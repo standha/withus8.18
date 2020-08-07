@@ -21,6 +21,7 @@ import com.bluecore.withus.entity.alarms.Appointment;
 import com.bluecore.withus.entity.alarms.Pill;
 import com.bluecore.withus.service.AlarmService;
 import com.bluecore.withus.service.UserService;
+import com.bluecore.withus.util.Utility;
 
 @Controller
 public class AlarmController {
@@ -86,9 +87,12 @@ public class AlarmController {
 
 		return modelAndView;
 	}
-	@GetMapping("/appointment/{date}")
-	public Appointment getAppointment(@PathVariable LocalDate date) {
+	@GetMapping(value = "/appointment/{dateString}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Appointment getAppointment(@PathVariable String dateString) {
 		User user = userService.getUserById("pantera");
+
+		LocalDate date = Utility.parseDate(dateString);
 
 		return alarmService.getAppointment(user, date);
 	}

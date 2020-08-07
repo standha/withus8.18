@@ -1,8 +1,10 @@
 function showTime() {
+	const form = document.querySelector("#appointment-form");
+
 	const dateInput = document.querySelector("#date input[name=date]");
 	const dateValue = dateInput.value;
 
-	const url = ("appointment/" + dateValue);
+	const url = (form.action + "/" + dateValue);
 	const options = {
 		method: "GET",
 		headers: {
@@ -12,8 +14,8 @@ function showTime() {
 	};
 
 	const response = fetch(url, options);
+	console.log("response", response);
 	if (response && response.ok) {
-		const form = document.querySelector("#appointment-form");
 		response.json().then(object => {
 			if (object) {
 				form.querySelector("input[name=id]").value = object["id"];
