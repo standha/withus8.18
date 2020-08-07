@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<head>
+	<meta charset="UTF-8">
+	<link th:href="@{/css/alarm/appointments.css}" rel="stylesheet">
+	<script th:src="@{/js/alarm/appointments.js}"></script>
+	<title>외래 방문 시간</title>
+</head>
+<body>
+	<div th:replace="header :: #header"></div>
+	<div id="body">
+		<!-- TODO: 보호자일 경우 immutable 하도록 -->
+		<form id="appointment-form" th:action="@{/appointment}">
+			<div>외래 방문 시간</div>
+			<div id="date">
+				<p>여기에 달력을 그려야 하는데~</p>
+				<input type="date" name="date">
+				<button type="button" onclick="showTime();">날짜 선택 (했다 치고)</button>
+			</div>
+			<div id="time" class="hidden">
+				<input type="hidden" name="id">
+				<input type="checkbox" name="enabled">
+				<input type="time" name="time">
+			</div>
+
+			<input type="submit" onsubmit="onFormSubmission(this);" value="저장">
+		</form>
+	</div>
+</body>
+</html>

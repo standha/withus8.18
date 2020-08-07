@@ -1,18 +1,23 @@
 package com.bluecore.withus.entity.alarms;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.bluecore.withus.entity.User;
+import com.bluecore.withus.util.Utility;
 
 @Entity
+@Table(indexes = @Index(columnList = "date"))
 public class Appointment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +31,10 @@ public class Appointment {
 	private boolean enabled;
 
 	@Column
-	private LocalDateTime dateTime;
+	private LocalDate date;
+
+	@Column
+	private LocalTime time;
 
 	@Override
 	public boolean equals(Object o) {
@@ -42,18 +50,23 @@ public class Appointment {
 	}
 
 	public Appointment() { }
-	private Appointment(User user, boolean enabled, LocalDateTime dateTime) {
+	private Appointment(User user, boolean enabled, LocalDate date, LocalTime time) {
 		this.user = user;
 		this.enabled = enabled;
-		this.dateTime = dateTime;
+		this.date = date;
+		this.time = time;
 	}
 
 	public long getId() { return id; }
 	public User getUser() { return user; }
 	public boolean isEnabled() { return enabled; }
-	public LocalDateTime getDateTime() { return dateTime; }
+	public LocalDate getDate() { return date; }
+	public LocalTime getTime() { return time; }
 
 	public void setUser(User user) { this.user = user; }
+
+	public String getDateString() { return Utility.DATE_FORMATTER.format(date); }
+	public String getTimeString() { return Utility.TIME_FORMATTER.format(time); }
 
 	public static Builder builder() {
 		return new Builder();
@@ -62,7 +75,9 @@ public class Appointment {
 	public static class Builder {
 		private User user;
 		private boolean enabled;
-		private LocalDateTime dateTime;
+		private LocalDate date;
+		private LocalTime time;
+
 		public Builder setUser(User user) {
 			this.user = user;
 			return this;
@@ -71,12 +86,17 @@ public class Appointment {
 			this.enabled = enabled;
 			return this;
 		}
-		public Builder setDateTime(LocalDateTime dateTime) {
-			this.dateTime = dateTime;
+		public Builder setDate(LocalDate date) {
+			this.date = date;
 			return this;
 		}
+		public Builder setTime(LocalTime time) {
+			this.time = time;
+			return this;
+		}
+
 		public Appointment createAppointment() {
-			return new Appointment(user, enabled, dateTime);
+			return new Appointment(user, enabled, date, time);
 		}
 	}
 }

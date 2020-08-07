@@ -1,5 +1,8 @@
 package com.bluecore.withus.service;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +35,22 @@ public class AlarmService {
 	@NonNull
 	public List<Appointment> getAppointments(User user) {
 		return appointmentRepository.findAllByUser(user);
+	}
+	@NonNull
+	public List<Appointment> getAppointments(User user, Year year, Month month) {
+		LocalDate start = LocalDate.of(year.getValue(), month.getValue(), 1);
+		LocalDate end = start.withDayOfMonth(start.lengthOfMonth());
+
+		return getAppointments(user, start, end);
+	}
+	@NonNull
+	public List<Appointment> getAppointments(User user, LocalDate startInclusive, LocalDate endInclusive) {
+		return appointmentRepository.findAllByUserAndDateIsBetween(user, startInclusive, endInclusive);
+	}
+
+	@Nullable
+	public Appointment getAppointment(User user, LocalDate date) {
+		return appointmentRepository.findTopByUserAndDateOrderByIdDesc(user, date).orElse(null);
 	}
 
 	public Pill upsertPill(Pill pill) {
