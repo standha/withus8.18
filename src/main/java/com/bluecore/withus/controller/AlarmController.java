@@ -54,10 +54,12 @@ public class AlarmController {
 
 		return modelAndView;
 	}
-	@PostMapping(value = "/pill", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	@PostMapping(value = "/pill", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public String postPill(HttpServletRequest request, HttpServletResponse response, @RequestBody Pill pill) {
 		User user = userService.getUserById("pantera");
+		pill.setUser(user);
+
 		Pill saved = alarmService.upsertPill(pill);
 
 		return "성공?";
