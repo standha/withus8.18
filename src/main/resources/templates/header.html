@@ -1,0 +1,8 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<div id="header">
+	<span><a id="helper" href="javascript: alert('도우미');">도우미</a></span>
+	<span><a id="disease-information" href="javascript: alert('질환정보');">질환정보</a></span>
+	<span>
+		<a th:if="${previousUrl != null}" th:href="${previousUrl}">!뒤로가기 그림!</a>
+	</span>
+</div>

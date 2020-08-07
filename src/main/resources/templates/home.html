@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<head>
+	<meta charset="UTF-8">
+	<link th:href="@{/css/home.css}" rel="stylesheet">
+	<title>HOME</title>
+</head>
+<body>
+	<div th:replace="header :: #header"></div>
+	<div id="body">
+		<div id="level-1">
+			<span>이 주의 목표: 잘 살자</span>
+			<span>여기에 꽃 그림</span>
+		</div>
+		<div id="level-2">
+			<a th:href="@{/alarm}">알람</a>
+			<a href="javascript: alert('blood pressure');">혈압/맥박</a>
+			<a href="javascript: alert('exercise');">운동</a>
+		</div>
+		<div id="level-3">
+			<a href="javascript: alert('survey');">증상일지</a>
+			<a href="javascript: alert('salt-and-water');">염분/수분</a>
+			<a href="javascript: alert('weight');">체중</a>
+		</div>
+	</div>
+	<div th:replace="footer :: #footer"></div>
+	<p th:text="'User: ' + ${user}"></p>
+</body>
+</html>
