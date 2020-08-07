@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -55,8 +56,9 @@ public class AlarmController {
 	}
 	@PostMapping(value = "/pill", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	@ResponseBody
-	public String postPill(HttpServletRequest request, HttpServletResponse response) {
+	public String postPill(HttpServletRequest request, HttpServletResponse response, @RequestBody Pill pill) {
 		User user = userService.getUserById("pantera");
+		Pill saved = alarmService.upsertPill(pill);
 
 		return "성공?";
 	}
