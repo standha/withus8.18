@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import com.bluecore.withus.configuration.JsonIgnore;
 import com.bluecore.withus.entity.User;
 
 @Entity
@@ -26,12 +27,15 @@ public class Pill {
 	private boolean enabled;
 
 	@Column
+	@JsonIgnore
 	private LocalTime breakfast;
 
 	@Column
+	@JsonIgnore
 	private LocalTime lunch;
 
 	@Column
+	@JsonIgnore
 	private LocalTime dinner;
 
 	@Override

@@ -5,6 +5,8 @@ import java.time.Month;
 import java.time.Year;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bluecore.withus.dto.Result;
 import com.bluecore.withus.entity.User;
 import com.bluecore.withus.entity.alarms.Appointment;
 import com.bluecore.withus.entity.alarms.Pill;
@@ -25,6 +28,8 @@ import com.bluecore.withus.util.Utility;
 
 @Controller
 public class AlarmController {
+	private static final Logger logger = LoggerFactory.getLogger(AlarmController.class);
+
 	private final UserService userService;
 	private final AlarmService alarmService;
 
@@ -60,13 +65,25 @@ public class AlarmController {
 	}
 	@PostMapping(value = "/pill", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public String postPill(@RequestBody Pill pill) {
+	public Result<Pill> postPill(@RequestBody Pill pill) {
 		User user = userService.getUserById("pantera");
 		pill.setUser(user);
 
-		Pill saved = alarmService.upsertPill(pill);
+		Result.Code code;
+		Pill saved = null;
+		try {
+			saved = alarmService.upsertPill(pill);
+			code = Result.Code.OK;
+		} catch (Exception exception) {
+			logger.error(exception.getLocalizedMessage(), exception);
 
-		return "TODO: 유의미한 Object로 바꾸기; 어쨌든 성공";
+			code = Result.Code.ERROR_DATABASE;
+		}
+
+		return Result.<Pill>builder()
+			.setCode(code)
+			.setData(saved)
+			.createResult();
 	}
 
 	@GetMapping("/appointments")
@@ -89,21 +106,51 @@ public class AlarmController {
 	}
 	@GetMapping(value = "/appointment/{dateString}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Appointment getAppointment(@PathVariable String dateString) {
+	public Result<Appointment> getAppointment(@PathVariable String dateString) {
 		User user = userService.getUserById("pantera");
 
 		LocalDate date = Utility.parseDate(dateString);
 
-		return alarmService.getAppointment(user, date);
+		Result.Code code;
+		Appointment appointment = null;
+		try {
+			appointment = alarmService.getAppointment(user, date);
+			if (appointment == null) {
+				code = Result.Code.OK_NULL;
+			} else {
+				code = Result.Code.OK;
+			}
+		} catch (Exception exception) {
+			logger.error(exception.getLocalizedMessage(), exception);
+
+			code = Result.Code.ERROR_DATABASE;
+		}
+
+		return Result.<Appointment>builder()
+			.setCode(code)
+			.setData(appointment)
+			.createResult();
 	}
 	@PostMapping("/appointment")
 	@ResponseBody
-	public String postAppointment(@RequestBody Appointment appointment) {
+	public Result<Appointment> postAppointment(@RequestBody Appointment appointment) {
 		User user = userService.getUserById("pantera");
 		appointment.setUser(user);
 
-		Appointment saved = alarmService.upsertAppointment(appointment);
+		Result.Code code;
+		Appointment saved = null;
+		try {
+			saved = alarmService.upsertAppointment(appointment);
+			code = Result.Code.OK;
+		} catch (Exception exception) {
+			logger.error(exception.getLocalizedMessage(), exception);
 
-		return "TODO: 유의미한 Object로 바꾸기; 어쨌든 성공";
+			code = Result.Code.ERROR_DATABASE;
+		}
+
+		return Result.<Appointment>builder()
+			.setCode(code)
+			.setData(saved)
+			.createResult();
 	}
 }

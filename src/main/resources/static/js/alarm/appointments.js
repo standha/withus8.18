@@ -13,19 +13,35 @@ function showTime() {
 		}
 	};
 
-	const response = fetch(url, options);
-	console.log("response", response);
-	if (response && response.ok) {
-		response.json().then(object => {
+	fetch(url, options)
+		.then(response => response.json())
+		.then(object => {
+			console.log(object);
+
+			let ok = false;
 			if (object) {
-				form.querySelector("input[name=id]").value = object["id"];
-				form.querySelector("input[name=enabled]").checked = object["enabled"];
-				form.querySelector("input[name=time]").value = object["time"];
+				if (object["code"] === "OK") {
+					const data = object["data"];
+					form.querySelector("input[name=id]").value = data["id"];
+					form.querySelector("input[name=enabled]").checked = data["enabled"];
+					form.querySelector("input[name=time]").value = data["timeString"];
+
+					ok = true;
+				} else if (object["code"].indexOf("OK") === 0) {
+					form.querySelector("input[name=id]").value = "";
+					form.querySelector("input[name=enabled]").checked = false;
+					form.querySelector("input[name=time]").value = null;
+
+					ok = true;
+				} else {
+					alert(object["code"]);
+				}
 			}
 
-			form.querySelector("#time.hidden").classList.remove("hidden");
+			if (ok) {
+				form.querySelector("#time").classList.remove("hidden");
+			}
 		});
-	}
 }
 
 function onFormSubmission(form) {

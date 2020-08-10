@@ -10,7 +10,7 @@
 	<div th:replace="header :: #header"></div>
 	<div id="body">
 		<!-- TODO: 보호자일 경우 immutable 하도록 -->
-		<form id="appointment-form" th:action="@{/appointment}" onsubmit="onFormSubmission(this);">
+		<form id="appointment-form" th:action="@{/appointment}" onsubmit="return onFormSubmission(this);">
 			<div>외래 방문 시간</div>
 			<div id="date">
 				<p>여기에 달력을 그려야 하는데~</p>

@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.bluecore.withus.configuration.JsonIgnore;
 import com.bluecore.withus.entity.User;
 import com.bluecore.withus.util.Utility;
 
@@ -31,9 +32,11 @@ public class Appointment {
 	private boolean enabled;
 
 	@Column
+	@JsonIgnore
 	private LocalDate date;
 
 	@Column
+	@JsonIgnore
 	private LocalTime time;
 
 	@Override
@@ -65,8 +68,8 @@ public class Appointment {
 
 	public void setUser(User user) { this.user = user; }
 
-	public String getDateString() { return Utility.DATE_FORMATTER.format(date); }
-	public String getTimeString() { return Utility.TIME_FORMATTER.format(time); }
+	public String getDateString() { return Utility.format(date); }
+	public String getTimeString() { return Utility.format(time); }
 
 	public static Builder builder() {
 		return new Builder();

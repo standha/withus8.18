@@ -23,10 +23,9 @@ function onFormSubmission(form) {
 		body: JSON.stringify(body)
 	};
 
-	const response = fetch(url, options);
-	if (response && response.ok) {
-		console.log(response);
-	}
+	fetch(url, options)
+		.then(response => response.json())
+		.then(data => console.log(data));
 
 	return false;
 }
