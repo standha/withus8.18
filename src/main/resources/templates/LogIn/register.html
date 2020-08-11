@@ -2,19 +2,22 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <head>
 	<meta charset="UTF-8">
-	<title>Title</title>
+	<script th:src="@{/js/register.js}"></script>
+	<title>회원 가입</title>
 </head>
 <body>
-	<form id="MemberInfo" th:action="@{/saveMember}" method="post"  onsubmit="return onFormSubmission(this);">
-
+	<div id="body">
+		<form id="MemberInfo" th:action="@{/saveMember}" method="post"  onsubmit="return onFormSubmission(this);">
 			아이디
-			<input type="text" name="id">
+			<input type="text" name="id" th:value="${User?.id}">
 			비밀번호
-			<input type="text" name="password">
+			<input type="text" name="password" th:value="${User?.password}">
 			전화번호
-			<input type="text" name="contact">
+			<input type="text" name="contact" th:value="${User?.contact}">
 
-		<input type="submit" value="회원가입">
-	</form>
+			<input type="submit" value="회원가입" >
+		</form>
+	</div>
+
 </body>
 </html>

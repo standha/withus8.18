@@ -32,7 +32,15 @@ public class LoginController {
 		return modelAndView;
 	}
 
-	@PostMapping({"/saveMember"})
+	@PostMapping({"/saveMember"}, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ModelAndView putMember(@RequestBody User user) {
+		ModelAndView modelAndView = new ModelAndView("LogIn/login");
+
+		userService.saveUser(user);
+
+		return modelAndView;
+	}
+/*	@PostMapping({"/saveMember"})
 	public ModelAndView putMember(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView modelAndView = new ModelAndView("LogIn/login");
 
@@ -48,6 +56,6 @@ public class LoginController {
 		userService.saveUser(user);
 
 		return modelAndView;
-	}
+	}*/
 
 }
