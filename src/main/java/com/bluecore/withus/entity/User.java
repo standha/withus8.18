@@ -2,6 +2,8 @@ package com.bluecore.withus.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,9 +15,11 @@ import javax.persistence.OneToOne;
 
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class User implements Serializable {
+public class User implements Serializable , UserDetails {
 	@Id
 	@Column(columnDefinition = "VARCHAR(128) NOT NULL", length = 128)
 	@NonNull
@@ -71,8 +75,38 @@ public class User implements Serializable {
 	}
 
 	@NonNull
-	public String getId() { return id; }
-	public String getPassword() { return password; }
+	public String getId() {
+		return id;
+	}
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return new ArrayList<>();
+	}
+	@Override
+	public String getPassword() {
+		return password;
+	}
+	@Override
+	public String getUsername() {
+		return id;
+	}
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
+
 	public String getName() { return name; }
 	@NonNull
 	public String getContact() { return contact; }
