@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.bluecore.withus.entity.User;
 import com.bluecore.withus.service.UserService;
 
 @Controller
@@ -36,7 +35,7 @@ public class LoginController {
 	public ModelAndView putMember(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView modelAndView = new ModelAndView("LogIn/login");
 
-		String id = request.getParameterMap().get("id");
+		/*String id = request.getParameterMap().get("id");
 		String password =request.getParameterMap().get("password").toString();
 		String contact = request.getParameterMap().get("contact").toString();
 
@@ -45,7 +44,7 @@ public class LoginController {
 			.setPassword(password)
 			.setContact(contact).createUser();
 
-		userService.saveUser(user);
+		userService.saveUser(user);*/
 
 		return modelAndView;
 	}
