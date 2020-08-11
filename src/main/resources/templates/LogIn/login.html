@@ -2,8 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <head>
 	<meta charset="UTF-8">
-	<link th:href="@{/css/alarm/appointments.css}" rel="stylesheet">
-	<script th:src="@{/js/alarm/appointments.js}"></script>
 	<title>로그인 페이지</title>
 </head>
 <body>
@@ -18,5 +16,6 @@
 		<div><label> Password: <input type="password" name="password"/> </label></div>
 		<div><input type="submit" value="Sign In"/></div>
 	</form>
+	<a th:href="@{/registerMember}">회원가입</a>
 </body>
 </html>
