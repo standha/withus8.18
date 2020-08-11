@@ -2,18 +2,66 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <head>
 	<meta charset="UTF-8">
+	<link th:href="@{/css/register.css}" rel="stylesheet">
 	<title>Title</title>
 </head>
 <body>
 	<form id="MemberInfo" th:action="@{/saveMember}" method="post"  onsubmit="return onFormSubmission(this);">
-
-			아이디
-			<input type="text" name="id">
-			비밀번호
-			<input type="text" name="password">
-			전화번호
-			<input type="text" name="contact">
-
+		<div id="user-wrap">
+			<label class="user">
+				<input type="radio" name="register" value="patient" checked>
+				<div>
+					<img th:src="@{/images/patient.png}">
+					<span>환자</span>
+				</div>
+			</label>
+			<label class="user">
+				<input type="radio" name="register" value="caregiver">
+				<div>
+					<img th:src="@{/images/protector.png}">
+					<span>보호자</span>
+				</div>
+			</label>
+		</div>
+		<div>
+			<div class="input-container">
+				<span class="label">아이디</span>
+				<input type="text" name="id">
+			</div>
+			<div class="input-container">
+				<span class="label">비밀번호</span>
+				<input type="text" name="password">
+			</div>
+			<div class="input-container">
+				<span class="label">이름</span>
+				<input type="text" name="name">
+			</div>
+			<div class="input-container">
+				<span class="label">생년월일</span>
+				<input type="text" name="birthdate">
+			</div>
+			<div class="input-container">
+				<span class="label">성별</span>
+				<div class="sex">
+					<label>
+						<input type="radio" name="sex" th:value="male" checked>
+						<span id="male">남자</span>
+					</label>
+					<label>
+						<input type="radio" name="sex" th:value="female">
+						<span id="female">여자</span>
+					</label>
+				</div>
+			</div>
+			<div class="input-container">
+				<span class="label">연락처<br>(본인)</span>
+				<input type="text" name="contact">
+			</div>
+			<div class="input-container">
+				<span class="label">연락처<br>(보호자)</span>
+				<input type="text" name="caregiver">
+			</div>
+		</div>
 		<input type="submit" value="회원가입">
 	</form>
 </body>

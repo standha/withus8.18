@@ -1,0 +1,76 @@
+#MemberInfo {
+    text-align: center;
+    font-size: 40px;
+}
+
+#user-wrap {
+    display: flex;
+    width: fit-content;
+    margin: 100px auto;
+}
+
+.user {
+    width: 400px;
+}
+
+[type=radio] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* IMAGE STYLES */
+[type=radio] + img {
+    cursor: pointer;
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked + div, [type=radio]:checked + span{
+    outline: 5px solid #FFC000;
+}
+
+label img {
+    width: 150px;
+}
+
+[type=text] {
+    width: 400px;
+    height: 70px;
+    font-size: 40px;
+    border-radius: 15px;
+}
+
+.input-container {
+    width: fit-content;
+    display: grid;
+    grid-auto-flow: column;
+    margin: 20px auto;
+}
+
+.label {
+    width: 200px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.sex {
+    width: 400px;
+    height: 75px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#male, #female {
+    border: 1px solid black;
+    padding: 10px 40px;
+}
+
+[type=submit] {
+    border: 1px solid #00B050;
+    background: #C5E0B4;
+    font-size: 50px;
+    padding: 10px 50px;
+    border-radius: 15px;
+    margin-top: 100px;
+}
