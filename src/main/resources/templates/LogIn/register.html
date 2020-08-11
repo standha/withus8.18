@@ -30,18 +30,10 @@
 			</div>
 			<div id="sex">
 				성별 <br>
-
-				<!--<input type="radio" id="male" name="sex" th:value="${user?.sex.MALE}">
-				<label for="male">남자</label><br>
-
-				<input type="radio" id="female" name="sex" th:value="${user?.sex.FEMALE}">
-				<label for="female">여자</label><br>
--->
-				<input type="radio" id="male" name="sex" th:value="${user?.sex}" />
-				<label th:for="male" th:text=MALE>남자</label>
-
-				<input type="radio" id="female" name="sex" th:value="${user?.sex}" />
-				<label th:for="female" th:text=FEMALE>여자</label>
+				<div th:each="state : ${T(com.bluecore.withus.entity.User.Sex).values()}" >
+					<input type="radio" id="${state}" name="sex" th:value="${state}">
+					<label for="${state}" th:text="${state}"></label>
+				</div>
 			</div>
 			<div id="caregiver">
 				연락처 (보호자)
