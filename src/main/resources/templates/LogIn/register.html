@@ -2,18 +2,51 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <head>
 	<meta charset="UTF-8">
-	<script th:src="@{/js/register.js}"></script>
+	<script th:src="@{/js/user.js}"></script>
 	<title>회원 가입</title>
 </head>
 <body>
 	<div id="body">
-		<form id="MemberInfo" th:action="@{/saveMember}" method="post"  onsubmit="return onFormSubmission(this);">
-			아이디
-			<input type="text" name="id" th:value="${User?.id}">
-			비밀번호
-			<input type="text" name="password" th:value="${User?.password}">
-			전화번호
-			<input type="text" name="contact" th:value="${User?.contact}">
+		<form id="MemberInfo" th:action="@{/saveMember}" method="post" onsubmit="return onFormSubmission(this);">
+			<div id="id">
+				아이디
+				<input type="text" name="id" th:value="${user?.id}">
+			</div>
+			<div id="password">
+				비밀번호
+				<input type="text" name="password" th:value="${user?.password}">
+			</div>
+			<div id="name">
+				이름
+				<input type="text" name="name" th:value="${user?.name}">
+			</div>
+			<div id="contact">
+				전화번호
+				<input type="text" name="contact" th:value="${user?.contact}">
+			</div>
+			<div id="birthdate">
+				생년월일
+				<input type="text" name="birthdate" th:value="${user?.birthdate}">
+			</div>
+			<div id="sex">
+				성별 <br>
+
+				<!--<input type="radio" id="male" name="sex" th:value="${user?.sex.MALE}">
+				<label for="male">남자</label><br>
+
+				<input type="radio" id="female" name="sex" th:value="${user?.sex.FEMALE}">
+				<label for="female">여자</label><br>
+-->
+				<input type="radio" id="male" name="sex" th:value="${user?.sex}" />
+				<label th:for="male" th:text=MALE>남자</label>
+
+				<input type="radio" id="female" name="sex" th:value="${user?.sex}" />
+				<label th:for="female" th:text=FEMALE>여자</label>
+			</div>
+			<div id="caregiver">
+				연락처 (보호자)
+				<input type="text" name="caregiver" th:value="${user?.caregiver}">
+			</div>
 
 			<input type="submit" value="회원가입" >
 		</form>

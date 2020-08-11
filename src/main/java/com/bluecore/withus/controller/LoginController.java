@@ -3,9 +3,12 @@ package com.bluecore.withus.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bluecore.withus.entity.User;
@@ -28,17 +31,19 @@ public class LoginController {
 	@GetMapping({"/registerMember"})
 	public ModelAndView getRegisterPage(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView modelAndView = new ModelAndView("LogIn/register");
+		User user = new User();
+		modelAndView.addObject("user", user);
+		modelAndView.addObject("previousUrl", "LogIn/login");
 
 		return modelAndView;
 	}
 
-	@PostMapping({"/saveMember"}, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ModelAndView putMember(@RequestBody User user) {
-		ModelAndView modelAndView = new ModelAndView("LogIn/login");
+	@PostMapping(value = "/saveMember", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public User putMember(@RequestBody User user) {
 
-		userService.saveUser(user);
+		return userService.saveUser(user);
 
-		return modelAndView;
 	}
 /*	@PostMapping({"/saveMember"})
 	public ModelAndView putMember(HttpServletRequest request, HttpServletResponse response) {

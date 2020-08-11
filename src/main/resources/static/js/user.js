@@ -1,11 +1,11 @@
 function onFormSubmission(form) {
 	const id = form.querySelector("input[name=id]").value;
-	const password = form.querySelector("input[pass=password]").value;
+	const password = form.querySelector("input[name=password]").value;
 	const name = form.querySelector("input[name=name]").value;
 	const contact = form.querySelector("input[name=contact]").value;
 	const birthdate = form.querySelector("input[name=birthdate]").value;
-	const sex = form.querySelector("input[name=sex]").checked;
-	const caregiver = form.querySelector("input[name=caregiver]").value;
+	const sex = form.querySelector("input[name=sex]").value;
+	/*const caregiver = form.querySelector("input[name=caregiver]").value;*/
 
 
 	const body = {
@@ -15,7 +15,7 @@ function onFormSubmission(form) {
 		contact: contact,
 		birthdate: birthdate,
 		sex: sex,
-		caregiver: caregiver
+		/*caregiver: caregiver*/
 	};
 
 	const url = form.action;
