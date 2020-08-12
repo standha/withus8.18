@@ -37,6 +37,8 @@ public class Result<T> {
 		OK,
 		OK_NULL,
 		ERROR,
+		ERROR_DUPLICATE_ID,
+		ERROR_DUPLICATE_CONTACT,
 		ERROR_DATABASE
 	}
 }

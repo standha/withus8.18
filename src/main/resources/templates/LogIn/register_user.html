@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <head>
 	<meta charset="UTF-8">
-	<script th:src="@{/js/user.js}"></script>
+	<script th:src="@{/js/register.js}"></script>
 	<title>회원 가입</title>
 </head>
 <body>
 	<div id="body">
-		<form id="MemberInfo" th:action="@{/saveMember}" method="post" onsubmit="return onFormSubmission(this);">
+		<form id="MemberInfo" th:action="@{/saveUser}" method="post" onsubmit="return onFormSubmission(this);">
 			<div id="id">
 				아이디
 				<input type="text" name="id" th:value="${user?.id}">
@@ -22,7 +22,7 @@
 			</div>
 			<div id="contact">
 				전화번호
-				<input type="text" name="contact" th:value="${user?.contact}">
+				<input type="number" name="contact" th:value="${user?.contact}">
 			</div>
 			<div id="birthdate">
 				생년월일
@@ -37,7 +37,7 @@
 			</div>
 			<div id="caregiver">
 				연락처 (보호자)
-				<input type="text" name="caregiver" th:value="${user?.caregiver}">
+				<input type="number" name="caregiver" th:value="${user?.caregiver}">
 			</div>
 
 			<input type="submit" value="회원가입" >

@@ -8,4 +8,6 @@ import com.bluecore.withus.entity.User;
 
 public interface UserRepository extends JpaRepository<User, String> {
 	Optional<User> findByIdAndPassword(String id, String password);
+
+	Optional<User> findByContact(String contact);
 }
