@@ -45,7 +45,7 @@ public class AlarmController {
 		User user = userService.getUserById("pantera");
 
 		modelAndView.addObject("user", user);
-		modelAndView.addObject("previousUrl", "/");
+		modelAndView.addObject("previousUrl", "/home");
 
 		return modelAndView;
 	}

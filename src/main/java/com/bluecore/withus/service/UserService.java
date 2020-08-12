@@ -20,4 +20,13 @@ public class UserService {
 	public User getUserById(String id) {
 		return userRepository.findById(id).orElse(null);
 	}
+	@Nullable
+	public User getUserByIdPassword(String id, String password) {
+		return userRepository.findByIdAndPassword(id, password).orElse(null);
+	}
+
+	@Nullable
+	public User saveUser(User user) {
+		return userRepository.save(user);
+	}
 }
