@@ -10,21 +10,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.bluecore.withus.entity.alarms.Appointment;
 import com.bluecore.withus.entity.alarms.Pill;
 import com.bluecore.withus.service.AlarmService;
 
-@Service
+@Component
 @EnableAsync
-public class SchedulerService {
-	private static final Logger logger = LoggerFactory.getLogger(SchedulerService.class);
+public class Scheduler {
+	private static final Logger logger = LoggerFactory.getLogger(Scheduler.class);
 
 	private final AlarmService alarmService;
 
 	@Autowired
-	public SchedulerService(AlarmService alarmService) {
+	public Scheduler(AlarmService alarmService) {
 		this.alarmService = alarmService;
 	}
 
