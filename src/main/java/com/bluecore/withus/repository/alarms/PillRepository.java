@@ -6,17 +6,21 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.lang.NonNull;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bluecore.withus.entity.User;
 import com.bluecore.withus.entity.alarms.Pill;
 
 public interface PillRepository extends JpaRepository<Pill, Long> {
+	@Transactional(readOnly = true)
 	@NonNull
 	List<Pill> findAllByEnabledIsTrueAndBreakfastOrLunchOrDinner(LocalTime breakfast, LocalTime lunch, LocalTime dinner);
+	@Transactional(readOnly = true)
 	@NonNull
 	default List<Pill> findAllByEnabledIsTrueAndTime(LocalTime time) {
 		return findAllByEnabledIsTrueAndBreakfastOrLunchOrDinner(time, time, time);
 	}
 
+	@Transactional(readOnly = true)
 	Optional<Pill> findTopByUserOrderByIdDesc(User user);
 }
