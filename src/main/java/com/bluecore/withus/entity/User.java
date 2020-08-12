@@ -10,11 +10,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 @Entity
+@Table
 public class User implements Serializable {
 	@Id
 	@Column(columnDefinition = "VARCHAR(128) NOT NULL", length = 128)

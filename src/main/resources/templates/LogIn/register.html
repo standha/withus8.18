@@ -26,13 +26,13 @@
 			</div>
 			<div id="birthdate">
 				생년월일
-				<input type="text" name="birthdate" th:value="${user?.birthdate}">
+				<input type="date" name="birthdate" th:value="${user?.birthdate}">
 			</div>
 			<div id="sex">
 				성별 <br>
-				<div th:each="state : ${T(com.bluecore.withus.entity.User.Sex).values()}" >
-					<input type="radio" id="${state}" name="sex" th:value="${state}">
-					<label for="${state}" th:text="${state}"></label>
+				<div th:each="state : ${T(com.bluecore.withus.entity.User.Sex).values()}">
+					<input type="radio" th:id="${state}" name="sex" th:value="${state}">
+					<label th:for="${state}" th:text="${state==T(com.bluecore.withus.entity.User.Sex).MALE ? '남자':'여자'}"></label>
 				</div>
 			</div>
 			<div id="caregiver">

@@ -4,7 +4,7 @@ function onFormSubmission(form) {
 	const name = form.querySelector("input[name=name]").value;
 	const contact = form.querySelector("input[name=contact]").value;
 	const birthdate = form.querySelector("input[name=birthdate]").value;
-	const sex = form.querySelector("input[name=sex]").value;
+	const sex = form.querySelector("input[name=sex]:checked").value;
 	/*const caregiver = form.querySelector("input[name=caregiver]").value;*/
 
 
