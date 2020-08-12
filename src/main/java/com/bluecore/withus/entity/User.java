@@ -8,13 +8,16 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 @Entity
+@Table(indexes = @Index(columnList = "id,password"))
 public class User implements Serializable {
 	@Id
 	@Column(columnDefinition = "VARCHAR(128) NOT NULL", length = 128)
@@ -46,7 +49,7 @@ public class User implements Serializable {
 	private User caregiver;
 
 	public User() { }
-	private User(String id, String password, String name, String contact, LocalDate birthdate, Sex sex, User caregiver) {
+	private User(@NonNull String id, String password, String name, @NonNull String contact, @Nullable LocalDate birthdate, @Nullable Sex sex, @Nullable User caregiver) {
 		this.id = id;
 		this.password = password;
 		this.name = name;
