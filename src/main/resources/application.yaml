@@ -17,3 +17,8 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+
+logging:
+  file:
+    path: /home/withus/logs
+    name: withus.log
