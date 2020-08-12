@@ -20,5 +20,4 @@ spring:
 
 logging:
   file:
-    path: /home/withus/logs
-    name: withus.log
+    name: /home/withus/logs/withus.log
