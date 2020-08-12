@@ -32,3 +32,18 @@ function onFormSubmission(form) {
 
 	return false;
 }
+
+function doDisplay(user) {
+	console.log(user)
+	var elems = document.getElementsByClassName("patient-only");
+
+	if(user === 'caregiver') {
+		for(var i=0; i<elems.length; i++) {
+			elems[i].style.display = 'none'
+		}
+	} else {
+		for(var i=0; i<elems.length; i++) {
+			elems[i].style.display = 'grid'
+		}
+	}
+}

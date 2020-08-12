@@ -10,7 +10,13 @@
 }
 
 .user {
-    width: 400px;
+    width: 350px;
+    display: table;
+}
+
+#patient, #caregiver {
+    display: table-cell;
+    vertical-align: middle;
 }
 
 [type=radio] {
@@ -26,12 +32,16 @@
 }
 
 /* CHECKED STYLES */
-[type=radio]:checked + div, [type=radio]:checked + span{
+[type=radio]:checked + div {
     outline: 5px solid #FFC000;
 }
 
+[type=radio]:checked + span {
+    background: #C5E0B4;
+}
+
 label img {
-    width: 150px;
+    width: 130px;
 }
 
 [type=text] {
@@ -59,10 +69,12 @@ label img {
     height: 75px;
     display: flex;
     justify-content: space-between;
+    margin-top: 15px;
 }
 
 #male, #female {
     border: 1px solid black;
+    border-radius: 15px;
     padding: 10px 40px;
 }
 

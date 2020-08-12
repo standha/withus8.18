@@ -3,23 +3,24 @@
 <head>
 	<meta charset="UTF-8">
 	<link th:href="@{/css/register.css}" rel="stylesheet">
+	<script th:src="@{/js/register.js}"></script>
 	<title>Title</title>
 </head>
 <body>
 	<form id="MemberInfo" th:action="@{/saveMember}" method="post"  onsubmit="return onFormSubmission(this);">
 		<div id="user-wrap">
-			<label class="user">
-				<input type="radio" name="register" value="patient" checked>
-				<div>
+			<label>
+				<input type="radio" name="user" th:value="patient" onclick="doDisplay(this.value)" checked>
+				<div class="user">
 					<img th:src="@{/images/patient.png}">
-					<span>환자</span>
+					<span id="patient">환자</span>
 				</div>
 			</label>
-			<label class="user">
-				<input type="radio" name="register" value="caregiver">
-				<div>
+			<label>
+				<input type="radio" name="user" th:value="caregiver" onclick="doDisplay(this.value)">
+				<div class="user">
 					<img th:src="@{/images/protector.png}">
-					<span>보호자</span>
+					<span id="caregiver">보호자</span>
 				</div>
 			</label>
 		</div>
@@ -36,11 +37,11 @@
 				<span class="label">이름</span>
 				<input type="text" name="name">
 			</div>
-			<div class="input-container">
+			<div class="input-container patient-only">
 				<span class="label">생년월일</span>
 				<input type="text" name="birthdate">
 			</div>
-			<div class="input-container">
+			<div class="input-container patient-only">
 				<span class="label">성별</span>
 				<div class="sex">
 					<label>
@@ -57,12 +58,12 @@
 				<span class="label">연락처<br>(본인)</span>
 				<input type="text" name="contact">
 			</div>
-			<div class="input-container">
+			<div class="input-container patient-only">
 				<span class="label">연락처<br>(보호자)</span>
 				<input type="text" name="caregiver">
 			</div>
 		</div>
-		<input type="submit" value="회원가입">
+		<input type="submit" th:value="회원가입">
 	</form>
 </body>
 </html>
