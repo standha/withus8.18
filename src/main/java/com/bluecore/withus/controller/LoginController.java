@@ -58,18 +58,38 @@ public class LoginController {
 			User existId = userService.getUserById(user.getId());
 			User existContact = userService.getUserByContact(user.getContact());
 
-			if(existId == null && existContact == null){
-				savedUser = userService.saveUser(user);
-				code = Result.Code.OK;
-			} else {
-				if(existId != null) {
-					savedUser = existId;
-					code = Result.Code.ERROR_DUPLICATE_ID;
+			if(existId == null && existContact == null) {
+				User.Type userType = user.getType();
+
+				if(userType.equals(User.Type.CAREGIVER)){
+					savedUser = userService.saveUser(user);
+					code = Result.Code.OK;
 				}
-				if(existContact != null) {
-					savedUser = existContact;
-					code = Result.Code.ERROR_DUPLICATE_CONTACT;
+				if(userType.equals(User.Type.PATIENT)){
+					User caregiver = user.getCaregiver();
+					if(caregiver == null){
+						savedUser = userService.saveUser(user);
+						code = Result.Code.OK;
+					} else {
+						User existCareGiver = userService.getUserByContact(user.getCaregiver().getContact());
+						if (existCareGiver == null){
+							code = Result.Code.ERROR_NO_EXIST_CAREGIVER;
+						} else {
+							user.setCaregiver(existCareGiver);
+							savedUser = userService.saveUser(user);
+							code = Result.Code.OK;
+						}
+					}
 				}
+			}
+
+			if(existContact != null) {
+				savedUser = existContact;
+				code = Result.Code.ERROR_DUPLICATE_CONTACT;
+			}
+			if(existId != null) {
+				savedUser = existId;
+				code = Result.Code.ERROR_DUPLICATE_ID;
 			}
 
 		} catch (Exception exception){

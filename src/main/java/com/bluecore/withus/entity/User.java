@@ -24,10 +24,10 @@ public class User implements Serializable {
 	@NonNull
 	protected String id;
 
-	@Column(columnDefinition = "VARCHAR(255)")
+	@Column(columnDefinition = "VARCHAR(255) NOT NULL")
 	protected String password;
 
-	@Column(columnDefinition = "VARCHAR(32)", length = 32)
+	@Column(columnDefinition = "VARCHAR(32) NOT NULL", length = 32)
 	protected String name;
 
 	@Column(columnDefinition = "VARCHAR(32) NOT NULL", length = 32, unique = true)
@@ -43,19 +43,24 @@ public class User implements Serializable {
 	@Nullable
 	private Sex sex;
 
+	@Column(columnDefinition = "VARCHAR(16) NOT NULL", length = 16)
+	@Enumerated(EnumType.STRING)
+	private Type type;
+
 	@OneToOne
 	@JoinColumn(name = "caregiver_contact", columnDefinition = "VARCHAR(32)", referencedColumnName = "contact")
 	@Nullable
 	private User caregiver;
 
 	public User() { }
-	private User(@NonNull String id, String password, String name, @NonNull String contact, @Nullable LocalDate birthdate, @Nullable Sex sex, @Nullable User caregiver) {
+	private User(@NonNull String id, String password, String name, @NonNull String contact, @Nullable LocalDate birthdate, @Nullable Sex sex, Type type, @Nullable User caregiver) {
 		this.id = id;
 		this.password = password;
 		this.name = name;
 		this.contact = contact;
 		this.birthdate = birthdate;
 		this.sex = sex;
+		this.type = type;
 		this.caregiver = caregiver;
 	}
 
@@ -83,11 +88,18 @@ public class User implements Serializable {
 	public LocalDate getBirthdate() { return birthdate; }
 	@Nullable
 	public Sex getSex() { return sex; }
+	public Type getType() { return type; }
 	@Nullable
 	public User getCaregiver() { return caregiver; }
 
+	public void setCaregiver(User user) { this.caregiver = user;}
+
 	public enum Sex {
 		MALE, FEMALE
+	}
+
+	public enum Type {
+		PATIENT, CAREGIVER
 	}
 
 	public static Builder builder() {
@@ -101,6 +113,7 @@ public class User implements Serializable {
 		private String contact;
 		private LocalDate birthdate;
 		private Sex sex;
+		private Type type;
 		private User caregiver;
 
 		public Builder setId(String id) {
@@ -127,13 +140,17 @@ public class User implements Serializable {
 			this.sex = sex;
 			return this;
 		}
+		public Builder setType(Type type) {
+			this.type = type;
+			return this;
+		}
 		public Builder setCaregiver(User caregiver) {
 			this.caregiver = caregiver;
 			return this;
 		}
 
 		public User createUser() {
-			return new User(id, password, name, contact, birthdate, sex, caregiver);
+			return new User(id, password, name, contact, birthdate, sex, type, caregiver);
 		}
 	}
 }

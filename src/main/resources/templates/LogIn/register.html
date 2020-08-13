@@ -10,14 +10,14 @@
 	<form id="MemberInfo" th:action="@{/saveUser}" method="post"  onsubmit="return onFormSubmission(this);">
 		<div id="user-wrap">
 			<label>
-				<input type="radio" name="user" th:value="patient" onclick="doDisplay(this.value)" checked>
+				<input type="radio" name="user" th:value="${T(com.bluecore.withus.entity.User.Type).PATIENT}" onclick="doDisplay(this.value)" checked>
 				<div class="user">
 					<img th:src="@{/images/patient.png}">
 					<span id="patient">환자</span>
 				</div>
 			</label>
 			<label>
-				<input type="radio" name="user" th:value="caregiver" onclick="doDisplay(this.value)">
+				<input type="radio" name="user" th:value="${T(com.bluecore.withus.entity.User.Type).CAREGIVER}" onclick="doDisplay(this.value)">
 				<div class="user">
 					<img th:src="@{/images/protector.png}">
 					<span id="caregiver">보호자</span>
