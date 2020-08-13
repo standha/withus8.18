@@ -2,24 +2,23 @@ package com.bluecore.withus.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class User implements Serializable , UserDetails {
+@Table(indexes = @Index(columnList = "id,password"))
+public class User implements Serializable {
 	@Id
 	@Column(columnDefinition = "VARCHAR(128) NOT NULL", length = 128)
 	@NonNull
@@ -50,7 +49,7 @@ public class User implements Serializable , UserDetails {
 	private User caregiver;
 
 	public User() { }
-	private User(String id, String password, String name, String contact, LocalDate birthdate, Sex sex, User caregiver) {
+	private User(@NonNull String id, String password, String name, @NonNull String contact, @Nullable LocalDate birthdate, @Nullable Sex sex, @Nullable User caregiver) {
 		this.id = id;
 		this.password = password;
 		this.name = name;
@@ -75,38 +74,8 @@ public class User implements Serializable , UserDetails {
 	}
 
 	@NonNull
-	public String getId() {
-		return id;
-	}
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return new ArrayList<>();
-	}
-	@Override
-	public String getPassword() {
-		return password;
-	}
-	@Override
-	public String getUsername() {
-		return id;
-	}
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
-
+	public String getId() { return id; }
+	public String getPassword() { return password; }
 	public String getName() { return name; }
 	@NonNull
 	public String getContact() { return contact; }

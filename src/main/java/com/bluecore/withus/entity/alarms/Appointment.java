@@ -18,7 +18,13 @@ import com.bluecore.withus.entity.User;
 import com.bluecore.withus.util.Utility;
 
 @Entity
-@Table(indexes = @Index(columnList = "date"))
+@Table(
+	indexes = {
+		@Index(columnList = "date"),
+		@Index(columnList = "enabled,date"),
+		@Index(columnList = "enabled,date,time")
+	}
+)
 public class Appointment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

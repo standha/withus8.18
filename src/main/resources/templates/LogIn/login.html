@@ -17,14 +17,14 @@
 		<div th:if="${param.logout}">
 			You have been logged out.
 		</div>
-		<form id="loginInfo" th:action="@{/login}" method="post">
+		<form id="loginInfo" th:action="@{/login-process}" method="post">
 			<div>
 				<div id="id"><label> 아이디: <input type="text" name="username"/> </label></div>
 				<div><label> 비밀번호: <input type="password" name="password"/> </label></div>
 			</div>
 			<div id="button-area">
 				<input type="submit" value="로그인"/>
-				<input type="button" value="회원가입" onclick="location.href='/registerMember'"></input>
+				<input type="button" value="회원가입" onclick="location.href='/registerMember'">
 			</div>
 		</form>
 	</div>
