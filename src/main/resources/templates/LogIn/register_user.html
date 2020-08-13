@@ -10,23 +10,23 @@
 		<form id="MemberInfo" th:action="@{/saveUser}" method="post" onsubmit="return onFormSubmission(this);">
 			<div id="id">
 				아이디
-				<input type="text" name="id" th:value="${user?.id}">
+				<input type="text" name="id">
 			</div>
 			<div id="password">
 				비밀번호
-				<input type="text" name="password" th:value="${user?.password}">
+				<input type="password" name="password">
 			</div>
 			<div id="name">
 				이름
-				<input type="text" name="name" th:value="${user?.name}">
+				<input type="text" name="name">
 			</div>
 			<div id="contact">
 				전화번호
-				<input type="number" name="contact" th:value="${user?.contact}">
+				<input type="number" name="contact">
 			</div>
 			<div id="birthdate">
 				생년월일
-				<input type="date" name="birthdate" th:value="${user?.birthdate}">
+				<input type="date" name="birthdate">
 			</div>
 			<div id="sex">
 				성별 <br>
@@ -37,7 +37,7 @@
 			</div>
 			<div id="caregiver">
 				연락처 (보호자)
-				<input type="number" name="caregiver" th:value="${user?.caregiver}">
+				<input type="number" name="caregiver">
 			</div>
 
 			<input type="submit" value="회원가입" >

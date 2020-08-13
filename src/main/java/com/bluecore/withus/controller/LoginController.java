@@ -36,7 +36,7 @@ public class LoginController {
 
 	@GetMapping({ "/registerUser" })
 	public ModelAndView getRegisterPage(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView modelAndView = new ModelAndView("register_user");
+		ModelAndView modelAndView = new ModelAndView("LogIn/register_user");
 		User user = new User();
 		modelAndView.addObject("user", user);
 		modelAndView.addObject("previousUrl", "LogIn/login");
