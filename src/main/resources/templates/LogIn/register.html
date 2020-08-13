@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<head>
+	<meta charset="UTF-8">
+	<link th:href="@{/css/register.css}" rel="stylesheet">
+	<script th:src="@{/js/register.js}"></script>
+	<script th:src="@{/js/user.js}"></script>
+	<title>회원 가입</title>
+</head>
+<body>
+	<form id="MemberInfo" th:action="@{/saveMember}" method="post"  onsubmit="return onFormSubmission(this);">
+		<div id="user-wrap">
+			<label>
+				<input type="radio" name="user" th:value="patient" onclick="doDisplay(this.value)" checked>
+				<div class="user">
+					<img th:src="@{/images/patient.png}">
+					<span id="patient">환자</span>
+				</div>
+			</label>
+			<label>
+				<input type="radio" name="user" th:value="caregiver" onclick="doDisplay(this.value)">
+				<div class="user">
+					<img th:src="@{/images/protector.png}">
+					<span id="caregiver">보호자</span>
+				</div>
+			</label>
+		</div>
+		<div>
+			<div class="input-container">
+				<span class="label">아이디</span>
+				<input type="text" name="id">
+			</div>
+			<div class="input-container">
+				<span class="label">비밀번호</span>
+				<input type="password" name="password">
+			</div>
+			<div class="input-container">
+				<span class="label">이름</span>
+				<input type="text" name="name">
+			</div>
+			<div class="input-container patient-only">
+				<span class="label">생년월일</span>
+				<input type="text" name="birthdate">
+			</div>
+			<div class="input-container patient-only">
+				<span class="label">성별</span>
+				<div class="sex">
+					<label>
+						<input type="radio" name="sex" value="MALE">
+						<span id="male">남자</span>
+					</label>
+					<label>
+						<input type="radio" name="sex" value="FEMALE">
+						<span id="female">여자</span>
+					</label>
+				</div>
+			</div>
+			<div class="input-container">
+				<span class="label">연락처<br>(본인)</span>
+				<input type="text" name="contact">
+			</div>
+			<div class="input-container patient-only">
+				<span class="label">연락처<br>(보호자)</span>
+				<input type="text" name="caregiver">
+			</div>
+		</div>
+		<input type="submit" value="회원가입">
+	</form>
+</body>
+</html>

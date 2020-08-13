@@ -22,7 +22,6 @@ public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	private final UserService userService;
 
-
 	public LoginController(UserService userService) {
 		this.userService = userService;
 	}

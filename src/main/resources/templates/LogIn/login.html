@@ -2,20 +2,31 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <head>
 	<meta charset="UTF-8">
+	<link th:href="@{/css/login.css}" rel="stylesheet">
 	<title>로그인 페이지</title>
 </head>
 <body>
-	<div th:if="${param.error}">
-		Invalid username and password.
+	<div id="body">
+		<img id="img-login" th:src="@{/images/withus.png}"/>
+		<form id="auto-login">
+			<label><input th:type="checkbox">자동 로그인</label>
+		</form>
+		<div th:if="${param.error}">
+			Invalid username and password.
+		</div>
+		<div th:if="${param.logout}">
+			You have been logged out.
+		</div>
+		<form id="loginInfo" th:action="@{/login-process}" method="post">
+			<div>
+				<div id="id"><label> 아이디: <input type="text" name="username"/> </label></div>
+				<div><label> 비밀번호: <input type="password" name="password"/> </label></div>
+			</div>
+			<div id="button-area">
+				<input type="submit" value="로그인"/>
+				<input type="button" value="회원가입" onclick="location.href='/registerUser'">
+			</div>
+		</form>
 	</div>
-	<div th:if="${param.logout}">
-		You have been logged out.
-	</div>
-	<form th:action="@{/login-process}" method="post">
-		<div><label> User Name : <input type="text" name="username"/> </label></div>
-		<div><label> Password: <input type="password" name="password"/> </label></div>
-		<div><input type="submit" value="Sign In"/></div>
-	</form>
-	<a th:href="@{/registerUser}">회원가입</a>
 </body>
 </html>

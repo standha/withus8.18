@@ -1,5 +1,5 @@
 server:
-  port: 80
+  port: 8080
   shutdown: graceful
 
 spring:
@@ -20,5 +20,4 @@ spring:
 
 logging:
   file:
-    path: /home/withus/logs
-    name: withus.log
+    name: /home/withus/logs/withus.log
