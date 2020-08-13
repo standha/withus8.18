@@ -1,4 +1,4 @@
-package com.bluecore.withus.configuration;
+package com.bluecore.withus.auth;
 
 import java.util.ArrayList;
 
