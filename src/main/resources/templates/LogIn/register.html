@@ -45,7 +45,7 @@
 				<span class="label">성별</span>
 					<div th:each="state : ${T(com.bluecore.withus.entity.User.Sex).values()}">
 						<label>
-							<input type="radio" name="sex" th:value="${state}" onclick="checkedRadio(this.value)">
+							<input type="radio" name="sex" th:value="${state}">
 							<span th:id="${state}" th:text="${state==T(com.bluecore.withus.entity.User.Sex).MALE ? '남자':'여자'}"></span>
 						</label>
 					</div>

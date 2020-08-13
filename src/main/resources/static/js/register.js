@@ -35,13 +35,13 @@ function onFormSubmission(form) {
 
 	if(id.search(/\s/) !== -1){
 		alert("아이디가 공백입니다.");
-	}/* else if (password.search(/\s/) !== -1){
+	/*} else if (password.search(/\s/) !== -1){
 		alert("비밀번호가 공백입니다.");
 	} else if (name.search(/\s/) !== -1){
 		alert("이름이 공백입니다.");
 	} else if (contact.search(/\s/) !== -1){
 		alert("연락처가 공백입니다.");
-	}*/ else {
+	*/} else {
 		fetch(url, options)
 		.then(response => response.json())
 		.then(data => {
