@@ -5,8 +5,6 @@ import java.time.Month;
 import java.time.Year;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bluecore.withus.auth.AuthenticationFacade;
 import com.bluecore.withus.dto.Result;
 import com.bluecore.withus.entity.User;
 import com.bluecore.withus.entity.alarms.Appointment;
@@ -27,14 +26,14 @@ import com.bluecore.withus.service.UserService;
 import com.bluecore.withus.util.Utility;
 
 @Controller
-public class AlarmController {
-	private static final Logger logger = LoggerFactory.getLogger(AlarmController.class);
-
+public class AlarmController extends BaseController {
 	private final UserService userService;
 	private final AlarmService alarmService;
 
 	@Autowired
-	public AlarmController(UserService userService, AlarmService alarmService) {
+	public AlarmController(AuthenticationFacade authenticationFacade, UserService userService, AlarmService alarmService) {
+		super(authenticationFacade);
+
 		this.userService = userService;
 		this.alarmService = alarmService;
 	}
@@ -42,7 +41,7 @@ public class AlarmController {
 	@GetMapping("/alarm")
 	public ModelAndView getAlarms() {
 		ModelAndView modelAndView = new ModelAndView("alarm/alarm");
-		User user = userService.getUserById("pantera");
+		User user = userService.getUserById(getUsername());
 
 		modelAndView.addObject("user", user);
 		modelAndView.addObject("previousUrl", "/home");
@@ -53,7 +52,7 @@ public class AlarmController {
 	@GetMapping("/pill")
 	public ModelAndView getPill() {
 		ModelAndView modelAndView = new ModelAndView("alarm/pill");
-		User user = userService.getUserById("pantera");
+		User user = userService.getUserById(getUsername());
 
 		Pill pill = alarmService.getPill(user);
 
@@ -66,7 +65,7 @@ public class AlarmController {
 	@PostMapping(value = "/pill", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Result<Pill> postPill(@RequestBody Pill pill) {
-		User user = userService.getUserById("pantera");
+		User user = userService.getUserById(getUsername());
 		pill.setUser(user);
 
 		Result.Code code;
@@ -89,7 +88,7 @@ public class AlarmController {
 	@GetMapping("/appointments")
 	public ModelAndView getAppointments(@RequestParam(required = false) Integer year, @RequestParam(required = false) Integer month) {
 		ModelAndView modelAndView = new ModelAndView("alarm/appointments");
-		User user = userService.getUserById("pantera");
+		User user = userService.getUserById(getUsername());
 
 		List<Appointment> appointments;
 		if (year == null || month == null) {
@@ -107,7 +106,7 @@ public class AlarmController {
 	@GetMapping(value = "/appointment/{dateString}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Result<Appointment> getAppointment(@PathVariable String dateString) {
-		User user = userService.getUserById("pantera");
+		User user = userService.getUserById(getUsername());
 
 		LocalDate date = Utility.parseDate(dateString);
 
@@ -134,7 +133,7 @@ public class AlarmController {
 	@PostMapping("/appointment")
 	@ResponseBody
 	public Result<Appointment> postAppointment(@RequestBody Appointment appointment) {
-		User user = userService.getUserById("pantera");
+		User user = userService.getUserById(getUsername());
 		appointment.setUser(user);
 
 		Result.Code code;
