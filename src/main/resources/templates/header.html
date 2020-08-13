@@ -1,9 +1,12 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="kr">
-<link th:href="@{/css/header.css}" rel="stylesheet">
 <div id="header">
-	<span><a id="helper" href="javascript: alert('도우미');">도우미</a></span>
-	<span><a id="disease-information" href="javascript: alert('질환정보');">질환정보</a></span>
-	<span>
+	<button id="helper" onclick="alert('도우미');">
+		<img th:src="@{/images/helper.png}"/>
+		<span>도우미</span>
+	</button>
+	<button id="disease-information" onclick="alert('질환정보');">질환정보</button>
+	<button id="user">
+		<img th:src="@{/images/user.png}"/>
 		<a th:if="${previousUrl != null}" th:href="${previousUrl}">!뒤로가기 그림!</a>
-	</span>
+	</button>
 </div>

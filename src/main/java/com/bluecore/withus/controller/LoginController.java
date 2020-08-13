@@ -41,26 +41,6 @@ public class LoginController {
 	@PostMapping(value = "/saveMember", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public User putMember(@RequestBody User user) {
-
 		return userService.saveUser(user);
-
 	}
-/*	@PostMapping({"/saveMember"})
-	public ModelAndView putMember(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView modelAndView = new ModelAndView("LogIn/login");
-
-		String id = request.getParameterMap().get("id");
-		String password =request.getParameterMap().get("password").toString();
-		String contact = request.getParameterMap().get("contact").toString();
-
-		User user = User.builder()
-			.setId(id)
-			.setPassword(password)
-			.setContact(contact).createUser();
-
-		userService.saveUser(user);
-
-		return modelAndView;
-	}*/
-
 }
