@@ -5,7 +5,13 @@ function onFormSubmission(form) {
 	const contact = form.querySelector("input[name=contact]").value;
 	const birthdate = form.querySelector("input[name=birthdate]").value;
 	const sex = form.querySelector("input[name=sex]:checked").value;
-	/*const caregiver = form.querySelector("input[name=caregiver]").value;*/
+	let caregiver;
+
+	if (form.querySelector("input[name=caregiver]").value.search(/\s/) !== -1) {
+		caregiver = null;
+	} else {
+		caregiver = form.querySelector("input[name=caregiver]").value;
+	}
 
 	const body = {
 		id: id,
@@ -13,8 +19,8 @@ function onFormSubmission(form) {
 		name: name,
 		contact: contact,
 		birthdate: birthdate,
-		sex: sex
-		/*caregiver: caregiver*/
+		sex: sex,
+		caregiver: caregiver
 	};
 
 	const url = form.action;
@@ -27,7 +33,7 @@ function onFormSubmission(form) {
 		body: JSON.stringify(body)
 	};
 
-	if(id.search(/\s/) != -1){
+	if(id.search(/\s/) !== -1){
 		alert("아이디가 공백입니다.");
 	}/* else if (password.search(/\s/) !== -1){
 		alert("비밀번호가 공백입니다.");
@@ -40,10 +46,10 @@ function onFormSubmission(form) {
 		.then(response => response.json())
 		.then(data => {
 			console.log(data);
-			if (data.code == 'OK') {
+			if (data.code === 'OK') {
 				window.location.href = "/home";
 				alert("정상 적으로 회원 가입 되었습니다.");
-			} else if (data.code == 'ERROR_DUPLICATE_ID'){
+			} else if (data.code === 'ERROR_DUPLICATE_ID'){
 				alert("이미 존재하는 아이디 입니다.");
 			} else {
 				alert("회원 가입 실패");
@@ -52,4 +58,19 @@ function onFormSubmission(form) {
 	}
 
 	return false;
+}
+
+function doDisplay(user) {
+	console.log(user)
+	var elems = document.getElementsByClassName("patient-only");
+
+	if(user === 'caregiver') {
+		for(var i=0; i<elems.length; i++) {
+			elems[i].style.display = 'none'
+		}
+	} else {
+		for(var i=0; i<elems.length; i++) {
+			elems[i].style.display = 'grid'
+		}
+	}
 }

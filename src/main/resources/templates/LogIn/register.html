@@ -4,11 +4,10 @@
 	<meta charset="UTF-8">
 	<link th:href="@{/css/register.css}" rel="stylesheet">
 	<script th:src="@{/js/register.js}"></script>
-	<script th:src="@{/js/user.js}"></script>
 	<title>회원 가입</title>
 </head>
 <body>
-	<form id="MemberInfo" th:action="@{/saveMember}" method="post"  onsubmit="return onFormSubmission(this);">
+	<form id="MemberInfo" th:action="@{/saveUser}" method="post"  onsubmit="return onFormSubmission(this);">
 		<div id="user-wrap">
 			<label>
 				<input type="radio" name="user" th:value="patient" onclick="doDisplay(this.value)" checked>
@@ -40,31 +39,27 @@
 			</div>
 			<div class="input-container patient-only">
 				<span class="label">생년월일</span>
-				<input type="text" name="birthdate">
+				<input type="date" name="birthdate">
 			</div>
 			<div class="input-container patient-only">
 				<span class="label">성별</span>
-				<div class="sex">
-					<label>
-						<input type="radio" name="sex" value="MALE">
-						<span id="male">남자</span>
-					</label>
-					<label>
-						<input type="radio" name="sex" value="FEMALE">
-						<span id="female">여자</span>
-					</label>
-				</div>
+					<div th:each="state : ${T(com.bluecore.withus.entity.User.Sex).values()}">
+						<label>
+							<input type="radio" name="sex" th:value="${state}" onclick="checkedRadio(this.value)">
+							<span th:id="${state}" th:text="${state==T(com.bluecore.withus.entity.User.Sex).MALE ? '남자':'여자'}"></span>
+						</label>
+					</div>
 			</div>
 			<div class="input-container">
 				<span class="label">연락처<br>(본인)</span>
-				<input type="text" name="contact">
+				<input type="number" name="contact">
 			</div>
 			<div class="input-container patient-only">
 				<span class="label">연락처<br>(보호자)</span>
-				<input type="text" name="caregiver">
+				<input type="number" name="caregiver">
 			</div>
 		</div>
-		<input type="submit" value="회원가입">
+			<input type="submit" value="회원가입">
 	</form>
 </body>
 </html>

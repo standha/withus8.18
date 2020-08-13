@@ -44,7 +44,7 @@ label img {
     width: 130px;
 }
 
-[type=text] {
+[type=text],[type=password],[type=number],[type=date] {
     width: 400px;
     height: 70px;
     font-size: 40px;
@@ -72,7 +72,7 @@ label img {
     margin-top: 15px;
 }
 
-#male, #female {
+#MALE, #FEMALE {
     border: 1px solid black;
     border-radius: 15px;
     padding: 10px 40px;
