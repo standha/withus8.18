@@ -1,0 +1,28 @@
+#header {
+	height: 10%;
+	padding: 20px;
+	display: flex;
+	justify-content: space-between;
+	border-bottom: 10px solid #c0e4b2;
+}
+
+#header button, #header a {
+	border-radius: 15px;
+	font-size: 40px;
+	height: 70px;
+}
+
+#header #helper {
+	background: pink;
+	border: 3px solid red;
+}
+
+#header #disease-information {
+	background: none;
+	border: 3px solid black;
+}
+
+#header #user {
+	border: none;
+	background: none;
+}

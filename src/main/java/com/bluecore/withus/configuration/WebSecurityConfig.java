@@ -27,33 +27,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		this.userService = userService;
 	}
 
-	/*@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(customAuthenticationProvider);
-	}*/
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
 			.csrf()
-			.disable()
+				.disable()
 			.authorizeRequests()
-			.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
-			.permitAll()
-			.antMatchers("/registerUser", "/saveUser")
-			.permitAll()
-			.anyRequest()
-			.authenticated()
-			.and()
+				.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+					.permitAll()
+				.antMatchers("/registerUser", "/saveUser")
+					.permitAll()
+				.anyRequest()
+					.authenticated()
+					.and()
 			.formLogin()
-			.loginPage("/login")
-			.loginProcessingUrl("/login-process")
-			.defaultSuccessUrl("/home", true)
-			.permitAll()
-			.and()
+				.loginPage("/login")
+				.loginProcessingUrl("/login-process")
+				.defaultSuccessUrl("/home", true)
+				.permitAll()
+				.and()
 			.rememberMe()
-			.rememberMeParameter("remember-me")
-			.key(REMEMBER_ME_TOKEN)
-			.tokenValiditySeconds(Math.toIntExact(Duration.ofDays(30).getSeconds()));
+				.rememberMeParameter("remember-me")
+				.key(REMEMBER_ME_TOKEN)
+				.tokenValiditySeconds(Math.toIntExact(Duration.ofDays(30).getSeconds()));
 	}
 
 	@Bean

@@ -64,10 +64,13 @@ function setFinished(finished) {
 				} else {
 					alert("복약 처리에 실패했습니다.")
 				}
+			} else {
+				alert("복약 처리에 실패했습니다.")
 			}
 		});
 }
 
 function showHistory() {
-
+	const element = document.querySelector("#pill-history-get-action");
+	location.href = element.value;
 }

@@ -35,10 +35,6 @@ public class UserService implements UserDetailsService {
 	public User getUserById(String id) {
 		return userRepository.findById(id).orElse(null);
 	}
-	@Nullable
-	public User getUserByIdPassword(String id, String password) {
-		return userRepository.findByIdAndPassword(id, password).orElse(null);
-	}
 
 	@Nullable
 	public User getUserByContact(String contact) {

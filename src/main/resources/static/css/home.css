@@ -6,12 +6,8 @@ body {
 	text-decoration: none;
 }
 
-#header button, #body button, #body input {
+#body button, #body input {
 	border-radius: 15px;
-}
-
-#footer a {
-	text-decoration: none;
 }
 
 #body #level-1 {
@@ -68,34 +64,6 @@ body {
 	margin-bottom: 70px;
 }
 
-#header {
-	height: 10%;
-	padding: 20px;
-	display: flex;
-	justify-content: space-between;
-	border-bottom: 10px solid #c0e4b2;
-}
-
-#header button {
-	font-size: 40px;
-	height: 70px;
-}
-
-#header #helper {
-	background: pink;
-	border: 3px solid red;
-}
-
-#header #disease-information {
-	background: none;
-	border: 3px solid black;
-}
-
-#header #user {
-	border: none;
-	background: none;
-}
-
 #helper img {
 	width: 35px;
 }
@@ -103,25 +71,3 @@ body {
 #user img {
 	width: 80px;
 }
-
-#footer img {
-	width: 80px;
-}
-
-#footer {
-	height: 4%;
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	width: 100%;
-	padding: 15px 0;
-	text-align: center;
-	background: #ecfee3;
-	border: 2px solid #76d799;
-}
-
-#footer #with-withus {
-	font-size: 60px;
-	color: navy;
-}
-
