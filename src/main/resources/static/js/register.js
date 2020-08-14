@@ -67,6 +67,7 @@ function onFormSubmission(form) {
 			}
 		});
 	}
+
 	return false;
 }
 
@@ -84,14 +85,14 @@ function removeSpace(value) {
 
 function doDisplay(user) {
 	console.log(user)
-	var elems = document.getElementsByClassName("patient-only");
+	const elems = document.getElementsByClassName("patient-only");
 
-	if(user === 'CAREGIVER') {
-		for(var i=0; i<elems.length; i++) {
+	if (user === 'CAREGIVER') {
+		for (let i = 0; i < elems.length; i++) {
 			elems[i].style.display = 'none'
 		}
 	} else {
-		for(var i=0; i<elems.length; i++) {
+		for (let i = 0; i < elems.length; i++) {
 			elems[i].style.display = 'grid'
 		}
 	}
