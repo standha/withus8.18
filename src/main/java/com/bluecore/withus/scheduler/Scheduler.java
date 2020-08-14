@@ -12,8 +12,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.bluecore.withus.entity.alarms.Appointment;
-import com.bluecore.withus.entity.alarms.Pill;
+import com.bluecore.withus.entity.alarm.Appointment;
+import com.bluecore.withus.entity.alarm.Pill;
 import com.bluecore.withus.service.AlarmService;
 
 @Component

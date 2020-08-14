@@ -12,29 +12,53 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import com.bluecore.withus.entity.User;
-import com.bluecore.withus.entity.alarms.Appointment;
-import com.bluecore.withus.entity.alarms.Pill;
-import com.bluecore.withus.repository.alarms.AppointmentRepository;
-import com.bluecore.withus.repository.alarms.PillRepository;
+import com.bluecore.withus.entity.alarm.Appointment;
+import com.bluecore.withus.entity.alarm.Pill;
+import com.bluecore.withus.entity.alarm.PillHistory;
+import com.bluecore.withus.repository.alarm.AppointmentRepository;
+import com.bluecore.withus.repository.alarm.PillHistoryRepository;
+import com.bluecore.withus.repository.alarm.PillRepository;
 
 @Service
 public class AlarmService {
 	private final PillRepository pillRepository;
+	private final PillHistoryRepository pillHistoryRepository;
 	private final AppointmentRepository appointmentRepository;
 
 	@Autowired
-	public AlarmService(PillRepository pillRepository, AppointmentRepository appointmentRepository) {
+	public AlarmService(PillRepository pillRepository, PillHistoryRepository pillHistoryRepository, AppointmentRepository appointmentRepository) {
 		this.pillRepository = pillRepository;
+		this.pillHistoryRepository = pillHistoryRepository;
 		this.appointmentRepository = appointmentRepository;
 	}
 
+	@Nullable
+	public Pill getPillById(long id) {
+		return pillRepository.findById(id).orElse(null);
+	}
 	@NonNull
 	public List<Pill> getEnabledPillsByTime(LocalTime time) {
 		return pillRepository.findAllByEnabledIsTrueAndTime(time);
 	}
 	@Nullable
-	public Pill getPill(User user) {
+	public Pill getPillByUser(User user) {
 		return pillRepository.findTopByUserOrderByIdDesc(user).orElse(null);
+	}
+
+	@NonNull
+	public List<PillHistory> getFinishedPillHistoriesByUser(User user) {
+		return pillHistoryRepository.findAllByFinishedIsTrueAndPillUserOrderByDate(user);
+	}
+	@NonNull
+	public List<PillHistory> getFinishedPillHistoriesByUserYearMonth(User user, Year year, Month month) {
+		LocalDate start = LocalDate.of(year.getValue(), month.getValue(), 1);
+		LocalDate end = start.withDayOfMonth(start.lengthOfMonth());
+
+		return pillHistoryRepository.findAllByFinishedIsTrueAndPillUserAndDateBetweenOrderByDate(user, start, end);
+	}
+	@Nullable
+	public PillHistory getPillHistoryByUserDate(User user, LocalDate date) {
+		return pillHistoryRepository.findTopByPillUserAndDateOrderByIdDesc(user, date).orElse(null);
 	}
 
 	/**
@@ -42,7 +66,7 @@ public class AlarmService {
 	 */
 	@NonNull
 	public List<Appointment> getAppointments(User user) {
-		return appointmentRepository.findAllByUser(user);
+		return appointmentRepository.findAllByUserOrderByDateAscTimeAsc(user);
 	}
 
 	/**
@@ -62,12 +86,12 @@ public class AlarmService {
 	 */
 	@NonNull
 	public List<Appointment> getAppointments(User user, LocalDate startInclusive, LocalDate endInclusive) {
-		return appointmentRepository.findAllByUserAndDateIsBetween(user, startInclusive, endInclusive);
+		return appointmentRepository.findAllByUserAndDateIsBetweenOrderByDateAscTimeAsc(user, startInclusive, endInclusive);
 	}
 
 	@NonNull
 	public List<Appointment> getEnabledAppointmentsByDate(LocalDate date) {
-		return appointmentRepository.findAllByEnabledIsTrueAndDate(date);
+		return appointmentRepository.findAllByEnabledIsTrueAndDateOrderByTime(date);
 	}
 
 	@NonNull
@@ -82,6 +106,10 @@ public class AlarmService {
 
 	public Pill upsertPill(Pill pill) {
 		return pillRepository.save(pill);
+	}
+
+	public PillHistory upsertPillHistory(PillHistory pillHistory) {
+		return pillHistoryRepository.save(pillHistory);
 	}
 
 	public Appointment upsertAppointment(Appointment appointment) {

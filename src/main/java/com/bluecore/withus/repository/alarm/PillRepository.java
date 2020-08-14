@@ -1,4 +1,4 @@
-package com.bluecore.withus.repository.alarms;
+package com.bluecore.withus.repository.alarm;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -6,11 +6,13 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bluecore.withus.entity.User;
-import com.bluecore.withus.entity.alarms.Pill;
+import com.bluecore.withus.entity.alarm.Pill;
 
+@Repository
 public interface PillRepository extends JpaRepository<Pill, Long> {
 	@Transactional(readOnly = true)
 	@NonNull

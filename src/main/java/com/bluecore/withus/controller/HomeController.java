@@ -14,19 +14,15 @@ import com.bluecore.withus.service.UserService;
 
 @Controller
 public class HomeController extends BaseController{
-	private final UserService userService;
-
 	@Autowired
 	public HomeController(AuthenticationFacade authenticationFacade, UserService userService) {
-		super(authenticationFacade);
-
-		this.userService = userService;
+		super(userService, authenticationFacade);
 	}
 
 	@GetMapping({ "/home" })
 	public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView modelAndView = new ModelAndView("home");
-		User user = userService.getUserById(getUsername());
+		User user = getUser();
 		modelAndView.addObject("user", user);
 
 		return modelAndView;
