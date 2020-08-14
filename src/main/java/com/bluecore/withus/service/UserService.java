@@ -26,6 +26,11 @@ public class UserService {
 	}
 
 	@Nullable
+	public User getUserByContact(String contact) {
+		return userRepository.findByContact(contact).orElse(null);
+	}
+
+	@Nullable
 	public User saveUser(User user) {
 		return userRepository.save(user);
 	}
