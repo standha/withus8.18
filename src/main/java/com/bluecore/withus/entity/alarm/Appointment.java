@@ -1,4 +1,4 @@
-package com.bluecore.withus.entity.alarms;
+package com.bluecore.withus.entity.alarm;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -37,11 +37,11 @@ public class Appointment {
 	@Column(columnDefinition = "BIT(1)")
 	private boolean enabled;
 
-	@Column
+	@Column(columnDefinition = "DATE")
 	@JsonIgnore
 	private LocalDate date;
 
-	@Column
+	@Column(columnDefinition = "TIME")
 	@JsonIgnore
 	private LocalTime time;
 

@@ -1,4 +1,4 @@
-package com.bluecore.withus.entity.alarms;
+package com.bluecore.withus.entity.alarm;
 
 import java.time.LocalTime;
 import java.util.Objects;
@@ -14,6 +14,7 @@ import javax.persistence.Table;
 
 import com.bluecore.withus.configuration.JsonIgnore;
 import com.bluecore.withus.entity.User;
+import com.bluecore.withus.util.Utility;
 
 @Entity
 @Table(indexes = @Index(columnList = "enabled,breakfast,lunch,dinner"))
@@ -26,18 +27,21 @@ public class Pill {
 	@JoinColumn(name = "user_id")
 	private User user;
 
+	@Column(columnDefinition = "VARCHAR(64)")
+	private String name;
+
 	@Column(columnDefinition = "BIT(1)")
 	private boolean enabled;
 
-	@Column
+	@Column(columnDefinition = "TIME")
 	@JsonIgnore
 	private LocalTime breakfast;
 
-	@Column
+	@Column(columnDefinition = "TIME")
 	@JsonIgnore
 	private LocalTime lunch;
 
-	@Column
+	@Column(columnDefinition = "TIME")
 	@JsonIgnore
 	private LocalTime dinner;
 
@@ -55,8 +59,9 @@ public class Pill {
 	}
 
 	public Pill() { }
-	private Pill(User user, boolean enabled, LocalTime breakfast, LocalTime lunch, LocalTime dinner) {
+	private Pill(User user, String name, boolean enabled, LocalTime breakfast, LocalTime lunch, LocalTime dinner) {
 		this.user = user;
+		this.name = name;
 		this.enabled = enabled;
 		this.breakfast = breakfast;
 		this.lunch = lunch;
@@ -65,6 +70,7 @@ public class Pill {
 
 	public long getId() { return id; }
 	public User getUser() { return user; }
+	public String getName() { return name; }
 	public boolean isEnabled() { return enabled; }
 	public LocalTime getBreakfast() { return breakfast; }
 	public LocalTime getLunch() { return lunch; }
@@ -72,12 +78,17 @@ public class Pill {
 
 	public void setUser(User user) { this.user = user; }
 
+	public String getBreakfastString() { return Utility.format(breakfast); }
+	public String getLunchString() { return Utility.format(lunch); }
+	public String getDinnerString() { return Utility.format(dinner); }
+
 	public static Builder builder() {
 		return new Builder();
 	}
 
 	public static class Builder {
 		private User user;
+		private String name;
 		private boolean enabled;
 		private LocalTime breakfast;
 		private LocalTime lunch;
@@ -85,6 +96,10 @@ public class Pill {
 
 		public Builder setUser(User user) {
 			this.user = user;
+			return this;
+		}
+		public Builder setName(String name) {
+			this.name = name;
 			return this;
 		}
 		public Builder setEnabled(boolean enabled) {
@@ -103,8 +118,9 @@ public class Pill {
 			this.dinner = dinner;
 			return this;
 		}
+
 		public Pill createPill() {
-			return new Pill(user, enabled, breakfast, lunch, dinner);
+			return new Pill(user, name, enabled, breakfast, lunch, dinner);
 		}
 	}
 }

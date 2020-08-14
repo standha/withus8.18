@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
@@ -25,10 +27,14 @@ public class User implements Serializable {
 	protected String id;
 
 	@Column(columnDefinition = "VARCHAR(255) NOT NULL")
-	protected String password;
+	private String password;
+
+	@Column(columnDefinition = "INT(11)")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer ordinal;
 
 	@Column(columnDefinition = "VARCHAR(32) NOT NULL", length = 32)
-	protected String name;
+	private String name;
 
 	@Column(columnDefinition = "VARCHAR(32) NOT NULL", length = 32, unique = true)
 	@NonNull
@@ -41,7 +47,7 @@ public class User implements Serializable {
 	@Column(columnDefinition = "VARCHAR(6)", length = 6)
 	@Enumerated(EnumType.STRING)
 	@Nullable
-	private Sex sex;
+	private Gender gender;
 
 	@Column(columnDefinition = "VARCHAR(16) NOT NULL", length = 16)
 	@Enumerated(EnumType.STRING)
@@ -53,13 +59,14 @@ public class User implements Serializable {
 	private User caregiver;
 
 	public User() { }
-	private User(@NonNull String id, String password, String name, @NonNull String contact, @Nullable LocalDate birthdate, @Nullable Sex sex, Type type, @Nullable User caregiver) {
+	private User(@NonNull String id, String password, Integer ordinal, String name, @NonNull String contact, @Nullable LocalDate birthdate, @Nullable Gender gender, Type type, @Nullable User caregiver) {
 		this.id = id;
 		this.password = password;
+		this.ordinal = ordinal;
 		this.name = name;
 		this.contact = contact;
 		this.birthdate = birthdate;
-		this.sex = sex;
+		this.gender = gender;
 		this.type = type;
 		this.caregiver = caregiver;
 	}
@@ -81,20 +88,21 @@ public class User implements Serializable {
 	@NonNull
 	public String getId() { return id; }
 	public String getPassword() { return password; }
+	public Integer getOrdinal() { return ordinal; }
 	public String getName() { return name; }
 	@NonNull
 	public String getContact() { return contact; }
 	@Nullable
 	public LocalDate getBirthdate() { return birthdate; }
 	@Nullable
-	public Sex getSex() { return sex; }
+	public Gender getGender() { return gender; }
 	public Type getType() { return type; }
 	@Nullable
 	public User getCaregiver() { return caregiver; }
 
 	public void setCaregiver(User user) { this.caregiver = user;}
 
-	public enum Sex {
+	public enum Gender {
 		MALE, FEMALE
 	}
 
@@ -109,10 +117,11 @@ public class User implements Serializable {
 	public static class Builder {
 		private String id;
 		private String password;
+		private Integer ordinal;
 		private String name;
 		private String contact;
 		private LocalDate birthdate;
-		private Sex sex;
+		private Gender gender;
 		private Type type;
 		private User caregiver;
 
@@ -122,6 +131,10 @@ public class User implements Serializable {
 		}
 		public Builder setPassword(String password) {
 			this.password = password;
+			return this;
+		}
+		public Builder setOrdinal(Integer ordinal) {
+			this.ordinal = ordinal;
 			return this;
 		}
 		public Builder setName(String name) {
@@ -136,8 +149,8 @@ public class User implements Serializable {
 			this.birthdate = birthdate;
 			return this;
 		}
-		public Builder setSex(Sex sex) {
-			this.sex = sex;
+		public Builder setGender(Gender gender) {
+			this.gender = gender;
 			return this;
 		}
 		public Builder setType(Type type) {
@@ -150,7 +163,7 @@ public class User implements Serializable {
 		}
 
 		public User createUser() {
-			return new User(id, password, name, contact, birthdate, sex, type, caregiver);
+			return new User(id, password, ordinal, name, contact, birthdate, gender, type, caregiver);
 		}
 	}
 }

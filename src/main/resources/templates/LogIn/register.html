@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <head>
@@ -43,10 +44,10 @@
 			</div>
 			<div class="input-container patient-only">
 				<span class="label">성별</span>
-					<div th:each="state : ${T(com.bluecore.withus.entity.User.Sex).values()}">
+					<div th:each="state : ${T(com.bluecore.withus.entity.User.Gender).values()}">
 						<label>
-							<input type="radio" name="sex" th:value="${state}">
-							<span th:id="${state}" th:text="${state==T(com.bluecore.withus.entity.User.Sex).MALE ? '남자':'여자'}"></span>
+							<input type="radio" name="gender" th:value="${state}">
+							<span th:id="${state}" th:text="${state==T(com.bluecore.withus.entity.User.Gender).MALE ? '남자':'여자'}"></span>
 						</label>
 					</div>
 			</div>

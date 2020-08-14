@@ -3,6 +3,7 @@ package com.bluecore.withus.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -22,6 +23,7 @@ public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	private final UserService userService;
 
+	@Autowired
 	public LoginController(UserService userService) {
 		this.userService = userService;
 	}
@@ -102,5 +104,4 @@ public class LoginController {
 			.setData(savedUser)
 			.createResult();
 	}
-
 }
