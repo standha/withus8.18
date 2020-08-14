@@ -26,7 +26,7 @@ body {
 #level-1 input {
 	width: 600px;
 	height: 70px;
-	border: 10px solid #C0E4B2;
+	border: 10px solid #c0e4b2;
 }
 
 #level-1 img {
@@ -73,7 +73,7 @@ body {
 	padding: 20px;
 	display: flex;
 	justify-content: space-between;
-	border-bottom: 10px solid #C0E4B2;
+	border-bottom: 10px solid #c0e4b2;
 }
 
 #header button {
@@ -116,8 +116,8 @@ body {
 	width: 100%;
 	padding: 15px 0;
 	text-align: center;
-	background: #ECFEE3;
-	border: 2px solid #76D799;
+	background: #ecfee3;
+	border: 2px solid #76d799;
 }
 
 #footer #with-withus {

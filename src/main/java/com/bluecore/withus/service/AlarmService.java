@@ -104,14 +104,17 @@ public class AlarmService {
 		return appointmentRepository.findTopByUserAndDateOrderByIdDesc(user, date).orElse(null);
 	}
 
+	@NonNull
 	public Pill upsertPill(Pill pill) {
 		return pillRepository.save(pill);
 	}
 
+	@NonNull
 	public PillHistory upsertPillHistory(PillHistory pillHistory) {
 		return pillHistoryRepository.save(pillHistory);
 	}
 
+	@NonNull
 	public Appointment upsertAppointment(Appointment appointment) {
 		return appointmentRepository.save(appointment);
 	}

@@ -1,46 +1,68 @@
 package com.bluecore.withus.configuration;
 
+import java.time.Duration;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import com.bluecore.withus.auth.CustomAuthenticationProvider;
+import com.bluecore.withus.auth.NoOpPasswordEncoder;
+import com.bluecore.withus.service.UserService;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	private final CustomAuthenticationProvider customAuthenticationProvider;
+	private static final String REMEMBER_ME_TOKEN = "THIS MUST BE KEPT SECRET AND MAYBE CHANGED";
+
+	private final UserService userService;
 
 	@Autowired
-	public WebSecurityConfig(CustomAuthenticationProvider customAuthenticationProvider) {
-		this.customAuthenticationProvider = customAuthenticationProvider;
+	public WebSecurityConfig(UserService userService) {
+		this.userService = userService;
 	}
 
-	@Override
+	/*@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(customAuthenticationProvider);
-	}
+	}*/
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
 			.csrf()
-				.disable()
+			.disable()
 			.authorizeRequests()
 			.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
-				.permitAll()
+			.permitAll()
 			.antMatchers("/registerUser", "/saveUser")
-				.permitAll()
+			.permitAll()
 			.anyRequest()
-				.authenticated()
-				.and()
+			.authenticated()
+			.and()
 			.formLogin()
-				.loginPage("/login")
-				.loginProcessingUrl("/login-process")
-				.defaultSuccessUrl("/home", true)
-				.permitAll();
+			.loginPage("/login")
+			.loginProcessingUrl("/login-process")
+			.defaultSuccessUrl("/home", true)
+			.permitAll()
+			.and()
+			.rememberMe()
+			.rememberMeParameter("remember-me")
+			.key(REMEMBER_ME_TOKEN)
+			.tokenValiditySeconds(Math.toIntExact(Duration.ofDays(30).getSeconds()));
+	}
+
+	@Bean
+	public AuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+		// TODO: NoOpPasswordEncoder just does nothing for convenience.
+		authenticationProvider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+		authenticationProvider.setUserDetailsService(userService);
+
+		return authenticationProvider;
 	}
 }
