@@ -5,10 +5,12 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+import org.springframework.lang.Nullable;
+
 public class Utility {
 	public static final String DATE_FORMAT = "yyyy-MM-dd";
 	public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_FORMAT);
-	public static final String TIME_FORMAT = "hh:mm:ss";
+	public static final String TIME_FORMAT = "HH:mm:ss";
 	public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_FORMAT);
 	public static final String DATE_TIME_FORMAT = DATE_FORMAT + TIME_FORMAT;
 	public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
@@ -20,4 +22,8 @@ public class Utility {
 	public static String format(LocalDate date) { return date.format(DATE_FORMATTER); }
 	public static String format(LocalTime date) { return date.format(TIME_FORMATTER); }
 	public static String format(LocalDateTime date) { return date.format(DATE_TIME_FORMATTER); }
+
+	public static boolean nullOrEmptyOrSpace(@Nullable String sentence) {
+		return (sentence == null || sentence.trim().isEmpty());
+	}
 }
