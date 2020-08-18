@@ -18,6 +18,7 @@ import com.bluecore.withus.dto.Result;
 import com.bluecore.withus.entity.User;
 import com.bluecore.withus.exception.UnexpectedEnumValueException;
 import com.bluecore.withus.service.UserService;
+import com.bluecore.withus.util.Utility;
 
 @Controller
 public class LoginController {
@@ -50,62 +51,72 @@ public class LoginController {
 	@PostMapping(value = "/saveUser", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Result<User> putMember(@RequestBody User user) {
-		/*
-		 * TODO : 날짜 전화번호(보호자,사용자) 포맷 형식 확인하기
-		 */
 
 		User savedUser = null;
 		Result.Code code = Result.Code.ERROR;
-		try {
-			User existId = userService.getUserById(user.getId());
-			User existContact = userService.getUserByContact(user.getContact());
 
-			if (existId == null && existContact == null) {
-				User.Type userType = user.getType();
+		if (!isMissingMandatories(user)) {
+			try {
+				User existId = userService.getUserById(user.getId());
+				User existContact = userService.getUserByContact(user.getContact());
 
-				switch (userType) {
-					case CAREGIVER:
-						savedUser = userService.upsertUserEncodingPassword(user);
-						code = Result.Code.OK;
-						break;
-					case PATIENT:
-						User caregiver = user.getCaregiver();
-						if (caregiver == null) {
+				if (existId == null && existContact == null) {
+					User.Type userType = user.getType();
+
+					switch (userType) {
+						case CAREGIVER:
 							savedUser = userService.upsertUserEncodingPassword(user);
 							code = Result.Code.OK;
-						} else {
-							User existCareGiver = userService.getUserByContact(user.getCaregiver().getContact());
-							if (existCareGiver == null) {
-								code = Result.Code.ERROR_NO_EXIST_CAREGIVER;
-							} else {
-								user.setCaregiver(existCareGiver);
+							break;
+						case PATIENT:
+							User caregiver = user.getCaregiver();
+							if (caregiver == null) {
 								savedUser = userService.upsertUserEncodingPassword(user);
 								code = Result.Code.OK;
+							} else {
+								User existCareGiver = userService.getUserByContact(user.getCaregiver().getContact());
+								if (existCareGiver == null) {
+									code = Result.Code.ERROR_NO_EXIST_CAREGIVER;
+								} else {
+									user.setCaregiver(existCareGiver);
+									savedUser = userService.upsertUserEncodingPassword(user);
+									code = Result.Code.OK;
+								}
 							}
-						}
-
-						break;
-					default:
-						throw new UnexpectedEnumValueException(userType, User.Type.class);
+							break;
+						default:
+							throw new UnexpectedEnumValueException(userType, User.Type.class);
+					}
 				}
-			}
 
-			if (existContact != null) {
-				savedUser = existContact;
-				code = Result.Code.ERROR_DUPLICATE_CONTACT;
+				if (existContact != null) {
+					savedUser = existContact;
+					code = Result.Code.ERROR_DUPLICATE_CONTACT;
+				}
+				if (existId != null) {
+					savedUser = existId;
+					code = Result.Code.ERROR_DUPLICATE_ID;
+				}
+			} catch (Exception exception) {
+				logger.error(exception.getLocalizedMessage(), exception);
+				code = Result.Code.ERROR_DATABASE;
 			}
-			if (existId != null) {
-				savedUser = existId;
-				code = Result.Code.ERROR_DUPLICATE_ID;
-			}
-		} catch (Exception exception) {
-			logger.error(exception.getLocalizedMessage(), exception);
-			code = Result.Code.ERROR_DATABASE;
 		}
 
 		return Result.<User>builder()
 			.setCode(code)
 			.setData(savedUser)
 			.createResult();
+	}
+
+	public boolean isMissingMandatories(User user){
+
+		if (Utility.nullOrEmptyOrSpace(user.getId()) ||
+			Utility.nullOrEmptyOrSpace(user.getPassword()) ||
+			Utility.nullOrEmptyOrSpace(user.getName()) ||
+			Utility.nullOrEmptyOrSpace(user.getContact())) {
+			return true;
+		}
+		return false;
 	}
 }
