@@ -49,7 +49,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.rememberMe()
 				.rememberMeParameter("remember-me")
 				.key(REMEMBER_ME_TOKEN)
-				.tokenValiditySeconds(Math.toIntExact(Duration.ofDays(30).getSeconds()));
+				.tokenValiditySeconds(Math.toIntExact(Duration.ofDays(30).getSeconds()))
+				.userDetailsService(userService);
 	}
 
 	@Bean
