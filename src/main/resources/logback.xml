@@ -12,6 +12,7 @@
 			<onMismatch>DENY</onMismatch>
 		</filter>
 	</appender>
+
 	<appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${LOG_HOME}/withus.log</file>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -23,16 +24,17 @@
 			<onMismatch>DENY</onMismatch>
 		</filter>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>withus/%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>${LOG_HOME}/withus/%d{yyyy-MM-dd}.log</fileNamePattern>
 		</rollingPolicy>
 	</appender>
+
 	<appender name="sqlFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${LOG_HOME}/sql.log</file>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<pattern>${LOG_PATTERN}</pattern>
 		</encoder>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>sql/%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>${LOG_HOME}/sql/%d{yyyy-MM-dd}.log</fileNamePattern>
 		</rollingPolicy>
 	</appender>
 
