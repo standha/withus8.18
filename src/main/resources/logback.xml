@@ -6,7 +6,7 @@
 		<encoder>
 			<pattern>${LOG_PATTERN}</pattern>
 		</encoder>
-		<filter class="com.bluecore.withus.configuration.LevelEqualOrAboveFilter">
+		<filter class="withus.configuration.LevelEqualOrAboveFilter">
 			<level>INFO</level>
 			<onMatch>ACCEPT</onMatch>
 			<onMismatch>DENY</onMismatch>
@@ -18,7 +18,7 @@
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<pattern>${LOG_PATTERN}</pattern>
 		</encoder>
-		<filter class="com.bluecore.withus.configuration.LevelEqualOrAboveFilter">
+		<filter class="withus.configuration.LevelEqualOrAboveFilter">
 			<level>INFO</level>
 			<onMatch>ACCEPT</onMatch>
 			<onMismatch>DENY</onMismatch>
