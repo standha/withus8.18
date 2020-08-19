@@ -1,4 +1,4 @@
-package withus.controller;
+package withus.aspect;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -9,11 +9,13 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class ControllerAspect {
-	private static final Logger logger = LoggerFactory.getLogger(ControllerAspect.class);
+public class StatisticalAspect {
+	private static final Logger logger = LoggerFactory.getLogger(StatisticalAspect.class);
 
-	// TODO: 모든 GET request에 대해서만 처리 중
-	@Around("@annotation(org.springframework.web.bind.annotation.GetMapping)")
+	/**
+	 * Gets invoked around methods annotated with {@link withus.aspect.Statistical}.
+	 */
+	@Around("@annotation(withus.aspect.Statistical)")
 	public Object updateStatisticsAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 		Object result = null;
 		try {

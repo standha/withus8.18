@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
 import withus.dto.alarm.PillHistoryDto;
@@ -39,6 +40,7 @@ public class AlarmController extends BaseController {
 	}
 
 	@GetMapping("/alarm")
+	@Statistical
 	public ModelAndView getAlarm() {
 		ModelAndView modelAndView = new ModelAndView("alarm/alarm");
 		modelAndView.addObject("previousUrl", "/home");
@@ -47,6 +49,7 @@ public class AlarmController extends BaseController {
 	}
 
 	@GetMapping("/pill")
+	@Statistical
 	public ModelAndView getPill() {
 		ModelAndView modelAndView = new ModelAndView("alarm/pill");
 		User user = getUser();
@@ -147,6 +150,7 @@ public class AlarmController extends BaseController {
 	}
 
 	@GetMapping("/appointments")
+	@Statistical
 	public ModelAndView getAppointments(@RequestParam(required = false) Integer year, @RequestParam(required = false) Integer month) {
 		ModelAndView modelAndView = new ModelAndView("alarm/appointments");
 		User user = getUser();
