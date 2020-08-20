@@ -105,7 +105,7 @@ public class LoginController {
 		return Result.<User>builder()
 			.setCode(code)
 			.setData(savedUser)
-			.createResult();
+			.create();
 	}
 
 	public boolean isMissingMandatories(User user){

@@ -19,7 +19,7 @@ public class UserTest {
 			.setName("son")
 			.setContact("5678")
 			.setType(User.Type.CAREGIVER)
-			.createUser();
+			.create();
 
 		User caretaker = User.builder()
 			.setId("patient")
@@ -30,7 +30,7 @@ public class UserTest {
 			.setBirthdate(LocalDate.of(2000, 2, 28))
 			.setGender(User.Gender.MALE)
 			.setCaregiver(caregiver)
-			.createUser();
+			.create();
 
 		Assertions.assertThat(caretaker.getCaregiver().getContact()).isEqualTo("5678");
 	}
