@@ -14,6 +14,11 @@ spring:
   jpa:
     generate-ddl: true
     open-in-view: false
-    show-sql: true
+
+    # If you use a logging framework like log4j,
+    # you should always set that property to false
+    # because it gives you no benefit at all.
+    # https://stackoverflow.com/a/22977693/1986241
+    show-sql: false
     hibernate:
       ddl-auto: update
