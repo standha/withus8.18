@@ -184,7 +184,7 @@ public class User implements Serializable, UserDetails {
 			return this;
 		}
 
-		public User createUser() {
+		public User create() {
 			return new User(id, password, ordinal, name, contact, birthdate, gender, type, caregiver);
 		}
 	}

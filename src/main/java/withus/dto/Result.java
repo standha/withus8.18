@@ -28,7 +28,7 @@ public class Result<T> {
 			return this;
 		}
 
-		public Result<T> createResult() {
+		public Result<T> create() {
 			return new Result<>(code, data);
 		}
 	}

@@ -81,7 +81,7 @@ public class AlarmController extends BaseController {
 		return Result.<Pill>builder()
 			.setCode(code)
 			.setData(saved)
-			.createResult();
+			.create();
 	}
 
 	@GetMapping("/pill-history")
@@ -127,7 +127,7 @@ public class AlarmController extends BaseController {
 					pillHistory = PillHistory.builder()
 						.setPill(existingPill)
 						.setDate(today)
-						.createPillHistory();
+						.create();
 				}
 
 				pillHistory.setFinished(finished);
@@ -146,7 +146,7 @@ public class AlarmController extends BaseController {
 		return Result.<PillHistory>builder()
 			.setCode(code)
 			.setData(saved)
-			.createResult();
+			.create();
 	}
 
 	@GetMapping("/appointments")
@@ -192,7 +192,7 @@ public class AlarmController extends BaseController {
 		return Result.<Appointment>builder()
 			.setCode(code)
 			.setData(appointment)
-			.createResult();
+			.create();
 	}
 	@PostMapping("/appointment")
 	@ResponseBody
@@ -214,6 +214,6 @@ public class AlarmController extends BaseController {
 		return Result.<Appointment>builder()
 			.setCode(code)
 			.setData(saved)
-			.createResult();
+			.create();
 	}
 }
