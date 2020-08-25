@@ -24,10 +24,6 @@ build:
   artifacts:
     paths: [build/libs/*.jar]
     expire_in: 1 day
-  only:
-    changes:
-      - "*.gradle"
-      - gradle.properties
   cache:
     key: gradle-cache-key
     paths:
@@ -46,3 +42,7 @@ run:
       - .gradle/wrapper
       - .gradle/caches
     policy: pull
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: never
+    - when: manual
