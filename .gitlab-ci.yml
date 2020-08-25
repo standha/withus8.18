@@ -20,6 +20,7 @@ cache:
 build:
   stage: build
   script:
+    - echo $CI_PIPELINE_SOURCE
     - bash gradlew clean bootJar
   artifacts:
     paths: [build/libs/*.jar]
@@ -30,10 +31,16 @@ build:
       - .gradle/wrapper
       - .gradle/caches
     policy: push
+  rules:
+    - if: '$CI_PIPELINE_SOURCE !~ /web/i'
+      when: never
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+      when: always
 
 run:
   stage: run
   script:
+    - echo $CI_PIPELINE_SOURCE
     - bash /home/gitlab-runner/run-withus.sh
   timeout: 1 minute
   cache:
@@ -43,6 +50,7 @@ run:
       - .gradle/caches
     policy: pull
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_PIPELINE_SOURCE !~ /web/i'
       when: never
-    - when: manual
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+      when: always
