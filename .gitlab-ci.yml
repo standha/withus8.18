@@ -38,7 +38,7 @@ build:
 run:
   stage: run
   script:
-    - nohup bash /home/gitlab-runner/run-withus.sh
+    - bash /home/gitlab-runner/run-withus.sh
   timeout: 1 minute
   cache:
     key: gradle-cache-key
