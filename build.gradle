@@ -43,3 +43,6 @@ test {
 bootJar {
 	archiveFileName = "${archiveBaseName.get()}.${archiveExtension.get()}"
 }
+
+{
+}
