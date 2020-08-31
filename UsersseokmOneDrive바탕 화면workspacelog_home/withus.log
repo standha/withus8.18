@@ -1,0 +1,1217 @@
+00:00:49.194 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+00:00:49.196 [INFO ] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+00:00:49.202 [INFO ] o.s.web.servlet.DispatcherServlet - Completed initialization in 6 ms
+00:46:02.509 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 14684 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+00:46:02.511 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+00:46:02.918 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+00:46:02.961 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 31ms. Found 2 JPA repository interfaces.
+00:46:03.441 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+00:46:03.447 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+00:46:03.448 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+00:46:03.448 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+00:46:03.531 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+00:46:03.531 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 979 ms
+00:46:03.668 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+00:46:03.699 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+00:46:03.840 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+00:46:03.904 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+00:46:04.212 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+00:46:04.227 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+00:46:04.702 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+00:46:04.709 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+00:46:05.147 [INFO ] o.s.s.web.DefaultSecurityFilterChain - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2a120c88, org.springframework.security.web.context.SecurityContextPersistenceFilter@5e51ec2e, org.springframework.security.web.header.HeaderWriterFilter@7f6b57f2, org.springframework.security.web.authentication.logout.LogoutFilter@4a9bce99, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@2bf3ec4, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4c65d8e3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@145e958f, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@2bfa17b0, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@285bf5ac, org.springframework.security.web.session.SessionManagementFilter@52b32b70, org.springframework.security.web.access.ExceptionTranslationFilter@d3cce46, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@71b0289b]
+00:46:05.359 [INFO ] o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+00:46:05.402 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+00:46:05.415 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+00:46:05.424 [INFO ] withus.WithusApplication - Started WithusApplication in 3.183 seconds (JVM running for 3.744)
+00:46:12.644 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+00:46:12.644 [INFO ] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+00:46:12.649 [INFO ] o.s.web.servlet.DispatcherServlet - Completed initialization in 5 ms
+13:24:37.862 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 12376 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+13:24:37.865 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+13:24:38.493 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+13:24:38.560 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 56ms. Found 2 JPA repository interfaces.
+13:24:39.439 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+13:24:39.452 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+13:24:39.452 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+13:24:39.452 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+13:24:39.799 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+13:24:39.799 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1863 ms
+13:24:40.155 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+13:24:40.223 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+13:24:40.539 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+13:24:40.668 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+13:24:41.635 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 10744 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+13:24:41.638 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+13:24:42.093 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+13:24:42.150 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 49ms. Found 2 JPA repository interfaces.
+13:24:42.749 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+13:24:42.756 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+13:24:42.756 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+13:24:42.757 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+13:24:42.979 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+13:24:42.980 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1295 ms
+13:24:43.153 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+13:24:43.197 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+13:24:43.374 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+13:24:43.460 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+13:24:43.820 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+13:24:43.841 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+13:24:44.474 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+13:24:44.481 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+13:24:45.009 [INFO ] o.s.s.web.DefaultSecurityFilterChain - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2bfa17b0, org.springframework.security.web.context.SecurityContextPersistenceFilter@52b30054, org.springframework.security.web.header.HeaderWriterFilter@697a92af, org.springframework.security.web.authentication.logout.LogoutFilter@7afb9c93, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@20027c44, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@144ee8a7, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@699d96bc, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@785a4557, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@625264ed, org.springframework.security.web.session.SessionManagementFilter@16b76858, org.springframework.security.web.access.ExceptionTranslationFilter@56d822dc, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@26d028f7]
+13:24:45.252 [INFO ] o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+13:24:45.305 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+13:24:45.322 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+13:24:45.332 [INFO ] withus.WithusApplication - Started WithusApplication in 4.008 seconds (JVM running for 4.64)
+13:25:08.829 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+13:25:08.829 [INFO ] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+13:25:08.834 [INFO ] o.s.web.servlet.DispatcherServlet - Completed initialization in 5 ms
+13:47:54.501 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 12828 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+13:47:54.503 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+13:47:54.883 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+13:47:54.918 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 29ms. Found 2 JPA repository interfaces.
+13:47:55.378 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+13:47:55.383 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+13:47:55.384 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+13:47:55.384 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+13:47:55.460 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+13:47:55.461 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 920 ms
+13:47:55.592 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+13:47:55.623 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+13:47:55.777 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+13:47:55.843 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+13:47:56.128 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+13:47:56.143 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+13:47:56.573 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+13:47:56.579 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+13:47:56.962 [INFO ] o.s.s.web.DefaultSecurityFilterChain - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3ef0e576, org.springframework.security.web.context.SecurityContextPersistenceFilter@56d822dc, org.springframework.security.web.header.HeaderWriterFilter@7956f93a, org.springframework.security.web.authentication.logout.LogoutFilter@7bbdb220, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@782cc5fa, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@21b744ec, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@52b32b70, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@42cc420b, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@da34eb0, org.springframework.security.web.session.SessionManagementFilter@27bb74e1, org.springframework.security.web.access.ExceptionTranslationFilter@74707df8, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7433ca19]
+13:47:57.150 [INFO ] o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+13:47:57.188 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+13:47:57.201 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+13:47:57.210 [INFO ] withus.WithusApplication - Started WithusApplication in 2.954 seconds (JVM running for 3.467)
+13:48:04.300 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+13:48:04.301 [INFO ] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+13:48:04.305 [INFO ] o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
+13:51:03.735 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 14260 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+13:51:03.737 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+13:51:04.110 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+13:51:04.147 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 32ms. Found 2 JPA repository interfaces.
+13:51:04.634 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+13:51:04.640 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+13:51:04.641 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+13:51:04.641 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+13:51:04.727 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+13:51:04.728 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 951 ms
+13:51:04.859 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+13:51:04.889 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+13:51:05.043 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+13:51:05.114 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+13:51:05.411 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+13:51:05.426 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+13:51:05.904 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+13:51:05.910 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+13:51:06.309 [INFO ] o.s.s.web.DefaultSecurityFilterChain - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7df4709e, org.springframework.security.web.context.SecurityContextPersistenceFilter@30eedaa4, org.springframework.security.web.header.HeaderWriterFilter@21b744ec, org.springframework.security.web.authentication.logout.LogoutFilter@5df64b2a, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@5086623f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7f6b57f2, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@69ce14e6, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@da34eb0, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2bfa17b0, org.springframework.security.web.session.SessionManagementFilter@7ea3839e, org.springframework.security.web.access.ExceptionTranslationFilter@2e3cd732, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@70f4abc1]
+13:51:06.506 [INFO ] o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+13:51:06.547 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+13:51:06.559 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+13:51:06.568 [INFO ] withus.WithusApplication - Started WithusApplication in 3.104 seconds (JVM running for 3.607)
+14:03:04.199 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 14332 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+14:03:04.202 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+14:03:04.608 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+14:03:04.645 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 31ms. Found 2 JPA repository interfaces.
+14:03:05.151 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+14:03:05.156 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+14:03:05.157 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+14:03:05.157 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+14:03:05.248 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+14:03:05.248 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1008 ms
+14:03:05.402 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+14:03:05.441 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+14:03:05.617 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+14:03:05.683 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+14:03:05.972 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+14:03:05.987 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+14:03:06.436 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+14:03:06.442 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+14:03:06.844 [INFO ] o.s.s.web.DefaultSecurityFilterChain - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6c6379c, org.springframework.security.web.context.SecurityContextPersistenceFilter@d3cce46, org.springframework.security.web.header.HeaderWriterFilter@2ab8589a, org.springframework.security.web.authentication.logout.LogoutFilter@38a96593, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@563172d3, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@52b30054, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@382faf51, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@3ef0e576, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7df4709e, org.springframework.security.web.session.SessionManagementFilter@697a92af, org.springframework.security.web.access.ExceptionTranslationFilter@606d6d2c, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@78eafad]
+14:03:07.056 [INFO ] o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+14:03:07.099 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+14:03:07.113 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+14:03:07.122 [INFO ] withus.WithusApplication - Started WithusApplication in 3.178 seconds (JVM running for 3.703)
+14:03:16.500 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+14:03:16.500 [INFO ] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+14:03:16.504 [INFO ] o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
+14:27:02.087 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 15336 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+14:27:02.089 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+14:27:02.474 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+14:27:02.510 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 30ms. Found 2 JPA repository interfaces.
+14:27:02.976 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+14:27:02.981 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+14:27:02.981 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+14:27:02.981 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+14:27:03.061 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+14:27:03.061 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 935 ms
+14:27:03.197 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+14:27:03.228 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+14:28:41.182 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 8324 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+14:28:41.185 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+14:28:41.593 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+14:28:41.628 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 30ms. Found 2 JPA repository interfaces.
+14:28:42.096 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+14:28:42.102 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+14:28:42.102 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+14:28:42.102 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+14:28:42.181 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+14:28:42.181 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 957 ms
+14:28:42.315 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+14:28:42.344 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+14:28:42.492 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+14:28:42.561 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+14:28:42.866 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+14:28:42.881 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+14:28:43.398 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+14:28:43.404 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+14:28:43.812 [INFO ] o.s.s.web.DefaultSecurityFilterChain - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@678586f0, org.springframework.security.web.context.SecurityContextPersistenceFilter@5d08976a, org.springframework.security.web.header.HeaderWriterFilter@4a9bce99, org.springframework.security.web.authentication.logout.LogoutFilter@7adae08e, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@642c72cf, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@165d1d54, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@51132514, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@7686f701, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5ad6f98e, org.springframework.security.web.session.SessionManagementFilter@2905b568, org.springframework.security.web.access.ExceptionTranslationFilter@2c678c7b, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5aa6da2]
+14:28:44.005 [INFO ] o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+14:28:44.043 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+14:28:44.055 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+14:28:44.065 [INFO ] withus.WithusApplication - Started WithusApplication in 3.146 seconds (JVM running for 3.653)
+14:30:52.524 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 2680 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+14:30:52.526 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+14:30:52.984 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+14:30:53.020 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 31ms. Found 2 JPA repository interfaces.
+14:30:53.483 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+14:30:53.488 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+14:30:53.488 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+14:30:53.488 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+14:30:53.567 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+14:30:53.567 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1001 ms
+14:30:53.714 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+14:30:53.749 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+14:30:53.918 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+14:30:53.982 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+14:30:54.264 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+14:30:54.279 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+14:30:54.710 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+14:30:54.715 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+14:30:55.114 [INFO ] o.s.s.web.DefaultSecurityFilterChain - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@563172d3, org.springframework.security.web.context.SecurityContextPersistenceFilter@7956f93a, org.springframework.security.web.header.HeaderWriterFilter@65e620b0, org.springframework.security.web.authentication.logout.LogoutFilter@57bdceaa, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@59fea5f5, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@27bb74e1, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@d3cce46, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@782cc5fa, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5086623f, org.springframework.security.web.session.SessionManagementFilter@74707df8, org.springframework.security.web.access.ExceptionTranslationFilter@467af68c, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3e753289]
+14:30:55.304 [INFO ] o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+14:30:55.343 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+14:30:55.355 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+14:30:55.364 [INFO ] withus.WithusApplication - Started WithusApplication in 3.097 seconds (JVM running for 3.984)
+14:35:55.525 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 11428 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+14:35:55.528 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+14:35:56.007 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+14:35:56.045 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 32ms. Found 2 JPA repository interfaces.
+14:35:56.555 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+14:35:56.560 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+14:35:56.561 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+14:35:56.561 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+14:35:56.649 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+14:35:56.649 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1074 ms
+14:35:56.802 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+14:35:56.835 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+14:35:56.993 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+14:35:57.056 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+14:35:57.339 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+14:35:57.354 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+14:35:57.838 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+14:35:57.843 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+14:35:58.035 [WARN ] o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'webSecurityConfig' defined in file [C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main\withus\configuration\WebSecurityConfig.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userService' defined in file [C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main\withus\service\UserService.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'patientRepository' defined in withus.repository.PatientRepository defined in @EnableJpaRepositories declared on WithusApplication: Invocation of init method failed; nested exception is java.lang.IllegalArgumentException: Failed to create query for method public abstract java.util.Optional withus.repository.PatientRepository.findByPatientAndPassword(java.lang.String,java.lang.String)! No property patient found for type Tbl_patient! Did you mean 'patientId'?
+14:35:58.035 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+14:35:58.038 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+14:35:58.040 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+14:35:58.042 [INFO ] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+14:35:58.049 [INFO ] o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+14:35:58.058 [ERROR] o.s.boot.SpringApplication - Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'webSecurityConfig' defined in file [C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main\withus\configuration\WebSecurityConfig.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userService' defined in file [C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main\withus\service\UserService.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'patientRepository' defined in withus.repository.PatientRepository defined in @EnableJpaRepositories declared on WithusApplication: Invocation of init method failed; nested exception is java.lang.IllegalArgumentException: Failed to create query for method public abstract java.util.Optional withus.repository.PatientRepository.findByPatientAndPassword(java.lang.String,java.lang.String)! No property patient found for type Tbl_patient! Did you mean 'patientId'?
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:797)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:227)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1356)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1203)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:556)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:516)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:226)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:322)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:897)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:879)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:551)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:750)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1237)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
+	at withus.WithusApplication.main(WithusApplication.java:15)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userService' defined in file [C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main\withus\service\UserService.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'patientRepository' defined in withus.repository.PatientRepository defined in @EnableJpaRepositories declared on WithusApplication: Invocation of init method failed; nested exception is java.lang.IllegalArgumentException: Failed to create query for method public abstract java.util.Optional withus.repository.PatientRepository.findByPatientAndPassword(java.lang.String,java.lang.String)! No property patient found for type Tbl_patient! Did you mean 'patientId'?
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:797)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:227)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1356)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1203)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:556)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:516)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:226)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:322)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1307)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1227)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:884)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:788)
+	... 20 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'patientRepository' defined in withus.repository.PatientRepository defined in @EnableJpaRepositories declared on WithusApplication: Invocation of init method failed; nested exception is java.lang.IllegalArgumentException: Failed to create query for method public abstract java.util.Optional withus.repository.PatientRepository.findByPatientAndPassword(java.lang.String,java.lang.String)! No property patient found for type Tbl_patient! Did you mean 'patientId'?
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1794)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:594)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:516)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:226)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:322)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1307)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1227)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:884)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:788)
+	... 34 common frames omitted
+Caused by: java.lang.IllegalArgumentException: Failed to create query for method public abstract java.util.Optional withus.repository.PatientRepository.findByPatientAndPassword(java.lang.String,java.lang.String)! No property patient found for type Tbl_patient! Did you mean 'patientId'?
+	at org.springframework.data.jpa.repository.query.PartTreeJpaQuery.<init>(PartTreeJpaQuery.java:96)
+	at org.springframework.data.jpa.repository.query.JpaQueryLookupStrategy$CreateQueryLookupStrategy.resolveQuery(JpaQueryLookupStrategy.java:107)
+	at org.springframework.data.jpa.repository.query.JpaQueryLookupStrategy$CreateIfNotFoundQueryLookupStrategy.resolveQuery(JpaQueryLookupStrategy.java:218)
+	at org.springframework.data.jpa.repository.query.JpaQueryLookupStrategy$AbstractQueryLookupStrategy.resolveQuery(JpaQueryLookupStrategy.java:81)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.lookupQuery(QueryExecutorMethodInterceptor.java:99)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.lambda$mapMethodsToQuery$1(QueryExecutorMethodInterceptor.java:92)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.Iterator.forEachRemaining(Iterator.java:116)
+	at java.util.Collections$UnmodifiableCollection$1.forEachRemaining(Collections.java:1051)
+	at java.util.Spliterators$IteratorSpliterator.forEachRemaining(Spliterators.java:1801)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:482)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:708)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:499)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.mapMethodsToQuery(QueryExecutorMethodInterceptor.java:94)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.lambda$new$0(QueryExecutorMethodInterceptor.java:84)
+	at java.util.Optional.map(Optional.java:215)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.<init>(QueryExecutorMethodInterceptor.java:84)
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport.getRepository(RepositoryFactorySupport.java:331)
+	at org.springframework.data.repository.core.support.RepositoryFactoryBeanSupport.lambda$afterPropertiesSet$5(RepositoryFactoryBeanSupport.java:297)
+	at org.springframework.data.util.Lazy.getNullable(Lazy.java:212)
+	at org.springframework.data.util.Lazy.get(Lazy.java:94)
+	at org.springframework.data.repository.core.support.RepositoryFactoryBeanSupport.afterPropertiesSet(RepositoryFactoryBeanSupport.java:300)
+	at org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean.afterPropertiesSet(JpaRepositoryFactoryBean.java:144)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1790)
+	... 45 common frames omitted
+Caused by: org.springframework.data.mapping.PropertyReferenceException: No property patient found for type Tbl_patient! Did you mean 'patientId'?
+	at org.springframework.data.mapping.PropertyPath.<init>(PropertyPath.java:94)
+	at org.springframework.data.mapping.PropertyPath.create(PropertyPath.java:382)
+	at org.springframework.data.mapping.PropertyPath.create(PropertyPath.java:358)
+	at org.springframework.data.mapping.PropertyPath.lambda$from$0(PropertyPath.java:311)
+	at java.util.concurrent.ConcurrentMap.computeIfAbsent(ConcurrentMap.java:324)
+	at org.springframework.data.mapping.PropertyPath.from(PropertyPath.java:293)
+	at org.springframework.data.mapping.PropertyPath.from(PropertyPath.java:276)
+	at org.springframework.data.repository.query.parser.Part.<init>(Part.java:82)
+	at org.springframework.data.repository.query.parser.PartTree$OrPart.lambda$new$0(PartTree.java:251)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:175)
+	at java.util.Spliterators$ArraySpliterator.forEachRemaining(Spliterators.java:948)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:482)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:708)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:499)
+	at org.springframework.data.repository.query.parser.PartTree$OrPart.<init>(PartTree.java:252)
+	at org.springframework.data.repository.query.parser.PartTree$Predicate.lambda$new$0(PartTree.java:381)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:175)
+	at java.util.Spliterators$ArraySpliterator.forEachRemaining(Spliterators.java:948)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:482)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:708)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:499)
+	at org.springframework.data.repository.query.parser.PartTree$Predicate.<init>(PartTree.java:382)
+	at org.springframework.data.repository.query.parser.PartTree.<init>(PartTree.java:97)
+	at org.springframework.data.jpa.repository.query.PartTreeJpaQuery.<init>(PartTreeJpaQuery.java:89)
+	... 71 common frames omitted
+14:37:10.138 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 10472 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+14:37:10.141 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+14:37:10.576 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+14:37:10.613 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 31ms. Found 2 JPA repository interfaces.
+14:37:11.099 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+14:37:11.104 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+14:37:11.105 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+14:37:11.105 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+14:37:11.192 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+14:37:11.192 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1012 ms
+14:37:11.330 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+14:37:11.359 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+14:37:11.508 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+14:37:11.571 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+14:37:11.858 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+14:37:11.873 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+14:37:12.301 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+14:37:12.307 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+14:37:12.678 [INFO ] o.s.s.web.DefaultSecurityFilterChain - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3b5da0b0, org.springframework.security.web.context.SecurityContextPersistenceFilter@7ea3839e, org.springframework.security.web.header.HeaderWriterFilter@2e3cd732, org.springframework.security.web.authentication.logout.LogoutFilter@485deee1, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@71b0289b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@d3cce46, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@15f2a43f, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@7eae55, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2c9cafa5, org.springframework.security.web.session.SessionManagementFilter@2ab8589a, org.springframework.security.web.access.ExceptionTranslationFilter@e3ed455, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@14485747]
+14:37:12.887 [INFO ] o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+14:37:12.926 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+14:37:12.939 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+14:37:12.948 [INFO ] withus.WithusApplication - Started WithusApplication in 3.05 seconds (JVM running for 3.552)
+14:37:29.650 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+14:37:29.650 [INFO ] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+14:37:29.654 [INFO ] o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
+14:47:48.098 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 13488 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+14:47:48.100 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+14:47:48.508 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+14:47:48.549 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 35ms. Found 2 JPA repository interfaces.
+14:47:49.076 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+14:47:49.081 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+14:47:49.082 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+14:47:49.082 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+14:47:49.161 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+14:47:49.161 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1024 ms
+14:47:49.296 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+14:47:49.326 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+14:47:49.476 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+14:47:49.541 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+14:47:49.833 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+14:47:49.849 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+14:47:50.307 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+14:47:50.312 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+14:47:50.714 [INFO ] o.s.s.web.DefaultSecurityFilterChain - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5d84e363, org.springframework.security.web.context.SecurityContextPersistenceFilter@2e3cd732, org.springframework.security.web.header.HeaderWriterFilter@46702c26, org.springframework.security.web.authentication.logout.LogoutFilter@2d2fc130, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@a2df0d5, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2ab8589a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@144ee8a7, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@71b0289b, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3ef0e576, org.springframework.security.web.session.SessionManagementFilter@e3ed455, org.springframework.security.web.access.ExceptionTranslationFilter@74b97416, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7e8f23ad]
+14:47:50.914 [INFO ] o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+14:47:50.954 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+14:47:50.967 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+14:47:50.976 [INFO ] withus.WithusApplication - Started WithusApplication in 3.121 seconds (JVM running for 3.739)
+14:47:57.861 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+14:47:57.861 [INFO ] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+14:47:57.865 [INFO ] o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
+14:48:53.998 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 12820 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+14:48:54.000 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+14:48:54.380 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+14:48:54.414 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 29ms. Found 2 JPA repository interfaces.
+14:48:54.877 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+14:48:54.882 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+14:48:54.883 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+14:48:54.883 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+14:48:54.959 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+14:48:54.959 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 922 ms
+14:48:55.088 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+14:48:55.117 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+14:48:55.269 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+14:48:55.336 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+14:48:55.637 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+14:48:55.654 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+14:48:56.111 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+14:48:56.116 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+14:48:56.516 [INFO ] o.s.s.web.DefaultSecurityFilterChain - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3b5da0b0, org.springframework.security.web.context.SecurityContextPersistenceFilter@7ea3839e, org.springframework.security.web.header.HeaderWriterFilter@2e3cd732, org.springframework.security.web.authentication.logout.LogoutFilter@485deee1, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@71b0289b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@d3cce46, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@15f2a43f, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@7eae55, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2c9cafa5, org.springframework.security.web.session.SessionManagementFilter@2ab8589a, org.springframework.security.web.access.ExceptionTranslationFilter@e3ed455, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@14485747]
+14:48:56.711 [INFO ] o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+14:48:56.748 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+14:48:56.761 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+14:48:56.770 [INFO ] withus.WithusApplication - Started WithusApplication in 3.01 seconds (JVM running for 3.532)
+14:49:06.635 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+14:49:06.635 [INFO ] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+14:49:06.639 [INFO ] o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
+14:50:13.577 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 12656 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+14:50:13.579 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+14:50:13.994 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+14:50:14.028 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 28ms. Found 2 JPA repository interfaces.
+14:50:14.513 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+14:50:14.520 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+14:50:14.520 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+14:50:14.520 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+14:50:14.614 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+14:50:14.614 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 997 ms
+14:50:14.754 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+14:50:14.784 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+14:50:14.935 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+14:50:15.005 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+14:50:15.303 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+14:50:15.319 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+14:50:15.747 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+14:50:15.752 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+14:50:15.956 [WARN ] o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'webSecurityConfig' defined in file [C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main\withus\configuration\WebSecurityConfig.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userService' defined in file [C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main\withus\service\UserService.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'patientRepository' defined in withus.repository.PatientRepository defined in @EnableJpaRepositories declared on WithusApplication: Invocation of init method failed; nested exception is java.lang.IllegalArgumentException: Failed to create query for method public abstract java.util.Optional withus.repository.PatientRepository.findByPatientId(java.lang.String)! No property id found for type String! Traversed path: Tbl_patient.patient.
+14:50:15.956 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+14:50:15.958 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+14:50:15.961 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+14:50:15.963 [INFO ] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+14:50:15.971 [INFO ] o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+14:50:15.979 [ERROR] o.s.boot.SpringApplication - Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'webSecurityConfig' defined in file [C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main\withus\configuration\WebSecurityConfig.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userService' defined in file [C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main\withus\service\UserService.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'patientRepository' defined in withus.repository.PatientRepository defined in @EnableJpaRepositories declared on WithusApplication: Invocation of init method failed; nested exception is java.lang.IllegalArgumentException: Failed to create query for method public abstract java.util.Optional withus.repository.PatientRepository.findByPatientId(java.lang.String)! No property id found for type String! Traversed path: Tbl_patient.patient.
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:797)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:227)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1356)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1203)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:556)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:516)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:226)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:322)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:897)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:879)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:551)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:750)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1237)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
+	at withus.WithusApplication.main(WithusApplication.java:15)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userService' defined in file [C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main\withus\service\UserService.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'patientRepository' defined in withus.repository.PatientRepository defined in @EnableJpaRepositories declared on WithusApplication: Invocation of init method failed; nested exception is java.lang.IllegalArgumentException: Failed to create query for method public abstract java.util.Optional withus.repository.PatientRepository.findByPatientId(java.lang.String)! No property id found for type String! Traversed path: Tbl_patient.patient.
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:797)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:227)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1356)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1203)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:556)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:516)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:226)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:322)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1307)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1227)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:884)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:788)
+	... 20 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'patientRepository' defined in withus.repository.PatientRepository defined in @EnableJpaRepositories declared on WithusApplication: Invocation of init method failed; nested exception is java.lang.IllegalArgumentException: Failed to create query for method public abstract java.util.Optional withus.repository.PatientRepository.findByPatientId(java.lang.String)! No property id found for type String! Traversed path: Tbl_patient.patient.
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1794)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:594)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:516)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:226)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:322)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1307)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1227)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:884)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:788)
+	... 34 common frames omitted
+Caused by: java.lang.IllegalArgumentException: Failed to create query for method public abstract java.util.Optional withus.repository.PatientRepository.findByPatientId(java.lang.String)! No property id found for type String! Traversed path: Tbl_patient.patient.
+	at org.springframework.data.jpa.repository.query.PartTreeJpaQuery.<init>(PartTreeJpaQuery.java:96)
+	at org.springframework.data.jpa.repository.query.JpaQueryLookupStrategy$CreateQueryLookupStrategy.resolveQuery(JpaQueryLookupStrategy.java:107)
+	at org.springframework.data.jpa.repository.query.JpaQueryLookupStrategy$CreateIfNotFoundQueryLookupStrategy.resolveQuery(JpaQueryLookupStrategy.java:218)
+	at org.springframework.data.jpa.repository.query.JpaQueryLookupStrategy$AbstractQueryLookupStrategy.resolveQuery(JpaQueryLookupStrategy.java:81)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.lookupQuery(QueryExecutorMethodInterceptor.java:99)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.lambda$mapMethodsToQuery$1(QueryExecutorMethodInterceptor.java:92)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.Iterator.forEachRemaining(Iterator.java:116)
+	at java.util.Collections$UnmodifiableCollection$1.forEachRemaining(Collections.java:1051)
+	at java.util.Spliterators$IteratorSpliterator.forEachRemaining(Spliterators.java:1801)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:482)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:708)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:499)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.mapMethodsToQuery(QueryExecutorMethodInterceptor.java:94)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.lambda$new$0(QueryExecutorMethodInterceptor.java:84)
+	at java.util.Optional.map(Optional.java:215)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.<init>(QueryExecutorMethodInterceptor.java:84)
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport.getRepository(RepositoryFactorySupport.java:331)
+	at org.springframework.data.repository.core.support.RepositoryFactoryBeanSupport.lambda$afterPropertiesSet$5(RepositoryFactoryBeanSupport.java:297)
+	at org.springframework.data.util.Lazy.getNullable(Lazy.java:212)
+	at org.springframework.data.util.Lazy.get(Lazy.java:94)
+	at org.springframework.data.repository.core.support.RepositoryFactoryBeanSupport.afterPropertiesSet(RepositoryFactoryBeanSupport.java:300)
+	at org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean.afterPropertiesSet(JpaRepositoryFactoryBean.java:144)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1790)
+	... 45 common frames omitted
+Caused by: org.springframework.data.mapping.PropertyReferenceException: No property id found for type String! Traversed path: Tbl_patient.patient.
+	at org.springframework.data.mapping.PropertyPath.<init>(PropertyPath.java:94)
+	at org.springframework.data.mapping.PropertyPath.create(PropertyPath.java:382)
+	at org.springframework.data.mapping.PropertyPath.create(PropertyPath.java:358)
+	at org.springframework.data.mapping.PropertyPath.create(PropertyPath.java:392)
+	at org.springframework.data.mapping.PropertyPath.create(PropertyPath.java:416)
+	at org.springframework.data.mapping.PropertyPath.create(PropertyPath.java:358)
+	at org.springframework.data.mapping.PropertyPath.lambda$from$0(PropertyPath.java:311)
+	at java.util.concurrent.ConcurrentMap.computeIfAbsent(ConcurrentMap.java:324)
+	at org.springframework.data.mapping.PropertyPath.from(PropertyPath.java:293)
+	at org.springframework.data.mapping.PropertyPath.from(PropertyPath.java:276)
+	at org.springframework.data.repository.query.parser.Part.<init>(Part.java:82)
+	at org.springframework.data.repository.query.parser.PartTree$OrPart.lambda$new$0(PartTree.java:251)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:175)
+	at java.util.Spliterators$ArraySpliterator.forEachRemaining(Spliterators.java:948)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:482)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:708)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:499)
+	at org.springframework.data.repository.query.parser.PartTree$OrPart.<init>(PartTree.java:252)
+	at org.springframework.data.repository.query.parser.PartTree$Predicate.lambda$new$0(PartTree.java:381)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:175)
+	at java.util.Spliterators$ArraySpliterator.forEachRemaining(Spliterators.java:948)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:482)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:708)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:499)
+	at org.springframework.data.repository.query.parser.PartTree$Predicate.<init>(PartTree.java:382)
+	at org.springframework.data.repository.query.parser.PartTree.<init>(PartTree.java:97)
+	at org.springframework.data.jpa.repository.query.PartTreeJpaQuery.<init>(PartTreeJpaQuery.java:89)
+	... 71 common frames omitted
+14:51:29.652 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 14216 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+14:51:29.655 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+14:51:30.024 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+14:51:30.059 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 30ms. Found 2 JPA repository interfaces.
+14:51:30.519 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+14:51:30.525 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+14:51:30.525 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+14:51:30.525 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+14:51:30.610 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+14:51:30.610 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 918 ms
+14:51:30.741 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+14:51:30.769 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+14:51:30.909 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+14:51:30.972 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+14:51:31.261 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+14:51:31.277 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+14:51:31.705 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+14:51:31.710 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+14:51:32.118 [INFO ] o.s.s.web.DefaultSecurityFilterChain - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@563172d3, org.springframework.security.web.context.SecurityContextPersistenceFilter@7956f93a, org.springframework.security.web.header.HeaderWriterFilter@65e620b0, org.springframework.security.web.authentication.logout.LogoutFilter@57bdceaa, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@59fea5f5, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@27bb74e1, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@d3cce46, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@782cc5fa, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5086623f, org.springframework.security.web.session.SessionManagementFilter@74707df8, org.springframework.security.web.access.ExceptionTranslationFilter@467af68c, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3e753289]
+14:51:32.306 [INFO ] o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+14:51:32.343 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+14:51:32.356 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+14:51:32.365 [INFO ] withus.WithusApplication - Started WithusApplication in 2.954 seconds (JVM running for 3.453)
+14:51:36.677 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+14:51:36.677 [INFO ] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+14:51:36.681 [INFO ] o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
+14:53:05.536 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 892 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+14:53:05.538 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+14:53:06.004 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+14:53:06.041 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 31ms. Found 2 JPA repository interfaces.
+14:53:06.571 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+14:53:06.577 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+14:53:06.578 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+14:53:06.578 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+14:53:06.666 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+14:53:06.667 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1083 ms
+14:53:06.810 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+14:53:06.846 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+14:53:07.017 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+14:53:07.081 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+14:53:07.362 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+14:53:07.376 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+14:53:07.803 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+14:53:07.808 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+14:53:08.000 [WARN ] o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'webSecurityConfig' defined in file [C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main\withus\configuration\WebSecurityConfig.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userService' defined in file [C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main\withus\service\UserService.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'patientRepository' defined in withus.repository.PatientRepository defined in @EnableJpaRepositories declared on WithusApplication: Invocation of init method failed; nested exception is java.lang.IllegalArgumentException: Failed to create query for method public abstract java.util.Optional withus.repository.PatientRepository.findByPatientAndPassword(java.lang.String,java.lang.String)! No property patient found for type Tbl_patient! Did you mean 'patientId'?
+14:53:08.000 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+14:53:08.002 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+14:53:08.005 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+14:53:08.006 [INFO ] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+14:53:08.014 [INFO ] o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+14:53:08.022 [ERROR] o.s.boot.SpringApplication - Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'webSecurityConfig' defined in file [C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main\withus\configuration\WebSecurityConfig.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userService' defined in file [C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main\withus\service\UserService.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'patientRepository' defined in withus.repository.PatientRepository defined in @EnableJpaRepositories declared on WithusApplication: Invocation of init method failed; nested exception is java.lang.IllegalArgumentException: Failed to create query for method public abstract java.util.Optional withus.repository.PatientRepository.findByPatientAndPassword(java.lang.String,java.lang.String)! No property patient found for type Tbl_patient! Did you mean 'patientId'?
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:797)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:227)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1356)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1203)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:556)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:516)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:226)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:322)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:897)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:879)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:551)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:750)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1237)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
+	at withus.WithusApplication.main(WithusApplication.java:15)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userService' defined in file [C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main\withus\service\UserService.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'patientRepository' defined in withus.repository.PatientRepository defined in @EnableJpaRepositories declared on WithusApplication: Invocation of init method failed; nested exception is java.lang.IllegalArgumentException: Failed to create query for method public abstract java.util.Optional withus.repository.PatientRepository.findByPatientAndPassword(java.lang.String,java.lang.String)! No property patient found for type Tbl_patient! Did you mean 'patientId'?
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:797)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:227)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1356)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1203)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:556)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:516)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:226)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:322)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1307)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1227)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:884)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:788)
+	... 20 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'patientRepository' defined in withus.repository.PatientRepository defined in @EnableJpaRepositories declared on WithusApplication: Invocation of init method failed; nested exception is java.lang.IllegalArgumentException: Failed to create query for method public abstract java.util.Optional withus.repository.PatientRepository.findByPatientAndPassword(java.lang.String,java.lang.String)! No property patient found for type Tbl_patient! Did you mean 'patientId'?
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1794)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:594)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:516)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:226)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:322)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1307)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1227)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:884)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:788)
+	... 34 common frames omitted
+Caused by: java.lang.IllegalArgumentException: Failed to create query for method public abstract java.util.Optional withus.repository.PatientRepository.findByPatientAndPassword(java.lang.String,java.lang.String)! No property patient found for type Tbl_patient! Did you mean 'patientId'?
+	at org.springframework.data.jpa.repository.query.PartTreeJpaQuery.<init>(PartTreeJpaQuery.java:96)
+	at org.springframework.data.jpa.repository.query.JpaQueryLookupStrategy$CreateQueryLookupStrategy.resolveQuery(JpaQueryLookupStrategy.java:107)
+	at org.springframework.data.jpa.repository.query.JpaQueryLookupStrategy$CreateIfNotFoundQueryLookupStrategy.resolveQuery(JpaQueryLookupStrategy.java:218)
+	at org.springframework.data.jpa.repository.query.JpaQueryLookupStrategy$AbstractQueryLookupStrategy.resolveQuery(JpaQueryLookupStrategy.java:81)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.lookupQuery(QueryExecutorMethodInterceptor.java:99)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.lambda$mapMethodsToQuery$1(QueryExecutorMethodInterceptor.java:92)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.Iterator.forEachRemaining(Iterator.java:116)
+	at java.util.Collections$UnmodifiableCollection$1.forEachRemaining(Collections.java:1051)
+	at java.util.Spliterators$IteratorSpliterator.forEachRemaining(Spliterators.java:1801)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:482)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:708)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:499)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.mapMethodsToQuery(QueryExecutorMethodInterceptor.java:94)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.lambda$new$0(QueryExecutorMethodInterceptor.java:84)
+	at java.util.Optional.map(Optional.java:215)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.<init>(QueryExecutorMethodInterceptor.java:84)
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport.getRepository(RepositoryFactorySupport.java:331)
+	at org.springframework.data.repository.core.support.RepositoryFactoryBeanSupport.lambda$afterPropertiesSet$5(RepositoryFactoryBeanSupport.java:297)
+	at org.springframework.data.util.Lazy.getNullable(Lazy.java:212)
+	at org.springframework.data.util.Lazy.get(Lazy.java:94)
+	at org.springframework.data.repository.core.support.RepositoryFactoryBeanSupport.afterPropertiesSet(RepositoryFactoryBeanSupport.java:300)
+	at org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean.afterPropertiesSet(JpaRepositoryFactoryBean.java:144)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1790)
+	... 45 common frames omitted
+Caused by: org.springframework.data.mapping.PropertyReferenceException: No property patient found for type Tbl_patient! Did you mean 'patientId'?
+	at org.springframework.data.mapping.PropertyPath.<init>(PropertyPath.java:94)
+	at org.springframework.data.mapping.PropertyPath.create(PropertyPath.java:382)
+	at org.springframework.data.mapping.PropertyPath.create(PropertyPath.java:358)
+	at org.springframework.data.mapping.PropertyPath.lambda$from$0(PropertyPath.java:311)
+	at java.util.concurrent.ConcurrentMap.computeIfAbsent(ConcurrentMap.java:324)
+	at org.springframework.data.mapping.PropertyPath.from(PropertyPath.java:293)
+	at org.springframework.data.mapping.PropertyPath.from(PropertyPath.java:276)
+	at org.springframework.data.repository.query.parser.Part.<init>(Part.java:82)
+	at org.springframework.data.repository.query.parser.PartTree$OrPart.lambda$new$0(PartTree.java:251)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:175)
+	at java.util.Spliterators$ArraySpliterator.forEachRemaining(Spliterators.java:948)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:482)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:708)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:499)
+	at org.springframework.data.repository.query.parser.PartTree$OrPart.<init>(PartTree.java:252)
+	at org.springframework.data.repository.query.parser.PartTree$Predicate.lambda$new$0(PartTree.java:381)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:175)
+	at java.util.Spliterators$ArraySpliterator.forEachRemaining(Spliterators.java:948)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:482)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:708)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:499)
+	at org.springframework.data.repository.query.parser.PartTree$Predicate.<init>(PartTree.java:382)
+	at org.springframework.data.repository.query.parser.PartTree.<init>(PartTree.java:97)
+	at org.springframework.data.jpa.repository.query.PartTreeJpaQuery.<init>(PartTreeJpaQuery.java:89)
+	... 71 common frames omitted
+14:53:53.901 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 4472 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+14:53:53.903 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+14:53:54.282 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+14:53:54.317 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 30ms. Found 2 JPA repository interfaces.
+14:53:54.781 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+14:53:54.786 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+14:53:54.787 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+14:53:54.787 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+14:53:54.863 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+14:53:54.864 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 921 ms
+14:53:54.992 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+14:53:55.021 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+14:53:55.163 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+14:53:55.225 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+14:53:55.510 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+14:53:55.525 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+14:53:55.945 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+14:53:55.950 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+14:53:56.341 [INFO ] o.s.s.web.DefaultSecurityFilterChain - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7df4709e, org.springframework.security.web.context.SecurityContextPersistenceFilter@30eedaa4, org.springframework.security.web.header.HeaderWriterFilter@21b744ec, org.springframework.security.web.authentication.logout.LogoutFilter@5df64b2a, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@5086623f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7f6b57f2, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@69ce14e6, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@da34eb0, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2bfa17b0, org.springframework.security.web.session.SessionManagementFilter@7ea3839e, org.springframework.security.web.access.ExceptionTranslationFilter@2e3cd732, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@70f4abc1]
+14:53:56.548 [INFO ] o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+14:53:56.594 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+14:53:56.607 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+14:53:56.616 [INFO ] withus.WithusApplication - Started WithusApplication in 2.958 seconds (JVM running for 3.455)
+14:53:58.958 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+14:53:58.958 [INFO ] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+14:53:58.962 [INFO ] o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
+14:56:51.779 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 14684 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+14:56:51.782 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+14:56:52.169 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+14:56:52.204 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 29ms. Found 2 JPA repository interfaces.
+14:56:52.662 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+14:56:52.667 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+14:56:52.668 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+14:56:52.668 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+14:56:52.745 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+14:56:52.745 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 926 ms
+14:56:52.881 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+14:56:52.912 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+14:56:53.054 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+14:56:53.117 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+14:56:53.399 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+14:56:53.416 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+14:56:53.863 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+14:56:53.869 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+14:56:54.257 [INFO ] o.s.s.web.DefaultSecurityFilterChain - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@563172d3, org.springframework.security.web.context.SecurityContextPersistenceFilter@7956f93a, org.springframework.security.web.header.HeaderWriterFilter@65e620b0, org.springframework.security.web.authentication.logout.LogoutFilter@57bdceaa, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@59fea5f5, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@27bb74e1, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@d3cce46, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@782cc5fa, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5086623f, org.springframework.security.web.session.SessionManagementFilter@74707df8, org.springframework.security.web.access.ExceptionTranslationFilter@467af68c, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3e753289]
+14:56:54.443 [INFO ] o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+14:56:54.482 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+14:56:54.494 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+14:56:54.503 [INFO ] withus.WithusApplication - Started WithusApplication in 2.98 seconds (JVM running for 3.541)
+14:56:59.700 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+14:56:59.700 [INFO ] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+14:56:59.704 [INFO ] o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
+15:15:25.111 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 10328 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+15:15:25.114 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+15:15:25.489 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+15:15:25.525 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 30ms. Found 2 JPA repository interfaces.
+15:15:26.021 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+15:15:26.026 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+15:15:26.027 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+15:15:26.027 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+15:15:26.104 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+15:15:26.104 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 952 ms
+15:15:26.239 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+15:15:26.268 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+15:15:26.408 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+15:15:26.474 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+15:15:26.758 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+15:15:26.772 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+15:15:27.122 [INFO ] org.hibernate.tuple.PojoInstantiator - HHH000182: No default (no-argument) constructor for class: withus.entity.Tbl_user_progress (class must be instantiated by Interceptor)
+15:15:27.272 [WARN ] o.h.t.s.i.ExceptionHandlerLoggedImpl - GenerationTarget encountered exception accepting command : Error executing DDL "create table tbl_user_progress (registration_count INTEGER(11) NOTNULL not null, week_progress INTEGER(11) default 0, withusrang_progress VARCHAR(20), primary key (registration_count)) engine=InnoDB" via JDBC Statement
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "create table tbl_user_progress (registration_count INTEGER(11) NOTNULL not null, week_progress INTEGER(11) default 0, withusrang_progress VARCHAR(20), primary key (registration_count)) engine=InnoDB" via JDBC Statement
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:559)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:504)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.createTable(AbstractSchemaMigrator.java:277)
+	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:71)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:207)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:114)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:184)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:316)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:469)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1259)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:391)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:378)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1790)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:594)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:516)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:226)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:322)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1109)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:869)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:551)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:750)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1237)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
+	at withus.WithusApplication.main(WithusApplication.java:15)
+Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NOTNULL not null, week_progress INTEGER(11) default 0, withusrang_progress VARCH' at line 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeInternal(StatementImpl.java:764)
+	at com.mysql.cj.jdbc.StatementImpl.execute(StatementImpl.java:648)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:95)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54)
+	... 35 common frames omitted
+15:15:27.277 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+15:15:27.282 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+15:15:27.705 [INFO ] o.s.s.web.DefaultSecurityFilterChain - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@8f6b4ab, org.springframework.security.web.context.SecurityContextPersistenceFilter@285bf5ac, org.springframework.security.web.header.HeaderWriterFilter@559fd5ec, org.springframework.security.web.authentication.logout.LogoutFilter@47c96f2c, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@455cbf18, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7ab2ba47, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5aa6da2, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@6ace919c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6e517c9e, org.springframework.security.web.session.SessionManagementFilter@708dfe10, org.springframework.security.web.access.ExceptionTranslationFilter@7df4709e, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@25109608]
+15:15:27.894 [INFO ] o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+15:15:27.933 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+15:15:27.947 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+15:15:27.956 [INFO ] withus.WithusApplication - Started WithusApplication in 3.089 seconds (JVM running for 3.681)
+15:17:56.364 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 9388 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+15:17:56.366 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+15:17:56.746 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+15:17:56.785 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 33ms. Found 2 JPA repository interfaces.
+15:17:57.270 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+15:17:57.275 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+15:17:57.276 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+15:17:57.276 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+15:17:57.353 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+15:17:57.354 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 948 ms
+15:17:57.489 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+15:17:57.519 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+15:17:57.698 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+15:17:57.764 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+15:17:58.077 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+15:17:58.094 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+15:17:58.446 [INFO ] org.hibernate.tuple.PojoInstantiator - HHH000182: No default (no-argument) constructor for class: withus.entity.Tbl_user_progress (class must be instantiated by Interceptor)
+15:17:58.574 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+15:17:58.580 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+15:17:58.975 [INFO ] o.s.s.web.DefaultSecurityFilterChain - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5fde1d64, org.springframework.security.web.context.SecurityContextPersistenceFilter@69f9b561, org.springframework.security.web.header.HeaderWriterFilter@395281c2, org.springframework.security.web.authentication.logout.LogoutFilter@3b5da0b0, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@297bd171, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7433ca19, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@a2df0d5, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@7b5833ee, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5350ab17, org.springframework.security.web.session.SessionManagementFilter@3e753289, org.springframework.security.web.access.ExceptionTranslationFilter@5834198f, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@60652518]
+15:17:59.165 [INFO ] o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+15:17:59.203 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+15:17:59.216 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+15:17:59.225 [INFO ] withus.WithusApplication - Started WithusApplication in 3.099 seconds (JVM running for 3.6)
+16:28:22.692 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 10444 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+16:28:22.695 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+16:28:23.075 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+16:28:23.111 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 29ms. Found 2 JPA repository interfaces.
+16:28:23.572 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+16:28:23.577 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+16:28:23.578 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+16:28:23.578 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+16:28:23.656 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+16:28:23.656 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 921 ms
+16:28:23.789 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+16:28:23.819 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+16:28:23.956 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+16:28:24.025 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+16:28:24.320 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+16:28:24.335 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+16:28:24.670 [INFO ] org.hibernate.tuple.PojoInstantiator - HHH000182: No default (no-argument) constructor for class: withus.entity.Tbl_goal_list (class must be instantiated by Interceptor)
+16:28:24.675 [INFO ] org.hibernate.tuple.PojoInstantiator - HHH000182: No default (no-argument) constructor for class: withus.entity.Tbl_medication_alarm (class must be instantiated by Interceptor)
+16:28:24.688 [INFO ] org.hibernate.tuple.PojoInstantiator - HHH000182: No default (no-argument) constructor for class: withus.entity.Tbl_user_progress (class must be instantiated by Interceptor)
+16:28:24.871 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+16:28:24.876 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+16:28:25.274 [INFO ] o.s.s.web.DefaultSecurityFilterChain - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4005e485, org.springframework.security.web.context.SecurityContextPersistenceFilter@559fd5ec, org.springframework.security.web.header.HeaderWriterFilter@2c9cafa5, org.springframework.security.web.authentication.logout.LogoutFilter@4e6cbdf1, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@443af394, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@708dfe10, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@202f054f, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@455cbf18, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5f5c187d, org.springframework.security.web.session.SessionManagementFilter@7df4709e, org.springframework.security.web.access.ExceptionTranslationFilter@785a4557, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@79cdf2d4]
+16:28:25.465 [INFO ] o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+16:28:25.504 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+16:28:25.517 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+16:28:25.526 [INFO ] withus.WithusApplication - Started WithusApplication in 3.082 seconds (JVM running for 3.596)
+16:43:12.210 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 7656 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+16:43:12.213 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+16:43:12.601 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+16:43:12.638 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 31ms. Found 2 JPA repository interfaces.
+16:43:13.111 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+16:43:13.117 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+16:43:13.117 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+16:43:13.117 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+16:43:13.201 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+16:43:13.201 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 950 ms
+16:43:13.341 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+16:43:13.374 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+16:43:13.522 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+16:43:13.588 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+16:43:13.881 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+16:43:13.896 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+16:43:14.278 [INFO ] org.hibernate.tuple.PojoInstantiator - HHH000182: No default (no-argument) constructor for class: withus.entity.Tbl_medication_alarm (class must be instantiated by Interceptor)
+16:43:14.292 [INFO ] org.hibernate.tuple.PojoInstantiator - HHH000182: No default (no-argument) constructor for class: withus.entity.Tbl_user_progress (class must be instantiated by Interceptor)
+16:43:14.385 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+16:43:14.390 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+16:43:14.802 [INFO ] o.s.s.web.DefaultSecurityFilterChain - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@58182b96, org.springframework.security.web.context.SecurityContextPersistenceFilter@18989e0, org.springframework.security.web.header.HeaderWriterFilter@2bfa17b0, org.springframework.security.web.authentication.logout.LogoutFilter@5dae5a70, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@59313495, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@285bf5ac, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1410d645, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@1850f2da, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@37d6dddc, org.springframework.security.web.session.SessionManagementFilter@559fd5ec, org.springframework.security.web.access.ExceptionTranslationFilter@2c9cafa5, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7198ab9a]
+16:43:14.999 [INFO ] o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+16:43:15.040 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+16:43:15.053 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+16:43:15.061 [INFO ] withus.WithusApplication - Started WithusApplication in 3.1 seconds (JVM running for 3.645)
+17:55:15.462 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 5516 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+17:55:15.465 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+17:55:15.870 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+17:55:15.910 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 35ms. Found 4 JPA repository interfaces.
+17:55:16.390 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+17:55:16.395 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+17:55:16.396 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+17:55:16.396 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+17:55:16.476 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+17:55:16.476 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 971 ms
+17:55:16.613 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+17:55:16.642 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+17:55:16.795 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+17:55:16.861 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+17:55:17.154 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+17:55:17.171 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+17:55:17.545 [INFO ] org.hibernate.tuple.PojoInstantiator - HHH000182: No default (no-argument) constructor for class: withus.entity.Tbl_medication_alarm (class must be instantiated by Interceptor)
+17:55:17.559 [INFO ] org.hibernate.tuple.PojoInstantiator - HHH000182: No default (no-argument) constructor for class: withus.entity.Tbl_user_progress (class must be instantiated by Interceptor)
+17:55:17.836 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+17:55:17.842 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+17:55:18.284 [INFO ] o.s.s.web.DefaultSecurityFilterChain - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@58e02359, org.springframework.security.web.context.SecurityContextPersistenceFilter@4d4b019e, org.springframework.security.web.header.HeaderWriterFilter@1640f20f, org.springframework.security.web.authentication.logout.LogoutFilter@350d26f3, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@5a8d676e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@21280cbb, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3dda8a2e, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@145a821d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@74fc3fc7, org.springframework.security.web.session.SessionManagementFilter@6e948f1c, org.springframework.security.web.access.ExceptionTranslationFilter@2b35c7aa, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@2d4f67e]
+17:55:18.498 [INFO ] o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+17:55:18.546 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+17:55:18.553 [WARN ] o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8080 is already in use
+17:55:18.553 [INFO ] o.s.s.c.ThreadPoolTaskScheduler - Shutting down ExecutorService 'taskScheduler'
+17:55:18.555 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+17:55:18.556 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+17:55:18.559 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+17:55:18.561 [INFO ] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+17:55:18.561 [INFO ] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+17:55:18.564 [INFO ] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+17:55:18.564 [INFO ] o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+17:55:18.569 [INFO ] o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+17:55:18.575 [ERROR] o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+17:56:12.772 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 2628 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+17:56:12.774 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+17:56:13.151 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+17:56:13.194 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 37ms. Found 4 JPA repository interfaces.
+17:56:13.664 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+17:56:13.669 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+17:56:13.670 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+17:56:13.670 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+17:56:13.747 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+17:56:13.747 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 936 ms
+17:56:13.880 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+17:56:13.915 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+17:56:14.064 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+17:56:14.128 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+17:56:14.411 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+17:56:14.425 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+17:56:14.766 [INFO ] org.hibernate.tuple.PojoInstantiator - HHH000182: No default (no-argument) constructor for class: withus.entity.Tbl_medication_alarm (class must be instantiated by Interceptor)
+17:56:14.780 [INFO ] org.hibernate.tuple.PojoInstantiator - HHH000182: No default (no-argument) constructor for class: withus.entity.Tbl_user_progress (class must be instantiated by Interceptor)
+17:56:14.880 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+17:56:14.886 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+17:56:15.311 [INFO ] o.s.s.web.DefaultSecurityFilterChain - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@353b0719, org.springframework.security.web.context.SecurityContextPersistenceFilter@49986178, org.springframework.security.web.header.HeaderWriterFilter@7f012923, org.springframework.security.web.authentication.logout.LogoutFilter@2036f83, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@5df2023c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@25b74370, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2eb6d34a, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@6029f2a4, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2a4e939a, org.springframework.security.web.session.SessionManagementFilter@4403bff8, org.springframework.security.web.access.ExceptionTranslationFilter@74cd798f, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7254838]
+17:56:15.505 [INFO ] o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+17:56:15.544 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+17:56:15.551 [WARN ] o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8080 is already in use
+17:56:15.551 [INFO ] o.s.s.c.ThreadPoolTaskScheduler - Shutting down ExecutorService 'taskScheduler'
+17:56:15.552 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+17:56:15.553 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+17:56:15.557 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+17:56:15.558 [INFO ] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+17:56:15.558 [INFO ] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+17:56:15.561 [INFO ] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+17:56:15.562 [INFO ] o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+17:56:15.567 [INFO ] o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+17:56:15.572 [ERROR] o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+17:58:11.649 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 9680 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+17:58:11.652 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+17:58:12.093 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+17:58:12.136 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 38ms. Found 4 JPA repository interfaces.
+17:58:12.688 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+17:58:12.694 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+17:58:12.695 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+17:58:12.695 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+17:58:12.788 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+17:58:12.788 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1090 ms
+17:58:12.933 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+17:58:12.964 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+17:58:13.117 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+17:58:13.181 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+17:58:13.468 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+17:58:13.483 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+17:58:13.833 [INFO ] org.hibernate.tuple.PojoInstantiator - HHH000182: No default (no-argument) constructor for class: withus.entity.Tbl_medication_alarm (class must be instantiated by Interceptor)
+17:58:13.846 [INFO ] org.hibernate.tuple.PojoInstantiator - HHH000182: No default (no-argument) constructor for class: withus.entity.Tbl_user_progress (class must be instantiated by Interceptor)
+17:58:13.936 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+17:58:13.941 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+17:58:14.354 [INFO ] o.s.s.web.DefaultSecurityFilterChain - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2bfc8558, org.springframework.security.web.context.SecurityContextPersistenceFilter@314f59b, org.springframework.security.web.header.HeaderWriterFilter@4bdb04c8, org.springframework.security.web.authentication.logout.LogoutFilter@131ba005, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@27dc335a, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7f012923, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1f71e024, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@47fa3671, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6029f2a4, org.springframework.security.web.session.SessionManagementFilter@3ce7394f, org.springframework.security.web.access.ExceptionTranslationFilter@6e517c9e, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@352e5a82]
+17:58:14.553 [INFO ] o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+17:58:14.596 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+17:58:14.610 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+17:58:14.619 [INFO ] withus.WithusApplication - Started WithusApplication in 3.225 seconds (JVM running for 3.764)
+17:58:51.080 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+17:58:51.080 [INFO ] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+17:58:51.085 [INFO ] o.s.web.servlet.DispatcherServlet - Completed initialization in 5 ms
+17:59:18.689 [ERROR] withus.controller.LoginController - No default constructor for entity:  : withus.entity.Tbl_user_progress; nested exception is org.hibernate.InstantiationException: No default constructor for entity:  : withus.entity.Tbl_user_progress
+org.springframework.orm.jpa.JpaSystemException: No default constructor for entity:  : withus.entity.Tbl_user_progress; nested exception is org.hibernate.InstantiationException: No default constructor for entity:  : withus.entity.Tbl_user_progress
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:353)
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.translateExceptionIfPossible(HibernateJpaDialect.java:255)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.translateExceptionIfPossible(AbstractEntityManagerFactoryBean.java:528)
+	at org.springframework.dao.support.ChainedPersistenceExceptionTranslator.translateExceptionIfPossible(ChainedPersistenceExceptionTranslator.java:61)
+	at org.springframework.dao.support.DataAccessUtils.translateIfNecessary(DataAccessUtils.java:242)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:153)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:178)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:95)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:212)
+	at com.sun.proxy.$Proxy100.save(Unknown Source)
+	at withus.service.UserService.upsertUserEncodingPassword(UserService.java:105)
+	at withus.controller.LoginController.putMember(LoginController.java:67)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:105)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:878)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:792)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1040)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:652)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:733)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:320)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:126)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:90)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:118)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:137)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:111)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:150)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:158)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:200)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:92)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:77)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:105)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:56)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:215)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:178)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:358)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:271)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:373)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1589)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.hibernate.InstantiationException: No default constructor for entity:  : withus.entity.Tbl_user_progress
+	at org.hibernate.tuple.PojoInstantiator.instantiate(PojoInstantiator.java:85)
+	at org.hibernate.tuple.PojoInstantiator.instantiate(PojoInstantiator.java:105)
+	at org.hibernate.tuple.entity.AbstractEntityTuplizer.instantiate(AbstractEntityTuplizer.java:704)
+	at org.hibernate.persister.entity.AbstractEntityPersister.instantiate(AbstractEntityPersister.java:5165)
+	at org.hibernate.internal.SessionImpl.instantiate(SessionImpl.java:1599)
+	at org.hibernate.event.internal.DefaultMergeEventListener.entityIsTransient(DefaultMergeEventListener.java:231)
+	at org.hibernate.event.internal.DefaultMergeEventListener.entityIsDetached(DefaultMergeEventListener.java:318)
+	at org.hibernate.event.internal.DefaultMergeEventListener.onMerge(DefaultMergeEventListener.java:172)
+	at org.hibernate.event.internal.DefaultMergeEventListener.onMerge(DefaultMergeEventListener.java:70)
+	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:102)
+	at org.hibernate.internal.SessionImpl.fireMerge(SessionImpl.java:794)
+	at org.hibernate.internal.SessionImpl.merge(SessionImpl.java:781)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.orm.jpa.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler.invoke(SharedEntityManagerCreator.java:314)
+	at com.sun.proxy.$Proxy91.merge(Unknown Source)
+	at org.springframework.data.jpa.repository.support.SimpleJpaRepository.save(SimpleJpaRepository.java:557)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.data.repository.core.support.ImplementationInvocationMetadata.invoke(ImplementationInvocationMetadata.java:72)
+	at org.springframework.data.repository.core.support.RepositoryComposition$RepositoryFragments.invoke(RepositoryComposition.java:382)
+	at org.springframework.data.repository.core.support.RepositoryComposition.invoke(RepositoryComposition.java:205)
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport$ImplementationMethodExecutionInterceptor.invoke(RepositoryFactorySupport.java:549)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.doInvoke(QueryExecutorMethodInterceptor.java:155)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.invoke(QueryExecutorMethodInterceptor.java:130)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor.invoke(DefaultMethodInvokingMethodInterceptor.java:80)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:367)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:118)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:139)
+	... 86 common frames omitted
+18:02:44.082 [INFO ] withus.WithusApplication - Starting WithusApplication on DESKTOP-L9L0C2V with PID 13792 (C:\Users\seokm\OneDrive\바탕 화면\workspace\withus\build\classes\java\main started by seokm in C:\Users\seokm\OneDrive\바탕 화면\workspace\withus)
+18:02:44.085 [INFO ] withus.WithusApplication - No active profile set, falling back to default profiles: default
+18:02:44.476 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+18:02:44.515 [INFO ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 33ms. Found 4 JPA repository interfaces.
+18:02:45.002 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+18:02:45.008 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+18:02:45.008 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+18:02:45.008 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+18:02:45.087 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+18:02:45.087 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 964 ms
+18:02:45.220 [INFO ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+18:02:45.250 [INFO ] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+18:02:45.399 [INFO ] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+18:02:45.464 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+18:02:45.748 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+18:02:45.763 [INFO ] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+18:02:46.133 [INFO ] org.hibernate.tuple.PojoInstantiator - HHH000182: No default (no-argument) constructor for class: withus.entity.Tbl_medication_alarm (class must be instantiated by Interceptor)
+18:02:46.237 [INFO ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+18:02:46.243 [INFO ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+18:02:46.669 [INFO ] o.s.s.web.DefaultSecurityFilterChain - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@50bf795f, org.springframework.security.web.context.SecurityContextPersistenceFilter@261275ae, org.springframework.security.web.header.HeaderWriterFilter@314f59b, org.springframework.security.web.authentication.logout.LogoutFilter@35e07e19, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@47fa3671, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@49986178, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@34beadce, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@66d2885c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@29fcfc54, org.springframework.security.web.session.SessionManagementFilter@7f012923, org.springframework.security.web.access.ExceptionTranslationFilter@3ce7394f, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@2987d0fa]
+18:02:46.857 [INFO ] o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+18:02:46.896 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+18:02:46.909 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+18:02:46.918 [INFO ] withus.WithusApplication - Started WithusApplication in 3.081 seconds (JVM running for 3.727)
+18:03:01.868 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+18:03:01.868 [INFO ] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+18:03:01.873 [INFO ] o.s.web.servlet.DispatcherServlet - Completed initialization in 5 ms

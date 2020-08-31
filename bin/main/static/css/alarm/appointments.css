@@ -1,0 +1,7 @@
+#body div {
+	height: 50%;
+}
+
+.hidden {
+	visibility: hidden;
+}

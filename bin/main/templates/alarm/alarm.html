@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<head>
+	<meta charset="UTF-8">
+	<link th:href="@{/css/header.css}" rel="stylesheet">
+	<link th:href="@{/css/alarm/alarm.css}" rel="stylesheet">
+	<title>알람</title>
+</head>
+<body>
+	<div th:replace="header :: #header"></div>
+	<div id="body">
+		<div id="level-1" class="level">
+			<a th:href="@{/pill}" class="icon">
+				<img th:src="@{/images/alarm/pill.png}">
+				<button>복약</button>
+			</a>
+		</div>
+		<div id="level-2" class="level">
+			<a th:href="@{/appointments}" class="icon">
+				<img th:src="@{/images/alarm/appointments.png}">
+				<button>외래 방문 시간</button>
+			</a>
+		</div>
+	</div>
+</body>
+</html>

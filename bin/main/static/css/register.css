@@ -1,0 +1,92 @@
+#MemberInfo {
+	text-align: center;
+	font-size: 40px;
+}
+#GmemberInfo {
+	text-align: center;
+	font-size: 40px;
+}
+
+#user-wrap {
+	display: flex;
+	width: fit-content;
+	margin: 100px auto;
+}
+
+.user {
+	width: 350px;
+	display: table;
+}
+
+#patientId, #caregiver {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+[type=radio] {
+	position: absolute;
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+/* IMAGE STYLES */
+[type=radio] + img {
+	cursor: pointer;
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked + div {
+	outline: 5px solid #ffc000;
+}
+
+[type=radio]:checked + span {
+	background: #c5e0b4;
+}
+
+label img {
+	width: 130px;
+}
+
+[type=text], [type=password], [type=number], [type=date] {
+	width: 400px;
+	height: 70px;
+	font-size: 40px;
+	border-radius: 15px;
+}
+
+.input-container {
+	width: fit-content;
+	display: grid;
+	grid-auto-flow: column;
+	margin: 20px auto;
+}
+
+.label {
+	width: 200px;
+	text-align: left;
+	font-weight: bold;
+}
+
+.gender {
+	width: 400px;
+	height: 75px;
+	display: flex;
+	justify-content: space-between;
+	margin-top: 15px;
+}
+
+#MALE, #FEMALE {
+	border: 1px solid black;
+	border-radius: 15px;
+	padding: 10px 40px;
+}
+
+[type=submit] {
+	border: 1px solid #00b050;
+	background: #c5e0b4;
+	font-size: 50px;
+	padding: 10px 50px;
+	border-radius: 15px;
+	margin-top: 100px;
+}
