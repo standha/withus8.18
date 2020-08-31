@@ -1,4 +1,4 @@
-function onFormSubmission(form) {
+/*function onFormSubmission(form) {
 	const id = form.querySelector("input[name=id]").value;
 	const enabled = form.querySelector("input[name=enabled]").checked;
 	const breakfast = form.querySelector("input[name=breakfast]").value;
@@ -74,3 +74,4 @@ function showHistory() {
 	const element = document.querySelector("#pill-history-get-action");
 	location.href = element.value;
 }
+*/

@@ -5,6 +5,9 @@ import java.time.Month;
 import java.time.Year;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
+import com.sun.org.apache.xpath.internal.operations.Mod;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -19,201 +22,50 @@ import org.springframework.web.servlet.ModelAndView;
 import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
-import withus.dto.alarm.PillHistoryDto;
-import withus.entity.User;
-import withus.entity.alarm.Appointment;
-import withus.entity.alarm.Pill;
-import withus.entity.alarm.PillHistory;
+import withus.entity.Tbl_medication_alarm;
+import withus.entity.Tbl_patient;
 import withus.service.AlarmService;
 import withus.service.UserService;
 import withus.util.Utility;
 
 @Controller
-public class AlarmController extends BaseController {
-	private final AlarmService alarmService;
+public class AlarmController extends BaseController{
+    private final AlarmService alarmService;
 
-	@Autowired
-	public AlarmController(AuthenticationFacade authenticationFacade, UserService userService, AlarmService alarmService) {
-		super(userService, authenticationFacade);
+    @Autowired
+    public AlarmController(AuthenticationFacade authenticationFacade, UserService userService, AlarmService alarmService){
+        super(userService, authenticationFacade);
 
-		this.alarmService = alarmService;
-	}
+        this.alarmService = alarmService;
 
-	@GetMapping("/alarm")
-	@Statistical
-	public ModelAndView getAlarm() {
-		ModelAndView modelAndView = new ModelAndView("alarm/alarm");
-		modelAndView.addObject("previousUrl", "/home");
+    }
 
-		return modelAndView;
-	}
+    @GetMapping("/alarm")
+    @Statistical
+    public ModelAndView getAlarm() {
+        ModelAndView modelAndView = new ModelAndView("alarm/alarm");
+        modelAndView.addObject("previousUrl", "/home");
 
-	@GetMapping("/pill")
-	@Statistical
-	public ModelAndView getPill() {
-		ModelAndView modelAndView = new ModelAndView("alarm/pill");
-		User user = getUser();
+        return modelAndView;
+    }
 
-		Pill pill = alarmService.getPillByUser(user);
+    @GetMapping("/medicationAlarm")
+    @Statistical
+    public ModelAndView getMedicationAlarm(){
+        ModelAndView modelAndView = new ModelAndView("alarm/medicationAlarm");
+        Tbl_patient tbl_patient = getTbl_patient();
+     //   Tbl_medication_alarm tbl_medication_alarm = alarmService.getMedicationAlarmByPatient(tbl_patient);
 
-		modelAndView.addObject("pill", pill);
-		modelAndView.addObject("previousUrl", "/alarm");
+       // modelAndView.addObject("medicationAlarm",tbl_medication_alarm);
+        modelAndView.addObject("previousUrl","/alarm");
 
-		return modelAndView;
-	}
-	@PostMapping(value = "/pill", consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public Result<Pill> postPill(@RequestBody Pill pill) {
-		User user = getUser();
-		pill.setUser(user);
-
-		Result.Code code;
-		Pill saved = null;
-		try {
-			saved = alarmService.upsertPill(pill);
-			code = Result.Code.OK;
-		} catch (Exception exception) {
-			logger.error(exception.getLocalizedMessage(), exception);
-
-			code = Result.Code.ERROR_DATABASE;
-		}
-
-		return Result.<Pill>builder()
-			.setCode(code)
-			.setData(saved)
-			.create();
-	}
-
-	@GetMapping("/pill-history")
-	public ModelAndView getPillHistory(@RequestParam(required = false) Integer year, @RequestParam(required = false) Integer month) {
-		ModelAndView modelAndView = new ModelAndView("alarm/pill-history");
-
-		User user = getUser();
-
-		List<PillHistory> pillHistories;
-		if (year == null || month == null) {
-			pillHistories = alarmService.getFinishedPillHistoriesByUser(user);
-		} else {
-			pillHistories = alarmService.getFinishedPillHistoriesByUserYearMonth(user, Year.of(year), Month.of(month));
-		}
-
-		modelAndView.addObject("pillHistories", pillHistories);
-		modelAndView.addObject("previousUrl", "/alarm");
-
-		return modelAndView;
-	}
-	@PutMapping(value = "/pill-history", consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public Result<PillHistory> putPillHistory(@RequestBody PillHistoryDto pillHistoryDto) {
-		User user = getUser();
-
-		Result.Code code;
-		PillHistory saved = null;
-
-		Long pillId = pillHistoryDto.getPillId();
-		if (pillId == null) {
-			code = Result.Code.ERROR_MODIFYING_NULL;
-		} else {
-			Pill existingPill = alarmService.getPillById(pillId);
-			if (existingPill == null) {
-				code = Result.Code.ERROR_MODIFYING_NULL;
-			} else {
-				LocalDate today = LocalDate.now();
-				Boolean finishedValue = pillHistoryDto.getFinished();
-				boolean finished = (finishedValue != null && finishedValue);
-
-				PillHistory pillHistory = alarmService.getPillHistoryByUserDate(user, today);
-				if (pillHistory == null) {
-					pillHistory = PillHistory.builder()
-						.setPill(existingPill)
-						.setDate(today)
-						.create();
-				}
-
-				pillHistory.setFinished(finished);
-
-				try {
-					saved = alarmService.upsertPillHistory(pillHistory);
-					code = Result.Code.OK;
-				} catch (Exception exception) {
-					logger.error(exception.getLocalizedMessage(), exception);
-
-					code = Result.Code.ERROR_DATABASE;
-				}
-			}
-		}
-
-		return Result.<PillHistory>builder()
-			.setCode(code)
-			.setData(saved)
-			.create();
-	}
-
-	@GetMapping("/appointments")
-	@Statistical
-	public ModelAndView getAppointments(@RequestParam(required = false) Integer year, @RequestParam(required = false) Integer month) {
-		ModelAndView modelAndView = new ModelAndView("alarm/appointments");
-		User user = getUser();
-
-		List<Appointment> appointments;
-		if (year == null || month == null) {
-			appointments = alarmService.getAppointments(user);
-		} else {
-			appointments = alarmService.getAppointments(user, Year.of(year), Month.of(month));
-		}
-
-		modelAndView.addObject("appointments", appointments);
-		modelAndView.addObject("previousUrl", "/alarm");
-
-		return modelAndView;
-	}
-	@GetMapping(value = "/appointment/{dateString}", produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public Result<Appointment> getAppointment(@PathVariable String dateString) {
-		User user = getUser();
-
-		LocalDate date = Utility.parseDate(dateString);
-
-		Result.Code code;
-		Appointment appointment = null;
-		try {
-			appointment = alarmService.getAppointment(user, date);
-			if (appointment == null) {
-				code = Result.Code.OK_NULL;
-			} else {
-				code = Result.Code.OK;
-			}
-		} catch (Exception exception) {
-			logger.error(exception.getLocalizedMessage(), exception);
-
-			code = Result.Code.ERROR_DATABASE;
-		}
-
-		return Result.<Appointment>builder()
-			.setCode(code)
-			.setData(appointment)
-			.create();
-	}
-	@PostMapping("/appointment")
-	@ResponseBody
-	public Result<Appointment> postAppointment(@RequestBody Appointment appointment) {
-		User user = getUser();
-		appointment.setUser(user);
-
-		Result.Code code;
-		Appointment saved = null;
-		try {
-			saved = alarmService.upsertAppointment(appointment);
-			code = Result.Code.OK;
-		} catch (Exception exception) {
-			logger.error(exception.getLocalizedMessage(), exception);
-
-			code = Result.Code.ERROR_DATABASE;
-		}
-
-		return Result.<Appointment>builder()
-			.setCode(code)
-			.setData(saved)
-			.create();
-	}
+        return modelAndView;
+    }
+  /*
+    @PostMapping(value = "/medicationAlarm", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Result<Tbl_medication_alarm> postMedicationAlarm(@RequestBody Tbl_medication_alarm tbl_medication_alarm){
+        Tbl_patient tbl_patient = getTbl_patient();
+        tbl_medication_alarm.setRegistra
+    }*/
 }

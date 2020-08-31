@@ -1,4 +1,4 @@
-package withus.entity.alarm;
+/*package withus.entity.alarm;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -14,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import withus.configuration.JsonIgnore;
-import withus.entity.User;
 import withus.util.Utility;
 
 @Entity
@@ -59,7 +58,7 @@ public class Appointment {
 	}
 
 	public Appointment() { }
-	public Appointment(User user, boolean enabled, LocalDate date, LocalTime time) {
+	private Appointment(User user, boolean enabled, LocalDate date, LocalTime time) {
 		this.user = user;
 		this.enabled = enabled;
 		this.date = date;
@@ -76,4 +75,37 @@ public class Appointment {
 
 	public String getDateString() { return Utility.format(date); }
 	public String getTimeString() { return Utility.format(time); }
+
+	public static Builder builder() {
+		return new Builder();
+	}
+
+	public static class Builder {
+		private User user;
+		private boolean enabled;
+		private LocalDate date;
+		private LocalTime time;
+
+		public Builder setUser(User user) {
+			this.user = user;
+			return this;
+		}
+		public Builder setEnabled(boolean enabled) {
+			this.enabled = enabled;
+			return this;
+		}
+		public Builder setDate(LocalDate date) {
+			this.date = date;
+			return this;
+		}
+		public Builder setTime(LocalTime time) {
+			this.time = time;
+			return this;
+		}
+
+		public Appointment createAppointment() {
+			return new Appointment(user, enabled, date, time);
+		}
+	}
 }
+*/

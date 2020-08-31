@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import withus.auth.AuthenticationFacade;
-import withus.entity.User;
+import withus.entity.Tbl_patient;
 import withus.service.UserService;
 
 public class BaseController {
@@ -23,7 +23,7 @@ public class BaseController {
 	protected String getUsername() {
 		return authenticationFacade.getAuthentication().getName();
 	}
-	protected User getUser() {
+	protected Tbl_patient getTbl_patient() {
 		return userService.getUserById(getUsername());
 	}
 }

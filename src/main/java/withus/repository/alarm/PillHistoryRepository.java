@@ -1,4 +1,4 @@
-package withus.repository.alarm;
+/*package withus.repository.alarm;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import withus.entity.User;
 import withus.entity.alarm.Pill;
 import withus.entity.alarm.PillHistory;
 
@@ -28,3 +27,4 @@ public interface PillHistoryRepository extends JpaRepository<PillHistory, Long> 
 	@Transactional(readOnly = true)
 	Optional<PillHistory> findTopByPillUserAndDateOrderByIdDesc(User user, LocalDate date);
 }
+*/

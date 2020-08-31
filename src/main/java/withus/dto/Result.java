@@ -28,7 +28,7 @@ public class Result<T> {
 			return this;
 		}
 
-		public Result<T> create() {
+		public Result<T> createResult() {
 			return new Result<>(code, data);
 		}
 	}
@@ -39,6 +39,9 @@ public class Result<T> {
 		ERROR,
 		ERROR_DUPLICATE_ID,
 		ERROR_DUPLICATE_CONTACT,
+		ERROR_DUPLICATE_GCONTACT,
+		ERROR_DUPICATE_GID,
+		ERROR_DUPLICATE_GTELL,
 		ERROR_NO_EXIST_CAREGIVER,
 		ERROR_DATABASE,
 		ERROR_MODIFYING_NULL

@@ -1,4 +1,4 @@
-package withus.entity.alarm;
+/*package withus.entity.alarm;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -83,8 +83,9 @@ public class PillHistory {
 			this.finished = finished;
 			return this;
 		}
-		public PillHistory create() {
+		public PillHistory createPillHistory() {
 			return new PillHistory(pill, date, finished);
 		}
 	}
 }
+*/
