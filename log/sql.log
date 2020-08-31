@@ -1,6 +1,0 @@
-12:17:37.398 [DEBUG] org.hibernate.SQL - create table tbl_guardian (registration_count integer not null, gapp_token VARCHAR(256), gname VARCHAR(20), gpassword VARCHAR(20), gtell VARCHAR(20), guardian VARCHAR(20), linked_user_id VARCHAR(20), primary key (registration_count)) engine=InnoDB
-12:17:37.457 [DEBUG] org.hibernate.SQL - create table tbl_patient (registration_count integer not null auto_increment, app_token VARCHAR(256), birthday DATE, contact VARCHAR(20), gcontact VARCHAR(20), gender VARCHAR(8), name VARCHAR(20), password VARCHAR(20), patient VARCHAR(128), primary key (registration_count)) engine=InnoDB
-12:17:37.474 [DEBUG] org.hibernate.SQL - alter table tbl_guardian drop index UKtrmec210r0gu231xnbw70hb3c
-12:17:37.509 [DEBUG] org.hibernate.SQL - alter table tbl_guardian add constraint UKtrmec210r0gu231xnbw70hb3c unique (gtell)
-12:17:37.537 [DEBUG] org.hibernate.SQL - alter table tbl_patient drop index UKjf5f0fyb3snja0cx7hqithg14
-12:17:37.542 [DEBUG] org.hibernate.SQL - alter table tbl_patient add constraint UKjf5f0fyb3snja0cx7hqithg14 unique (gcontact, contact, patient)

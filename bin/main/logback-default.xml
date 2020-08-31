@@ -1,6 +1,0 @@
-<included>
-	<!-- 기존 log 정보 <property name="LOG_HOME" value="/home/withus/logs"/> -->
-	<!-- <property name="LOG_HOME" value="/Users/sexysuckmin/Desktop/working/withus/log/"/>-->
-	<property name="LOG_HOME" value="D:\projectWork\log_home"/>
-	<!--수정수정-->
-</included>
