@@ -1338,3 +1338,4 @@ Identify and stop the process that's listening on port 8080 or configure this ap
 15:53:40.408 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 15:53:40.409 [INFO ] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 15:53:40.414 [INFO ] o.s.web.servlet.DispatcherServlet - Completed initialization in 5 ms
+17:02:03.480 [WARN ] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m56s834ms325?s300ns).
