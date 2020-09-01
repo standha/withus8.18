@@ -1,13 +1,20 @@
 package withus.entity;
 
-
-import lombok.*;
-
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.criteria.CriteriaBuilder;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Builder(toBuilder = true)
@@ -33,4 +40,10 @@ public class Tbl_blood_pressure_pulse {
     @Column(name = "pulse")
     private Integer pulse;
 
+    @Column(columnDefinition = "DATE")
+    private LocalDate date;
+
+    @ManyToOne
+    @JoinColumn(name = "patient_registration_count", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private Tbl_patient patient;
 }
