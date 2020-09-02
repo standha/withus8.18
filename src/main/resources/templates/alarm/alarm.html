@@ -7,20 +7,20 @@
 	<title>알람</title>
 </head>
 <body>
-	<div th:replace="header :: #header"></div>
-	<div id="body">
-		<div id="level-1" class="level">
-			<a th:href="@{/pill}" class="icon">
-				<img th:src="@{/images/alarm/pill.png}">
-				<button>복약</button>
-			</a>
-		</div>
-		<div id="level-2" class="level">
-			<a th:href="@{/appointments}" class="icon">
-				<img th:src="@{/images/alarm/appointments.png}">
-				<button>외래 방문 시간</button>
-			</a>
-		</div>
+<div th:replace="header :: #header"></div>
+<div id="body">
+	<div id="level-1" class="level">
+		<a th:href="@{/medicationAlarm.html}" class="icon">
+			<img th:src="@{/images/alarm/pill.png}">
+			<button>복약</button>
+		</a>
 	</div>
+	<div id="level-2" class="level">
+		<a th:href="@{/appointments}" class="icon">
+			<img th:src="@{/images/alarm/appointments.png}">
+			<button>외래 방문 시간</button>
+		</a>
+	</div>
+</div>
 </body>
 </html>

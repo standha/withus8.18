@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 import javax.persistence.Column;
-import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
@@ -24,12 +24,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-@Table(
-	indexes = {
-		@Index(columnList = "id,password"),
-		@Index(columnList = "type")
-	}
-)
+@Table(indexes = @Index(columnList = "id,password"))
 public class User implements Serializable, UserDetails {
 	@Id
 	@Column(columnDefinition = "VARCHAR(128) NOT NULL", length = 128)
@@ -39,11 +34,14 @@ public class User implements Serializable, UserDetails {
 	@Column(columnDefinition = "VARCHAR(255) NOT NULL")
 	private String password;
 
-	@Column(columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP")
-	private LocalDateTime registrationDateTime = LocalDateTime.now();
+
 
 	@Column(columnDefinition = "VARCHAR(32) NOT NULL", length = 32)
 	private String name;
+
+	@Column(columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP")
+	private LocalDateTime registrationDateTime = LocalDateTime.now();
+
 
 	@Column(columnDefinition = "VARCHAR(32) NOT NULL", length = 32, unique = true)
 	@NonNull
@@ -58,20 +56,23 @@ public class User implements Serializable, UserDetails {
 	@Nullable
 	private Gender gender;
 
+	@Column(columnDefinition = "VARCHAR(256)", length = 256)
+	@Nullable
+	private String appToken;
+
 	@Column(columnDefinition = "VARCHAR(16) NOT NULL", length = 16)
 	@Enumerated(EnumType.STRING)
 	private Type type;
 
 	@OneToOne
-	@JoinColumn(name = "caregiver_contact", columnDefinition = "VARCHAR(32)", referencedColumnName = "contact", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+	@JoinColumn(name = "caregiver_contact", columnDefinition = "VARCHAR(32)", referencedColumnName = "contact")
 	@Nullable
 	private User caregiver;
 
 	public User() { }
-	private User(@NonNull String id, String password, LocalDateTime registrationDateTime, String name, @NonNull String contact, @Nullable LocalDate birthdate, @Nullable Gender gender, Type type, @Nullable User caregiver) {
+	private User(@NonNull String id, String password, String name, @NonNull String contact, @Nullable LocalDate birthdate, @Nullable Gender gender, Type type, @Nullable User caregiver) {
 		this.id = id;
 		this.password = password;
-		this.registrationDateTime = registrationDateTime;
 		this.name = name;
 		this.contact = contact;
 		this.birthdate = birthdate;
@@ -114,7 +115,6 @@ public class User implements Serializable, UserDetails {
 	@NonNull
 	public String getId() { return id; }
 
-	public LocalDateTime getRegistrationDateTime() { return registrationDateTime; }
 	public String getName() { return name; }
 	@NonNull
 	public String getContact() { return contact; }
@@ -144,7 +144,7 @@ public class User implements Serializable, UserDetails {
 	public static class Builder {
 		private String id;
 		private String password;
-		private LocalDateTime registrationDateTime = LocalDateTime.now();
+
 		private String name;
 		private String contact;
 		private LocalDate birthdate;
@@ -160,10 +160,7 @@ public class User implements Serializable, UserDetails {
 			this.password = password;
 			return this;
 		}
-		public Builder setRegistrationDateTime(LocalDateTime registrationDateTime) {
-			this.registrationDateTime = registrationDateTime;
-			return this;
-		}
+
 		public Builder setName(String name) {
 			this.name = name;
 			return this;
@@ -189,8 +186,8 @@ public class User implements Serializable, UserDetails {
 			return this;
 		}
 
-		public User create() {
-			return new User(id, password, registrationDateTime, name, contact, birthdate, gender, type, caregiver);
+		public User createUser() {
+			return new User(id, password, name, contact, birthdate, gender, type, caregiver);
 		}
 	}
 }

@@ -83,7 +83,7 @@ public class PillHistory {
 			this.finished = finished;
 			return this;
 		}
-		public PillHistory create() {
+		public PillHistory createPillHistory() {
 			return new PillHistory(pill, date, finished);
 		}
 	}

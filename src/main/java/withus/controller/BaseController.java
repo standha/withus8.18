@@ -26,4 +26,8 @@ public class BaseController {
 	protected User getUser() {
 		return userService.getUserById(getUsername());
 	}
+	protected String getPatientContact() {
+		return getUser().getContact();
+	}
+
 }

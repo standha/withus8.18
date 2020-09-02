@@ -23,7 +23,7 @@ public class PasswordEncoderTest {
 		.setContact("010")
 		.setName("name")
 		.setType(User.Type.PATIENT)
-		.create();
+		.createUser();
 
 	@Test
 	public void testNoOpPasswordEncoder() {

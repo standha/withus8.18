@@ -12,9 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.Builder;
+import lombok.Getter;
 import withus.configuration.JsonIgnore;
 import withus.entity.User;
 import withus.util.Utility;
+
 
 @Entity
 @Table(indexes = @Index(columnList = "enabled,breakfast,lunch,dinner"))
@@ -81,4 +84,46 @@ public class Pill {
 	public String getBreakfastString() { return Utility.format(breakfast); }
 	public String getLunchString() { return Utility.format(lunch); }
 	public String getDinnerString() { return Utility.format(dinner); }
+
+	public static Builder builder() {
+		return new Builder();
+	}
+
+	public static class Builder {
+		private User user;
+		private String name;
+		private boolean enabled;
+		private LocalTime breakfast;
+		private LocalTime lunch;
+		private LocalTime dinner;
+
+		public Builder setUser(User user) {
+			this.user = user;
+			return this;
+		}
+		public Builder setName(String name) {
+			this.name = name;
+			return this;
+		}
+		public Builder setEnabled(boolean enabled) {
+			this.enabled = enabled;
+			return this;
+		}
+		public Builder setBreakfast(LocalTime breakfast) {
+			this.breakfast = breakfast;
+			return this;
+		}
+		public Builder setLunch(LocalTime lunch) {
+			this.lunch = lunch;
+			return this;
+		}
+		public Builder setDinner(LocalTime dinner) {
+			this.dinner = dinner;
+			return this;
+		}
+
+		public Pill createPill() {
+			return new Pill(user, name, enabled, breakfast, lunch, dinner);
+		}
+	}
 }

@@ -1,16 +1,15 @@
 function onFormSubmission(form) {
-	const id = form.querySelector("input[name=id]").value;
-	const enabled = form.querySelector("input[name=enabled]").checked;
-	const breakfast = form.querySelector("input[name=breakfast]").value;
-	const lunch = form.querySelector("input[name=lunch]").value;
-	const dinner = form.querySelector("input[name=dinner]").value;
+
+	const enabled = form.querySelector("input[name=medicationAlarmOnoff]").checked;
+	const breakfast = form.querySelector("input[name=medicationTimeMorning]").value;
+	const lunch = form.querySelector("input[name=medicationTimeLaunch]").value;
+	const dinner = form.querySelector("input[name=medicationTimeDinner]").value;
 
 	const body = {
-		id: id,
-		enabled: enabled,
-		breakfast: breakfast,
-		lunch: lunch,
-		dinner: dinner
+		medicationAlarmOnoff: enabled,
+		medicationTimeMorning: breakfast,
+		medicationTimeLaunch: lunch,
+		medicationTimeDinner: dinner
 	};
 
 	const url = form.action;
