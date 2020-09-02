@@ -36,8 +36,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					.permitAll()
 				.antMatchers("/registerUser", "/saveUser")
 					.permitAll()
-				.antMatchers("/registerGuardianUser", "/saveGuser")
-					.permitAll()
 				.anyRequest()
 					.authenticated()
 					.and()

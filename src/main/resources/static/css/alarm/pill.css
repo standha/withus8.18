@@ -51,13 +51,6 @@
 	height: 44%;
 	font-size: 44px;
 }
-#pill-form #gsubmit {
-	grid-row: 2;
-	grid-column: 2;
-	width: 60%;
-	height: 44%;
-	font-size: 44px;
-}
 
 #reminder-area {
 	text-align: center;

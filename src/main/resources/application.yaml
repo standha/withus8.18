@@ -1,20 +1,13 @@
 server:
   port: 8080
   shutdown: graceful
-#수정수정#
+
 spring:
   application.name: Withus
   datasource:
-    #외부 local  jdbc 정보 home
-    #url: jdbc:mysql://localhost:3306/withus?serverTimezone=Asia/Seoul
-    #회사 local jdbc 정보 bluecore
-    url: jdbc:mysql://127.0.0.1/withus?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://192.168.0.223/withus?serverTimezone=Asia/Seoul
     username: withus
-    #password: root
-    #password : io2860277 -mac
-    #password : withus
-
-    password : withus
+    password: withus
     driver-class-name: com.mysql.cj.jdbc.Driver
     initialization-mode: never
     sql-script-encoding: UTF-8
@@ -26,9 +19,6 @@ spring:
     # you should always set that property to false
     # because it gives you no benefit at all.
     # https://stackoverflow.com/a/22977693/1986241
-    show-sql: true
+    show-sql: false
     hibernate:
-      ddl-auto: none
-    properties:
-      hibernate:
-       #naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+      ddl-auto: update

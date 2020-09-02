@@ -2,10 +2,6 @@
 	text-align: center;
 	font-size: 40px;
 }
-#GmemberInfo {
-	text-align: center;
-	font-size: 40px;
-}
 
 #user-wrap {
 	display: flex;
@@ -18,7 +14,7 @@
 	display: table;
 }
 
-#patientId, #caregiver {
+#patient, #caregiver {
 	display: table-cell;
 	vertical-align: middle;
 }
