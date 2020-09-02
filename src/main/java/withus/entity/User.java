@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +25,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-@Table(indexes = @Index(columnList = "id,password"))
+@Table(
+	indexes = {
+		@Index(columnList = "id,password"),
+		@Index(columnList = "type")
+	}
+)
 public class User implements Serializable, UserDetails {
 	@Id
 	@Column(columnDefinition = "VARCHAR(128) NOT NULL", length = 128)
@@ -58,7 +65,7 @@ public class User implements Serializable, UserDetails {
 	private Type type;
 
 	@OneToOne
-	@JoinColumn(name = "caregiver_contact", columnDefinition = "VARCHAR(32)", referencedColumnName = "contact")
+	@JoinColumn(name = "caregiver_contact", columnDefinition = "VARCHAR(32)", referencedColumnName = "contact", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
 	@Nullable
 	private User caregiver;
 
