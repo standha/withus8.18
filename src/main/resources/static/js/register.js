@@ -9,8 +9,8 @@ function onFormSubmission(form) {
 	const birthdateValue = form.querySelector("input[name=birthdate]").value;
 	const birthdate = isEmpty(birthdateValue) ? null : birthdateValue;
 
-	const sexElement = form.querySelector("input[name=sex]:checked");
-	const sex = sexElement? sexElement.value: null;
+	const genderElement = form.querySelector("input[name=gender]:checked");
+	const gender = genderElement? genderElement.value: null;
 
 	const caregiverValue = form.querySelector("input[name=caregiver]").value;
 	const user = {
@@ -27,7 +27,7 @@ function onFormSubmission(form) {
 		name: name,
 		contact: contact,
 		birthdate: birthdate,
-		sex: sex,
+		gender: gender,
 		type: userType,
 		caregiver: caregiver
 	};

@@ -18,7 +18,7 @@ public class HomeController extends BaseController{
 		super(userService, authenticationFacade);
 	}
 
-	@GetMapping({ "/home" })
+	@GetMapping({ "/", "/home" })
 	public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView modelAndView = new ModelAndView("home");
 		User user = getUser();

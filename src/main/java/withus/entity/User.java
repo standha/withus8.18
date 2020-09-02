@@ -2,6 +2,7 @@ package withus.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
@@ -11,8 +12,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
@@ -40,9 +39,8 @@ public class User implements Serializable, UserDetails {
 	@Column(columnDefinition = "VARCHAR(255) NOT NULL")
 	private String password;
 
-	@Column(columnDefinition = "INT(11)")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer ordinal;
+	@Column(columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP")
+	private LocalDateTime registrationDateTime = LocalDateTime.now();
 
 	@Column(columnDefinition = "VARCHAR(32) NOT NULL", length = 32)
 	private String name;
@@ -70,10 +68,10 @@ public class User implements Serializable, UserDetails {
 	private User caregiver;
 
 	public User() { }
-	private User(@NonNull String id, String password, Integer ordinal, String name, @NonNull String contact, @Nullable LocalDate birthdate, @Nullable Gender gender, Type type, @Nullable User caregiver) {
+	private User(@NonNull String id, String password, LocalDateTime registrationDateTime, String name, @NonNull String contact, @Nullable LocalDate birthdate, @Nullable Gender gender, Type type, @Nullable User caregiver) {
 		this.id = id;
 		this.password = password;
-		this.ordinal = ordinal;
+		this.registrationDateTime = registrationDateTime;
 		this.name = name;
 		this.contact = contact;
 		this.birthdate = birthdate;
@@ -116,7 +114,7 @@ public class User implements Serializable, UserDetails {
 	@NonNull
 	public String getId() { return id; }
 
-	public Integer getOrdinal() { return ordinal; }
+	public LocalDateTime getRegistrationDateTime() { return registrationDateTime; }
 	public String getName() { return name; }
 	@NonNull
 	public String getContact() { return contact; }
@@ -146,7 +144,7 @@ public class User implements Serializable, UserDetails {
 	public static class Builder {
 		private String id;
 		private String password;
-		private Integer ordinal;
+		private LocalDateTime registrationDateTime = LocalDateTime.now();
 		private String name;
 		private String contact;
 		private LocalDate birthdate;
@@ -162,8 +160,8 @@ public class User implements Serializable, UserDetails {
 			this.password = password;
 			return this;
 		}
-		public Builder setOrdinal(Integer ordinal) {
-			this.ordinal = ordinal;
+		public Builder setRegistrationDateTime(LocalDateTime registrationDateTime) {
+			this.registrationDateTime = registrationDateTime;
 			return this;
 		}
 		public Builder setName(String name) {
@@ -192,7 +190,7 @@ public class User implements Serializable, UserDetails {
 		}
 
 		public User create() {
-			return new User(id, password, ordinal, name, contact, birthdate, gender, type, caregiver);
+			return new User(id, password, registrationDateTime, name, contact, birthdate, gender, type, caregiver);
 		}
 	}
 }

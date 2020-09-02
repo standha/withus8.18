@@ -29,7 +29,7 @@ public class LoginController {
 		this.userService = userService;
 	}
 
-	@GetMapping({ "/", "/login" })
+	@GetMapping({ "/login" })
 	public ModelAndView getLogin(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView modelAndView = new ModelAndView("LogIn/login");
 
@@ -39,8 +39,6 @@ public class LoginController {
 	@GetMapping({ "/registerUser" })
 	public ModelAndView getRegisterPage(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView modelAndView = new ModelAndView("LogIn/register");
-		User user = new User();
-		modelAndView.addObject("user", user);
 		modelAndView.addObject("previousUrl", "LogIn/login");
 
 		return modelAndView;
