@@ -27,26 +27,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Override
-	protected void configure(HttpSecurity httpSecurity) throws Exception {
+	protected void configure(HttpSecurity httpSecurity) throws Exception
+	{
 		httpSecurity
 			.csrf()
 				.disable()
 			.authorizeRequests()
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
 					.permitAll()
-				.antMatchers("/registerUser", "/saveUser", "/admin", "/login")
+				.antMatchers("/registerUser", "/saveUser")
 					.permitAll()
 				.anyRequest()
 					.authenticated()
 					.and()
 			.formLogin()
-				.loginPage("/admin")
-				.loginProcessingUrl("/admin-login-process")
-				.defaultSuccessUrl("/adminHome", true)
-				.permitAll()
 				.loginPage("/login")
 				.loginProcessingUrl("/login-process")
-				.defaultSuccessUrl("/home", true)
+				.defaultSuccessUrl("/center", true)
 				.permitAll()
 				.and()
 			.rememberMe()
