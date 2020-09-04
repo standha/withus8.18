@@ -1,22 +1,27 @@
 package withus.controller;
 
+import org.aspectj.weaver.ast.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
-import withus.entity.Tbl_medication_alarm;
-import withus.entity.Tbl_outpatient_visit_alarm;
-import withus.entity.User;
+import withus.entity.*;
 import withus.service.AlarmService;
 import withus.service.UserService;
+import withus.util.Utility;
+
+import javax.jws.WebParam;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class AlarmController extends BaseController{
@@ -36,7 +41,7 @@ public class AlarmController extends BaseController{
         ModelAndView modelAndView = new ModelAndView("alarm/alarm");
         String user = getUsername();
         modelAndView.addObject("previousUrl", "/home");
-        System.out.println("alarm Count :  : "+user);
+        System.out.println("UserName : "+user);
         return modelAndView;
     }
 
@@ -47,13 +52,22 @@ public class AlarmController extends BaseController{
         User user = getUser();
         String patientContact = getPatientContact();
         String userId = getUsername();
-        System.out.println("보호자의 환자의 아이디 : " + patientContact);
         modelAndView.addObject("medicationAlarm",userId);
         modelAndView.addObject("previousUrl","/alarm");
 
         return modelAndView;
     }
+    @GetMapping("/pill-history")
+    public ModelAndView getPillHistory(@RequestParam(required = false) Integer year, @RequestParam(required = false) Integer month) {
+        ModelAndView modelAndView = new ModelAndView("alarm/pill-history");
+        String username = getUsername();
+        List<Tbl_medication_record> pillHistories;
+        pillHistories  = alarmService.getFinishedRecord(username);
+        modelAndView.addObject("pillHistories", pillHistories);
+        modelAndView.addObject("previousUrl", "/alarm");
 
+        return modelAndView;
+    }
     @PostMapping(value = "/medicationAlarm", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<Tbl_medication_alarm> postMedicationAlarm(@RequestBody Tbl_medication_alarm tbl_medication_alarm){
@@ -75,6 +89,25 @@ public class AlarmController extends BaseController{
                 .setData(seved)
                 .createResult();
     }
+    @PutMapping(value = "/pill-history", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Result<Tbl_medication_record> getPillHistoryTrue(@RequestBody Tbl_medication_record tbl_medication_record) {
+        String userId = getUsername();
+        tbl_medication_record.setPk(new RecordKey(userId, LocalDate.now()));
+        Result.Code code;
+        Tbl_medication_record saved = null;
+        try {
+            saved = alarmService.upsertTrueRecord(tbl_medication_record);
+            code = Result.Code.OK;
+        } catch (Exception exception) {
+            logger.error(exception.getLocalizedMessage(), exception);
+            code = Result.Code.ERROR_DATABASE;
+        }
+        return Result.<Tbl_medication_record>builder()
+                .setCode(code)
+                .setData(saved)
+                .createResult();
+    }
 
     @GetMapping("/appointments")
     @Statistical
@@ -83,7 +116,6 @@ public class AlarmController extends BaseController{
         User user = getUser();
         String patientContact = getPatientContact();
         String userId = getUsername();
-        System.out.println("보호자의 환자의 아이디 : " + patientContact);
         modelAndView.addObject("appointments",userId);
         modelAndView.addObject("previousUrl","/alarm");
 

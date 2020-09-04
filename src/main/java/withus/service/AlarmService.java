@@ -4,23 +4,35 @@ package withus.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
-import withus.entity.Tbl_medication_alarm;
-import withus.entity.Tbl_outpatient_visit_alarm;
+import withus.entity.*;
 import withus.repository.MedicationAlarmRepository;
+import withus.repository.MedicationRecordRepository;
 import withus.repository.OutPatientVisitAlarmRepository;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.time.LocalDate;
+import java.util.List;
 
 
 @Service
 public class AlarmService{
     private final MedicationAlarmRepository medicationAlarmRepository;
     private final OutPatientVisitAlarmRepository outPatientVisitAlarmRepository;
+    private final MedicationRecordRepository medicationRecordRepository;
+
 
     @Autowired
-    public AlarmService(MedicationAlarmRepository medicationAlarmRepository, OutPatientVisitAlarmRepository outPatientVisitAlarmRepository){
+    public AlarmService(MedicationRecordRepository medicationRecordRepository, MedicationAlarmRepository medicationAlarmRepository, OutPatientVisitAlarmRepository outPatientVisitAlarmRepository){
         this.medicationAlarmRepository = medicationAlarmRepository;
+        this.medicationRecordRepository = medicationRecordRepository;
         this.outPatientVisitAlarmRepository = outPatientVisitAlarmRepository;
     }
-
+    @Nonnull
+    public Tbl_medication_record upsertTrueRecord(Tbl_medication_record tbl_medication_record){
+        Tbl_medication_record saved = medicationRecordRepository.save(tbl_medication_record);
+        return saved;
+    }
     @NonNull
     public Tbl_medication_alarm upsertMedication(Tbl_medication_alarm tbl_medication_alarm){
         Tbl_medication_alarm found = medicationAlarmRepository.findById(tbl_medication_alarm.getId()).orElse(null);
@@ -28,7 +40,9 @@ public class AlarmService{
         found.setMedicationTimeLaunch(tbl_medication_alarm.getMedicationTimeLaunch());
         found.setMedicationTimeDinner(tbl_medication_alarm.getMedicationTimeDinner());
         found.setMedicationAlarmOnoff(tbl_medication_alarm.isMedicationAlarmOnoff());
-        return medicationAlarmRepository.save(found);
+
+        Tbl_medication_alarm saved = medicationAlarmRepository.save(tbl_medication_alarm);
+        return saved;
     }
     @NonNull
     public Tbl_outpatient_visit_alarm upsertOutPatientVisit(Tbl_outpatient_visit_alarm tbl_outpatient_visit_alarm) {
@@ -38,5 +52,8 @@ public class AlarmService{
         found.setOutPatientVisitTime(tbl_outpatient_visit_alarm.getOutPatientVisitTime());
         return outPatientVisitAlarmRepository.save(found);
     }
-
+    @Nullable
+    public List<Tbl_medication_record>getFinishedRecord(String id){
+        return medicationRecordRepository.findByPk_IdAndFinishedIsTrue(id);
+    }
 }
