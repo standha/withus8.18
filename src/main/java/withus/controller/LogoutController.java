@@ -1,34 +1,34 @@
-package withus.adminController;
+package withus.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
 import withus.entity.User;
+import withus.entity.User.Type;
 import withus.service.UserService;
 
 @Controller
-public class AdminHomeController extends AdminBaseController
+public class LogoutController extends BaseController
 {
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
+
 	@Autowired
-	public AdminHomeController(AuthenticationFacade authenticationFacade, UserService userService)
+	public LogoutController(AuthenticationFacade authenticationFacade, UserService userService)
 	{
 		super(userService, authenticationFacade);
 	}
 
-	@GetMapping({ "/adminHome" })
+	@GetMapping({ "/logout" })
 	public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response)
 	{
-		ModelAndView modelAndView = new ModelAndView("/Admin/admin_home");
-//		System.out.println("AAAAAAAAAAAAAAAAA : " + "["+ user.getId() +"]");
-//		User user = getUser();
-//		System.out.println("AAAAAAAAAAAAAAAAA : " + "["+ user.getId() +"]");
-//		modelAndView.addObject("user", user);
+		ModelAndView modelAndView = new ModelAndView("/logout");
 
 		return modelAndView;
 	}

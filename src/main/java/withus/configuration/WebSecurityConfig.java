@@ -11,6 +11,8 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 import withus.auth.NoOpPasswordEncoder;
 import withus.service.UserService;
 
@@ -42,6 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					.and()
 			.formLogin()
 				.loginPage("/login")
+				.loginPage("/admin")
 				.loginProcessingUrl("/login-process")
 				.defaultSuccessUrl("/center", true)
 				.permitAll()
@@ -51,6 +54,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.key(REMEMBER_ME_TOKEN)
 				.tokenValiditySeconds(Math.toIntExact(Duration.ofDays(30).getSeconds()))
 				.userDetailsService(userService);
+
+		httpSecurity
+			.logout()
+			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+			.logoutSuccessUrl("/logout")
+			.invalidateHttpSession(true);
+
 	}
 
 	@Bean
@@ -63,3 +73,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return authenticationProvider;
 	}
 }
+

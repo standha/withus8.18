@@ -16,12 +16,16 @@ import withus.repository.OutPatientVisitAlarmRepository;
 import withus.repository.UserRepository;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService implements UserDetailsService
+{
 	private final UserRepository userRepository;
 	private final MedicationAlarmRepository medicationAlarmRepository;
 	private final OutPatientVisitAlarmRepository outPatientVisitAlarmRepository;
+
 	@Autowired
-	public UserService(UserRepository userRepository, MedicationAlarmRepository medicationAlarmRepository, OutPatientVisitAlarmRepository outPatientVisitAlarmRepository) {
+	public UserService(UserRepository userRepository, MedicationAlarmRepository medicationAlarmRepository,
+			OutPatientVisitAlarmRepository outPatientVisitAlarmRepository)
+	{
 		this.userRepository = userRepository;
 		this.medicationAlarmRepository = medicationAlarmRepository;
 		this.outPatientVisitAlarmRepository = outPatientVisitAlarmRepository;
@@ -29,46 +33,50 @@ public class UserService implements UserDetailsService {
 
 	@Override
 	@NonNull
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return userRepository.findById(username).orElseThrow(() -> {
-				String message = String.format("Username \"%s\" does not exist!", username);
-				return new UsernameNotFoundException(message);
-			}
-		);
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
+	{
+		return userRepository.findById(username).orElseThrow(() ->
+		{
+			String message = String.format("Username \"%s\" does not exist!", username);
+			return new UsernameNotFoundException(message);
+		});
 	}
 
 	@Nullable
-	public User getUserById(String id) {
+	public User getUserById(String id)
+	{
 		return userRepository.findById(id).orElse(null);
 	}
 
 	@Nullable
-	public User getUserByContact(String contact) {
+	public User getUserByContact(String contact)
+	{
 		return userRepository.findByContact(contact).orElse(null);
 	}
 
 	@NonNull
-	public User upsertUser(User user) {
+	public User upsertUser(User user)
+	{
 		return userRepository.save(user);
 	}
+
 	@NonNull
-	public User upsertUserEncodingPassword(User user) {
+	public User upsertUserEncodingPassword(User user)
+	{
 		String plaintextPassword = user.getPassword();
 		NoOpPasswordEncoder noOpPasswordEncoder = NoOpPasswordEncoder.getInstance();
 		String encodedPassword = noOpPasswordEncoder.encode(plaintextPassword);
 		User saved = userRepository.save(user);
 		String checkType = user.getType().name();
 		System.out.println("Type of user is " + checkType + ".(now)");
-		if(checkType == "PATIENT") {
+		if (checkType == "PATIENT")
+		{
 			System.out.println("Making patient table to Id(String)");
-			Tbl_medication_alarm tbl_medication_alarm = Tbl_medication_alarm.builder()
-					.id(saved.getId())
-					.build();
+			Tbl_medication_alarm tbl_medication_alarm = Tbl_medication_alarm.builder().id(saved.getId()).build();
 			medicationAlarmRepository.save(tbl_medication_alarm);
 
 			Tbl_outpatient_visit_alarm tbl_outpatient_visit_alarm = Tbl_outpatient_visit_alarm.builder()
-					.id(saved.getId())
-					.build();
+					.id(saved.getId()).build();
 			outPatientVisitAlarmRepository.save(tbl_outpatient_visit_alarm);
 		}
 		return saved;
