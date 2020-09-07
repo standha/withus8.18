@@ -30,6 +30,12 @@ public class BaseController {
 	protected String getPatientContact() {
 		return getUser().getContact();
 	}
+
+	protected String[] getAllPatient()
+	{
+		return userService.getAllPatient();
+	}
+
 	@Nullable
 	protected User getCaretaker() {
 		return userService.getUserByCaregiverId(getUsername());

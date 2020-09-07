@@ -10,13 +10,9 @@ import org.hibernate.annotations.ColumnDefault;
 import withus.configuration.JsonIgnore;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.sql.DataSource;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
+
 
 @Entity
 @Builder(toBuilder = true)

@@ -36,7 +36,7 @@ public class AdminLoginController extends AdminBaseController
 	public ModelAndView getLogin(HttpServletRequest request, HttpServletResponse response)
 	{
 		System.out.println("AdminLoginController");
-		ModelAndView modelAndView = new ModelAndView("Admin/admin");
+		ModelAndView modelAndView = new ModelAndView("Login/admin_login");
 
 		return modelAndView;
 	}

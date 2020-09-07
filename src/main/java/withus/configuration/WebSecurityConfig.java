@@ -11,6 +11,8 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 import withus.auth.NoOpPasswordEncoder;
 import withus.service.UserService;
 
@@ -27,26 +29,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Override
-	protected void configure(HttpSecurity httpSecurity) throws Exception {
+	protected void configure(HttpSecurity httpSecurity) throws Exception
+	{
 		httpSecurity
 			.csrf()
 				.disable()
 			.authorizeRequests()
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
 					.permitAll()
-				.antMatchers("/registerUser", "/saveUser", "/admin", "/login")
+				.antMatchers("/registerUser", "/saveUser")
 					.permitAll()
 				.anyRequest()
 					.authenticated()
 					.and()
 			.formLogin()
-				.loginPage("/admin")
-				.loginProcessingUrl("/admin-login-process")
-				.defaultSuccessUrl("/adminHome", true)
-				.permitAll()
 				.loginPage("/login")
+				.loginPage("/admin")
 				.loginProcessingUrl("/login-process")
-				.defaultSuccessUrl("/home", true)
+				.defaultSuccessUrl("/center", true)
 				.permitAll()
 				.and()
 			.rememberMe()
@@ -54,6 +54,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.key(REMEMBER_ME_TOKEN)
 				.tokenValiditySeconds(Math.toIntExact(Duration.ofDays(30).getSeconds()))
 				.userDetailsService(userService);
+
+		httpSecurity
+			.logout()
+			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+			.logoutSuccessUrl("/logout")
+			.invalidateHttpSession(true);
+
 	}
 
 	@Bean
@@ -66,3 +73,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return authenticationProvider;
 	}
 }
+

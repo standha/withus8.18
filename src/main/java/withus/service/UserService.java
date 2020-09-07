@@ -79,4 +79,9 @@ public class UserService implements UserDetailsService {
 		return saved;
 
 	}
+
+	public String[] getAllPatient()
+	{
+		return userRepository.getAllPatient();
+	}
 }

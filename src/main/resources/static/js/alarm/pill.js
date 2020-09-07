@@ -31,7 +31,6 @@ function onFormSubmission(form) {
 
 function setFinished(finished) {
 	const body = {
-		pillId: document.querySelector("#pill-form input[name=id]").value,
 		finished: finished
 	};
 
