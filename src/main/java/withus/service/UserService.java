@@ -36,7 +36,6 @@ public class UserService implements UserDetailsService {
 			}
 		);
 	}
-
 	@Nullable
 	public User getUserById(String id) {
 		return userRepository.findById(id).orElse(null);
@@ -57,6 +56,7 @@ public class UserService implements UserDetailsService {
 		NoOpPasswordEncoder noOpPasswordEncoder = NoOpPasswordEncoder.getInstance();
 		String encodedPassword = noOpPasswordEncoder.encode(plaintextPassword);
 		User saved = userRepository.save(user);
+		User caregiver = new User();
 		String checkType = user.getType().name();
 		System.out.println("Type of user is " + checkType + ".(now)");
 		if(checkType == "PATIENT") {
