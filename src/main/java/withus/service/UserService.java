@@ -1,5 +1,7 @@
 package withus.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -80,8 +82,8 @@ public class UserService implements UserDetailsService {
 
 	}
 
-	public String[] getAllPatient()
+	public List<User> getAllPatient()
 	{
-		return userRepository.getAllPatient();
+		return userRepository.findAll();
 	}
 }

@@ -1,10 +1,10 @@
 package withus.adminController;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
-
-import antlr.collections.List;
 import withus.auth.AuthenticationFacade;
 import withus.entity.User;
 import withus.service.UserService;
@@ -41,7 +41,7 @@ public class AdminBaseController
 		return getUser().getContact();
 	}
 	
-	protected String[] getAllPatient()
+	protected List<User> getAllPatient()
 	{
 		return userService.getAllPatient();
 	}

@@ -3,6 +3,7 @@ package withus.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class CenterController extends BaseController
 		logger.info("center");
 		logger.debug("AAAAAAAAAAAAAAA get" + getAllPatient());
 		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-		System.out.println("AAAAAAAAAAAAAAA get" + String.join("| ", getAllPatient()));
+		System.out.println("AAAAAAAAAAAAAAA get" + new Gson().toJson(getAllPatient()));
 		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 
 		User user = getUser();
