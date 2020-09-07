@@ -18,12 +18,12 @@ public class PasswordEncoderTest {
 	private UserService userService;
 
 	private final User userWithPlaintextPassword = User.builder()
-		.setId("id")
-		.setPassword("password")
-		.setContact("010")
-		.setName("name")
-		.setType(User.Type.PATIENT)
-		.createUser();
+		.userId("id")
+		.password("password")
+		.contact("010")
+		.name("name")
+		.type(User.Type.PATIENT)
+		.build();
 
 	@Test
 	public void testNoOpPasswordEncoder() {

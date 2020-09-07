@@ -14,23 +14,23 @@ public class UserTest {
 	@Test
 	public void testUserRelation() {
 		User caregiver = User.builder()
-			.setId("son")
-			.setPassword("password")
-			.setName("son")
-			.setContact("5678")
-			.setType(User.Type.CAREGIVER)
-			.createUser();
+			.userId("son")
+			.password("password")
+			.name("son")
+			.contact("5678")
+			.type(User.Type.CAREGIVER)
+			.build();
 
 		User caretaker = User.builder()
-			.setId("patient")
-			.setPassword("password")
-			.setName("patient")
-			.setContact("1234")
-			.setType(User.Type.PATIENT)
-			.setBirthdate(LocalDate.of(2000, 2, 28))
-			.setGender(User.Gender.MALE)
-			.setCaregiver(caregiver)
-			.createUser();
+			.userId("patient")
+			.password("password")
+			.name("patient")
+			.contact("1234")
+			.type(User.Type.PATIENT)
+			.birthdate(LocalDate.of(2000, 2, 28))
+			.gender(User.Gender.MALE)
+			.caregiver(caregiver)
+			.build();
 
 		Assertions.assertThat(caretaker.getCaregiver().getContact()).isEqualTo("5678");
 	}

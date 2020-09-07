@@ -25,7 +25,7 @@ public class AdminHomeController extends AdminBaseController
 	{
 		ModelAndView modelAndView = new ModelAndView("home");
 		User user = getUser();
-		System.out.println("AAAAAAAAAAAAAAAAA : " + "["+ user.getId() +"]");
+		System.out.println("AAAAAAAAAAAAAAAAA : " + "["+ user.getUserId() +"]");
 		modelAndView.addObject("user", user);
 
 		return modelAndView;

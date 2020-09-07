@@ -2,6 +2,7 @@ package withus.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import withus.auth.AuthenticationFacade;
 import withus.entity.User;
@@ -21,7 +22,7 @@ public class BaseController {
 		return authenticationFacade.getAuthentication();
 	}
 	protected String getUsername() {
-		return authenticationFacade.getAuthentication().getName();
+		return getAuthentication().getName();
 	}
 	protected User getUser() {
 		return userService.getUserById(getUsername());
@@ -29,5 +30,8 @@ public class BaseController {
 	protected String getPatientContact() {
 		return getUser().getContact();
 	}
-
+	@Nullable
+	protected User getCaretaker() {
+		return userService.getUserByCaregiverId(getUsername());
+	}
 }
