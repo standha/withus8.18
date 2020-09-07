@@ -25,11 +25,16 @@ public class AdminHomeController extends AdminBaseController
 	public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response)
 	{
 		ModelAndView modelAndView = new ModelAndView("/Admin/admin_home");
+//		User user = getUser();
 //		System.out.println("AAAAAAAAAAAAAAAAA : " + "["+ user.getId() +"]");
 //		User user = getUser();
 //		System.out.println("AAAAAAAAAAAAAAAAA : " + "["+ user.getId() +"]");
 //		modelAndView.addObject("user", user);
+//		getAllPatient();
+		logger.debug("AAAAAAAAAAAAAAA");
+		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 
+//		logger.debug("AAAAAAAAAAAAAAA get" + getAllPatient());
 		return modelAndView;
 	}
 }

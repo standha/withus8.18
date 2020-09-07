@@ -1,5 +1,8 @@
 package withus.service;
 
+import javax.persistence.Embeddable;
+import javax.persistence.EntityManager;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -7,6 +10,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import com.mysql.cj.Query;
+
+import antlr.collections.List;
 import withus.auth.NoOpPasswordEncoder;
 import withus.entity.Tbl_medication_alarm;
 import withus.entity.Tbl_outpatient_visit_alarm;
@@ -81,5 +88,10 @@ public class UserService implements UserDetailsService
 		}
 		return saved;
 
+	}
+	
+	public String[] getAllPatient()
+	{
+		return userRepository.getAllPatient();
 	}
 }

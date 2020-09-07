@@ -23,9 +23,12 @@ import org.springframework.lang.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.mysql.cj.Query;
+
 @Entity
 @Table(indexes = @Index(columnList = "id,password"))
-public class User implements Serializable, UserDetails {
+public class User implements Serializable, UserDetails
+{
 	@Id
 	@Column(columnDefinition = "VARCHAR(128) NOT NULL", length = 128)
 	@NonNull
@@ -34,14 +37,11 @@ public class User implements Serializable, UserDetails {
 	@Column(columnDefinition = "VARCHAR(255) NOT NULL")
 	private String password;
 
-
-
 	@Column(columnDefinition = "VARCHAR(32) NOT NULL", length = 32)
 	private String name;
 
 	@Column(columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime registrationDateTime = LocalDateTime.now();
-
 
 	@Column(columnDefinition = "VARCHAR(32) NOT NULL", length = 32, unique = true)
 	@NonNull
@@ -69,8 +69,13 @@ public class User implements Serializable, UserDetails {
 	@Nullable
 	private User caregiver;
 
-	public User() { }
-	private User(@NonNull String id, String password, String name, @NonNull String contact, @Nullable LocalDate birthdate, @Nullable Gender gender, Type type, @Nullable User caregiver) {
+	public User()
+	{
+	}
+
+	private User(@NonNull String id, String password, String name, @NonNull String contact,
+			@Nullable LocalDate birthdate, @Nullable Gender gender, Type type, @Nullable User caregiver)
+	{
 		this.id = id;
 		this.password = password;
 		this.name = name;
@@ -82,66 +87,136 @@ public class User implements Serializable, UserDetails {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) { return true; }
-		if (o == null || getClass() != o.getClass()) { return false; }
+	public boolean equals(Object o)
+	{
+		if (this == o)
+		{
+			return true;
+		}
+		if (o == null || getClass() != o.getClass())
+		{
+			return false;
+		}
 
-		User user = (User)o;
+		User user = (User) o;
 		return id.equals(user.id);
 	}
 
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		return Objects.hash(id);
 	}
 
 	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
+	public Collection<? extends GrantedAuthority> getAuthorities()
+	{
 		return new ArrayList<>();
 	}
+
 	@Override
-	public String getPassword() { return password; }
+	public String getPassword()
+	{
+		return password;
+	}
+
 	@Override
-	public String getUsername() { return id; }
+	public String getUsername()
+	{
+		return id;
+	}
+
 	@Override
-	public boolean isAccountNonExpired() { return true; }
+	public boolean isAccountNonExpired()
+	{
+		return true;
+	}
+
 	@Override
-	public boolean isAccountNonLocked() { return true; }
+	public boolean isAccountNonLocked()
+	{
+		return true;
+	}
+
 	@Override
-	public boolean isCredentialsNonExpired() { return true; }
+	public boolean isCredentialsNonExpired()
+	{
+		return true;
+	}
+
 	@Override
-	public boolean isEnabled() { return true; }
+	public boolean isEnabled()
+	{
+		return true;
+	}
 
 	@NonNull
-	public String getId() { return id; }
+	public String getId()
+	{
+		return id;
+	}
 
-	public String getName() { return name; }
+	public String getName()
+	{
+		return name;
+	}
+
 	@NonNull
-	public String getContact() { return contact; }
-	@Nullable
-	public LocalDate getBirthdate() { return birthdate; }
-	@Nullable
-	public Gender getGender() { return gender; }
-	public Type getType() { return type; }
-	@Nullable
-	public User getCaregiver() { return caregiver; }
+	public String getContact()
+	{
+		return contact;
+	}
 
-	public void setPassword(String password) { this.password = password; }
-	public void setCaregiver(@Nullable User user) { this.caregiver = user;}
+	@Nullable
+	public LocalDate getBirthdate()
+	{
+		return birthdate;
+	}
 
-	public enum Gender {
+	@Nullable
+	public Gender getGender()
+	{
+		return gender;
+	}
+
+	public Type getType()
+	{
+		return type;
+	}
+
+	@Nullable
+	public User getCaregiver()
+	{
+		return caregiver;
+	}
+
+	public void setPassword(String password)
+	{
+		this.password = password;
+	}
+
+	public void setCaregiver(@Nullable User user)
+	{
+		this.caregiver = user;
+	}
+
+	public enum Gender
+	{
 		MALE, FEMALE
 	}
 
-	public enum Type {
+	public enum Type
+	{
 		PATIENT, CAREGIVER, ADMINISTRATOR
 	}
 
-	public static Builder builder() {
+	public static Builder builder()
+	{
 		return new Builder();
 	}
 
-	public static class Builder {
+	public static class Builder
+	{
 		private String id;
 		private String password;
 
@@ -152,41 +227,56 @@ public class User implements Serializable, UserDetails {
 		private Type type;
 		private User caregiver;
 
-		public Builder setId(String id) {
+		public Builder setId(String id)
+		{
 			this.id = id;
 			return this;
 		}
-		public Builder setPassword(String password) {
+
+		public Builder setPassword(String password)
+		{
 			this.password = password;
 			return this;
 		}
 
-		public Builder setName(String name) {
+		public Builder setName(String name)
+		{
 			this.name = name;
 			return this;
 		}
-		public Builder setContact(String contact) {
+
+		public Builder setContact(String contact)
+		{
 			this.contact = contact;
 			return this;
 		}
-		public Builder setBirthdate(LocalDate birthdate) {
+
+		public Builder setBirthdate(LocalDate birthdate)
+		{
 			this.birthdate = birthdate;
 			return this;
 		}
-		public Builder setGender(Gender gender) {
+
+		public Builder setGender(Gender gender)
+		{
 			this.gender = gender;
 			return this;
 		}
-		public Builder setType(Type type) {
+
+		public Builder setType(Type type)
+		{
 			this.type = type;
 			return this;
 		}
-		public Builder setCaregiver(User caregiver) {
+
+		public Builder setCaregiver(User caregiver)
+		{
 			this.caregiver = caregiver;
 			return this;
 		}
 
-		public User createUser() {
+		public User createUser()
+		{
 			return new User(id, password, name, contact, birthdate, gender, type, caregiver);
 		}
 	}

@@ -28,7 +28,12 @@ public class CenterController extends BaseController
 	@GetMapping({ "/center" })
 	public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response)
 	{
+
 		logger.info("center");
+		logger.debug("AAAAAAAAAAAAAAA get" + getAllPatient());
+		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		System.out.println("AAAAAAAAAAAAAAA get" + String.join("| ", getAllPatient()));
+		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 
 		User user = getUser();
 		ModelAndView modelAndView = new ModelAndView();
