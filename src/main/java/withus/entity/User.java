@@ -39,7 +39,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User implements Serializable, UserDetails {
 	@Id
 	@Column(name = "id", columnDefinition = "VARCHAR(128) NOT NULL", length = 128, unique = true)
-	@NonNull
 	@EqualsAndHashCode.Include
 	@Getter
 	private String userId;

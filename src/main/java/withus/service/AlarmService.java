@@ -35,11 +35,11 @@ public class AlarmService{
     }
     @NonNull
     public Tbl_medication_alarm upsertMedication(Tbl_medication_alarm tbl_medication_alarm){
-        Tbl_medication_alarm found = medicationAlarmRepository.findById(tbl_medication_alarm.getId()).orElse(null);
-        found.setMedicationTimeMorning(tbl_medication_alarm.getMedicationTimeMorning());
-        found.setMedicationTimeLaunch(tbl_medication_alarm.getMedicationTimeLaunch());
-        found.setMedicationTimeDinner(tbl_medication_alarm.getMedicationTimeDinner());
-        found.setMedicationAlarmOnoff(tbl_medication_alarm.isMedicationAlarmOnoff());
+            Tbl_medication_alarm found = medicationAlarmRepository.findById(tbl_medication_alarm.getId()).orElse(null);
+            found.setMedicationTimeMorning(tbl_medication_alarm.getMedicationTimeMorning());
+            found.setMedicationTimeLaunch(tbl_medication_alarm.getMedicationTimeLaunch());
+            found.setMedicationTimeDinner(tbl_medication_alarm.getMedicationTimeDinner());
+            found.setMedicationAlarmOnoff(tbl_medication_alarm.isMedicationAlarmOnoff());
 
         Tbl_medication_alarm saved = medicationAlarmRepository.save(tbl_medication_alarm);
         return saved;
@@ -52,6 +52,16 @@ public class AlarmService{
         found.setOutPatientVisitTime(tbl_outpatient_visit_alarm.getOutPatientVisitTime());
         return outPatientVisitAlarmRepository.save(found);
     }
+    @Nullable
+    public List<Tbl_medication_alarm> getPillAlarmOn(){
+        return medicationAlarmRepository.findByMedicationAlarmOnoffIsTrue();
+    }
+
+    @Nullable
+    public List<Tbl_outpatient_visit_alarm> getVisitAlarmOn(){
+        return outPatientVisitAlarmRepository.findByVisitAlarmIsTrue();
+    }
+
     @Nullable
     public List<Tbl_medication_record>getFinishedRecord(String id){
         return medicationRecordRepository.findByPk_IdAndFinishedIsTrue(id);
