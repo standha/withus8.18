@@ -57,7 +57,7 @@ public class WwithusEntry {
 	}
 
 	public static Matcher createMatcherForCode(String code) {
-		Pattern pattern = Pattern.compile("^[ \t\n]*w([0-9]+)d([0-9]+)_([0-9]+)(?:_[0-9]+?)?[ \t\n]*$", Pattern.CASE_INSENSITIVE);
+		Pattern pattern = Pattern.compile("^[ \t\n]*w([0-9]+)d([0-9]+)_([0-9]+)(?:_([0-9]+?))?[ \t\n]*$", Pattern.CASE_INSENSITIVE);
 		return pattern.matcher(code);
 	}
 
