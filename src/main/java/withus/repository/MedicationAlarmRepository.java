@@ -21,4 +21,7 @@ public interface MedicationAlarmRepository extends JpaRepository<Tbl_medication_
     @Nonnull
     Optional<Tbl_medication_alarm>findById(String id);
 
+    @Transactional(readOnly = true)
+    @Nonnull
+    List<Tbl_medication_alarm>findByMedicationAlarmOnoffIsTrue();
 }

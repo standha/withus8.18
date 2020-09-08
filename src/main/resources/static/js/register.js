@@ -13,6 +13,7 @@ function onFormSubmission(form) {
 	const sex = sexElement? sexElement.value: null;
 
 	const caregiverValue = form.querySelector("input[name=caregiver]").value;
+	const appToken = form.querySelector("input[name=appToken]").value;
 	const user = {
 		userId: null,
 		password: null,
@@ -29,9 +30,9 @@ function onFormSubmission(form) {
 		birthdate: birthdate,
 		gender: sex,
 		type: userType,
-		caregiver: caregiver
+		caregiver: caregiver,
+		appToken:appToken
 	};
-
 	const url = form.action;
 	const options = {
 		method: "POST",

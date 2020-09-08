@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/header.css}" rel="stylesheet">
+    <link th:href="@{/css/symptom/symptom.css}" rel="stylesheet">
+    <script th:src="@{/js/symptom/symptom.js}"></script>
+    <title>증상 일지</title>
+</head>
+<body>
+<input type="hidden" id="symptom-put-action" th:attr="value=@{/symptom-history}">
+<div th:replace="header :: #header"></div>
+<div id="body">
+    <!-- TODO: 보호자일 경우 immutable 하도록 -->
+    <form id="symptom-form" th:action="@{/symptom}" onsubmit="return onFormSubmission(this);">
+        <div id = "btn_group1">숨이 차다
+            <input type = "radio" value = "true"    id = "yes_1" name="outofbreath">예
+            <input type = "radio" value = "false"   id = "no_1"  name="outofbreath">아니오
+        </div>
+        <div id = "btn_group2">지친다
+            <input type = "radio" value = "true"    id = "yes_2" name="tired">예
+            <input type = "radio" value = "false"   id = "no_2"  name="tired">아니오
+        </div>
+        <div id = "btn_group3">발목 붓는다
+            <input type = "radio" value = "true"    id = "yes_3" name="ankle">예
+            <input type = "radio" value = "false"   id = "no_3"  name="ankle">아니오
+        </div>
+        <div id = "btn_group4" type="button">잠에서 깬다
+            <input type = "radio" value = "true"    id = "yes_4" name="cough">예
+            <input type = "radio" value = "false"   id = "no_4"  name="cough">아니오
+        </div>
+        <input type="submit" value="저장">
+    </form>
+</div>
+</body>
+</html>

@@ -40,6 +40,8 @@ public class CenterController extends BaseController
 		}
 		else
 		{
+			modelAndView.addObject("type", user.getType());
+			System.out.println(user.getType());
 			modelAndView.setViewName("home");
 		}
 

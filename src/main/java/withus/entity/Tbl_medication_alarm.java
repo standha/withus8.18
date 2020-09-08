@@ -2,6 +2,7 @@ package withus.entity;
 
 import lombok.*;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,13 +26,15 @@ public class Tbl_medication_alarm {
     @Column(name = "medication_Alarm_Onoff")
     private boolean medicationAlarmOnoff;
 
+
     @Column(name = "medication_Time_Morning")
     private LocalTime medicationTimeMorning;
+
 
     @Column(name = "medication_Time_Launch")
     private LocalTime medicationTimeLaunch;
 
+
     @Column(name = "medication_Time_Dinner")
     private LocalTime medicationTimeDinner;
-
 }
