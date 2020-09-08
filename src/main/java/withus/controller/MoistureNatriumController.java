@@ -71,7 +71,7 @@ public class MoistureNatriumController extends BaseController{
             saved = moistureNatriumService.upsertMoistureRecord(tbl_mositrue_record);
             code = Result.Code.OK;
         }catch (Exception exception){
-            logger.error(exception.getLocalizedMessage(), exception);
+            log.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
         }
         return Result.<Tbl_mositrue_record>builder()

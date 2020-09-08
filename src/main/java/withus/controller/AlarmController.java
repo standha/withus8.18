@@ -82,7 +82,7 @@ public class AlarmController extends BaseController{
             seved = alarmService.upsertMedication(tbl_medication_alarm);
             code = Result.Code.OK;
         } catch (Exception exception){
-            logger.error(exception.getLocalizedMessage(),exception);
+            log.error(exception.getLocalizedMessage(),exception);
             code = Result.Code.ERROR_DATABASE;
         }
         return Result.<Tbl_medication_alarm>builder()
@@ -101,7 +101,7 @@ public class AlarmController extends BaseController{
             saved = alarmService.upsertTrueRecord(tbl_medication_record);
             code = Result.Code.OK;
         } catch (Exception exception) {
-            logger.error(exception.getLocalizedMessage(), exception);
+            log.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
         }
         return Result.<Tbl_medication_record>builder()
@@ -134,7 +134,7 @@ public class AlarmController extends BaseController{
             seved = alarmService.upsertOutPatientVisit(tbl_outpatient_visit_alarm);
             code = Result.Code.OK;
         } catch (Exception exception){
-            logger.error(exception.getLocalizedMessage(),exception);
+            log.error(exception.getLocalizedMessage(),exception);
             code = Result.Code.ERROR_DATABASE;
         }
         return Result.<Tbl_outpatient_visit_alarm>builder()

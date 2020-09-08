@@ -11,7 +11,7 @@ import withus.entity.User;
 import withus.service.UserService;
 
 public class BaseController {
-	protected final Logger logger = LoggerFactory.getLogger(getClass());
+	protected final Logger log = LoggerFactory.getLogger(getClass());
 	protected final UserService userService;
 	private final AuthenticationFacade authenticationFacade;
 
