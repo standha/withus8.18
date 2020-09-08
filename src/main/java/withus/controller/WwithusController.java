@@ -6,8 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
+import withus.dto.Result;
 import withus.entity.User;
 import withus.entity.WwithusEntryHistory;
 import withus.service.UserService;
@@ -27,16 +29,22 @@ public class WwithusController extends BaseController {
 
 	@GetMapping("/wwithus")
 	public ModelAndView getWwithus() {
-		ModelAndView modelAndView = new ModelAndView("wwithus/wwithus.html");
-		User user = getUser();
+		return new ModelAndView("wwithus/wwithus.html");
+	}
 
-		List<WwithusEntryHistory> wwithusEntryHistories = wwithusService.getWwithusEntryHistories(user);
-		if (!wwithusEntryHistories.isEmpty()) {
-			log.debug("User ({}) has {} history(ies) of today.", user, wwithusEntryHistories.size());
+	@GetMapping("/wwithus/chat-balloons")
+	@ResponseBody
+	public Result<List<WwithusEntryHistory>> getChatBalloons() {
+		User user = getUser();
+		Result.Code code = Result.Code.OK;
+		List<WwithusEntryHistory> data = wwithusService.getWwithusEntryHistories(user);
+		if (!data.isEmpty()) {
+			log.debug("User ({}) has {} history(ies) of today.", user, data.size());
 		}
 
-		modelAndView.addObject("chatBalloons", wwithusService.toChatBalloons(wwithusEntryHistories));
-
-		return modelAndView;
+		return Result.<List<WwithusEntryHistory>>builder()
+			.code(code)
+			.data(data)
+			.build();
 	}
 }
