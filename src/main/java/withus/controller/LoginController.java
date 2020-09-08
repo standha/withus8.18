@@ -56,7 +56,7 @@ public class LoginController {
 
 		if (!isMissingMandatories(user)) {
 			try {
-				User existId = userService.getUserById(user.getId());
+				User existId = userService.getUserById(user.getUserId());
 				User existContact = userService.getUserByContact(user.getContact());
 
 				if (existId == null && existContact == null) {
@@ -110,7 +110,7 @@ public class LoginController {
 
 	public boolean isMissingMandatories(User user){
 
-		if (Utility.nullOrEmptyOrSpace(user.getId()) ||
+		if (Utility.nullOrEmptyOrSpace(user.getUserId()) ||
 			Utility.nullOrEmptyOrSpace(user.getPassword()) ||
 			Utility.nullOrEmptyOrSpace(user.getName()) ||
 			Utility.nullOrEmptyOrSpace(user.getContact())) {

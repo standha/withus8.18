@@ -1,5 +1,7 @@
 package withus.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -30,7 +32,7 @@ public class UserService implements UserDetailsService {
 	@Override
 	@NonNull
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return userRepository.findById(username).orElseThrow(() -> {
+		return userRepository.findByUserId(username).orElseThrow(() -> {
 				String message = String.format("Username \"%s\" does not exist!", username);
 				return new UsernameNotFoundException(message);
 			}
@@ -38,7 +40,12 @@ public class UserService implements UserDetailsService {
 	}
 	@Nullable
 	public User getUserById(String id) {
-		return userRepository.findById(id).orElse(null);
+		return userRepository.findByUserId(id).orElse(null);
+	}
+
+	@Nullable
+	public User getUserByCaregiverId(String caregiverId) {
+		return userRepository.findByCaregiverUserId(caregiverId).orElse(null);
 	}
 
 	@Nullable
@@ -62,16 +69,21 @@ public class UserService implements UserDetailsService {
 		if(checkType == "PATIENT") {
 			System.out.println("Making patient table to Id(String)");
 			Tbl_medication_alarm tbl_medication_alarm = Tbl_medication_alarm.builder()
-					.id(saved.getId())
+					.id(saved.getUserId())
 					.build();
 			medicationAlarmRepository.save(tbl_medication_alarm);
 
 			Tbl_outpatient_visit_alarm tbl_outpatient_visit_alarm = Tbl_outpatient_visit_alarm.builder()
-					.id(saved.getId())
+					.id(saved.getUserId())
 					.build();
 			outPatientVisitAlarmRepository.save(tbl_outpatient_visit_alarm);
 		}
 		return saved;
 
+	}
+
+	public List<User> getAllPatient()
+	{
+		return userRepository.findAll();
 	}
 }
