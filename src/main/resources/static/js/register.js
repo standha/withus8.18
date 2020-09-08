@@ -9,12 +9,12 @@ function onFormSubmission(form) {
 	const birthdateValue = form.querySelector("input[name=birthdate]").value;
 	const birthdate = isEmpty(birthdateValue) ? null : birthdateValue;
 
-	const sexElement = form.querySelector("input[name=sex]:checked");
+	const sexElement = form.querySelector("input[name=gender]:checked");
 	const sex = sexElement? sexElement.value: null;
 
 	const caregiverValue = form.querySelector("input[name=caregiver]").value;
 	const user = {
-		id: null,
+		userId: null,
 		password: null,
 		name: null,
 		contact: caregiverValue
@@ -22,12 +22,12 @@ function onFormSubmission(form) {
 	const caregiver = isEmpty(caregiverValue) ? null : user;
 
 	const body = {
-		id: id,
+		userId: id,
 		password: password,
 		name: name,
 		contact: contact,
 		birthdate: birthdate,
-		sex: sex,
+		gender: sex,
 		type: userType,
 		caregiver: caregiver
 	};
@@ -41,7 +41,7 @@ function onFormSubmission(form) {
 		},
 		body: JSON.stringify(body)
 	};
-
+	console.log(options)
 	if(isEmpty(removeSpace(id))){
 		alert("아이디가 공백입니다.");
 	} else if (isEmpty(removeSpace(password))){
