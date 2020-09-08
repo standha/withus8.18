@@ -1,10 +1,12 @@
 package withus.entity;
 
-import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.*;
-import java.util.Date;
+import lombok.*;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Builder(toBuilder = true)
@@ -14,15 +16,10 @@ import java.util.Date;
 @Getter
 @Table(name = "tbl_weight")
 public class Tbl_weight {
+    @EmbeddedId
+    private RecordKey pk;
 
-    @Id
-    @Column(name = "registration_Count")
-    private Integer registrationCount;
-
-    @Column(name = "weight_Record")
-    private Date weightRecord;
-
-    @Column(name = "weight")
-    private Integer weight;
+    @Column(name = "Weight")
+    private float weight;
 
 }

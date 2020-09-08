@@ -7,11 +7,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
+import withus.configuration.JsonIgnore;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.sql.DataSource;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 
 @Entity
 @Builder(toBuilder = true)
@@ -22,11 +23,16 @@ import java.util.Date;
 @Table(name = "tbl_outpatient_visit_alarm")
 public class Tbl_outpatient_visit_alarm {
     @Id
-    @Column(name = "registration_Count")
-    private Integer registrationCount;
+    @Column(name = "outpaient_visit_id")
+    private String id;
+
+    @Column(name = "visit_Date")
+    @JsonIgnore
+    private LocalDate outPatientVisitDate;
 
     @Column(name = "visit_Time")
-    private Date outPatientVisitTime;
+    @JsonIgnore
+    private LocalTime outPatientVisitTime;
 
     @Column(name = "visit_Alarm")
     @ColumnDefault("0")

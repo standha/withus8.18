@@ -8,24 +8,27 @@
 	<title>외래 방문 시간</title>
 </head>
 <body>
-	<div th:replace="header :: #header"></div>
-	<div id="body">
-		<!-- TODO: 보호자일 경우 immutable 하도록 -->
-		<form id="appointment-form" th:action="@{/appointment}" onsubmit="return onFormSubmission(this);">
-			<div>외래 방문 시간</div>
-			<div id="date">
-				<p>여기에 달력을 그려야 하는데~</p>
-				<input type="date" name="date">
-				<button type="button" onclick="showTime();">날짜 선택 (했다 치고)</button>
-			</div>
-			<div id="time" class="hidden">
-				<input type="hidden" name="id">
-				<input type="checkbox" name="enabled">
-				<input type="time" name="time">
-			</div>
-
-			<input type="submit" value="저장">
-		</form>
-	</div>
+<div th:replace="header :: #header"></div>
+<div id="body">
+	<!-- TODO: 보호자일 경우 immutable 하도록 -->
+	<form id="appointment-form" th:action="@{/appointment}" onsubmit="return onFormSubmission(this);">
+		<div>Visit Patient Time On/Off</div>
+		<div id="date">
+			<p>Calender plugin</p>
+			<p>---------------</p>
+			<p>---------------</p>
+			<p>-----달력-----</p>
+			<p>---------------</p>
+			<p>---------------</p>
+			<p>Select Date
+			<input type="date" name="outPatientVisitDate"></p>
+			<p>Select Time
+			<input type="time" name="outPatientVisitTime"></p>
+			<p>Alarm On/Off CheckBox
+			<input type="checkbox" name="visitAlarm"></p>
+		</div>
+		<input type="submit" value="저장">
+	</form>
+</div>
 </body>
 </html>

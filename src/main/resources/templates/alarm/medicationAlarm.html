@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<head>
+	<meta charset="UTF-8">
+	<link th:href="@{/css/header.css}" rel="stylesheet">
+	<link th:href="@{/css/alarm/pill.css}" rel="stylesheet">
+	<script th:src="@{/js/alarm/pill.js}"></script>
+	<title>복약</title>
+</head>
+<body>
+<input type="hidden" id="pill-history-get-action" th:attr="value=@{/pill-history}">
+<input type="hidden" id="pill-put-action" th:attr="value=@{/pill-history}">
+<div th:replace="header :: #header"></div>
+<div id="body">
+	<div id="body-title">💊 복약</div>
+	<!-- TODO: 보호자일 경우 immutable 하도록 -->
+	<form id="pill-form" th:action="@{/medicationAlarm}" method="post" onsubmit="return onFormSubmission(this);">
+
+			<span id="times">
+				<span id="breakfast">
+					아침
+					<input type="time" name="medicationTimeMorning" th:value="${pill?.medicationTimeMorning}">
+				</span>
+				<span id="lunch">
+					점심
+					<input type="time" name="medicationTimeLaunch" th:value="${pill?.medicationTimeLaunch}">
+				</span>
+				<span id="dinner">
+					저녁
+					<input type="time" name="medicationTimeDinner" th:value="${pill?.medicationTimeDinner}">
+				</span>
+			</span>
+		<label id="enabled"><input type="checkbox" name="medicationAlarmOnoff" th:checked="${pill?.medicationAlarmOnoff == true}"> 켜짐</label>
+		<input type="submit" id="submit" value="저장">
+	</form>
+	<div id="reminder-area">
+		<p th:text="'잠깐! 오늘 하루 심부전약 을(를) 다 드셨나요?'"></p>
+		<div>
+			<button id="yes" type="button" onclick="setFinished(true);">예</button>
+			<button id="no" type="button" onclick="setFinished(false);">아니오</button>
+		</div>
+		<div>
+			<button id="history" type="button" onclick="showHistory();">복약기록</button>
+		</div>
+	</div>
+</div>
+</body>
+</html>

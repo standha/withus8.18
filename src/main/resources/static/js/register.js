@@ -1,27 +1,38 @@
 function onFormSubmission(form) {
-	const id = form.querySelector("input[name=patientId]").value;
+	const userType = form.querySelector("input[name=user]:checked").value;
+
+	const id = form.querySelector("input[name=id]").value;
 	const password = form.querySelector("input[name=password]").value;
 	const name = form.querySelector("input[name=name]").value;
 	const contact = form.querySelector("input[name=contact]").value;
 
-	const birthdayValue = form.querySelector("input[name=birthday]").value;
-	const birthday = isEmpty(birthdayValue) ? null : birthdayValue;
-
-	const gcontact = form.querySelector("input[name=gcontact]").value;
+	const birthdateValue = form.querySelector("input[name=birthdate]").value;
+	const birthdate = isEmpty(birthdateValue) ? null : birthdateValue;
 
 	const sexElement = form.querySelector("input[name=gender]:checked");
 	const sex = sexElement? sexElement.value: null;
 
+	const caregiverValue = form.querySelector("input[name=caregiver]").value;
+	const appToken = form.querySelector("input[name=appToken]").value;
+	const user = {
+		userId: null,
+		password: null,
+		name: null,
+		contact: caregiverValue
+	}
+	const caregiver = isEmpty(caregiverValue) ? null : user;
+
 	const body = {
-		patientId: id,
+		userId: id,
 		password: password,
 		name: name,
 		contact: contact,
-		birthday: birthday,
+		birthdate: birthdate,
 		gender: sex,
-		gcontact: gcontact
+		type: userType,
+		caregiver: caregiver,
+		appToken:appToken
 	};
-
 	const url = form.action;
 	const options = {
 		method: "POST",
@@ -31,19 +42,16 @@ function onFormSubmission(form) {
 		},
 		body: JSON.stringify(body)
 	};
-
+	console.log(options)
 	if(isEmpty(removeSpace(id))){
-		alert("아이디를 작성해주세요..");
+		alert("아이디가 공백입니다.");
 	} else if (isEmpty(removeSpace(password))){
-		alert("비밀번호를 작성해주세요.");
+		alert("비밀번호가 공백입니다.");
 	} else if (isEmpty(removeSpace(name))){
-		alert("이름을 작성해주세요");
+		alert("이름이 공백입니다.");
 	} else if (isEmpty(removeSpace(contact))){
 		alert("연락처(본인)가 공백입니다.");
-	} else if (isEmpty(removeSpace(gcontact))){
-		alert("연락처(보호자)가 공백입니다.");
-	}
-	else {
+	} else {
 		fetch(url, options)
 		.then(response => response.json())
 		.then(data => {
@@ -53,74 +61,14 @@ function onFormSubmission(form) {
 				alert("정상 적으로 회원 가입 되었습니다.");
 			} else if (data.code === 'ERROR_DUPLICATE_ID'){
 				alert("이미 존재하는 아이디 입니다.");
-			} else if (data.code === 'ERROR_DUPLICATE_CONTACT'){
-				alert("이미 같은 번호로 가입을 진행하셨습니다. (번호를 확인하시고, 사전에 가입하시지 않으셨다면 관리자에게 말씀해주세요.)");
-			} else if (data.code === 'ERROR_DUPLICATE_GCONTACT'){
-				alert("이미 같은 보호자분 번호로 가입을 진행하셨습니다. (번호를 확인하시고, 사전에 가입하지 않으셨다면 관리자에게 말씀해주세요.)")
-			}else {
+			} else if (data.code === 'ERROR_NO_EXIST_CAREGIVER'){
+				alert("존재하지 않는 보호자 번호 입니다. (공백 입력 또는 보호자 등록 해주세요)");
+			} else {
 				alert("회원 가입 실패");
 			}
 		});
 	}
 
-	return false;
-}
-function onForGuardianSubmission(form) {
-	const id = form.querySelector("input[name=guardianId]").value;
-	const password = form.querySelector("input[name=gpassword]").value;
-	const name = form.querySelector("input[name=gname]").value;
-	const contact = form.querySelector("input[name=gtell]").value;
-	const g_body = {
-		guardianId: id,
-		gpassword: password,
-		gname: name,
-		gtell: contact
-	};
-	console.log("1111111" + password);
-
-	const url = form.action;
-	const options = {
-		method: "POST",
-		headers: {
-			"Accept": "application/json",
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify(g_body)
-	};
-
-	console.log("22222" + password);
-
-	if(isEmpty(removeSpace(id))){
-		alert("아이디를 작성해주세요..");
-	} else if (isEmpty(removeSpace(password))){
-		alert("비밀번호를 작성해주세요.");
-	} else if (isEmpty(removeSpace(name))){
-		alert("이름을 작성해주세요");
-	} else if (isEmpty(removeSpace(contact))){
-		alert("연락처(본인)가 공백입니다.");
-	}
-	else {
-		fetch(url, options)
-			.then(response => response.json())
-			.then(data => {
-				console.log(data);
-				if (data.code === 'OK') {
-					window.location.href = "/home";
-					alert("정상 적으로 회원 가입 되었습니다.");
-				} else if (data.code === 'ERROR_DUPICATE_GID'){
-					alert("이미 존재하는 아이디 입니다.");
-				} else if (data.code === 'ERROR_DUPLICATE_GTELL'){
-					window.location.href = "/home";
-					alert("정상 적으로 회원 가입 되었습니다.");
-				} else if (data.code === 'ERROR'){
-					alert("ERROR");
-					console.log(password);
-				}
-				else{
-					alert("회원 가입 실패");
-				}
-			});
-	}
 	return false;
 }
 
@@ -134,4 +82,19 @@ function isEmpty(value){
 
 function removeSpace(value) {
 	return value.replace(/\s/g,"");
+}
+
+function doDisplay(user) {
+	console.log(user)
+	const elems = document.getElementsByClassName("patient-only");
+
+	if (user === 'CAREGIVER') {
+		for (let i = 0; i < elems.length; i++) {
+			elems[i].style.display = 'none'
+		}
+	} else {
+		for (let i = 0; i < elems.length; i++) {
+			elems[i].style.display = 'grid'
+		}
+	}
 }

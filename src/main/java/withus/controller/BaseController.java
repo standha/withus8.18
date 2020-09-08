@@ -1,10 +1,13 @@
 package withus.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import withus.auth.AuthenticationFacade;
-import withus.entity.Tbl_patient;
+import withus.entity.User;
 import withus.service.UserService;
 
 public class BaseController {
@@ -21,9 +24,22 @@ public class BaseController {
 		return authenticationFacade.getAuthentication();
 	}
 	protected String getUsername() {
-		return authenticationFacade.getAuthentication().getName();
+		return getAuthentication().getName();
 	}
-	protected Tbl_patient getTbl_patient() {
+	protected User getUser() {
 		return userService.getUserById(getUsername());
+	}
+	protected String getPatientContact() {
+		return getUser().getContact();
+	}
+
+	protected List<User> getAllPatient()
+	{
+		return userService.getAllPatient();
+	}
+
+	@Nullable
+	protected User getCaretaker() {
+		return userService.getUserByCaregiverId(getUsername());
 	}
 }

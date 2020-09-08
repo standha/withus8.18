@@ -1,6 +1,9 @@
 package withus.entity;
 
-import lombok.Builder;
+import lombok.*;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -8,33 +11,30 @@ import javax.persistence.Table;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "TBL_MEDICATION_ALARM")
+@Builder(toBuilder = true)
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@Setter
+@Getter
+@Table(name = "tbl_medication_alarm")
 public class Tbl_medication_alarm {
-
     @Id
-    @Column(name = "registration_Count")
-    private Integer registrationCount;
+    @Column(name = "medication_id", columnDefinition = "VARCHAR(128) NOT NULL", length = 128)
+    @NonNull
+    protected String id;
 
-    @Column(name = "medcation_Alarm_Onoff")
-    private boolean medcationAlarmOnoff;
+    @Column(name = "medication_Alarm_Onoff")
+    private boolean medicationAlarmOnoff;
+
 
     @Column(name = "medication_Time_Morning")
     private LocalTime medicationTimeMorning;
 
+
     @Column(name = "medication_Time_Launch")
     private LocalTime medicationTimeLaunch;
 
-    @Column(name = "medcation_Time_Dinner")
-    private LocalTime medcationTimeDinner;
 
-    @Builder
-    public Tbl_medication_alarm(Integer registrationCount, boolean medcationAlarmOnoff, LocalTime medicationTimeMorning,
-                                LocalTime medicationTimeLaunch, LocalTime medcationTimeDinner){
-        this.registrationCount = registrationCount;
-        this.medcationAlarmOnoff = medcationAlarmOnoff;
-        this.medicationTimeMorning = medicationTimeMorning;
-        this.medicationTimeLaunch = medicationTimeLaunch;
-        this.medcationTimeDinner = medcationTimeDinner;
-    }
-
+    @Column(name = "medication_Time_Dinner")
+    private LocalTime medicationTimeDinner;
 }

@@ -1,32 +1,20 @@
 package withus.controller;
 
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.Year;
-import java.util.List;
-
-import com.fasterxml.jackson.databind.ser.Serializers;
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import org.apache.catalina.User;
+import org.aspectj.weaver.ast.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
-import withus.entity.Tbl_medication_alarm;
-import withus.entity.Tbl_patient;
+import withus.entity.*;
 import withus.service.AlarmService;
 import withus.service.UserService;
-import withus.util.Utility;
+import java.time.LocalDate;
+import java.util.List;
+
 
 @Controller
 public class AlarmController extends BaseController{
@@ -44,8 +32,9 @@ public class AlarmController extends BaseController{
     @Statistical
     public ModelAndView getAlarm() {
         ModelAndView modelAndView = new ModelAndView("alarm/alarm");
+        String user = getUsername();
         modelAndView.addObject("previousUrl", "/home");
-
+        System.out.println("UserName : "+user);
         return modelAndView;
     }
 
@@ -53,19 +42,96 @@ public class AlarmController extends BaseController{
     @Statistical
     public ModelAndView getMedicationAlarm(){
         ModelAndView modelAndView = new ModelAndView("alarm/medicationAlarm");
-        Tbl_patient tbl_patient = getTbl_patient();
-     //   Tbl_medication_alarm tbl_medication_alarm = alarmService.getMedicationAlarmByPatient(tbl_patient);
-
-       // modelAndView.addObject("medicationAlarm",tbl_medication_alarm);
+        User user = getUser();
+        String patientContact = getPatientContact();
+        String userId = getUsername();
+        modelAndView.addObject("medicationAlarm",userId);
         modelAndView.addObject("previousUrl","/alarm");
 
         return modelAndView;
     }
-  /*
+    @GetMapping("/pill-history")
+    public ModelAndView getPillHistory(@RequestParam(required = false) Integer year, @RequestParam(required = false) Integer month) {
+        ModelAndView modelAndView = new ModelAndView("alarm/pill-history");
+        String username = getUsername();
+        List<Tbl_medication_record> pillHistories;
+        pillHistories  = alarmService.getFinishedRecord(username);
+        modelAndView.addObject("pillHistories", pillHistories);
+        modelAndView.addObject("previousUrl", "/alarm");
+
+        return modelAndView;
+    }
     @PostMapping(value = "/medicationAlarm", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<Tbl_medication_alarm> postMedicationAlarm(@RequestBody Tbl_medication_alarm tbl_medication_alarm){
-        Tbl_patient tbl_patient = getTbl_patient();
-        tbl_medication_alarm.setRegistra
-    }*/
+        String userId = getUsername();
+        tbl_medication_alarm.setId(userId);
+
+        Result.Code code;
+        Tbl_medication_alarm seved = null;
+
+        try{
+            seved = alarmService.upsertMedication(tbl_medication_alarm);
+            code = Result.Code.OK;
+        } catch (Exception exception){
+            logger.error(exception.getLocalizedMessage(),exception);
+            code = Result.Code.ERROR_DATABASE;
+        }
+        return Result.<Tbl_medication_alarm>builder()
+                .setCode(code)
+                .setData(seved)
+                .createResult();
+    }
+    @PutMapping(value = "/pill-history", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Result<Tbl_medication_record> getPillHistoryTrue(@RequestBody Tbl_medication_record tbl_medication_record) {
+        String userId = getUsername();
+        tbl_medication_record.setPk(new RecordKey(userId, LocalDate.now()));
+        Result.Code code;
+        Tbl_medication_record saved = null;
+        try {
+            saved = alarmService.upsertTrueRecord(tbl_medication_record);
+            code = Result.Code.OK;
+        } catch (Exception exception) {
+            logger.error(exception.getLocalizedMessage(), exception);
+            code = Result.Code.ERROR_DATABASE;
+        }
+        return Result.<Tbl_medication_record>builder()
+                .setCode(code)
+                .setData(saved)
+                .createResult();
+    }
+
+    @GetMapping("/appointments")
+    @Statistical
+    public ModelAndView getAppointments(@RequestParam(required = false) Integer year, @RequestParam(required = false) Integer month) {
+        ModelAndView modelAndView = new ModelAndView("alarm/appointments");
+        User user = getUser();
+        String patientContact = getPatientContact();
+        String userId = getUsername();
+        modelAndView.addObject("appointments",userId);
+        modelAndView.addObject("previousUrl","/alarm");
+
+        return modelAndView;
+    }
+    @PostMapping("/appointment")
+    @ResponseBody
+    public Result<Tbl_outpatient_visit_alarm> PostPatientVisit(@RequestBody Tbl_outpatient_visit_alarm tbl_outpatient_visit_alarm){
+        String userId = getUsername();
+        tbl_outpatient_visit_alarm.setId(userId);
+        Result.Code code;
+        Tbl_outpatient_visit_alarm seved = null;
+
+        try{
+            seved = alarmService.upsertOutPatientVisit(tbl_outpatient_visit_alarm);
+            code = Result.Code.OK;
+        } catch (Exception exception){
+            logger.error(exception.getLocalizedMessage(),exception);
+            code = Result.Code.ERROR_DATABASE;
+        }
+        return Result.<Tbl_outpatient_visit_alarm>builder()
+                .setCode(code)
+                .setData(seved)
+                .createResult();
+    }
 }

@@ -11,6 +11,8 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 import withus.auth.NoOpPasswordEncoder;
 import withus.service.UserService;
 
@@ -27,31 +29,43 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Override
-	protected void configure(HttpSecurity httpSecurity) throws Exception {
+	protected void configure(HttpSecurity httpSecurity) throws Exception
+	{
 		httpSecurity
-			.csrf()
+				.csrf()
 				.disable()
-			.authorizeRequests()
+				.authorizeRequests()
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
-					.permitAll()
-				.antMatchers("/registerUser", "/saveUser")
-					.permitAll()
-				.antMatchers("/registerGuardianUser", "/saveGuser")
-					.permitAll()
+				.permitAll()
+				.antMatchers("/registerUser", "/saveUser", "/admin")
+				.permitAll()
 				.anyRequest()
-					.authenticated()
-					.and()
-			.formLogin()
+				.authenticated()
+				.and()
+				.formLogin()
+				.loginPage("/admin")
+				.loginProcessingUrl("/login-process")
+				.defaultSuccessUrl("/center", true)
+				.permitAll();
+		httpSecurity.formLogin()
 				.loginPage("/login")
 				.loginProcessingUrl("/login-process")
-				.defaultSuccessUrl("/home", true)
-				.permitAll()
-				.and()
-			.rememberMe()
+				.defaultSuccessUrl("/center", true)
+				.permitAll();
+
+		httpSecurity
+				.rememberMe()
 				.rememberMeParameter("remember-me")
 				.key(REMEMBER_ME_TOKEN)
 				.tokenValiditySeconds(Math.toIntExact(Duration.ofDays(30).getSeconds()))
 				.userDetailsService(userService);
+
+		httpSecurity
+				.logout()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.logoutSuccessUrl("/logout")
+				.invalidateHttpSession(true);
+
 	}
 
 	@Bean
@@ -64,3 +78,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return authenticationProvider;
 	}
 }
+

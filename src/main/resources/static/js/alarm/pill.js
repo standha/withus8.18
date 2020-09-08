@@ -1,16 +1,15 @@
-/*function onFormSubmission(form) {
-	const id = form.querySelector("input[name=id]").value;
-	const enabled = form.querySelector("input[name=enabled]").checked;
-	const breakfast = form.querySelector("input[name=breakfast]").value;
-	const lunch = form.querySelector("input[name=lunch]").value;
-	const dinner = form.querySelector("input[name=dinner]").value;
+function onFormSubmission(form) {
+
+	const enabled = form.querySelector("input[name=medicationAlarmOnoff]").checked;
+	const breakfast = form.querySelector("input[name=medicationTimeMorning]").value;
+	const lunch = form.querySelector("input[name=medicationTimeLaunch]").value;
+	const dinner = form.querySelector("input[name=medicationTimeDinner]").value;
 
 	const body = {
-		id: id,
-		enabled: enabled,
-		breakfast: breakfast,
-		lunch: lunch,
-		dinner: dinner
+		medicationAlarmOnoff: enabled,
+		medicationTimeMorning: breakfast,
+		medicationTimeLaunch: lunch,
+		medicationTimeDinner: dinner
 	};
 
 	const url = form.action;
@@ -32,7 +31,6 @@
 
 function setFinished(finished) {
 	const body = {
-		pillId: document.querySelector("#pill-form input[name=id]").value,
 		finished: finished
 	};
 
@@ -48,23 +46,33 @@ function setFinished(finished) {
 
 	fetch(url, options)
 		.then(response => response.json())
-		.then(object => {
+		.then(object =>
+		 {
 			console.log(object);
 
 			let data = object["data"];
-			if (data) {
+			if (data)
+			{
 				let finishedResponse = data["finished"];
 
-				if (finished === finishedResponse) {
-					if (finished) {
+				if (finished === finishedResponse) 
+				{
+					if (finished) 
+					{
 						alert("복약하신 것으로 기록하였습니다.")
-					} else {
+					} 
+					else 
+					{
 						alert("아직 복약하지 않은 것으로 기록하였습니다.")
 					}
-				} else {
+				} 
+				else 
+				{
 					alert("복약 처리에 실패했습니다.")
 				}
-			} else {
+			} 
+			else 
+			{
 				alert("복약 처리에 실패했습니다.")
 			}
 		});
@@ -74,4 +82,3 @@ function showHistory() {
 	const element = document.querySelector("#pill-history-get-action");
 	location.href = element.value;
 }
-*/

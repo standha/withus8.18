@@ -6,47 +6,29 @@
 	<link th:href="@{/css/register.css}" rel="stylesheet">
 	<script th:src="@{/js/register.js}"></script>
 	<title>회원 가입</title>
-	<script>
-		function showpform(x)
-		{
-			if(x==0)
-				document.getElementById('patient_form').style.display='block';
-			else
-				document.getElementById('patient_form').style.display='none';
-			return
-		}
-		function showgform(y)
-		{
-			if(y==0)
-				document.getElementById('guardian_form').style.display='block';
-			else
-				document.getElementById('guardian_form').style.display='none';
-		}
-
-	</script>
 </head>
 <body>
 	<form id="MemberInfo" th:action="@{/saveUser}" method="post"  onsubmit="return onFormSubmission(this);">
 		<div id="user-wrap">
 			<label>
-				<input type="radio" name="user" onclick="showpform(0);showgform(1)" checked>
+				<input type="radio" name="user" th:value="${T(withus.entity.User.Type).PATIENT}" onclick="doDisplay(this.value)" checked>
 				<div class="user">
 					<img th:src="@{/images/patient.png}">
-					<span id="patientId">환자</span>
+					<span id="patient">환자</span>
 				</div>
 			</label>
 			<label>
-				<input type="radio" name="user" onclick="showpform(1);showgform(0)">
+				<input type="radio" name="user" th:value="${T(withus.entity.User.Type).CAREGIVER}" onclick="doDisplay(this.value)">
 				<div class="user">
 					<img th:src="@{/images/protector.png}">
 					<span id="caregiver">보호자</span>
 				</div>
 			</label>
 		</div>
-		<div id="patient_form">
+		<div>
 			<div class="input-container">
 				<span class="label">아이디</span>
-				<input type="text" name="patientId">
+				<input type="text" name="id">
 			</div>
 			<div class="input-container">
 				<span class="label">비밀번호</span>
@@ -56,16 +38,16 @@
 				<span class="label">이름</span>
 				<input type="text" name="name">
 			</div>
-			<div class="input-container">
+			<div class="input-container patient-only">
 				<span class="label">생년월일</span>
-				<input type="date" name="birthday">
+				<input type="date" name="birthdate">
 			</div>
-			<div class="input-container">
+			<div class="input-container patient-only">
 				<span class="label">성별</span>
-					 <div th:each="state : ${T(withus.entity.Tbl_patient.Gender).values()}">
+					<div th:each="state : ${T(withus.entity.User.Gender).values()}">
 						<label>
 							<input type="radio" name="gender" th:value="${state}">
-							<span th:id="${state}" th:text="${state==T(withus.entity.Tbl_patient.Gender).MALE ? '남자':'여자'}"></span>
+							<span th:id="${state}" th:text="${state==T(withus.entity.User.Gender).MALE ? '남자':'여자'}"></span>
 						</label>
 					</div>
 			</div>
@@ -73,34 +55,15 @@
 				<span class="label">연락처<br>(본인)</span>
 				<input type="number" name="contact">
 			</div>
-			<div class="input-container">
+			<div class="input-container patient-only">
 				<span class="label">연락처<br>(보호자)</span>
-				<input type="number" name="gcontact">
+				<input type="number" name="caregiver">
+			</div>
 
-			</div>
-			<input type="submit" value="회원가입">
+			<input tpye = 'hidden' name = "appToken" th:value = "${appToken}" style = "display:none">
+
 		</div>
-	</form>
-	<form id="gMemberInfo" th:action="@{/saveGuser}" method="post"  onsubmit="return onForGuardianSubmission(this);">
-		<div id="guardian_form">
-			<div class="input-container">
-				<span class="label">아이디</span>
-				<input type="text" name="guardianId">
-			</div>
-			<div class="input-container">
-				<span class="label">비밀번호</span>
-				<input type="text" name="gpassword">
-			</div>
-			<div class="input-container">
-				<span class="label">이름</span>
-				<input type="text" name="gname">
-			</div>
-			<div class="input-container">
-				<span class="label">연락처<br>(보호자)</span>
-				<input type="number" name="gtell">
-			</div>
 			<input type="submit" value="회원가입">
-		</div>
 	</form>
 </body>
 </html>

@@ -7,7 +7,6 @@
 	<link th:href="@{/css/home.css}" rel="stylesheet">
 	<title>위더스</title>
 </head>
-
 <body>
 	<div th:replace="header :: #header"></div>
 	<div id="body">
@@ -33,15 +32,15 @@
 			</a>
 		</div>
 		<div id="level-3">
-			<a class="main-icon" href="javascript: alert('survey');">
+			<a class="main-icon" th:href="@{/symptom}">
 				<img th:src="@{/images/survey.png}"/>
 				<button>증상일지</button>
 			</a>
-			<a class="main-icon" href="javascript: alert('salt-and-water');">
+			<a class="main-icon"  th:href="@{/moistureNatrium}">
 				<img th:src="@{/images/saltAndWater.png}"/>
 				<button>염분/수분</button>
 			</a>
-			<a class="main-icon" href="javascript: alert('weight');">
+			<a class="main-icon" th:href="@{/weight}">
 				<img th:src="@{/images/weight.png}"/>
 				<button>체중</button>
 			</a>

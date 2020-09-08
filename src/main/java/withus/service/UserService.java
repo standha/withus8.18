@@ -1,123 +1,94 @@
 package withus.service;
 
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-//import sun.plugin2.applet.context.NoopExecutionContext;
 import withus.auth.NoOpPasswordEncoder;
-import withus.entity.*;
-import withus.repository.*;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import withus.entity.Tbl_medication_alarm;
+import withus.entity.Tbl_outpatient_visit_alarm;
+import withus.entity.User;
+import withus.repository.MedicationAlarmRepository;
+import withus.repository.OutPatientVisitAlarmRepository;
+import withus.repository.UserRepository;
 
 @Service
 public class UserService implements UserDetailsService {
-    private final PatientRepository patientRepository;
-    private final GuardianRepository guardianRepository;
-    private final GoalListRepository goalListRepository;
-    private final UserProgressRepository userProgressRepository;
-    private final ButtonCountRepository buttonCountRepository;
-  //  private final
+	private final UserRepository userRepository;
+	private final MedicationAlarmRepository medicationAlarmRepository;
+	private final OutPatientVisitAlarmRepository outPatientVisitAlarmRepository;
+	@Autowired
+	public UserService(UserRepository userRepository, MedicationAlarmRepository medicationAlarmRepository, OutPatientVisitAlarmRepository outPatientVisitAlarmRepository) {
+		this.userRepository = userRepository;
+		this.medicationAlarmRepository = medicationAlarmRepository;
+		this.outPatientVisitAlarmRepository = outPatientVisitAlarmRepository;
+	}
 
+	@Override
+	@NonNull
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		return userRepository.findByUserId(username).orElseThrow(() -> {
+				String message = String.format("Username \"%s\" does not exist!", username);
+				return new UsernameNotFoundException(message);
+			}
+		);
+	}
+	@Nullable
+	public User getUserById(String id) {
+		return userRepository.findByUserId(id).orElse(null);
+	}
 
-    @Autowired
-    public UserService(PatientRepository patientRepository, GuardianRepository guardianRepository, GoalListRepository goalListRepository,
-                       UserProgressRepository userProgressRepository, ButtonCountRepository buttonCountRepository){
-        this.patientRepository = patientRepository;
-        this.guardianRepository = guardianRepository;
-        this.goalListRepository = goalListRepository;
-        this.userProgressRepository = userProgressRepository;
-        this.buttonCountRepository = buttonCountRepository;
-    }
+	@Nullable
+	public User getUserByCaregiverId(String caregiverId) {
+		return userRepository.findByCaregiverUserId(caregiverId).orElse(null);
+	}
 
+	@Nullable
+	public User getUserByContact(String contact) {
+		return userRepository.findByContact(contact).orElse(null);
+	}
 
-    @Override
-    @Nonnull
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if(guardianRepository.findByGuardianId(username).isPresent()){
-            return guardianRepository.findByGuardianId(username).orElseThrow(()->{
-                 String emthyMessage = String.format("User does not exist");
-                 return new UsernameNotFoundException(emthyMessage);
-            }
-            );
-        }else{
-            return patientRepository.findByPatientId(username).orElseThrow(()->{
-                        String emthyMessage = String.format("User does not exist");
-                        return new UsernameNotFoundException(emthyMessage);
-                    }
-            );
+	@NonNull
+	public User upsertUser(User user) {
+		return userRepository.save(user);
+	}
+	@NonNull
+	public User upsertUserEncodingPassword(User user) {
+		String plaintextPassword = user.getPassword();
+		NoOpPasswordEncoder noOpPasswordEncoder = NoOpPasswordEncoder.getInstance();
+		String encodedPassword = noOpPasswordEncoder.encode(plaintextPassword);
+		User saved = userRepository.save(user);
+		User caregiver = new User();
+		String checkType = user.getType().name();
+		System.out.println("Type of user is " + checkType + ".(now)");
+		if(checkType == "PATIENT") {
+			System.out.println("Making patient table to Id(String)");
+			Tbl_medication_alarm tbl_medication_alarm = Tbl_medication_alarm.builder()
+					.id(saved.getUserId())
+					.build();
+			medicationAlarmRepository.save(tbl_medication_alarm);
 
-        }
-    }
+			Tbl_outpatient_visit_alarm tbl_outpatient_visit_alarm = Tbl_outpatient_visit_alarm.builder()
+					.id(saved.getUserId())
+					.build();
+			outPatientVisitAlarmRepository.save(tbl_outpatient_visit_alarm);
+		}
+		return saved;
 
-    @Nullable
-    public Tbl_patient getUserById(String patient) {
-        return patientRepository.findByPatientId(patient).orElse(null);
-    }
+	}
 
-    @Nullable
-    public Tbl_patient getUserByContact(String contact){return patientRepository.findByContact(contact).orElse(null);}
-
-    @Nullable
-    public Tbl_patient getUserByGcontact(String gcontact){return patientRepository.findByGcontact(gcontact).orElse(null);}
-
-    @NonNull
-    public Tbl_patient upsertUser(Tbl_patient tbl_patient) {return patientRepository.save(tbl_patient);}
-
-    @Nullable
-    public Tbl_guardian getUserByGid(String guardian) {return guardianRepository.findByGuardianId(guardian).orElse(null);}
-
-    @Nullable
-    public Tbl_guardian getUserByGtell(String gtell) {return guardianRepository.findByGtell(gtell).orElse(null);}
-
-    @NonNull
-    public Tbl_guardian upsertGuser(Tbl_guardian tbl_guardian) {return guardianRepository.save(tbl_guardian);}
-
-    @NonNull
-    public Tbl_patient upsertUserEncodingPassword(Tbl_patient tbl_patient){
-        String plaintextPassword = tbl_patient.getPassword();
-        NoOpPasswordEncoder noOpPasswordEncoder = NoOpPasswordEncoder.getInstance();
-        String encodedPassword = noOpPasswordEncoder.encode(plaintextPassword);
-        tbl_patient.setPassword(encodedPassword);
-        Tbl_patient saved = patientRepository.save(tbl_patient);
-        //Guardian table (PK)registrationCount, Gtell, LinkedPatientIdl set by patient table
-        Tbl_guardian tbl_guardian = Tbl_guardian.builder()
-                .setRegistrationCount(saved.getRegistrationCount())
-                .setGtell(saved.getGcontact())
-                .setLinkedPatientId(saved.getPatientId())
-                .createGuardian();
-        guardianRepository.save(tbl_guardian);
-        //Goal List table (PK) registrationCount set by patient table
-        Tbl_goal_list tbl_goal_list = Tbl_goal_list.builder()
-                .registrationCount(saved.getRegistrationCount())
-                .build();
-        goalListRepository.save(tbl_goal_list);
-        //User Progress table (PK) registrationCounts set by patient table
-        Tbl_user_progress tbl_user_progress = Tbl_user_progress.builder()
-                .registrationCount(saved.getRegistrationCount())
-                .build();
-        userProgressRepository.save(tbl_user_progress);
-        //button Count table (PK) registrationCount set by patient table
-        Tbl_button_count tbl_button_count = Tbl_button_count.builder()
-                .registrationCount(saved.getRegistrationCount())
-                .build();
-        buttonCountRepository.save(tbl_button_count);
-        return saved;
-    }
-    // UPDATE GUARDIAN
-    @Nonnull
-    public Tbl_guardian upsertGuardian(Tbl_guardian tbl_guardian) {
-        Tbl_guardian found = guardianRepository.findByGtell(tbl_guardian.getGtell()).orElse(null);
-        found.setGpassword(tbl_guardian.getPassword());
-        found.setGname(tbl_guardian.getName());
-        found.setGuardianId(tbl_guardian.getGuardianId());
-        found.setG_tell(tbl_guardian.getGtell());
-
-        return guardianRepository.save(found);
-    }
+	public List<User> getAllPatient()
+	{
+		return userRepository.findAll();
+	}
+	
+	@Nullable
+	public List<User> getAllToken(){
+		return userRepository.findByAppTokenIsNotNull();
+	}
 }

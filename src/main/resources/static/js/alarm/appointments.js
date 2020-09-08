@@ -1,7 +1,7 @@
 function showTime() {
 	const form = document.querySelector("#appointment-form");
 
-	const dateInput = document.querySelector("#date input[name=date]");
+	const dateInput = document.querySelector("#date input[name=outPatientVisitDate]");
 	const dateValue = dateInput.value;
 
 	const url = (form.action + "/" + dateValue);
@@ -45,16 +45,14 @@ function showTime() {
 }
 
 function onFormSubmission(form) {
-	const id = form.querySelector("input[name=id]").value;
-	const enabled = form.querySelector("input[name=enabled]").checked;
-	const date = form.querySelector("input[name=date]").value
-	const time = form.querySelector("input[name=time]").value;
+	const enabled = form.querySelector("input[name=visitAlarm]").checked;
+	const date = form.querySelector("input[name=outPatientVisitDate]").value
+	const time = form.querySelector("input[name=outPatientVisitTime]").value;
 
 	const body = {
-		id: id,
-		enabled: enabled,
-		date: date,
-		time: time
+		visitAlarm: enabled,
+		outPatientVisitDate: date,
+		outPatientVisitTime: time
 	};
 
 	const url = form.action;
