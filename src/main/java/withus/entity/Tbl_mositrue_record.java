@@ -16,6 +16,6 @@ public class Tbl_mositrue_record {
     @EmbeddedId
     private RecordKey pk;
 
-    @Column(name = "moistureIntake", columnDefinition = "default 0")
+    @Column(name = "moistureIntake")
     private Integer intake;
 }
