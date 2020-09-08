@@ -5,12 +5,11 @@
 	<link th:href="@{/css/header.css}" rel="stylesheet">
 	<link th:href="@{/css/wwithus/wwithus.css}" rel="stylesheet">
 	<script th:src="@{/js/wwithus/wwithus.js}"></script>
+	<script th:src="@{/js/wwithus/chat-balloon.js}"></script>
 	<title>위더스랑</title>
 </head>
 <body>
+	<input type="hidden" id="chat-balloon-url" th:attr="value=@{/wwithus/chat-balloons}">
 	<div th:replace="header :: #header"></div>
-	<div id="body">
-		<div class="chat-balloons" th:each="chatBalloon: ${chatBalloons}">
-		</div>
-	</div>
+	<div id="body"></div>
 </body>

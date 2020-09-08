@@ -1,0 +1,21 @@
+div.balloons {
+	display: flex;
+	flex-direction: row;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+div.balloons.right {
+	flex-direction: row-reverse;
+}
+
+div.balloons > .content {
+	font-size: 22px;
+}
+
+div.balloons > .date-time {
+	text-align: right;
+	align-self: flex-end;
+	font-size: 12px;
+	white-space: pre-line;
+}

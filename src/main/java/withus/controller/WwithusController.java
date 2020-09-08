@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
+import withus.dto.wwithus.ChatBalloon;
 import withus.entity.User;
 import withus.entity.WwithusEntryHistory;
 import withus.service.UserService;
@@ -29,20 +30,25 @@ public class WwithusController extends BaseController {
 
 	@GetMapping("/wwithus")
 	public ModelAndView getWwithus() {
-		return new ModelAndView("wwithus/wwithus.html");
+		ModelAndView modelAndView = new ModelAndView("wwithus/wwithus.html");
+		modelAndView.addObject("previousUrl", "/home");
+
+		return modelAndView;
 	}
 
 	@GetMapping("/wwithus/chat-balloons")
 	@ResponseBody
-	public Result<List<WwithusEntryHistory>> getChatBalloons() {
+	public Result<List<ChatBalloon>> getChatBalloons() {
 		User user = getUser();
 		Result.Code code = Result.Code.OK;
-		List<WwithusEntryHistory> data = wwithusService.getWwithusEntryHistories(user);
-		if (!data.isEmpty()) {
-			log.debug("User ({}) has {} history(ies) of today.", user, data.size());
+		List<ChatBalloon> data = null;
+		List<WwithusEntryHistory> wwithusEntryHistories = wwithusService.getWwithusEntryHistories(user);
+		if (!wwithusEntryHistories.isEmpty()) {
+			log.debug("User ({}) has {} history(ies) of today.", user, wwithusEntryHistories.size());
+			data = wwithusService.toChatBalloons(wwithusEntryHistories);
 		}
 
-		return Result.<List<WwithusEntryHistory>>builder()
+		return Result.<List<ChatBalloon>>builder()
 			.code(code)
 			.data(data)
 			.build();
