@@ -16,14 +16,17 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class WebMvcConfigurerImplementation implements WebMvcConfigurer {
+public class WebMvcConfigurerImplementation implements WebMvcConfigurer
+{
 	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+	public void addResourceHandlers(ResourceHandlerRegistry registry)
+	{
 		registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
 	}
 
 	@Override
-	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+	public void extendMessageConverters(List<HttpMessageConverter<?>> converters)
+	{
 		GsonHttpMessageConverter gsonHttpMessageConverter = new GsonHttpMessageConverter();
 		gsonHttpMessageConverter.setGson(gson());
 		gsonHttpMessageConverter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
@@ -32,19 +35,23 @@ public class WebMvcConfigurerImplementation implements WebMvcConfigurer {
 	}
 
 	@Bean
-	public Gson gson() {
-		GsonBuilder gsonBuilder = new GsonBuilder()
-			.setPrettyPrinting()
-			.addSerializationExclusionStrategy(new ExclusionStrategy() {
-				@Override
-				public boolean shouldSkipField(FieldAttributes fieldAttributes) {
-					return (fieldAttributes.getAnnotation(JsonIgnore.class) != null);
-				}
-				@Override
-				public boolean shouldSkipClass(Class<?> clazz) {
-					return false;
-				}
-			});
+	public Gson gson()
+	{
+		GsonBuilder gsonBuilder = new GsonBuilder().setPrettyPrinting()
+				.addSerializationExclusionStrategy(new ExclusionStrategy()
+				{
+					@Override
+					public boolean shouldSkipField(FieldAttributes fieldAttributes)
+					{
+						return (fieldAttributes.getAnnotation(JsonIgnore.class) != null);
+					}
+
+					@Override
+					public boolean shouldSkipClass(Class<?> clazz)
+					{
+						return false;
+					}
+				});
 
 		return gsonBuilder.create();
 	}

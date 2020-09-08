@@ -7,11 +7,17 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import withus.entity.User;
 
-import javax.jws.soap.SOAPBinding;
-
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
 	@Transactional(readOnly = true)
-	Optional<User> findByIdAndPassword(String id, String password);
+	Optional<User> findByUserId(String userId);
+
+	@Transactional(readOnly = true)
+	Optional<User> findByCaregiverUserId(String caregiverUserId);
+
+	@Transactional(readOnly = true)
+	Optional<User> findByUserIdAndPassword(String id, String password);
+
+	@Transactional(readOnly = true)
 	Optional<User> findByContact(String contact);
 }
