@@ -31,11 +31,6 @@ public class CenterController extends BaseController
 	{
 
 		logger.info("center");
-		logger.debug("AAAAAAAAAAAAAAA get" + getAllPatient());
-		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-		System.out.println("AAAAAAAAAAAAAAA get" + new Gson().toJson(getAllPatient()));
-		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-
 		User user = getUser();
 		ModelAndView modelAndView = new ModelAndView();
 

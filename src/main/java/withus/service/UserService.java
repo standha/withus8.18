@@ -49,6 +49,11 @@ public class UserService implements UserDetailsService {
 	}
 
 	@Nullable
+	public User getUserByCaregiverId(String caregiverId) {
+		return userRepository.findByCaregiverUserId(caregiverId).orElse(null);
+	}
+
+	@Nullable
 	public User getUserByContact(String contact) {
 		return userRepository.findByContact(contact).orElse(null);
 	}

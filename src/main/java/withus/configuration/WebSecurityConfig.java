@@ -32,34 +32,39 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity httpSecurity) throws Exception
 	{
 		httpSecurity
-			.csrf()
+				.csrf()
 				.disable()
-			.authorizeRequests()
+				.authorizeRequests()
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
-					.permitAll()
-				.antMatchers("/registerUser", "/saveUser")
-					.permitAll()
+				.permitAll()
+				.antMatchers("/registerUser", "/saveUser", "/admin")
+				.permitAll()
 				.anyRequest()
-					.authenticated()
-					.and()
-			.formLogin()
-				.loginPage("/login")
+				.authenticated()
+				.and()
+				.formLogin()
 				.loginPage("/admin")
 				.loginProcessingUrl("/login-process")
 				.defaultSuccessUrl("/center", true)
-				.permitAll()
-				.and()
-			.rememberMe()
+				.permitAll();
+		httpSecurity.formLogin()
+				.loginPage("/login")
+				.loginProcessingUrl("/login-process")
+				.defaultSuccessUrl("/center", true)
+				.permitAll();
+
+		httpSecurity
+				.rememberMe()
 				.rememberMeParameter("remember-me")
 				.key(REMEMBER_ME_TOKEN)
 				.tokenValiditySeconds(Math.toIntExact(Duration.ofDays(30).getSeconds()))
 				.userDetailsService(userService);
 
 		httpSecurity
-			.logout()
-			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-			.logoutSuccessUrl("/logout")
-			.invalidateHttpSession(true);
+				.logout()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.logoutSuccessUrl("/logout")
+				.invalidateHttpSession(true);
 
 	}
 
