@@ -46,23 +46,33 @@ function setFinished(finished) {
 
 	fetch(url, options)
 		.then(response => response.json())
-		.then(object => {
+		.then(object =>
+		 {
 			console.log(object);
 
 			let data = object["data"];
-			if (data) {
+			if (data)
+			{
 				let finishedResponse = data["finished"];
 
-				if (finished === finishedResponse) {
-					if (finished) {
+				if (finished === finishedResponse) 
+				{
+					if (finished) 
+					{
 						alert("복약하신 것으로 기록하였습니다.")
-					} else {
+					} 
+					else 
+					{
 						alert("아직 복약하지 않은 것으로 기록하였습니다.")
 					}
-				} else {
+				} 
+				else 
+				{
 					alert("복약 처리에 실패했습니다.")
 				}
-			} else {
+			} 
+			else 
+			{
 				alert("복약 처리에 실패했습니다.")
 			}
 		});
