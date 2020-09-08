@@ -27,4 +27,11 @@ public class WwithusEntryCodeTest {
 		Assertions.assertThat(matcher.group(2)).isEqualTo("3");
 		Assertions.assertThat(matcher.group(3)).isEqualTo("1_2MQQ");
 	}
+
+	@Test
+	public void testWwithusCodeFormat3() {
+		String format = "W1d1_1!";
+		Matcher matcher = WwithusEntry.createMatcherForCode(format);
+		Assertions.assertThat(matcher.find()).isFalse();
+	}
 }
