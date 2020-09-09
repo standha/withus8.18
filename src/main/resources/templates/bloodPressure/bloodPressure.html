@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/header.css}" rel="stylesheet">
+    <script th:src="@{/js/bloodPressure/bloodPressure.js}"></script>
+    <title>혈압맥박 측정</title>
+</head>
+<body>
+<input type="hidden" id="bloodPressure-history-get-action" th:attr="value=@{/bloodPressure-all-history}">
+<div th:replace="header :: #header"></div>
+<div id="body">
+    <!-- TODO: 보호자일 경우 immutable 하도록 -->
+    <form id="bloodPressure-form" th:action="@{/bloodPressure}" onsubmit="return onFormSubmission(this);">
+        <div>Exercise record input</div>
+        <div id="date">
+            <p>Input Contraction/relaxation</p>
+                <p><input type="text"  value='0'  name="contraction">
+                <input type="text"  value='0'  name="relaxation">mm/Hg</p>
+            <p>Input Pressure</p>
+                <p><input type="text"  value='0'  name="pressure">(회/분)</p>
+        </div>
+        <input type="submit" value="Save >.<">
+    </form>
+    <div>
+        <br>
+        <button id="exerciseRecord" type="button" onclick="showHistory();">혈압맥박기록</button>
+    </div>
+</div>
+</body>
+</html>
