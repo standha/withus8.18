@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/register.css}" rel="stylesheet">
+    <script th:src="@{/js/changeInfo.js}"></script>
+    <title>정보수정</title>
+</head>
+<script>
+
+</script>
+<body>
+<form id="MemberInfo" th:action="@{/changeInfo}" method="post"  onsubmit="return onFormSubmission(this);">
+    <div id="user-wrap">
+        <label id = "changePatient">
+            <input type="radio" name="user" value="PATIENT" onclick="doDisplay(this.value)" checked>
+            <div class="user">
+                <img th:src="@{/images/patient.png}">
+                <span id="patient">환자</span>
+            </div>
+        </label>
+        <label id = "changeCaregiver">
+            <input type="radio" name="user" value="CAREGIVER" onclick="doDisplay(this.value)">
+            <div class="user">
+                <img th:src="@{/images/protector.png}">
+                <span id="caregiver">보호자</span>
+            </div>
+        </label>
+    </div>
+    <div>
+        <div class="input-container" >
+            <span class="label">아이디</span>
+            <input type="text" th:value="${user.userId}" id="userId"  name="id" readonly />
+        </div>
+        <div class="input-container">
+            <span class="label">비밀번호</span>
+            <input type="password"  th:value="${user.password}" name="password" readonly />
+        </div>
+        <div class="input-container">
+            <span class="label">이름</span>
+            <input type="text" th:value="${user.name}" name="name">
+        </div>
+        <div class="input-container patient-only">
+            <span class="label">생년월일</span>
+            <input type="date" th:value="${user.birthdate}" name="birthdate">
+        </div>
+        <div class="input-container patient-only">
+            <span class="label">성별</span>
+            <div th:each="state : ${T(withus.entity.User.Gender).values()}">
+                <label>
+                    <input type="radio" name="gender" th:value="${state}">
+                    <span th:id="${state}" th:text="${state==T(withus.entity.User.Gender).MALE ? '남자':'여자'}"></span>
+                </label>
+            </div>
+        </div>
+        <div class="input-container">
+            <span class="label">연락처<br>(본인)</span>
+            <input type="number" th:value="${user.contact}" name="contact">
+        </div>
+        <div class="input-container patient-only">
+            <span class="label">연락처<br>(보호자)</span>
+            <input type="number" th:value="${user.caregiver}" name="caregiver">
+        </div>
+    </div>
+    <div>
+
+        <input tpye = 'hidden' name = "appToken" th:value = "${user.appToken}" style = "display:none">
+    </div>
+    <div>
+        <input type="submit" value="정보수정">
+    </div>
+
+</form>
+</body>
+</html>
