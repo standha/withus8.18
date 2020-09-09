@@ -1,5 +1,8 @@
 package withus.controller;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -15,9 +18,6 @@ import withus.entity.RecordKey;
 import withus.entity.Tbl_symptom_log;
 import withus.service.SymptomService;
 import withus.service.UserService;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @Controller
 public class SymptomController extends BaseController{
@@ -52,12 +52,12 @@ public class SymptomController extends BaseController{
             saved = symptomService.upsertSymptomRecord(tbl_symptom_log);
             code = Result.Code.OK;
         }catch (Exception exception){
-            logger.error(exception.getLocalizedMessage(), exception);
+            log.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
         }
         return Result.<Tbl_symptom_log>builder()
-                .setCode(code)
-                .setData(saved)
-                .createResult();
+                .code(code)
+                .data(saved)
+                .build();
     }
 }

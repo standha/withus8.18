@@ -1,23 +1,24 @@
+const MESSAGE_INTERVAL_MILLIS = 4444;
+const FETCH_OPTIONS = {
+	method: "GET",
+	headers: {
+		"Accept": "application/json",
+		"Content-Type": "application/json"
+	}
+};
+
 document.addEventListener('DOMContentLoaded', function() {
 	onDomLoad();
 }, false);
 
 function onDomLoad() {
 	const url = document.querySelector("#chat-balloon-url").value;
-	const options = {
-		method: "GET",
-		headers: {
-			"Accept": "application/json",
-			"Content-Type": "application/json"
-		}
-	};
 
-	fetch(url, options)
+	fetch(url, FETCH_OPTIONS)
 		.then(response => response.json())
 		.then(object => {
 			console.log(object);
 
-			let ok = false;
 			if (object) {
 				const data = object["data"];
 				if (data) {
@@ -38,6 +39,11 @@ function renderBalloons(objects) {
 		const chatBalloon = ChatBalloon.fromObject(object);
 
 		renderBalloon(parentElement, chatBalloon);
+		if (!chatBalloon.isAnswerExpected) {
+			setInterval(function() {
+				requestNext(chatBalloon);
+			}, MESSAGE_INTERVAL_MILLIS);
+		}
 	});
 }
 
@@ -48,10 +54,17 @@ function renderBalloons(objects) {
  */
 function renderBalloon(parentElement, chatBalloon) {
 	const div = document.createElement("div");
-	div.id = chatBalloon.sequence;
+	div.id = chatBalloon.sequence.toString();
 	div.className = "balloons";
 
+	// TODO: specify what to do with '도우미 연결' (chatBalloon.isEmergencyCall)
+
 	const input = '<input type="hidden" value="' + chatBalloon.sequence + '">';
+	let audio = "";
+	if (chatBalloon.urlToAudioFile) {
+		audio = '<audio src="' + chatBalloon.urlToAudioFile + '" controls></audio>';
+	}
+
 	const contentSpan =
 		'<span class="content">' +
 		chatBalloon.content +
@@ -63,10 +76,31 @@ function renderBalloon(parentElement, chatBalloon) {
 
 	if (chatBalloon.direction === "RIGHT") {
 		div.classList.add("right");
-		div.innerHTML = (input + "\n" + dateTimeSpan + "\n" + contentSpan);
+		div.innerHTML = (input + audio + dateTimeSpan + contentSpan);
 	} else {
-		div.innerHTML = (input + "\n" + contentSpan + "\n" + dateTimeSpan);
+		div.innerHTML = (input + audio + contentSpan + dateTimeSpan);
 	}
 
 	parentElement.appendChild(div);
+}
+
+/**
+ * @param {ChatBalloon} chatBalloon
+ */
+function requestNext(chatBalloon) {
+	const nextCode = chatBalloon.nextCode;
+
+	const parameters = { nextCode: nextCode };
+	const url = (document.querySelector("#request-chat-balloon-url").value + new URLSearchParams(parameters));
+
+	fetch(url, FETCH_OPTIONS)
+		.then(response => response.json())
+		.then(object => {
+			console.log(object);
+
+			if (object) {
+				const data = object["data"];
+				renderBalloons(data);
+			}
+		});
 }

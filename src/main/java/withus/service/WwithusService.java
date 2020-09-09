@@ -31,8 +31,8 @@ public class WwithusService {
 	}
 
 	public WwithusEntry getWwithusEntryAndSaveHistory(WwithusEntryRequest wwithusEntryRequest) {
-		String code = wwithusEntryRequest.getCode();
-		WwithusEntry wwithusEntry = wwithusEntryRepository.findById(code).orElseThrow(() -> {
+		String code = wwithusEntryRequest.getNextCode();
+		WwithusEntry wwithusEntry = wwithusEntryRepository.findById(code).<RuntimeException>orElseThrow(() -> {
 			throw new RuntimeException(String.format("Failed to select entry by the code \"%s\".", code));
 		});
 
@@ -52,8 +52,12 @@ public class WwithusService {
 	public ChatBalloon toChatBalloon(@NonNull WwithusEntry wwithusEntry) {
 		return ChatBalloon.builder()
 			.direction(ChatBalloon.Direction.LEFT)
+			.isEmergencyCall(wwithusEntry.isEmergencyCall())
+			.isAnswerExpected(wwithusEntry.isAnswerExpected())
 			.content(wwithusEntry.getContent())
+			.urlToAudioFile(wwithusEntry.getUrlToAudioFile())
 			.dateTime(LocalDateTime.now())
+			.nextCode(wwithusEntry.getNextCode())
 			.build();
 	}
 
@@ -79,11 +83,15 @@ public class WwithusService {
 	}
 
 	private ChatBalloon toChatBalloon(@NonNull WwithusEntryHistory wwithusEntryHistory) {
+		WwithusEntry wwithusEntry = wwithusEntryHistory.getEntry();
 		return ChatBalloon.builder()
-			// TODO
-			.direction(ChatBalloon.Direction.LEFT)
-			.content(wwithusEntryHistory.getEntry().getContent())
+			.direction(wwithusEntry.isAnswer()? ChatBalloon.Direction.RIGHT: ChatBalloon.Direction.LEFT)
+			.isEmergencyCall(wwithusEntry.isEmergencyCall())
+			.isAnswerExpected(wwithusEntry.isAnswerExpected())
+			.content(wwithusEntry.getContent())
+			.urlToAudioFile(wwithusEntry.getUrlToAudioFile())
 			.dateTime(wwithusEntryHistory.getDateTime())
+			.nextCode(wwithusEntry.getNextCode())
 			.build();
 	}
 }

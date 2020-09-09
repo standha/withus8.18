@@ -9,5 +9,5 @@ public class WwithusEntryRequest {
 	@Setter
 	private User user;
 
-	private String code;
+	private String nextCode;
 }

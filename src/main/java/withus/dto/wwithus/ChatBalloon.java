@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -16,8 +17,14 @@ import org.springframework.lang.NonNull;
 @ToString
 public class ChatBalloon implements Comparable<ChatBalloon> {
 	private final Direction direction;
+	private final boolean isEmergencyCall;
+	private final boolean isAnswerExpected;
 	private final String content;
+	@Nullable
+	private final String urlToAudioFile;
 	private final LocalDateTime dateTime;
+	@Nullable
+	private final String nextCode;
 
 	@Override
 	public int compareTo(@NonNull ChatBalloon that) {
