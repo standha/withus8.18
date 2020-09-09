@@ -1,5 +1,6 @@
 package withus.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,17 +38,18 @@ public class WwithusController extends BaseController {
 		return modelAndView;
 	}
 
-	@GetMapping("/wwithus/chat-balloons")
+	@GetMapping("/wwithus/histories")
 	@ResponseBody
-	public Result<List<ChatBalloon>> getChatBalloons() {
+	public Result<List<ChatBalloon>> getHistories() {
 		Result.Code code = Result.Code.OK;
 		List<ChatBalloon> data = null;
 
 		User user = getUser();
 		List<WwithusEntryHistory> wwithusEntryHistories = wwithusService.getWwithusEntryHistories(user);
+
+		log.debug("User ({}) has {} history(ies) of today.", user, wwithusEntryHistories.size());
 		if (!wwithusEntryHistories.isEmpty()) {
-			log.debug("User ({}) has {} history(ies) of today.", user, wwithusEntryHistories.size());
-			data = wwithusService.toChatBalloons(wwithusEntryHistories);
+			data = wwithusService.ToChatBalloons(wwithusEntryHistories);
 		}
 
 		return Result.<List<ChatBalloon>>builder()
@@ -56,15 +58,20 @@ public class WwithusController extends BaseController {
 			.build();
 	}
 
-	@GetMapping("/wwithus/request-chat-balloon")
+	@GetMapping("/wwithus/request-next")
 	@ResponseBody
-	public Result<ChatBalloon> getChatBalloon(@RequestParam WwithusEntryRequest wwithusEntryRequest) {
+	public Result<ChatBalloon> getNext(@RequestParam(name = "nextCode", required = false) String nextCode) {
 		Result.Code code = Result.Code.ERROR;
 		ChatBalloon data = null;
 
 		try {
 			User user = getUser();
-			wwithusEntryRequest.setUser(user);
+			WwithusEntryRequest wwithusEntryRequest = WwithusEntryRequest.builder()
+				.user(user)
+				.nextCode(nextCode)
+				.date(LocalDate.of(2020, 9, 7))
+				.build();
+
 			WwithusEntry wwithusEntry = wwithusService.getWwithusEntryAndSaveHistory(wwithusEntryRequest);
 
 			code = Result.Code.OK;

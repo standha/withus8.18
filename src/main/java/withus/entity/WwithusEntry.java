@@ -16,23 +16,33 @@ import org.springframework.lang.Nullable;
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
-public class WwithusEntry {
+public class WwithusEntry implements Comparable<WwithusEntry> {
 	@Id
 	@Column(columnDefinition = "VARCHAR(32)", unique = true)
 	@EqualsAndHashCode.Include
 	private String code;
 
-	@Column(columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE")
-	private boolean isAnswer;
+	@Column(name = "is_first", columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE")
+	private boolean first;
 
-	@Column(columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE")
-	private boolean isEmergencyCall;
+	@Column(name = "is_last", columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE")
+	private boolean last;
 
-	@Column(columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE")
-	private boolean isAnswerExpected;
+	@Column(name = "is_answer", columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE")
+	private boolean answer;
+
+	@Column(name = "is_help_request", columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE")
+	private boolean helpRequest;
+
+	@Column(name = "is_answer_expected", columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE")
+	private boolean answerExpected;
 
 	@Column(columnDefinition = "VARCHAR(4096)", length = 4096)
 	private String content;
+
+	@Column(columnDefinition = "VARCHAR(512)", length = 512)
+	@Nullable
+	private String urlToImageFile;
 
 	@Column(columnDefinition = "VARCHAR(512)", length = 512)
 	@Nullable
@@ -42,6 +52,11 @@ public class WwithusEntry {
 	@JoinColumn(columnDefinition = "VARCHAR(32)")
 	@Nullable
 	private WwithusEntry next;
+
+	@Override
+	public int compareTo(@NonNull WwithusEntry that) {
+		return code.compareTo(that.code);
+	}
 
 	public int getWeek() {
 		Matcher matcher = createMatcherForCode(code);
@@ -59,11 +74,6 @@ public class WwithusEntry {
 		} else {
 			throw new InvalidCodeFormatException(code);
 		}
-	}
-
-	@NonNull
-	public String getWeekAndDay() {
-		return String.format("W%dD%d", getWeek(), getDay());
 	}
 
 	public String getSuffix() {

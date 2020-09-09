@@ -1,7 +1,9 @@
 package withus.dto.wwithus;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -17,14 +19,20 @@ import org.springframework.lang.Nullable;
 @ToString
 public class ChatBalloon implements Comparable<ChatBalloon> {
 	private final Direction direction;
-	private final boolean isEmergencyCall;
+	private final boolean isHelpRequest;
 	private final boolean isAnswerExpected;
+	private final boolean isToTerminate;
 	private final String content;
+	@Nullable
+	private final String urlToImageFile;
 	@Nullable
 	private final String urlToAudioFile;
 	private final LocalDateTime dateTime;
 	@Nullable
 	private final String nextCode;
+	@NonNull
+	@Builder.Default
+	private final List<AnswerButton> answerButtons = new ArrayList<>();
 
 	@Override
 	public int compareTo(@NonNull ChatBalloon that) {

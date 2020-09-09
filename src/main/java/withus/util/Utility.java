@@ -1,5 +1,6 @@
 package withus.util;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -22,6 +23,78 @@ public class Utility {
 	public static String format(LocalDate date) { return date.format(DATE_FORMATTER); }
 	public static String format(LocalTime date) { return date.format(TIME_FORMATTER); }
 	public static String format(LocalDateTime date) { return date.format(DATE_TIME_FORMATTER); }
+
+	public static int getDayDigitForWwithus(int week, DayOfWeek dayOfWeek) {
+		if (week < 1 || week > 24) { throw new RuntimeException(String.format("Unexpected value for week #: %d", week)); }
+
+		if (week <= 8) {
+			switch (dayOfWeek) {
+				case MONDAY:
+					return 1;
+				case TUESDAY:
+					return 2;
+				case THURSDAY:
+					return 3;
+				case SATURDAY:
+					return 4;
+				default:
+					throw new RuntimeException(String.format("No Wwithus on %s week #%d.", dayOfWeek, week));
+			}
+		} else {
+			switch (dayOfWeek) {
+				case MONDAY:
+					return 1;
+				case WEDNESDAY:
+					return 2;
+				case SATURDAY:
+					return 3;
+				default:
+					throw new RuntimeException(String.format("No Wwithus on %s week #%d.", dayOfWeek, week));
+			}
+		}
+	}
+
+	public static DayOfWeek getNextDayForWwithus(int week, DayOfWeek dayOfWeek) {
+		if (week < 1 || week > 24) { throw new RuntimeException(String.format("Unexpected value for week #: %d", week)); }
+
+		try {
+			getDayDigitForWwithus(week, dayOfWeek);
+
+			// No exception means we have Wwithus today.
+			return dayOfWeek;
+		} catch (RuntimeException runtimeException) {
+			if (week <= 8) {
+				switch (dayOfWeek) {
+					case SUNDAY:
+					case MONDAY:
+						return DayOfWeek.MONDAY;
+					case TUESDAY:
+						return DayOfWeek.TUESDAY;
+					case WEDNESDAY:
+					case THURSDAY:
+						return DayOfWeek.THURSDAY;
+					case FRIDAY:
+					case SATURDAY:
+						return DayOfWeek.SATURDAY;
+				}
+			} else {
+				switch (dayOfWeek) {
+					case SUNDAY:
+					case MONDAY:
+						return DayOfWeek.MONDAY;
+					case TUESDAY:
+					case WEDNESDAY:
+						return DayOfWeek.WEDNESDAY;
+					case THURSDAY:
+					case FRIDAY:
+					case SATURDAY:
+						return DayOfWeek.SATURDAY;
+				}
+			}
+
+			throw new RuntimeException("We are sorry. The Earth is going to explode now.");
+		}
+	}
 
 	public static boolean nullOrEmptyOrSpace(@Nullable String sentence) {
 		return (sentence == null || sentence.trim().isEmpty());

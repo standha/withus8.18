@@ -30,7 +30,8 @@ public class WwithusEntryHistory {
 	private Key key;
 
 	@Column(columnDefinition = "TIMESTAMP")
-	private LocalDateTime dateTime;
+	@Builder.Default
+	private LocalDateTime dateTime = LocalDateTime.now();
 
 	public User getUser() { return key.user; }
 	public WwithusEntry getEntry() { return key.entry; }

@@ -19,7 +19,6 @@ public interface WwithusEntryHistoryRepository extends JpaRepository<WwithusEntr
 	@Transactional(readOnly = true)
 	@NonNull
 	List<WwithusEntryHistory> findAllByKey_UserAndDateTimeIsBetween(User user, LocalDateTime start, LocalDateTime end);
-	@Transactional(readOnly = true)
 	@NonNull
 	default List<WwithusEntryHistory> findAllByUserAndDate(User user, LocalDate date) {
 		LocalDateTime start = LocalDateTime.of(date, LocalTime.MIN);

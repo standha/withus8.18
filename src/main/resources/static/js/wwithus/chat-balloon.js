@@ -1,5 +1,18 @@
 class ChatBalloon {
-	constructor(sequence, direction, isEmergencyCall, isAnswerExpected, content, urlToAudioFile, dateTime, nextCode) {
+	/**
+	 * @param {number} sequence
+	 * @param {string} direction
+	 * @param {boolean} isToTerminate
+	 * @param {boolean} isHelpRequest
+	 * @param {boolean} isAnswerExpected
+	 * @param {string} content
+	 * @param {string | null} urlToImageFile
+	 * @param {string | null} urlToAudioFile
+	 * @param {number[]} dateTime
+	 * @param {string | null} nextCode
+	 * @param {AnswerButton[]} answerButtons
+	 */
+	constructor(sequence, direction, isToTerminate, isHelpRequest, isAnswerExpected, content, urlToImageFile, urlToAudioFile, dateTime, nextCode, answerButtons) {
 		if (sequence) {
 			this._sequence = sequence;
 		} else {
@@ -7,12 +20,15 @@ class ChatBalloon {
 		}
 
 		this._direction = direction;
-		this._isEmergencyCall = (isEmergencyCall == true);
-		this._isAnswerExpected = (isAnswerExpected == true);
+		this._isToTerminate = isToTerminate;
+		this._isHelpRequest = isHelpRequest;
+		this._isAnswerExpected = isAnswerExpected;
 		this._content = content;
+		this._urlToImageFile = urlToImageFile;
 		this._urlToAudioFile = urlToAudioFile;
 		this._dateTime = dateTime;
 		this._nextCode = nextCode;
+		this._answerButtons = answerButtons;
 
 		ChatBalloon.creationCount++
 	}
@@ -30,7 +46,11 @@ class ChatBalloon {
 	/**
 	 * @returns {boolean}
 	 */
-	get isEmergencyCall() { return this._isEmergencyCall; }
+	get isToTerminate() { return this._isToTerminate; }
+	/**
+	 * @returns {boolean}
+	 */
+	get isHelpRequest() { return this._isHelpRequest; }
 	/**
 	 * @returns {boolean}
 	 */
@@ -40,19 +60,25 @@ class ChatBalloon {
 	 */
 	get content() { return this._content; }
 	/**
-	 * @returns {string}
+	 * @returns {string | null}
+	 */
+	get urlToImageFile() { return this._urlToImageFile; }
+	/**
+	 * @returns {string | null}
 	 */
 	get urlToAudioFile() { return this._urlToAudioFile; }
 	/**
-	 * @returns {string}
+	 * @returns {number[]}
 	 */
 	get dateTime() { return this._dateTime; }
 	/**
-	 * @returns {string}
+	 * @returns {string | null}
 	 */
-	get nextCode() {
-		return this._nextCode;
-	}
+	get nextCode() { return this._nextCode; }
+	/**
+	 * @returns {AnswerButton[]}
+	 */
+	get answerButtons() { return this._answerButtons; }
 
 	/**
 	 * @returns {Date}
@@ -85,12 +111,15 @@ class ChatBalloon {
 		const object = {
 			sequence: this._sequence,
 			direction: this._direction,
-			isEmergencyCall: this._isEmergencyCall,
+			isToTerminate: this._isToTerminate,
+			isHelpRequest: this._isHelpRequest,
 			isAnswerExpected: this._isAnswerExpected,
 			content: this._content,
+			urlToImageFile: this._urlToImageFile,
 			urlToAudioFile: this._urlToAudioFile,
 			dateTime: this._dateTime,
-			nextCode: this._nextCode
+			nextCode: this._nextCode,
+			answerButtons: this._answerButtons
 		};
 
 		return JSON.stringify(object);
@@ -118,19 +147,31 @@ class ChatBalloon {
 	static fromObject(object) {
 		const errorMessage = ('Object "' + object + '" is malformed for class "' + ChatBalloon.name + '".');
 
-		if (!object.hasOwnProperty("direction") || !object.hasOwnProperty("content") || !object.hasOwnProperty("dateTime")) {
+		if (
+			!object.hasOwnProperty("direction") ||
+			!object.hasOwnProperty("toTerminate") ||
+			!object.hasOwnProperty("helpRequest") ||
+			!object.hasOwnProperty("answerExpected") ||
+			!object.hasOwnProperty("content") ||
+			!object.hasOwnProperty("dateTime") ||
+			!object.hasOwnProperty("answerButtons")
+		) {
 			throw new Error(errorMessage);
 		}
 
 		const sequence = object["sequence"];
 		const direction = object["direction"];
-		const isEmergencyCall = object["isEmergencyCall"];
-		const isAnswerExpected = object["isAnswerExpected"];
+		// WARNING: isToTerminate가 아니라 toTerminate인 점에 유의할 것!
+		const isToTerminate = object["toTerminate"];
+		const isHelpRequest = object["helpRequest"];
+		const isAnswerExpected = object["answerExpected"];
 		const content = object["content"];
+		const urlToImageFile = object["urlToImageFile"];
 		const urlToAudioFile = object["urlToAudioFile"];
 		const dateTime = object["dateTime"];
 		const nextCode = object["nextCode"];
+		const answerButtons = object["answerButtons"];
 
-		return new ChatBalloon(sequence, direction, isEmergencyCall, isAnswerExpected, content, urlToAudioFile, dateTime, nextCode);
+		return new ChatBalloon(sequence, direction, isToTerminate, isHelpRequest, isAnswerExpected, content, urlToImageFile, urlToAudioFile, dateTime, nextCode, answerButtons);
 	}
 }
