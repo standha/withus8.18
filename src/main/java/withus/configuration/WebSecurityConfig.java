@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
 import withus.auth.NoOpPasswordEncoder;
 import withus.service.UserService;
 
@@ -37,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
 				.permitAll()
-				.antMatchers("/registerUser", "/saveUser", "/admin","/changeInfo")
+				.antMatchers("/registerUser", "/saveUser", "/admin")
 				.permitAll()
 				.anyRequest()
 				.authenticated()
