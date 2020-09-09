@@ -1,13 +1,12 @@
 @charset "UTF-8";
 
+body > form {height: 100%;}
 #wrap {display: flex; flex-direction: column; justify-content: space-between; height: 100%; overflow-y: auto;}
 header {position: relative;}
 header .header-wrap {padding: 3% 5%;}
 header .header-wrap .head {display: flex; justify-content: space-between;}
 header .header-wrap .head .btn {display: flex; align-items: center; width: auto; padding: 0 10px;}
-footer {position: relative; margin-top: auto;}
-footer .footer-wrap {}
-footer .footer-wrap .btn-wrap {padding: 8%;}
+footer {position: relative;}
 
 .gnb {}
 .gnb li {}
@@ -20,6 +19,7 @@ footer .footer-wrap .btn-wrap {padding: 8%;}
 .index-page .container {margin: auto 0;}
 .index-page .login-wrap {display: flex; flex-direction: column; margin: 0 8%; padding: 5% 6%; border-radius: 15px; box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05); border: solid 1px #f4f4f4; background-color: #ffffff;}
 .index-page .login-wrap .chk-wrap .chk-box {margin-left: auto;}
+.index-page .footer-wrap .btn-wrap {padding: 8%;}
 
 /* main */
 .main-page {background-color: #f6f9fc;}
@@ -31,12 +31,22 @@ footer .footer-wrap .btn-wrap {padding: 8%;}
 .main-page .header-wrap .cont .todo-txt {font-size: 1.4rem; font-weight: 900; line-height: 1.5;}
 .main-page .header-wrap .target-img {position: absolute; left: 50%; bottom: -50px; transform: translateX(-50%);}
 .main-page .main-icon {display: flex; flex-wrap: wrap; justify-content: space-between; margin: 60px 8% 20px;}
-.main-page .main-icon li {display: flex; flex-direction: column; justify-content: space-between; align-items: center; width: 31%; padding: 8% 0; margin-bottom: 15px; border-radius: 15px; box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.04); border: solid 1px #eff0f0; background-color: #ffffff;}
-.main-page .main-icon li span {text-align: center; font-size: 1.1rem; font-weight: 700;}
-.main-page .main-icon li span[class*="ico-"] {margin-bottom: 10px;}
+.main-page .main-icon a {display: flex; flex-direction: column; justify-content: space-between; align-items: center; width: 31%; padding: 8% 0; margin-bottom: 15px; border-radius: 15px; box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.04); border: solid 1px #eff0f0; background-color: #ffffff;}
+.main-page .main-icon a span {text-align: center; font-size: 1.1rem; font-weight: 700;}
+.main-page .main-icon a span[class*="ico-"] {margin-bottom: 10px;}
 .main-page .footer-wrap {display: flex; justify-content: space-between; padding: 3% 5%; box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.04); background-color: #ffffff; box-sizing: border-box;}
 .main-page .footer-wrap .chat-txt {display: flex; font-weight: 300; font-size: 1rem; align-items: center;}
 .main-page .footer-wrap .chat-txt span {padding-right: 5px;}
 .main-page .footer-wrap .chat-txt .green {font-weight: 700; color: #25cc85;}
 .main-page .footer-wrap .chat-txt .black {font-weight: 700; color: #222; font-size: 1.13rem; padding-right: 5px;}
 .main-page .footer-wrap .btn {display: flex; align-items: center; width: auto; padding: 0 15px;}
+
+/* join */
+.join-page {background-color: #f6f9fc;}
+.join-page .header-wrap {display: flex; background-color: #fff;}
+.join-page .field-wrap {}
+.join-page .footer-wrap .btn-wrap {padding: 0 5%; margin-bottom: 10%;}
+
+
+/* modify */
+
