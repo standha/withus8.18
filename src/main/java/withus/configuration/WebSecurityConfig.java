@@ -37,24 +37,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
 				.permitAll()
-				.antMatchers("/registerUser", "/saveUser", "/admin")
+				.antMatchers("/registerUser", "/saveUser")
 				.permitAll()
 				.anyRequest()
-				.authenticated()
-				.and()
-				.formLogin()
-				.loginPage("/admin")
-				.loginProcessingUrl("/login-process")
-				.defaultSuccessUrl("/center", true)
-				.permitAll();
+				.authenticated();
+
 		httpSecurity.formLogin()
+				.loginPage("/admin")
 				.loginPage("/login")
 				.loginProcessingUrl("/login-process")
 				.defaultSuccessUrl("/center", true)
 				.permitAll();
 
-		httpSecurity
-				.rememberMe()
+		httpSecurity .rememberMe()
 				.rememberMeParameter("remember-me")
 				.key(REMEMBER_ME_TOKEN)
 				.tokenValiditySeconds(Math.toIntExact(Duration.ofDays(30).getSeconds()))

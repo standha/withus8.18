@@ -46,7 +46,7 @@ public class NoticeScheduler {
         this.userService = userService;
     }
 
-    @Scheduled(cron = "0 * * * * *")
+    //@Scheduled(cron = "0 * * * * *")
     public @ResponseBody ResponseEntity<String> pill() throws JSONException, InterruptedException  {
         System.out.println("복약 알림 Scheduler ");
         if(noticePill().isEmpty()){
@@ -108,7 +108,7 @@ public class NoticeScheduler {
     }
     //cron = "0 0 20 * * *"
     //매일 20시 위더스 알림
-    @Scheduled(cron = "0 0 20 * * *")
+    //@Scheduled(cron = "0 * * * * *")
     @RequestMapping(produces="application/json;charset=UTF-8")
     public @ResponseBody ResponseEntity<String> send() throws JSONException, InterruptedException, NonUniqueResultException {
         String messageBody = " 님, 오늘 심장 건강을 위해 실천하신 내용을 [위더스]에 기록하셨나요?\n 기록하지 않았다면 지금 기록해주세요!";
@@ -149,7 +149,7 @@ public class NoticeScheduler {
     }
 
     //외래 진료 전날 18시 알림
-    @Scheduled(cron = "0 0 20 * * *")
+    //@Scheduled(cron = "0 * * * * *")
     public @ResponseBody ResponseEntity<String> visit18() throws JSONException, InterruptedException  {
         System.out.println("예약 전일 오후 6시 알림");
         if(noticeTomorrowVisit().isEmpty()){
@@ -199,7 +199,7 @@ public class NoticeScheduler {
     }
 
     //외래 진료 2시간전 알림
-    @Scheduled(cron = "0 * * * * *")
+    //@Scheduled(cron = "0 * * * * *")
     @RequestMapping(produces="application/json;charset=UTF-8")
     public @ResponseBody ResponseEntity<String> visit2() throws JSONException, InterruptedException  {
         String messageBody = " 병원 진료 전 준비사항 (예: 금식)이 있는 지 확인해보세요!";
