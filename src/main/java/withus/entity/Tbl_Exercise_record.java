@@ -1,5 +1,6 @@
 package withus.entity;
 
+
 import lombok.*;
 import withus.util.Utility;
 import javax.persistence.*;
@@ -10,13 +11,15 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Setter
 @Getter
-@Table(name = "tbl_medication_record")
-public class Tbl_medication_record {
+@Table(name = "tbl_exercise_record")
+public class Tbl_Exercise_record {
     @EmbeddedId
     private RecordKey pk;
 
-    @Column(name = "finished")
-    private boolean finished;
+    @Column(name = "hour", columnDefinition = "int default 0")
+    private Integer hour;
 
-    public String getDateString() { return Utility.format(pk.getDate()); }
+    @Column(name = "minute", columnDefinition = "int default 0")
+    private Integer minute;
+
 }
