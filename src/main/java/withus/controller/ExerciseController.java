@@ -12,8 +12,6 @@ import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
 import withus.entity.RecordKey;
 import withus.entity.Tbl_Exercise_record;
-import withus.entity.Tbl_mositrue_record;
-import withus.entity.Tbl_outpatient_visit_alarm;
 import withus.service.ExerciseService;
 import withus.service.UserService;
 
@@ -39,6 +37,17 @@ public class ExerciseController extends BaseController {
         System.out.println("UserName : "+user);
         return modelAndView;
     }
+    @GetMapping("/exercise-all-history")
+    @Statistical
+    public ModelAndView getExerciseAll(){
+        ModelAndView modelAndView = new ModelAndView("exercise/exercise-all-history");
+        String username = getUsername();
+        List<Tbl_Exercise_record> exerciseHistory;
+        exerciseHistory = exerciseService.getExerciseAllRecord(username,-1, -1);
+        modelAndView.addObject("exercise",exerciseHistory);
+        modelAndView.addObject("previousUrl","exercise");
+        return modelAndView;
+    }
     @PostMapping("/exercise")
     @ResponseBody
     public Result<Tbl_Exercise_record> PostPatientVisit(@RequestBody Tbl_Exercise_record tbl_exercise_record){
@@ -57,16 +66,5 @@ public class ExerciseController extends BaseController {
                 .setCode(code)
                 .setData(seved)
                 .createResult();
-    }
-    @GetMapping("/exercise-all-history")
-    @Statistical
-    public ModelAndView getExerciseAll(){
-        ModelAndView modelAndView = new ModelAndView("exercise/exercise-all-history");
-        String username = getUsername();
-        List<Tbl_Exercise_record> exerciseHistory;
-        exerciseHistory = exerciseService.getExerciseAllRecord(username,-1, -1);
-        modelAndView.addObject("exercise",exerciseHistory);
-        modelAndView.addObject("previousUrl","exercise");
-        return modelAndView;
     }
 }

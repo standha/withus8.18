@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import withus.entity.RecordKey;
 import withus.entity.Tbl_weight;
-
 import java.time.LocalDate;
 import java.util.List;
 

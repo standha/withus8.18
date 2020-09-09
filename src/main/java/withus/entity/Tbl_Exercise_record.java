@@ -2,7 +2,6 @@ package withus.entity;
 
 
 import lombok.*;
-import withus.util.Utility;
 import javax.persistence.*;
 
 @Entity
