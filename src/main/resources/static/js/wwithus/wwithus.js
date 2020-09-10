@@ -7,6 +7,9 @@ const FETCH_OPTIONS = {
 	}
 };
 
+/**
+ * @type {Node}
+ */
 let balloonsAreaElement;
 /**
  * @type {string} /wwithus/request-next
@@ -21,7 +24,15 @@ function onDomLoad() {
 	balloonsAreaElement = document.querySelector("div#body");
 	urlToRequestNext = document.querySelector("#request-next-url").value;
 
+	removeChildren(balloonsAreaElement);
 	loadHistory();
+}
+
+/**
+ * @param {Node} parent
+ */
+function removeChildren(parent) {
+	parent.childNodes.forEach(childNode => { parent.removeChild(childNode); });
 }
 
 function loadHistory() {
@@ -95,12 +106,11 @@ function renderBalloon(parentElement, chatBalloon) {
 				answerButtonsSpan += "<a>";
 			}
 
-			answerButtonsSpan += answerButton.content;
-			if (answerButton.urlToImageFile) {
-				answerButtonsSpan += `<img src="${answerButton.urlToImageFile}" alt="이미지가 표시되지 않고 있습니다.">`;
-			}
+			answerButtonsSpan += `${answerButton.content}</a><br>`;
 
-			answerButtonsSpan += "</a><br>";
+			if (answerButton.urlToImageFile) {
+				answerButtonsSpan += `<img src="${answerButton.urlToImageFile}" alt="이미지가 표시되지 않고 있습니다."><br>`;
+			}
 		});
 		answerButtonsSpan += "</span>";
 	}
