@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/register.css}" rel="stylesheet">
+    <link th:href="@{/css/alarm/alarm.css}" rel="stylesheet">
+    <script th:src="@{/js/moistureNatrium/natrium.js}"></script>
+    <title>염분</title>
+</head>
+<body>
+<form id="MemberInfo" th:action="@{/natrium}" method="post"  onsubmit="return onFormSubmission(this);">
+
+        <div>
+        <span class="label">아침</span>
+        <div th:each="morning : ${T(withus.entity.Tbl_natrium_record.Salt).values()}" th:switch="${morning}">
+            <p th:case="">
+                <label>
+                    <input type="radio" name="morning" th:value="${morning}" >
+                    <span th:id="${morning}" th:text="${morning}"></span>
+                </label>
+            </p>
+        </div>
+        </div>
+        <div>
+        <span class="label">점심</span>
+        <div th:each="launch : ${T(withus.entity.Tbl_natrium_record.Salt).values()}">
+            <label>
+                <input type="radio" name="launch" th:value="${launch}">
+                <span th:id="${launch}" th:text="${launch}"></span>
+            </label>
+        </div>
+        </div>
+        <div>
+        <span class="label">저녁</span>
+        <div th:each="dinner : ${T(withus.entity.Tbl_natrium_record.Salt).values()}">
+            <label>
+                <input type="radio" name="dinner" th:value="${dinner}">
+                <span th:id="${dinner}" th:text="${dinner}"></span>
+            </label>
+        </div>
+        </div>
+
+    <div>
+        <input type="submit" value="저장">
+    </div>
+</form>
+</body>
+</html>

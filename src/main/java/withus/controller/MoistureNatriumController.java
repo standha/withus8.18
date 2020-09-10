@@ -58,6 +58,37 @@ public class MoistureNatriumController extends BaseController{
         modelAndView.addObject("previousUrl","moistureNatrium");
         return modelAndView;
     }
+    @GetMapping("/natrium")
+    @Statistical
+    public ModelAndView getNatrium(){
+        ModelAndView modelAndView = new ModelAndView("moistureNatrium/natrium");
+        String username = getUsername();
+        List<Tbl_natrium_record> natriumHistory;
+        natriumHistory = moistureNatriumService.getNatriumTodayRecord(new RecordKey(username, LocalDate.now()));
+        System.out.println(natriumHistory);
+        modelAndView.addObject("natrium",natriumHistory);
+        modelAndView.addObject("previousUrl","moistureNatrium");
+        return modelAndView;
+    }
+    @PostMapping("/natrium")
+    @ResponseBody
+    public Result<Tbl_natrium_record> postNatrium(@RequestBody Tbl_natrium_record tbl_natrium_record){
+        String username = getUsername();
+        tbl_natrium_record.setPk(new RecordKey(username, LocalDate.now()));
+        Result.Code code;
+        Tbl_natrium_record seved = null;
+        try{
+            seved = moistureNatriumService.upsertNatriumRecord(tbl_natrium_record);
+            code = Result.Code.OK;
+        } catch (Exception exception){
+            logger.error(exception.getLocalizedMessage(),exception);
+            code = Result.Code.ERROR_DATABASE;
+        }
+        return Result.<Tbl_natrium_record>builder()
+                .setCode(code)
+                .setData(seved)
+                .createResult();
+    }
     @PutMapping(value = "/moisture-history",consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<Tbl_mositrue_record> getMoisture(@RequestBody Tbl_mositrue_record tbl_mositrue_record){

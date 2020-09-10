@@ -5,14 +5,26 @@ function onFormSubmission(form) {
     const password = form.querySelector("input[name=password]").value;
     const name = form.querySelector("input[name=name]").value;
     const contact = form.querySelector("input[name=contact]").value;
+    if(form.querySelector("input[name=birthdate]") == null){
+        birthdateValue =  null;
+        birthdate = null;
+    }else{
 
-    const birthdateValue = form.querySelector("input[name=birthdate]").value;
-    const birthdate = isEmpty(birthdateValue) ? null : birthdateValue;
-
-    const sexElement = form.querySelector("input[name=gender]:checked");
-    const sex = sexElement? sexElement.value: null;
-
-    const caregiverValue = form.querySelector("input[name=caregiver]").value;
+        birthdateValue  = form.querySelector("input[name=birthdate]") .value;
+        birthdate =    isEmpty(birthdateValue) ? null : birthdateValue;
+    }
+    if(form.querySelector("input[name=gender]:checked") == null){
+        sexElement = null;
+        sex = null;
+    }else{
+        sexElement = form.querySelector("input[name=gender]:checked");
+        sex = sexElement? sexElement.value: null;
+    }
+    if( form.querySelector("input[name=caregiver]") == null){
+        caregiverValue = null;
+    }else{
+        caregiverValue = form.querySelector("input[name=caregiver]").value;
+    }
     const appToken = form.querySelector("input[name=appToken]").value;
     const user = {
         userId: null,
@@ -20,7 +32,11 @@ function onFormSubmission(form) {
         name: null,
         contact: caregiverValue
     }
-    const caregiver = isEmpty(caregiverValue) ? null : user;
+    if(caregiverValue == null){
+        caregiver = null;
+    }else{
+        caregiver = isEmpty(caregiverValue) ? null : user;
+    }
 
     const body = {
         userId: id,
@@ -79,7 +95,9 @@ function isEmpty(value){
 function removeSpace(value) {
     return value.replace(/\s/g,"");
 }
-
+function onDisplay(user) {
+    const elems = document.getElementsByClassName("patient-only");
+}
 function doDisplay(user) {
     console.log(user)
     const elems = document.getElementsByClassName("patient-only");

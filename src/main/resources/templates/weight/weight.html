@@ -18,7 +18,6 @@
         <div>체중</div>
         <div>
             <p>매일 같은 시간에 체중을 측정해주세요.</p>
-            <!-- 소수점 한자리까지 숫자만 입력 가능 -->
             <p th:each="weight :${weightRecord}" th:text="${weight.weight} + kg"></p>
             <input type="text" name="weight" onkeypress="return isNumberKey(event)"
                    onkeyup="this.value=this.value.replace(/[\ㄱ-ㅎㅏ-ㅣ가-힣]/g, '');"
