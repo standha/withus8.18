@@ -2,7 +2,7 @@ class ChatBalloon {
 	/**
 	 * @param {number} sequence
 	 * @param {string} direction
-	 * @param {boolean} isToTerminate
+	 * @param {boolean} isMostRecent
 	 * @param {boolean} isHelpRequest
 	 * @param {boolean} isAnswerExpected
 	 * @param {string} content
@@ -12,7 +12,7 @@ class ChatBalloon {
 	 * @param {string | null} nextCode
 	 * @param {AnswerButton[]} answerButtons
 	 */
-	constructor(sequence, direction, isToTerminate, isHelpRequest, isAnswerExpected, content, urlToImageFile, urlToAudioFile, dateTime, nextCode, answerButtons) {
+	constructor(sequence, direction, isMostRecent, isHelpRequest, isAnswerExpected, content, urlToImageFile, urlToAudioFile, dateTime, nextCode, answerButtons) {
 		if (sequence) {
 			this._sequence = sequence;
 		} else {
@@ -20,7 +20,7 @@ class ChatBalloon {
 		}
 
 		this._direction = direction;
-		this._isToTerminate = isToTerminate;
+		this._isMostRecent = isMostRecent;
 		this._isHelpRequest = isHelpRequest;
 		this._isAnswerExpected = isAnswerExpected;
 		this._content = content;
@@ -46,7 +46,7 @@ class ChatBalloon {
 	/**
 	 * @returns {boolean}
 	 */
-	get isToTerminate() { return this._isToTerminate; }
+	get isMostRecent() { return this._isMostRecent; }
 	/**
 	 * @returns {boolean}
 	 */
@@ -88,9 +88,9 @@ class ChatBalloon {
 		// You suck, javascript.
 		const month = (this._dateTime[1] - 1);
 		const date = this._dateTime[2];
-		const hour = this._dateTime[3];
-		const minute = this._dateTime[4];
-		const second = this._dateTime[5];
+		const hour = (this._dateTime[3]? this._dateTime[3]: 0);
+		const minute = (this._dateTime[4]? this._dateTime[4]: 0);
+		const second = (this._dateTime[5]? this._dateTime[5]: 0);
 
 		return new Date(year, month, date, hour, minute, second);
 	}
@@ -111,7 +111,7 @@ class ChatBalloon {
 		const object = {
 			sequence: this._sequence,
 			direction: this._direction,
-			isToTerminate: this._isToTerminate,
+			isMostRecent: this._isMostRecent,
 			isHelpRequest: this._isHelpRequest,
 			isAnswerExpected: this._isAnswerExpected,
 			content: this._content,
@@ -149,7 +149,7 @@ class ChatBalloon {
 
 		if (
 			!object.hasOwnProperty("direction") ||
-			!object.hasOwnProperty("toTerminate") ||
+			!object.hasOwnProperty("mostRecent") ||
 			!object.hasOwnProperty("helpRequest") ||
 			!object.hasOwnProperty("answerExpected") ||
 			!object.hasOwnProperty("content") ||
@@ -161,8 +161,11 @@ class ChatBalloon {
 
 		const sequence = object["sequence"];
 		const direction = object["direction"];
-		// WARNING: isToTerminate가 아니라 toTerminate인 점에 유의할 것!
-		const isToTerminate = object["toTerminate"];
+		/*
+		 * WARNING: isMostRecent가 아니라 mostRecent인 점에 유의할 것!
+		 * GSON serialization의 네이밍 규칙에 따른 결과
+		 */
+		const isMostRecent = object["mostRecent"];
 		const isHelpRequest = object["helpRequest"];
 		const isAnswerExpected = object["answerExpected"];
 		const content = object["content"];
@@ -172,6 +175,6 @@ class ChatBalloon {
 		const nextCode = object["nextCode"];
 		const answerButtons = object["answerButtons"];
 
-		return new ChatBalloon(sequence, direction, isToTerminate, isHelpRequest, isAnswerExpected, content, urlToImageFile, urlToAudioFile, dateTime, nextCode, answerButtons);
+		return new ChatBalloon(sequence, direction, isMostRecent, isHelpRequest, isAnswerExpected, content, urlToImageFile, urlToAudioFile, dateTime, nextCode, answerButtons);
 	}
 }

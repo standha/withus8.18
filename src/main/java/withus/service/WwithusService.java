@@ -2,8 +2,8 @@ package withus.service;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,7 +32,7 @@ public class WwithusService {
 		this.wwithusEntryHistoryRepository = wwithusEntryHistoryRepository;
 	}
 
-	public WwithusEntry getWwithusEntryAndSaveHistory(WwithusEntryRequest wwithusEntryRequest) {
+	public ChatBalloon getWwithusEntryAndSaveHistory(WwithusEntryRequest wwithusEntryRequest) {
 		WwithusEntry wwithusEntry;
 		String code = wwithusEntryRequest.getNextCode();
 		User user = wwithusEntryRequest.getUser();
@@ -51,7 +51,7 @@ public class WwithusService {
 		WwithusEntryHistory wwithusEntryHistory = toWwithusEntryHistory(wwithusEntryRequest.getUser(), wwithusEntry);
 		wwithusEntryHistoryRepository.save(wwithusEntryHistory);
 
-		return wwithusEntry;
+		return toChatBalloon(wwithusEntryHistory, true);
 	}
 
 	public List<WwithusEntry> getAnswerWwithusEntries(String currentCode) {
@@ -59,42 +59,23 @@ public class WwithusService {
 	}
 
 	@NonNull
-	public List<WwithusEntryHistory> getWwithusEntryHistories(User user) {
+	public List<ChatBalloon> getWwithusEntryHistories(User user) {
 		LocalDate today = LocalDate.now();
 
-		return wwithusEntryHistoryRepository.findAllByUserAndDate(user, today);
-	}
+		List<WwithusEntryHistory> wwithusEntryHistories = wwithusEntryHistoryRepository.findAllByUserAndDate(user, today);
 
-	public List<ChatBalloon> ToChatBalloons(@NonNull List<WwithusEntryHistory> wwithusEntryHistories) {
 		List<ChatBalloon> chatBalloons = new ArrayList<>();
-		for (WwithusEntryHistory wwithusEntryHistory : wwithusEntryHistories) {
-			chatBalloons.add(toChatBalloon(wwithusEntryHistory));
+		Iterator<WwithusEntryHistory> iterator = wwithusEntryHistories.stream().sorted().iterator();
+		while (iterator.hasNext()) {
+			WwithusEntryHistory wwithusEntryHistory = iterator.next();
+
+			boolean isMostRecent = !iterator.hasNext();
+			chatBalloons.add(toChatBalloon(wwithusEntryHistory, isMostRecent));
 		}
 
 		return chatBalloons.stream()
 			.sorted()
 			.collect(Collectors.toList());
-	}
-
-	public ChatBalloon toChatBalloon(@NonNull WwithusEntry wwithusEntry) {
-		boolean isAnswerExpected = wwithusEntry.isAnswerExpected();
-		ChatBalloon.ChatBalloonBuilder chatBalloonBuilder = ChatBalloon.builder()
-			.direction(ChatBalloon.Direction.LEFT)
-			.isToTerminate(wwithusEntry.isAnswer() && wwithusEntry.getNextCode() == null)
-			.isHelpRequest(wwithusEntry.isHelpRequest())
-			.isAnswerExpected(isAnswerExpected)
-			.content(wwithusEntry.getContent())
-			.urlToImageFile(wwithusEntry.getUrlToImageFile())
-			.urlToAudioFile(wwithusEntry.getUrlToAudioFile())
-			.dateTime(LocalDateTime.now())
-			.nextCode(wwithusEntry.getNextCode());
-
-		if (isAnswerExpected) {
-			List<AnswerButton> answerButtons = getAnswerButtons(wwithusEntry);
-			chatBalloonBuilder.answerButtons(answerButtons);
-		}
-
-		return chatBalloonBuilder.build();
 	}
 
 	private WwithusEntryHistory toWwithusEntryHistory(User user, WwithusEntry wwithusEntry) {
@@ -107,12 +88,12 @@ public class WwithusService {
 			).build();
 	}
 
-	private ChatBalloon toChatBalloon(@NonNull WwithusEntryHistory wwithusEntryHistory) {
+	private ChatBalloon toChatBalloon(@NonNull WwithusEntryHistory wwithusEntryHistory, boolean isLast) {
 		WwithusEntry wwithusEntry = wwithusEntryHistory.getEntry();
 		boolean isAnswerExpected = wwithusEntry.isAnswerExpected();
 		ChatBalloon.ChatBalloonBuilder chatBalloonBuilder = ChatBalloon.builder()
 			.direction(wwithusEntry.isAnswer()? ChatBalloon.Direction.RIGHT: ChatBalloon.Direction.LEFT)
-			.isToTerminate(wwithusEntry.isAnswer() && wwithusEntry.getNextCode() == null)
+			.isMostRecent(isLast)
 			.isHelpRequest(wwithusEntry.isHelpRequest())
 			.isAnswerExpected(isAnswerExpected)
 			.content(wwithusEntry.getContent())
@@ -138,6 +119,7 @@ public class WwithusService {
 			WwithusEntry answerWwithusEntity = answerWwithusEntries.get(i);
 			AnswerButton answerButton = AnswerButton.builder()
 				.ordinal(i)
+				.isToTerminate(answerWwithusEntity.isLast())
 				.content(answerWwithusEntity.getContent())
 				.urlToImageFile(answerWwithusEntity.getUrlToImageFile())
 				.nextCode(answerWwithusEntity.getNextCode())

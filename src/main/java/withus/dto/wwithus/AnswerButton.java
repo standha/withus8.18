@@ -14,6 +14,7 @@ import org.springframework.lang.Nullable;
 @ToString
 public class AnswerButton implements Comparable<AnswerButton> {
 	private final int ordinal;
+	private final boolean isToTerminate;
 	private final String content;
 	@Nullable
 	private final String urlToImageFile;

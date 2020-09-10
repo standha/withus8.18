@@ -16,6 +16,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.lang.NonNull;
 
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -24,17 +25,22 @@ import lombok.ToString;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 @ToString
-public class WwithusEntryHistory {
+public class WwithusEntryHistory implements Comparable<WwithusEntryHistory> {
 	@EmbeddedId
 	@EqualsAndHashCode.Include
 	private Key key;
 
 	@Column(columnDefinition = "TIMESTAMP")
 	@Builder.Default
-	private LocalDateTime dateTime = LocalDateTime.now();
+	private final LocalDateTime dateTime = LocalDateTime.now();
 
 	public User getUser() { return key.user; }
 	public WwithusEntry getEntry() { return key.entry; }
+
+	@Override
+	public int compareTo(@NonNull WwithusEntryHistory that) {
+		return dateTime.compareTo(that.dateTime);
+	}
 
 	@Embeddable
 	@EqualsAndHashCode(onlyExplicitlyIncluded = true)

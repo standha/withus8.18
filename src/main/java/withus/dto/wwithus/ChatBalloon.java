@@ -19,9 +19,9 @@ import org.springframework.lang.Nullable;
 @ToString
 public class ChatBalloon implements Comparable<ChatBalloon> {
 	private final Direction direction;
+	private final boolean isMostRecent;
 	private final boolean isHelpRequest;
 	private final boolean isAnswerExpected;
-	private final boolean isToTerminate;
 	private final String content;
 	@Nullable
 	private final String urlToImageFile;

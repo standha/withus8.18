@@ -34,13 +34,9 @@ function loadHistory() {
 
 			if (object) {
 				const data = object["data"];
-				if (data) {
-					if (Array.isArray(data)) {
-						renderBalloons(data, false);
-					} else {
-						console.error("Expected an array but WTF is this?", data);
-					}
-				} else if (data === null) {
+				if (data && data.length > 0) {
+					renderBalloons(data);
+				} else {
 					requestNext(null);
 				}
 			}
@@ -50,13 +46,12 @@ function loadHistory() {
 /**
  *
  * @param {Object[]} objects
- * @param {boolean} toRequestNext
  */
-function renderBalloons(objects, toRequestNext) {
+function renderBalloons(objects) {
 	objects.forEach(object => {
 		const chatBalloon = ChatBalloon.fromObject(object);
 
-		renderBalloon(balloonsAreaElement, chatBalloon, toRequestNext);
+		renderBalloon(balloonsAreaElement, chatBalloon);
 	});
 }
 
@@ -64,9 +59,8 @@ function renderBalloons(objects, toRequestNext) {
  *
  * @param {Node} parentElement
  * @param {ChatBalloon} chatBalloon
- * @param {boolean} toRequestNext
  */
-function renderBalloon(parentElement, chatBalloon, toRequestNext) {
+function renderBalloon(parentElement, chatBalloon) {
 	const div = document.createElement("div");
 	div.id = chatBalloon.sequence.toString();
 	div.className = "balloons";
@@ -90,7 +84,16 @@ function renderBalloon(parentElement, chatBalloon, toRequestNext) {
 	if (chatBalloon.answerButtons && chatBalloon.answerButtons.length > 0) {
 		answerButtonsSpan = `<span class="answer-buttons">`;
 		chatBalloon.answerButtons.forEach(answerButton => {
-			answerButtonsSpan += `<a href="javascript: requestNextByCode('${answerButton.nextCode}')">`;
+			if (chatBalloon.isMostRecent) {
+				// noinspection JSUnresolvedVariable: 나도 왜 이딴 짓을 해야 하는지 모르겠다.
+				if (answerButton.isToTerminate || answerButton.toTerminate) {
+					answerButtonsSpan += `<a href="javascript: terminateWwithus();">`;
+				} else {
+					answerButtonsSpan += `<a href="javascript: requestNextByCode('${answerButton.nextCode}');">`;
+				}
+			} else {
+				answerButtonsSpan += "<a>";
+			}
 
 			answerButtonsSpan += answerButton.content;
 			if (answerButton.urlToImageFile) {
@@ -110,7 +113,7 @@ function renderBalloon(parentElement, chatBalloon, toRequestNext) {
 
 	parentElement.appendChild(div);
 
-	if (toRequestNext && !chatBalloon.isAnswerExpected) {
+	if (chatBalloon.isMostRecent && !chatBalloon.isAnswerExpected) {
 		setTimeout(requestNext, MESSAGE_INTERVAL_MILLIS, chatBalloon);
 	}
 }
@@ -128,6 +131,8 @@ function requestNext(chatBalloon) {
  * @param {string | null} nextCode
  */
 function requestNextByCode(nextCode) {
+	removeAllAnchorLinks();
+
 	let modifiedUrlToRequestNext = urlToRequestNext;
 	if (nextCode !== null) {
 		const parameters = { nextCode: nextCode };
@@ -147,4 +152,16 @@ function requestNextByCode(nextCode) {
 				renderBalloon(balloonsAreaElement, chatBalloon, true);
 			}
 		});
+}
+
+function terminateWwithus() {
+	removeAllAnchorLinks();
+}
+
+/**
+ * A terrible workaround to remove the href attribute of all anchors within balloonsAreaElement.
+ */
+function removeAllAnchorLinks() {
+	let anchors = balloonsAreaElement.querySelectorAll("a[href]");
+	anchors.forEach(anchor => { anchor.removeAttribute("href"); });
 }

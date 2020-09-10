@@ -14,8 +14,6 @@ import withus.dto.Result;
 import withus.dto.wwithus.ChatBalloon;
 import withus.dto.wwithus.WwithusEntryRequest;
 import withus.entity.User;
-import withus.entity.WwithusEntry;
-import withus.entity.WwithusEntryHistory;
 import withus.service.UserService;
 import withus.service.WwithusService;
 
@@ -42,15 +40,11 @@ public class WwithusController extends BaseController {
 	@ResponseBody
 	public Result<List<ChatBalloon>> getHistories() {
 		Result.Code code = Result.Code.OK;
-		List<ChatBalloon> data = null;
 
 		User user = getUser();
-		List<WwithusEntryHistory> wwithusEntryHistories = wwithusService.getWwithusEntryHistories(user);
+		List<ChatBalloon> data = wwithusService.getWwithusEntryHistories(user);
 
-		log.debug("User ({}) has {} history(ies) of today.", user, wwithusEntryHistories.size());
-		if (!wwithusEntryHistories.isEmpty()) {
-			data = wwithusService.ToChatBalloons(wwithusEntryHistories);
-		}
+		log.debug("User ({}) has {} history(ies) of today.", user, data.size());
 
 		return Result.<List<ChatBalloon>>builder()
 			.code(code)
@@ -72,10 +66,8 @@ public class WwithusController extends BaseController {
 				.date(LocalDate.of(2020, 9, 7))
 				.build();
 
-			WwithusEntry wwithusEntry = wwithusService.getWwithusEntryAndSaveHistory(wwithusEntryRequest);
-
+			data = wwithusService.getWwithusEntryAndSaveHistory(wwithusEntryRequest);
 			code = Result.Code.OK;
-			data = wwithusService.toChatBalloon(wwithusEntry);
 		} catch (Exception exception) {
 			log.error(exception.getLocalizedMessage(), exception);
 		}
