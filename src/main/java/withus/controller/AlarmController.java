@@ -82,7 +82,7 @@ public class AlarmController extends BaseController{
                 .setData(seved)
                 .createResult();
     }
-    @PutMapping(value = "/pill-history", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/pill-history", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<Tbl_medication_record> getPillHistoryTrue(@RequestBody Tbl_medication_record tbl_medication_record) {
         String userId = getUsername();

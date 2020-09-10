@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/header.css}" rel="stylesheet">
+    <link th:href="@{/css/alarm/pill.css}" rel="stylesheet">
+    <title>복약</title>
+
+</head>
+
+<body>
+<input type="hidden" id="moisture-put-action" th:attr="value=@{/symptom-history.html}">
+
+<div th:replace="header :: #header"></div>
+<div id="body">
+
+    <div th:each="symptomHistory: ${symptom}">
+    <div th:text="'유저 이름 :' + ${symptomHistory.pk.id} + '       날짜 :' + ${symptomHistory.pk.date}+'            증상 갯수: '+${symptomHistory.getTodaysymptom()}"></div>
+</div>
+</div>
+</body>
+</html>

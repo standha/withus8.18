@@ -58,6 +58,7 @@ public class MoistureNatriumController extends BaseController{
         modelAndView.addObject("previousUrl","moistureNatrium");
         return modelAndView;
     }
+
     @PutMapping(value = "/moisture-history",consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<Tbl_mositrue_record> getMoisture(@RequestBody Tbl_mositrue_record tbl_mositrue_record){
