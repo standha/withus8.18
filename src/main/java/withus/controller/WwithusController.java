@@ -1,6 +1,5 @@
 package withus.controller;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +62,6 @@ public class WwithusController extends BaseController {
 			WwithusEntryRequest wwithusEntryRequest = WwithusEntryRequest.builder()
 				.user(user)
 				.nextCode(nextCode)
-				.date(LocalDate.of(2020, 9, 7))
 				.build();
 
 			data = wwithusService.getWwithusEntryAndSaveHistory(wwithusEntryRequest);
