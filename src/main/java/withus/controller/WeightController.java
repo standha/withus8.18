@@ -36,15 +36,37 @@ public class WeightController extends BaseController {
     public ModelAndView getWeight() {
         ModelAndView modelAndView = new ModelAndView("weight/weight");
         modelAndView.addObject("previousUrl", "/home");
-        String username = getUsername();
+
         List<Tbl_weight> weightRecord;
-
-        weightRecord = weightService.getWeightDateRecord(new RecordKey(username, LocalDate.now()), 0);
-
+        List<Tbl_weight> weightRecord2;
+        //Tbl_weight weightRecord3;
+        //Tbl_weight weightRecord4;
+        String userId = getUsername();
         User user = getUser();
 
         modelAndView.addObject("type", user.getType());
-        modelAndView.addObject("weightRecord", weightRecord);
+
+        if(user.getType() == User.Type.PATIENT){
+            weightRecord = weightService.getWeightDateRecord(new RecordKey(userId, LocalDate.now()), 0);
+            weightRecord2 = weightService.getWeightRecord(userId,0);
+
+            float testweight;
+            modelAndView.addObject("weightRecordToday", weightRecord);
+            modelAndView.addObject("weightTest", weightRecord2);
+            if(weightRecord == null) {
+                testweight = 0;
+            }
+            else{
+                testweight = weightRecord.get(weightRecord.size()-1).getWeight();
+                System.out.println(testweight);
+            }
+            modelAndView.addObject("testweight", testweight);
+        }
+        else if(user.getType() == User.Type.CAREGIVER){
+            User patient = getCaretaker();
+            weightRecord = weightService.getWeightDateRecord(new RecordKey(patient.getName(), LocalDate.now()), 0);
+            modelAndView.addObject("weightRecordToday", weightRecord);
+        }
         return modelAndView;
     }
 
@@ -53,12 +75,20 @@ public class WeightController extends BaseController {
     public ModelAndView getWeightHistory(){
         ModelAndView modelAndView = new ModelAndView("weight/weight-history");
         modelAndView.addObject("previousUrl", "/weight");
-        String username = getUsername();
+
+        User user = getUser();
         List<Tbl_weight> weightRecord;
 
-        weightRecord = weightService.getWeightRecord(username, 0);
+        if(user.getType() == User.Type.PATIENT){
+            weightRecord = weightService.getWeightRecord(user.getName(), 0);
+            modelAndView.addObject("weightRecord", weightRecord);
+        }
+        else if(user.getType() == User.Type.CAREGIVER){
+            User patient  = getCaretaker();
+            weightRecord = weightService.getWeightRecord(patient.getName(), 0);
+            modelAndView.addObject("weightRecord", weightRecord);
+        }
 
-        modelAndView.addObject("weightRecord", weightRecord);
         return modelAndView;
     }
 

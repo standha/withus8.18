@@ -22,8 +22,9 @@ public interface UserRepository extends JpaRepository<User, String> {
 
 	@Transactional(readOnly = true)
 	Optional<User> findByContact(String contact);
-	
+
 	@Transactional(readOnly = true)
 	@Nullable
 	List<User> findByAppTokenIsNotNull();
+
 }

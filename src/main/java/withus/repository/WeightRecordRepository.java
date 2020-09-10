@@ -18,6 +18,9 @@ public interface WeightRecordRepository extends JpaRepository<Tbl_weight, Record
     List<Tbl_weight>findByPkAndWeightGreaterThan(RecordKey pk, float weight);
 
     @Transactional(readOnly = true)
-    List<Tbl_weight>findByPk_DateAndWeightGreaterThan(LocalDate pk_LocalDate, float weight);
+    Tbl_weight findByPk_DateAndWeightGreaterThan(LocalDate pk_LocalDate, float weight);
+
+    @Transactional(readOnly = true)
+    Tbl_weight findByPkAndWeight(RecordKey pk, float weight);
 
 }
