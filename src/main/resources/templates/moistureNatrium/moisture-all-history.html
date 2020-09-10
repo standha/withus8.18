@@ -7,24 +7,21 @@
     <title>복약</title>
 
 </head>
-
 <body>
 <input type="hidden" id="moisture-put-action" th:attr="value=@{/moisture-history}">
 
 <div th:replace="header :: #header"></div>
 <div id="body">
     <div id="body-title">수분 달력</div>
-    <p>Calender plugin</p>
-    <p>---------------</p>
-    <p>---------------</p>
-    <p>-----물통-----</p>
-    <p>---------------</p>
-    <p>---------------</p>
     <p>기록들</p>
-    <!-- 처음 등록을 진행한 후, 이 버튼은 보여지면 안됨 -->
     <br>
     <div th:each="moistureHistory: ${moisture}">
         <div th:text="'유저 이름 :' + ${moistureHistory.pk.id} + '       날짜 :' + ${moistureHistory.pk.date}"></div>
+    </div>
+    <div>
+        <label>
+            <input type="text" name="moistureWeek" th:value="${moistureWeek}">
+        </label>
     </div>
 </div>
 </body>

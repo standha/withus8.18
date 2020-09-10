@@ -14,7 +14,9 @@ import withus.entity.*;
 import withus.service.MoistureNatriumService;
 import withus.service.UserService;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -52,9 +54,12 @@ public class MoistureNatriumController extends BaseController{
     public ModelAndView getMoistureAll(){
         ModelAndView modelAndView = new ModelAndView("moistureNatrium/moisture-all-history");
         String username = getUsername();
+        Integer moistureWeek = avgWeek();
         List<Tbl_mositrue_record> moistureAllHistory;
+        System.out.println(avgWeek());
         moistureAllHistory = moistureNatriumService.getMoistureRecord(username,0);
         modelAndView.addObject("moisture",moistureAllHistory);
+        modelAndView.addObject("moistureWeek",moistureWeek);
         modelAndView.addObject("previousUrl","moistureNatrium");
         return modelAndView;
     }
@@ -107,5 +112,18 @@ public class MoistureNatriumController extends BaseController{
                 .setCode(code)
                 .setData(saved)
                 .createResult();
+    }
+    public Integer avgWeek(){
+        Integer avg = 0;
+        LocalDate now = LocalDate.now();
+        String username = getUsername();
+        avg = moistureNatriumService.getMoistureDayRecord(new RecordKey(username,now.with(DayOfWeek.MONDAY))) +
+                moistureNatriumService.getMoistureDayRecord(new RecordKey(username,now.with(DayOfWeek.TUESDAY)))+
+                moistureNatriumService.getMoistureDayRecord(new RecordKey(username,now.with(DayOfWeek.WEDNESDAY))) +
+                moistureNatriumService.getMoistureDayRecord(new RecordKey(username,now.with(DayOfWeek.TUESDAY))) +
+                moistureNatriumService.getMoistureDayRecord(new RecordKey(username,now.with(DayOfWeek.FRIDAY))) +
+                moistureNatriumService.getMoistureDayRecord(new RecordKey(username,now.with(DayOfWeek.SATURDAY)))+
+                moistureNatriumService.getMoistureDayRecord(new RecordKey(username,now.with(DayOfWeek.SUNDAY)));
+        return avg*200/7;
     }
 }
