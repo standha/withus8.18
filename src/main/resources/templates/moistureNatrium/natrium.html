@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/header.css}" rel="stylesheet">
+    <script th:src="@{/js/moistureNatrium/natrium.js}"></script>
+    <title>염분</title>
+</head>
+<body>
+<input type="hidden" id="natrium-history-get-action" th:attr="value=@{/natrium-all-history}">
+<div th:replace="header :: #header"></div>
+<form id="MemberInfo" th:action="@{/natrium}" method="post"  onsubmit="return onFormSubmission(this);">
+
+        <div>
+
+        <div  th:switch="${morning}">아침
+            <span th:case = 0 >
+                <label><input type="radio" name="morning" th:value="0" checked >식사안함</label>
+                <label><input type="radio" name="morning" th:value="1"  >저염</label>
+                <label><input type="radio" name="morning" th:value="2"  >보통</label>
+                <label><input type="radio" name="morning" th:value="3"  >고염</label>
+            </span>
+            <span th:case = 1 >
+               <label><input type="radio" name="morning" th:value="0"  >식사안함</label>
+                <label><input type="radio" name="morning" th:value="1"  checked>저염</label>
+                <label><input type="radio" name="morning" th:value="2"  >보통</label>
+                <label><input type="radio" name="morning" th:value="3"  >고염</label>
+            </span>
+            <span th:case= 2 >
+               <label><input type="radio" name="morning" th:value="0"  >식사안함</label>
+                <label><input type="radio" name="morning" th:value="1"  >저염</label>
+                <label><input type="radio" name="morning" th:value="2"  checked>보통</label>
+                <label><input type="radio" name="morning" th:value="3"  >고염</label>
+            </span>
+            <span th:case=3>
+                <label><input type="radio" name="morning" th:value="0"  >식사안함</label>
+                <label><input type="radio" name="morning" th:value="1"  >저염</label>
+                <label><input type="radio" name="morning" th:value="2"  >보통</label>
+                <label><input type="radio" name="morning" th:value="3"  checked>고염</label>
+            </span>
+            <span th:case=4>
+                <label><input type="radio" name="morning" th:value="0"  >식사안함</label>
+                <label><input type="radio" name="morning" th:value="1"  >저염</label>
+                <label><input type="radio" name="morning" th:value="2"  >보통</label>
+                <label><input type="radio" name="morning" th:value="3"  >고염</label>
+            </span>
+        </div>
+
+            <div  th:switch="${lunch}">점심
+                <span th:case = 0 >
+                <label><input type="radio" name="lunch" th:value="0" checked >식사안함</label>
+                <label><input type="radio" name="lunch" th:value="1"  >저염</label>
+                <label><input type="radio" name="lunch" th:value="2"  >보통</label>
+                <label><input type="radio" name="lunch" th:value="3"  >고염</label>
+            </span>
+                <span th:case = 1 >
+               <label><input type="radio" name="lunch" th:value="0"  >식사안함</label>
+                <label><input type="radio" name="lunch" th:value="1"  checked>저염</label>
+                <label><input type="radio" name="lunch" th:value="2"  >보통</label>
+                <label><input type="radio" name="lunch" th:value="3"  >고염</label>
+            </span>
+                <span th:case= 2 >
+               <label><input type="radio" name="lunch" th:value="0"  >식사안함</label>
+                <label><input type="radio" name="lunch" th:value="1"  >저염</label>
+                <label><input type="radio" name="lunch" th:value="2"  checked>보통</label>
+                <label><input type="radio" name="lunch" th:value="3"  >고염</label>
+            </span>
+                <span th:case=3>
+                <label><input type="radio" name="lunch" th:value="0"  >식사안함</label>
+                <label><input type="radio" name="lunch" th:value="1"  >저염</label>
+                <label><input type="radio" name="lunch" th:value="2"  >보통</label>
+                <label><input type="radio" name="lunch" th:value="3"  checked>고염</label>
+            </span>
+                <span th:case=4>
+                <label><input type="radio" name="lunch" th:value="0"  >식사안함</label>
+                <label><input type="radio" name="lunch" th:value="1"  >저염</label>
+                <label><input type="radio" name="lunch" th:value="2"  >보통</label>
+                <label><input type="radio" name="lunch" th:value="3"  >고염</label>
+            </span>
+            </div>
+            <div  th:switch="${dinner}">저녁
+                <span th:case = 0 >
+                <label><input type="radio" name="dinner" th:value="0" checked >식사안함</label>
+                <label><input type="radio" name="dinner" th:value="1"  >저염</label>
+                <label><input type="radio" name="dinner" th:value="2"  >보통</label>
+                <label><input type="radio" name="v" th:value="3"  >고염</label>
+            </span>
+                <span th:case = 1 >
+               <label><input type="radio" name="dinner" th:value="0"  >식사안함</label>
+                <label><input type="radio" name="dinner" th:value="1"  checked>저염</label>
+                <label><input type="radio" name="dinner" th:value="2"  >보통</label>
+                <label><input type="radio" name="dinner" th:value="3"  >고염</label>
+            </span>
+                <span th:case= 2 >
+               <label><input type="radio" name="dinner" th:value="0"  >식사안함</label>
+                <label><input type="radio" name="dinner" th:value="1"  >저염</label>
+                <label><input type="radio" name="dinner" th:value="2"  checked>보통</label>
+                <label><input type="radio" name="dinner" th:value="3"  >고염</label>
+            </span>
+                <span th:case=3>
+                <label><input type="radio" name="dinner" th:value="0"  >식사안함</label>
+                <label><input type="radio" name="dinner" th:value="1"  >저염</label>
+                <label><input type="radio" name="dinner" th:value="2"  >보통</label>
+                <label><input type="radio" name="dinner" th:value="3"  checked>고염</label>
+            </span>
+                <span th:case=4>
+                <label><input type="radio" name="dinner" th:value="0"  >식사안함</label>
+                <label><input type="radio" name="dinner" th:value="1"  >저염</label>
+                <label><input type="radio" name="dinner" th:value="2"  >보통</label>
+                <label><input type="radio" name="dinner" th:value="3"  >고염</label>
+            </span>
+            </div>
+        </div>
+
+
+    <div>
+        <input type="submit" value="저장">
+    </div>
+</form>
+<div>
+    <button id="history" type="button" onclick="showHistory();">저염식이 실천</button>
+</div>
+</body>
+</html>
