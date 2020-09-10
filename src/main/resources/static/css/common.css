@@ -117,7 +117,7 @@ select:focus {border: 1px solid #111;}
 .chk-wrap.type01 .chk-box + .chk-box {margin-left: 10px;}
 .chk-wrap.type01 .chk-box .chk-mark {position: absolute; left: 0; top: 50%; width: 23px; height: 23px; transform: translateY(-50%); background-position: -2px -2px;}
 .chk-wrap.type01 .chk-box label {font-weight: 500; font-size: 1rem; color: #222; text-align: left; display: block; padding-left: 30px;}
-.chk-wrap.type01 .chk-box.checked .chk-mark {background-position: -28px -2px;}
+.chk-wrap.type01 .chk-box.checked .chk-mark {background-position: -27px -2px;}
 
 .chk-wrap.type02 {}
 .chk-wrap.type02 .chk-box {position: relative; padding: 35px 0 5px; border-radius: 10px; border: 2px solid #eaeaea; background-color: #fff;}

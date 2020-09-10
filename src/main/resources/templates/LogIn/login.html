@@ -11,6 +11,23 @@
 <link th:href="@{/css/layout.css}" rel="stylesheet" >
 <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
 <script th:src="@{/js/common.js}"></script>
+
+<script>
+function remember_ckeckbox()
+{
+	if (document.getElementById('remem1').className === "chk-box")
+	{
+		document.getElementById('remem1').className = "chk-box checked";
+		document.getElementById("chk2").setAttribute("checked", "");
+	}
+	else
+	{
+		document.getElementById('remem1').className = "chk-box";
+		document.getElementById("chk2").removeAttribute("checked");
+	}
+}
+</script>
+
 </head>
 <body>
 	<div class="skip-navi">
@@ -48,9 +65,11 @@
 						</div>
 					</div>
 					<div class="chk-wrap type01">
-						<div class="chk-box">
-							<span class="chk-mark">
-								<input type="checkbox" name="" id="chk2">
+						<div class="chk-box" id="remem1">
+							<span class="chk-mark" id="remem2" onclick="javascript:remember_ckeckbox()">
+								<label>
+									<input type="checkbox" name="remember-me" id="chk2" >
+								</label>
 							</span>
 							<label for="chk2">자동 로그인</label>
 						</div>
