@@ -2,6 +2,7 @@ package withus.service;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -35,25 +36,35 @@ public class WwithusService {
 	}
 
 	public ChatBalloon getWwithusEntryAndSaveHistory(WwithusEntryRequest wwithusEntryRequest) {
-		WwithusEntry wwithusEntry;
-		String code = wwithusEntryRequest.getNextCode();
 		User user = wwithusEntryRequest.getUser();
+		List<String> codesToSaveAsHistories = wwithusEntryRequest.getCodesToSaveAsHistories();
+		String currentCode = wwithusEntryRequest.getCurrentCode();
+		if (currentCode != null) { codesToSaveAsHistories.add(currentCode); }
+
+		for (String codeToSaveAsHistory : codesToSaveAsHistories) {
+			WwithusEntry currentEntry = wwithusEntryRepository.findById(codeToSaveAsHistory).<RuntimeException>orElseThrow(() -> {
+				throw new RuntimeException(String.format("Failed to select entry by the code \"%s\".", currentCode));
+			});
+
+			WwithusEntryHistory wwithusEntryHistory = toWwithusEntryHistory(wwithusEntryRequest.getUser(), currentEntry);
+			wwithusEntryHistoryRepository.save(wwithusEntryHistory);
+		}
+
+		WwithusEntry nextEntry;
+		String nextCode = wwithusEntryRequest.getNextCode();
 		int week = user.getWeek();
 		DayOfWeek dayOfWeek = wwithusEntryRequest.getDate().getDayOfWeek();
-		if (code == null) {
-			wwithusEntry = wwithusEntryRepository.findFirstByWeekAndDay(week, dayOfWeek).<RuntimeException>orElseThrow(() -> {
+		if (nextCode == null) {
+			nextEntry = wwithusEntryRepository.findFirstByWeekAndDay(week, dayOfWeek).<RuntimeException>orElseThrow(() -> {
 				throw new RuntimeException(String.format("Failed to select the first entry for %s, week %d.", dayOfWeek, week));
 			});
 		} else {
-			wwithusEntry = wwithusEntryRepository.findById(code).<RuntimeException>orElseThrow(() -> {
-				throw new RuntimeException(String.format("Failed to select entry by the code \"%s\".", code));
+			nextEntry = wwithusEntryRepository.findById(nextCode).<RuntimeException>orElseThrow(() -> {
+				throw new RuntimeException(String.format("Failed to select entry by the code \"%s\".", nextCode));
 			});
 		}
 
-		WwithusEntryHistory wwithusEntryHistory = toWwithusEntryHistory(wwithusEntryRequest.getUser(), wwithusEntry);
-		wwithusEntryHistoryRepository.save(wwithusEntryHistory);
-
-		return toChatBalloon(wwithusEntryHistory, true);
+		return toChatBalloon(nextEntry, true);
 	}
 
 	public List<WwithusEntry> getAnswerWwithusEntries(String currentCode) {
@@ -107,10 +118,16 @@ public class WwithusService {
 			).build();
 	}
 
+	private ChatBalloon toChatBalloon(@NonNull WwithusEntry wwithusEntry, boolean isLast) {
+		return toChatBalloon(wwithusEntry, LocalDateTime.now(), isLast);
+	}
 	private ChatBalloon toChatBalloon(@NonNull WwithusEntryHistory wwithusEntryHistory, boolean isLast) {
-		WwithusEntry wwithusEntry = wwithusEntryHistory.getEntry();
+		return toChatBalloon(wwithusEntryHistory.getEntry(), wwithusEntryHistory.getDateTime(), isLast);
+	}
+	private ChatBalloon toChatBalloon(@NonNull WwithusEntry wwithusEntry, @NonNull LocalDateTime dateTime, boolean isLast) {
 		boolean isAnswerExpected = wwithusEntry.isAnswerExpected();
 		ChatBalloon.ChatBalloonBuilder chatBalloonBuilder = ChatBalloon.builder()
+			.code(wwithusEntry.getCode())
 			.direction(wwithusEntry.isAnswer()? ChatBalloon.Direction.RIGHT: ChatBalloon.Direction.LEFT)
 			.isMostRecent(isLast)
 			.isHelpRequest(wwithusEntry.isHelpRequest())
@@ -118,7 +135,7 @@ public class WwithusService {
 			.content(wwithusEntry.getContent())
 			.urlToImageFile(wwithusEntry.getUrlToImageFile())
 			.urlToAudioFile(wwithusEntry.getUrlToAudioFile())
-			.dateTime(wwithusEntryHistory.getDateTime())
+			.dateTime(dateTime)
 			.nextCode(wwithusEntry.getNextCode());
 
 		if (isAnswerExpected) {
@@ -138,6 +155,7 @@ public class WwithusService {
 		for (int i = 0; i < answerWwithusEntries.size(); i++) {
 			WwithusEntry answerWwithusEntity = answerWwithusEntries.get(i);
 			AnswerButton answerButton = AnswerButton.builder()
+				.code(answerWwithusEntity.getCode())
 				.ordinal(i)
 				.isToTerminate(answerWwithusEntity.isLast())
 				.isToRewind(answerWwithusEntity.isToRewind())

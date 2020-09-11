@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
@@ -63,19 +64,16 @@ public class WwithusController extends BaseController {
 		return wwithusService.deleteWwithusEntryHistories(user, today);
 	}
 
-	@GetMapping("/wwithus/request-next")
+	@PostMapping("/wwithus/request-next")
 	@ResponseBody
-	public Result<ChatBalloon> getNext(@RequestParam(name = "nextCode", required = false) String nextCode) {
+	public Result<ChatBalloon> getNext(@RequestBody WwithusEntryRequest wwithusEntryRequest) {
 		Result.Code code = Result.Code.ERROR;
 		ChatBalloon data = null;
 
 		try {
 			User user = getUser();
-			WwithusEntryRequest wwithusEntryRequest = WwithusEntryRequest.builder()
-				.user(user)
-				.nextCode(nextCode)
-				.date(LocalDate.of(2020, 9, 7))
-				.build();
+			wwithusEntryRequest.setUser(user);
+			wwithusEntryRequest.setDate(LocalDate.now());
 
 			data = wwithusService.getWwithusEntryAndSaveHistory(wwithusEntryRequest);
 			code = Result.Code.OK;

@@ -1,5 +1,6 @@
 class AnswerButton {
 	/**
+	 * @param {string} code
 	 * @param {number} ordinal
 	 * @param {string} content
 	 * @param {boolean} isToTerminate
@@ -7,7 +8,8 @@ class AnswerButton {
 	 * @param {string | null} urlToImageFile
 	 * @param {string | null} nextCode
 	 */
-	constructor(ordinal, isToTerminate, isToRewind, content, urlToImageFile, nextCode) {
+	constructor(code, ordinal, isToTerminate, isToRewind, content, urlToImageFile, nextCode) {
+		this._code = code;
 		this._ordinal = ordinal;
 		this._isToTerminate = isToTerminate;
 		this._isToRewind = isToRewind;
@@ -16,6 +18,10 @@ class AnswerButton {
 		this._nextCode = nextCode;
 	}
 
+	/**
+	 * @returns {string}
+	 */
+	get code() { return this._code; }
 	/**
 	 * @returns {number}
 	 */
@@ -46,6 +52,7 @@ class AnswerButton {
 	 */
 	toJson() {
 		const object = {
+			code: this._code,
 			ordinal: this._ordinal,
 			isToTerminate: this._isToTerminate,
 			isToRewind: this._isToRewind,
@@ -77,12 +84,19 @@ class AnswerButton {
 	 * @returns {AnswerButton}
 	 */
 	static fromObject(object) {
-		const errorMessage = ('Object "' + object + '" is malformed for class "' + AnswerButton.name + '".');
+		const errorMessage = (`Object "${JSON.stringify(object)}" is malformed for class "${AnswerButton.name}".`);
 
-		if (!object.hasOwnProperty("ordinal") || !object.hasOwnProperty("toTerminate") || !object.hasOwnProperty("content")) {
+		if (
+			!object.hasOwnProperty("code") ||
+			!object.hasOwnProperty("ordinal") ||
+			!object.hasOwnProperty("toTerminate") ||
+			!object.hasOwnProperty("toRewind") ||
+			!object.hasOwnProperty("content")
+		) {
 			throw new Error(errorMessage);
 		}
 
+		const code = object["code"];
 		const ordinal = object["ordinal"];
 		// WARNING: isToTerminate가 아니라 toTerminate인 점에 유의할 것!
 		const isToTerminate = object["toTerminate"];
@@ -91,6 +105,6 @@ class AnswerButton {
 		const urlToImageFile = object["urlToImageFile"];
 		const nextCode = object["nextCode"];
 
-		return new AnswerButton(ordinal, isToTerminate, isToRewind, content, urlToImageFile, nextCode);
+		return new AnswerButton(code, ordinal, isToTerminate, isToRewind, content, urlToImageFile, nextCode);
 	}
 }

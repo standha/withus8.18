@@ -1,21 +1,28 @@
 package withus.dto.wwithus;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.lang.Nullable;
 import withus.entity.User;
 
+@NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 @Getter
+@Setter
 public class WwithusEntryRequest {
-	private final User user;
+	private User user;
+	private String currentCode;
 	@Nullable
-	private final String nextCode;
+	private String nextCode;
+	private List<String> codesToSaveAsHistories;
 	@Builder.Default
-	private final LocalDate date = LocalDate.now();
+	private LocalDate date = LocalDate.now();
 }

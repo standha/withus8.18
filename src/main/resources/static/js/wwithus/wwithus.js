@@ -7,8 +7,8 @@ const GET_FETCH_OPTIONS = {
 	}
 };
 
-/**
- * @type {Node}
+/**codesToSaveAsHistories
+ * @type {Element}
  */
 let balloonsAreaElement;
 /**
@@ -36,7 +36,7 @@ function onDomLoad() {
 }
 
 /**
- * @param {Node} parent
+ * @param {Element} parent
  */
 function removeChildren(parent) {
 	parent.childNodes.forEach(childNode => { parent.removeChild(childNode); });
@@ -83,16 +83,14 @@ function renderBalloons(objects) {
 	objects.forEach(object => {
 		const chatBalloon = ChatBalloon.fromObject(object);
 
-		renderBalloon(balloonsAreaElement, chatBalloon);
+		renderBalloon(chatBalloon);
 	});
 }
 
 /**
- *
- * @param {Node} parentElement
  * @param {ChatBalloon} chatBalloon
  */
-function renderBalloon(parentElement, chatBalloon) {
+function renderBalloon(chatBalloon) {
 	const div = document.createElement("div");
 	div.id = chatBalloon.sequence.toString();
 	div.className = "balloons";
@@ -114,32 +112,7 @@ function renderBalloon(parentElement, chatBalloon) {
 
 	let answerButtonsSpan = "";
 	if (chatBalloon.answerButtons && chatBalloon.answerButtons.length > 0) {
-		answerButtonsSpan = `<span class="answer-buttons">`;
-		chatBalloon.answerButtons.forEach(answerButton => {
-			if (chatBalloon.isMostRecent) {
-				/*
-				 * 나도 왜 이딴 짓을 해야 하는지 모르겠다.
-				 * 일단은 이 시점에서 answerButton이 AnswerButton 타입임을 알 수 없는 상태여서 그런 것 같다.
-				 */
-				// noinspection JSUnresolvedVariable
-				if (answerButton.isToTerminate || answerButton.toTerminate) {
-					answerButtonsSpan += `<a href="javascript: terminateWwithus();">`;
-				} else if (answerButton.isToRewind || answerButton.toRewind) {
-					answerButtonsSpan += `<a href="javascript: deleteHistory(); history.back();">`;
-				} else {
-					answerButtonsSpan += `<a href="javascript: requestNextByCode('${answerButton.nextCode}');">`;
-				}
-			} else {
-				answerButtonsSpan += "<a>";
-			}
-
-			answerButtonsSpan += `${answerButton.content}</a><br>`;
-
-			if (answerButton.urlToImageFile) {
-				answerButtonsSpan += `<img src="${answerButton.urlToImageFile}" alt="이미지가 표시되지 않고 있습니다."><br>`;
-			}
-		});
-		answerButtonsSpan += "</span>";
+		answerButtonsSpan = renderButtons(chatBalloon);
 	}
 
 	if (chatBalloon.direction === "RIGHT") {
@@ -148,7 +121,7 @@ function renderBalloon(parentElement, chatBalloon) {
 
 	div.innerHTML = (input + img + audio + contentSpan + answerButtonsSpan + dateTimeSpan);
 
-	parentElement.appendChild(div);
+	balloonsAreaElement.appendChild(div);
 
 	if (chatBalloon.isMostRecent && !chatBalloon.isAnswerExpected) {
 		setTimeout(requestNext, MESSAGE_INTERVAL_MILLIS, chatBalloon);
@@ -156,28 +129,92 @@ function renderBalloon(parentElement, chatBalloon) {
 }
 
 /**
- * @param {ChatBalloon | null} chatBalloon
+ * @param {string} answerButtonContent
  */
-function requestNext(chatBalloon) {
-	const nextCode = (chatBalloon? chatBalloon.nextCode: null);
+function renderAnswer(answerButtonContent) {
+	const div = document.createElement("div");
+	div.className = "answer balloons right";
+	div.innerHTML = `<span class="content">${answerButtonContent}</span>`;
 
-	requestNextByCode(nextCode);
+	balloonsAreaElement.appendChild(div);
 }
 
 /**
- * @param {string | null} nextCode
+ * @param {ChatBalloon} chatBalloon
+ * @returns {string}
  */
-function requestNextByCode(nextCode) {
+function renderButtons(chatBalloon) {
+	let answerButtonsSpan = `<span class="answer-buttons">`;
+
+	chatBalloon.answerButtons.forEach(answerButton => {
+		if (chatBalloon.isMostRecent) {
+			let href;
+			/*
+			 * 나도 왜 이딴 짓을 해야 하는지 모르겠다.
+			 * 아마도 answerButton을 AnswerButton 타입으로 인지하지 못해서?
+			 * isToTerminate/isToRewind만으로 충분해야 하지만
+			 * 보험 필드 toTerminate/toRewind도 같이 확인 (2020.09.11)
+			 */
+			if (answerButton.isToRewind || answerButton.toRewind) {
+				href = "javascript: deleteHistory(); history.back();";
+			} else {
+				if (answerButton.isToTerminate || answerButton.toTerminate) {
+					href = `javascript: answer('${answerButton.code}', null, '${answerButton.content}', '${chatBalloon.code}'); history.back();`;
+				} else {
+					href = `javascript: answer('${answerButton.code}', '${answerButton.nextCode}', '${answerButton.content}', '${chatBalloon.code}');`;
+				}
+			}
+
+			answerButtonsSpan += `<a href="${href}">`;
+		} else {
+			answerButtonsSpan += "<a>";
+		}
+
+		answerButtonsSpan += `${answerButton.content}</a><br>`;
+
+		if (answerButton.urlToImageFile) {
+			answerButtonsSpan += `<img src="${answerButton.urlToImageFile}" alt="이미지가 표시되지 않고 있습니다."><br>`;
+		}
+	});
+
+	answerButtonsSpan += "</span>";
+
+	return answerButtonsSpan;
+}
+
+/**
+ * @param {ChatBalloon | null} chatBalloon
+ */
+function requestNext(chatBalloon) {
+	const currentCode = (chatBalloon? chatBalloon.code: null);
+	const nextCode = (chatBalloon? chatBalloon.nextCode: null);
+
+	requestNextByCode(currentCode, nextCode);
+}
+
+/**
+ * @param {string} currentCode
+ * @param {string | null} nextCode
+ * @param {...string} codesToSaveAsHistories
+ */
+function requestNextByCode(currentCode, nextCode, ...codesToSaveAsHistories) {
 	removeAllAnchorLinks();
 
-	let modifiedUrlToRequestNext = urlToRequestNext;
-	if (nextCode !== null) {
-		const parameters = { nextCode: nextCode };
+	const body = {
+		currentCode: currentCode,
+		nextCode: nextCode,
+		codesToSaveAsHistories: codesToSaveAsHistories
+	};
+	const options = {
+		method: "POST",
+		headers: {
+			"Accept": "application/json",
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(body)
+	};
 
-		modifiedUrlToRequestNext += ("?" + new URLSearchParams(parameters));
-	}
-
-	fetch(modifiedUrlToRequestNext, GET_FETCH_OPTIONS)
+	fetch(urlToRequestNext, options)
 		.then(response => response.json())
 		.then(object => {
 			console.log(object);
@@ -186,13 +223,20 @@ function requestNextByCode(nextCode) {
 				const data = object["data"];
 
 				const chatBalloon = ChatBalloon.fromObject(data);
-				renderBalloon(balloonsAreaElement, chatBalloon, true);
+				renderBalloon(chatBalloon);
 			}
 		});
 }
 
-function terminateWwithus() {
-	removeAllAnchorLinks();
+/**
+ * @param {string} answerButtonCode
+ * @param {string} answerButtonNextCode
+ * @param {string} answerButtonContent
+ * @param {string} chatBalloonCode
+ */
+function answer(answerButtonCode, answerButtonNextCode, answerButtonContent, chatBalloonCode) {
+	requestNextByCode(answerButtonCode, answerButtonNextCode, chatBalloonCode);
+	renderAnswer(answerButtonContent);
 }
 
 /**

@@ -1,5 +1,6 @@
 class ChatBalloon {
 	/**
+	 * @param {string} code
 	 * @param {number} sequence
 	 * @param {string} direction
 	 * @param {boolean} isMostRecent
@@ -12,7 +13,9 @@ class ChatBalloon {
 	 * @param {string | null} nextCode
 	 * @param {AnswerButton[]} answerButtons
 	 */
-	constructor(sequence, direction, isMostRecent, isHelpRequest, isAnswerExpected, content, urlToImageFile, urlToAudioFile, dateTime, nextCode, answerButtons) {
+	constructor(code, sequence, direction, isMostRecent, isHelpRequest, isAnswerExpected, content, urlToImageFile, urlToAudioFile, dateTime, nextCode, answerButtons) {
+		this._code = code;
+
 		if (sequence) {
 			this._sequence = sequence;
 		} else {
@@ -35,6 +38,10 @@ class ChatBalloon {
 
 	static creationCount = 0;
 
+	/**
+	 * @returns {string}
+	 */
+	get code() { return this._code; }
 	/**
 	 * @returns {number}
 	 */
@@ -109,6 +116,7 @@ class ChatBalloon {
 	 */
 	toJson() {
 		const object = {
+			code: this._code,
 			sequence: this._sequence,
 			direction: this._direction,
 			isMostRecent: this._isMostRecent,
@@ -145,9 +153,10 @@ class ChatBalloon {
 	 * @returns {ChatBalloon}
 	 */
 	static fromObject(object) {
-		const errorMessage = ('Object "' + object + '" is malformed for class "' + ChatBalloon.name + '".');
+		const errorMessage = (`Object "${JSON.stringify(object)}" is malformed for class "${ChatBalloon.name}".`);
 
 		if (
+			!object.hasOwnProperty("code") ||
 			!object.hasOwnProperty("direction") ||
 			!object.hasOwnProperty("mostRecent") ||
 			!object.hasOwnProperty("helpRequest") ||
@@ -159,6 +168,7 @@ class ChatBalloon {
 			throw new Error(errorMessage);
 		}
 
+		const code = object["code"];
 		const sequence = object["sequence"];
 		const direction = object["direction"];
 		/*
@@ -175,6 +185,6 @@ class ChatBalloon {
 		const nextCode = object["nextCode"];
 		const answerButtons = object["answerButtons"];
 
-		return new ChatBalloon(sequence, direction, isMostRecent, isHelpRequest, isAnswerExpected, content, urlToImageFile, urlToAudioFile, dateTime, nextCode, answerButtons);
+		return new ChatBalloon(code, sequence, direction, isMostRecent, isHelpRequest, isAnswerExpected, content, urlToImageFile, urlToAudioFile, dateTime, nextCode, answerButtons);
 	}
 }

@@ -13,6 +13,7 @@ import org.springframework.lang.Nullable;
 @Getter
 @ToString
 public class AnswerButton implements Comparable<AnswerButton> {
+	private final String code;
 	private final int ordinal;
 	private final boolean isToTerminate;
 	private final boolean isToRewind;

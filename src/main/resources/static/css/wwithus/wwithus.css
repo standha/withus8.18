@@ -5,8 +5,8 @@ div.balloons {
 	margin-bottom: 5px;
 }
 
-div.balloons.right {
-	/* TODO: align right */
+div.balloons.right > .content {
+	text-align: right;
 }
 
 div.balloons > .content {

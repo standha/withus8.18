@@ -18,6 +18,7 @@ import org.springframework.lang.Nullable;
 @Getter
 @ToString
 public class ChatBalloon implements Comparable<ChatBalloon> {
+	private final String code;
 	private final Direction direction;
 	private final boolean isMostRecent;
 	private final boolean isHelpRequest;
@@ -27,7 +28,8 @@ public class ChatBalloon implements Comparable<ChatBalloon> {
 	private final String urlToImageFile;
 	@Nullable
 	private final String urlToAudioFile;
-	private final LocalDateTime dateTime;
+	@Builder.Default
+	private final LocalDateTime dateTime = LocalDateTime.now();
 	@Nullable
 	private final String nextCode;
 	@NonNull
