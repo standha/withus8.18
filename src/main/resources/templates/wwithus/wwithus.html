@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<link th:href="@{/css/header.css}" rel="stylesheet">
 	<link th:href="@{/css/wwithus/wwithus.css}" rel="stylesheet">
+	<script th:src="@{/js/header.js}"></script>
 	<script th:src="@{/js/wwithus/wwithus.js}"></script>
 	<script th:src="@{/js/wwithus/answer-button.js}"></script>
 	<script th:src="@{/js/wwithus/chat-balloon.js}"></script>
@@ -12,7 +13,6 @@
 <body>
 	<input type="hidden" id="history-url" th:attr="value=@{/wwithus/histories}">
 	<input type="hidden" id="request-next-url" th:attr="value=@{/wwithus/request-next}">
-	<input type="hidden" id="help-request-url" th:attr="value=@{/wwithus/help-request}">
 	<div th:replace="header :: #header"></div>
 	<div id="body"></div>
 </body>

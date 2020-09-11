@@ -1,7 +1,6 @@
 package withus.controller;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,22 +16,18 @@ import withus.dto.Result;
 import withus.dto.wwithus.ChatBalloon;
 import withus.dto.wwithus.WwithusEntryRequest;
 import withus.entity.User;
-import withus.entity.WithusHelpRequest;
-import withus.service.CenterService;
 import withus.service.UserService;
 import withus.service.WwithusService;
 
 @Controller
 public class WwithusController extends BaseController {
 	private final WwithusService wwithusService;
-	private final CenterService centerService;
 
 	@Autowired
-	public WwithusController(UserService userService, AuthenticationFacade authenticationFacade, WwithusService wwithusService, CenterService centerService) {
+	public WwithusController(UserService userService, AuthenticationFacade authenticationFacade, WwithusService wwithusService) {
 		super(userService, authenticationFacade);
 
 		this.wwithusService = wwithusService;
-		this.centerService = centerService;
 	}
 
 	@GetMapping("/wwithus")
@@ -89,27 +84,6 @@ public class WwithusController extends BaseController {
 		return Result.<ChatBalloon>builder()
 			.code(code)
 			.data(data)
-			.build();
-	}
-
-	@PostMapping("/wwithus/help-request")
-	@ResponseBody
-	public Result<WithusHelpRequest> postHelpRequest() {
-		User user = getUser();
-		LocalDateTime now = LocalDateTime.now();
-
-		Result.Code code = Result.Code.ERROR;
-		WithusHelpRequest withusHelpRequest = null;
-		try {
-			withusHelpRequest = centerService.createHelpRequest(user, now);
-			code = Result.Code.OK;
-		} catch (Exception exception) {
-			log.error(exception.getLocalizedMessage(), exception);
-		}
-
-		return Result.<WithusHelpRequest>builder()
-			.code(code)
-			.data(withusHelpRequest)
 			.build();
 	}
 }

@@ -24,12 +24,6 @@ let urlToHistory;
  */
 let urlToRequestNext;
 
-/**
- * @type {string}
- * /wwithus/help-request
- */
-let urlToHelpRequest;
-
 document.addEventListener("DOMContentLoaded", function() {
 	onDomLoad();
 }, false);
@@ -38,7 +32,6 @@ function onDomLoad() {
 	balloonsAreaElement = document.querySelector("div#body");
 	urlToHistory = document.querySelector("#history-url").value;
 	urlToRequestNext = document.querySelector("#request-next-url").value;
-	urlToHelpRequest = document.querySelector("#help-request-url").value;
 
 	removeChildren(balloonsAreaElement);
 	loadHistory();
@@ -131,6 +124,7 @@ function renderBalloon(chatBalloon) {
 	div.innerHTML = (input + img + audio + contentSpan + answerButtonsSpan + dateTimeSpan);
 
 	balloonsAreaElement.appendChild(div);
+	window.scrollTo(0, document.body.scrollHeight);
 
 	if (chatBalloon.isMostRecent && !chatBalloon.isAnswerExpected) {
 		setTimeout(requestNext, MESSAGE_INTERVAL_MILLIS, chatBalloon);
@@ -251,28 +245,6 @@ function requestNextByCode(currentCode, nextCode, ...codesToSaveAsHistories) {
 function answer(answerButtonCode, answerButtonNextCode, answerButtonContent, chatBalloonCode) {
 	requestNextByCode(answerButtonCode, answerButtonNextCode, chatBalloonCode);
 	renderAnswer(answerButtonContent);
-}
-
-function sendHelpRequest() {
-	const options = {
-		method: "POST",
-		headers: {
-			"Accept": "application/json",
-			"Content-Type": "application/json"
-		}
-	};
-
-	fetch(urlToHelpRequest, options)
-		.then(response => response.json())
-		.then(object => {
-			const code = object["code"];
-			if (code === "OK") {
-				const data = object["data"];
-				console.log(data);
-			} else {
-				alert("위더스 도우미 호출에 실패하였습니다.");
-			}
-		});
 }
 
 /**
