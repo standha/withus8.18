@@ -11,16 +11,24 @@ const GET_FETCH_OPTIONS = {
  * @type {Element}
  */
 let balloonsAreaElement;
+
 /**
  * @type {string}
  * /wwithus/histories
  */
 let urlToHistory;
+
 /**
  * @type {string}
  * /wwithus/request-next
  */
 let urlToRequestNext;
+
+/**
+ * @type {string}
+ * /wwithus/help-request
+ */
+let urlToHelpRequest;
 
 document.addEventListener("DOMContentLoaded", function() {
 	onDomLoad();
@@ -30,6 +38,7 @@ function onDomLoad() {
 	balloonsAreaElement = document.querySelector("div#body");
 	urlToHistory = document.querySelector("#history-url").value;
 	urlToRequestNext = document.querySelector("#request-next-url").value;
+	urlToHelpRequest = document.querySelector("#help-request-url").value;
 
 	removeChildren(balloonsAreaElement);
 	loadHistory();
@@ -148,7 +157,7 @@ function renderButtons(chatBalloon) {
 
 	chatBalloon.answerButtons.forEach(answerButton => {
 		if (chatBalloon.isMostRecent) {
-			let href;
+			let href = "javascript:";
 			/*
 			 * 나도 왜 이딴 짓을 해야 하는지 모르겠다.
 			 * 아마도 answerButton을 AnswerButton 타입으로 인지하지 못해서?
@@ -156,16 +165,21 @@ function renderButtons(chatBalloon) {
 			 * 보험 필드 toTerminate/toRewind도 같이 확인 (2020.09.11)
 			 */
 			if (answerButton.isToRewind || answerButton.toRewind) {
-				href = "javascript: deleteHistory(); history.back();";
+				href += " deleteHistory(); history.back();";
 			} else {
+				if (answerButton.isHelpRequest || answerButton.helpRequest) {
+					href += " sendHelpRequest();";
+				}
+
 				if (answerButton.isToTerminate || answerButton.toTerminate) {
-					href = `javascript: answer('${answerButton.code}', null, '${answerButton.content}', '${chatBalloon.code}'); history.back();`;
+					href += ` answer('${answerButton.code}', null, '${answerButton.content}', '${chatBalloon.code}'); history.back();`;
 				} else {
-					href = `javascript: answer('${answerButton.code}', '${answerButton.nextCode}', '${answerButton.content}', '${chatBalloon.code}');`;
+					href += ` answer('${answerButton.code}', '${answerButton.nextCode}', '${answerButton.content}', '${chatBalloon.code}');`;
 				}
 			}
 
-			answerButtonsSpan += `<a href="${href}">`;
+			let replacedHref = href.replaceAll(/ {2,}/g, ' ');
+			answerButtonsSpan += `<a href="${replacedHref}">`;
 		} else {
 			answerButtonsSpan += "<a>";
 		}
@@ -237,6 +251,28 @@ function requestNextByCode(currentCode, nextCode, ...codesToSaveAsHistories) {
 function answer(answerButtonCode, answerButtonNextCode, answerButtonContent, chatBalloonCode) {
 	requestNextByCode(answerButtonCode, answerButtonNextCode, chatBalloonCode);
 	renderAnswer(answerButtonContent);
+}
+
+function sendHelpRequest() {
+	const options = {
+		method: "POST",
+		headers: {
+			"Accept": "application/json",
+			"Content-Type": "application/json"
+		}
+	};
+
+	fetch(urlToHelpRequest, options)
+		.then(response => response.json())
+		.then(object => {
+			const code = object["code"];
+			if (code === "OK") {
+				const data = object["data"];
+				console.log(data);
+			} else {
+				alert("위더스 도우미 호출에 실패하였습니다.");
+			}
+		});
 }
 
 /**

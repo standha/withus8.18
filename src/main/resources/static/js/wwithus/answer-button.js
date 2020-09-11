@@ -3,14 +3,16 @@ class AnswerButton {
 	 * @param {string} code
 	 * @param {number} ordinal
 	 * @param {string} content
+	 * @param {boolean} isHelpRequest
 	 * @param {boolean} isToTerminate
 	 * @param {boolean} isToRewind
 	 * @param {string | null} urlToImageFile
 	 * @param {string | null} nextCode
 	 */
-	constructor(code, ordinal, isToTerminate, isToRewind, content, urlToImageFile, nextCode) {
+	constructor(code, ordinal, isHelpRequest, isToTerminate, isToRewind, content, urlToImageFile, nextCode) {
 		this._code = code;
 		this._ordinal = ordinal;
+		this._isHelpRequest = isHelpRequest;
 		this._isToTerminate = isToTerminate;
 		this._isToRewind = isToRewind;
 		this._content = content;
@@ -26,6 +28,10 @@ class AnswerButton {
 	 * @returns {number}
 	 */
 	get ordinal() { return this._ordinal; }
+	/**
+	 * @returns {boolean}
+	 */
+	get isHelpRequest() { return this._isHelpRequest; }
 	/**
 	 * @returns {boolean}
 	 */
@@ -54,6 +60,7 @@ class AnswerButton {
 		const object = {
 			code: this._code,
 			ordinal: this._ordinal,
+			isHelpRequest: this._isHelpRequest,
 			isToTerminate: this._isToTerminate,
 			isToRewind: this._isToRewind,
 			content: this._content,
@@ -89,6 +96,7 @@ class AnswerButton {
 		if (
 			!object.hasOwnProperty("code") ||
 			!object.hasOwnProperty("ordinal") ||
+			!object.hasOwnProperty("helpRequest") ||
 			!object.hasOwnProperty("toTerminate") ||
 			!object.hasOwnProperty("toRewind") ||
 			!object.hasOwnProperty("content")
@@ -98,13 +106,13 @@ class AnswerButton {
 
 		const code = object["code"];
 		const ordinal = object["ordinal"];
-		// WARNING: isToTerminate가 아니라 toTerminate인 점에 유의할 것!
+		const isHelpRequest = object["helpRequest"];
 		const isToTerminate = object["toTerminate"];
 		const isToRewind = object["toRewind"];
 		const content = object["content"];
 		const urlToImageFile = object["urlToImageFile"];
 		const nextCode = object["nextCode"];
 
-		return new AnswerButton(code, ordinal, isToTerminate, isToRewind, content, urlToImageFile, nextCode);
+		return new AnswerButton(code, ordinal, isHelpRequest, isToTerminate, isToRewind, content, urlToImageFile, nextCode);
 	}
 }

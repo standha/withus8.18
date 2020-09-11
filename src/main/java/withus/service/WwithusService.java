@@ -19,8 +19,10 @@ import withus.dto.wwithus.WwithusEntryRequest;
 import withus.entity.User;
 import withus.entity.WwithusEntry;
 import withus.entity.WwithusEntryHistory;
+import withus.entity.WwithusHelpRequest;
 import withus.repository.WwithusEntryHistoryRepository;
 import withus.repository.WwithusEntryRepository;
+import withus.repository.WwithusHelpRequestRepository;
 import withus.util.Utility;
 
 @Service
@@ -28,11 +30,13 @@ import withus.util.Utility;
 public class WwithusService {
 	private final WwithusEntryRepository wwithusEntryRepository;
 	private final WwithusEntryHistoryRepository wwithusEntryHistoryRepository;
+	private final WwithusHelpRequestRepository wwithusHelpRequestRepository;
 
 	@Autowired
-	public WwithusService(WwithusEntryRepository wwithusEntryRepository, WwithusEntryHistoryRepository wwithusEntryHistoryRepository) {
+	public WwithusService(WwithusEntryRepository wwithusEntryRepository, WwithusEntryHistoryRepository wwithusEntryHistoryRepository, WwithusHelpRequestRepository wwithusHelpRequestRepository) {
 		this.wwithusEntryRepository = wwithusEntryRepository;
 		this.wwithusEntryHistoryRepository = wwithusEntryHistoryRepository;
+		this.wwithusHelpRequestRepository = wwithusHelpRequestRepository;
 	}
 
 	public ChatBalloon getWwithusEntryAndSaveHistory(WwithusEntryRequest wwithusEntryRequest) {
@@ -108,6 +112,15 @@ public class WwithusService {
 		return code;
 	}
 
+	public WwithusHelpRequest createHelpRequest(User user, LocalDateTime dateTime) {
+		WwithusHelpRequest wwithusHelpRequest = WwithusHelpRequest.builder()
+			.user(user)
+			.dateTime(dateTime)
+			.build();
+
+		return wwithusHelpRequestRepository.save(wwithusHelpRequest);
+	}
+
 	private WwithusEntryHistory toWwithusEntryHistory(User user, WwithusEntry wwithusEntry) {
 		return WwithusEntryHistory.builder()
 			.key(
@@ -130,7 +143,6 @@ public class WwithusService {
 			.code(wwithusEntry.getCode())
 			.direction(wwithusEntry.isAnswer()? ChatBalloon.Direction.RIGHT: ChatBalloon.Direction.LEFT)
 			.isMostRecent(isLast)
-			.isHelpRequest(wwithusEntry.isHelpRequest())
 			.isAnswerExpected(isAnswerExpected)
 			.content(wwithusEntry.getContent())
 			.urlToImageFile(wwithusEntry.getUrlToImageFile())
@@ -157,6 +169,7 @@ public class WwithusService {
 			AnswerButton answerButton = AnswerButton.builder()
 				.code(answerWwithusEntity.getCode())
 				.ordinal(i)
+				.isHelpRequest(answerWwithusEntity.isHelpRequest())
 				.isToTerminate(answerWwithusEntity.isLast())
 				.isToRewind(answerWwithusEntity.isToRewind())
 				.content(answerWwithusEntity.getContent())

@@ -20,10 +20,10 @@ import org.springframework.lang.NonNull;
 
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
+@Getter
 @ToString
 public class WwithusEntryHistory implements Comparable<WwithusEntryHistory> {
 	@EmbeddedId
@@ -44,10 +44,10 @@ public class WwithusEntryHistory implements Comparable<WwithusEntryHistory> {
 
 	@Embeddable
 	@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-	@Getter
 	@NoArgsConstructor
 	@AllArgsConstructor(access = AccessLevel.PRIVATE)
 	@Builder
+	@Getter
 	@ToString
 	public static class Key implements Serializable {
 		@OneToOne

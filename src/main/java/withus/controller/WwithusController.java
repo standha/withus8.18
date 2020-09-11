@@ -1,6 +1,7 @@
 package withus.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import withus.dto.Result;
 import withus.dto.wwithus.ChatBalloon;
 import withus.dto.wwithus.WwithusEntryRequest;
 import withus.entity.User;
+import withus.entity.WwithusHelpRequest;
 import withus.service.UserService;
 import withus.service.WwithusService;
 
@@ -84,6 +86,27 @@ public class WwithusController extends BaseController {
 		return Result.<ChatBalloon>builder()
 			.code(code)
 			.data(data)
+			.build();
+	}
+
+	@PostMapping("/wwithus/help-request")
+	@ResponseBody
+	public Result<WwithusHelpRequest> postHelpRequest() {
+		User user = getUser();
+		LocalDateTime now = LocalDateTime.now();
+
+		Result.Code code = Result.Code.ERROR;
+		WwithusHelpRequest wwithusHelpRequest = null;
+		try {
+			wwithusHelpRequest = wwithusService.createHelpRequest(user, now);
+			code = Result.Code.OK;
+		} catch (Exception exception) {
+			log.error(exception.getLocalizedMessage(), exception);
+		}
+
+		return Result.<WwithusHelpRequest>builder()
+			.code(code)
+			.data(wwithusHelpRequest)
 			.build();
 	}
 }

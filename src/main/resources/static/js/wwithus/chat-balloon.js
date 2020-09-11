@@ -4,7 +4,6 @@ class ChatBalloon {
 	 * @param {number} sequence
 	 * @param {string} direction
 	 * @param {boolean} isMostRecent
-	 * @param {boolean} isHelpRequest
 	 * @param {boolean} isAnswerExpected
 	 * @param {string} content
 	 * @param {string | null} urlToImageFile
@@ -13,7 +12,7 @@ class ChatBalloon {
 	 * @param {string | null} nextCode
 	 * @param {AnswerButton[]} answerButtons
 	 */
-	constructor(code, sequence, direction, isMostRecent, isHelpRequest, isAnswerExpected, content, urlToImageFile, urlToAudioFile, dateTime, nextCode, answerButtons) {
+	constructor(code, sequence, direction, isMostRecent, isAnswerExpected, content, urlToImageFile, urlToAudioFile, dateTime, nextCode, answerButtons) {
 		this._code = code;
 
 		if (sequence) {
@@ -24,7 +23,6 @@ class ChatBalloon {
 
 		this._direction = direction;
 		this._isMostRecent = isMostRecent;
-		this._isHelpRequest = isHelpRequest;
 		this._isAnswerExpected = isAnswerExpected;
 		this._content = content;
 		this._urlToImageFile = urlToImageFile;
@@ -54,10 +52,6 @@ class ChatBalloon {
 	 * @returns {boolean}
 	 */
 	get isMostRecent() { return this._isMostRecent; }
-	/**
-	 * @returns {boolean}
-	 */
-	get isHelpRequest() { return this._isHelpRequest; }
 	/**
 	 * @returns {boolean}
 	 */
@@ -120,7 +114,6 @@ class ChatBalloon {
 			sequence: this._sequence,
 			direction: this._direction,
 			isMostRecent: this._isMostRecent,
-			isHelpRequest: this._isHelpRequest,
 			isAnswerExpected: this._isAnswerExpected,
 			content: this._content,
 			urlToImageFile: this._urlToImageFile,
@@ -159,7 +152,6 @@ class ChatBalloon {
 			!object.hasOwnProperty("code") ||
 			!object.hasOwnProperty("direction") ||
 			!object.hasOwnProperty("mostRecent") ||
-			!object.hasOwnProperty("helpRequest") ||
 			!object.hasOwnProperty("answerExpected") ||
 			!object.hasOwnProperty("content") ||
 			!object.hasOwnProperty("dateTime") ||
@@ -176,7 +168,6 @@ class ChatBalloon {
 		 * GSON serialization의 네이밍 규칙에 따른 결과
 		 */
 		const isMostRecent = object["mostRecent"];
-		const isHelpRequest = object["helpRequest"];
 		const isAnswerExpected = object["answerExpected"];
 		const content = object["content"];
 		const urlToImageFile = object["urlToImageFile"];
@@ -185,6 +176,6 @@ class ChatBalloon {
 		const nextCode = object["nextCode"];
 		const answerButtons = object["answerButtons"];
 
-		return new ChatBalloon(code, sequence, direction, isMostRecent, isHelpRequest, isAnswerExpected, content, urlToImageFile, urlToAudioFile, dateTime, nextCode, answerButtons);
+		return new ChatBalloon(code, sequence, direction, isMostRecent, isAnswerExpected, content, urlToImageFile, urlToAudioFile, dateTime, nextCode, answerButtons);
 	}
 }

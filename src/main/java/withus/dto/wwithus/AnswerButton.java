@@ -15,6 +15,7 @@ import org.springframework.lang.Nullable;
 public class AnswerButton implements Comparable<AnswerButton> {
 	private final String code;
 	private final int ordinal;
+	private final boolean isHelpRequest;
 	private final boolean isToTerminate;
 	private final boolean isToRewind;
 	private final String content;
