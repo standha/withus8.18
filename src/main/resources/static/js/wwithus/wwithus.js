@@ -80,7 +80,7 @@ function renderBalloon(parentElement, chatBalloon) {
 
 	let img = "";
 	if (chatBalloon.urlToImageFile) {
-		img = `<img src=${chatBalloon.urlToImageFile}" alt="이미지가 표시되지 않고 있습니다.">`;
+		img = `<img src="${chatBalloon.urlToImageFile}" alt="이미지가 표시되지 않고 있습니다.">`;
 	}
 
 	let audio = "";

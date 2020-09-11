@@ -97,6 +97,7 @@ public class WwithusService {
 			.isHelpRequest(wwithusEntry.isHelpRequest())
 			.isAnswerExpected(isAnswerExpected)
 			.content(wwithusEntry.getContent())
+			.urlToImageFile(wwithusEntry.getUrlToImageFile())
 			.urlToAudioFile(wwithusEntry.getUrlToAudioFile())
 			.dateTime(wwithusEntryHistory.getDateTime())
 			.nextCode(wwithusEntry.getNextCode());
