@@ -29,13 +29,24 @@ public class BloodPressureController extends BaseController {
         super(userService, authenticationFacade);
         this.bloodPressureService = bloodPressureService;
     }
+
     @GetMapping("/bloodPressure")
     @Statistical
     public ModelAndView getBloodPressure() {
         ModelAndView modelAndView = new ModelAndView("bloodPressure/bloodPressure");
         String user = getUsername();
+        if(bloodPressureService.getTodayBloodRecord(new RecordKey(user,LocalDate.now())) != null){
+            Tbl_blood_pressure_pulse today= bloodPressureService.getTodayBloodRecord(new RecordKey(user,LocalDate.now()));
+            modelAndView.addObject("contraction", today.getContraction());
+            modelAndView.addObject("pressure", today.getPressure());
+            modelAndView.addObject("relaxation", today.getRelaxation());
+        }
+        else{
+            modelAndView.addObject("contraction",0);
+            modelAndView.addObject("pressure", 0);
+            modelAndView.addObject("relaxation", 0);
+        }
         modelAndView.addObject("previousUrl", "/home");
-        System.out.println("UserName : "+user);
         return modelAndView;
     }
 

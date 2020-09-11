@@ -1,23 +1,21 @@
 package withus.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
-import withus.entity.*;
+import withus.entity.RecordKey;
+import withus.entity.Tbl_mositrue_record;
+import withus.entity.Tbl_natrium_record;
 import withus.service.MoistureNatriumService;
 import withus.service.UserService;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -15,10 +15,14 @@
         <div>Exercise record input</div>
         <div id="date">
             <p>Input Contraction/relaxation</p>
-                <p><input type="text"  value='0'  name="contraction">
-                <input type="text"  value='0'  name="relaxation">mm/Hg</p>
+                <p>
+                    <input type="text"  th:value="${contraction}"  name="contraction">
+                    <input type="text"  th:value="${relaxation}"  name="relaxation">mm/Hg
+                </p>
             <p>Input Pressure</p>
-                <p><input type="text"  value='0'  name="pressure">(회/분)</p>
+                <p>
+                    <input type="text"  th:value="${pressure}"  name="pressure">(회/분)
+                </p>
         </div>
         <input type="submit" value="Save >.<">
     </form>
