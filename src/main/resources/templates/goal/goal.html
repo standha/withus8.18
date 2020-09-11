@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/header.css}" rel="stylesheet">
+    <link th:href="@{/css/alarm/pill.css}" rel="stylesheet">
+    <script th:src="@{/js/goal/goal.js}"></script>
+    <title>이 주의 목표</title>
+</head>
+<body>
+    <div th:replace="header :: #header"></div>
+    <div id="body">
+        <div>목표 리스트</div>
+        <div>오늘의 목표</div>
+            <p th:text="${goalThisWeek}"></p>
+        <div>약물 복용</div>
+        <div>
+            <p>
+                <input type="radio" name="check_radio" onclick="radioClick()" value="매일 정해진 시간 약 복용">매일 정해진 시간 약 복용
+            </p>
+            <p>
+                <input type="radio" name="check_radio" onclick="radioClick()" value="매일 혈압과 맥박 측정">매일 혈압과 맥박 측정
+            </p>
+            <p>
+                <input type="radio" name="check_radio" onclick="radioClick()" value="매일 체중 측정">매일 체중 측정
+            </p>
+        </div>
+        <div>증상일지 및 염분 제한</div>
+        <div>
+            <p>
+                <input type="radio" name="check_radio" onclick="radioClick()"  value="주 3회 이상 증상일지 기록">주 3회 이상 증상일지 기록
+            </p>
+            <p>
+                <input type="radio" name="check_radio" onclick="radioClick()" value="매일 증상일지 기록">매일 증상일지 기록
+            </p>
+            <p>
+                <input type="radio" name="check_radio" onclick="radioClick()" value="주 3회 이상 식사 시 염분 측정">주 3회 이상 식사 시 염분 측정
+            </p>
+            <p>
+                <input type="radio" name="check_radio" onclick="radioClick()"  value="매일 식사 시 염분 측정">매일 식사 시 염분 측정
+            </p>
+        </div>
+        <div>운동</div>
+        <div>
+            <p>
+                <input type="radio" name="check_radio" onclick="radioClick()" value="주 1회, 최소 30분 이상 운동">주 1회, 최소 30분 이상 운동
+            </p>
+            <p>
+                <input type="radio" name="check_radio" onclick="radioClick()" value="주 3회, 최소 30분 이상 운동">주 3회, 최소 30분 이상 운동
+            </p>
+        </div>
+    </div>
+</body>
+</html>
