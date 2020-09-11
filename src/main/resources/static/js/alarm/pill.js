@@ -36,7 +36,7 @@ function setFinished(finished) {
 
 	const url = document.querySelector("#pill-put-action").value;
 	const options = {
-		method: "PUT",
+		method: "POST",
 		headers: {
 			"Accept": "application/json",
 			"Content-Type": "application/json"

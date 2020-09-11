@@ -38,6 +38,7 @@ public class MoistureNatriumController extends BaseController{
         System.out.println("UserName : "+user);
         return modelAndView;
     }
+
     @GetMapping("/moisture")
     @Statistical
     public ModelAndView getMoisture(){
