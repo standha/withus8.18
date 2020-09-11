@@ -1,36 +1,41 @@
 package withus.controller;
 
+import java.time.LocalDateTime;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
+import withus.dto.Result;
 import withus.entity.User;
 import withus.entity.User.Type;
+import withus.entity.WithusHelpRequest;
+import withus.service.CenterService;
 import withus.service.UserService;
 
 @Controller
 public class CenterController extends BaseController
 {
-	protected final Logger logger = LoggerFactory.getLogger(getClass());
+	private final CenterService centerService;
 
 	@Autowired
-	public CenterController(AuthenticationFacade authenticationFacade, UserService userService)
+	public CenterController(AuthenticationFacade authenticationFacade, UserService userService, CenterService centerService)
 	{
 		super(userService, authenticationFacade);
+
+		this.centerService = centerService;
 	}
 
 	@GetMapping({ "/center" })
 	public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response)
 	{
 
-		logger.info("center");
+		log.info("center");
 		User user = getUser();
 		ModelAndView modelAndView = new ModelAndView();
 
@@ -48,5 +53,26 @@ public class CenterController extends BaseController
 		modelAndView.addObject("user", user);
 
 		return modelAndView;
+	}
+
+	@PostMapping("/center/help-request")
+	@ResponseBody
+	public Result<WithusHelpRequest> postHelpRequest() {
+		User user = getUser();
+		LocalDateTime now = LocalDateTime.now();
+
+		Result.Code code = Result.Code.ERROR;
+		WithusHelpRequest withusHelpRequest = null;
+		try {
+			withusHelpRequest = centerService.createHelpRequest(user, now);
+			code = Result.Code.OK;
+		} catch (Exception exception) {
+			log.error(exception.getLocalizedMessage(), exception);
+		}
+
+		return Result.<WithusHelpRequest>builder()
+			.code(code)
+			.data(withusHelpRequest)
+			.build();
 	}
 }

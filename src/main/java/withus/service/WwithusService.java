@@ -19,10 +19,8 @@ import withus.dto.wwithus.WwithusEntryRequest;
 import withus.entity.User;
 import withus.entity.WwithusEntry;
 import withus.entity.WwithusEntryHistory;
-import withus.entity.WwithusHelpRequest;
 import withus.repository.WwithusEntryHistoryRepository;
 import withus.repository.WwithusEntryRepository;
-import withus.repository.WwithusHelpRequestRepository;
 import withus.util.Utility;
 
 @Service
@@ -30,13 +28,11 @@ import withus.util.Utility;
 public class WwithusService {
 	private final WwithusEntryRepository wwithusEntryRepository;
 	private final WwithusEntryHistoryRepository wwithusEntryHistoryRepository;
-	private final WwithusHelpRequestRepository wwithusHelpRequestRepository;
 
 	@Autowired
-	public WwithusService(WwithusEntryRepository wwithusEntryRepository, WwithusEntryHistoryRepository wwithusEntryHistoryRepository, WwithusHelpRequestRepository wwithusHelpRequestRepository) {
+	public WwithusService(WwithusEntryRepository wwithusEntryRepository, WwithusEntryHistoryRepository wwithusEntryHistoryRepository) {
 		this.wwithusEntryRepository = wwithusEntryRepository;
 		this.wwithusEntryHistoryRepository = wwithusEntryHistoryRepository;
-		this.wwithusHelpRequestRepository = wwithusHelpRequestRepository;
 	}
 
 	public ChatBalloon getWwithusEntryAndSaveHistory(WwithusEntryRequest wwithusEntryRequest) {
@@ -110,15 +106,6 @@ public class WwithusService {
 		}
 
 		return code;
-	}
-
-	public WwithusHelpRequest createHelpRequest(User user, LocalDateTime dateTime) {
-		WwithusHelpRequest wwithusHelpRequest = WwithusHelpRequest.builder()
-			.user(user)
-			.dateTime(dateTime)
-			.build();
-
-		return wwithusHelpRequestRepository.save(wwithusHelpRequest);
 	}
 
 	private WwithusEntryHistory toWwithusEntryHistory(User user, WwithusEntry wwithusEntry) {

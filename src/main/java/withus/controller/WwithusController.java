@@ -17,19 +17,22 @@ import withus.dto.Result;
 import withus.dto.wwithus.ChatBalloon;
 import withus.dto.wwithus.WwithusEntryRequest;
 import withus.entity.User;
-import withus.entity.WwithusHelpRequest;
+import withus.entity.WithusHelpRequest;
+import withus.service.CenterService;
 import withus.service.UserService;
 import withus.service.WwithusService;
 
 @Controller
 public class WwithusController extends BaseController {
 	private final WwithusService wwithusService;
+	private final CenterService centerService;
 
 	@Autowired
-	public WwithusController(UserService userService, AuthenticationFacade authenticationFacade, WwithusService wwithusService) {
+	public WwithusController(UserService userService, AuthenticationFacade authenticationFacade, WwithusService wwithusService, CenterService centerService) {
 		super(userService, authenticationFacade);
 
 		this.wwithusService = wwithusService;
+		this.centerService = centerService;
 	}
 
 	@GetMapping("/wwithus")
@@ -91,22 +94,22 @@ public class WwithusController extends BaseController {
 
 	@PostMapping("/wwithus/help-request")
 	@ResponseBody
-	public Result<WwithusHelpRequest> postHelpRequest() {
+	public Result<WithusHelpRequest> postHelpRequest() {
 		User user = getUser();
 		LocalDateTime now = LocalDateTime.now();
 
 		Result.Code code = Result.Code.ERROR;
-		WwithusHelpRequest wwithusHelpRequest = null;
+		WithusHelpRequest withusHelpRequest = null;
 		try {
-			wwithusHelpRequest = wwithusService.createHelpRequest(user, now);
+			withusHelpRequest = centerService.createHelpRequest(user, now);
 			code = Result.Code.OK;
 		} catch (Exception exception) {
 			log.error(exception.getLocalizedMessage(), exception);
 		}
 
-		return Result.<WwithusHelpRequest>builder()
+		return Result.<WithusHelpRequest>builder()
 			.code(code)
-			.data(wwithusHelpRequest)
+			.data(withusHelpRequest)
 			.build();
 	}
 }
