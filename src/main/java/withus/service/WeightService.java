@@ -3,7 +3,6 @@ package withus.service;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.security.ssl.Record;
 import withus.entity.RecordKey;
 import withus.entity.Tbl_weight;
 import withus.repository.WeightRecordRepository;
