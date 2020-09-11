@@ -37,7 +37,7 @@ public class AlarmService{
     public Tbl_medication_alarm upsertMedication(Tbl_medication_alarm tbl_medication_alarm){
             Tbl_medication_alarm found = medicationAlarmRepository.findById(tbl_medication_alarm.getId()).orElse(null);
             found.setMedicationTimeMorning(tbl_medication_alarm.getMedicationTimeMorning());
-            found.setMedicationTimeLaunch(tbl_medication_alarm.getMedicationTimeLaunch());
+            found.setMedicationTimeLunch(tbl_medication_alarm.getMedicationTimeLunch());
             found.setMedicationTimeDinner(tbl_medication_alarm.getMedicationTimeDinner());
             found.setMedicationAlarmOnoff(tbl_medication_alarm.isMedicationAlarmOnoff());
 

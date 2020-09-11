@@ -31,8 +31,8 @@ public class Tbl_medication_alarm {
     private LocalTime medicationTimeMorning;
 
 
-    @Column(name = "medication_Time_Launch")
-    private LocalTime medicationTimeLaunch;
+    @Column(name = "medication_Time_Lunch")
+    private LocalTime medicationTimeLunch;
 
 
     @Column(name = "medication_Time_Dinner")

@@ -78,7 +78,7 @@ public class MoistureNatriumController extends BaseController{
         else{
             Tbl_natrium_record natrium = moistureNatriumService.getNatriumTodayRecord(new RecordKey(username, LocalDate.now()));
             modelAndView.addObject("morning",natrium.getMorning());
-            modelAndView.addObject("lunch",natrium.getLaunch());
+            modelAndView.addObject("lunch",natrium.getLunch());
             modelAndView.addObject("dinner",natrium.getDinner());
             modelAndView.addObject("previousUrl","moistureNatrium");
             return modelAndView;
@@ -135,8 +135,10 @@ public class MoistureNatriumController extends BaseController{
                 case 3:
                     highCount++;
                     break;
+                case 0:
+                    break;
             }
-            switch(natrium.getLaunch()){
+            switch(natrium.getLunch()){
                 case 1:
                     lowCount++;
                     break;
@@ -145,6 +147,8 @@ public class MoistureNatriumController extends BaseController{
                     break;
                 case 3:
                     highCount++;
+                    break;
+                case 0:
                     break;
             }
             switch(natrium.getDinner()){
@@ -156,6 +160,8 @@ public class MoistureNatriumController extends BaseController{
                     break;
                 case 3:
                     highCount++;
+                    break;
+                case 0:
                     break;
             }
 

@@ -18,8 +18,8 @@ public class Tbl_natrium_record {
     @Column(name = "morning")
     private  Integer morning;
 
-    @Column(name = "launch")
-    private Integer launch;
+    @Column(name = "lunch")
+    private Integer lunch;
 
     @Column(name = "dinner")
     private Integer dinner;
