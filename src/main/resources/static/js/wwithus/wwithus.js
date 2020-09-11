@@ -126,7 +126,8 @@ function renderBalloon(chatBalloon) {
 	balloonsAreaElement.appendChild(div);
 	window.scrollTo(0, document.body.scrollHeight);
 
-	if (chatBalloon.isMostRecent && !chatBalloon.isAnswerExpected) {
+	// TODO: 대답 자체가 finishing인지 판단해서 조건 추가
+	if (chatBalloon.isMostRecent && !chatBalloon.isAnswerExpected && !chatBalloon.containsFinishingAnswer) {
 		setTimeout(requestNext, MESSAGE_INTERVAL_MILLIS, chatBalloon);
 	}
 }
@@ -159,16 +160,16 @@ function renderButtons(chatBalloon) {
 			 * 보험 필드 toTerminate/toRewind도 같이 확인 (2020.09.11)
 			 */
 			if (answerButton.isToRewind || answerButton.toRewind) {
-				href += " deleteHistory(); history.back();";
+				href += " deleteHistory(); location.reload();";
 			} else {
 				if (answerButton.isHelpRequest || answerButton.helpRequest) {
 					href += " sendHelpRequest();";
 				}
 
 				if (answerButton.isToTerminate || answerButton.toTerminate) {
-					href += ` answer('${answerButton.code}', null, '${answerButton.content}', '${chatBalloon.code}'); history.back();`;
+					href += ` answer('${answerButton.code}', null, '${answerButton.content}', '${chatBalloon.code}', true); history.back();`;
 				} else {
-					href += ` answer('${answerButton.code}', '${answerButton.nextCode}', '${answerButton.content}', '${chatBalloon.code}');`;
+					href += ` answer('${answerButton.code}', '${answerButton.nextCode}', '${answerButton.content}', '${chatBalloon.code}', false);`;
 				}
 			}
 
@@ -197,15 +198,16 @@ function requestNext(chatBalloon) {
 	const currentCode = (chatBalloon? chatBalloon.code: null);
 	const nextCode = (chatBalloon? chatBalloon.nextCode: null);
 
-	requestNextByCode(currentCode, nextCode);
+	requestNextByCode(false, currentCode, nextCode);
 }
 
 /**
+ * @param {boolean} toSkipRendering
  * @param {string} currentCode
  * @param {string | null} nextCode
  * @param {...string} codesToSaveAsHistories
  */
-function requestNextByCode(currentCode, nextCode, ...codesToSaveAsHistories) {
+function requestNextByCode(toSkipRendering, currentCode, nextCode, ...codesToSaveAsHistories) {
 	removeAllAnchorLinks();
 
 	const body = {
@@ -230,8 +232,10 @@ function requestNextByCode(currentCode, nextCode, ...codesToSaveAsHistories) {
 			if (object) {
 				const data = object["data"];
 
-				const chatBalloon = ChatBalloon.fromObject(data);
-				renderBalloon(chatBalloon);
+				if (!toSkipRendering) {
+					const chatBalloon = ChatBalloon.fromObject(data);
+					renderBalloon(chatBalloon);
+				}
 			}
 		});
 }
@@ -241,10 +245,14 @@ function requestNextByCode(currentCode, nextCode, ...codesToSaveAsHistories) {
  * @param {string} answerButtonNextCode
  * @param {string} answerButtonContent
  * @param {string} chatBalloonCode
+ * @param {boolean} toSkipRendering 실제 UI 업데이트를 무시할지 여부
  */
-function answer(answerButtonCode, answerButtonNextCode, answerButtonContent, chatBalloonCode) {
-	requestNextByCode(answerButtonCode, answerButtonNextCode, chatBalloonCode);
-	renderAnswer(answerButtonContent);
+function answer(answerButtonCode, answerButtonNextCode, answerButtonContent, chatBalloonCode, toSkipRendering) {
+	requestNextByCode(toSkipRendering, answerButtonCode, answerButtonNextCode, chatBalloonCode);
+
+	if (!toSkipRendering) {
+		renderAnswer(answerButtonContent);
+	}
 }
 
 /**

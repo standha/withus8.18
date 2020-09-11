@@ -11,8 +11,9 @@ class ChatBalloon {
 	 * @param {number[]} dateTime
 	 * @param {string | null} nextCode
 	 * @param {AnswerButton[]} answerButtons
+	 * @param {boolean} containsFinishingAnswer
 	 */
-	constructor(code, sequence, direction, isMostRecent, isAnswerExpected, content, urlToImageFile, urlToAudioFile, dateTime, nextCode, answerButtons) {
+	constructor(code, sequence, direction, isMostRecent, isAnswerExpected, content, urlToImageFile, urlToAudioFile, dateTime, nextCode, answerButtons, containsFinishingAnswer) {
 		this._code = code;
 
 		if (sequence) {
@@ -30,6 +31,7 @@ class ChatBalloon {
 		this._dateTime = dateTime;
 		this._nextCode = nextCode;
 		this._answerButtons = answerButtons;
+		this._containsFinishingAnswer = containsFinishingAnswer;
 
 		ChatBalloon.creationCount++
 	}
@@ -82,6 +84,11 @@ class ChatBalloon {
 	get answerButtons() { return this._answerButtons; }
 
 	/**
+	 * @returns {boolean}
+	 */
+	get containsFinishingAnswer() { return this._containsFinishingAnswer; }
+
+	/**
 	 * @returns {Date}
 	 */
 	get date() {
@@ -120,7 +127,8 @@ class ChatBalloon {
 			urlToAudioFile: this._urlToAudioFile,
 			dateTime: this._dateTime,
 			nextCode: this._nextCode,
-			answerButtons: this._answerButtons
+			answerButtons: this._answerButtons,
+			containsFinishingAnswer: this._containsFinishingAnswer
 		};
 
 		return JSON.stringify(object);
@@ -155,7 +163,8 @@ class ChatBalloon {
 			!object.hasOwnProperty("answerExpected") ||
 			!object.hasOwnProperty("content") ||
 			!object.hasOwnProperty("dateTime") ||
-			!object.hasOwnProperty("answerButtons")
+			!object.hasOwnProperty("answerButtons") ||
+			!object.hasOwnProperty("containsFinishingAnswer")
 		) {
 			throw new Error(errorMessage);
 		}
@@ -175,7 +184,8 @@ class ChatBalloon {
 		const dateTime = object["dateTime"];
 		const nextCode = object["nextCode"];
 		const answerButtons = object["answerButtons"];
+		const containsFinishingAnswer = object["containsFinishingAnswer"];
 
-		return new ChatBalloon(code, sequence, direction, isMostRecent, isAnswerExpected, content, urlToImageFile, urlToAudioFile, dateTime, nextCode, answerButtons);
+		return new ChatBalloon(code, sequence, direction, isMostRecent, isAnswerExpected, content, urlToImageFile, urlToAudioFile, dateTime, nextCode, answerButtons, containsFinishingAnswer);
 	}
 }

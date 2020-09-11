@@ -47,7 +47,12 @@ public class WwithusService {
 			});
 
 			WwithusEntryHistory wwithusEntryHistory = toWwithusEntryHistory(wwithusEntryRequest.getUser(), currentEntry);
-			wwithusEntryHistoryRepository.save(wwithusEntryHistory);
+			WwithusEntryHistory existingHistory = wwithusEntryHistoryRepository.findById(wwithusEntryHistory.getKey()).orElse(null);
+			if (existingHistory == null) {
+				wwithusEntryHistoryRepository.save(wwithusEntryHistory);
+			} else {
+				log.debug("Chose not to overwrite a {}: {}", WwithusEntry.class.getSimpleName(), wwithusEntryHistory);
+			}
 		}
 
 		WwithusEntry nextEntry;

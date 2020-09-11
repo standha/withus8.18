@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,6 +41,11 @@ public class ChatBalloon implements Comparable<ChatBalloon> {
 		return Comparator.comparing(ChatBalloon::getDateTime)
 			.thenComparing(ChatBalloon::getDirection)
 			.compare(this, that);
+	}
+
+	@JsonProperty("containsFinishingAnswer")
+	public boolean containsFinishingAnswer() {
+		return answerButtons.stream().anyMatch(AnswerButton::isToTerminate);
 	}
 
 	public enum Direction {
