@@ -1,9 +1,11 @@
 package withus.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,7 +43,8 @@ public class WwithusController extends BaseController {
 		Result.Code code = Result.Code.OK;
 
 		User user = getUser();
-		List<ChatBalloon> data = wwithusService.getWwithusEntryHistories(user);
+		LocalDate today = LocalDate.now();
+		List<ChatBalloon> data = wwithusService.getWwithusEntryHistories(user, today);
 
 		log.debug("User ({}) has {} history(ies) of today.", user, data.size());
 
@@ -49,6 +52,15 @@ public class WwithusController extends BaseController {
 			.code(code)
 			.data(data)
 			.build();
+	}
+
+	@DeleteMapping("/wwithus/histories")
+	@ResponseBody
+	public Result.Code deleteHistories() {
+		User user = getUser();
+		LocalDate today = LocalDate.now();
+
+		return wwithusService.deleteWwithusEntryHistories(user, today);
 	}
 
 	@GetMapping("/wwithus/request-next")
@@ -62,6 +74,7 @@ public class WwithusController extends BaseController {
 			WwithusEntryRequest wwithusEntryRequest = WwithusEntryRequest.builder()
 				.user(user)
 				.nextCode(nextCode)
+				.date(LocalDate.of(2020, 9, 7))
 				.build();
 
 			data = wwithusService.getWwithusEntryAndSaveHistory(wwithusEntryRequest);

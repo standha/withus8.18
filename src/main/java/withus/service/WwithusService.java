@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
+import withus.dto.Result;
 import withus.dto.wwithus.AnswerButton;
 import withus.dto.wwithus.ChatBalloon;
 import withus.dto.wwithus.WwithusEntryRequest;
@@ -19,6 +20,7 @@ import withus.entity.WwithusEntry;
 import withus.entity.WwithusEntryHistory;
 import withus.repository.WwithusEntryHistoryRepository;
 import withus.repository.WwithusEntryRepository;
+import withus.util.Utility;
 
 @Service
 @Slf4j
@@ -59,10 +61,11 @@ public class WwithusService {
 	}
 
 	@NonNull
-	public List<ChatBalloon> getWwithusEntryHistories(User user) {
-		LocalDate today = LocalDate.now();
+	public List<ChatBalloon> getWwithusEntryHistories(User user, LocalDate date) {
+		int week = user.getWeek();
+		int day = Utility.getDayDigitForWwithus(week, date.getDayOfWeek());
 
-		List<WwithusEntryHistory> wwithusEntryHistories = wwithusEntryHistoryRepository.findAllByUserAndDate(user, today);
+		List<WwithusEntryHistory> wwithusEntryHistories = wwithusEntryHistoryRepository.findAllByUserAndWeekDay(user, week, day);
 
 		List<ChatBalloon> chatBalloons = new ArrayList<>();
 		Iterator<WwithusEntryHistory> iterator = wwithusEntryHistories.stream().sorted().iterator();
@@ -76,6 +79,22 @@ public class WwithusService {
 		return chatBalloons.stream()
 			.sorted()
 			.collect(Collectors.toList());
+	}
+
+	@NonNull
+	public Result.Code deleteWwithusEntryHistories(User user, LocalDate date) {
+		Result.Code code = Result.Code.OK;
+		int week = user.getWeek();
+		int day = Utility.getDayDigitForWwithus(week, date.getDayOfWeek());
+
+		List<WwithusEntryHistory> wwithusEntryHistories = wwithusEntryHistoryRepository.findAllByUserAndWeekDay(user, week, day);
+		if (wwithusEntryHistories.isEmpty()) {
+			code = Result.Code.ERROR_NOTHING_TO_DELETE;
+		} else {
+			wwithusEntryHistoryRepository.deleteAll(wwithusEntryHistories);
+		}
+
+		return code;
 	}
 
 	private WwithusEntryHistory toWwithusEntryHistory(User user, WwithusEntry wwithusEntry) {
@@ -121,6 +140,7 @@ public class WwithusService {
 			AnswerButton answerButton = AnswerButton.builder()
 				.ordinal(i)
 				.isToTerminate(answerWwithusEntity.isLast())
+				.isToRewind(answerWwithusEntity.isToRewind())
 				.content(answerWwithusEntity.getContent())
 				.urlToImageFile(answerWwithusEntity.getUrlToImageFile())
 				.nextCode(answerWwithusEntity.getNextCode())

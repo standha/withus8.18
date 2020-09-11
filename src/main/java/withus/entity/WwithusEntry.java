@@ -28,6 +28,9 @@ public class WwithusEntry implements Comparable<WwithusEntry> {
 	@Column(name = "is_last", columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE")
 	private boolean last;
 
+	@Column(name = "is_to_rewind", columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE")
+	private boolean toRewind;
+
 	@Column(name = "is_answer", columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE")
 	private boolean answer;
 

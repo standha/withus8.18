@@ -1,5 +1,5 @@
 const MESSAGE_INTERVAL_MILLIS = 2000;
-const FETCH_OPTIONS = {
+const GET_FETCH_OPTIONS = {
 	method: "GET",
 	headers: {
 		"Accept": "application/json",
@@ -12,7 +12,13 @@ const FETCH_OPTIONS = {
  */
 let balloonsAreaElement;
 /**
- * @type {string} /wwithus/request-next
+ * @type {string}
+ * /wwithus/histories
+ */
+let urlToHistory;
+/**
+ * @type {string}
+ * /wwithus/request-next
  */
 let urlToRequestNext;
 
@@ -22,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function onDomLoad() {
 	balloonsAreaElement = document.querySelector("div#body");
+	urlToHistory = document.querySelector("#history-url").value;
 	urlToRequestNext = document.querySelector("#request-next-url").value;
 
 	removeChildren(balloonsAreaElement);
@@ -36,9 +43,7 @@ function removeChildren(parent) {
 }
 
 function loadHistory() {
-	const url = document.querySelector("#chat-balloon-url").value;
-
-	fetch(url, FETCH_OPTIONS)
+	fetch(urlToHistory, GET_FETCH_OPTIONS)
 		.then(response => response.json())
 		.then(object => {
 			console.log(object);
@@ -51,6 +56,22 @@ function loadHistory() {
 					requestNext(null);
 				}
 			}
+		});
+}
+
+function deleteHistory() {
+	const options = {
+		method: "DELETE",
+		headers: {
+			"Accept": "application/json",
+			"Content-Type": "application/json"
+		}
+	};
+
+	fetch(urlToHistory, options)
+		.then(response => response.json())
+		.then(object => {
+			console.log(object);
 		});
 }
 
@@ -96,9 +117,15 @@ function renderBalloon(parentElement, chatBalloon) {
 		answerButtonsSpan = `<span class="answer-buttons">`;
 		chatBalloon.answerButtons.forEach(answerButton => {
 			if (chatBalloon.isMostRecent) {
-				// noinspection JSUnresolvedVariable: 나도 왜 이딴 짓을 해야 하는지 모르겠다.
+				/*
+				 * 나도 왜 이딴 짓을 해야 하는지 모르겠다.
+				 * 일단은 이 시점에서 answerButton이 AnswerButton 타입임을 알 수 없는 상태여서 그런 것 같다.
+				 */
+				// noinspection JSUnresolvedVariable
 				if (answerButton.isToTerminate || answerButton.toTerminate) {
 					answerButtonsSpan += `<a href="javascript: terminateWwithus();">`;
+				} else if (answerButton.isToRewind || answerButton.toRewind) {
+					answerButtonsSpan += `<a href="javascript: deleteHistory(); history.back();">`;
 				} else {
 					answerButtonsSpan += `<a href="javascript: requestNextByCode('${answerButton.nextCode}');">`;
 				}
@@ -150,7 +177,7 @@ function requestNextByCode(nextCode) {
 		modifiedUrlToRequestNext += ("?" + new URLSearchParams(parameters));
 	}
 
-	fetch(modifiedUrlToRequestNext, FETCH_OPTIONS)
+	fetch(modifiedUrlToRequestNext, GET_FETCH_OPTIONS)
 		.then(response => response.json())
 		.then(object => {
 			console.log(object);

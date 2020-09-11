@@ -20,6 +20,9 @@ public interface WwithusEntryRepository extends JpaRepository<WwithusEntry, Stri
 	Optional<WwithusEntry> findTopByCodeStartsWithAndFirstIsTrueOrderByCode(String code);
 	default Optional<WwithusEntry> findFirstByWeekAndDay(int week, DayOfWeek dayOfWeek) {
 		int day = Utility.getDayDigitForWwithus(week, dayOfWeek);
+		return findFirstByWeekAndDay(week, day);
+	}
+	default Optional<WwithusEntry> findFirstByWeekAndDay(int week, int day) {
 		return findTopByCodeStartsWithAndFirstIsTrueOrderByCode(String.format("W%dD%d", week, day));
 	}
 }
