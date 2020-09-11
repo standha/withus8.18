@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import withus.entity.RecordKey;
 import withus.entity.Tbl_weight;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,7 +17,7 @@ public interface WeightRecordRepository extends JpaRepository<Tbl_weight, Record
     List<Tbl_weight>findByPkAndWeightGreaterThan(RecordKey pk, float weight);
 
     @Transactional(readOnly = true)
-    Tbl_weight findByPk_DateAndWeightGreaterThan(LocalDate pk_LocalDate, float weight);
+    Tbl_weight findByPk_DateAndWeightGreaterThan(RecordKey pk, float weight);
 
     @Transactional(readOnly = true)
     Tbl_weight findByPkAndWeight(RecordKey pk, float weight);

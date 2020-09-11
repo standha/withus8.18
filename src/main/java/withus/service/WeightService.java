@@ -32,8 +32,8 @@ public class WeightService {
     }
 
     @NonNull
-    public Tbl_weight getWeightToday(LocalDate localDate, float weight){
-        return weightRecordRepository.findByPk_DateAndWeightGreaterThan(localDate, weight);
+    public Tbl_weight getWeightToday(RecordKey pk, float weight){
+        return weightRecordRepository.findByPk_DateAndWeightGreaterThan(pk, weight);
     }
 
     @NonNull

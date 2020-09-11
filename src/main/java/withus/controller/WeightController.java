@@ -39,10 +39,15 @@ public class WeightController extends BaseController {
 
         List<Tbl_weight> weightRecord;
         List<Tbl_weight> weightRecord2;
-        //Tbl_weight weightRecord3;
-        //Tbl_weight weightRecord4;
+        Tbl_weight weightRecord3;
+
+
         String userId = getUsername();
         User user = getUser();
+
+        weightRecord3 = weightService.getWeight(new RecordKey(userId, LocalDate.now()), 0);
+
+        float testweight = 0;
 
         modelAndView.addObject("type", user.getType());
 
@@ -50,17 +55,20 @@ public class WeightController extends BaseController {
             weightRecord = weightService.getWeightDateRecord(new RecordKey(userId, LocalDate.now()), 0);
             weightRecord2 = weightService.getWeightRecord(userId,0);
 
-            float testweight;
+            System.out.println(weightRecord3);
+
             modelAndView.addObject("weightRecordToday", weightRecord);
             modelAndView.addObject("weightTest", weightRecord2);
-            if(weightRecord == null) {
+
+            if(weightRecord3 == null) {
                 testweight = 0;
+                modelAndView.addObject("testWeight", testweight);
             }
             else{
                 testweight = weightRecord.get(weightRecord.size()-1).getWeight();
-                System.out.println(testweight);
+                modelAndView.addObject("testWeight", testweight);
             }
-            modelAndView.addObject("testweight", testweight);
+            System.out.println(testweight);
         }
         else if(user.getType() == User.Type.CAREGIVER){
             User patient = getCaretaker();

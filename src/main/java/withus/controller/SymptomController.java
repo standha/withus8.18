@@ -41,7 +41,7 @@ public class SymptomController extends BaseController{
         return modelAndView;
     }
 
-    @PutMapping(value = "/symptom-history",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/symptom",consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<Tbl_symptom_log> getSymptom(@RequestBody Tbl_symptom_log tbl_symptom_log){
         String userId = getUsername();

@@ -2,8 +2,6 @@ package withus.entity;
 
 import lombok.*;
 import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;

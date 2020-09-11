@@ -35,6 +35,7 @@ public class LoginController {
 
 	@GetMapping({ "/registerUser" })
 	public ModelAndView getRegisterPage(HttpServletRequest request, HttpServletResponse response,@RequestParam(required = false) String token) {
+		System.out.println("INBOUND registerUser");
 		ModelAndView modelAndView = new ModelAndView("LogIn/register");
 		User user = new User();
 		modelAndView.addObject("appToken",token);
