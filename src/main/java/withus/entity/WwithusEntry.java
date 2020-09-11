@@ -22,22 +22,40 @@ public class WwithusEntry implements Comparable<WwithusEntry> {
 	@EqualsAndHashCode.Include
 	private String code;
 
-	@Column(name = "is_first", columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE")
+	/**
+	 * 시작 엔트리인지 여부
+	 */
+	@Column(name = "is_first", columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE COMMENT '시작 엔트리인지 여부'")
 	private boolean first;
 
-	@Column(name = "is_last", columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE")
+	/**
+	 * 종료 엔트리인지 여부
+	 */
+	@Column(name = "is_last", columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE COMMENT '종료 엔트리인지 여부")
 	private boolean last;
 
-	@Column(name = "is_to_rewind", columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE")
+	/**
+	 * 해당 선택지를 택하였을 때 내역을 삭제하고 위더스랑을 처음부터 재시작하고자 한다면 {@code true}, {@code false} otherwise.
+	 */
+	@Column(name = "is_to_rewind", columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE COMMENT '해당 선택지를 택하였을 때 내역을 삭제하고 위더스랑을 처음부터 재시작하고자 한다면 TRUE, FALSE otherwise.'")
 	private boolean toRewind;
 
-	@Column(name = "is_answer", columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE")
+	/**
+	 * 사용자의 선택지인지 여부
+	 */
+	@Column(name = "is_answer", columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE COMMENT '사용자의 선택지인지 여부'")
 	private boolean answer;
 
-	@Column(name = "is_help_request", columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE")
+	/**
+	 * 위더스 도우미 호출인지 여부
+	 */
+	@Column(name = "is_help_request", columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE COMMENT '위더스 도우미 호출인지 여부'")
 	private boolean helpRequest;
 
-	@Column(name = "is_answer_expected", columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE")
+	/**
+	 * 답변 필요 여부
+	 */
+	@Column(name = "is_answer_expected", columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE COMMENT '답변 필요 여부'")
 	private boolean answerExpected;
 
 	@Column(columnDefinition = "VARCHAR(4096)", length = 4096)
@@ -52,7 +70,7 @@ public class WwithusEntry implements Comparable<WwithusEntry> {
 	private String urlToAudioFile;
 
 	@OneToOne
-	@JoinColumn(columnDefinition = "VARCHAR(32)")
+	@JoinColumn(columnDefinition = "VARCHAR(32) COMMENT '다음 statement의 CODE'")
 	@Nullable
 	private WwithusEntry next;
 
@@ -94,6 +112,10 @@ public class WwithusEntry implements Comparable<WwithusEntry> {
 	}
 
 	public static Matcher createMatcherForCode(String code) {
+		/*
+		 * regular expressions로 곤란을 겪고 있다면?
+		 * https://regex101.com/r/qAg8q5/3
+		 */
 		Pattern pattern = Pattern.compile("^[ \t\n]*W([0-9]+)D([0-9]+)_([a-zA-Z0-9_]+?)[ \t\n]*$", Pattern.CASE_INSENSITIVE);
 		return pattern.matcher(code);
 	}

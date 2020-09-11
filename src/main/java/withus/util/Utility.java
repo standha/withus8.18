@@ -24,6 +24,9 @@ public class Utility {
 	public static String format(LocalTime date) { return date.format(TIME_FORMATTER); }
 	public static String format(LocalDateTime date) { return date.format(DATE_TIME_FORMATTER); }
 
+	/**
+	 * @return {@code week}주차 {@code dayOfWeek}요일이 해당 주 내에서 며칠차인지를 리턴
+	 */
 	public static int getDayDigitForWwithus(int week, DayOfWeek dayOfWeek) {
 		if (week < 1 || week > 24) { throw new RuntimeException(String.format("Unexpected value for week #: %d", week)); }
 
@@ -54,6 +57,10 @@ public class Utility {
 		}
 	}
 
+	/**
+	 * @return {@code week}주차 {@code dayOfWeek}요일을 기준으로
+	 * 다음 위더스랑 서비스가 제공되는 것이 무슨 요일인지를 리턴
+	 */
 	public static DayOfWeek getNextDayForWwithus(int week, DayOfWeek dayOfWeek) {
 		if (week < 1 || week > 24) { throw new RuntimeException(String.format("Unexpected value for week #: %d", week)); }
 

@@ -39,7 +39,10 @@ public class WithusHelpRequest {
 	@Builder.Default
 	private final LocalDateTime dateTime = LocalDateTime.now();
 
-	@Column(columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE")
+	/**
+	 * 위더스 도우미 호출 처리가 완료되었는지 (호출한 환자와의 면담 완료 등)
+	 */
+	@Column(columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE COMMENT '위더스 도우미 호출 처리가 완료되었는지 여부 (호출한 환자와의 면담 완료 등)'")
 	private boolean dealtWith;
 
 	@OneToOne
