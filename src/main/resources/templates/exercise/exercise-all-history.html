@@ -20,6 +20,9 @@
     <div th:each="exerciseHistory: ${exercise}">
         <div th:text="'유저 이름 :' + ${exerciseHistory.pk.id} + '       날짜 :' + ${exerciseHistory.pk.date}"></div>
     </div>
+    <label>
+        <input type="text" name="moistureWeek" th:value="${exerciseWeek}" readonly/>분 (일주일 평균)
+    </label>
 </div>
 </body>
 </html>
