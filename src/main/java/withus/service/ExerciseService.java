@@ -42,4 +42,9 @@ public class ExerciseService {
         dayHourToMinute = (dayHour * 60) + dayMinute;
         return dayHourToMinute;
     }
+    @Nullable
+    public Tbl_Exercise_record getExercise(RecordKey pk){
+        return exerciseRecordRepository.findById(pk).orElse(null);
+    }
+
 }

@@ -43,9 +43,16 @@ public class MoistureNatriumController extends BaseController{
     public ModelAndView getMoisture(){
         ModelAndView modelAndView = new ModelAndView("moistureNatrium/moisture");
         String username = getUsername();
-        List<Tbl_mositrue_record> moistureHistory;
-        moistureHistory = moistureNatriumService.getMoistureAllRecord(new RecordKey(username, LocalDate.now()), -1);
-        modelAndView.addObject("moisture",moistureHistory);
+        if(moistureNatriumService.getMoisture(new RecordKey(username, LocalDate.now()))==null){
+            modelAndView.addObject("intake", 0);
+            modelAndView.addObject("intakeMinus", 0);
+            modelAndView.addObject("intakePlus", 0);
+        }else{
+            Tbl_mositrue_record moisture = moistureNatriumService.getMoisture(new RecordKey(username, LocalDate.now()));
+            modelAndView.addObject("intake", moisture.getIntake());
+            modelAndView.addObject("intakeMinus", moisture.getIntake());
+            modelAndView.addObject("intakePlus", moisture.getIntake());
+        }
         modelAndView.addObject("previousUrl","moistureNatrium");
         return modelAndView;
     }

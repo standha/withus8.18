@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import withus.entity.RecordKey;
+import withus.entity.Tbl_Exercise_record;
 import withus.entity.Tbl_mositrue_record;
 import withus.entity.Tbl_natrium_record;
 import withus.repository.MoistureRecordRepository;
@@ -57,6 +58,11 @@ public class MoistureNatriumService {
     @Nonnull
     public List<Tbl_natrium_record> getNatriumRecord(){
         return natriumRecordRepository.findByPkIsNotNull();
+    }
+
+    @Nullable
+    public Tbl_mositrue_record getMoisture(RecordKey pk){
+        return moistureRecordRepository.findById(pk).orElse(null);
     }
 
     @Nullable

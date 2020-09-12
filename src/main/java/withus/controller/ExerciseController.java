@@ -12,6 +12,7 @@ import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
 import withus.entity.RecordKey;
 import withus.entity.Tbl_Exercise_record;
+import withus.entity.Tbl_symptom_log;
 import withus.service.ExerciseService;
 import withus.service.UserService;
 
@@ -33,7 +34,15 @@ public class ExerciseController extends BaseController {
     @Statistical
     public ModelAndView getExercise() {
         ModelAndView modelAndView = new ModelAndView("exercise/exercise");
-        String user = getUsername();
+        String username = getUsername();
+        if(exerciseService.getExercise(new RecordKey(username, LocalDate.now()))==null){
+            modelAndView.addObject("hour", 0);
+            modelAndView.addObject("minute", 0);
+        }else{
+            Tbl_Exercise_record exercise = exerciseService.getExercise(new RecordKey(username, LocalDate.now()));
+            modelAndView.addObject("hour", exercise.getHour());
+            modelAndView.addObject("minute", exercise.getMinute());
+        }
         modelAndView.addObject("previousUrl", "/home");
         return modelAndView;
     }
