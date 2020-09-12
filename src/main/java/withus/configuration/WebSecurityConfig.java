@@ -45,14 +45,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.loginPage("/admin")
 				.loginProcessingUrl("/login-process")
 				.defaultSuccessUrl("/center", true)
+				.failureUrl("/admin")
 				.permitAll();
 		httpSecurity.formLogin()
 				.loginPage("/login")
 				.loginProcessingUrl("/login-process")
 				.defaultSuccessUrl("/center", true)
-				.permitAll();
-
-		httpSecurity
+				.failureUrl("/login")
+				//.failureUrl("/login.html?error=true")
+				.permitAll()
+				.and()
 				.rememberMe()
 				.rememberMeParameter("remember-me")
 				.key(REMEMBER_ME_TOKEN)

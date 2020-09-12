@@ -27,17 +27,13 @@ public class AdminLoginController extends AdminBaseController
 {
 	@Autowired
 	public AdminLoginController(AuthenticationFacade authenticationFacade, UserService userService,
-			AlarmService alarmService)
-	{
+			AlarmService alarmService){
 		super(userService, authenticationFacade);
 	}
 
 	@GetMapping({ "/admin" })
-	public ModelAndView getLogin(HttpServletRequest request, HttpServletResponse response)
-	{
-		System.out.println("AdminLoginController");
+	public ModelAndView getLogin(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView modelAndView = new ModelAndView("Login/admin_login");
-
 		return modelAndView;
 	}
 }
