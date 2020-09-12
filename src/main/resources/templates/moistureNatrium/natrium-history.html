@@ -14,7 +14,7 @@
 <div id="body">
 
     <div th:each="natriumHistory: ${natrium}">
-        <div th:text="'유저 이름 :' + ${natriumHistory.pk.id} + '날짜 :' + ${natriumHistory.pk.date}+'아침: '+${natriumHistory.getMorning()} + ' 점심: '+${natriumHistory.getLaunch()}+'저녁: '+${natriumHistory.getDinner()}" >
+        <div th:text="'유저 이름 :' + ${natriumHistory.pk.id} + '날짜 :' + ${natriumHistory.pk.date}+'아침: '+${natriumHistory.getMorning()} + ' 점심: '+${natriumHistory.getLunch()}+'저녁: '+${natriumHistory.getDinner()}" >
 
         </div>
     </div>

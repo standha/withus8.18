@@ -1,17 +1,16 @@
 package withus.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
-import withus.entity.*;
+import withus.entity.RecordKey;
+import withus.entity.Tbl_mositrue_record;
+import withus.entity.Tbl_natrium_record;
 import withus.service.MoistureNatriumService;
 import withus.service.UserService;
 
@@ -80,7 +79,7 @@ public class MoistureNatriumController extends BaseController{
         else{
             Tbl_natrium_record natrium = moistureNatriumService.getNatriumTodayRecord(new RecordKey(username, LocalDate.now()));
             modelAndView.addObject("morning",natrium.getMorning());
-            modelAndView.addObject("lunch",natrium.getLaunch());
+            modelAndView.addObject("lunch",natrium.getLunch());
             modelAndView.addObject("dinner",natrium.getDinner());
             modelAndView.addObject("previousUrl","moistureNatrium");
             return modelAndView;
@@ -137,8 +136,10 @@ public class MoistureNatriumController extends BaseController{
                 case 3:
                     highCount++;
                     break;
+                case 0:
+                    break;
             }
-            switch(natrium.getLaunch()){
+            switch(natrium.getLunch()){
                 case 1:
                     lowCount++;
                     break;
@@ -147,6 +148,8 @@ public class MoistureNatriumController extends BaseController{
                     break;
                 case 3:
                     highCount++;
+                    break;
+                case 0:
                     break;
             }
             switch(natrium.getDinner()){
@@ -158,6 +161,8 @@ public class MoistureNatriumController extends BaseController{
                     break;
                 case 3:
                     highCount++;
+                    break;
+                case 0:
                     break;
             }
 
