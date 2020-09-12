@@ -7,12 +7,14 @@ import withus.entity.Tbl_natrium_record;
 import withus.entity.RecordKey;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface NatriumRecordRepository extends JpaRepository<Tbl_natrium_record, RecordKey> {
     @Transactional(readOnly = true)
-    List<Tbl_natrium_record>findByPk_IdAndMorningIsNotLikeAndLaunchIsNotLikeAndDinnerIsNotLike(String username, Tbl_natrium_record.Salt morning, Tbl_natrium_record.Salt launch, Tbl_natrium_record.Salt dinner);
+    List<Tbl_natrium_record>findByPkIsNotNull();
 
     @Transactional(readOnly = true)
-    List<Tbl_natrium_record> findByPk(RecordKey pk);
+    Optional<Tbl_natrium_record> findByPk(RecordKey pk);
+
 }

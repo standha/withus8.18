@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/header.css}" rel="stylesheet">
+    <link th:href="@{/css/alarm/pill.css}" rel="stylesheet">
+    <title>복약</title>
+
+</head>
+
+<body>
+
+<div th:replace="header :: #header"></div>
+<div id="body">
+
+    <div th:each="natriumHistory: ${natrium}">
+        <div th:text="'유저 이름 :' + ${natriumHistory.pk.id} + '날짜 :' + ${natriumHistory.pk.date}+'아침: '+${natriumHistory.getMorning()} + ' 점심: '+${natriumHistory.getLaunch()}+'저녁: '+${natriumHistory.getDinner()}" >
+
+        </div>
+    </div>
+        <div th:text="'1주일 고염식 섭취 횟수'+${high}+'회'"></div>
+        <div th:text="'1주일 보통   섭취 횟수'+${normal}+'회'"></div>
+        <div th:text="'1주일 저염식 섭취 횟수'+${low}+'회'"></div>
+
+</div>
+</body>
+</html>

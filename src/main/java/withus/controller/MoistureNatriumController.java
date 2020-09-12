@@ -1,6 +1,7 @@
 package withus.controller;
 
 import com.sun.org.apache.xpath.internal.operations.Mod;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -63,18 +64,113 @@ public class MoistureNatriumController extends BaseController{
         modelAndView.addObject("previousUrl","moistureNatrium");
         return modelAndView;
     }
+
     @GetMapping("/natrium")
     @Statistical
     public ModelAndView getNatrium(){
         ModelAndView modelAndView = new ModelAndView("moistureNatrium/natrium");
         String username = getUsername();
-        List<Tbl_natrium_record> natriumHistory;
-        natriumHistory = moistureNatriumService.getNatriumTodayRecord(new RecordKey(username, LocalDate.now()));
-        System.out.println(natriumHistory);
-        modelAndView.addObject("natrium",natriumHistory);
-        modelAndView.addObject("previousUrl","moistureNatrium");
+        if (moistureNatriumService.getNatriumTodayRecord(new RecordKey(username, LocalDate.now()))==null) {
+            modelAndView.addObject("morning",4);
+            modelAndView.addObject("lunch",4);
+            modelAndView.addObject("dinner",4);
+            modelAndView.addObject("previousUrl","moistureNatrium");
+            return modelAndView;
+        }
+        else{
+            Tbl_natrium_record natrium = moistureNatriumService.getNatriumTodayRecord(new RecordKey(username, LocalDate.now()));
+            modelAndView.addObject("morning",natrium.getMorning());
+            modelAndView.addObject("lunch",natrium.getLaunch());
+            modelAndView.addObject("dinner",natrium.getDinner());
+            modelAndView.addObject("previousUrl","moistureNatrium");
+            return modelAndView;
+        }
+    }
+
+    @GetMapping("/natrium-all-history")
+    @Statistical
+    public ModelAndView getSymptomAll(){
+        ModelAndView modelAndView = new ModelAndView("moistureNatrium/natrium-history");
+        String username = getUsername();
+        LocalDate today = LocalDate.now();
+        int lowCount =0;
+        int norCount =0;
+        int highCount =0;
+        List<Tbl_natrium_record> natriums = new ArrayList<>();
+        if(moistureNatriumService.getNatriumTodayRecord(new RecordKey(username, today.with(DayOfWeek.SUNDAY)))!=null){
+            Tbl_natrium_record sun = moistureNatriumService.getNatriumTodayRecord(new RecordKey(username, today.with(DayOfWeek.SUNDAY)));
+            natriums.add(sun);
+        }
+        if(moistureNatriumService.getNatriumTodayRecord(new RecordKey(username, today.with(DayOfWeek.MONDAY)))!=null){
+            Tbl_natrium_record sun = moistureNatriumService.getNatriumTodayRecord(new RecordKey(username, today.with(DayOfWeek.MONDAY)));
+            natriums.add(sun);
+        }
+        if(moistureNatriumService.getNatriumTodayRecord(new RecordKey(username, today.with(DayOfWeek.TUESDAY)))!=null){
+            Tbl_natrium_record sun = moistureNatriumService.getNatriumTodayRecord(new RecordKey(username, today.with(DayOfWeek.TUESDAY)));
+            natriums.add(sun);
+        }
+        if(moistureNatriumService.getNatriumTodayRecord(new RecordKey(username, today.with(DayOfWeek.WEDNESDAY)))!=null){
+            Tbl_natrium_record sun = moistureNatriumService.getNatriumTodayRecord(new RecordKey(username, today.with(DayOfWeek.WEDNESDAY)));
+            natriums.add(sun);
+        }
+        if(moistureNatriumService.getNatriumTodayRecord(new RecordKey(username, today.with(DayOfWeek.THURSDAY)))!=null){
+            Tbl_natrium_record sun = moistureNatriumService.getNatriumTodayRecord(new RecordKey(username, today.with(DayOfWeek.THURSDAY)));
+            natriums.add(sun);
+        }
+        if(moistureNatriumService.getNatriumTodayRecord(new RecordKey(username, today.with(DayOfWeek.FRIDAY)))!=null){
+            Tbl_natrium_record sun = moistureNatriumService.getNatriumTodayRecord(new RecordKey(username, today.with(DayOfWeek.FRIDAY)));
+            natriums.add(sun);
+        }
+        if(moistureNatriumService.getNatriumTodayRecord(new RecordKey(username, today.with(DayOfWeek.SATURDAY)))!=null){
+            Tbl_natrium_record sun = moistureNatriumService.getNatriumTodayRecord(new RecordKey(username, today.with(DayOfWeek.SATURDAY)));
+            natriums.add(sun);
+        }
+
+        for(Tbl_natrium_record natrium: natriums){
+            switch(natrium.getMorning()){
+                case 1:
+                    lowCount++;
+                    break;
+                case 2:
+                    norCount++;
+                    break;
+                case 3:
+                    highCount++;
+                    break;
+            }
+            switch(natrium.getLaunch()){
+                case 1:
+                    lowCount++;
+                    break;
+                case 2:
+                    norCount++;
+                    break;
+                case 3:
+                    highCount++;
+                    break;
+            }
+            switch(natrium.getDinner()){
+                case 1:
+                    lowCount++;
+                    break;
+                case 2:
+                    norCount++;
+                    break;
+                case 3:
+                    highCount++;
+                    break;
+            }
+
+        }
+        modelAndView.addObject("low",lowCount);
+        modelAndView.addObject("normal",norCount);
+        modelAndView.addObject("high",highCount);
+        modelAndView.addObject("natrium",natriums);
+        modelAndView.addObject("previousUrl","/natrium")
+;
         return modelAndView;
     }
+
     @PostMapping("/natrium")
     @ResponseBody
     public Result<Tbl_natrium_record> postNatrium(@RequestBody Tbl_natrium_record tbl_natrium_record){
@@ -94,6 +190,7 @@ public class MoistureNatriumController extends BaseController{
                 .setData(seved)
                 .createResult();
     }
+
     @PutMapping(value = "/moisture-history",consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<Tbl_mositrue_record> getMoisture(@RequestBody Tbl_mositrue_record tbl_mositrue_record){

@@ -16,18 +16,13 @@ public class Tbl_natrium_record {
     private RecordKey pk;
 
     @Column(name = "morning")
-    @Enumerated(EnumType.STRING)
-    private  Salt morning;
+    private  Integer morning;
 
     @Column(name = "launch")
-    @Enumerated(EnumType.STRING)
-    private Salt launch;
+    private Integer launch;
 
     @Column(name = "dinner")
-    @Enumerated(EnumType.STRING)
-    private Salt dinner;
+    private Integer dinner;
 
-    public enum Salt{
-        NONE, LOW, MEDIUM, HIGH
-    }
+
 }

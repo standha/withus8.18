@@ -1,5 +1,6 @@
 package withus.service;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -54,12 +55,13 @@ public class MoistureNatriumService {
     }
 
     @Nonnull
-    public List<Tbl_natrium_record> getNatriumAllRecord(String id, Tbl_natrium_record.Salt morning, Tbl_natrium_record.Salt launch, Tbl_natrium_record.Salt dinner){
-        return natriumRecordRepository.findByPk_IdAndMorningIsNotLikeAndLaunchIsNotLikeAndDinnerIsNotLike(id, morning, launch, dinner);
+    public List<Tbl_natrium_record> getNatriumRecord(){
+        return natriumRecordRepository.findByPkIsNotNull();
     }
 
-    @Nonnull
-    public List<Tbl_natrium_record> getNatriumTodayRecord(RecordKey pk){
-        return natriumRecordRepository.findByPk(pk);
+    @Nullable
+    public Tbl_natrium_record getNatriumTodayRecord(RecordKey pk){
+        return natriumRecordRepository.findByPk(pk).orElse(null);
     }
+
 }
