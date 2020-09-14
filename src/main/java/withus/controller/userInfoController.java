@@ -30,11 +30,13 @@ public class userInfoController extends BaseController {
     public ModelAndView getUserInfo() {
         ModelAndView modelAndView = new ModelAndView("/changeInfo");
         User user = getUser();
-      /*  if(user.getType() == User.Type.PATIENT && user.getCaregiver().getContact() != null){
+        if(user.getType() == User.Type.PATIENT && user.getCaregiver() != null){
             modelAndView.addObject("caregiver_contact", user.getCaregiver().getContact());
-        }else if(user.getType() == User.Type.PATIENT && user.getCaregiver().getContact() == null){
-            modelAndView.addObject("caregiver_contact", null);
-        }*/
+        }else if(user.getType() == User.Type.PATIENT && user.getCaregiver() == null){
+            modelAndView.addObject("caregiver_contact", "현재 보호자 번호가 없습니다.");
+        }else{
+            modelAndView.addObject("caregiver_contact", "현재 보호자 번호가 없습니다..");
+        }
         modelAndView.addObject("user", user);
         modelAndView.addObject("previousUrl", "/home");
 

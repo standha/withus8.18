@@ -107,26 +107,19 @@ public class ExerciseController extends BaseController {
     public Integer avgWeek(){
         Integer avg = 0;
         LocalDate now = LocalDate.now();
+        String username = "";
         if(getUser().getType() == User.Type.PATIENT){
-            String username = getUsername();
-            avg = exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.MONDAY))) +
-                    exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.TUESDAY))) +
-                    exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.WEDNESDAY)))  +
-                    exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.THURSDAY))) +
-                    exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.FRIDAY))) +
-                    exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.SATURDAY))) +
-                    exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.SUNDAY))) ;
-            return avg/7;
-        }else{
-            String username = getCaretaker().getUserId();
-            avg = exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.MONDAY))) +
-                    exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.TUESDAY))) +
-                    exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.WEDNESDAY)))  +
-                    exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.THURSDAY))) +
-                    exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.FRIDAY))) +
-                    exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.SATURDAY))) +
-                    exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.SUNDAY))) ;
-            return avg/7;
+            username = getUsername();
+        }else if(getUser().getType() == User.Type.CAREGIVER){
+            username = getCaretaker().getUserId();
         }
+        avg = exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.MONDAY))) +
+                exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.TUESDAY))) +
+                exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.WEDNESDAY)))  +
+                exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.THURSDAY))) +
+                exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.FRIDAY))) +
+                exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.SATURDAY))) +
+                exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.SUNDAY))) ;
+        return avg/7;
     }
 }

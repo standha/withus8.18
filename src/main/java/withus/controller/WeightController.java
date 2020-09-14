@@ -33,50 +33,26 @@ public class WeightController extends BaseController {
     public ModelAndView getWeight() {
             ModelAndView modelAndView = new ModelAndView("weight/weight");
             User.Type typeCheck = getUser().getType();
-            switch (typeCheck){
-                case PATIENT:
-                    if(weightService.getTodayWeight(new RecordKey(getUsername(), LocalDate.now()))==null){
+                    if(weightService.getTodayWeight(new RecordKey(getConnectId(), LocalDate.now()))==null){
                         modelAndView.addObject("weight", "오늘 몸무게를 입력해봐요!"); //객체가 비어있어 타임리프에 null point 오류를 해결해주도록 한다. weight에 0kg을 뷰해줌
                     }else{
-                        Tbl_weight weight = weightService.getTodayWeight(new RecordKey(getUsername(), LocalDate.now()));
+                        Tbl_weight weight = weightService.getTodayWeight(new RecordKey(getConnectId(), LocalDate.now()));
                         modelAndView.addObject("weight", weight.getWeight());
                     }
-                    break;
-                case CAREGIVER:
-                    if(weightService.getTodayWeight(new RecordKey(getCaretaker().getUserId(), LocalDate.now()))==null){
-                        System.out.println(getCaretaker().getName());
-                        System.out.println(getCaretaker().getUserId());
-                        modelAndView.addObject("weight", "환자분께서 몸무게를 입력하지 않으셨습니다."); //객체가 비어있어 타임리프에 null point 오류를 해결해주도록 한다. weight에 0kg을 뷰해줌
-                    }else{
-                        Tbl_weight weight = weightService.getTodayWeight(new RecordKey(getCaretaker().getUserId(), LocalDate.now()));
-                        modelAndView.addObject("weight", weight.getWeight());
-                    }
-                    break;
-            }
+
             modelAndView.addObject("type",typeCheck);
             modelAndView.addObject("previousUrl", "/home");
             return modelAndView;
     }
 
-    @GetMapping("/weight-all-history")
+    @GetMapping("/weight-history")
     @Statistical
     public ModelAndView getWeightHistory(){
         ModelAndView modelAndView = new ModelAndView("weight/weight-history");
         modelAndView.addObject("previousUrl", "/weight");
-
-        User user = getUser();
         List<Tbl_weight> weightRecord;
-
-        if(user.getType() == User.Type.PATIENT){
-            weightRecord = weightService.getWeightRecord(user.getName(), 0);
-            modelAndView.addObject("weightRecord", weightRecord);
-        }
-        else if(user.getType() == User.Type.CAREGIVER){
-            User patient  = getCaretaker();
-            weightRecord = weightService.getWeightRecord(patient.getName(), 0);
-            modelAndView.addObject("weightRecord", weightRecord);
-        }
-
+        weightRecord = weightService.getWeightRecord(getConnectId(),0);
+        modelAndView.addObject("weightRecord",weightRecord);
         return modelAndView;
     }
 

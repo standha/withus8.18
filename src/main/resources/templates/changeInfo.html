@@ -60,7 +60,7 @@
         </div>
         <div th:unless="${user.type != T(withus.entity.User.Type).PATIENT}" class="input-container patient-only">
             <span class="label">연락처<br>(보호자)</span>
-            <input type="number" th:value="${user.caregiver}" name="caregiver">
+            <input type="number" th:value="${caregiver_contact}" name="caregiver">
         </div>
     </div>
     <div>

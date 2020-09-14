@@ -25,9 +25,16 @@
 <!--    <div>
         <button id="yes1" type="button" onclick="setAdd(1);">물 마셨어요~ (+1)</button>
     </div> -->
-    <div th:text="'마신양 :' + ${intake} + ' : 섭취하셨습니다 지금까지'"></div><br>
-    <button id="yes" type="button" th:onclick="'setAdd(parseInt(' + ${intakePlus} + '))'">물 마셨어요~ (+1)</button>
-    <button id="no" type="button" th:onclick="'setMinus(parseInt(' + ${intakeMinus} + '))'">물 안마셨어요~ (-1)</button>
+    <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+        <div th:text="'마신양 :' + ${intake} + ' : 섭취하셨습니다 지금까지'"></div><br>
+        <button id="yes" type="button" th:onclick="'setAdd(parseInt(' + ${intakePlus} + '))'">물 마셨어요~ (+1)</button>
+        <button id="no" type="button" th:onclick="'setMinus(parseInt(' + ${intakeMinus} + '))'">물 안마셨어요~ (-1)</button>
+    </div>
+    <div th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
+        <div th:text="'마신양 :' + ${intake} + ' : 섭취하셨습니다 지금까지'"></div><br>
+        <button id="yes" type="button" th:onclick="'setAdd(parseInt(' + ${intakePlus} + '))'" disabled>물 마셨어요~ (+1)</button>
+        <button id="no" type="button" th:onclick="'setMinus(parseInt(' + ${intakeMinus} + '))'" disabled>물 안마셨어요~ (-1)</button>
+    </div>
     <div>
         <button id="history" type="button" onclick="showHistory();">수분섭취 기록</button>
     </div>
