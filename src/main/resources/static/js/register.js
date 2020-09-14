@@ -14,6 +14,7 @@ function onFormSubmission(form) {
 
 	const caregiverValue = form.querySelector("input[name=caregiver]").value;
 	const appToken = form.querySelector("input[name=appToken]").value;
+
 	const user = {
 		userId: null,
 		password: null,
@@ -21,6 +22,8 @@ function onFormSubmission(form) {
 		contact: caregiverValue
 	}
 	const caregiver = isEmpty(caregiverValue) ? null : user;
+	const progress = type(userType)? 0 : null;
+	const level = type(userType)? 0 : null;
 
 	const body = {
 		userId: id,
@@ -31,7 +34,9 @@ function onFormSubmission(form) {
 		gender: sex,
 		type: userType,
 		caregiver: caregiver,
-		appToken:appToken
+		appToken:appToken,
+		progress: progress,
+		level: level
 	};
 	const url = form.action;
 	const options = {
@@ -96,5 +101,16 @@ function doDisplay(user) {
 		for (let i = 0; i < elems.length; i++) {
 			elems[i].style.display = 'grid'
 		}
+	}
+}
+
+function type(value){
+	if(value == "PATIENT")
+	{
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
