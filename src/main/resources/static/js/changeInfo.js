@@ -73,9 +73,9 @@ function onFormSubmission(form) {
                 console.log(data);
                 if (data.code === 'OK') {
                     window.location.href = "/center";
-                    alert("정상 적으로 회원 가입 되었습니다.");
+                    alert("정보 수정이 완료되었습니다.");
                 }else {
-                    alert("회원 가입 실패");
+                    alert("정보 수정 실패");
                 }
             });
     }
@@ -93,9 +93,6 @@ function isEmpty(value){
 
 function removeSpace(value) {
     return value.replace(/\s/g,"");
-}
-function onDisplay(user) {
-    const elems = document.getElementsByClassName("patient-only");
 }
 function doDisplay(user) {
     console.log(user)
