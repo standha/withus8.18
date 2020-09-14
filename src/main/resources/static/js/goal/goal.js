@@ -102,15 +102,15 @@ function radioClick(){
         fetch(url, options)
             .then(response => response.json())
             .then(data =>console.log(data));
+
+        history.back();
     }
     else{
         console.log("목표 설정 취소");
-        checked.check = false;
-
+        window.location.reload();
     }
 
     return false;
-
 }
 
 // function popTest(){
