@@ -13,7 +13,7 @@ function onFormSubmission(form) {
 	const sex = sexElement? sexElement.value: null;
 
 	const caregiverValue = form.querySelector("input[name=caregiver]").value;
-	const appToken = form.querySelector("input[name=appToken]").value;
+	const token = form.querySelector("input[name=appToken]").value;
 
 	const user = {
 		userId: null,
@@ -24,7 +24,7 @@ function onFormSubmission(form) {
 	const caregiver = isEmpty(caregiverValue) ? null : user;
 	const progress = type(userType)? 0 : null;
 	const level = type(userType)? 0 : null;
-
+	const appToken = isEmpty(token) ? null : token;
 	const body = {
 		userId: id,
 		password: password,

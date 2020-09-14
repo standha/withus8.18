@@ -249,4 +249,84 @@ public class NoticeScheduler {
         }
         return visitToken;
     }
+
+    //cron = "0 0 8 * * MON,TUE,THU,SAT"
+    @Scheduled(cron = "0 0 8 * * MON,TUE,THU,SAT")
+    @RequestMapping(produces="application/json;charset=UTF-8")
+    public @ResponseBody ResponseEntity<String> withus() throws JSONException, InterruptedException  {
+        String messageBody = " 방금 [ 위더스랑 ]에 메시지가 도착했어요. ";
+        if(withusAppToken().isEmpty()){
+            return new ResponseEntity<>("No Target!", HttpStatus.BAD_REQUEST);
+        }
+
+        String notifications = AndroidPushPeriodicNotifications.PeriodicNotificationJson("",messageBody,withusAppToken());
+        HttpEntity<String> request = new HttpEntity<>(notifications);
+
+        CompletableFuture<String> pushNotification = androidPushNotificationService.send(request);
+        CompletableFuture.allOf(pushNotification).join();
+
+        try{
+            String firebaseResponse = pushNotification.get();
+            return new ResponseEntity<>(firebaseResponse, HttpStatus.OK);
+        }
+        catch (InterruptedException e){
+            logger.debug("got interrupted!");
+            throw new InterruptedException();
+        }
+        catch (ExecutionException e){
+            logger.debug("execution error!");
+        }
+        return new ResponseEntity<>("Push Notification ERROR!", HttpStatus.BAD_REQUEST);
+    }
+
+    public List<String> withusAppToken(){
+        List<String>tokenList = new ArrayList<String>();
+        List<User> patients = userService.getPatientToken(User.Type.PATIENT);
+        for(User patient : patients){
+            if(patient.getProgress() > 0 && patient.getProgress() < 9){
+                tokenList.add(patient.getAppToken());
+            }
+        }
+        return tokenList;
+    }
+
+    //cron = "0 0 8 * * MON,TUE,THU,SAT"
+    @Scheduled(cron = "0 0 8 * * MON,WED,SAT")
+    @RequestMapping(produces="application/json;charset=UTF-8")
+    public @ResponseBody ResponseEntity<String> withus2() throws JSONException, InterruptedException  {
+        String messageBody = " 방금 [ 위더스랑 ]에 메시지가 도착했어요. ";
+        if(withusAppToken2().isEmpty()){
+            return new ResponseEntity<>("No Target!", HttpStatus.BAD_REQUEST);
+        }
+
+        String notifications = AndroidPushPeriodicNotifications.PeriodicNotificationJson("",messageBody,withusAppToken2());
+        HttpEntity<String> request = new HttpEntity<>(notifications);
+
+        CompletableFuture<String> pushNotification = androidPushNotificationService.send(request);
+        CompletableFuture.allOf(pushNotification).join();
+
+        try{
+            String firebaseResponse = pushNotification.get();
+            return new ResponseEntity<>(firebaseResponse, HttpStatus.OK);
+        }
+        catch (InterruptedException e){
+            logger.debug("got interrupted!");
+            throw new InterruptedException();
+        }
+        catch (ExecutionException e){
+            logger.debug("execution error!");
+        }
+        return new ResponseEntity<>("Push Notification ERROR!", HttpStatus.BAD_REQUEST);
+    }
+
+    public List<String> withusAppToken2(){
+        List<String>tokenList = new ArrayList<String>();
+        List<User> patients = userService.getPatientToken(User.Type.PATIENT);
+        for(User patient : patients){
+            if(patient.getProgress() >= 9 && patient.getProgress() <= 24){
+                tokenList.add(patient.getAppToken());
+            }
+        }
+        return tokenList;
+    }
 }

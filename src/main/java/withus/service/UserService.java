@@ -100,4 +100,9 @@ public class UserService implements UserDetailsService {
 	public List<User> getPatient(User.Type type){
 		return userRepository.findByType(type);
 	}
+
+	@Nullable
+	public List<User> getPatientToken(User.Type type){
+		return userRepository.findByAppTokenIsNotNullAndType(type);
+	}
 }
