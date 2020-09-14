@@ -1,6 +1,7 @@
 package withus.entity;
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import withus.entity.RecordKey;
 
 import javax.persistence.Column;
@@ -20,17 +21,17 @@ public class Tbl_symptom_log {
     private RecordKey pk;
 
     @Column(name = "outofbreath")
-    private Boolean outofbreath;
+    private Integer outofbreath;
 
     @Column(name = "tired")
-    private Boolean tired;
+    private Integer tired;
 
     @Column(name = "ankle")
-    private Boolean ankle;
+    private Integer ankle;
 
     @Column(name = "cough")
-    private Boolean cough;
+    private Integer cough;
 
     @Column(name = "todaySymptom")
-    private Integer todaySymptom;
+    private Integer todaysymptom;
 }

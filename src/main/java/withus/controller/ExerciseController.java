@@ -12,9 +12,11 @@ import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
 import withus.entity.RecordKey;
 import withus.entity.Tbl_Exercise_record;
+import withus.entity.Tbl_symptom_log;
 import withus.service.ExerciseService;
 import withus.service.UserService;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -32,9 +34,16 @@ public class ExerciseController extends BaseController {
     @Statistical
     public ModelAndView getExercise() {
         ModelAndView modelAndView = new ModelAndView("exercise/exercise");
-        String user = getUsername();
+        String username = getUsername();
+        if(exerciseService.getExercise(new RecordKey(username, LocalDate.now()))==null){
+            modelAndView.addObject("hour", 0);
+            modelAndView.addObject("minute", 0);
+        }else{
+            Tbl_Exercise_record exercise = exerciseService.getExercise(new RecordKey(username, LocalDate.now()));
+            modelAndView.addObject("hour", exercise.getHour());
+            modelAndView.addObject("minute", exercise.getMinute());
+        }
         modelAndView.addObject("previousUrl", "/home");
-        System.out.println("UserName : "+user);
         return modelAndView;
     }
     @GetMapping("/exercise-all-history")
@@ -44,6 +53,7 @@ public class ExerciseController extends BaseController {
         String username = getUsername();
         List<Tbl_Exercise_record> exerciseHistory;
         exerciseHistory = exerciseService.getExerciseAllRecord(username,-1, -1);
+        modelAndView.addObject("exerciseWeek",avgWeek());
         modelAndView.addObject("exercise",exerciseHistory);
         modelAndView.addObject("previousUrl","exercise");
         return modelAndView;
@@ -66,5 +76,18 @@ public class ExerciseController extends BaseController {
                 .setCode(code)
                 .setData(seved)
                 .createResult();
+    }
+    public Integer avgWeek(){
+        Integer avg = 0;
+        LocalDate now = LocalDate.now();
+        String username = getUsername();
+        avg = exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.MONDAY))) +
+                exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.TUESDAY))) +
+                exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.WEDNESDAY)))  +
+                exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.THURSDAY))) +
+                exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.FRIDAY))) +
+                exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.SATURDAY))) +
+                exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.SUNDAY))) ;
+        return avg/7;
     }
 }

@@ -22,16 +22,12 @@
     <p>---------------</p>
     <p>---------------</p>
     <p>기록들</p>
-    <button id="yes1" type="button" onclick="setAdd(1);">물 마셨어요~ (+1)</button>
-    <!-- 처음 등록을 진행한 후, 이 버튼은 보여지면 안됨 -->
-    <br>
-    <div th:each="moistureHistory: ${moisture}">
-        <div th:text="${moistureHistory.pk.id} + '마신양 :' + ${moistureHistory.intake} + ' : 섭취하셨습니다 지금까지'"></div>
-        <button id="yes" type="button" th:onclick="'setAdd(parseInt(' + ${moistureHistory.intake} + '))'">물 마셨어요~ (+1)</button>
-        <!-- <button id="yes" type="button" onclick="setAdd(document.querySelector('#intake').value);">예</button> -->
-        <button id="no" type="button" th:onclick="'setMinus(parseInt(' + ${moistureHistory.intake} + '))'">물 안마셨어요~ (-1)</button>
-    </div>
-    <br>
+<!--    <div>
+        <button id="yes1" type="button" onclick="setAdd(1);">물 마셨어요~ (+1)</button>
+    </div> -->
+    <div th:text="'마신양 :' + ${intake} + ' : 섭취하셨습니다 지금까지'"></div><br>
+    <button id="yes" type="button" th:onclick="'setAdd(parseInt(' + ${intakePlus} + '))'">물 마셨어요~ (+1)</button>
+    <button id="no" type="button" th:onclick="'setMinus(parseInt(' + ${intakeMinus} + '))'">물 안마셨어요~ (-1)</button>
     <div>
         <button id="history" type="button" onclick="showHistory();">수분섭취 기록</button>
     </div>

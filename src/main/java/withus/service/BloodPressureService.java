@@ -3,8 +3,10 @@ package withus.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import withus.entity.RecordKey;
 import withus.entity.Tbl_Exercise_record;
 import withus.entity.Tbl_blood_pressure_pulse;
+import withus.entity.Tbl_symptom_log;
 import withus.repository.BloodPressureRepository;
 
 import javax.annotation.Nonnull;
@@ -29,5 +31,10 @@ public class BloodPressureService {
     @Nullable
     public List<Tbl_blood_pressure_pulse> getBloodAllRecord(String username, Integer contraction, Integer pressure, Integer relaxation){
         return bloodPressureRepository.findByPk_IdAndContractionGreaterThanAndPressureGreaterThanAndRelaxationGreaterThan(username, contraction, pressure, relaxation);
+    }
+
+    @Nullable
+    public Tbl_blood_pressure_pulse getTodayBloodRecord(RecordKey pk){
+        return bloodPressureRepository.findByPk(pk).orElse(null);
     }
 }

@@ -33,7 +33,8 @@ public class CenterController extends BaseController
 		logger.info("center");
 		User user = getUser();
 		ModelAndView modelAndView = new ModelAndView();
-
+		String username = user.getUsername();
+		System.out.println(username);
 		if (user.getType().equals(Type.ADMINISTRATOR))
 		{
 			modelAndView.setViewName("/Admin/admin_Home");

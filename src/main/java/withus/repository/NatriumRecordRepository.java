@@ -3,17 +3,18 @@ package withus.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import withus.entity.Tbl_natrium_record;
 import withus.entity.RecordKey;
-import withus.entity.Tbl_symptom_log;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface SymptomRepository extends JpaRepository <Tbl_symptom_log, RecordKey> {
+public interface NatriumRecordRepository extends JpaRepository<Tbl_natrium_record, RecordKey> {
     @Transactional(readOnly = true)
-    List<Tbl_symptom_log>findByPk_IdAndTodaysymptomGreaterThan(String pk_id, Integer todaySymptom);
+    List<Tbl_natrium_record>findByPkIsNotNull();
 
     @Transactional(readOnly = true)
-    Optional<Tbl_symptom_log> findByPk(RecordKey recordKey);
+    Optional<Tbl_natrium_record> findByPk(RecordKey pk);
+
 }
