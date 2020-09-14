@@ -26,4 +26,6 @@ public class Utility {
 	public static boolean nullOrEmptyOrSpace(@Nullable String sentence) {
 		return (sentence == null || sentence.trim().isEmpty());
 	}
+
+
 }

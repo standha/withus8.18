@@ -18,8 +18,7 @@ import withus.service.UserService;
 
 import java.time.LocalDate;
 import java.util.List;
-
-import static withus.entity.Tbl_goal.GoalType.GOAL1;
+;
 
 @Controller
 public class GoalController extends BaseController{

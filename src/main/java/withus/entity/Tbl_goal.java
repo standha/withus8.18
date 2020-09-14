@@ -19,12 +19,4 @@ public class Tbl_goal {
     @Column(name = "Goal")
     private Integer goal;
 
-    @Column(columnDefinition = "VARCHAR(16) NOT NULL", length = 16)
-	@Enumerated(EnumType.STRING)
-    //@Column(name = "GoalTest")
-    private GoalType goaltype;
-
-    public enum GoalType{
-        GOAL1, GOAL2
-    }
 }

@@ -113,13 +113,9 @@ public class ExerciseController extends BaseController {
         }else if(getUser().getType() == User.Type.CAREGIVER){
             username = getCaretaker().getUserId();
         }
-        avg = exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.MONDAY))) +
-                exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.TUESDAY))) +
-                exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.WEDNESDAY)))  +
-                exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.THURSDAY))) +
-                exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.FRIDAY))) +
-                exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.SATURDAY))) +
-                exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.SUNDAY))) ;
+        for(int i=1; i<8; i++){
+            avg = avg + exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.of(i))));
+        }
         return avg/7;
     }
 }

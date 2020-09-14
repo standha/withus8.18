@@ -9,6 +9,8 @@ import withus.entity.RecordKey;
 import withus.entity.Tbl_mositrue_record;
 import withus.repository.ExerciseRecordRepository;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -35,9 +37,7 @@ public class ExerciseService {
     @Nullable
     public Integer getExerciseDayRecord(RecordKey pk){
         Tbl_Exercise_record getDay = exerciseRecordRepository.findByPkAndHourIsNotNullAndMinuteIsNotNull(pk).orElse(null);
-        Integer dayHour;
-        Integer dayMinute;
-        Integer dayHourToMinute;
+        Integer dayHour,dayMinute , dayHourToMinute;
         if(getDay == null){ dayHour = 0; dayMinute = 0; }else{dayHour = getDay.getHour(); dayMinute = getDay.getMinute();}
         dayHourToMinute = (dayHour * 60) + dayMinute;
         return dayHourToMinute;
