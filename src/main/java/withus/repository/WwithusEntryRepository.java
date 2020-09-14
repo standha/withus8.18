@@ -20,8 +20,7 @@ public interface WwithusEntryRepository extends JpaRepository<WwithusEntry, Stri
 	List<WwithusEntry> findAllByAnswerIsTrueAndCodeIsNotAndCodeStartsWithOrderByCode(String not, String startsWith);
 	/**
 	 * {@link withus.repository.WwithusEntryRepository#findAllByAnswerIsTrueAndCodeIsNotAndCodeStartsWithOrderByCode(String, String)}를 호출하되,
-	 * {@code not}과 {@code startsWith}를 하나의 동일한 값({@code startsWith})으로 전달
-	 * <p>
+	 * {@code not}과 {@code startsWith}를 하나의 동일한 값({@code startsWith})으로 전달<p>
 	 * 예를 들어 "W1D1_2"에 대한 답변인 "W1D1_2_A1", "W1D1_2_A2"를 select 해 올 때 유용하다.
 	 */
 	default List<WwithusEntry> findAllAnswersByCodeStartsWithButNotExactlyOrderByCode(String startsWith) {
