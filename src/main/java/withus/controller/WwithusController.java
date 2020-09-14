@@ -53,7 +53,7 @@ public class WwithusController extends BaseController {
 			/*
 			 * TODO: 재진입 시에 취할 행동.
 			 *  의도한 것은
-			 *  "다시 들어와주셨네요. 저 위더스랑과의 대화를 다시 하고 싶으세요?" 처리이나,
+			 *  "다시 들어와주셨네요. 저 위더스랑과의 대화를 다시 하고 싶으세요?" 등의 처리이나,
 			 *  현재의 설계로는 불가능할 것 같아 보류 (2020.09.14)
 			 */
 			/*List<ChatBalloon> histories = wwithusService.getWwithusEntryHistories(user, today);

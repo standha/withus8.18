@@ -159,14 +159,14 @@ function renderButtons(chatBalloon) {
 			 * 보험 필드 toTerminate/toRewind도 같이 확인 (2020.09.11)
 			 */
 			if (answerButton.isToRewind || answerButton.toRewind) {
-				href += " deleteHistory(); setTimeout(new function() { location.reload() }, 1111);";
+				href += " deleteHistory(); sleep(666).then(() => location.reload());";
 			} else {
 				if (answerButton.isHelpRequest || answerButton.helpRequest) {
 					href += " sendHelpRequest();";
 				}
 
 				if (answerButton.isToTerminate || answerButton.toTerminate) {
-					href += ` answer('${answerButton.code}', null, '${answerButton.content}', '${chatBalloon.code}', true); history.back();`;
+					href += ` answer('${answerButton.code}', null, '${answerButton.content}', '${chatBalloon.code}', true); sleep(666).then(() => history.back());`;
 				} else {
 					href += ` answer('${answerButton.code}', '${answerButton.nextCode}', '${answerButton.content}', '${chatBalloon.code}', false);`;
 				}
