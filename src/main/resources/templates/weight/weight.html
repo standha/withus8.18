@@ -13,7 +13,6 @@
 <div th:replace="header :: #header"></div>
 <div id="body">
     <form id="weight-form" th:action="@{/weight}" onsubmit="return onFormSubmission(this);">
-        <input type="hidden" name="id" th:value="${weight?.id}">
         <div>체중</div>
         <div>
             <p>매일 같은 시간에 체중을 측정해주세요.</p>
@@ -22,23 +21,25 @@
                 <input
                         type="text" name="weight" onkeypress="return isNumberKey(event)"
                         onkeyup="this.value=this.value.replace(/[\ㄱ-ㅎㅏ-ㅣ가-힣]/g, '');"
-                        th:value="${testWeight}"
-                        th:text="kg">
+                        value="0" th:value="${weight}" text="kg">
             </div>
             <!-- 보호자가 로그인 중 -->
-            <div  th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}" th:each="weight :${weightRecordToday}" th:text="${weight.weight} + kg"></div>
+            <div  th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
+                <input
+                        type="text" name="weight" th:value="${weight}" text = "kg" disabled>
+            </div>
             <!-- 소수점 한자리까지 숫자만 입력 가능 -->
         </div>
-        <div>
-            <button th:if="${type} == ${T(withus.entity.User.Type).PATIENT}"
-                    id="date" name="date" th:value="${weight?.date}"
-                    type="button" onclick="setFinished(true);">입력
-            </button>
+        <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+            <input type="submit" value="저장">
         </div>
-        <div>
-            <button id="history" type="button" onclick="showWeightHistory();">체중변화 관찰</button>
+        <div  th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <input type="submit" value="저장" disabled>
         </div>
     </form>
+    <div>
+        <button id="history" type="button" onclick="showWeightHistory();">체중변화 관찰</button>
+    </div>
 </div>
 </body>
 </html>

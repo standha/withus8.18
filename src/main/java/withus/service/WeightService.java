@@ -1,5 +1,6 @@
 package withus.service;
 
+import com.sun.istack.Nullable;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,13 +32,13 @@ public class WeightService {
         return weightRecordRepository.findByPk_IdAndWeightGreaterThan(id, weight);
     }
 
-    @NonNull
-    public Tbl_weight getWeightToday(RecordKey pk, float weight){
-        return weightRecordRepository.findByPk_DateAndWeightGreaterThan(pk, weight);
+    @Nullable
+    public Tbl_weight getTodayWeight(RecordKey pk) {
+        return weightRecordRepository.findByPk(pk).orElse(null);
     }
 
     @NonNull
-    public List<Tbl_weight> getWeightDateRecord(RecordKey pk, float weight){
+    public Tbl_weight getWeightDateRecord(RecordKey pk, float weight){
         return weightRecordRepository.findByPkAndWeightGreaterThan(pk, weight);
     }
 

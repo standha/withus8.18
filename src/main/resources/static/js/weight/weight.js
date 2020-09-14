@@ -1,10 +1,8 @@
 function onFormSubmission(form) {
-	const id = form.querySelector("input[name=id]").value;
+
 	const weight = form.querySelector("input[name=weight]").value;
-	const date = form.querySelector("button[name=date]").value;
 
 	const body = {
-		id: id,
 		weight: weight
 	};
 
@@ -22,17 +20,11 @@ function onFormSubmission(form) {
 		.then(response => response.json())
 		.then(data =>console.log(data));
 
-
-	location.reload(true);
-	top.document.location.reload();
-	opener.location.reload();
-	top.document.location.reload();
-
-	return true;
+	return false;
 }
+/*
+function setWeight(){
 
-function setFinished(finished){
-	
 	const body = {
 		//weightId: document.querySelector("#weight-form input[name=id]").value,
 		weight: document.querySelector("#weight-form input[name=weight]").value
@@ -47,15 +39,12 @@ function setFinished(finished){
 		},
 		body: JSON.stringify(body)
 	};
-	
-	fetch(url, options);
+	console.log("setWeight()");
+	fetch(url, options)
+		.then(response => response.json())
+		.then(data =>console.log(data));
 
-	location.reload(true);
-	top.document.location.reload();
-	opener.location.reload();
-	top.document.location.reload();
-	
-}
+}*/
 
 function isNumberKey(evt){
 		//체중 입력받는 부분
@@ -81,16 +70,6 @@ function isNumberKey(evt){
 		
 		return true;
 }
-
-function setOff(){
-	const date = document.getElementById('date');
-	date.disabled='disabled';
-
-	const weight = document.getElementsByClassName('weight');
-	weight.disabled='disabled';
-
-}
-
 
 function showWeightHistory() {
 	const element = document.querySelector("#weight-history-get-action");

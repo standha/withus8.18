@@ -2,10 +2,7 @@ package withus.controller;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
@@ -18,8 +15,6 @@ import withus.service.UserService;
 
 import java.time.LocalDate;
 import java.util.List;
-
-import static withus.entity.Tbl_goal.GoalType.GOAL1;
 
 @Controller
 public class GoalController extends BaseController{
@@ -54,8 +49,16 @@ public class GoalController extends BaseController{
         modelAndView.addObject("goalThisWeek", temp);
         return modelAndView;
     }
+//
+//    @GetMapping("/poptest")
+//    @Statistical
+//    public ModelAndView poptest(){
+//        ModelAndView modelAndView = new ModelAndView("goal/poptest");
+//
+//        return modelAndView;
+//    }
 
-    @PutMapping(value = "/goal-history", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/goal", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<Tbl_goal> getGoal(@RequestBody Tbl_goal tbl_goal){
         String userId = getUsername();
