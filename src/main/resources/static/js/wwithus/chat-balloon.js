@@ -4,6 +4,7 @@ class ChatBalloon {
 	 * @param {number} sequence
 	 * @param {string} direction
 	 * @param {boolean} isMostRecent
+	 * @param {boolean} isToTerminate
 	 * @param {boolean} isAnswerExpected
 	 * @param {string} content
 	 * @param {string | null} urlToImageFile
@@ -13,7 +14,7 @@ class ChatBalloon {
 	 * @param {AnswerButton[]} answerButtons
 	 * @param {boolean} containsFinishingAnswer
 	 */
-	constructor(code, sequence, direction, isMostRecent, isAnswerExpected, content, urlToImageFile, urlToAudioFile, dateTime, nextCode, answerButtons, containsFinishingAnswer) {
+	constructor(code, sequence, direction, isMostRecent, isToTerminate, isAnswerExpected, content, urlToImageFile, urlToAudioFile, dateTime, nextCode, answerButtons, containsFinishingAnswer) {
 		this._code = code;
 
 		if (sequence) {
@@ -24,6 +25,7 @@ class ChatBalloon {
 
 		this._direction = direction;
 		this._isMostRecent = isMostRecent;
+		this._isToTerminate = isToTerminate;
 		this._isAnswerExpected = isAnswerExpected;
 		this._content = content;
 		this._urlToImageFile = urlToImageFile;
@@ -57,6 +59,10 @@ class ChatBalloon {
 	/**
 	 * @returns {boolean}
 	 */
+	get isToTerminate() { return this._isToTerminate; }
+	/**
+	 * @returns {boolean}
+	 */
 	get isAnswerExpected() { return this._isAnswerExpected; }
 	/**
 	 * @returns {string}
@@ -82,11 +88,13 @@ class ChatBalloon {
 	 * @returns {AnswerButton[]}
 	 */
 	get answerButtons() { return this._answerButtons; }
-
 	/**
 	 * @returns {boolean}
 	 */
 	get containsFinishingAnswer() { return this._containsFinishingAnswer; }
+	get toScheduleForNextChatBalloon() {
+		return (this._isMostRecent && !this._isAnswerExpected && !(this._containsFinishingAnswer || this._isToTerminate));
+	}
 
 	/**
 	 * @returns {Date}
@@ -121,6 +129,7 @@ class ChatBalloon {
 			sequence: this._sequence,
 			direction: this._direction,
 			isMostRecent: this._isMostRecent,
+			isToTerminate: this._isToTerminate,
 			isAnswerExpected: this._isAnswerExpected,
 			content: this._content,
 			urlToImageFile: this._urlToImageFile,
@@ -160,6 +169,7 @@ class ChatBalloon {
 			!object.hasOwnProperty("code") ||
 			!object.hasOwnProperty("direction") ||
 			!object.hasOwnProperty("mostRecent") ||
+			!object.hasOwnProperty("toTerminate") ||
 			!object.hasOwnProperty("answerExpected") ||
 			!object.hasOwnProperty("content") ||
 			!object.hasOwnProperty("dateTime") ||
@@ -177,6 +187,7 @@ class ChatBalloon {
 		 * GSON serialization의 네이밍 규칙에 따른 결과
 		 */
 		const isMostRecent = object["mostRecent"];
+		const isToTerminate = object["toTerminate"];
 		const isAnswerExpected = object["answerExpected"];
 		const content = object["content"];
 		const urlToImageFile = object["urlToImageFile"];
@@ -186,6 +197,6 @@ class ChatBalloon {
 		const answerButtons = object["answerButtons"];
 		const containsFinishingAnswer = object["containsFinishingAnswer"];
 
-		return new ChatBalloon(code, sequence, direction, isMostRecent, isAnswerExpected, content, urlToImageFile, urlToAudioFile, dateTime, nextCode, answerButtons, containsFinishingAnswer);
+		return new ChatBalloon(code, sequence, direction, isMostRecent, isToTerminate, isAnswerExpected, content, urlToImageFile, urlToAudioFile, dateTime, nextCode, answerButtons, containsFinishingAnswer);
 	}
 }

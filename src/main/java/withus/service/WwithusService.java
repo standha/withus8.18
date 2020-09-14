@@ -4,6 +4,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -98,6 +99,75 @@ public class WwithusService {
 	}
 
 	@NonNull
+	public List<ChatBalloon> getReentrentChatBalloons(User user, LocalDate date) {
+		List<ChatBalloon> reentrantChatBalloons = new ArrayList<>();
+
+		String content = "다시 들어와주셨네요. 저 위더스랑과의 대화를 다시 하고 싶으세요?";
+
+		final String TEMPORARY_POSITIVE = "예";
+		final String TEMPORARY_NEGATIVE = "아니요";
+		final String TEMPORARY_POSITIVE_HASH_CODE = String.valueOf(TEMPORARY_POSITIVE.hashCode());
+		final String TEMPORARY_NEGATIVE_HASH_CODE = String.valueOf(TEMPORARY_NEGATIVE.hashCode());
+
+		ChatBalloon interrogation = ChatBalloon.builder()
+			.content(content)
+			.answerButtons(
+				Arrays.asList(
+					AnswerButton.builder()
+						.ordinal(0)
+						.code("DOES NOT MATTER")
+						.isToRewind(false)
+						.isToTerminate(false)
+						.isHelpRequest(false)
+						.content(TEMPORARY_POSITIVE)
+						.nextCode(TEMPORARY_POSITIVE_HASH_CODE)
+						.build(),
+					AnswerButton.builder()
+						.ordinal(1)
+						.code("DOES NOT REALLY MATTER")
+						.isToRewind(false)
+						.isToTerminate(false)
+						.isHelpRequest(false)
+						.content(TEMPORARY_NEGATIVE)
+						.nextCode(TEMPORARY_NEGATIVE_HASH_CODE)
+						.build()
+				)
+			).build();
+		ChatBalloon positiveChatBalloon = ChatBalloon.builder()
+			.code(TEMPORARY_POSITIVE_HASH_CODE)
+			// TODO: 해당 날짜의 대화 처음부터 시작...
+			.build();
+		ChatBalloon negativeChatBalloon = ChatBalloon.builder()
+			.code(TEMPORARY_NEGATIVE_HASH_CODE)
+			// TODO
+			.content(String.format("아쉽지만, %s에 다시 인사드릴게요.", Utility.getNextDayForWwithus(user.getWeek(), date.getDayOfWeek())))
+			.build();
+
+		reentrantChatBalloons.add(interrogation);
+		reentrantChatBalloons.add(positiveChatBalloon);
+		reentrantChatBalloons.add(negativeChatBalloon);
+
+		return reentrantChatBalloons;
+	}
+
+	@NonNull
+	public List<ChatBalloon> getCyaLaterChatBalloons(User user) {
+		List<ChatBalloon> cyaLaterChatBalloons = new ArrayList<>();
+		ChatBalloon cyaLaterBalloon = ChatBalloon.builder()
+			.code("AN ARBITRARY CODE")
+			.direction(ChatBalloon.Direction.LEFT)
+			.isMostRecent(false)
+			.isToTerminate(true)
+			.isAnswerExpected(false)
+			.content(Utility.getNonWwithusDayMessage(user.getWeek()))
+			.build();
+
+		cyaLaterChatBalloons.add(cyaLaterBalloon);
+
+		return cyaLaterChatBalloons;
+	}
+
+	@NonNull
 	public Result.Code deleteWwithusEntryHistories(User user, LocalDate date) {
 		Result.Code code = Result.Code.OK;
 		int week = user.getWeek();
@@ -135,6 +205,7 @@ public class WwithusService {
 			.code(wwithusEntry.getCode())
 			.direction(wwithusEntry.isAnswer()? ChatBalloon.Direction.RIGHT: ChatBalloon.Direction.LEFT)
 			.isMostRecent(isLast)
+			.isToTerminate(wwithusEntry.isLast())
 			.isAnswerExpected(isAnswerExpected)
 			.content(wwithusEntry.getContent())
 			.urlToImageFile(wwithusEntry.getUrlToImageFile())

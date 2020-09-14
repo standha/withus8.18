@@ -18,6 +18,7 @@ import withus.dto.wwithus.WwithusEntryRequest;
 import withus.entity.User;
 import withus.service.UserService;
 import withus.service.WwithusService;
+import withus.util.Utility;
 
 @Controller
 public class WwithusController extends BaseController {
@@ -45,7 +46,25 @@ public class WwithusController extends BaseController {
 
 		User user = getUser();
 		LocalDate today = LocalDate.now();
-		List<ChatBalloon> data = wwithusService.getWwithusEntryHistories(user, today);
+
+		List<ChatBalloon> data;
+		try {
+			data = wwithusService.getWwithusEntryHistories(user, today);
+			/*
+			 * TODO: 재진입 시에 취할 행동.
+			 *  의도한 것은
+			 *  "다시 들어와주셨네요. 저 위더스랑과의 대화를 다시 하고 싶으세요?" 처리이나,
+			 *  현재의 설계로는 불가능할 것 같아 보류 (2020.09.14)
+			 */
+			/*List<ChatBalloon> histories = wwithusService.getWwithusEntryHistories(user, today);
+			if (histories.stream().anyMatch(ChatBalloon::isToTerminate)) {
+				data = wwithusService.getReentrentChatBalloons(user, today);
+			} else {
+				data = histories;
+			}*/
+		} catch (Utility.NoWithusException noWithusException) {
+			data = wwithusService.getCyaLaterChatBalloons(user);
+		}
 
 		log.debug("User ({}) has {} history(ies) of today.", user, data.size());
 
@@ -73,7 +92,9 @@ public class WwithusController extends BaseController {
 		try {
 			User user = getUser();
 			wwithusEntryRequest.setUser(user);
-			wwithusEntryRequest.setDate(LocalDate.now());
+
+			LocalDate today = LocalDate.now();
+			wwithusEntryRequest.setDate(today);
 
 			data = wwithusService.getWwithusEntryAndSaveHistory(wwithusEntryRequest);
 			code = Result.Code.OK;

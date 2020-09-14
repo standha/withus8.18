@@ -5,6 +5,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.lang.Nullable;
 
@@ -15,6 +21,14 @@ public class Utility {
 	public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_FORMAT);
 	public static final String DATE_TIME_FORMAT = DATE_FORMAT + TIME_FORMAT;
 	public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
+
+	private static final List<DayOfWeek> WWITHUS_DAYS_OF_WEEK_ON_FIRST_TO_EIGHTH_WEEK = Stream.of(
+		DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.THURSDAY, DayOfWeek.SATURDAY
+	).sorted().collect(Collectors.toList());
+
+	private static final List<DayOfWeek> WWITHUS_DAYS_OF_WEEK_ON_TENTH_WEEK_OR_LATER = Stream.of(
+		DayOfWeek.TUESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SUNDAY
+	).sorted().collect(Collectors.toList());
 
 	public static LocalDate parseDate(String dateString) { return LocalDate.parse(dateString, DATE_FORMATTER); }
 	public static LocalTime parseTime(String timeString) { return LocalTime.parse(timeString, TIME_FORMATTER); }
@@ -28,33 +42,14 @@ public class Utility {
 	 * @return {@code week}주차 {@code dayOfWeek}요일이 해당 주 내에서 며칠차인지를 리턴
 	 */
 	public static int getDayDigitForWwithus(int week, DayOfWeek dayOfWeek) {
-		if (week < 1 || week > 24) { throw new RuntimeException(String.format("Unexpected value for week #: %d", week)); }
+		List<DayOfWeek> wwithusDaysOfWeek = selectDaysOfWeekList(week);
 
-		if (week <= 8) {
-			switch (dayOfWeek) {
-				case MONDAY:
-					return 1;
-				case TUESDAY:
-					return 2;
-				case THURSDAY:
-					return 3;
-				case SATURDAY:
-					return 4;
-				default:
-					throw new RuntimeException(String.format("No Wwithus on %s week #%d.", dayOfWeek, week));
-			}
-		} else {
-			switch (dayOfWeek) {
-				case MONDAY:
-					return 1;
-				case WEDNESDAY:
-					return 2;
-				case SATURDAY:
-					return 3;
-				default:
-					throw new RuntimeException(String.format("No Wwithus on %s week #%d.", dayOfWeek, week));
-			}
+		int index = wwithusDaysOfWeek.indexOf(dayOfWeek);
+		if (index < 0) {
+			throw new NoWithusException(dayOfWeek, week);
 		}
+
+		return (index + 1);
 	}
 
 	/**
@@ -62,7 +57,7 @@ public class Utility {
 	 * 다음 위더스랑 서비스가 제공되는 것이 무슨 요일인지를 리턴
 	 */
 	public static DayOfWeek getNextDayForWwithus(int week, DayOfWeek dayOfWeek) {
-		if (week < 1 || week > 24) { throw new RuntimeException(String.format("Unexpected value for week #: %d", week)); }
+		List<DayOfWeek> wwithusDaysOfWeek = selectDaysOfWeekList(week);
 
 		try {
 			getDayDigitForWwithus(week, dayOfWeek);
@@ -70,40 +65,68 @@ public class Utility {
 			// No exception means we have Wwithus today.
 			return dayOfWeek;
 		} catch (RuntimeException runtimeException) {
-			if (week <= 8) {
-				switch (dayOfWeek) {
-					case SUNDAY:
-					case MONDAY:
-						return DayOfWeek.MONDAY;
-					case TUESDAY:
-						return DayOfWeek.TUESDAY;
-					case WEDNESDAY:
-					case THURSDAY:
-						return DayOfWeek.THURSDAY;
-					case FRIDAY:
-					case SATURDAY:
-						return DayOfWeek.SATURDAY;
-				}
-			} else {
-				switch (dayOfWeek) {
-					case SUNDAY:
-					case MONDAY:
-						return DayOfWeek.MONDAY;
-					case TUESDAY:
-					case WEDNESDAY:
-						return DayOfWeek.WEDNESDAY;
-					case THURSDAY:
-					case FRIDAY:
-					case SATURDAY:
-						return DayOfWeek.SATURDAY;
-				}
-			}
+			DayOfWeek candidate = dayOfWeek;
+			do {
+				candidate = getNextDayOfWeek(candidate);
+			} while (!wwithusDaysOfWeek.contains(candidate));
 
-			throw new RuntimeException("We are sorry. The Earth is going to explode now.");
+			return candidate;
 		}
+	}
+
+	public static String getNonWwithusDayMessage(int week) {
+		List<DayOfWeek> wwithusDaysOfWeek = selectDaysOfWeekList(week);
+		String daysOfWeekInKorean = daysOfWeekInKorean(wwithusDaysOfWeek);
+
+		return String.format(
+			"반갑습니다. 매일 위더스에 자신의 건강상태를 잘 기록하고 계시죠? 저 위더스랑과의 대화는 %s에 있어요. 그날 뵐게요.\uD83D\uDE42",
+			daysOfWeekInKorean
+		);
+	}
+
+	public static List<DayOfWeek> selectDaysOfWeekList(int week) {
+		if (week < 1 || week > 24) { throw new RuntimeException(String.format("Unexpected value for week #: %d", week)); }
+
+		if (week <= 8) {
+			return WWITHUS_DAYS_OF_WEEK_ON_FIRST_TO_EIGHTH_WEEK;
+		} else {
+			return WWITHUS_DAYS_OF_WEEK_ON_TENTH_WEEK_OR_LATER;
+		}
+	}
+
+	public static DayOfWeek getNextDayOfWeek(DayOfWeek dayOfWeek) {
+		int ordianl = dayOfWeek.ordinal();
+		int nextOrdinal = ordianl + 1;
+		DayOfWeek[] daysOfWeek = DayOfWeek.values();
+
+		return daysOfWeek[nextOrdinal % daysOfWeek.length];
 	}
 
 	public static boolean nullOrEmptyOrSpace(@Nullable String sentence) {
 		return (sentence == null || sentence.trim().isEmpty());
+	}
+
+	public static String dayOfWeekInKorean(DayOfWeek dayOfWeek) {
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("E", Locale.KOREAN);
+		return dateTimeFormatter.format(dayOfWeek);
+	}
+
+	public static String daysOfWeekInKorean(Collection<DayOfWeek> daysOfWeek) {
+		List<String> strings = new ArrayList<>();
+		for (DayOfWeek dayOfWeek : daysOfWeek) {
+			strings.add(dayOfWeekInKorean(dayOfWeek));
+		}
+
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(String.join(",", strings));
+		stringBuilder.append("요일");
+
+		return stringBuilder.toString();
+	}
+
+	public static class NoWithusException extends RuntimeException {
+		public NoWithusException(DayOfWeek dayOfWeek, int week) {
+			super(String.format("No Wwithus on %s week #%d.", dayOfWeek, week));
+		}
 	}
 }

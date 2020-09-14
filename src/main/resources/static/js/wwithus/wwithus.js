@@ -126,8 +126,7 @@ function renderBalloon(chatBalloon) {
 	balloonsAreaElement.appendChild(div);
 	window.scrollTo(0, document.body.scrollHeight);
 
-	// TODO: 대답 자체가 finishing인지 판단해서 조건 추가
-	if (chatBalloon.isMostRecent && !chatBalloon.isAnswerExpected && !chatBalloon.containsFinishingAnswer) {
+	if (chatBalloon.toScheduleForNextChatBalloon) {
 		setTimeout(requestNext, MESSAGE_INTERVAL_MILLIS, chatBalloon);
 	}
 }
@@ -160,7 +159,7 @@ function renderButtons(chatBalloon) {
 			 * 보험 필드 toTerminate/toRewind도 같이 확인 (2020.09.11)
 			 */
 			if (answerButton.isToRewind || answerButton.toRewind) {
-				href += " deleteHistory(); location.reload();";
+				href += " deleteHistory(); setTimeout(new function() { location.reload() }, 1111);";
 			} else {
 				if (answerButton.isHelpRequest || answerButton.helpRequest) {
 					href += " sendHelpRequest();";

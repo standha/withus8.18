@@ -22,6 +22,7 @@ public class ChatBalloon implements Comparable<ChatBalloon> {
 	private final String code;
 	private final Direction direction;
 	private final boolean isMostRecent;
+	private final boolean isToTerminate;
 	private final boolean isAnswerExpected;
 	private final String content;
 	@Nullable
