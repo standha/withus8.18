@@ -102,9 +102,9 @@ public class LoginController {
 		}
 
 		return Result.<User>builder()
-			.setCode(code)
-			.setData(savedUser)
-			.createResult();
+			.code(code)
+			.data(savedUser)
+			.build();
 	}
 
 	public boolean isMissingMandatories(User user){

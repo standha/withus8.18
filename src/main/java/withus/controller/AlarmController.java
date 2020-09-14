@@ -1,20 +1,28 @@
 package withus.controller;
 
-import org.aspectj.weaver.ast.Test;
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
-import withus.entity.*;
+import withus.entity.RecordKey;
+import withus.entity.Tbl_medication_alarm;
+import withus.entity.Tbl_medication_record;
+import withus.entity.Tbl_outpatient_visit_alarm;
+import withus.entity.User;
 import withus.service.AlarmService;
 import withus.service.UserService;
-import java.time.LocalDate;
-import java.util.List;
-
 
 @Controller
 public class AlarmController extends BaseController{
@@ -74,13 +82,13 @@ public class AlarmController extends BaseController{
             seved = alarmService.upsertMedication(tbl_medication_alarm);
             code = Result.Code.OK;
         } catch (Exception exception){
-            logger.error(exception.getLocalizedMessage(),exception);
+            log.error(exception.getLocalizedMessage(),exception);
             code = Result.Code.ERROR_DATABASE;
         }
         return Result.<Tbl_medication_alarm>builder()
-                .setCode(code)
-                .setData(seved)
-                .createResult();
+                .code(code)
+                .data(seved)
+                .build();
     }
     @PostMapping(value = "/pill-history", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -93,13 +101,13 @@ public class AlarmController extends BaseController{
             saved = alarmService.upsertTrueRecord(tbl_medication_record);
             code = Result.Code.OK;
         } catch (Exception exception) {
-            logger.error(exception.getLocalizedMessage(), exception);
+            log.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
         }
         return Result.<Tbl_medication_record>builder()
-                .setCode(code)
-                .setData(saved)
-                .createResult();
+                .code(code)
+                .data(saved)
+                .build();
     }
 
     @GetMapping("/appointments")
@@ -126,12 +134,12 @@ public class AlarmController extends BaseController{
             seved = alarmService.upsertOutPatientVisit(tbl_outpatient_visit_alarm);
             code = Result.Code.OK;
         } catch (Exception exception){
-            logger.error(exception.getLocalizedMessage(),exception);
+            log.error(exception.getLocalizedMessage(),exception);
             code = Result.Code.ERROR_DATABASE;
         }
         return Result.<Tbl_outpatient_visit_alarm>builder()
-                .setCode(code)
-                .setData(seved)
-                .createResult();
+                .code(code)
+                .data(seved)
+                .build();
     }
 }

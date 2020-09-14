@@ -83,6 +83,10 @@ public class User implements Serializable, UserDetails {
 	@Getter
 	private Type type;
 
+	@Column(columnDefinition = "INT(3) NOT NULL DEFAULT 0")
+	@Getter
+	private int week;
+
 	@OneToOne
 	@JoinColumn(name = "caregiver_contact", columnDefinition = "VARCHAR(32)", referencedColumnName = "contact")
 	@Nullable
