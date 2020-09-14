@@ -9,8 +9,8 @@
 </head>
 <body>
 	<div th:replace="header :: #header"></div>
-	<div th:each="weightHistory: ${weightHistories}">
-		<div th:text="${weightHistoriy.dateString} + ': kg'"></div>
+	<div th:each="weightHistory: ${weightRecord}">
+		<div th:text="${weightHistory.pk.date} +' 몸무게 : ' +${weightHistory.weight}+ 'kg'"></div>
 	</div>
 </body>
 </html>

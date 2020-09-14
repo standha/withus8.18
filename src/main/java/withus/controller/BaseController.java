@@ -42,4 +42,17 @@ public class BaseController {
 	protected User getCaretaker() {
 		return userService.getUserByCaregiverId(getUsername());
 	}
+
+	protected String getConnectId() {
+		String username = null;
+		switch (getUser().getType()) {
+			case PATIENT:
+				username = getUsername();
+				break;
+			case CAREGIVER:
+				username = getCaretaker().getUserId();
+				break;
+		}
+		return username;
+	}
 }

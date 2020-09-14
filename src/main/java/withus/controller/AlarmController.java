@@ -42,10 +42,19 @@ public class AlarmController extends BaseController{
     @Statistical
     public ModelAndView getMedicationAlarm(){
         ModelAndView modelAndView = new ModelAndView("alarm/medicationAlarm");
-        User user = getUser();
-        String patientContact = getPatientContact();
-        String userId = getUsername();
-        modelAndView.addObject("medicationAlarm",userId);
+        if(alarmService.getTodayAlarm(getConnectId())== null){
+            modelAndView.addObject("medicationTimeMorning","");
+            modelAndView.addObject("medicationTimeLunch","");
+            modelAndView.addObject("medicationTimeDinner","");
+            modelAndView.addObject("medicationAlarmOnoff","");
+        }else{
+            Tbl_medication_alarm alarm = alarmService.getTodayAlarm(getConnectId());
+            modelAndView.addObject("medicationTimeMorning",alarm.getMedicationTimeMorning());
+            modelAndView.addObject("medicationTimeLunch",alarm.getMedicationTimeLunch());
+            modelAndView.addObject("medicationTimeDinner",alarm.getMedicationTimeDinner());
+            modelAndView.addObject("medicationAlarmOnoff",alarm.isMedicationAlarmOnoff());
+        }
+        modelAndView.addObject("type",getUser().getType());
         modelAndView.addObject("previousUrl","/alarm");
 
         return modelAndView;

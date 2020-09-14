@@ -26,7 +26,7 @@ public class HomeController extends BaseController{
 
 		// TODO: to be removed
 		System.out.printf("caretaker: %s\n", getCaretaker());
-
+		System.out.println(user.getUserId());
 		return modelAndView;
 	}
 }

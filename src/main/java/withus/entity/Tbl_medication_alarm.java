@@ -2,7 +2,7 @@ package withus.entity;
 
 import lombok.*;
 import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

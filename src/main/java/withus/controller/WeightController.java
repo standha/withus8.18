@@ -6,10 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import withus.aspect.Statistical;
@@ -34,18 +31,18 @@ public class WeightController extends BaseController {
     @GetMapping("/weight")
     @Statistical
     public ModelAndView getWeight() {
-        ModelAndView modelAndView = new ModelAndView("weight/weight");
-        modelAndView.addObject("previousUrl", "/home");
-        String username = getUsername();
-        List<Tbl_weight> weightRecord;
+            ModelAndView modelAndView = new ModelAndView("weight/weight");
+            User.Type typeCheck = getUser().getType();
+                    if(weightService.getTodayWeight(new RecordKey(getConnectId(), LocalDate.now()))==null){
+                        modelAndView.addObject("weight", "오늘 몸무게를 입력해봐요!"); //객체가 비어있어 타임리프에 null point 오류를 해결해주도록 한다. weight에 0kg을 뷰해줌
+                    }else{
+                        Tbl_weight weight = weightService.getTodayWeight(new RecordKey(getConnectId(), LocalDate.now()));
+                        modelAndView.addObject("weight", weight.getWeight());
+                    }
 
-        weightRecord = weightService.getWeightDateRecord(new RecordKey(username, LocalDate.now()), 0);
-
-        User user = getUser();
-
-        modelAndView.addObject("type", user.getType());
-        modelAndView.addObject("weightRecord", weightRecord);
-        return modelAndView;
+            modelAndView.addObject("type",typeCheck);
+            modelAndView.addObject("previousUrl", "/home");
+            return modelAndView;
     }
 
     @GetMapping("/weight-history")
@@ -53,17 +50,14 @@ public class WeightController extends BaseController {
     public ModelAndView getWeightHistory(){
         ModelAndView modelAndView = new ModelAndView("weight/weight-history");
         modelAndView.addObject("previousUrl", "/weight");
-        String username = getUsername();
         List<Tbl_weight> weightRecord;
-
-        weightRecord = weightService.getWeightRecord(username, 0);
-
-        modelAndView.addObject("weightRecord", weightRecord);
+        weightRecord = weightService.getWeightRecord(getConnectId(),0);
+        modelAndView.addObject("weightRecord",weightRecord);
         return modelAndView;
     }
 
 
-    @PutMapping(value = "/weight-history", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/weight", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<Tbl_weight> getWeight(@RequestBody Tbl_weight tbl_weight){
         String userId = getUsername();

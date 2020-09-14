@@ -17,6 +17,11 @@ import withus.repository.MedicationAlarmRepository;
 import withus.repository.OutPatientVisitAlarmRepository;
 import withus.repository.UserRepository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+
 @Service
 public class UserService implements UserDetailsService {
 	private final UserRepository userRepository;
@@ -65,9 +70,8 @@ public class UserService implements UserDetailsService {
 		User saved = userRepository.save(user);
 		User caregiver = new User();
 		String checkType = user.getType().name();
-		System.out.println("Type of user is " + checkType + ".(now)");
+		System.out.println("Making patient table to Id(String)"+checkType);
 		if(checkType == "PATIENT") {
-			System.out.println("Making patient table to Id(String)");
 			Tbl_medication_alarm tbl_medication_alarm = Tbl_medication_alarm.builder()
 					.id(saved.getUserId())
 					.build();

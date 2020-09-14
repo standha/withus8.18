@@ -15,23 +15,42 @@
 	<div id="body-title">💊 복약</div>
 	<!-- TODO: 보호자일 경우 immutable 하도록 -->
 	<form id="pill-form" th:action="@{/medicationAlarm}" method="post" onsubmit="return onFormSubmission(this);">
-
+		<div  th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
 			<span id="times">
 				<span id="breakfast">
 					아침
-					<input type="time" name="medicationTimeMorning" th:value="${pill?.medicationTimeMorning}">
+					<input type="time" name="medicationTimeMorning" th:value="${medicationTimeMorning}">
 				</span>
 				<span id="lunch">
 					점심
-					<input type="time" name="medicationTimeLunch" th:value="${pill?.medicationTimeLunch}">
+					<input type="time" name="medicationTimeLunch" th:value="${medicationTimeLunch}">
 				</span>
 				<span id="dinner">
 					저녁
-					<input type="time" name="medicationTimeDinner" th:value="${pill?.medicationTimeDinner}">
+					<input type="time" name="medicationTimeDinner" th:value="${medicationTimeDinner}">
 				</span>
 			</span>
-		<label id="enabled"><input type="checkbox" name="medicationAlarmOnoff" th:checked="${pill?.medicationAlarmOnoff == true}"> 켜짐</label>
-		<input type="submit" id="submit" value="저장">
+			<label id="enabled"><input type="checkbox" name="medicationAlarmOnoff" th:checked="${medicationAlarmOnoff == true}"> 켜짐</label>
+			<input type="submit" id="submit" value="저장">
+		</div>
+		<div  th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
+			<span id="times">
+				<span id="breakfast">
+					아침
+					<input type="time" name="medicationTimeMorning" th:value="${medicationTimeMorning}" disabled>
+				</span>
+				<span id="lunch">
+					점심
+					<input type="time" name="medicationTimeLunch" th:value="${medicationTimeLunch}" disabled>
+				</span>
+				<span id="dinner">
+					저녁
+					<input type="time" name="medicationTimeDinner" th:value="${medicationTimeDinner}" disabled>
+				</span>
+			</span>
+			<label id="enabled"><input type="checkbox" name="medicationAlarmOnoff" th:checked="${medicationAlarmOnoff == true}" disabled> 켜짐</label>
+			<input type="submit" id="submit" value="저장" disabled>
+		</div>
 	</form>
 	<div id="reminder-area">
 		<p th:text="'잠깐! 오늘 하루 심부전약 을(를) 다 드셨나요?'"></p>
