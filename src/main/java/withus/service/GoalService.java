@@ -7,12 +7,12 @@ import withus.repository.GoalRepository;
 import javax.annotation.Nullable;
 
 @Service
-public class goalService {
+public class GoalService {
 
     private final GoalRepository goalRepository;
 
     @Autowired
-    public goalService(GoalRepository goalRepository){
+    public GoalService(GoalRepository goalRepository){
         this.goalRepository = goalRepository;
     }
 

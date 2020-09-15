@@ -12,5 +12,4 @@ public interface GoalRepository extends JpaRepository<Tbl_goal, String> {
     @Transactional(readOnly = true)
     @Nonnull
     Optional<Tbl_goal> findByGoalId(String GoalId);
-
 }
