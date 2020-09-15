@@ -65,6 +65,11 @@ public class AlarmService{
     public Tbl_medication_alarm getTodayAlarm(String username){
         return medicationAlarmRepository.findById(username).orElse(null);
     }
+
+    @Nullable
+    public Tbl_outpatient_visit_alarm getPatientAppointment(String username){
+        return outPatientVisitAlarmRepository.findById(username).orElse(null);
+    }
     @Nullable
     public List<Tbl_medication_record>getFinishedRecord(String id){
         return medicationRecordRepository.findByPk_IdAndFinishedIsTrue(id);

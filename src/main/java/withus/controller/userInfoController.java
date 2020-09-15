@@ -15,9 +15,6 @@ import withus.exception.UnexpectedEnumValueException;
 import withus.service.UserService;
 import withus.util.Utility;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 
 @Controller
 public class userInfoController extends BaseController {
@@ -52,13 +49,13 @@ public class userInfoController extends BaseController {
                     User.Type userType = user.getType();
                     switch (userType) {
                         case CAREGIVER:
-                            savedUser = userService.upsertUserEncodingPassword(user);
+                            savedUser = userService.upsertUser(user);
                             code = Result.Code.OK;
                             break;
                         case PATIENT:
                             User caregiver = user.getCaregiver();
                             if (caregiver == null) {
-                                savedUser = userService.upsertUserEncodingPassword(user);
+                                savedUser = userService.upsertUser(user);
                                 code = Result.Code.OK;
                             } else {
                                 User existCareGiver = userService.getUserByContact(user.getCaregiver().getContact());
@@ -66,7 +63,7 @@ public class userInfoController extends BaseController {
                                     code = Result.Code.ERROR_NO_EXIST_CAREGIVER;
                                 } else {
                                     user.setCaregiver(existCareGiver);
-                                    savedUser = userService.upsertUserEncodingPassword(user);
+                                    savedUser = userService.upsertUser(user);
                                     code = Result.Code.OK;
                                 }
                             }

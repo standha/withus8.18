@@ -24,9 +24,6 @@ public class HomeController extends BaseController{
 		User user = getUser();
 		modelAndView.addObject("user", user);
 
-		// TODO: to be removed
-		System.out.printf("caretaker: %s\n", getCaretaker());
-		System.out.println(user.getUserId());
 		return modelAndView;
 	}
 }
