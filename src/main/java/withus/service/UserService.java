@@ -10,9 +10,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import withus.auth.NoOpPasswordEncoder;
+import withus.entity.Tbl_goal;
 import withus.entity.Tbl_medication_alarm;
 import withus.entity.Tbl_outpatient_visit_alarm;
 import withus.entity.User;
+import withus.repository.GoalRepository;
 import withus.repository.MedicationAlarmRepository;
 import withus.repository.OutPatientVisitAlarmRepository;
 import withus.repository.UserRepository;
@@ -27,9 +29,12 @@ public class UserService implements UserDetailsService {
 	private final UserRepository userRepository;
 	private final MedicationAlarmRepository medicationAlarmRepository;
 	private final OutPatientVisitAlarmRepository outPatientVisitAlarmRepository;
+	private final GoalRepository goalRepositroy;
 	@Autowired
-	public UserService(UserRepository userRepository, MedicationAlarmRepository medicationAlarmRepository, OutPatientVisitAlarmRepository outPatientVisitAlarmRepository) {
+	public UserService(UserRepository userRepository, MedicationAlarmRepository medicationAlarmRepository, OutPatientVisitAlarmRepository outPatientVisitAlarmRepository,
+					   GoalRepository goalRepositroy) {
 		this.userRepository = userRepository;
+		this.goalRepositroy = goalRepositroy;
 		this.medicationAlarmRepository = medicationAlarmRepository;
 		this.outPatientVisitAlarmRepository = outPatientVisitAlarmRepository;
 	}
@@ -68,7 +73,6 @@ public class UserService implements UserDetailsService {
 		NoOpPasswordEncoder noOpPasswordEncoder = NoOpPasswordEncoder.getInstance();
 		String encodedPassword = noOpPasswordEncoder.encode(plaintextPassword);
 		User saved = userRepository.save(user);
-		User caregiver = new User();
 		String checkType = user.getType().name();
 		if(checkType == "PATIENT") {
 			Tbl_medication_alarm tbl_medication_alarm = Tbl_medication_alarm.builder()
@@ -80,6 +84,12 @@ public class UserService implements UserDetailsService {
 					.id(saved.getUserId())
 					.build();
 			outPatientVisitAlarmRepository.save(tbl_outpatient_visit_alarm);
+
+			Tbl_goal tbl_goal = Tbl_goal.builder()
+					.goalId(saved.getUserId())
+					.goal(0)
+					.build();
+			goalRepositroy.save(tbl_goal);
 		}
 		return saved;
 
