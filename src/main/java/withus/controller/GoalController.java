@@ -1,5 +1,6 @@
 package withus.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,8 @@ import java.util.List;
 public class GoalController extends BaseController{
     private final GoalService goalService;
 
-    public GoalController(UserService userService, AuthenticationFacade authenticationFacade, GoalService goalService) {
+    @Autowired
+    public GoalController(AuthenticationFacade authenticationFacade, UserService userService, GoalService goalService) {
         super(userService, authenticationFacade);
         this.goalService = goalService;
     }
@@ -29,27 +31,13 @@ public class GoalController extends BaseController{
     @Statistical
     public ModelAndView getGoal(){
         ModelAndView modelAndView = new ModelAndView("goal/goal");
-        modelAndView.addObject("previousUrl", "/home");
+        modelAndView.addObject("previousUrl", "/center");
 
-        Tbl_goal goalRecord;
-        String userId = getUsername();
-        String temp = null;
-
-        goalRecord = goalService.getGoalDateRecord(new RecordKey(userId, LocalDate.now()), 0);
-        if(goalRecord == null){
-            temp = "목표를 설정해 주세요";
-        }
-        else {
-            if (goalRecord.getGoal() == 1) {
-                temp = "목표 1설정";
-            } else if (goalRecord.getGoal() == 2) {
-                temp = "목표 2설정";
-            }
-        }
-        modelAndView.addObject("goalThisWeek", temp);
+        modelAndView.addObject("type", getUser().getType());
         return modelAndView;
     }
-//
+
+//    팝업창 사용한다면..
 //    @GetMapping("/poptest")
 //    @Statistical
 //    public ModelAndView poptest(){
@@ -62,7 +50,7 @@ public class GoalController extends BaseController{
     @ResponseBody
     public Result<Tbl_goal> getGoal(@RequestBody Tbl_goal tbl_goal){
         String userId = getUsername();
-        tbl_goal.setPk(new RecordKey(userId, LocalDate.now()));
+        tbl_goal.setGoalId(userId);
         Result.Code code;
         Tbl_goal saved = null;
         try{
