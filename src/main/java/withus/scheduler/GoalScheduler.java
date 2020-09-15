@@ -116,7 +116,7 @@ public class GoalScheduler {
         return count;
     }
 
-    @Scheduled(cron = "0 0 21 0 0 SUN")
+  /*  @Scheduled(cron = "0 0 21 0 0 SUN")
     public void GoalList(){
         List<User> users = userService.getPatient(User.Type.PATIENT);
         List<String>noneToken = new ArrayList<>();
@@ -249,7 +249,7 @@ public class GoalScheduler {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public @ResponseBody
     ResponseEntity<String> levelNotice(List<String>tokenList,String message) throws JSONException, InterruptedException  {
