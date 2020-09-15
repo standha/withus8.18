@@ -115,8 +115,8 @@ public class GoalScheduler {
         }
         return count;
     }
-
-    @Scheduled(cron = "0 0 21 0 0 SUN")
+    //cron = "0 0 21 0 0 SUN"
+    @Scheduled(cron = "0 0 21 * * SUN")
     public void GoalList(){
         List<User> users = userService.getPatient(User.Type.PATIENT);
         List<String>noneToken = new ArrayList<>();
@@ -124,6 +124,7 @@ public class GoalScheduler {
         List<String>winToken = new ArrayList<>();
         for(User user : users){
             Tbl_goal goalUser = goalService.getGoalId(user.getUsername());
+            int success = 0 ;
             switch (goalUser.getGoal()){
                 case 0:
                     noneToken.add(user.getAppToken());
@@ -132,6 +133,7 @@ public class GoalScheduler {
                     break;
                 case 1:
                     if(PillCount(user.getUserId()) == 7 ) {
+                        success = 1;
                         winToken.add(user.getAppToken());
                         if(haveParent(user))
                             winToken.add(user.getAppToken());
@@ -144,6 +146,7 @@ public class GoalScheduler {
                     break;
                 case 2:
                     if(BloodCount(user.getUserId()) == 7 ) {
+                        success = 1;
                         winToken.add(user.getAppToken());
                         if(haveParent(user))
                             winToken.add(user.getAppToken());
@@ -156,6 +159,7 @@ public class GoalScheduler {
                     break;
                 case 3:
                     if(WeightCount(user.getUserId()) == 7 ) {
+                        success = 1;
                         winToken.add(user.getAppToken());
                         if(haveParent(user))
                             winToken.add(user.getAppToken());
@@ -168,6 +172,7 @@ public class GoalScheduler {
                     break;
                 case 4:
                     if(SymptomCount(user.getUserId()) >= 3 ) {
+                        success = 1;
                         winToken.add(user.getAppToken());
                         if(haveParent(user))
                             winToken.add(user.getAppToken());
@@ -180,6 +185,7 @@ public class GoalScheduler {
                     break;
                 case 5:
                     if(SymptomCount(user.getUserId()) == 7 ) {
+                        success = 1;
                         winToken.add(user.getAppToken());
                         if(haveParent(user))
                             winToken.add(user.getAppToken());
@@ -192,6 +198,7 @@ public class GoalScheduler {
                     break;
                 case 6:
                     if(NatriumCount(user.getUserId()) >= 3 ) {
+                        success = 1;
                         winToken.add(user.getAppToken());
                         if(haveParent(user))
                             winToken.add(user.getAppToken());
@@ -204,6 +211,7 @@ public class GoalScheduler {
                     break;
                 case 7:
                     if(NatriumCount(user.getUserId()) == 7 ) {
+                        success = 1;
                         winToken.add(user.getAppToken());
                         if(haveParent(user))
                             winToken.add(user.getAppToken());
@@ -216,6 +224,7 @@ public class GoalScheduler {
                     break;
                 case 8:
                     if(ExerciseCount(user.getUserId()) >= 1 ) {
+                        success = 1;
                         winToken.add(user.getAppToken());
                         if(haveParent(user))
                             winToken.add(user.getAppToken());
@@ -228,6 +237,7 @@ public class GoalScheduler {
                     break;
                 case 9:
                     if(ExerciseCount(user.getUserId()) >= 3 ) {
+                        success = 1;
                         winToken.add(user.getAppToken());
                         if(haveParent(user))
                             winToken.add(user.getAppToken());
@@ -238,6 +248,10 @@ public class GoalScheduler {
                             loseToken.add(user.getAppToken());
                     }
                     break;
+            }
+            if(success == 1){
+                user.setLevel(user.getLevel()+1);
+                userService.upsertUser(user);
             }
         }
         try {

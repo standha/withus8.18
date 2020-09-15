@@ -23,7 +23,7 @@ function onFormSubmission(form) {
 	}
 	const caregiver = isEmpty(caregiverValue) ? null : user;
 	const progress = type(userType)? 0 : null;
-	const level = type(userType)? 0 : null;
+	const level = type(userType)? 1 : null;
 	const appToken = isEmpty(token) ? null : token;
 	const body = {
 		userId: id,
