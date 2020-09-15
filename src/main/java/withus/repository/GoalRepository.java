@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface GoalRepository extends JpaRepository<Tbl_goal, String> {
     @Transactional(readOnly = true)
     @Nonnull
-    Optional<Tbl_goal> findById(String id);
+    Optional<Tbl_goal> findByGoalId(String GoalId);
 
 }
