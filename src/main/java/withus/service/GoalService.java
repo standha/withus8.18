@@ -8,6 +8,7 @@ import withus.repository.GoalRepository;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
 
 @Service
 public class GoalService {
@@ -29,4 +30,6 @@ public class GoalService {
         return goalRepository.save(tbl_goal);
     }
 
+    @Nullable
+    public List<Tbl_goal> getAllGoal(){return goalRepository.findAll();}
 }
