@@ -5,9 +5,9 @@ server:
 spring:
   application.name: withus
   datasource:
-    url: jdbc:mysql://192.168.0.223/withus?serverTimezone=Asia/Seoul
-    username: withus
-    password: withus
+    url: jdbc:mysql://192.168.0.223/withus1?serverTimezone=Asia/Seoul
+    username: withus1
+    password: withus1
 
     driver-class-name: com.mysql.cj.jdbc.Driver
     initialization-mode: never

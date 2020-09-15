@@ -35,9 +35,9 @@ public class BloodPressureController extends BaseController {
     public ModelAndView getBloodPressure() {
         ModelAndView modelAndView = new ModelAndView("bloodPressure/bloodPressure");
         if(bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(),LocalDate.now())) == null){
-            modelAndView.addObject("contraction","수축");
-            modelAndView.addObject("pressure", "혈압");
-            modelAndView.addObject("relaxation", "이완");
+            modelAndView.addObject("contraction","");
+            modelAndView.addObject("pressure", "");
+            modelAndView.addObject("relaxation", "");
         }
         else{
             Tbl_blood_pressure_pulse today= bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(),LocalDate.now()));

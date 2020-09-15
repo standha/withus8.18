@@ -37,6 +37,7 @@ public class MoistureNatriumController extends BaseController{
         modelAndView.addObject("previousUrl", "/center");
         return modelAndView;
     }
+
     @GetMapping("/moisture")
     @Statistical
     public ModelAndView getMoisture(){
@@ -103,7 +104,7 @@ public class MoistureNatriumController extends BaseController{
         int norCount =0;
         int highCount =0;
         List<Tbl_natrium_record> natriums = new ArrayList<>();
-        for(int i=1; i<8; i++){
+        for(int i=1; i<=7; i++){
             if(moistureNatriumService.getNatriumTodayRecord(new RecordKey(getConnectId(), today.with(DayOfWeek.of(i))))!=null){
                 Tbl_natrium_record sun = moistureNatriumService.getNatriumTodayRecord(new RecordKey(getConnectId(), today.with(DayOfWeek.of(i))));
                 natriums.add(sun);
