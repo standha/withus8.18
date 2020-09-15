@@ -70,7 +70,6 @@ public class UserService implements UserDetailsService {
 		User saved = userRepository.save(user);
 		User caregiver = new User();
 		String checkType = user.getType().name();
-		System.out.println("Making patient table to Id(String)"+checkType);
 		if(checkType == "PATIENT") {
 			Tbl_medication_alarm tbl_medication_alarm = Tbl_medication_alarm.builder()
 					.id(saved.getUserId())

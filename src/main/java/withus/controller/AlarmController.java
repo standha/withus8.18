@@ -32,9 +32,7 @@ public class AlarmController extends BaseController{
     @Statistical
     public ModelAndView getAlarm() {
         ModelAndView modelAndView = new ModelAndView("alarm/alarm");
-        String user = getUsername();
         modelAndView.addObject("previousUrl", "/home");
-        System.out.println("UserName : "+user);
         return modelAndView;
     }
 
@@ -115,10 +113,9 @@ public class AlarmController extends BaseController{
     @Statistical
     public ModelAndView getAppointments(@RequestParam(required = false) Integer year, @RequestParam(required = false) Integer month) {
         ModelAndView modelAndView = new ModelAndView("alarm/appointments");
-        User user = getUser();
-        String patientContact = getPatientContact();
-        String userId = getUsername();
-        modelAndView.addObject("appointments",userId);
+        Tbl_outpatient_visit_alarm appointment = alarmService.getPatientAppointment(getConnectId());
+        modelAndView.addObject("type",getUser().getType());
+        modelAndView.addObject("appointments",appointment);
         modelAndView.addObject("previousUrl","/alarm");
 
         return modelAndView;

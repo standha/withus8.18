@@ -48,7 +48,6 @@ public class NoticeScheduler {
 
     //@Scheduled(cron = "0 * * * * *")
     public @ResponseBody ResponseEntity<String> pill() throws JSONException, InterruptedException  {
-        System.out.println("복약 알림 Scheduler ");
         if(noticePill().isEmpty()){
             return new ResponseEntity<>("No Target!", HttpStatus.BAD_REQUEST);
         }

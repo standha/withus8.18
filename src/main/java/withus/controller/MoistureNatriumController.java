@@ -35,7 +35,6 @@ public class MoistureNatriumController extends BaseController{
         ModelAndView modelAndView = new ModelAndView("moistureNatrium/moistureNatrium");
         String user = getUsername();
         modelAndView.addObject("previousUrl", "/home");
-        System.out.println("UserName : "+user);
         return modelAndView;
     }
     @GetMapping("/moisture")
@@ -206,7 +205,6 @@ public class MoistureNatriumController extends BaseController{
         for(int i=1; i<8; i++){
             avg = avg+  moistureNatriumService.getMoistureDayRecord(new RecordKey(getConnectId(),now.with(DayOfWeek.of(i))));
         }
-        System.out.println(avg);
         return avg*200/7;
     }
 }

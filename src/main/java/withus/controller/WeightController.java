@@ -33,12 +33,12 @@ public class WeightController extends BaseController {
     public ModelAndView getWeight() {
             ModelAndView modelAndView = new ModelAndView("weight/weight");
             User.Type typeCheck = getUser().getType();
-                    if(weightService.getTodayWeight(new RecordKey(getConnectId(), LocalDate.now()))==null){
-                        modelAndView.addObject("weight", "오늘 몸무게를 입력해봐요!"); //객체가 비어있어 타임리프에 null point 오류를 해결해주도록 한다. weight에 0kg을 뷰해줌
-                    }else{
-                        Tbl_weight weight = weightService.getTodayWeight(new RecordKey(getConnectId(), LocalDate.now()));
-                        modelAndView.addObject("weight", weight.getWeight());
-                    }
+            if(weightService.getTodayWeight(new RecordKey(getConnectId(), LocalDate.now()))==null){
+                modelAndView.addObject("weight", "오늘 몸무게를 입력해봐요!"); //객체가 비어있어 타임리프에 null point 오류를 해결해주도록 한다. weight에 0kg을 뷰해줌
+            }else{
+                Tbl_weight weight = weightService.getTodayWeight(new RecordKey(getConnectId(), LocalDate.now()));
+                modelAndView.addObject("weight", weight.getWeight());
+            }
 
             modelAndView.addObject("type",typeCheck);
             modelAndView.addObject("previousUrl", "/home");
