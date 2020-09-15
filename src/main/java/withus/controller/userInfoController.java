@@ -30,6 +30,11 @@ public class userInfoController extends BaseController {
     public ModelAndView getUserInfo() {
         ModelAndView modelAndView = new ModelAndView("/changeInfo");
         User user = getUser();
+      /*  if(user.getType() == User.Type.PATIENT && user.getCaregiver().getContact() != null){
+            modelAndView.addObject("caregiver_contact", user.getCaregiver().getContact());
+        }else if(user.getType() == User.Type.PATIENT && user.getCaregiver().getContact() == null){
+            modelAndView.addObject("caregiver_contact", null);
+        }*/
         modelAndView.addObject("user", user);
         modelAndView.addObject("previousUrl", "/home");
 
@@ -38,11 +43,8 @@ public class userInfoController extends BaseController {
     @PostMapping(value = "/changeInfo", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<User> putMember(@RequestBody User user) {
-        System.out.println("2222222222222222222222222222222");
         User savedUser = null;
         Result.Code code = Result.Code.ERROR;
-        System.out.println("11111111111111111111111111111111111111");
-
         if (!isMissingMandatories(user)) {
             try {
                     User.Type userType = user.getType();

@@ -1,6 +1,5 @@
 function onFormSubmission(form) {
     const userType = form.querySelector("input[name=user]:checked").value;
-
     const id = form.querySelector("input[name=id]").value;
     const password = form.querySelector("input[name=password]").value;
     const name = form.querySelector("input[name=name]").value;

@@ -8,6 +8,7 @@ spring:
     url: jdbc:mysql://192.168.0.223/withus?serverTimezone=Asia/Seoul
     username: withus
     password: withus
+
     driver-class-name: com.mysql.cj.jdbc.Driver
     initialization-mode: never
     sql-script-encoding: UTF-8
