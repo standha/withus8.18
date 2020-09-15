@@ -1,9 +1,12 @@
 package withus.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import withus.entity.Tbl_goal;
 import withus.repository.GoalRepository;
+
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @Service
@@ -20,4 +23,10 @@ public class GoalService {
     public Tbl_goal getGoalId(String username){
         return goalRepository.findByGoalId(username).orElse(null);
     }
+
+    @NonNull
+    public Tbl_goal upsertGoal(Tbl_goal tbl_goal) {
+        return goalRepository.save(tbl_goal);
+    }
+
 }

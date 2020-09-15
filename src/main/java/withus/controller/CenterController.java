@@ -11,19 +11,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
+import withus.entity.Tbl_goal;
 import withus.entity.User;
 import withus.entity.User.Type;
+import withus.service.GoalService;
 import withus.service.UserService;
 
 @Controller
 public class CenterController extends BaseController
 {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
+	private final GoalService goalService;
 
 	@Autowired
-	public CenterController(AuthenticationFacade authenticationFacade, UserService userService)
+	public CenterController(AuthenticationFacade authenticationFacade, UserService userService, GoalService goalService)
 	{
 		super(userService, authenticationFacade);
+		this.goalService = goalService;
 	}
 
 	@GetMapping({ "/center" })
@@ -40,9 +44,47 @@ public class CenterController extends BaseController
 			modelAndView.addObject("type", user.getType());
 			modelAndView.setViewName("home");
 		}
-
+		modelAndView.addObject("goalNow",getGoalNow(getConnectId()));
 		modelAndView.addObject("user", user);
 
 		return modelAndView;
+	}
+
+	public String getGoalNow(String username){
+		Integer goalCheck = goalService.getGoalId(username).getGoal();
+		String goalNow = "";
+		switch (goalCheck){
+			case 0:
+				goalNow = "아직 이주의 목표를 설정하지 않으셨네요";
+				break;
+			case 1:
+				goalNow = "매일 정해진 시간 약 복용";
+				break;
+			case 2:
+				goalNow = "매일 혈압과 맥박 측정";
+				break;
+			case 3:
+				goalNow = "매일 체중 측정";
+				break;
+			case 4:
+				goalNow = "주 3회 이상 증상일지 기록";
+				break;
+			case 5:
+				goalNow = "매일 증상일지 기록";
+				break;
+			case 6:
+				goalNow = "주 3회 이상 식사 시 염분 측정";
+				break;
+			case 7:
+				goalNow = "매일 식사 시 염분 측정";
+				break;
+			case 8:
+				goalNow = "주 1회, 최소 30분 이상 운동";
+				break;
+			case 9:
+				goalNow = "주 3회, 최소 30분 이상 운동";
+				break;
+		}
+		return goalNow;
 	}
 }

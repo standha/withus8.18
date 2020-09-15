@@ -9,43 +9,83 @@
 </head>
 <body>
     <div th:replace="header :: #header"></div>
-    <div id="body">
+    <div id =  "body" th:if = "${type} == ${T(withus.entity.User.Type).PATIENT} ">
         <div>목표 리스트</div>
         <div>오늘의 목표</div>
         <div>약물 복용</div>
         <div>
             <p>
-                <input type="radio" name="check_radio" onclick="radioClick()" value="매일 정해진 시간 약 복용" th:checked="${goal == 0}">매일 정해진 시간 약 복용
+                <input type="radio" name="check_radio" onclick="radioClick()" value="매일 정해진 시간 약 복용" th:checked="${goal == 1}">매일 정해진 시간 약 복용
             </p>
             <p>
-                <input type="radio" name="check_radio" onclick="radioClick()" value="매일 혈압과 맥박 측정" th:checked="${goal == 1}">매일 혈압과 맥박 측정
+                <input type="radio" name="check_radio" onclick="radioClick()" value="매일 혈압과 맥박 측정" th:checked="${goal == 2}">매일 혈압과 맥박 측정
             </p>
             <p>
-                <input type="radio" name="check_radio" onclick="radioClick()" value="매일 체중 측정" th:checked="${goal == 2}" >매일 체중 측정
+                <input type="radio" name="check_radio" onclick="radioClick()" value="매일 체중 측정" th:checked="${goal == 3}" >매일 체중 측정
             </p>
         </div>
         <div>증상일지 및 염분 제한</div>
         <div>
             <p>
-                <input type="radio" name="check_radio" onclick="radioClick()"  value="주 3회 이상 증상일지 기록"  th:checked="${goal == 3}" >주 3회 이상 증상일지 기록
+                <input type="radio" name="check_radio" onclick="radioClick()"  value="주 3회 이상 증상일지 기록"  th:checked="${goal == 4}" >주 3회 이상 증상일지 기록
             </p>
             <p>
-                <input type="radio" name="check_radio" onclick="radioClick()" value="매일 증상일지 기록"  th:checked="${goal == 4}" >매일 증상일지 기록
+                <input type="radio" name="check_radio" onclick="radioClick()" value="매일 증상일지 기록"  th:checked="${goal == 5}" >매일 증상일지 기록
             </p>
             <p>
-                <input type="radio" name="check_radio" onclick="radioClick()" value="주 3회 이상 식사 시 염분 측정"  th:checked="${goal == 5}" >주 3회 이상 식사 시 염분 측정
+                <input type="radio" name="check_radio" onclick="radioClick()" value="주 3회 이상 식사 시 염분 측정"  th:checked="${goal == 6}" >주 3회 이상 식사 시 염분 측정
             </p>
             <p>
-                <input type="radio" name="check_radio" onclick="radioClick()"  value="매일 식사 시 염분 측정"  th:checked="${goal == 6}" >매일 식사 시 염분 측정
+                <input type="radio" name="check_radio" onclick="radioClick()"  value="매일 식사 시 염분 측정"  th:checked="${goal == 7}" >매일 식사 시 염분 측정
             </p>
         </div>
         <div>운동</div>
         <div>
             <p>
-                <input type="radio" name="check_radio" onclick="radioClick()" value="주 1회, 최소 30분 이상 운동"  th:checked="${goal == 7}" >주 1회, 최소 30분 이상 운동
+                <input type="radio" name="check_radio" onclick="radioClick()" value="주 1회, 최소 30분 이상 운동"  th:checked="${goal == 8}" >주 1회, 최소 30분 이상 운동
             </p>
             <p>
-                <input type="radio" name="check_radio" onclick="radioClick()" value="주 3회, 최소 30분 이상 운동"  th:checked="${goal == 8}" >주 3회, 최소 30분 이상 운동
+                <input type="radio" name="check_radio" onclick="radioClick()" value="주 3회, 최소 30분 이상 운동"  th:checked="${goal == 9}" >주 3회, 최소 30분 이상 운동
+            </p>
+        </div>
+    </div>
+    <div id =  "body" th:if = "${type} == ${T(withus.entity.User.Type).CAREGIVER} ">
+        <div>목표 리스트</div>
+        <div>오늘의 목표</div>
+        <div>약물 복용</div>
+        <div>
+            <p>
+                <input type="radio" name="check_radio" onclick="radioClick()" value="매일 정해진 시간 약 복용" th:checked="${goal == 1}" disabled>매일 정해진 시간 약 복용
+            </p>
+            <p>
+                <input type="radio" name="check_radio" onclick="radioClick()" value="매일 혈압과 맥박 측정" th:checked="${goal == 2}" disabled>매일 혈압과 맥박 측정
+            </p>
+            <p>
+                <input type="radio" name="check_radio" onclick="radioClick()" value="매일 체중 측정" th:checked="${goal == 3}" disabled>매일 체중 측정
+            </p>
+        </div>
+        <div>증상일지 및 염분 제한</div>
+        <div>
+            <p>
+                <input type="radio" name="check_radio" onclick="radioClick()"  value="주 3회 이상 증상일지 기록"  th:checked="${goal == 4}" disabled>주 3회 이상 증상일지 기록
+            </p>
+            <p>
+                <input type="radio" name="check_radio" onclick="radioClick()" value="매일 증상일지 기록"  th:checked="${goal == 5}" disabled>매일 증상일지 기록
+            </p>
+            <p>
+                <input type="radio" name="check_radio" onclick="radioClick()" value="주 3회 이상 식사 시 염분 측정"  th:checked="${goal == 6}" disabled>주 3회 이상 식사 시 염분 측정
+            </p>
+            <p>
+                <input type="radio" name="check_radio" onclick="radioClick()"  value="매일 식사 시 염분 측정"  th:checked="${goal == 7}" disabled>매일 식사 시 염분 측정
+            </p>
+        </div>
+        <div>운동</div>
+        <div>
+            <p>
+                <input type="radio" name="check_radio" onclick="radioClick()" value="주 1회, 최소 30분 이상 운동"  th:checked="${goal == 8}" disabled>주 1회, 최소 30분 이상 운동
+            </p>
+            <p>
+                <input type="radio" name="check_radio" onclick="radioClick()" value="주 3회, 최소 30분 이상 운동"  th:checked="${goal == 9}" disabled>주 3회, 최소 30분 이상 운동
             </p>
         </div>
     </div>
