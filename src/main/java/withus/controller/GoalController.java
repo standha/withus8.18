@@ -3,20 +3,16 @@ package withus.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
-import withus.entity.*;
-import withus.service.ExerciseService;
+import withus.entity.RecordKey;
+import withus.entity.Tbl_goal;
+import withus.entity.User;
 import withus.service.GoalService;
 import withus.service.UserService;
-
-import java.time.LocalDate;
 
 @Controller
 public class GoalController extends BaseController {
@@ -39,9 +35,10 @@ public class GoalController extends BaseController {
         modelAndView.addObject("previousUrl", "/center");
         return modelAndView;
     }
+
     @PutMapping(value = "/goal",consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Result<Tbl_goal> getMoisture(@RequestBody Tbl_goal tbl_goal){
+    public Result<Tbl_goal> getGoal(@RequestBody Tbl_goal tbl_goal){
         tbl_goal.setGoalId(getConnectId());
         Result.Code code;
         Tbl_goal saved = null;

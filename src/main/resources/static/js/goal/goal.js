@@ -103,7 +103,7 @@ function radioClick(){
             .then(response => response.json())
             .then(data =>console.log(data));
 
-        history.back();
+        location.href='center';
     }
     else{
         console.log("목표 설정 취소");
