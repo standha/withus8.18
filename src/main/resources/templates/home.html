@@ -94,69 +94,14 @@
                 <span class="black">위더스랑 </span>
                 <span class="ico-logo2"></span>
             </div>
-            <a class="btn sm type08" href="javascript:void(0)">
+            <a class="btn sm type08" th:href="@{wwithus}">
                 <span class="txt-lt">채팅시작</span>
                 <span class="ico-arrow1"></span>
             </a>
 		</div>
-	</footer>
 	<!-- // footer -->
-
-
 </div>
 <!--// wrap -->
 
-</body>
-</html>
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="kr">
-<head>
-	<meta charset="UTF-8">
-	<link th:href="@{/css/header.css}" rel="stylesheet">
-	<link th:href="@{/css/footer.css}" rel="stylesheet">
-	<link th:href="@{/css/home.css}" rel="stylesheet">
-	<script th:src="@{/js/header.js}"></script>
-	<title>위더스</title>
-</head>
-<body>
-	<div th:replace="header :: #header"></div>
-	<div id="body">
-		<div id="level-1">
-			<div>
-				<span>이 주의 목표</span>
-				<input th:type="text"/>
-			</div>
-			<img th:src="@{/images/flower.png}">
-		</div>
-		<div id="level-2">
-			<a class="main-icon" th:href="@{/alarm}">
-				<img th:src="@{/images/alarm.png}"/>
-				<button>알람</button>
-			</a>
-			<a class="main-icon" href="javascript: alert('blood-pressure');">
-				<img th:src="@{/images/bloodPressure.png}"/>
-				<button>혈압/맥박</button>
-			</a>
-			<a class="main-icon" href="javascript: alert('exercise');">
-				<img th:src="@{/images/exercise.png}"/>
-				<button>운동</button>
-			</a>
-		</div>
-		<div id="level-3">
-			<a class="main-icon" th:href="@{/symptom}">
-				<img th:src="@{/images/survey.png}"/>
-				<button>증상일지</button>
-			</a>
-			<a class="main-icon" th:href="@{/moistureNatrium}">
-				<img th:src="@{/images/saltAndWater.png}"/>
-				<button>염분/수분</button>
-			</a>
-			<a class="main-icon" th:href="@{/weight}">
-				<img th:src="@{/images/weight.png}"/>
-				<button>체중</button>
-			</a>
-		</div>
-	</div>
-	<div th:replace="footer :: #footer"></div>
 </body>
 </html>
