@@ -26,32 +26,49 @@ import withus.util.Utility;
 
 @Service
 @Slf4j
-public class WwithusService {
+public class WwithusService
+{
 	private final WwithusEntryRepository wwithusEntryRepository;
 	private final WwithusEntryHistoryRepository wwithusEntryHistoryRepository;
 
 	@Autowired
-	public WwithusService(WwithusEntryRepository wwithusEntryRepository, WwithusEntryHistoryRepository wwithusEntryHistoryRepository) {
+	public WwithusService(WwithusEntryRepository wwithusEntryRepository,
+			WwithusEntryHistoryRepository wwithusEntryHistoryRepository)
+	{
 		this.wwithusEntryRepository = wwithusEntryRepository;
 		this.wwithusEntryHistoryRepository = wwithusEntryHistoryRepository;
 	}
 
-	public ChatBalloon getWwithusEntryAndSaveHistory(WwithusEntryRequest wwithusEntryRequest) {
+	public ChatBalloon getWwithusEntryAndSaveHistory(WwithusEntryRequest wwithusEntryRequest)
+	{
 		User user = wwithusEntryRequest.getUser();
 		List<String> codesToSaveAsHistories = wwithusEntryRequest.getCodesToSaveAsHistories();
 		String currentCode = wwithusEntryRequest.getCurrentCode();
-		if (currentCode != null) { codesToSaveAsHistories.add(currentCode); }
 
-		for (String codeToSaveAsHistory : codesToSaveAsHistories) {
-			WwithusEntry currentEntry = wwithusEntryRepository.findById(codeToSaveAsHistory).<RuntimeException>orElseThrow(() -> {
-				throw new RuntimeException(String.format("Failed to select entry by the code \"%s\".", currentCode));
-			});
+		if (currentCode != null)
+		{
+			codesToSaveAsHistories.add(currentCode);
+		}
 
-			WwithusEntryHistory wwithusEntryHistory = toWwithusEntryHistory(wwithusEntryRequest.getUser(), currentEntry);
-			WwithusEntryHistory existingHistory = wwithusEntryHistoryRepository.findById(wwithusEntryHistory.getKey()).orElse(null);
-			if (existingHistory == null) {
+		for (String codeToSaveAsHistory : codesToSaveAsHistories)
+		{
+			WwithusEntry currentEntry = wwithusEntryRepository.findById(codeToSaveAsHistory)
+					.<RuntimeException>orElseThrow(() ->
+					{
+						throw new RuntimeException(
+								String.format("Failed to select entry by the code \"%s\".", currentCode));
+					});
+
+			WwithusEntryHistory wwithusEntryHistory = toWwithusEntryHistory(wwithusEntryRequest.getUser(),
+					currentEntry);
+			WwithusEntryHistory existingHistory = wwithusEntryHistoryRepository.findById(wwithusEntryHistory.getKey())
+					.orElse(null);
+			if (existingHistory == null)
+			{
 				wwithusEntryHistoryRepository.save(wwithusEntryHistory);
-			} else {
+			}
+			else
+			{
 				log.debug("Chose not to overwrite a {}: {}", WwithusEntry.class.getSimpleName(), wwithusEntryHistory);
 			}
 		}
@@ -60,12 +77,19 @@ public class WwithusService {
 		String nextCode = wwithusEntryRequest.getNextCode();
 		int week = user.getWeek();
 		DayOfWeek dayOfWeek = wwithusEntryRequest.getDate().getDayOfWeek();
-		if (nextCode == null) {
-			nextEntry = wwithusEntryRepository.findFirstByWeekAndDay(week, dayOfWeek).<RuntimeException>orElseThrow(() -> {
-				throw new RuntimeException(String.format("Failed to select the first entry for %s, week %d.", dayOfWeek, week));
-			});
-		} else {
-			nextEntry = wwithusEntryRepository.findById(nextCode).<RuntimeException>orElseThrow(() -> {
+		if (nextCode == null)
+		{
+			nextEntry = wwithusEntryRepository.findFirstByWeekAndDay(week, dayOfWeek)
+					.<RuntimeException>orElseThrow(() ->
+					{
+						throw new RuntimeException(
+								String.format("Failed to select the first entry for %s, week %d.", dayOfWeek, week));
+					});
+		}
+		else
+		{
+			nextEntry = wwithusEntryRepository.findById(nextCode).<RuntimeException>orElseThrow(() ->
+			{
 				throw new RuntimeException(String.format("Failed to select entry by the code \"%s\".", nextCode));
 			});
 		}
@@ -73,33 +97,36 @@ public class WwithusService {
 		return toChatBalloon(nextEntry, true);
 	}
 
-	public List<WwithusEntry> getAnswerWwithusEntries(String currentCode) {
+	public List<WwithusEntry> getAnswerWwithusEntries(String currentCode)
+	{
 		return wwithusEntryRepository.findAllAnswersByCodeStartsWithButNotExactlyOrderByCode(currentCode);
 	}
 
 	@NonNull
-	public List<ChatBalloon> getWwithusEntryHistories(User user, LocalDate date) {
+	public List<ChatBalloon> getWwithusEntryHistories(User user, LocalDate date)
+	{
 		int week = user.getWeek();
 		int day = Utility.getDayDigitForWwithus(week, date.getDayOfWeek());
 
-		List<WwithusEntryHistory> wwithusEntryHistories = wwithusEntryHistoryRepository.findAllByUserAndWeekDay(user, week, day);
+		List<WwithusEntryHistory> wwithusEntryHistories = wwithusEntryHistoryRepository.findAllByUserAndWeekDay(user,
+				week, day);
 
 		List<ChatBalloon> chatBalloons = new ArrayList<>();
 		Iterator<WwithusEntryHistory> iterator = wwithusEntryHistories.stream().sorted().iterator();
-		while (iterator.hasNext()) {
+		while (iterator.hasNext())
+		{
 			WwithusEntryHistory wwithusEntryHistory = iterator.next();
 
 			boolean isMostRecent = !iterator.hasNext();
 			chatBalloons.add(toChatBalloon(wwithusEntryHistory, isMostRecent));
 		}
 
-		return chatBalloons.stream()
-			.sorted()
-			.collect(Collectors.toList());
+		return chatBalloons.stream().sorted().collect(Collectors.toList());
 	}
 
 	@NonNull
-	public List<ChatBalloon> getReentrentChatBalloons(User user, LocalDate date) {
+	public List<ChatBalloon> getReentrentChatBalloons(User user, LocalDate date)
+	{
 		List<ChatBalloon> reentrantChatBalloons = new ArrayList<>();
 
 		String content = "다시 들어와주셨네요. 저 위더스랑과의 대화를 다시 하고 싶으세요?";
@@ -109,39 +136,23 @@ public class WwithusService {
 		final String TEMPORARY_POSITIVE_HASH_CODE = String.valueOf(TEMPORARY_POSITIVE.hashCode());
 		final String TEMPORARY_NEGATIVE_HASH_CODE = String.valueOf(TEMPORARY_NEGATIVE.hashCode());
 
-		ChatBalloon interrogation = ChatBalloon.builder()
-			.content(content)
-			.answerButtons(
-				Arrays.asList(
-					AnswerButton.builder()
-						.ordinal(0)
-						.code("DOES NOT MATTER")
-						.isToRewind(true)
-						.isToTerminate(false)
-						.isHelpRequest(false)
-						.content(TEMPORARY_POSITIVE)
-						.nextCode(TEMPORARY_POSITIVE_HASH_CODE)
-						.build(),
-					AnswerButton.builder()
-						.ordinal(1)
-						.code("DOES NOT REALLY MATTER")
-						.isToRewind(false)
-						.isToTerminate(true)
-						.isHelpRequest(false)
-						.content(TEMPORARY_NEGATIVE)
-						.nextCode(TEMPORARY_NEGATIVE_HASH_CODE)
-						.build()
-				)
-			).build();
-		ChatBalloon positiveChatBalloon = ChatBalloon.builder()
-			.code(TEMPORARY_POSITIVE_HASH_CODE)
-			// TODO: 해당 날짜의 대화 처음부터 시작...
-			.build();
-		ChatBalloon negativeChatBalloon = ChatBalloon.builder()
-			.code(TEMPORARY_NEGATIVE_HASH_CODE)
-			// TODO
-			.content(String.format("아쉽지만, %s에 다시 인사드릴게요.", Utility.getNextDayForWwithus(user.getWeek(), date.getDayOfWeek())))
-			.build();
+		ChatBalloon interrogation = ChatBalloon.builder().content(content)
+				.answerButtons(Arrays.asList(
+						AnswerButton.builder().ordinal(0).code("DOES NOT MATTER").isToRewind(true).isToTerminate(false)
+								.isHelpRequest(false).content(TEMPORARY_POSITIVE).nextCode(TEMPORARY_POSITIVE_HASH_CODE)
+								.build(),
+						AnswerButton.builder().ordinal(1).code("DOES NOT REALLY MATTER").isToRewind(false)
+								.isToTerminate(true).isHelpRequest(false).content(TEMPORARY_NEGATIVE)
+								.nextCode(TEMPORARY_NEGATIVE_HASH_CODE).build()))
+				.build();
+		ChatBalloon positiveChatBalloon = ChatBalloon.builder().code(TEMPORARY_POSITIVE_HASH_CODE)
+				// TODO: 해당 날짜의 대화 처음부터 시작...
+				.build();
+		ChatBalloon negativeChatBalloon = ChatBalloon.builder().code(TEMPORARY_NEGATIVE_HASH_CODE)
+				// TODO
+				.content(String.format("아쉽지만, %s에 다시 인사드릴게요.",
+						Utility.getNextDayForWwithus(user.getWeek(), date.getDayOfWeek())))
+				.build();
 
 		reentrantChatBalloons.add(interrogation);
 		reentrantChatBalloons.add(positiveChatBalloon);
@@ -151,16 +162,12 @@ public class WwithusService {
 	}
 
 	@NonNull
-	public List<ChatBalloon> getCyaLaterChatBalloons(User user) {
+	public List<ChatBalloon> getCyaLaterChatBalloons(User user)
+	{
 		List<ChatBalloon> cyaLaterChatBalloons = new ArrayList<>();
-		ChatBalloon cyaLaterBalloon = ChatBalloon.builder()
-			.code("AN ARBITRARY CODE")
-			.direction(ChatBalloon.Direction.LEFT)
-			.isMostRecent(false)
-			.isToTerminate(true)
-			.isAnswerExpected(false)
-			.content(Utility.getNonWwithusDayMessage(user.getWeek()))
-			.build();
+		ChatBalloon cyaLaterBalloon = ChatBalloon.builder().code("AN ARBITRARY CODE")
+				.direction(ChatBalloon.Direction.LEFT).isMostRecent(false).isToTerminate(true).isAnswerExpected(false)
+				.content(Utility.getNonWwithusDayMessage(user.getWeek())).build();
 
 		cyaLaterChatBalloons.add(cyaLaterBalloon);
 
@@ -168,52 +175,54 @@ public class WwithusService {
 	}
 
 	@NonNull
-	public Result.Code deleteWwithusEntryHistories(User user, LocalDate date) {
+	public Result.Code deleteWwithusEntryHistories(User user, LocalDate date)
+	{
 		Result.Code code = Result.Code.OK;
 		int week = user.getWeek();
 		int day = Utility.getDayDigitForWwithus(week, date.getDayOfWeek());
 
-		List<WwithusEntryHistory> wwithusEntryHistories = wwithusEntryHistoryRepository.findAllByUserAndWeekDay(user, week, day);
-		if (wwithusEntryHistories.isEmpty()) {
+		List<WwithusEntryHistory> wwithusEntryHistories = wwithusEntryHistoryRepository.findAllByUserAndWeekDay(user,
+				week, day);
+		if (wwithusEntryHistories.isEmpty())
+		{
 			code = Result.Code.ERROR_NOTHING_TO_DELETE;
-		} else {
+		}
+		else
+		{
 			wwithusEntryHistoryRepository.deleteAll(wwithusEntryHistories);
 		}
 
 		return code;
 	}
 
-	private WwithusEntryHistory toWwithusEntryHistory(User user, WwithusEntry wwithusEntry) {
+	private WwithusEntryHistory toWwithusEntryHistory(User user, WwithusEntry wwithusEntry)
+	{
 		return WwithusEntryHistory.builder()
-			.key(
-				WwithusEntryHistory.Key.builder()
-					.user(user)
-					.entry(wwithusEntry)
-					.build()
-			).build();
+				.key(WwithusEntryHistory.Key.builder().user(user).entry(wwithusEntry).build()).build();
 	}
 
-	private ChatBalloon toChatBalloon(@NonNull WwithusEntry wwithusEntry, boolean isLast) {
+	private ChatBalloon toChatBalloon(@NonNull WwithusEntry wwithusEntry, boolean isLast)
+	{
 		return toChatBalloon(wwithusEntry, LocalDateTime.now(), isLast);
 	}
-	private ChatBalloon toChatBalloon(@NonNull WwithusEntryHistory wwithusEntryHistory, boolean isLast) {
+
+	private ChatBalloon toChatBalloon(@NonNull WwithusEntryHistory wwithusEntryHistory, boolean isLast)
+	{
 		return toChatBalloon(wwithusEntryHistory.getEntry(), wwithusEntryHistory.getDateTime(), isLast);
 	}
-	private ChatBalloon toChatBalloon(@NonNull WwithusEntry wwithusEntry, @NonNull LocalDateTime dateTime, boolean isLast) {
-		boolean isAnswerExpected = wwithusEntry.isAnswerExpected();
-		ChatBalloon.ChatBalloonBuilder chatBalloonBuilder = ChatBalloon.builder()
-			.code(wwithusEntry.getCode())
-			.direction(wwithusEntry.isAnswer()? ChatBalloon.Direction.RIGHT: ChatBalloon.Direction.LEFT)
-			.isMostRecent(isLast)
-			.isToTerminate(wwithusEntry.isLast())
-			.isAnswerExpected(isAnswerExpected)
-			.content(wwithusEntry.getContent())
-			.urlToImageFile(wwithusEntry.getUrlToImageFile())
-			.urlToAudioFile(wwithusEntry.getUrlToAudioFile())
-			.dateTime(dateTime)
-			.nextCode(wwithusEntry.getNextCode());
 
-		if (isAnswerExpected) {
+	private ChatBalloon toChatBalloon(@NonNull WwithusEntry wwithusEntry, @NonNull LocalDateTime dateTime, boolean isLast)
+	{
+		boolean isAnswerExpected = wwithusEntry.isAnswerExpected();
+		ChatBalloon.ChatBalloonBuilder chatBalloonBuilder = ChatBalloon.builder().code(wwithusEntry.getCode())
+				.direction(wwithusEntry.isAnswer() ? ChatBalloon.Direction.RIGHT : ChatBalloon.Direction.LEFT)
+				.isMostRecent(isLast).isToTerminate(wwithusEntry.isLast()).isAnswerExpected(isAnswerExpected)
+				.content(wwithusEntry.getContent()).urlToImageFile(wwithusEntry.getUrlToImageFile())
+				.urlToAudioFile(wwithusEntry.getUrlToAudioFile()).dateTime(dateTime)
+				.nextCode(wwithusEntry.getNextCode());
+
+		if (isAnswerExpected)
+		{
 			List<AnswerButton> answerButtons = getAnswerButtons(wwithusEntry);
 			chatBalloonBuilder.answerButtons(answerButtons);
 		}
@@ -221,24 +230,20 @@ public class WwithusService {
 		return chatBalloonBuilder.build();
 	}
 
-	private List<AnswerButton> getAnswerButtons(WwithusEntry wwithusEntry) {
+	private List<AnswerButton> getAnswerButtons(WwithusEntry wwithusEntry)
+	{
 		List<AnswerButton> answerButtons = new ArrayList<>();
-		List<WwithusEntry> answerWwithusEntries = getAnswerWwithusEntries(wwithusEntry.getCode()).stream()
-			.sorted()
-			.collect(Collectors.toList());
+		List<WwithusEntry> answerWwithusEntries = getAnswerWwithusEntries(wwithusEntry.getCode()).stream().sorted()
+				.collect(Collectors.toList());
 
-		for (int i = 0; i < answerWwithusEntries.size(); i++) {
+		for (int i = 0; i < answerWwithusEntries.size(); i++)
+		{
 			WwithusEntry answerWwithusEntity = answerWwithusEntries.get(i);
-			AnswerButton answerButton = AnswerButton.builder()
-				.code(answerWwithusEntity.getCode())
-				.ordinal(i)
-				.isHelpRequest(answerWwithusEntity.isHelpRequest())
-				.isToTerminate(answerWwithusEntity.isLast())
-				.isToRewind(answerWwithusEntity.isToRewind())
-				.content(answerWwithusEntity.getContent())
-				.urlToImageFile(answerWwithusEntity.getUrlToImageFile())
-				.nextCode(answerWwithusEntity.getNextCode())
-				.build();
+			AnswerButton answerButton = AnswerButton.builder().code(answerWwithusEntity.getCode()).ordinal(i)
+					.isHelpRequest(answerWwithusEntity.isHelpRequest()).isToTerminate(answerWwithusEntity.isLast())
+					.isToRewind(answerWwithusEntity.isToRewind()).content(answerWwithusEntity.getContent())
+					.urlToImageFile(answerWwithusEntity.getUrlToImageFile()).nextCode(answerWwithusEntity.getNextCode())
+					.build();
 
 			answerButtons.add(answerButton);
 		}

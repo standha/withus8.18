@@ -91,6 +91,7 @@ public class WwithusController extends BaseController {
 
 		try {
 			User user = getUser();
+			System.out.println("AAAAAAAAAAAAAAA name = " + user.getName());
 			wwithusEntryRequest.setUser(user);
 
 			LocalDate today = LocalDate.now();

@@ -1,4 +1,4 @@
-const MESSAGE_INTERVAL_MILLIS = 1000;
+const MESSAGE_INTERVAL_MILLIS = 2000;
 const GET_FETCH_OPTIONS = {
 	method: "GET",
 	headers: {
@@ -24,11 +24,15 @@ let urlToHistory;
  */
 let urlToRequestNext;
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function()
+{
 	onDomLoad();
 }, false);
 
-function onDomLoad() {
+
+function onDomLoad()
+{
+	console.log("onDomLoad()");
 	balloonsAreaElement = document.querySelector("div#body");
 	urlToHistory = document.querySelector("#history-url").value;
 	urlToRequestNext = document.querySelector("#request-next-url").value;
@@ -40,28 +44,38 @@ function onDomLoad() {
 /**
  * @param {Element} parent
  */
-function removeChildren(parent) {
+function removeChildren(parent)
+{
+	console.log("removeChildren()");
 	parent.childNodes.forEach(childNode => { parent.removeChild(childNode); });
 }
 
-function loadHistory() {
+function loadHistory()
+{
+	console.log("loadHistory()");
+
 	fetch(urlToHistory, GET_FETCH_OPTIONS)
 		.then(response => response.json())
 		.then(object => {
 			console.log(object);
 
-			if (object) {
+			if (object)
+			{
 				const data = object["data"];
-				if (data && data.length > 0) {
+				if (data && data.length > 0)
+				{
 					renderBalloons(data);
-				} else {
+				}
+				else
+				{
 					requestNext(null);
 				}
 			}
 		});
 }
 
-function deleteHistory() {
+function deleteHistory()
+{
 	const options = {
 		method: "DELETE",
 		headers: {
@@ -81,10 +95,11 @@ function deleteHistory() {
  *
  * @param {Object[]} objects
  */
-function renderBalloons(objects) {
-	objects.forEach(object => {
+function renderBalloons(objects)
+{
+	objects.forEach(object =>
+	{
 		const chatBalloon = ChatBalloon.fromObject(object);
-
 		renderBalloon(chatBalloon);
 	});
 }
@@ -92,7 +107,8 @@ function renderBalloons(objects) {
 /**
  * @param {ChatBalloon} chatBalloon
  */
-function renderBalloon(chatBalloon) {
+function renderBalloon(chatBalloon)
+{
 	const div = document.createElement("div");
 	div.id = chatBalloon.sequence.toString();
 	div.className = "balloons";
@@ -100,12 +116,14 @@ function renderBalloon(chatBalloon) {
 	const input = `<input type="hidden" value="${chatBalloon.sequence}">`;
 
 	let img = "";
-	if (chatBalloon.urlToImageFile) {
+	if (chatBalloon.urlToImageFile)
+	{
 		img = `<img src="${chatBalloon.urlToImageFile}" alt="이미지가 표시되지 않고 있습니다.">`;
 	}
 
 	let audio = "";
-	if (chatBalloon.urlToAudioFile) {
+	if (chatBalloon.urlToAudioFile)
+	{
 		audio = `<audio src="${chatBalloon.urlToAudioFile}" controls></audio>`;
 	}
 
@@ -113,11 +131,13 @@ function renderBalloon(chatBalloon) {
 	const dateTimeSpan = `<span class="date-time">${chatBalloon.dateString}</span>`;
 
 	let answerButtonsSpan = "";
-	if (chatBalloon.answerButtons && chatBalloon.answerButtons.length > 0) {
+	if (chatBalloon.answerButtons && chatBalloon.answerButtons.length > 0)
+	{
 		answerButtonsSpan = renderButtons(chatBalloon);
 	}
 
-	if (chatBalloon.direction === "RIGHT") {
+	if (chatBalloon.direction === "RIGHT")
+	{
 		div.classList.add("right");
 	}
 
@@ -126,7 +146,8 @@ function renderBalloon(chatBalloon) {
 	balloonsAreaElement.appendChild(div);
 	window.scrollTo(0, document.body.scrollHeight);
 
-	if (chatBalloon.toScheduleForNextChatBalloon) {
+	if (chatBalloon.toScheduleForNextChatBalloon)
+	{
 		setTimeout(requestNext, MESSAGE_INTERVAL_MILLIS, chatBalloon);
 	}
 }
@@ -134,7 +155,8 @@ function renderBalloon(chatBalloon) {
 /**
  * @param {string} answerButtonContent
  */
-function renderAnswer(answerButtonContent) {
+function renderAnswer(answerButtonContent)
+{
 	const div = document.createElement("div");
 	div.className = "answer balloons right";
 	div.innerHTML = `<span class="content">${answerButtonContent}</span>`;
@@ -146,7 +168,8 @@ function renderAnswer(answerButtonContent) {
  * @param {ChatBalloon} chatBalloon
  * @returns {string}
  */
-function renderButtons(chatBalloon) {
+function renderButtons(chatBalloon)
+{
 	let answerButtonsSpan = `<span class="answer-buttons">`;
 
 	chatBalloon.answerButtons.forEach(answerButton => {
