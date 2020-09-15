@@ -46,14 +46,52 @@ public class NoticeScheduler {
         this.userService = userService;
     }
 
-    //@Scheduled(cron = "0 * * * * *")
-    public @ResponseBody ResponseEntity<String> pill() throws JSONException, InterruptedException  {
-        if(noticePill().isEmpty()){
+    @Scheduled(cron = "0 * * * * *")
+    public void pillNotice(){
+        List<String>morningToken = new ArrayList<>();
+        List<String>lunchToken = new ArrayList<>();
+        List<String>dinnerToken = new ArrayList<>();
+        List<Tbl_medication_alarm> alarms = alarmService.getPillAlarmOn();
+        for (Tbl_medication_alarm alarm : alarms) {
+            LocalTime localTime = LocalTime.now();
+
+            if(alarm.getMedicationTimeMorning() != null) {
+                if (localTime.getHour() == alarm.getMedicationTimeMorning().getHour() && localTime.getMinute() == alarm.getMedicationTimeMorning().getMinute()) {
+                    User idToken = userService.getUserById(alarm.getId());
+                    morningToken.add(idToken.getAppToken());
+                }
+            }
+
+            if(alarm.getMedicationTimeLunch() != null) {
+                if (localTime.getHour() == alarm.getMedicationTimeLunch().getHour() && localTime.getMinute() == alarm.getMedicationTimeLunch().getMinute()) {
+                    User idToken = userService.getUserById(alarm.getId());
+                    lunchToken.add(idToken.getAppToken());
+                }
+            }
+
+            if(alarm.getMedicationTimeDinner() != null) {
+                if (localTime.getHour() == alarm.getMedicationTimeDinner().getHour() && localTime.getMinute() == alarm.getMedicationTimeDinner().getMinute()) {
+                    User idToken = userService.getUserById(alarm.getId());
+                    dinnerToken.add(idToken.getAppToken());
+                }
+            }
+        }
+        try {
+            notice(morningToken,"아침 약을 복용하실 시간이에요.\n 지금 약을 복용해주세요!");
+            notice(lunchToken,"점심 약을 복용하실 시간이에요.\n 지금 약을 복용해주세요!");
+            notice(dinnerToken,"저녁 약을 복용하실 시간이에요.\n 약 복용 후 복약 기록에 기록해주세요.");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public @ResponseBody ResponseEntity<String> notice(List<String>tokenList,String message) throws JSONException, InterruptedException  {
+        if(tokenList.isEmpty()){
             return new ResponseEntity<>("No Target!", HttpStatus.BAD_REQUEST);
         }
-
-        String messageBody = " 약 먹을 시간이에요";
-        String notifications = AndroidPushPeriodicNotifications.PeriodicNotificationJson("",messageBody,noticePill());
+        String notifications = AndroidPushPeriodicNotifications.PeriodicNotificationJson("",message,tokenList);
         HttpEntity<String> request = new HttpEntity<>(notifications);
 
         CompletableFuture<String> pushNotification = androidPushNotificationService.send(request);
@@ -73,38 +111,6 @@ public class NoticeScheduler {
         return new ResponseEntity<>("Push Notification ERROR!", HttpStatus.BAD_REQUEST);
     }
 
-
-
-
-    public List<String> noticePill() throws NullPointerException{
-        List<String> pillToken = new ArrayList<String>();
-        List<Tbl_medication_alarm> alarms = alarmService.getPillAlarmOn();
-        for (Tbl_medication_alarm alarm : alarms) {
-            LocalTime localTime = LocalTime.now();
-
-            if(alarm.getMedicationTimeMorning() != null) {
-                if (localTime.getHour() == alarm.getMedicationTimeMorning().getHour() && localTime.getMinute() == alarm.getMedicationTimeMorning().getMinute()) {
-                    User idToken = userService.getUserById(alarm.getId());
-                    pillToken.add(idToken.getAppToken());
-                }
-            }
-
-            if(alarm.getMedicationTimeLunch() != null) {
-                if (localTime.getHour() == alarm.getMedicationTimeLunch().getHour() && localTime.getMinute() == alarm.getMedicationTimeLunch().getMinute()) {
-                    User idToken = userService.getUserById(alarm.getId());
-                    pillToken.add(idToken.getAppToken());
-                }
-            }
-
-            if(alarm.getMedicationTimeDinner() != null) {
-                if (localTime.getHour() == alarm.getMedicationTimeDinner().getHour() && localTime.getMinute() == alarm.getMedicationTimeDinner().getMinute()) {
-                    User idToken = userService.getUserById(alarm.getId());
-                    pillToken.add(idToken.getAppToken());
-                }
-            }
-        }
-        return pillToken;
-    }
     //cron = "0 0 20 * * *"
     //매일 20시 위더스 알림
     //@Scheduled(cron = "0 * * * * *")
