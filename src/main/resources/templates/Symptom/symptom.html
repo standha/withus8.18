@@ -3,34 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/header.css}" rel="stylesheet">
-    <link th:href="@{/css/symptom/symptom.css}" rel="stylesheet">
     <script th:src="@{/js/symptom/symptom.js}"></script>
     <title>증상 일지</title>
 </head>
 <body>
-<input type="hidden" id="symptom-put-action" th:attr="value=@{/symptom-history}">
+
+<input type="hidden" id="symptom-history-get-action" th:attr="value=@{/symptom-all-history}">
 <div th:replace="header :: #header"></div>
 <div id="body">
+    <div id="body-title">증상 일지</div>
     <!-- TODO: 보호자일 경우 immutable 하도록 -->
     <form id="symptom-form" th:action="@{/symptom}" onsubmit="return onFormSubmission(this);">
-        <div id = "btn_group1">숨이 차다
-            <input type = "radio" value = "true"    id = "yes_1" name="outofbreath">예
-            <input type = "radio" value = "false"   id = "no_1"  name="outofbreath">아니오
+        <div  th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+        <div id = "btn_group1" th:switch="${breath}">숨이 차다
+            <span th:case = 1>
+                <label><input type = "radio" value = 1 id = "yes_1" name="breath" checked >예</label>
+                <label><input type = "radio" value = 0 id = "no_1"  name="breath">아니오 </label>
+            </span>
+            <span th:case = 0>
+                <label><input type = "radio" value = 1 id = "yes_1" name="breath"  >예</label>
+                <label><input type = "radio" value = 0 id = "no_1"  name="breath" checked>아니오 </label>
+            </span>
+            <span th:case = 2>
+                <label><input type = "radio" value = 1 id = "yes_1" name="breath"  >예</label>
+                <label><input type = "radio" value = 0 id = "no_1"  name="breath" >아니오 </label>
+            </span>
         </div>
-        <div id = "btn_group2">지친다
-            <input type = "radio" value = "true"    id = "yes_2" name="tired">예
-            <input type = "radio" value = "false"   id = "no_2"  name="tired">아니오
+
+        <div id = "btn_group2" th:switch="${tired}">지친다
+            <span th:case = 1>
+                <label><input type = "radio" value = 1  id = "yes_2"  name="tired"  checked>예 </label>
+                <label><input type = "radio" value = 0   id = "no_2"  name="tired"  >아니오 </label>
+            </span>
+            <span th:case = 0>
+                <label><input type = "radio" value = 1  id = "yes_2"  name="tired"  >예 </label>
+                <label><input type = "radio" value = 0   id = "no_2"  name="tired"  checked>아니오 </label>
+            </span>
+            <span th:case = 2>
+                <label><input type = "radio" value = 1  id = "yes_2"  name="tired"  >예 </label>
+                <label><input type = "radio" value = 0   id = "no_2"  name="tired"  >아니오 </label>
+            </span>
         </div>
-        <div id = "btn_group3">발목 붓는다
-            <input type = "radio" value = "true"    id = "yes_3" name="ankle">예
-            <input type = "radio" value = "false"   id = "no_3"  name="ankle">아니오
+
+        <div id = "btn_group3" th:switch="${ankle}">발목 붓는다
+            <span th:case = 1>
+                <label><input type = "radio" value = 1   id = "yes_3" name="ankle" checked>예 </label>
+                <label> <input type = "radio" value =0   id = "no_3"  name="ankle" >아니오 </label>
+            </span>
+            <span th:case = 0>
+                <label><input type = "radio" value = 1   id = "yes_3" name="ankle" >예 </label>
+                <label> <input type = "radio" value =0   id = "no_3"  name="ankle" checked>아니오 </label>
+            </span>
+            <span th:case = 2>
+                <label><input type = "radio" value = 1   id = "yes_3" name="ankle" >예 </label>
+                <label> <input type = "radio" value =0   id = "no_3"  name="ankle" >아니오 </label>
+            </span>
         </div>
-        <div id = "btn_group4" type="button">잠에서 깬다
-            <input type = "radio" value = "true"    id = "yes_4" name="cough">예
-            <input type = "radio" value = "false"   id = "no_4"  name="cough">아니오
+
+        <div id = "btn_group4" th:switch="${cough}">잠에서 깬다
+            <span th:case = 1>
+                <label> <input type = "radio" value = 1    id = "yes_4" name="cough" checked>예 </label>
+                <label> <input type = "radio" value = 0   id = "no_4"  name="cough">아니오 </label>
+            </span>
+            <span th:case = 0>
+                <label> <input type = "radio" value = 1    id = "yes_4" name="cough" >예 </label>
+                <label> <input type = "radio" value = 0   id = "no_4"  name="cough" checked>아니오 </label>
+            </span>
+            <span th:case = 2>
+                <label> <input type = "radio" value = 1    id = "yes_4" name="cough" >예 </label>
+                <label> <input type = "radio" value = 0   id = "no_4"  name="cough" >아니오 </label>
+            </span>
         </div>
+
         <input type="submit" value="저장">
+        </div>
+        <div  th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div id = "btn_group1" th:switch="${breath}">숨이 차다
+                <span th:case = 1 >
+                <label><input type = "radio" value = 1 id = "yes_1" name="breath" checked disabled>예</label>
+                <label><input type = "radio" value = 0 id = "no_1"  name="breath" disabled>아니오 </label>
+            </span>
+                <span th:case = 0>
+                <label><input type = "radio" value = 1 id = "yes_1" name="breath"  disabled>예</label>
+                <label><input type = "radio" value = 0 id = "no_1"  name="breath" checked disabled>아니오 </label>
+            </span>
+                <span th:case = 2>
+                <label><input type = "radio" value = 1 id = "yes_1" name="breath" disabled>예</label>
+                <label><input type = "radio" value = 0 id = "no_1"  name="breath" disabled>아니오 </label>
+            </span>
+            </div>
+
+            <div id = "btn_group2" th:switch="${tired}">지친다
+                <span th:case = 1>
+                <label><input type = "radio" value = 1  id = "yes_2"  name="tired"  checked disabled>예 </label>
+                <label><input type = "radio" value = 0   id = "no_2"  name="tired"  disabled>아니오 </label>
+            </span>
+                <span th:case = 0>
+                <label><input type = "radio" value = 1  id = "yes_2"  name="tired"  disabled>예 </label>
+                <label><input type = "radio" value = 0   id = "no_2"  name="tired"  checked disabled>아니오 </label>
+            </span>
+                <span th:case = 2>
+                <label><input type = "radio" value = 1  id = "yes_2"  name="tired"  disabled>예 </label>
+                <label><input type = "radio" value = 0   id = "no_2"  name="tired"  disabled>아니오 </label>
+            </span>
+            </div>
+
+            <div id = "btn_group3" th:switch="${ankle}">발목 붓는다
+                <span th:case = 1>
+                <label><input type = "radio" value = 1   id = "yes_3" name="ankle" checked disabled>예 </label>
+                <label> <input type = "radio" value =0   id = "no_3"  name="ankle" disabled>아니오 </label>
+            </span>
+                <span th:case = 0>
+                <label><input type = "radio" value = 1   id = "yes_3" name="ankle" disabled>예 </label>
+                <label> <input type = "radio" value =0   id = "no_3"  name="ankle" checked disabled>아니오 </label>
+            </span>
+                <span th:case = 2>
+                <label><input type = "radio" value = 1   id = "yes_3" name="ankle" disabled>예 </label>
+                <label> <input type = "radio" value =0   id = "no_3"  name="ankle" disabled>아니오 </label>
+            </span>
+            </div>
+
+            <div id = "btn_group4" th:switch="${cough}">잠에서 깬다
+                <span th:case = 1>
+                <label> <input type = "radio" value = 1    id = "yes_4" name="cough" checked disabled>예 </label>
+                <label> <input type = "radio" value = 0   id = "no_4"  name="cough" disabled>아니오 </label>
+            </span>
+                <span th:case = 0>
+                <label> <input type = "radio" value = 1    id = "yes_4" name="cough" disabled>예 </label>
+                <label> <input type = "radio" value = 0   id = "no_4"  name="cough" checked disabled>아니오 </label>
+            </span>
+                <span th:case = 2>
+                <label> <input type = "radio" value = 1    id = "yes_4" name="cough" disabled>예 </label>
+                <label> <input type = "radio" value = 0   id = "no_4"  name="cough" disabled>아니오 </label>
+            </span>
+            </div>
+
+            <input type="submit" value="저장" disabled>
+        </div>
     </form>
+    <div>
+        <button id="history" type="button" onclick="showHistory();">증상 변화</button>
+    </div>
 </div>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package withus.configuration;
 
+import java.io.IOException;
 import java.time.Duration;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +12,20 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
 import withus.auth.NoOpPasswordEncoder;
 import withus.service.UserService;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	private static final String REMEMBER_ME_TOKEN = "THIS MUST BE KEPT SECRET AND MAYBE CHANGED";
 
 	private final UserService userService;
@@ -37,24 +44,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
 				.permitAll()
-				.antMatchers("/registerUser", "/saveUser", "/admin")
+				.antMatchers("/registerUser", "/saveUser", "/admin_login", "/login")
 				.permitAll()
 				.anyRequest()
 				.authenticated()
 				.and()
 				.formLogin()
-				.loginPage("/admin")
+				.loginPage("/admin_login")
 				.loginProcessingUrl("/login-process")
 				.defaultSuccessUrl("/center", true)
+				.failureUrl("/admin_login.html?error=true")
+				.failureHandler(failureHandler())
 				.permitAll();
 
 		httpSecurity.formLogin()
 				.loginPage("/login")
 				.loginProcessingUrl("/login-process")
 				.defaultSuccessUrl("/center", true)
-				.permitAll();
-
-		httpSecurity
+				.failureUrl("/login.html?error=true")
+				.permitAll()
+				.and()
 				.rememberMe()
 				.rememberMeParameter("remember-me")
 				.key(REMEMBER_ME_TOKEN)
@@ -77,6 +86,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		authenticationProvider.setUserDetailsService(userService);
 
 		return authenticationProvider;
+	}
+	@Bean
+	public AuthenticationFailureHandler failureHandler() {
+		return new CustomAuthenticationFailureHandler();
 	}
 }
 

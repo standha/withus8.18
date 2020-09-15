@@ -32,9 +32,7 @@ public class AlarmController extends BaseController{
     @Statistical
     public ModelAndView getAlarm() {
         ModelAndView modelAndView = new ModelAndView("alarm/alarm");
-        String user = getUsername();
         modelAndView.addObject("previousUrl", "/home");
-        System.out.println("UserName : "+user);
         return modelAndView;
     }
 
@@ -42,10 +40,19 @@ public class AlarmController extends BaseController{
     @Statistical
     public ModelAndView getMedicationAlarm(){
         ModelAndView modelAndView = new ModelAndView("alarm/medicationAlarm");
-        User user = getUser();
-        String patientContact = getPatientContact();
-        String userId = getUsername();
-        modelAndView.addObject("medicationAlarm",userId);
+        if(alarmService.getTodayAlarm(getConnectId())== null){
+            modelAndView.addObject("medicationTimeMorning","");
+            modelAndView.addObject("medicationTimeLunch","");
+            modelAndView.addObject("medicationTimeDinner","");
+            modelAndView.addObject("medicationAlarmOnoff","");
+        }else{
+            Tbl_medication_alarm alarm = alarmService.getTodayAlarm(getConnectId());
+            modelAndView.addObject("medicationTimeMorning",alarm.getMedicationTimeMorning());
+            modelAndView.addObject("medicationTimeLunch",alarm.getMedicationTimeLunch());
+            modelAndView.addObject("medicationTimeDinner",alarm.getMedicationTimeDinner());
+            modelAndView.addObject("medicationAlarmOnoff",alarm.isMedicationAlarmOnoff());
+        }
+        modelAndView.addObject("type",getUser().getType());
         modelAndView.addObject("previousUrl","/alarm");
 
         return modelAndView;
@@ -82,7 +89,7 @@ public class AlarmController extends BaseController{
                 .setData(seved)
                 .createResult();
     }
-    @PutMapping(value = "/pill-history", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/pill-history", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<Tbl_medication_record> getPillHistoryTrue(@RequestBody Tbl_medication_record tbl_medication_record) {
         String userId = getUsername();
@@ -106,10 +113,9 @@ public class AlarmController extends BaseController{
     @Statistical
     public ModelAndView getAppointments(@RequestParam(required = false) Integer year, @RequestParam(required = false) Integer month) {
         ModelAndView modelAndView = new ModelAndView("alarm/appointments");
-        User user = getUser();
-        String patientContact = getPatientContact();
-        String userId = getUsername();
-        modelAndView.addObject("appointments",userId);
+        Tbl_outpatient_visit_alarm appointment = alarmService.getPatientAppointment(getConnectId());
+        modelAndView.addObject("type",getUser().getType());
+        modelAndView.addObject("appointments",appointment);
         modelAndView.addObject("previousUrl","/alarm");
 
         return modelAndView;

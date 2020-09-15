@@ -2,13 +2,13 @@ function onFormSubmission(form) {
 
 	const enabled = form.querySelector("input[name=medicationAlarmOnoff]").checked;
 	const breakfast = form.querySelector("input[name=medicationTimeMorning]").value;
-	const lunch = form.querySelector("input[name=medicationTimeLaunch]").value;
+	const lunch = form.querySelector("input[name=medicationTimeLunch]").value;
 	const dinner = form.querySelector("input[name=medicationTimeDinner]").value;
 
 	const body = {
 		medicationAlarmOnoff: enabled,
 		medicationTimeMorning: breakfast,
-		medicationTimeLaunch: lunch,
+		medicationTimeLunch: lunch,
 		medicationTimeDinner: dinner
 	};
 
@@ -36,7 +36,7 @@ function setFinished(finished) {
 
 	const url = document.querySelector("#pill-put-action").value;
 	const options = {
-		method: "PUT",
+		method: "POST",
 		headers: {
 			"Accept": "application/json",
 			"Content-Type": "application/json"

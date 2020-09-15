@@ -12,9 +12,12 @@ import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
 import withus.entity.RecordKey;
 import withus.entity.Tbl_Exercise_record;
+import withus.entity.Tbl_symptom_log;
+import withus.entity.User;
 import withus.service.ExerciseService;
 import withus.service.UserService;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -32,9 +35,31 @@ public class ExerciseController extends BaseController {
     @Statistical
     public ModelAndView getExercise() {
         ModelAndView modelAndView = new ModelAndView("exercise/exercise");
-        String user = getUsername();
+        User.Type typeCheck = getUser().getType();
+        switch (typeCheck){
+            case PATIENT:
+                if(exerciseService.getExercise(new RecordKey(getUsername(), LocalDate.now()))==null){
+                    modelAndView.addObject("hour", "시간");
+                    modelAndView.addObject("minute", "분");
+                }else{
+                    Tbl_Exercise_record exercise = exerciseService.getExercise(new RecordKey(getUsername(), LocalDate.now()));
+                    modelAndView.addObject("hour", exercise.getHour());
+                    modelAndView.addObject("minute", exercise.getMinute());
+                }
+                break;
+            case CAREGIVER:
+                if(exerciseService.getExercise(new RecordKey(getCaretaker().getUserId(), LocalDate.now()))==null){
+                    modelAndView.addObject("hour", "시간");
+                    modelAndView.addObject("minute", "분");
+                }else{
+                    Tbl_Exercise_record exercise = exerciseService.getExercise(new RecordKey(getCaretaker().getUserId(), LocalDate.now()));
+                    modelAndView.addObject("hour", exercise.getHour());
+                    modelAndView.addObject("minute", exercise.getMinute());
+                }
+                break;
+        }
+        modelAndView.addObject("type",typeCheck);
         modelAndView.addObject("previousUrl", "/home");
-        System.out.println("UserName : "+user);
         return modelAndView;
     }
     @GetMapping("/exercise-all-history")
@@ -43,8 +68,20 @@ public class ExerciseController extends BaseController {
         ModelAndView modelAndView = new ModelAndView("exercise/exercise-all-history");
         String username = getUsername();
         List<Tbl_Exercise_record> exerciseHistory;
-        exerciseHistory = exerciseService.getExerciseAllRecord(username,-1, -1);
-        modelAndView.addObject("exercise",exerciseHistory);
+        switch (getUser().getType()){
+            case PATIENT:
+                exerciseHistory = exerciseService.getExerciseAllRecord(username,-1, -1);
+                modelAndView.addObject("exerciseWeek",avgWeek());
+                modelAndView.addObject("exercise",exerciseHistory);
+                break;
+            case CAREGIVER:
+                exerciseHistory = exerciseService.getExerciseAllRecord(getCaretaker().getUserId(), -1, -1);
+                modelAndView.addObject("exerciseWeek",avgWeek());
+                modelAndView.addObject("exercise",exerciseHistory);
+                break;
+
+        }
+        modelAndView.addObject("type",getUser().getType());
         modelAndView.addObject("previousUrl","exercise");
         return modelAndView;
     }
@@ -66,5 +103,19 @@ public class ExerciseController extends BaseController {
                 .setCode(code)
                 .setData(seved)
                 .createResult();
+    }
+    public Integer avgWeek(){
+        Integer avg = 0;
+        LocalDate now = LocalDate.now();
+        String username = "";
+        if(getUser().getType() == User.Type.PATIENT){
+            username = getUsername();
+        }else if(getUser().getType() == User.Type.CAREGIVER){
+            username = getCaretaker().getUserId();
+        }
+        for(int i=1; i<8; i++){
+            avg = avg + exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.of(i))));
+        }
+        return avg/7;
     }
 }

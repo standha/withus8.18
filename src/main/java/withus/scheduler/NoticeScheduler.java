@@ -48,7 +48,6 @@ public class NoticeScheduler {
 
     //@Scheduled(cron = "0 * * * * *")
     public @ResponseBody ResponseEntity<String> pill() throws JSONException, InterruptedException  {
-        System.out.println("복약 알림 Scheduler ");
         if(noticePill().isEmpty()){
             return new ResponseEntity<>("No Target!", HttpStatus.BAD_REQUEST);
         }
@@ -90,8 +89,8 @@ public class NoticeScheduler {
                 }
             }
 
-            if(alarm.getMedicationTimeLaunch() != null) {
-                if (localTime.getHour() == alarm.getMedicationTimeLaunch().getHour() && localTime.getMinute() == alarm.getMedicationTimeLaunch().getMinute()) {
+            if(alarm.getMedicationTimeLunch() != null) {
+                if (localTime.getHour() == alarm.getMedicationTimeLunch().getHour() && localTime.getMinute() == alarm.getMedicationTimeLunch().getMinute()) {
                     User idToken = userService.getUserById(alarm.getId());
                     pillToken.add(idToken.getAppToken());
                 }

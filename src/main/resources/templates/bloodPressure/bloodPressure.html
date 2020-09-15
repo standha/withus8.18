@@ -13,14 +13,31 @@
     <!-- TODO: 보호자일 경우 immutable 하도록 -->
     <form id="bloodPressure-form" th:action="@{/bloodPressure}" onsubmit="return onFormSubmission(this);">
         <div>Exercise record input</div>
-        <div id="date">
+        <div id="date"  th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
             <p>Input Contraction/relaxation</p>
-                <p><input type="text"  value='0'  name="contraction">
-                <input type="text"  value='0'  name="relaxation">mm/Hg</p>
+                <p>
+                    <input type="text"  th:value="${contraction}"  name="contraction">
+                    <input type="text"  th:value="${relaxation}"  name="relaxation">mm/Hg
+                </p>
             <p>Input Pressure</p>
-                <p><input type="text"  value='0'  name="pressure">(회/분)</p>
+                <p>
+                    <input type="text"  th:value="${pressure}"  name="pressure">(회/분)
+                </p>
+            <input type="submit" value="Save >.<">
         </div>
-        <input type="submit" value="Save >.<">
+
+        <div id="date"  th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <p>Input Contraction/relaxation</p>
+            <p>
+                <input type="text"  th:value="${contraction}"  name="contraction" disabled>
+                <input type="text"  th:value="${relaxation}"  name="relaxation" disabled>mm/Hg
+            </p>
+            <p>Input Pressure</p>
+            <p>
+                <input type="text"  th:value="${pressure}"  name="pressure" disabled>(회/분)
+            </p>
+            <input type="submit" value="Save >.<" disabled>
+        </div>
     </form>
     <div>
         <br>

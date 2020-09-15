@@ -29,13 +29,24 @@ public class BloodPressureController extends BaseController {
         super(userService, authenticationFacade);
         this.bloodPressureService = bloodPressureService;
     }
+
     @GetMapping("/bloodPressure")
     @Statistical
     public ModelAndView getBloodPressure() {
         ModelAndView modelAndView = new ModelAndView("bloodPressure/bloodPressure");
-        String user = getUsername();
+        if(bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(),LocalDate.now())) == null){
+            modelAndView.addObject("contraction","수축");
+            modelAndView.addObject("pressure", "혈압");
+            modelAndView.addObject("relaxation", "이완");
+        }
+        else{
+            Tbl_blood_pressure_pulse today= bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(),LocalDate.now()));
+            modelAndView.addObject("contraction", today.getContraction());
+            modelAndView.addObject("pressure", today.getPressure());
+            modelAndView.addObject("relaxation", today.getRelaxation());
+        }
+        modelAndView.addObject("type", getUser().getType());
         modelAndView.addObject("previousUrl", "/home");
-        System.out.println("UserName : "+user);
         return modelAndView;
     }
 
@@ -43,9 +54,8 @@ public class BloodPressureController extends BaseController {
     @Statistical
     public ModelAndView getBloodPressureRecord() {
         ModelAndView modelAndView = new ModelAndView("bloodPressure/bloodPressure-all-history");
-        String username = getUsername();
         List<Tbl_blood_pressure_pulse> bloodPressureHistory;
-        bloodPressureHistory = bloodPressureService.getBloodAllRecord(username,-1,-1,-1);
+        bloodPressureHistory = bloodPressureService.getBloodAllRecord(getConnectId(),-1,-1,-1);
         modelAndView.addObject("bloodPressure",bloodPressureHistory);
         modelAndView.addObject("previousUrl", "/home");
         return modelAndView;

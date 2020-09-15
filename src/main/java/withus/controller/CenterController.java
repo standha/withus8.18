@@ -41,15 +41,11 @@ public class CenterController extends BaseController
 		logger.info("center");
 		User user = getUser();
 		ModelAndView modelAndView = new ModelAndView();
-
-		if (user.getType().equals(Type.ADMINISTRATOR))
-		{
+		if (user.getType().equals(Type.ADMINISTRATOR)){
 			modelAndView.setViewName("/Admin/admin_Home");
 		}
-		else
-		{
+		else{
 			modelAndView.addObject("type", user.getType());
-			System.out.println(user.getType());
 			modelAndView.setViewName("home");
 		}
 

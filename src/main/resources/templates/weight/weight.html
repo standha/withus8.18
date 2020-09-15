@@ -11,8 +11,10 @@
 <input type="hidden" id="weight-history-get-action" th:attr="value=@{/weight-history}">
 <input type="hidden" id="weight-put-action" th:attr="value=@{/weight-history}">
 <div th:replace="header :: #header"></div>
-<div id="body">
+<div id="body" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+    <!-- 환자가 로그인 중 -->
     <form id="weight-form" th:action="@{/weight}" onsubmit="return onFormSubmission(this);">
+        <input type="hidden" name="id" th:value="${weight?.id}">
         <div>체중</div>
         <div>
             <p>매일 같은 시간에 체중을 측정해주세요.</p>
@@ -33,8 +35,8 @@
         <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
             <input type="submit" value="저장">
         </div>
-        <div  th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
-            <input type="submit" value="저장" disabled>
+        <div>
+            <button id="date" name="date" th:value="${weight?.date}" type="button" onclick="setFinished(true);" disabled="disabled">입력</button>
         </div>
     </form>
     <div>

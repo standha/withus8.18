@@ -19,7 +19,6 @@ public class Tbl_weight {
     @EmbeddedId
     private RecordKey pk;
 
-    @Column(name = "Weight")
+    @Column(name = "weight")
     private float weight;
-
 }

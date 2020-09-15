@@ -22,9 +22,9 @@ function onFormSubmission(form) {
 
 	return false;
 }
-/*
-function setWeight(){
 
+/*function setFinished(finished){
+	
 	const body = {
 		//weightId: document.querySelector("#weight-form input[name=id]").value,
 		weight: document.querySelector("#weight-form input[name=weight]").value
@@ -39,11 +39,14 @@ function setWeight(){
 		},
 		body: JSON.stringify(body)
 	};
-	console.log("setWeight()");
-	fetch(url, options)
-		.then(response => response.json())
-		.then(data =>console.log(data));
+	
+	fetch(url, options);
 
+	location.reload(true);
+	top.document.location.reload();
+	opener.location.reload();
+	top.document.location.reload();
+	
 }*/
 
 function isNumberKey(evt){
@@ -70,6 +73,16 @@ function isNumberKey(evt){
 		
 		return true;
 }
+
+function setOff(){
+	const date = document.getElementById('date');
+	date.disabled='disabled';
+
+	const weight = document.getElementsByClassName('weight');
+	weight.disabled='disabled';
+
+}
+
 
 function showWeightHistory() {
 	const element = document.querySelector("#weight-history-get-action");
