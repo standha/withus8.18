@@ -115,7 +115,7 @@ public class GoalScheduler {
         }
         return count;
     }
-    //cron = "0 0 21 0 0 SUN"
+    //cron = "0 0 21 * * SUN"
     @Scheduled(cron = "0 0 21 * * SUN")
     public void GoalList(){
         List<User> users = userService.getPatient(User.Type.PATIENT);

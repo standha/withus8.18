@@ -34,8 +34,15 @@ public class CenterController extends BaseController
 	@Statistical
 	public ModelAndView getGoal() {
 		ModelAndView modelAndView = new ModelAndView("achivement/achivement");
-		modelAndView.addObject("level",getUser().getLevel()/4);
-		modelAndView.addObject("previousUrl", "/center");
+		switch (getUser().getType()){
+			case PATIENT:
+				modelAndView.addObject("level",getUser().getLevel()/4);
+				modelAndView.addObject("previousUrl", "/center");
+				break;
+			case CAREGIVER:
+				modelAndView.addObject("level", getCaretaker().getLevel()/4);
+				modelAndView.addObject("previousUrl", "/center");
+		}
 		return modelAndView;
 	}
 	@GetMapping({ "/center" })
