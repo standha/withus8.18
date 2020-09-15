@@ -59,7 +59,7 @@ public class ExerciseController extends BaseController {
                 break;
         }
         modelAndView.addObject("type",typeCheck);
-        modelAndView.addObject("previousUrl", "/home");
+        modelAndView.addObject("previousUrl", "/center");
         return modelAndView;
     }
     @GetMapping("/exercise-all-history")

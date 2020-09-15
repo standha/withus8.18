@@ -46,7 +46,7 @@ public class BloodPressureController extends BaseController {
             modelAndView.addObject("relaxation", today.getRelaxation());
         }
         modelAndView.addObject("type", getUser().getType());
-        modelAndView.addObject("previousUrl", "/home");
+        modelAndView.addObject("previousUrl", "/center");
         return modelAndView;
     }
 
@@ -57,7 +57,7 @@ public class BloodPressureController extends BaseController {
         List<Tbl_blood_pressure_pulse> bloodPressureHistory;
         bloodPressureHistory = bloodPressureService.getBloodAllRecord(getConnectId(),-1,-1,-1);
         modelAndView.addObject("bloodPressure",bloodPressureHistory);
-        modelAndView.addObject("previousUrl", "/home");
+        modelAndView.addObject("previousUrl", "/center");
         return modelAndView;
     }
 

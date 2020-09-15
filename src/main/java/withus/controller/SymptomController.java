@@ -49,7 +49,7 @@ public class SymptomController extends BaseController{
            modelAndView.addObject("cough", symptom.getCough());
         }
         modelAndView.addObject("type",typeCheck);
-        modelAndView.addObject("previousUrl", "/home");
+        modelAndView.addObject("previousUrl", "/center");
         return modelAndView;
 
     }

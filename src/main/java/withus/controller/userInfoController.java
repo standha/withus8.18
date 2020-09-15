@@ -35,7 +35,7 @@ public class userInfoController extends BaseController {
             modelAndView.addObject("caregiver_contact", "현재 보호자 번호가 없습니다..");
         }
         modelAndView.addObject("user", user);
-        modelAndView.addObject("previousUrl", "/home");
+        modelAndView.addObject("previousUrl", "/center");
 
         return modelAndView;
     }

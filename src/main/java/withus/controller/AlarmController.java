@@ -32,7 +32,7 @@ public class AlarmController extends BaseController{
     @Statistical
     public ModelAndView getAlarm() {
         ModelAndView modelAndView = new ModelAndView("alarm/alarm");
-        modelAndView.addObject("previousUrl", "/home");
+        modelAndView.addObject("previousUrl", "/center");
         return modelAndView;
     }
 

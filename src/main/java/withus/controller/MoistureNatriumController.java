@@ -34,7 +34,7 @@ public class MoistureNatriumController extends BaseController{
     public ModelAndView getMoistureNatrium() {
         ModelAndView modelAndView = new ModelAndView("moistureNatrium/moistureNatrium");
         String user = getUsername();
-        modelAndView.addObject("previousUrl", "/home");
+        modelAndView.addObject("previousUrl", "/center");
         return modelAndView;
     }
     @GetMapping("/moisture")

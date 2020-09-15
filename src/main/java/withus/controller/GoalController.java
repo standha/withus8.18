@@ -36,7 +36,7 @@ public class GoalController extends BaseController {
         Tbl_goal goal = goalService.getGoalId(getConnectId());
         modelAndView.addObject("goal", goal.getGoal());
         modelAndView.addObject("type",typeCheck);
-        modelAndView.addObject("previousUrl", "/home");
+        modelAndView.addObject("previousUrl", "/center");
         return modelAndView;
     }
     @PutMapping(value = "/goal",consumes = MediaType.APPLICATION_JSON_VALUE)

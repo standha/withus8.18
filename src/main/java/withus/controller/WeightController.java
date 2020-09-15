@@ -41,7 +41,7 @@ public class WeightController extends BaseController {
             }
 
             modelAndView.addObject("type",typeCheck);
-            modelAndView.addObject("previousUrl", "/home");
+            modelAndView.addObject("previousUrl", "/center");
             return modelAndView;
     }
 
