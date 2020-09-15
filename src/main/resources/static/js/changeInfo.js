@@ -4,6 +4,8 @@ function onFormSubmission(form) {
     const password = form.querySelector("input[name=password]").value;
     const name = form.querySelector("input[name=name]").value;
     const contact = form.querySelector("input[name=contact]").value;
+    const level = form.querySelector("input[name=level]").value;
+    const progress = form.querySelector("input[name=progress]").value;
     if(form.querySelector("input[name=birthdate]") == null){
         birthdateValue =  null;
         birthdate = null;
@@ -46,7 +48,9 @@ function onFormSubmission(form) {
         gender: sex,
         type: userType,
         caregiver: caregiver,
-        appToken:appToken
+        appToken:appToken,
+        level: level,
+        progress:progress
     };
     const url = form.action;
     const options = {

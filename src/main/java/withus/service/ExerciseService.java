@@ -44,7 +44,7 @@ public class ExerciseService {
     }
     @Nullable
     public Tbl_Exercise_record getExercise(RecordKey pk){
-        return exerciseRecordRepository.findById(pk).orElse(null);
+        return exerciseRecordRepository.findByPk(pk).orElse(null);
     }
 
 }

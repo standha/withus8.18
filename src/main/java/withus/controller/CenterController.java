@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
+import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.entity.Tbl_goal;
 import withus.entity.User;
@@ -29,7 +30,21 @@ public class CenterController extends BaseController
 		super(userService, authenticationFacade);
 		this.goalService = goalService;
 	}
-
+	@GetMapping({ "/achivement" })
+	@Statistical
+	public ModelAndView getGoal() {
+		ModelAndView modelAndView = new ModelAndView("achivement/achivement");
+		switch (getUser().getType()){
+			case PATIENT:
+				modelAndView.addObject("level",getUser().getLevel()/4);
+				modelAndView.addObject("previousUrl", "/center");
+				break;
+			case CAREGIVER:
+				modelAndView.addObject("level", getCaretaker().getLevel()/4);
+				modelAndView.addObject("previousUrl", "/center");
+		}
+		return modelAndView;
+	}
 	@GetMapping({ "/center" })
 	public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response)
 	{
@@ -55,7 +70,7 @@ public class CenterController extends BaseController
 		String goalNow = "";
 		switch (goalCheck){
 			case 0:
-				goalNow = "아직 이주의 목표를 설정하지 않으셨네요";
+				goalNow = "이번주 목표를 설정해봐요!";
 				break;
 			case 1:
 				goalNow = "매일 정해진 시간 약 복용";
