@@ -250,7 +250,7 @@ public class NoticeScheduler {
     }
 
     //cron = "0 0 8 * * MON,TUE,THU,SAT"
-    @Scheduled(cron = "0 0 8 * * MON,TUE,THU,SAT")
+    //@Scheduled(cron = "0 0 8 * * MON,TUE,THU,SAT")
     @RequestMapping(produces="application/json;charset=UTF-8")
     public @ResponseBody ResponseEntity<String> withus() throws JSONException, InterruptedException  {
         String messageBody = " 방금 [ 위더스랑 ]에 메시지가 도착했어요. ";
@@ -290,7 +290,7 @@ public class NoticeScheduler {
     }
 
     //cron = "0 0 8 * * MON,TUE,THU,SAT"
-    @Scheduled(cron = "0 0 8 * * MON,WED,SAT")
+    //@Scheduled(cron = "0 0 8 * * MON,WED,SAT")
     @RequestMapping(produces="application/json;charset=UTF-8")
     public @ResponseBody ResponseEntity<String> withus2() throws JSONException, InterruptedException  {
         String messageBody = " 방금 [ 위더스랑 ]에 메시지가 도착했어요. ";

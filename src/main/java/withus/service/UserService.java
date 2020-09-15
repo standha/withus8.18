@@ -1,7 +1,5 @@
 package withus.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -19,10 +17,7 @@ import withus.repository.MedicationAlarmRepository;
 import withus.repository.OutPatientVisitAlarmRepository;
 import withus.repository.UserRepository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {

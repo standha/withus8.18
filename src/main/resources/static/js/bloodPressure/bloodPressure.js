@@ -1,15 +1,7 @@
 function onFormSubmission(form) {
-    if(form.querySelector("input[name=contraction]").value=="" ||
-        form.querySelector("input[name=relaxation]").value=="" ||
-        form.querySelector("input[name=pressure]").value=="")
-    {
-        alert("모든 항목에 입력 ");
-    }
-    else{
-        const contraction = form.querySelector("input[name=contraction]").value;
-        const relaxation = form.querySelector("input[name=relaxation]").value;
-        const pressure = form.querySelector("input[name=pressure]").value;
-    }
+    const contraction = form.querySelector("input[name=contraction]").value;
+    const relaxation = form.querySelector("input[name=relaxation]").value;
+    const pressure = form.querySelector("input[name=pressure]").value;
     const body = {
         contraction: contraction,
         relaxation: relaxation,

@@ -74,4 +74,9 @@ public class AlarmService{
     public List<Tbl_medication_record>getFinishedRecord(String id){
         return medicationRecordRepository.findByPk_IdAndFinishedIsTrue(id);
     }
+
+    @Nullable
+    public Tbl_medication_record getMedicationRecord(RecordKey pk){
+        return medicationRecordRepository.findByPkAndFinishedIsTrue(pk).orElse(null);
+    }
 }

@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import withus.entity.RecordKey;
 import withus.entity.Tbl_Exercise_record;
 import withus.entity.Tbl_mositrue_record;
+import withus.entity.Tbl_natrium_record;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
@@ -18,4 +19,7 @@ public interface ExerciseRecordRepository extends JpaRepository<Tbl_Exercise_rec
 
     @Transactional
     Optional<Tbl_Exercise_record> findByPkAndHourIsNotNullAndMinuteIsNotNull(RecordKey pk);
+
+    @Transactional(readOnly = true)
+    Optional<Tbl_Exercise_record> findByPk(RecordKey pk);
 }
