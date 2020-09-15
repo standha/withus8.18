@@ -22,19 +22,12 @@
                         type="text" name="weight" onkeypress="return isNumberKey(event)"
                         onkeyup="this.value=this.value.replace(/[\ㄱ-ㅎㅏ-ㅣ가-힣]/g, '');"
                         value="0" th:value="${weight}" text = "kg">
-                <!--th:text="kg">-- th:text 의 'th'는 타임리프를 뜻하는거, 만약 kg 만 작성해서 view 해주는 거라면 text="kg"으로 .. -->
             </div>
             <!-- 보호자가 로그인 중 -->
-            <!-- <div  th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}" th:each="weight :${weightRecordToday}" th:text="${weight.weight} + kg"></div>
-            이렇게 작성하면, 데이터가 없을 경우에는 view 화면 전체가 안나올텐데? 일단 입력이 안됬으면 0kg 이라고 하던 그래도 text필드는 보여줘야 하지 않을까? -->
             <div  th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
                 <input
                         type="text" name="weight" th:value="${weight}" text = "kg" disabled>
             </div>
-            <!-- 앞에서 보호자가 들어왔을 때, 라고 가정을 하고 또다른 input 타입을 적어준거면, 다른 방법(함수작성)을 사용하는 것보다 보호자일 때 보여주는 input text 에 disalbed
-            를 사용해주면 더 효율적일 듯 하지만, 이렇게 유저의 몸무게 1개의 값만 보여주는 거면 상관 없겠지만, 여러개의 데이터를 보여주는 상황이면, x2 를 작성해줘야 한다. 다른 방법도 알아보도록 해야할듯 하다.
-            disabled 사용 https://zetawiki.com/wiki/HTML_input_%ED%83%9C%EA%B7%B8_disabled_%EC%86%8D%EC%84%B1 -->
-            <!-- 소수점 한자리까지 숫자만 입력 가능 -->
         </div>
 
         <div  th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
