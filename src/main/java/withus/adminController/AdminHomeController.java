@@ -31,8 +31,6 @@ public class AdminHomeController extends AdminBaseController
 //		System.out.println("AAAAAAAAAAAAAAAAA : " + "["+ user.getUserId() +"]");
 //		modelAndView.addObject("user", user);
 //		getAllPatient();
-		logger.debug("AAAAAAAAAAAAAAA");
-		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 
 //		logger.debug("AAAAAAAAAAAAAAA get" + getAllPatient());
 		return modelAndView;
