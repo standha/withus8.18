@@ -91,9 +91,9 @@ public class ExerciseController extends BaseController {
         String userId = getUsername();
         tbl_exercise_record.setPk(new RecordKey(userId, LocalDate.now()));
         Result.Code code;
-        Tbl_Exercise_record seved = null;
+        Tbl_Exercise_record saved = null;
         try{
-            seved = exerciseService.upsertExerciseRecord(tbl_exercise_record);
+            saved = exerciseService.upsertExerciseRecord(tbl_exercise_record);
             code = Result.Code.OK;
         } catch (Exception exception){
             logger.error(exception.getLocalizedMessage(),exception);
@@ -101,7 +101,7 @@ public class ExerciseController extends BaseController {
         }
         return Result.<Tbl_Exercise_record>builder()
                 .setCode(code)
-                .setData(seved)
+                .setData(saved)
                 .createResult();
     }
     public Integer avgWeek(){

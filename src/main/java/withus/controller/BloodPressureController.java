@@ -68,9 +68,9 @@ public class BloodPressureController extends BaseController {
         String userId = getUsername();
         tbl_blood_pressure_pulse.setPk(new RecordKey(userId, LocalDate.now()));
         Result.Code code;
-        Tbl_blood_pressure_pulse seved = null;
+        Tbl_blood_pressure_pulse saved = null;
         try{
-            seved = bloodPressureService.upsertBloodPressureRecord(tbl_blood_pressure_pulse);
+            saved = bloodPressureService.upsertBloodPressureRecord(tbl_blood_pressure_pulse);
             code = Result.Code.OK;
         } catch (Exception exception){
             logger.error(exception.getLocalizedMessage(),exception);
@@ -78,7 +78,7 @@ public class BloodPressureController extends BaseController {
         }
         return Result.<Tbl_blood_pressure_pulse>builder()
                 .setCode(code)
-                .setData(seved)
+                .setData(saved)
                 .createResult();
     }
 }
