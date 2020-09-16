@@ -1,7 +1,15 @@
 function onFormSubmission(form) {
-    const contraction = form.querySelector("input[name=contraction]").value;
-    const relaxation = form.querySelector("input[name=relaxation]").value;
-    const pressure = form.querySelector("input[name=pressure]").value;
+    if(form.querySelector("input[name=contraction]").value==0 ||
+        form.querySelector("input[name=pressure]").value==0 ||
+        form.querySelector("input[name=relaxation]").value==0 )
+    {
+    }
+    else{
+         contraction = form.querySelector("input[name=contraction]").value;
+         relaxation = form.querySelector("input[name=relaxation]").value;
+         pressure = form.querySelector("input[name=pressure]").value;
+    }
+    console.log("C : "+contraction);
     const body = {
         contraction: contraction,
         relaxation: relaxation,

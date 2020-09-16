@@ -15,9 +15,6 @@ import withus.exception.UnexpectedEnumValueException;
 import withus.service.UserService;
 import withus.util.Utility;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 
 @Controller
 public class userInfoController extends BaseController {
@@ -30,31 +27,35 @@ public class userInfoController extends BaseController {
     public ModelAndView getUserInfo() {
         ModelAndView modelAndView = new ModelAndView("/changeInfo");
         User user = getUser();
+        if(user.getType() == User.Type.PATIENT && user.getCaregiver() != null){
+            modelAndView.addObject("caregiver_contact", user.getCaregiver().getContact());
+        }else if(user.getType() == User.Type.PATIENT && user.getCaregiver() == null){
+            modelAndView.addObject("caregiver_contact", "현재 보호자 번호가 없습니다.");
+        }else{
+            modelAndView.addObject("caregiver_contact", "현재 보호자 번호가 없습니다..");
+        }
         modelAndView.addObject("user", user);
-        modelAndView.addObject("previousUrl", "/home");
+        modelAndView.addObject("previousUrl", "/center");
 
         return modelAndView;
     }
     @PostMapping(value = "/changeInfo", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<User> putMember(@RequestBody User user) {
-        System.out.println("2222222222222222222222222222222");
         User savedUser = null;
         Result.Code code = Result.Code.ERROR;
-        System.out.println("11111111111111111111111111111111111111");
-
         if (!isMissingMandatories(user)) {
             try {
                     User.Type userType = user.getType();
                     switch (userType) {
                         case CAREGIVER:
-                            savedUser = userService.upsertUserEncodingPassword(user);
+                            savedUser = userService.upsertUser(user);
                             code = Result.Code.OK;
                             break;
                         case PATIENT:
                             User caregiver = user.getCaregiver();
                             if (caregiver == null) {
-                                savedUser = userService.upsertUserEncodingPassword(user);
+                                savedUser = userService.upsertUser(user);
                                 code = Result.Code.OK;
                             } else {
                                 User existCareGiver = userService.getUserByContact(user.getCaregiver().getContact());
@@ -62,7 +63,7 @@ public class userInfoController extends BaseController {
                                     code = Result.Code.ERROR_NO_EXIST_CAREGIVER;
                                 } else {
                                     user.setCaregiver(existCareGiver);
-                                    savedUser = userService.upsertUserEncodingPassword(user);
+                                    savedUser = userService.upsertUser(user);
                                     code = Result.Code.OK;
                                 }
                             }
@@ -77,9 +78,9 @@ public class userInfoController extends BaseController {
         }
 
         return Result.<User>builder()
-                .setCode(code)
-                .setData(savedUser)
-                .createResult();
+                .code(code)
+                .data(savedUser)
+                .build();
     }
     public boolean isMissingMandatories(User user){
 

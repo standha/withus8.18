@@ -1,10 +1,15 @@
 package withus.entity;
 
 import lombok.*;
+import org.springframework.lang.NonNull;
+import org.springframework.web.bind.annotation.GetMapping;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.time.LocalTime;
 
-@ToString
 @Entity
 @Builder(toBuilder = true)
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
@@ -13,18 +18,10 @@ import javax.persistence.*;
 @Getter
 @Table(name = "tbl_goal")
 public class Tbl_goal {
-    @EmbeddedId
-    private RecordKey pk;
+    @Id
+    @Column(name = "goal_id", columnDefinition = "VARCHAR(128) NOT NULL", length = 128)
+    protected String goalId;
 
-    @Column(name = "Goal")
+    @Column(name = "goal")
     private Integer goal;
-
-    @Column(columnDefinition = "VARCHAR(16) NOT NULL", length = 16)
-	@Enumerated(EnumType.STRING)
-    //@Column(name = "GoalTest")
-    private GoalType goaltype;
-
-    public enum GoalType{
-        GOAL1, GOAL2
-    }
 }

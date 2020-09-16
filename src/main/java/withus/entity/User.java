@@ -46,8 +46,6 @@ public class User implements Serializable, UserDetails {
 	@Column(columnDefinition = "VARCHAR(255) NOT NULL")
 	private String password;
 
-
-
 	@Column(columnDefinition = "VARCHAR(32) NOT NULL", length = 32)
 	@Getter
 	private String name;
@@ -92,6 +90,14 @@ public class User implements Serializable, UserDetails {
 	@Nullable
 	@Getter
 	private User caregiver;
+
+	@Column(name = "progress")
+	@Getter
+	private Integer progress;
+
+	@Column(name = "level")
+	@Getter
+	private Integer level;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

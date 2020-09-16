@@ -13,13 +13,20 @@
     <!-- TODO: 보호자일 경우 immutable 하도록 -->
     <form id="exercise-form" th:action="@{/exercise}" onsubmit="return onFormSubmission(this);">
         <div>Exercise record input</div>
-        <div id="date">
+        <div th:if = "${type} == ${T(withus.entity.User.Type).PATIENT} ">
             <p>Input Hour
-                <input type="text" value="0" th:value="${hour}" name="hour"></p>
+                <input type="text"  th:value="${hour}" name="hour"></p>
             <p>Input Minute
-                <input type="text" value="0" th:value="${minute}" name="minute"></p>
-        </div>
+                <input type="text"  th:value="${minute}" name="minute"></p>
         <input type="submit" value="Save >.<">
+        </div>
+        <div th:if = "${type} == ${T(withus.entity.User.Type).CAREGIVER} ">
+            <p>Input Hour
+                <input type="text"  th:value="${hour}" name="hour" disabled></p>
+            <p>Input Minute
+                <input type="text"  th:value="${minute}" name="minute" disabled></p>
+            <input type="submit" value="Save >.<" disabled>
+        </div>
     </form>
     <div>
         <button id="exerciseRecord" type="button" onclick="showHistory();">운동기록</button>

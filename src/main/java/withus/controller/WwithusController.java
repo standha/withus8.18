@@ -66,7 +66,7 @@ public class WwithusController extends BaseController {
 			data = wwithusService.getCyaLaterChatBalloons(user);
 		}
 
-		log.debug("User ({}) has {} history(ies) of today.", user, data.size());
+		logger.debug("User ({}) has {} history(ies) of today.", user, data.size());
 
 		return Result.<List<ChatBalloon>>builder()
 			.code(code)
@@ -99,7 +99,7 @@ public class WwithusController extends BaseController {
 			data = wwithusService.getWwithusEntryAndSaveHistory(wwithusEntryRequest);
 			code = Result.Code.OK;
 		} catch (Exception exception) {
-			log.error(exception.getLocalizedMessage(), exception);
+			logger.error(exception.getLocalizedMessage(), exception);
 		}
 
 		return Result.<ChatBalloon>builder()

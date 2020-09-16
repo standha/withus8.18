@@ -1,28 +1,20 @@
 package withus.controller;
 
-import java.time.LocalDate;
-import java.util.List;
-
+import org.aspectj.weaver.ast.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
-import withus.entity.RecordKey;
-import withus.entity.Tbl_medication_alarm;
-import withus.entity.Tbl_medication_record;
-import withus.entity.Tbl_outpatient_visit_alarm;
-import withus.entity.User;
+import withus.entity.*;
 import withus.service.AlarmService;
 import withus.service.UserService;
+import java.time.LocalDate;
+import java.util.List;
+
 
 @Controller
 public class AlarmController extends BaseController{
@@ -40,9 +32,7 @@ public class AlarmController extends BaseController{
     @Statistical
     public ModelAndView getAlarm() {
         ModelAndView modelAndView = new ModelAndView("alarm/alarm");
-        String user = getUsername();
-        modelAndView.addObject("previousUrl", "/home");
-        System.out.println("UserName : "+user);
+        modelAndView.addObject("previousUrl", "/center");
         return modelAndView;
     }
 
@@ -50,10 +40,19 @@ public class AlarmController extends BaseController{
     @Statistical
     public ModelAndView getMedicationAlarm(){
         ModelAndView modelAndView = new ModelAndView("alarm/medicationAlarm");
-        User user = getUser();
-        String patientContact = getPatientContact();
-        String userId = getUsername();
-        modelAndView.addObject("medicationAlarm",userId);
+        if(alarmService.getTodayAlarm(getConnectId())== null){
+            modelAndView.addObject("medicationTimeMorning","");
+            modelAndView.addObject("medicationTimeLunch","");
+            modelAndView.addObject("medicationTimeDinner","");
+            modelAndView.addObject("medicationAlarmOnoff","");
+        }else{
+            Tbl_medication_alarm alarm = alarmService.getTodayAlarm(getConnectId());
+            modelAndView.addObject("medicationTimeMorning",alarm.getMedicationTimeMorning());
+            modelAndView.addObject("medicationTimeLunch",alarm.getMedicationTimeLunch());
+            modelAndView.addObject("medicationTimeDinner",alarm.getMedicationTimeDinner());
+            modelAndView.addObject("medicationAlarmOnoff",alarm.isMedicationAlarmOnoff());
+        }
+        modelAndView.addObject("type",getUser().getType());
         modelAndView.addObject("previousUrl","/alarm");
 
         return modelAndView;
@@ -82,7 +81,7 @@ public class AlarmController extends BaseController{
             seved = alarmService.upsertMedication(tbl_medication_alarm);
             code = Result.Code.OK;
         } catch (Exception exception){
-            log.error(exception.getLocalizedMessage(),exception);
+            logger.error(exception.getLocalizedMessage(),exception);
             code = Result.Code.ERROR_DATABASE;
         }
         return Result.<Tbl_medication_alarm>builder()
@@ -101,7 +100,7 @@ public class AlarmController extends BaseController{
             saved = alarmService.upsertTrueRecord(tbl_medication_record);
             code = Result.Code.OK;
         } catch (Exception exception) {
-            log.error(exception.getLocalizedMessage(), exception);
+            logger.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
         }
         return Result.<Tbl_medication_record>builder()
@@ -114,10 +113,9 @@ public class AlarmController extends BaseController{
     @Statistical
     public ModelAndView getAppointments(@RequestParam(required = false) Integer year, @RequestParam(required = false) Integer month) {
         ModelAndView modelAndView = new ModelAndView("alarm/appointments");
-        User user = getUser();
-        String patientContact = getPatientContact();
-        String userId = getUsername();
-        modelAndView.addObject("appointments",userId);
+        Tbl_outpatient_visit_alarm appointment = alarmService.getPatientAppointment(getConnectId());
+        modelAndView.addObject("type",getUser().getType());
+        modelAndView.addObject("appointments",appointment);
         modelAndView.addObject("previousUrl","/alarm");
 
         return modelAndView;
@@ -134,7 +132,7 @@ public class AlarmController extends BaseController{
             seved = alarmService.upsertOutPatientVisit(tbl_outpatient_visit_alarm);
             code = Result.Code.OK;
         } catch (Exception exception){
-            log.error(exception.getLocalizedMessage(),exception);
+            logger.error(exception.getLocalizedMessage(),exception);
             code = Result.Code.ERROR_DATABASE;
         }
         return Result.<Tbl_outpatient_visit_alarm>builder()

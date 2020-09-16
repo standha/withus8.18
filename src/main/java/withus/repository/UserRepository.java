@@ -17,6 +17,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 	@Transactional(readOnly = true)
 	Optional<User> findByCaregiverUserId(String caregiverUserId);
 
+
 	@Transactional(readOnly = true)
 	Optional<User> findByUserIdAndPassword(String id, String password);
 
@@ -27,4 +28,11 @@ public interface UserRepository extends JpaRepository<User, String> {
 	@Nullable
 	List<User> findByAppTokenIsNotNull();
 
+	@Transactional(readOnly = true)
+	@Nullable
+	List<User> findByType(User.Type type);
+
+	@Transactional(readOnly = true)
+	@Nullable
+	List<User> findByAppTokenIsNotNullAndType(User.Type type);
 }

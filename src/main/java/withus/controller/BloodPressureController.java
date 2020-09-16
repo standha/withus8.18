@@ -34,19 +34,19 @@ public class BloodPressureController extends BaseController {
     @Statistical
     public ModelAndView getBloodPressure() {
         ModelAndView modelAndView = new ModelAndView("bloodPressure/bloodPressure");
-        String user = getUsername();
-        if(bloodPressureService.getTodayBloodRecord(new RecordKey(user,LocalDate.now())) != null){
-            Tbl_blood_pressure_pulse today= bloodPressureService.getTodayBloodRecord(new RecordKey(user,LocalDate.now()));
-            modelAndView.addObject("contraction", today.getContraction());
-            modelAndView.addObject("pressure", today.getPressure());
-            modelAndView.addObject("relaxation", today.getRelaxation());
-        }
-        else{
+        if(bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(),LocalDate.now())) == null){
             modelAndView.addObject("contraction",0);
             modelAndView.addObject("pressure", 0);
             modelAndView.addObject("relaxation", 0);
         }
-        modelAndView.addObject("previousUrl", "/home");
+        else{
+            Tbl_blood_pressure_pulse today= bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(),LocalDate.now()));
+            modelAndView.addObject("contraction", today.getContraction());
+            modelAndView.addObject("pressure", today.getPressure());
+            modelAndView.addObject("relaxation", today.getRelaxation());
+        }
+        modelAndView.addObject("type", getUser().getType());
+        modelAndView.addObject("previousUrl", "/center");
         return modelAndView;
     }
 
@@ -54,11 +54,10 @@ public class BloodPressureController extends BaseController {
     @Statistical
     public ModelAndView getBloodPressureRecord() {
         ModelAndView modelAndView = new ModelAndView("bloodPressure/bloodPressure-all-history");
-        String username = getUsername();
         List<Tbl_blood_pressure_pulse> bloodPressureHistory;
-        bloodPressureHistory = bloodPressureService.getBloodAllRecord(username,-1,-1,-1);
+        bloodPressureHistory = bloodPressureService.getBloodAllRecord(getConnectId(),-1,-1,-1);
         modelAndView.addObject("bloodPressure",bloodPressureHistory);
-        modelAndView.addObject("previousUrl", "/home");
+        modelAndView.addObject("previousUrl", "/center");
         return modelAndView;
     }
 
@@ -78,8 +77,8 @@ public class BloodPressureController extends BaseController {
             code = Result.Code.ERROR_DATABASE;
         }
         return Result.<Tbl_blood_pressure_pulse>builder()
-                .setCode(code)
-                .setData(seved)
-                .createResult();
+                .code(code)
+                .data(seved)
+                .build();
     }
 }

@@ -21,4 +21,6 @@ public interface MedicationRecordRepository extends JpaRepository<Tbl_medication
     @Transactional(readOnly = true)
     List<Tbl_medication_record>findByPk_IdAndFinishedIsTrue(String id);
 
+    @Transactional(readOnly = true)
+    Optional<Tbl_medication_record>findByPkAndFinishedIsTrue(RecordKey pk);
 }

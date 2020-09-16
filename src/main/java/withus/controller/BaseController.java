@@ -1,5 +1,6 @@
 package withus.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,7 +12,7 @@ import withus.entity.User;
 import withus.service.UserService;
 
 public class BaseController {
-	protected final Logger log = LoggerFactory.getLogger(getClass());
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	protected final UserService userService;
 	private final AuthenticationFacade authenticationFacade;
 
@@ -42,4 +43,18 @@ public class BaseController {
 	protected User getCaretaker() {
 		return userService.getUserByCaregiverId(getUsername());
 	}
+
+	protected String getConnectId() {
+		String username = null;
+		switch (getUser().getType()) {
+			case PATIENT:
+				username = getUsername();
+				break;
+			case CAREGIVER:
+				username = getCaretaker().getUserId();
+				break;
+		}
+		return username;
+	}
+
 }

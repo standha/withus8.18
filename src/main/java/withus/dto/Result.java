@@ -2,9 +2,11 @@ package withus.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @Builder
 @Getter
+@Setter
 public class Result<T>
 {
 	private final Code code;

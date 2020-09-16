@@ -9,7 +9,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AndroidPushPeriodicNotifications {
+public class
+AndroidPushPeriodicNotifications {
 
     public static String PeriodicNotificationJson(String title, String data,List<String> tokenData) throws JSONException, NullPointerException {
         JSONObject body = new JSONObject();

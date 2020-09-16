@@ -46,15 +46,11 @@ public class NoticeScheduler {
         this.userService = userService;
     }
 
-    //@Scheduled(cron = "0 * * * * *")
-    public @ResponseBody ResponseEntity<String> pill() throws JSONException, InterruptedException  {
-        System.out.println("복약 알림 Scheduler ");
-        if(noticePill().isEmpty()){
+    public @ResponseBody ResponseEntity<String> notice(List<String>tokenList,String message) throws JSONException, InterruptedException  {
+        if(tokenList.isEmpty()){
             return new ResponseEntity<>("No Target!", HttpStatus.BAD_REQUEST);
         }
-
-        String messageBody = " 약 먹을 시간이에요";
-        String notifications = AndroidPushPeriodicNotifications.PeriodicNotificationJson("",messageBody,noticePill());
+        String notifications = AndroidPushPeriodicNotifications.PeriodicNotificationJson("",message,tokenList);
         HttpEntity<String> request = new HttpEntity<>(notifications);
 
         CompletableFuture<String> pushNotification = androidPushNotificationService.send(request);
@@ -74,11 +70,12 @@ public class NoticeScheduler {
         return new ResponseEntity<>("Push Notification ERROR!", HttpStatus.BAD_REQUEST);
     }
 
-
-
-
-    public List<String> noticePill() throws NullPointerException{
-        List<String> pillToken = new ArrayList<String>();
+    //복약 PUSH 알림
+    @Scheduled(cron = "0 * * * * *")
+    public void pillNotice(){
+        List<String>morningToken = new ArrayList<>();
+        List<String>lunchToken = new ArrayList<>();
+        List<String>dinnerToken = new ArrayList<>();
         List<Tbl_medication_alarm> alarms = alarmService.getPillAlarmOn();
         for (Tbl_medication_alarm alarm : alarms) {
             LocalTime localTime = LocalTime.now();
@@ -86,26 +83,132 @@ public class NoticeScheduler {
             if(alarm.getMedicationTimeMorning() != null) {
                 if (localTime.getHour() == alarm.getMedicationTimeMorning().getHour() && localTime.getMinute() == alarm.getMedicationTimeMorning().getMinute()) {
                     User idToken = userService.getUserById(alarm.getId());
-                    pillToken.add(idToken.getAppToken());
+                    morningToken.add(idToken.getAppToken());
                 }
             }
 
             if(alarm.getMedicationTimeLunch() != null) {
                 if (localTime.getHour() == alarm.getMedicationTimeLunch().getHour() && localTime.getMinute() == alarm.getMedicationTimeLunch().getMinute()) {
                     User idToken = userService.getUserById(alarm.getId());
-                    pillToken.add(idToken.getAppToken());
+                    lunchToken.add(idToken.getAppToken());
                 }
             }
 
             if(alarm.getMedicationTimeDinner() != null) {
                 if (localTime.getHour() == alarm.getMedicationTimeDinner().getHour() && localTime.getMinute() == alarm.getMedicationTimeDinner().getMinute()) {
                     User idToken = userService.getUserById(alarm.getId());
-                    pillToken.add(idToken.getAppToken());
+                    dinnerToken.add(idToken.getAppToken());
                 }
             }
         }
-        return pillToken;
+        try {
+            notice(morningToken,"아침 약을 복용하실 시간이에요.\n 지금 약을 복용해주세요!");
+            notice(lunchToken,"점심 약을 복용하실 시간이에요.\n 지금 약을 복용해주세요!");
+            notice(dinnerToken,"저녁 약을 복용하실 시간이에요.\n 약 복용 후 복약 기록에 기록해주세요.");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
+
+    //외래 진료 전날 PUSH 알림
+    @Scheduled(cron = "0 0 18 * * *")
+    public void visitNotice(){
+        List<String> visitToken = new ArrayList<String>();
+        LocalDate tomorrow = LocalDate.now().plusDays(1);
+        List<Tbl_outpatient_visit_alarm> visits = alarmService.getVisitAlarmOn();
+        for (Tbl_outpatient_visit_alarm visit : visits) {
+            if (tomorrow.equals(visit.getOutPatientVisitDate())) {
+                User user = userService.getUserById(visit.getId());
+                visitToken.add(user.getAppToken());
+                User guser = user.getCaregiver();
+
+                if (guser == null) {
+                    break;
+                } else {
+                    visitToken.add(guser.getAppToken());
+                }
+            }
+        }
+        try {
+            notice(visitToken,"내일 병원 진료 전 준비사항 (예: 금식)이 있는 지 확인해보세요!");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //외래 진료 2시간전 PUSH알림
+    @Scheduled(cron = "0 * * * * *")
+    public void visitNotice2(){
+        List<String> visitToken = new ArrayList<String>();
+        LocalDateTime now = LocalDateTime.now();
+        LocalDate date = now.toLocalDate();
+        LocalTime time = now.toLocalTime();
+        List<Tbl_outpatient_visit_alarm> visits = alarmService.getVisitAlarmOn();
+        for (Tbl_outpatient_visit_alarm visit : visits) {
+            if(date.isEqual(visit.getOutPatientVisitDate())&&time.getHour()==visit.getOutPatientVisitTime().getHour()&&time.getMinute()==visit.getOutPatientVisitTime().getMinute()){
+                User user = userService.getUserById(visit.getId());
+                visitToken.add(user.getAppToken());
+                User guser = user.getCaregiver();
+                if(guser==null){
+                    break;
+                }
+                else{
+                    visitToken.add(guser.getAppToken());
+                }
+            }
+        }
+        try {
+            notice(visitToken,"병원 진료 전 준비사항 (예: 금식)이 있는 지 확인해보세요!");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //위더스랑 1~8주차 PUSH알림
+    @Scheduled(cron = "0 0 8 * * MON,TUE,THU,SAT")
+    public void withusNotice1(){
+        List<String>tokenList = new ArrayList<String>();
+        List<User> patients = userService.getPatientToken(User.Type.PATIENT);
+        for(User patient : patients){
+            if(patient.getProgress() > 0 && patient.getProgress() < 9){
+                tokenList.add(patient.getAppToken());
+            }
+        }
+        try {
+            notice(tokenList," 방금 [ 위더스랑 ]에 메시지가 도착했어요. ");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //위더스랑 9~24주차 PUSH 알림
+    @Scheduled(cron = "0 0 8 * * MON,WED,SAT")
+    public void withusNotice2(){
+        List<String>tokenList = new ArrayList<String>();
+        List<User> patients = userService.getPatientToken(User.Type.PATIENT);
+        for(User patient : patients){
+            if(patient.getProgress() >= 9 && patient.getProgress() <= 24){
+                tokenList.add(patient.getAppToken());
+            }
+        }
+        try {
+            notice(tokenList," 방금 [ 위더스랑 ]에 메시지가 도착했어요. ");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //***님 구현 예정
     //cron = "0 0 20 * * *"
     //매일 20시 위더스 알림
     //@Scheduled(cron = "0 * * * * *")
@@ -146,107 +249,5 @@ public class NoticeScheduler {
             }
         }
         return tokenList;
-    }
-
-    //외래 진료 전날 18시 알림
-    //@Scheduled(cron = "0 * * * * *")
-    public @ResponseBody ResponseEntity<String> visit18() throws JSONException, InterruptedException  {
-        System.out.println("예약 전일 오후 6시 알림");
-        if(noticeTomorrowVisit().isEmpty()){
-            return new ResponseEntity<>("No Target!", HttpStatus.BAD_REQUEST);
-        }
-
-        String messageBody = " 내일 병원 진료 전 준비사항 (예: 금식)이 있는 지 확인해보세요!";
-        String notifications = AndroidPushPeriodicNotifications.PeriodicNotificationJson("",messageBody,noticeTomorrowVisit());
-        HttpEntity<String> requests = new HttpEntity<>(notifications);
-
-        CompletableFuture<String> pushNotification = androidPushNotificationService.send(requests);
-        CompletableFuture.allOf(pushNotification).join();
-
-        try{
-            String firebaseResponse = pushNotification.get();
-            return new ResponseEntity<>(firebaseResponse, HttpStatus.OK);
-        }
-        catch (InterruptedException e){
-            logger.debug("got interrupted!");
-            throw new InterruptedException();
-        }
-        catch (ExecutionException e){
-            logger.debug("execution error!");
-        }
-        return new ResponseEntity<>("Push Notification ERROR!", HttpStatus.BAD_REQUEST);
-    }
-
-    public List<String> noticeTomorrowVisit() {
-        List<String> visitToken = new ArrayList<String>();
-        LocalDate tomorrow = LocalDate.now().plusDays(1);
-        List<Tbl_outpatient_visit_alarm> visits = alarmService.getVisitAlarmOn();
-            for (Tbl_outpatient_visit_alarm visit : visits) {
-            if(tomorrow.equals(visit.getOutPatientVisitDate())){
-                User user = userService.getUserById(visit.getId());
-                visitToken.add(user.getAppToken());
-                User guser = user.getCaregiver();
-
-                if(guser==null){
-                    break;
-                }
-                else{
-                    visitToken.add(guser.getAppToken());
-                }
-            }
-        }
-        return visitToken;
-    }
-
-    //외래 진료 2시간전 알림
-    //@Scheduled(cron = "0 * * * * *")
-    @RequestMapping(produces="application/json;charset=UTF-8")
-    public @ResponseBody ResponseEntity<String> visit2() throws JSONException, InterruptedException  {
-        String messageBody = " 병원 진료 전 준비사항 (예: 금식)이 있는 지 확인해보세요!";
-        System.out.println("진료 2시간 전 Scheduler ");
-        if(noticeTwoVisit().isEmpty()){
-            return new ResponseEntity<>("No Target!", HttpStatus.BAD_REQUEST);
-        }
-
-        String notifications = AndroidPushPeriodicNotifications.PeriodicNotificationJson("",messageBody,noticeTwoVisit());
-        HttpEntity<String> request = new HttpEntity<>(notifications);
-
-        CompletableFuture<String> pushNotification = androidPushNotificationService.send(request);
-        CompletableFuture.allOf(pushNotification).join();
-
-        try{
-            String firebaseResponse = pushNotification.get();
-            return new ResponseEntity<>(firebaseResponse, HttpStatus.OK);
-        }
-        catch (InterruptedException e){
-            logger.debug("got interrupted!");
-            throw new InterruptedException();
-        }
-        catch (ExecutionException e){
-            logger.debug("execution error!");
-        }
-        return new ResponseEntity<>("Push Notification ERROR!", HttpStatus.BAD_REQUEST);
-    }
-
-    public List<String> noticeTwoVisit() {
-        List<String> visitToken = new ArrayList<String>();
-        LocalDateTime now = LocalDateTime.now();
-        LocalDate date = now.toLocalDate();
-        LocalTime time = now.toLocalTime();
-        List<Tbl_outpatient_visit_alarm> visits = alarmService.getVisitAlarmOn();
-        for (Tbl_outpatient_visit_alarm visit : visits) {
-           if(date.isEqual(visit.getOutPatientVisitDate())&&time.getHour()==visit.getOutPatientVisitTime().getHour()&&time.getMinute()==visit.getOutPatientVisitTime().getMinute()){
-               User user = userService.getUserById(visit.getId());
-               visitToken.add(user.getAppToken());
-               User guser = user.getCaregiver();
-               if(guser==null){
-                   break;
-               }
-               else{
-                   visitToken.add(guser.getAppToken());
-               }
-           }
-        }
-        return visitToken;
     }
 }

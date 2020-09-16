@@ -34,9 +34,6 @@ public class HomeController extends BaseController {
 		User user = getUser();
 		modelAndView.addObject("user", user);
 
-		// TODO: to be removed
-		System.out.printf("caretaker: %s\n", getCaretaker());
-		System.out.println(user.getUserId());
 		return modelAndView;
 	}
 
@@ -52,7 +49,7 @@ public class HomeController extends BaseController {
 			withusHelpRequest = homeService.createHelpRequest(user, now);
 			code = Result.Code.OK;
 		} catch (Exception exception) {
-			log.error(exception.getLocalizedMessage(), exception);
+//			log.error(exception.getLocalizedMessage(), exception);
 		}
 
 		return Result.<WithusHelpRequest>builder()

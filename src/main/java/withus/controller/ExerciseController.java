@@ -13,6 +13,7 @@ import withus.dto.Result;
 import withus.entity.RecordKey;
 import withus.entity.Tbl_Exercise_record;
 import withus.entity.Tbl_symptom_log;
+import withus.entity.User;
 import withus.service.ExerciseService;
 import withus.service.UserService;
 
@@ -34,16 +35,31 @@ public class ExerciseController extends BaseController {
     @Statistical
     public ModelAndView getExercise() {
         ModelAndView modelAndView = new ModelAndView("exercise/exercise");
-        String username = getUsername();
-        if(exerciseService.getExercise(new RecordKey(username, LocalDate.now()))==null){
-            modelAndView.addObject("hour", 0);
-            modelAndView.addObject("minute", 0);
-        }else{
-            Tbl_Exercise_record exercise = exerciseService.getExercise(new RecordKey(username, LocalDate.now()));
-            modelAndView.addObject("hour", exercise.getHour());
-            modelAndView.addObject("minute", exercise.getMinute());
+        User.Type typeCheck = getUser().getType();
+        switch (typeCheck){
+            case PATIENT:
+                if(exerciseService.getExercise(new RecordKey(getUsername(), LocalDate.now()))==null){
+                    modelAndView.addObject("hour", "시간");
+                    modelAndView.addObject("minute", "분");
+                }else{
+                    Tbl_Exercise_record exercise = exerciseService.getExercise(new RecordKey(getUsername(), LocalDate.now()));
+                    modelAndView.addObject("hour", exercise.getHour());
+                    modelAndView.addObject("minute", exercise.getMinute());
+                }
+                break;
+            case CAREGIVER:
+                if(exerciseService.getExercise(new RecordKey(getCaretaker().getUserId(), LocalDate.now()))==null){
+                    modelAndView.addObject("hour", "시간");
+                    modelAndView.addObject("minute", "분");
+                }else{
+                    Tbl_Exercise_record exercise = exerciseService.getExercise(new RecordKey(getCaretaker().getUserId(), LocalDate.now()));
+                    modelAndView.addObject("hour", exercise.getHour());
+                    modelAndView.addObject("minute", exercise.getMinute());
+                }
+                break;
         }
-        modelAndView.addObject("previousUrl", "/home");
+        modelAndView.addObject("type",typeCheck);
+        modelAndView.addObject("previousUrl", "/center");
         return modelAndView;
     }
     @GetMapping("/exercise-all-history")
@@ -52,9 +68,20 @@ public class ExerciseController extends BaseController {
         ModelAndView modelAndView = new ModelAndView("exercise/exercise-all-history");
         String username = getUsername();
         List<Tbl_Exercise_record> exerciseHistory;
-        exerciseHistory = exerciseService.getExerciseAllRecord(username,-1, -1);
-        modelAndView.addObject("exerciseWeek",avgWeek());
-        modelAndView.addObject("exercise",exerciseHistory);
+        switch (getUser().getType()){
+            case PATIENT:
+                exerciseHistory = exerciseService.getExerciseAllRecord(username,-1, -1);
+                modelAndView.addObject("exerciseWeek",avgWeek());
+                modelAndView.addObject("exercise",exerciseHistory);
+                break;
+            case CAREGIVER:
+                exerciseHistory = exerciseService.getExerciseAllRecord(getCaretaker().getUserId(), -1, -1);
+                modelAndView.addObject("exerciseWeek",avgWeek());
+                modelAndView.addObject("exercise",exerciseHistory);
+                break;
+
+        }
+        modelAndView.addObject("type",getUser().getType());
         modelAndView.addObject("previousUrl","exercise");
         return modelAndView;
     }
@@ -73,21 +100,22 @@ public class ExerciseController extends BaseController {
             code = Result.Code.ERROR_DATABASE;
         }
         return Result.<Tbl_Exercise_record>builder()
-                .setCode(code)
-                .setData(seved)
-                .createResult();
+                .code(code)
+                .data(seved)
+                .build();
     }
     public Integer avgWeek(){
         Integer avg = 0;
         LocalDate now = LocalDate.now();
-        String username = getUsername();
-        avg = exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.MONDAY))) +
-                exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.TUESDAY))) +
-                exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.WEDNESDAY)))  +
-                exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.THURSDAY))) +
-                exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.FRIDAY))) +
-                exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.SATURDAY))) +
-                exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.SUNDAY))) ;
+        String username = "";
+        if(getUser().getType() == User.Type.PATIENT){
+            username = getUsername();
+        }else if(getUser().getType() == User.Type.CAREGIVER){
+            username = getCaretaker().getUserId();
+        }
+        for(int i=1; i<8; i++){
+            avg = avg + exerciseService.getExerciseDayRecord(new RecordKey(username,now.with(DayOfWeek.of(i))));
+        }
         return avg/7;
     }
 }

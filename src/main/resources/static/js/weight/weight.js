@@ -1,10 +1,7 @@
 function onFormSubmission(form) {
-	const id = form.querySelector("input[name=id]").value;
 	const weight = form.querySelector("input[name=weight]").value;
-	const date = form.querySelector("button[name=date]").value;
 
 	const body = {
-		id: id,
 		weight: weight
 	};
 
@@ -22,22 +19,18 @@ function onFormSubmission(form) {
 		.then(response => response.json())
 		.then(data =>console.log(data));
 
-
-	location.reload(true);
-	top.document.location.reload();
-	opener.location.reload();
-	top.document.location.reload();
-
-	return true;
+	return false;
 }
 
+/* 이 방법은 틀렸다고 말하기는 애매하지만, 좋은 방법은 아님, 일단 html 에서 form 형식으로 묶어서 form input 텍스트에 있는 값을 강제로 버튼 setfinished로 들고와서
+이 값을 보내준다. 근데 이 방법이 put 방식? 은 좋은 방법이 아닐듯 함, https://html.spec.whatwg.org/multipage/forms.html#the-form-element  *참조
 function setFinished(finished){
-	
+
 	const body = {
 		//weightId: document.querySelector("#weight-form input[name=id]").value,
 		weight: document.querySelector("#weight-form input[name=weight]").value
 	};
-	
+
 	const url = document.querySelector("#weight-put-action").value;
 	const options = {
 		method: "PUT",
@@ -47,7 +40,7 @@ function setFinished(finished){
 		},
 		body: JSON.stringify(body)
 	};
-	
+
 	fetch(url, options);
 
 	location.reload(true);
@@ -55,7 +48,7 @@ function setFinished(finished){
 	opener.location.reload();
 	top.document.location.reload();
 	
-}
+}*/
 
 function isNumberKey(evt){
 		//체중 입력받는 부분

@@ -1,10 +1,13 @@
 package withus.service;
 
+import com.sun.istack.Nullable;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.security.ssl.Record;
 import withus.entity.RecordKey;
 import withus.entity.Tbl_weight;
+import withus.entity.User;
 import withus.repository.WeightRecordRepository;
 
 import java.time.LocalDate;
@@ -30,19 +33,9 @@ public class WeightService {
         return weightRecordRepository.findByPk_IdAndWeightGreaterThan(id, weight);
     }
 
-    @NonNull
-    public Tbl_weight getWeightToday(RecordKey pk, float weight){
-        return weightRecordRepository.findByPk_DateAndWeightGreaterThan(pk, weight);
-    }
-
-    @NonNull
-    public List<Tbl_weight> getWeightDateRecord(RecordKey pk, float weight){
-        return weightRecordRepository.findByPkAndWeightGreaterThan(pk, weight);
-    }
-
-    @NonNull
-    public Tbl_weight getWeight(RecordKey pk, float weight){
-        return weightRecordRepository.findByPkAndWeight(pk, weight);
+    @Nullable
+    public Tbl_weight getTodayWeight(RecordKey pk) {
+        return weightRecordRepository.findByPk(pk).orElse(null);
     }
 
 }
