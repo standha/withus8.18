@@ -39,7 +39,7 @@ public class Utility {
 	public static String format(LocalDateTime date) { return date.format(DATE_TIME_FORMATTER); }
 
 	/**
-	 * @return {@code week}���� {@code dayOfWeek}������ �ش� �� ������ ��ĥ�������� ����
+	 * @return {@code week}주차 {@code dayOfWeek}요일이 해당 주 내에서 며칠차인지를 리턴
 	 */
 	public static int getDayDigitForWwithus(int week, DayOfWeek dayOfWeek) {
 		List<DayOfWeek> wwithusDaysOfWeek = selectDaysOfWeekList(week);
@@ -53,8 +53,8 @@ public class Utility {
 	}
 
 	/**
-	 * 	 * @return {@code week}���� {@code dayOfWeek}������ ��������
-	 * ���� �������� ���񽺰� �����Ǵ� ���� ���� ���������� ����
+	 * @return {@code week}주차 {@code dayOfWeek}요일을 기준으로
+	 * 다음 위더스랑 서비스가 제공되는 것이 무슨 요일인지를 리턴
 	 */
 	public static DayOfWeek getNextDayForWwithus(int week, DayOfWeek dayOfWeek) {
 		List<DayOfWeek> wwithusDaysOfWeek = selectDaysOfWeekList(week);
@@ -75,21 +75,21 @@ public class Utility {
 	}
 
 	/**
-	 * @return ���������� ���� �� ����ڿ��� ������ �޽���
+	 * @return 위더스랑이 없는 날 사용자에게 제공할 메시지
 	 */
 	public static String getNonWwithusDayMessage(int week) {
 		List<DayOfWeek> wwithusDaysOfWeek = selectDaysOfWeekList(week);
 		String daysOfWeekInKorean = daysOfWeekInKorean(wwithusDaysOfWeek);
 
 		return String.format(
-			"�ݰ����ϴ�. ���� �������� �ڽ��� �ǰ����¸� �� ����ϰ� �����? �� ������������ ��ȭ�� %s�� �־��. �׳� �ɰԿ�.\uD83D\uDE42",
+			"반갑습니다. 매일 위더스에 자신의 건강상태를 잘 기록하고 계시죠? 저 위더스랑과의 대화는 %s에 있어요. 그날 뵐게요.\uD83D\uDE42",
 			daysOfWeekInKorean
 		);
 	}
 
 	/**
-	 * @return ������� ������ ���� ���������� �����ϴ� ���ϵ��� ����Ʈ.<p>
-	 * {@link java.time.DayOfWeek#ordinal()} ������ ���ĵǾ� �ִ�.
+	 * @return 사용자의 주차에 따라 위더스랑을 진행하는 요일들의 리스트.<p>
+	 * {@link java.time.DayOfWeek#ordinal()} 순으로 정렬되어 있다.
 	 */
 	public static List<DayOfWeek> selectDaysOfWeekList(int week) {
 		if (week < 1 || week > 24) { throw new RuntimeException(String.format("Unexpected value for week #: %d", week)); }
@@ -106,7 +106,7 @@ public class Utility {
 	}
 
 	/**
-	 * @return ������ {@link java.time.DayOfWeek}�� ���� ({@link java.time.DayOfWeek#ordinal()} ����)
+	 * @return 지정한 {@link java.time.DayOfWeek}의 다음 ({@link java.time.DayOfWeek#ordinal()} 기준)
 	 * {@link java.time.DayOfWeek}.<p>
 	 * Examples:<p>
 	 * {@code getNextDayOfWeek(DayOfWeek.MONDAY)} returns {@link java.time.DayOfWeek#TUESDAY}<p>
@@ -121,7 +121,7 @@ public class Utility {
 	}
 
 	/**
-	 * @return {@link java.time.DayOfWeek}�� {@link java.util.Locale#KOREAN}���� ǥ��
+	 * @return {@link java.time.DayOfWeek}를 {@link java.util.Locale#KOREAN}으로 표현
 	 */
 	public static String dayOfWeekInKorean(DayOfWeek dayOfWeek) {
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("E", Locale.KOREAN);
@@ -129,9 +129,9 @@ public class Utility {
 	}
 
 	/**
-	 * @return {@link java.util.Collection} of {@link java.time.DayOfWeek}��
-	 * {@link java.util.Locale#KOREAN}���� ǥ��<p>
-	 * Example: "��,ȭ,������"
+	 * @return {@link java.util.Collection} of {@link java.time.DayOfWeek}를
+	 * {@link java.util.Locale#KOREAN}으로 표현<p>
+	 * Example: "월,화,수요일"
 	 */
 	public static String daysOfWeekInKorean(Collection<DayOfWeek> daysOfWeek) {
 		List<String> strings = new ArrayList<>();
@@ -139,11 +139,11 @@ public class Utility {
 			strings.add(dayOfWeekInKorean(dayOfWeek));
 		}
 
-		return (String.join(",", strings) + "����");
+		return (String.join(",", strings) + "요일");
 	}
 
 	/**
-	 * ���������� ���� ������ �˸��� ���� {@link java.lang.RuntimeException}.
+	 * 위더스랑이 없는 날임을 알리기 위한 {@link java.lang.RuntimeException}.
 	 */
 	public static class NoWithusException extends RuntimeException {
 		public NoWithusException(DayOfWeek dayOfWeek, int week) {
