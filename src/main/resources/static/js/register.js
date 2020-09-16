@@ -1,5 +1,8 @@
 function onFormSubmission(form) {
-	const userType = form.querySelector("input[name=user]:checked").value;
+	// const userType = form.querySelector("input[name=user]:checked").value;
+	// const userType = document.getElementById("patient").getAttributeNode(value);
+	const userType = form.querySelector("input[id=patient]").value;
+
 
 	const id = form.querySelector("input[name=id]").value;
 	const password = form.querySelector("input[name=password]").value;
@@ -90,7 +93,7 @@ function removeSpace(value) {
 }
 
 function doDisplay(user) {
-	console.log(user)
+	console.log("user = " + user);
 	const elems = document.getElementsByClassName("patient-only");
 
 	if (user === 'CAREGIVER') {
