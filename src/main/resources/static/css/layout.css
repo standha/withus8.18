@@ -6,7 +6,18 @@ header {position: relative;}
 header .header-wrap {padding: 3% 5%;}
 header .header-wrap .head {display: flex; justify-content: space-between;}
 header .header-wrap .head .btn {display: flex; align-items: center; width: auto; padding: 0 10px;}
+.header-wrap.type01 {display: flex; flex-direction: column; justify-content: space-between; border-bottom: 1px solid #edeeef; background-color: #fff;}
+.header-wrap.type01 h2 {position: absolute; display: flex; left: 50%; align-items: center; line-height: 36px; font-size: 1.25rem; color: #222; font-weight: 700; transform: translateX(-50%);}
+.header-wrap.type01 h2 span {display: inline-block; margin: 0 3px;}
+.header-wrap.type02 {display: flex; flex-direction: column; justify-content: space-between; border-bottom: 1px solid #edeeef; background-image: linear-gradient(98deg, #14bed2 4%, #0ddf6a 100%);}
+.header-wrap.type02 h2 {position: absolute; left: 50%; line-height: 36px; font-size: 1.25rem; color: #fff; font-weight: 700; transform: translateX(-50%);}
 footer {position: relative;}
+
+.container {position: relative;}
+.cont-wrap.type01 {border-top: 1px solid #edeeef; margin-top: 8px; box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05); background-color: #fff;}
+.cont-wrap.type01:before {content: ''; display: block; position: absolute; top: 0; width: 100%; height: 8px; background-color: #f6f9fc;}
+.cont-wrap.type01 h3 {font-size: 1.07rem; color: #666; font-weight: 500; padding: 12px 15px 15px;}
+
 
 .gnb {}
 .gnb li {}
@@ -43,10 +54,96 @@ footer {position: relative;}
 
 /* join */
 .join-page {background-color: #f6f9fc;}
-.join-page .header-wrap {display: flex; background-color: #fff;}
-.join-page .field-wrap {}
-.join-page .footer-wrap .btn-wrap {padding: 0 5%; margin-bottom: 10%;}
-
+.join-page .header-wrap {padding: 0; background-color: #fff; box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.04);}
+.join-page .container {margin-bottom: auto;}
 
 /* modify */
+.modify-page {}
+
+/* todo */
+.todo-page {}
+.todo-page .container {margin-bottom: auto;}
+.todo-page .cont-wrap {border: none; background-color: #f6f9fc;}
+.todo-page .cont-wrap .rdo-wrap {border-top: 1px solid #edeeef; border-bottom: 1px solid #edeeef; background-color: #fff;}
+
+/* list (alarm, intake) */
+.list-page {background-color: #f6f9fc;}
+.list-page header {margin-bottom: 0;}
+.list-page .container {margin: auto 0;}
+.list-card {display: flex; flex-direction: column; align-items: center; margin: 5%; padding: 0 5%; border-radius: 20px; box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.04); border: solid 1px #ededed; background-color: #fff; }
+.list-card span[class*="ico-"] {display: block; margin: 21% 0 15%;}
+
+/* daily */
+.daily-page {}
+.daily-page .container {margin-bottom: auto;}
+.daily-page .insert-wrap {padding: 0 3%;}
+.daily-box {padding: 7% 0; border-bottom: 1px solid #ebebeb;}
+.daily-box.last {border: none;}
+.daily-box .daily-tit {display: flex; align-items: normal;}
+.daily-box .daily-tit span[class*="ico-"] {margin-right: 10px;}
+.daily-box .daily-tit span.tit {font-size: 1.13rem; font-weight: 500; width: 80%; line-height: 1.4; margin-bottom: 5%;}
+.daily-box .rdo-wrap {padding: 0 17%;}
+
+/* step */
+.step-page {position: relative; overflow: hidden; background-image: linear-gradient(to bottom, #e2eff4, #edf2f2 83%); }
+.step-page:before {content: ''; display: block; position: absolute; width: 140px; height: 150px; right: 70%; top: 15%; background: url('../images/common/step/cloud-lt.png') 0 0 no-repeat; background-size: 100%;}
+.step-page:after {content: ''; display: block; position: absolute; width: 140px; height: 65px; left: 65%; top: 25%; background: url('../images/common/step/cloud-rt.png') 0 0 no-repeat; background-size: 100%;}
+.step-page header {margin-bottom: auto;}
+.step-page .tit-wrap {padding: 20% 0;}
+.step-page .tit-wrap span {position: relative; display: block; text-align: center; z-index: 1;}
+.step-page .tit-wrap span.tit {margin: 0 auto 3%; width: 212px; height: 30px; background: url('../images/common/step/sp-text.png'); background-position: 0 0; background-size: 290px 275px;}
+.step-page .tit-wrap span.sub {font-size: 1rem; color: #000; line-height: 1.4;}
+.step-page .container {position: relative; margin-bottom: -2%; margin-top: -10%;}
+.step-page .flower {position: absolute; margin-bottom: -60px; left: 50%; width: 330px; height: 360px; background: url('../images/common/step/flower01.png') 0 0 no-repeat; background-size: 100%; transform: translateX(-50%); z-index: 2;}
+.step-page .seed {position: relative; margin: 0 auto -60px; width: 330px; height: 360px; background: url('../images/common/step/step01.png') 0 0 no-repeat; background-size: 100%; z-index: 2;}
+.step-page .ground-wrap {position: relative; height: 90px; background: url('../images/common/step/ground02.png') 50% 0 repeat-x; background-size: 360px 134px;}
+.step-page .ground-wrap:after {content: ''; display: block; position: absolute; width: 66px; height: 57px; right: 5%; top: -48%; background: url('../images/common/step/sp-img.png') 0 0 no-repeat; background-size: 218px 58px; z-index: 2;}
+
+.step-page.step02 .tit-wrap span.tit {width: 187px; background-position: 0 -30px;} 
+.step-page.step02 .seed {background-image: url('../images/common/step/step02.png');}
+.step-page.step02 .ground-wrap:after {content: ''; display: block; position: absolute; width: 70px; height: 57px; right: 5%; top: -48%; background: url('../images/common/step/sp-img.png') -67px 0 no-repeat; background-size: 218px 58px;}
+.step-page.step03 .tit-wrap span.tit {width: 233px; background-position: 0 -60px;} 
+.step-page.step03 .seed {background-image: url('../images/common/step/step03.png');}
+.step-page.step03 .ground-wrap:after {content: ''; display: block; position: absolute; width: 70px; height: 57px; right: 5%; top: -48%; background: url('../images/common/step/sp-img.png') -67px 0 no-repeat; background-size: 218px 58px;}
+.step-page.step04 .tit-wrap span.tit {width: 239px; background-position: 0 -90px;} 
+.step-page.step04 .seed {background-image: url('../images/common/step/step04.png');}
+.step-page.step04 .ground-wrap:after {content: ''; display: block; position: absolute; width: 82px; height: 57px; right: 0; top: -48%; background: url('../images/common/step/sp-img.png') -136px 0 no-repeat; background-size: 218px 58px;}
+
+.step-page.level01 .flower {background: none;}
+.step-page.level02 .flower {background-image: url('../images/common/step/flower01.png');}
+.step-page.level03 .flower {background-image: url('../images/common/step/flower02.png');}
+.step-page.level04 .flower {background-image: url('../images/common/step/flower03.png');}
+.step-page.level05 .flower {background-image: url('../images/common/step/flower04.png');}
+.step-page.level06 .flower {background-image: url('../images/common/step/flower05.png');}
+
+.step01.level01 .ground-wrap,
+.step02.level01 .ground-wrap {background-image: url('../images/common/step/ground01.png');}
+.step04.level06 .container {background: url('../images/common/step/forest.png') 50% bottom no-repeat; background-size: 800px 117px;}
+.step04.level06 .flower {background-image: url('../images/common/step/flower06.png');}
+.step04.level06 .ground-wrap:after {display: none;}
+.step04.level02 .tit-wrap span.tit {width: 239px; background-position: 0 -120px;} 
+.step04.level03 .tit-wrap span.tit {width: 239px; background-position: 0 -150px;} 
+.step04.level04 .tit-wrap span.tit {width: 239px; background-position: 0 -180px;} 
+.step04.level05 .tit-wrap span.tit {width: 263px; background-position: 0 -210px;} 
+.step04.level06 .tit-wrap span.tit {width: 291px; background-position: 0 -240px;} 
+
+/* insert (blood, exercise, weight) */
+.insert-page {}
+.insert-page .container {margin-bottom: auto;}
+.insert-page .cont-wrap {}
+.insert-page .insert-wrap {padding: 5% 3%;}
+.insert-page .tit-img {margin: 7% auto 4%;}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
