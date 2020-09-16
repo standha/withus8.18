@@ -87,9 +87,9 @@ public class User implements Serializable, UserDetails {
 	@Getter
 	private User caregiver;
 
-	@Column(name = "progress")
+	@Column(name = "week")
 	@Getter
-	private Integer progress;
+	private Integer week;
 
 	@Column(name = "level")
 	@Getter

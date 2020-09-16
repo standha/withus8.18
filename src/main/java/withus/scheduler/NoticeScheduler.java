@@ -176,7 +176,7 @@ public class NoticeScheduler {
         List<String>tokenList = new ArrayList<String>();
         List<User> patients = userService.getPatientToken(User.Type.PATIENT);
         for(User patient : patients){
-            if(patient.getProgress() > 0 && patient.getProgress() < 9){
+            if(patient.getWeek() > 0 && patient.getWeek() < 9){
                 tokenList.add(patient.getAppToken());
             }
         }
@@ -195,7 +195,7 @@ public class NoticeScheduler {
         List<String>tokenList = new ArrayList<String>();
         List<User> patients = userService.getPatientToken(User.Type.PATIENT);
         for(User patient : patients){
-            if(patient.getProgress() >= 9 && patient.getProgress() <= 24){
+            if(patient.getWeek() >= 9 && patient.getWeek() <= 24){
                 tokenList.add(patient.getAppToken());
             }
         }
