@@ -104,6 +104,7 @@ function radioClick(){
             .then(data =>console.log(data));
 
         location.href='center';
+        //window.location.reload();
     }
     else{
         console.log("목표 설정 취소");
