@@ -1,9 +1,10 @@
 function onFormSubmission(form) {
-    const userType = form.querySelector("input[name=user]:checked").value;
+    const userType = form.querySelector("input[name=user]").value;
     const id = form.querySelector("input[name=id]").value;
     const password = form.querySelector("input[name=password]").value;
     const name = form.querySelector("input[name=name]").value;
     const contact = form.querySelector("input[name=contact]").value;
+
     if(form.querySelector("input[name=birthdate]") == null){
         birthdateValue =  null;
         birthdate = null;

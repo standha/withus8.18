@@ -15,21 +15,25 @@
 	<script th:src="@{/js/common.js}"></script>
 </head>
 <script>
-	function check_radio()
+	function check_radio(div)
 	{
-		if (document.getElementById('maleCheck').className === "rdo-box checked")
-		{
-			document.getElementById('maleCheck').className = "rdo-box";
-			document.getElementById('femaleCheck').className = "rdo-box checked";
-			document.getElementById("rdo2").setAttribute("checked", "");
-			document.getElementById("rdo1").removeAttribute("checked");
-		}
-		else
-		{
-			document.getElementById('femaleCheck').className = "rdo-box";
-			document.getElementById('maleCheck').className = "rdo-box checked";
-			document.getElementById("rdo1").setAttribute("checked", "");
-			document.getElementById("rdo2").removeAttribute("checked");
+		switch(div.id){
+			case "maleCheck":
+				if(document.getElementById('maleCheck').className === "rdo-box"){
+					document.getElementById('maleCheck').className = "rdo-box checked";
+					document.getElementById('femaleCheck').className = "rdo-box";
+					document.getElementById("rdo1").setAttribute("checked", "");
+					document.getElementById("rdo2").removeAttribute("checked");
+				}
+				break;
+			case "femaleCheck":
+				if(document.getElementById('femaleCheck').className === "rdo-box"){
+					document.getElementById('femaleCheck').className = "rdo-box checked";
+					document.getElementById('maleCheck').className = "rdo-box";
+					document.getElementById("rdo2").setAttribute("checked", "");
+					document.getElementById("rdo1").removeAttribute("checked");
+				}
+				break;
 		}
 	}
 </script>
@@ -46,13 +50,13 @@
 		<div class="header-wrap">
 			<div class="tab-wrap type01">
 				<ul class="tab-menu">
-					<li id="checkType" class="patient active">
+					<li id="checkType" class="patient active" onclick="doDisplay('PATIENT')">
 						<div class="menu-tit">
 							<span class="ico-join-chk"></span>
 							<span>환자</span>
 						</div>
 					</li>
-					<li class="guardian">
+					<li class="guardian" onclick="doDisplay('CAREGIVER')">
 						<div class="menu-tit" >
 							<span class="ico-join-chk"></span>
 							<span>보호자</span>
@@ -68,11 +72,11 @@
 	<div class="container" id="content">
 		<div class="field-wrap type02">
 			<div class="field">
-				<div class="insert error">
+				<div class="insert">
 					<label for="input1">아이디</label>
-					<input type="text" name="id" id="input1" placeholder="아이디를 입력해주세요" value="위더스">
+					<input type="text" name="id" id="input1" placeholder="아이디를 입력해주세요">
 				</div>
-				<p class="alert-notice">한글 아이디는 사용하실 수 없습니다.</p>
+				<!--<p class="alert-notice">한글 아이디는 사용하실 수 없습니다.</p>-->
 			</div>
 			<div class="field">
 				<div class="insert">
@@ -88,25 +92,25 @@
 					<input type="text" name="name" id="input3" placeholder="성함을 입력해주세요" value="">
 				</div>
 			</div>
-			<div class="field">
+			<div class="field patient-only">
 				<div class="insert">
 					<label for="input4">생년월일</label>
 					<input type="text" name="birthdate" id="input4" placeholder="ex) 601231">
 				</div>
 			</div>
-			<div class="field">
+			<div class="field patient-only">
 				<div class="insert">
 					<span class="label-txt">성별</span>
 					<div class="rdo-wrap grid2 type01">
-						<div class="rdo-box checked" id = "maleCheck" onclick="check_radio()">
+						<div class="rdo-box checked" id = "maleCheck" onclick="check_radio(this)">
                             <span class="rdo-mark" >
-                                <input type="radio" name="gender" id="rdo1">
+                                <input type="radio" name="gender" value="MALE" id="rdo1" checked>
                             </span>
 							<label for="rdo1">남자</label>
 						</div>
-						<div class="rdo-box" id = "femaleCheck" onclick="check_radio()">
+						<div class="rdo-box" id = "femaleCheck" onclick="check_radio(this)">
                             <span class="rdo-mark" >
-                                <input type="radio" name="gender" id="rdo2" >
+                                <input type="radio" name="gender" value="FEMALE" id="rdo2" >
                             </span>
 							<label for="rdo2">여자</label>
 						</div>
@@ -119,7 +123,7 @@
 					<input type="text" name="contact" id="input5" placeholder="ex) 01012345678">
 				</div>
 			</div>
-			<div class="field">
+			<div class="field patient-only">
 				<div class="insert">
 					<label for="input6">연락처(보호자)</label>
 					<input type="text" name="caregiver" id="input6" placeholder="ex) 01012345678">
@@ -141,9 +145,6 @@
 </form>
 </div>
 <!-- wrap -->
-
-<!--// wrap -->
-
 
 </body>
 </html>
