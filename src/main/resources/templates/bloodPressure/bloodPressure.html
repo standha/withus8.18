@@ -58,26 +58,26 @@
                                 <input type="number" class="num2" id="input2" th:value="${relaxation}" placeholder="--" name="relaxation" disabled>
                                 <span>mmHg</span>
                             </div>
-                            <div class="field">
-                                <label for="input2">맥박수</label>
-                                <div class="insert" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
-                                    <input type="number" id="input2" class="num2" th:value="${pressure}" placeholder="--" name="pressure">
-                                    <span>(회/분)</span>
-                                </div>
-                                <div class="insert" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
-                                    <input type="number" id="input2" class="num2" th:value="${pressure}" placeholder="--" name="pressure" disabled>
-                                    <span>(회/분)</span>
-                                </div>
+                        </div>
+                        <div class="field">
+                            <label for="input2">맥박수</label>
+                            <div class="insert" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+                                <input type="number" id="input2" class="num2" th:value="${pressure}" placeholder="--" name="pressure">
+                                <span>(회/분)</span>
+                            </div>
+                            <div class="insert" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
+                                <input type="number" id="input2" class="num2" th:value="${pressure}" placeholder="--" name="pressure" disabled>
+                                <span>(회/분)</span>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT}" class="btn-wrap type01">
-                <button class="btn xlg type01" type="submit">입력</button>
-            </div>
-            <div th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}" class="btn-wrap type01">
-                <button class="btn xlg type01" type="submit" disabled>입력</button>
+                <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT}" class="btn-wrap type01">
+                    <button class="btn xlg type01" type="submit">입력</button>
+                </div>
+                <div th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}" class="btn-wrap type01">
+                    <button class="btn xlg type01" type="submit" disabled>입력</button>
+                </div>
             </div>
         </form>
     </div>
