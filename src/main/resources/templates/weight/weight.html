@@ -1,44 +1,99 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <link th:href="@{/css/header.css}" rel="stylesheet">
-    <link th:href="@{/css/alarm/alarm.css}" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>위더스</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no">
+    <link th:href="@{/css/reset.css}" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <link th:href="@{/css/layout.css}" rel="stylesheet">
+    <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/weight/weight.js}"></script>
     <title>체중</title>
 </head>
 <body>
-<input type="hidden" id="weight-history-get-action" th:attr="value=@{/weight-history}">
-<input type="hidden" id="weight-put-action" th:attr="value=@{/weight-history}">
-<div th:replace="header :: #header"></div>
-<div id="body">
-    <form id="weight-form" th:action="@{/weight}" onsubmit="return onFormSubmission(this);">
-        <div>체중</div>
-        <div>
-            <p>매일 같은 시간에 체중을 측정해주세요.</p>
-            <!-- 환자가 로그인 중 -->
-            <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
-                <input
-                        type="text" name="weight" onkeypress="return isNumberKey(event)"
-                        onkeyup="this.value=this.value.replace(/[\ㄱ-ㅎㅏ-ㅣ가-힣]/g, '');"
-                        value="0" th:value="${weight}" text = "kg">
+<div class="skip-navi">
+    <a href="#content">본문 바로가기</a>
+</div>
+
+<!-- wrap -->
+<div id="wrap" class="insert-page">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap type01">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+                <h2>
+                    <span class="ico-weight-s"></span>
+                    <span>체중</span>
+                </h2>
             </div>
-            <!-- 보호자가 로그인 중 -->
-            <div  th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
-                <input
-                        type="text" name="weight" th:value="${weight}" text = "kg" disabled>
+        </div>
+    </header>
+        <!-- // header -->
+
+        <div class="container" id="content">
+            <form id="weight-form" th:action="@{/weight}" onsubmit="return onFormSubmission(this);">
+            <div class="cont-wrap type01">
+                <div class="insert-wrap">
+                    <div class="alert-info">
+                        <span class="ico-info2"></span>
+                        <span>매일 같은 시간에 체중을 측정해주세요</span>
+                    </div>
+                    <div class="tit-img ico-weight-l"></div>
+                    <div class="field-wrap type04">
+                        <div class="field">
+                            <label for="input1">체중</label>
+                            <input type="hidden" id="weight-history-get-action" th:attr="value=@{/weight-history}">
+                            <input type="hidden" id="weight-put-action" th:attr="value=@{/weight-history}">
+                            <!-- 환자가 로그인 중 -->
+                            <div class="insert" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+                                <input id="input1" class="num2"
+                                        type="number" name="weight"
+                                        value="0" th:value="${weight}" text = "kg">
+                                <span>Kg</span>
+                            </div>
+                            <!-- 보호자가 로그인 중 -->
+                            <div class="insert" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
+                                <input id="input1" class="num2"
+                                       type="number" name="weight"
+                                       value="0" th:value="${weight}" text = "kg" disabled>
+                                <span>Kg</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT}" class="btn-wrap type01">
+                <button class="btn xlg type01" type="submit">입력</button>
+            </div>
+            <div th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}" class="btn-wrap type01">
+                <button class="btn xlg type01" type="submit" disabled>입력</button>
+            </div>
+            </form>
         </div>
 
-        <div  th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
-            <input type="submit" value="저장">
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="btn-wrap type02">
+                <span class="btn xlg arrow-type02" onclick="showWeightHistory();">
+                    <span>체중변화 관찰</span>
+                    <span class="ico-arrow2"></span>
+                </span>
+            </div>
         </div>
-        <div  th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
-            <input type="submit" value="저장" disabled>
-        </div>
-    </form>
-    <div>
-        <button id="history" type="button" onclick="showWeightHistory();">체중변화 관찰</button>
-    </div>
+    </footer>
+    <!-- // footer -->
+</div>
 </body>
 </html>
