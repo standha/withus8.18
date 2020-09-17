@@ -47,13 +47,15 @@
                             <label for="input1">혈압:수축기/이완기</label>
                             <input type="hidden" id="bloodPressure-history-get-action" th:attr="value=@{/bloodPressure-all-history}">
                             <div class="insert" id="date"  th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
-                                <input type="number" class="num2" id="input2" th:value="${relaxation}" placeholder="--" name="relaxation">
                                 <input type="number" class="num3" id="input1" th:value="${contraction}" placeholder="--" name="contraction">
+                                <span class="bar">/</span>
+                                <input type="number" class="num2" id="input2" th:value="${relaxation}" placeholder="--" name="relaxation">
                                 <span>mmHg</span>
                             </div>
                             <div class="insert" id="date"  th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
-                                <input type="number" class="num2" id="input2" th:value="${relaxation}" placeholder="--" name="relaxation" disabled>
                                 <input type="number" class="num3" id="input1" th:value="${contraction}" placeholder="--" name="contraction" disabled>
+                                <span class="bar">/</span>
+                                <input type="number" class="num2" id="input2" th:value="${relaxation}" placeholder="--" name="relaxation" disabled>
                                 <span>mmHg</span>
                             </div>
                             <div class="field">

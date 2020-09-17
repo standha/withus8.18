@@ -13,7 +13,6 @@
     <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/weight/weight.js}"></script>
-    <title>체중</title>
 </head>
 <body>
 <div class="skip-navi">
@@ -65,7 +64,7 @@
                             </div>
                             <!-- 보호자가 로그인 중 -->
                             <div class="insert" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
-                                <input id="input1" class="num2"  placeholder="--"
+                                <input id="input1" class="num3"  placeholder="--"
                                        type="text" name="weight" onkeypress="return isNumberKey(event)"
                                        onkeyup="this.value=this.value.replace(/[\ㄱ-ㅎㅏ-ㅣ가-힣]/g, '');"
                                        value="0" th:value="${weight}" disabled>
