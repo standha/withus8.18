@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>위더스</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+    <link th:href="@{/css/reset.css}" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <link th:href="@{/css/layout.css}" rel="stylesheet">
+    <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+</head>
+<body>
+<div class="skip-navi">
+    <a href="#content">본문 바로가기</a>
+</div>
+
+<!-- wrap -->
+<!--
+	씨앗심기 4단게 => step01 / step02 / step03 / step04
+	꽃피우기 6단계 => level01 / level02 / level03 / level04 / level05 / level06
+	class 조합으로 총 24단계 화면구성
+ -->
+<div th:if="${level}==1" id="wrap" class="step-page step01 level01">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <div class="tit-wrap">
+                <span class="tit">
+                    <span class="hide">씨앗을 심으셨군요!</span>
+                </span>
+                <span class="sub">조금만 더 힘내시면 씨앗이 발아 할 거예요. <br> 이번주 목표를 달성해보세요!</span>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- content -->
+    <div class="container" id="content">
+        <div class="flower"></div>
+        <div class="seed"></div>
+    </div>
+    <!-- // content -->
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="ground-wrap"></div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+</div>
+<div th:if="${level}==2" id="wrap" class="step-page step02 level01">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <div class="tit-wrap">
+                <span class="tit">
+                    <span class="hide">새싹이 피었어요!</span>
+                </span>
+                <span class="sub">조금만 더 힘내시면 꽃봉오리가 맺어질 거예요. <br> 이번주 목표를 달성해보세요!</span>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- content -->
+    <div class="container" id="content">
+        <div class="flower"></div>
+        <div class="seed"></div>
+    </div>
+    <!-- // content -->
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="ground-wrap"></div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+</div>
+<div th:if="${level}==3" id="wrap" class="step-page step03 level01">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <div class="tit-wrap">
+                <span class="tit">
+                    <span class="hide">꽃봉오리를 맺었군요!</span>
+                </span>
+                <span class="sub">조금만 더 힘내시면 꽃봉오리가 맺어질 거예요. <br> 이번주 목표를 달성해보세요!</span>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- content -->
+    <div class="container" id="content">
+        <div class="flower"></div>
+        <div class="seed"></div>
+    </div>
+    <!-- // content -->
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="ground-wrap"></div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+</div>
+<div th:if="${level}==4" id="wrap" class="step-page step04 level01">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <div class="tit-wrap">
+                <span class="tit">
+                    <span class="hide">첫번째 꽃이 피었어요!</span>
+                </span>
+                <span class="sub">시작이 반이라고 하죠? <br> 앞으로 더 많은 꽃을 함께 피워보도록 해요.</span>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- content -->
+    <div class="container" id="content">
+        <div class="flower"></div>
+        <div class="seed"></div>
+    </div>
+    <!-- // content -->
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="ground-wrap"></div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+</div>
+
+<div th:if="${level}==5" id="wrap" class="step-page step01 level02">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <div class="tit-wrap">
+                <span class="tit">
+                    <span class="hide">씨앗을 심으셨군요!</span>
+                </span>
+                <span class="sub">조금만 더 힘내시면 씨앗이 발아 할 거예요. <br> 이번주 목표를 달성해보세요!</span>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- content -->
+    <div class="container" id="content">
+        <div class="flower"></div>
+        <div class="seed"></div>
+    </div>
+    <!-- // content -->
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="ground-wrap"></div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+</div>
+<div th:if="${level}==6" id="wrap" class="step-page step02 level02">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <div class="tit-wrap">
+                <span class="tit">
+                    <span class="hide">새싹이 피었어요!</span>
+                </span>
+                <span class="sub">조금만 더 힘내시면 꽃봉오리가 맺어질 거예요. <br> 이번주 목표를 달성해보세요!</span>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- content -->
+    <div class="container" id="content">
+        <div class="flower"></div>
+        <div class="seed"></div>
+    </div>
+    <!-- // content -->
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="ground-wrap"></div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+</div>
+<div th:if="${level}==7" id="wrap" class="step-page step03 level02">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <div class="tit-wrap">
+                <span class="tit">
+                    <span class="hide">꽃봉오리를 맺었군요!</span>
+                </span>
+                <span class="sub">조금만 더 힘내시면 꽃봉오리가 맺어질 거예요. <br> 이번주 목표를 달성해보세요!</span>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- content -->
+    <div class="container" id="content">
+        <div class="flower"></div>
+        <div class="seed"></div>
+    </div>
+    <!-- // content -->
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="ground-wrap"></div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+</div>
+<div th:if="${level}==8" id="wrap" class="step-page step04 level02">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <div class="tit-wrap">
+                <span class="tit">
+                    <span class="hide">두번째 꽃이 피었어요!</span>
+                </span>
+                <span class="sub">축하드려요! <br> 매주 목표 달성을 통해 더 많은 꽃을 피워보세요!</span>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- content -->
+    <div class="container" id="content">
+        <div class="flower"></div>
+        <div class="seed"></div>
+    </div>
+    <!-- // content -->
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="ground-wrap"></div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+</div>
+
+<div th:if="${level}==9" id="wrap" class="step-page step01 level03">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <div class="tit-wrap">
+                <span class="tit">
+                    <span class="hide">씨앗을 심으셨군요!</span>
+                </span>
+                <span class="sub">조금만 더 힘내시면 씨앗이 발아 할 거예요. <br> 이번주 목표를 달성해보세요!</span>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- content -->
+    <div class="container" id="content">
+        <div class="flower"></div>
+        <div class="seed"></div>
+    </div>
+    <!-- // content -->
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="ground-wrap"></div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+</div>
+<div th:if="${level}==10" id="wrap" class="step-page step02 level03">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <div class="tit-wrap">
+                <span class="tit">
+                    <span class="hide">새싹이 피었어요!</span>
+                </span>
+                <span class="sub">조금만 더 힘내시면 꽃봉오리가 맺어질 거예요. <br> 이번주 목표를 달성해보세요!</span>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- content -->
+    <div class="container" id="content">
+        <div class="flower"></div>
+        <div class="seed"></div>
+    </div>
+    <!-- // content -->
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="ground-wrap"></div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+</div>
+<div th:if="${level}==11" id="wrap" class="step-page step03 level03">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <div class="tit-wrap">
+                <span class="tit">
+                    <span class="hide">꽃봉오리를 맺었군요!</span>
+                </span>
+                <span class="sub">조금만 더 힘내시면 꽃봉오리가 맺어질 거예요. <br> 이번주 목표를 달성해보세요!</span>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- content -->
+    <div class="container" id="content">
+        <div class="flower"></div>
+        <div class="seed"></div>
+    </div>
+    <!-- // content -->
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="ground-wrap"></div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+</div>
+<div th:if="${level}==12" id="wrap" class="step-page step04 level03">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <div class="tit-wrap">
+                <span class="tit">
+                    <span class="hide">세번째 꽃이 피었어요!</span>
+                </span>
+                <span class="sub">잘하고 계시네요! <br> 이번 주에도 계속 노력해주세요!</span>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- content -->
+    <div class="container" id="content">
+        <div class="flower"></div>
+        <div class="seed"></div>
+    </div>
+    <!-- // content -->
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="ground-wrap"></div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+</div>
+
+<div th:if="${level}==13" id="wrap" class="step-page step01 level04">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <div class="tit-wrap">
+                <span class="tit">
+                    <span class="hide">씨앗을 심으셨군요!</span>
+                </span>
+                <span class="sub">조금만 더 힘내시면 씨앗이 발아 할 거예요. <br> 이번주 목표를 달성해보세요!</span>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- content -->
+    <div class="container" id="content">
+        <div class="flower"></div>
+        <div class="seed"></div>
+    </div>
+    <!-- // content -->
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="ground-wrap"></div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+</div>
+<div th:if="${level}==14" id="wrap" class="step-page step02 level04">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <div class="tit-wrap">
+                <span class="tit">
+                    <span class="hide">새싹이 피었어요!</span>
+                </span>
+                <span class="sub">조금만 더 힘내시면 꽃봉오리가 맺어질 거예요. <br> 이번주 목표를 달성해보세요!</span>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- content -->
+    <div class="container" id="content">
+        <div class="flower"></div>
+        <div class="seed"></div>
+    </div>
+    <!-- // content -->
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="ground-wrap"></div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+</div>
+<div th:if="${level}==15" id="wrap" class="step-page step03 level04">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <div class="tit-wrap">
+                <span class="tit">
+                    <span class="hide">꽃봉오리를 맺었군요!</span>
+                </span>
+                <span class="sub">조금만 더 힘내시면 꽃봉오리가 맺어질 거예요. <br> 이번주 목표를 달성해보세요!</span>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- content -->
+    <div class="container" id="content">
+        <div class="flower"></div>
+        <div class="seed"></div>
+    </div>
+    <!-- // content -->
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="ground-wrap"></div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+</div>
+<div th:if="${level}==16" id="wrap" class="step-page step04 level04">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <div class="tit-wrap">
+                <span class="tit">
+                    <span class="hide">네번째 꽃이 피었어요!</span>
+                </span>
+                <span class="sub">와우! 꽃밭이 점점 풍성해지고 있어요~ <br> 이번 주도 파이팅 하세요!</span>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- content -->
+    <div class="container" id="content">
+        <div class="flower"></div>
+        <div class="seed"></div>
+    </div>
+    <!-- // content -->
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="ground-wrap"></div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+</div>
+
+<div th:if="${level}==17" id="wrap" class="step-page step01 level05">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <div class="tit-wrap">
+                <span class="tit">
+                    <span class="hide">씨앗을 심으셨군요!</span>
+                </span>
+                <span class="sub">조금만 더 힘내시면 씨앗이 발아 할 거예요. <br> 이번주 목표를 달성해보세요!</span>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- content -->
+    <div class="container" id="content">
+        <div class="flower"></div>
+        <div class="seed"></div>
+    </div>
+    <!-- // content -->
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="ground-wrap"></div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+</div>
+<div th:if="${level}==18" id="wrap" class="step-page step02 level05">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <div class="tit-wrap">
+                <span class="tit">
+                    <span class="hide">새싹이 피었어요!</span>
+                </span>
+                <span class="sub">조금만 더 힘내시면 꽃봉오리가 맺어질 거예요. <br> 이번주 목표를 달성해보세요!</span>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- content -->
+    <div class="container" id="content">
+        <div class="flower"></div>
+        <div class="seed"></div>
+    </div>
+    <!-- // content -->
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="ground-wrap"></div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+</div>
+<div th:if="${level}==19" id="wrap" class="step-page step03 level05">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <div class="tit-wrap">
+                <span class="tit">
+                    <span class="hide">꽃봉오리를 맺었군요!</span>
+                </span>
+                <span class="sub">조금만 더 힘내시면 꽃봉오리가 맺어질 거예요. <br> 이번주 목표를 달성해보세요!</span>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- content -->
+    <div class="container" id="content">
+        <div class="flower"></div>
+        <div class="seed"></div>
+    </div>
+    <!-- // content -->
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="ground-wrap"></div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+</div>
+<div th:if="${level}==20" id="wrap" class="step-page step04 level05">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <div class="tit-wrap">
+                <span class="tit">
+                    <span class="hide">다섯번째 꽃이 피었어요!</span>
+                </span>
+                <span class="sub">이번 주도 고생하셨어요. <br> 머지않아 꽃밭에 꽃이 가득 필 거예요</span>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- content -->
+    <div class="container" id="content">
+        <div class="flower"></div>
+        <div class="seed"></div>
+    </div>
+    <!-- // content -->
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="ground-wrap"></div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+</div>
+
+<div th:if="${level}==21" id="wrap" class="step-page step01 level06">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <div class="tit-wrap">
+                <span class="tit">
+                    <span class="hide">씨앗을 심으셨군요!</span>
+                </span>
+                <span class="sub">조금만 더 힘내시면 씨앗이 발아 할 거예요. <br> 이번주 목표를 달성해보세요!</span>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- content -->
+    <div class="container" id="content">
+        <div class="flower"></div>
+        <div class="seed"></div>
+    </div>
+    <!-- // content -->
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="ground-wrap"></div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+</div>
+<div th:if="${level}==22" id="wrap" class="step-page step02 level06">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <div class="tit-wrap">
+                <span class="tit">
+                    <span class="hide">새싹이 피었어요!</span>
+                </span>
+                <span class="sub">조금만 더 힘내시면 꽃봉오리가 맺어질 거예요. <br> 이번주 목표를 달성해보세요!</span>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- content -->
+    <div class="container" id="content">
+        <div class="flower"></div>
+        <div class="seed"></div>
+    </div>
+    <!-- // content -->
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="ground-wrap"></div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+</div>
+<div th:if="${level}==23" id="wrap" class="step-page step03 level06">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <div class="tit-wrap">
+                <span class="tit">
+                    <span class="hide">꽃봉오리를 맺었군요!</span>
+                </span>
+                <span class="sub">조금만 더 힘내시면 꽃봉오리가 맺어질 거예요. <br> 이번주 목표를 달성해보세요!</span>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- content -->
+    <div class="container" id="content">
+        <div class="flower"></div>
+        <div class="seed"></div>
+    </div>
+    <!-- // content -->
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="ground-wrap"></div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+</div>
+<div th:if="${level}==24" id="wrap" class="step-page step04 level06">
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <div class="tit-wrap">
+                <span class="tit">
+                    <span class="hide">드디어 꽃밭이 완성됐어요!</span>
+                </span>
+                <span class="sub">앞으로도 이 꽃들을 보며 <br> 심장 건강을 위해 노력해주세요!</span>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- content -->
+    <div class="container" id="content">
+        <div class="flower"></div>
+        <div class="seed"></div>
+    </div>
+    <!-- // content -->
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="ground-wrap"></div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+</div>
+
+
+<!--// wrap -->
+
+</body>
+</html>

@@ -14,8 +14,8 @@ header .header-wrap .head .btn {display: flex; align-items: center; width: auto;
 footer {position: relative;}
 
 .container {position: relative;}
-.cont-wrap.type01 {border-top: 1px solid #edeeef; margin-top: 8px; background-color: #fff;}
-.cont-wrap.type01:before {content: ''; display: block; position: absolute; top: 0; width: 100%; height: 8px; box-shadow: inset 0 0 6px 0 rgba(0, 0, 0, 0.05); background-color: #f6f9fc;}
+.cont-wrap.type01 {border-top: 1px solid #edeeef; margin-top: 8px; box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05); background-color: #fff;}
+.cont-wrap.type01:before {content: ''; display: block; position: absolute; top: 0; width: 100%; height: 8px; background-color: #f6f9fc;}
 .cont-wrap.type01 h3 {font-size: 1.07rem; color: #666; font-weight: 500; padding: 12px 15px 15px;}
 
 
@@ -99,13 +99,13 @@ footer {position: relative;}
 .step-page .ground-wrap {position: relative; height: 90px; background: url('../images/common/step/ground02.png') 50% 0 repeat-x; background-size: 360px 134px;}
 .step-page .ground-wrap:after {content: ''; display: block; position: absolute; width: 66px; height: 57px; right: 5%; top: -48%; background: url('../images/common/step/sp-img.png') 0 0 no-repeat; background-size: 218px 58px; z-index: 2;}
 
-.step-page.step02 .tit-wrap span.tit {width: 187px; background-position: 0 -30px;} 
+.step-page.step02 .tit-wrap span.tit {width: 187px; background-position: 0 -30px;}
 .step-page.step02 .seed {background-image: url('../images/common/step/step02.png');}
 .step-page.step02 .ground-wrap:after {content: ''; display: block; position: absolute; width: 70px; height: 57px; right: 5%; top: -48%; background: url('../images/common/step/sp-img.png') -67px 0 no-repeat; background-size: 218px 58px;}
-.step-page.step03 .tit-wrap span.tit {width: 233px; background-position: 0 -60px;} 
+.step-page.step03 .tit-wrap span.tit {width: 233px; background-position: 0 -60px;}
 .step-page.step03 .seed {background-image: url('../images/common/step/step03.png');}
 .step-page.step03 .ground-wrap:after {content: ''; display: block; position: absolute; width: 70px; height: 57px; right: 5%; top: -48%; background: url('../images/common/step/sp-img.png') -67px 0 no-repeat; background-size: 218px 58px;}
-.step-page.step04 .tit-wrap span.tit {width: 239px; background-position: 0 -90px;} 
+.step-page.step04 .tit-wrap span.tit {width: 239px; background-position: 0 -90px;}
 .step-page.step04 .seed {background-image: url('../images/common/step/step04.png');}
 .step-page.step04 .ground-wrap:after {content: ''; display: block; position: absolute; width: 82px; height: 57px; right: 0; top: -48%; background: url('../images/common/step/sp-img.png') -136px 0 no-repeat; background-size: 218px 58px;}
 
@@ -121,11 +121,11 @@ footer {position: relative;}
 .step04.level06 .container {background: url('../images/common/step/forest.png') 50% bottom no-repeat; background-size: 800px 117px;}
 .step04.level06 .flower {background-image: url('../images/common/step/flower06.png');}
 .step04.level06 .ground-wrap:after {display: none;}
-.step04.level02 .tit-wrap span.tit {width: 239px; background-position: 0 -120px;} 
-.step04.level03 .tit-wrap span.tit {width: 239px; background-position: 0 -150px;} 
-.step04.level04 .tit-wrap span.tit {width: 239px; background-position: 0 -180px;} 
-.step04.level05 .tit-wrap span.tit {width: 263px; background-position: 0 -210px;} 
-.step04.level06 .tit-wrap span.tit {width: 291px; background-position: 0 -240px;} 
+.step04.level02 .tit-wrap span.tit {width: 239px; background-position: 0 -120px;}
+.step04.level03 .tit-wrap span.tit {width: 239px; background-position: 0 -150px;}
+.step04.level04 .tit-wrap span.tit {width: 239px; background-position: 0 -180px;}
+.step04.level05 .tit-wrap span.tit {width: 263px; background-position: 0 -210px;}
+.step04.level06 .tit-wrap span.tit {width: 291px; background-position: 0 -240px;}
 
 /* insert (blood, exercise, weight) */
 .insert-page {}
@@ -134,56 +134,15 @@ footer {position: relative;}
 .insert-page .insert-wrap {padding: 5% 3%;}
 .insert-page .tit-img {margin: 7% auto 4%;}
 
-/* calendar (alarm, exercise, symptom, intake) */
-.record-water {position: relative; background-color: #eff7fd;}
-.record-water:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 20px; height: 26px; background: url('../images/common/sp-icon.png') -236px -75px; background-size: 600px 450px; transform: translate(-50%, -17%);}
-.record-exercise {position: relative; background-color: #f5ecff;}
-.record-exercise:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 22px; height: 26px; background: url('../images/common/sp-icon.png') -98px -76px; background-size: 600px 450px; transform: translate(-50%, -17%);}
-.record-alarm {position: relative; background-color: #f3f8e4;}
-.record-alarm:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 24px; height: 22px; background: url('../images/common/sp-icon.png') -2px -77px; background-size: 600px 450px; transform: translate(-50%, -17%);}
-.record-face1 {position: relative;}
-.record-face1:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 33px; height: 33px; background: url('../images/common/sp-icon.png') -2px -144px; background-size: 600px 450px; transform: translate(-50%, -17%);}
-.record-face2 {position: relative;}
-.record-face2:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 33px; height: 33px; background: url('../images/common/sp-icon.png') -37px -144px; background-size: 600px 450px; transform: translate(-50%, -17%);}
-.record-face3 {position: relative;}
-.record-face3:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 33px; height: 33px; background: url('../images/common/sp-icon.png') -72px -144px; background-size: 600px 450px; transform: translate(-50%, -17%);}
-.record-face4 {position: relative;}
-.record-face4:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 33px; height: 33px; background: url('../images/common/sp-icon.png') -107px -144px; background-size: 600px 450px; transform: translate(-50%, -17%);}
 
-.record-colorbar {position: absolute; display: block; bottom: 7%; display: flex; flex-direction: column; justify-content: space-between; height: 50%; width: 100%; padding: 0 24%; border-radius: 2px;}
-.record-colorbar > span {width: 100%; height: 27%; padding: 0 !important; border-radius: 2px;}
-.record-colorbar .high {background-color: #db4848;}
-.record-colorbar .middle {background-color: #fdb100;}
-.record-colorbar .row {background-color: #22c172;}
-.record-colorbar .none {background-color: #e3e3e3;}
-.record-colorbar .blank {background-color: #fff;}
 
-.size-lg .ui-datepicker td span,
-.size-lg .ui-datepicker td a {padding-bottom: 83%;}
 
-.record-review {display: flex; justify-content: space-between; align-items: center; padding: 4% 0;}
-.record-review .tit {font-size: 1.09rem; line-height: 1.5; padding-left: 11%; text-align: center; font-weight: 500; color: #222;}
-.record-review .cont {font-weight: 500; color: #222; padding-right: 11%;}
-.record-review .cont span {font-size: 1rem; }
-.record-review .cont span.bold {font-size: 2.7rem; font-family: 'Roboto', sans-serif; letter-spacing: -0.05em;}
 
-.box-wrap {margin: 5% 3%; padding: 6% 0; border: 1px solid #ecedf0; background-color: #f7f8fa; border-radius: 18px;}
-.box-wrap .box-tit {text-align: center; font-size: 1rem; color: #222; font-weight: 500;}
-.box-wrap .box-list {display: flex; justify-content: space-between; flex: 1; margin-top: 5%;}
-.box-wrap .box-list li {position: relative; flex-grow: 1; text-align: center;}
-.box-wrap .box-list li:after {content: ''; display: block; position: absolute; width: 1px; height: 100%; right: 0; top: 0; background-color: #ebebeb;}
-.box-wrap .box-list li:last-child:after {display: none;}
-.box-wrap .box-list li span {display: block; text-align: center;}
-.box-wrap .box-list li span + span {margin-top: 10px;}
-.box-wrap .box-list li span[class*="round-"] {display: inline-block; padding: 5px 10px 7px; min-width: 65px; border-radius: 15px; color: #fff; font-size: 1.07rem; font-weight: 500;}
-.box-wrap .box-list li .round-high {background-color: #db4848;}
-.box-wrap .box-list li .round-middle {background-color: #fdb100;}
-.box-wrap .box-list li .round-row {background-color: #22c172;}
-.box-wrap .box-list li .bold {font-size: 1.25rem; font-weight: 700;}
 
-/* chat */
-.chat-page {background-image: linear-gradient(to bottom, #e2eff4, #edf2f2 83%);}
-.chat-page .cont-wrap {background: url('../images/common/bg-chat.png'); background-size: 281px 400px;}
+
+
+
+
 
 
 

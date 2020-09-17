@@ -39,21 +39,7 @@ public class CenterController extends BaseController
 		this.goalService = goalService;
 		this.countService = countService;
 	}
-	@GetMapping({ "/achivement" })
-	@Statistical
-	public ModelAndView getGoal() {
-		ModelAndView modelAndView = new ModelAndView("achivement/achivement");
-		switch (getUser().getType()){
-			case PATIENT:
-				modelAndView.addObject("level",getUser().getLevel()/4);
-				modelAndView.addObject("previousUrl", "/center");
-				break;
-			case CAREGIVER:
-				modelAndView.addObject("level", getCaretaker().getLevel()/4);
-				modelAndView.addObject("previousUrl", "/center");
-		}
-		return modelAndView;
-	}
+
 
 	@GetMapping({ "/center" })
 	public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response)
@@ -77,8 +63,26 @@ public class CenterController extends BaseController
 			modelAndView.addObject("week", user.getWeek());
 		}
 		modelAndView.addObject("goalNow",getGoalNow(getConnectId()));
+		modelAndView.addObject("level", ViewLevel(user));
 		modelAndView.addObject("user", user);
 		return modelAndView;
+	}
+
+	public Integer ViewLevel(User user){
+		Integer level = 1;
+		switch (user.getType()){
+			case PATIENT:
+				level = user.getLevel();
+				System.out.println("환자의 레벨 : " + level);
+				level = level % 4;
+				break;
+			case CAREGIVER:
+				level = getCaretaker().getLevel();
+				System.out.println("보호자의 환자 레벨 : " + level);
+				level = level % 4;
+				break;
+		}
+		return level;
 	}
 
 	public String getGoalNow(String username){
