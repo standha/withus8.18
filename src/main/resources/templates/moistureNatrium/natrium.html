@@ -11,101 +11,31 @@
 <div th:replace="header :: #header"></div>
 <form id="MemberInfo" th:action="@{/natrium}" method="post"  onsubmit="return onFormSubmission(this);">
     <div  th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
-        <div  th:switch="${morning}">아침
-            <span th:case = 0 >
-                <label><input type="radio" name="morning" th:value="0" checked >식사안함</label>
-                <label><input type="radio" name="morning" th:value="1"  >저염</label>
-                <label><input type="radio" name="morning" th:value="2"  >보통</label>
-                <label><input type="radio" name="morning" th:value="3"  >고염</label>
+        <div>아침
+            <span>
+                <label><input type="radio" name="morning" th:value="0" th:checked="${morning ==0}">식사안함</label>
+                <label><input type="radio" name="morning" th:value="1" th:checked="${morning ==1}" >저염</label>
+                <label><input type="radio" name="morning" th:value="2" th:checked="${morning ==2}" >보통</label>
+                <label><input type="radio" name="morning" th:value="3" th:checked="${morning ==3}" >고염</label>
             </span>
-            <span th:case = 1 >
-               <label><input type="radio" name="morning" th:value="0"  >식사안함</label>
-                <label><input type="radio" name="morning" th:value="1"  checked>저염</label>
-                <label><input type="radio" name="morning" th:value="2"  >보통</label>
-                <label><input type="radio" name="morning" th:value="3"  >고염</label>
-            </span>
-            <span th:case= 2 >
-               <label><input type="radio" name="morning" th:value="0"  >식사안함</label>
-                <label><input type="radio" name="morning" th:value="1"  >저염</label>
-                <label><input type="radio" name="morning" th:value="2"  checked>보통</label>
-                <label><input type="radio" name="morning" th:value="3"  >고염</label>
-            </span>
-            <span th:case=3>
-                <label><input type="radio" name="morning" th:value="0"  >식사안함</label>
-                <label><input type="radio" name="morning" th:value="1"  >저염</label>
-                <label><input type="radio" name="morning" th:value="2"  >보통</label>
-                <label><input type="radio" name="morning" th:value="3"  checked>고염</label>
-            </span>
-            <span th:case=4>
-                <label><input type="radio" name="morning" th:value="0"  >식사안함</label>
-                <label><input type="radio" name="morning" th:value="1"  >저염</label>
-                <label><input type="radio" name="morning" th:value="2"  >보통</label>
-                <label><input type="radio" name="morning" th:value="3"  >고염</label>
-            </span>
+
         </div>
-            <div  th:switch="${lunch}">점심
-                <span th:case = 0 >
-                <label><input type="radio" name="lunch" th:value="0" checked >식사안함</label>
-                <label><input type="radio" name="lunch" th:value="1"  >저염</label>
-                <label><input type="radio" name="lunch" th:value="2"  >보통</label>
-                <label><input type="radio" name="lunch" th:value="3"  >고염</label>
-            </span>
-                <span th:case = 1 >
-               <label><input type="radio" name="lunch" th:value="0"  >식사안함</label>
-                <label><input type="radio" name="lunch" th:value="1"  checked>저염</label>
-                <label><input type="radio" name="lunch" th:value="2"  >보통</label>
-                <label><input type="radio" name="lunch" th:value="3"  >고염</label>
-            </span>
-                <span th:case= 2 >
-               <label><input type="radio" name="lunch" th:value="0"  >식사안함</label>
-                <label><input type="radio" name="lunch" th:value="1"  >저염</label>
-                <label><input type="radio" name="lunch" th:value="2"  checked>보통</label>
-                <label><input type="radio" name="lunch" th:value="3"  >고염</label>
-            </span>
-                <span th:case=3>
-                <label><input type="radio" name="lunch" th:value="0"  >식사안함</label>
-                <label><input type="radio" name="lunch" th:value="1"  >저염</label>
-                <label><input type="radio" name="lunch" th:value="2"  >보통</label>
-                <label><input type="radio" name="lunch" th:value="3"  checked>고염</label>
-            </span>
-                <span th:case=4>
-                <label><input type="radio" name="lunch" th:value="0"  >식사안함</label>
-                <label><input type="radio" name="lunch" th:value="1"  >저염</label>
-                <label><input type="radio" name="lunch" th:value="2"  >보통</label>
-                <label><input type="radio" name="lunch" th:value="3"  >고염</label>
-            </span>
+            <div>점심
+                <span >
+                <label><input type="radio" name="lunch" th:value="0" th:checked="${lunch == 0 }" >식사안함</label>
+                <label><input type="radio" name="lunch" th:value="1" th:checked="${lunch == 1 }" >저염</label>
+                <label><input type="radio" name="lunch" th:value="2" th:checked="${lunch == 2 }" >보통</label>
+                <label><input type="radio" name="lunch" th:value="3" th:checked="${lunch == 3 }" >고염</label>
+                </span>
             </div>
-            <div  th:switch="${dinner}">저녁
-                <span th:case = 0 >
-                <label><input type="radio" name="dinner" th:value="0" checked >식사안함</label>
-                <label><input type="radio" name="dinner" th:value="1"  >저염</label>
-                <label><input type="radio" name="dinner" th:value="2"  >보통</label>
-                <label><input type="radio" name="dinner" th:value="3"  >고염</label>
-            </span>
-                <span th:case = 1 >
-               <label><input type="radio" name="dinner" th:value="0"  >식사안함</label>
-                <label><input type="radio" name="dinner" th:value="1"  checked>저염</label>
-                <label><input type="radio" name="dinner" th:value="2"  >보통</label>
-                <label><input type="radio" name="dinner" th:value="3"  >고염</label>
-            </span>
-                <span th:case= 2 >
-               <label><input type="radio" name="dinner" th:value="0"  >식사안함</label>
-                <label><input type="radio" name="dinner" th:value="1"  >저염</label>
-                <label><input type="radio" name="dinner" th:value="2"  checked>보통</label>
-                <label><input type="radio" name="dinner" th:value="3"  >고염</label>
-            </span>
-                <span th:case=3>
-                <label><input type="radio" name="dinner" th:value="0"  >식사안함</label>
-                <label><input type="radio" name="dinner" th:value="1"  >저염</label>
-                <label><input type="radio" name="dinner" th:value="2"  >보통</label>
-                <label><input type="radio" name="dinner" th:value="3"  checked>고염</label>
-            </span>
-                <span th:case=4>
-                <label><input type="radio" name="dinner" th:value="0"  >식사안함</label>
-                <label><input type="radio" name="dinner" th:value="1"  >저염</label>
-                <label><input type="radio" name="dinner" th:value="2"  >보통</label>
-                <label><input type="radio" name="dinner" th:value="3"  >고염</label>
-            </span>
+
+            <div>저녁
+                <span>
+                <label><input type="radio" name="dinner" th:value="0" th:checked="${dinner == 0 }" >식사안함</label>
+                <label><input type="radio" name="dinner" th:value="1" th:checked="${dinner == 1 }" >저염</label>
+                <label><input type="radio" name="dinner" th:value="2" th:checked="${dinner == 2 }" >보통</label>
+                <label><input type="radio" name="dinner" th:value="3" th:checked="${dinner == 3 }" >고염</label>
+                </span>
             </div>
         </div>
       <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
@@ -113,101 +43,31 @@
       </div>
     </div>
     <div  th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
-        <div  th:switch="${morning}">아침
-            <span th:case = 0 >
-                <label><input type="radio" name="morning" th:value="0" checked  disabled>식사안함</label>
-                <label><input type="radio" name="morning" th:value="1" disabled >저염</label>
-                <label><input type="radio" name="morning" th:value="2" disabled >보통</label>
-                <label><input type="radio" name="morning" th:value="3" disabled >고염</label>
+        <div>아침
+            <span>
+                <label><input type="radio" name="morning" th:value="0" th:checked="${morning == 0 }" disabled>식사안함</label>
+                <label><input type="radio" name="morning" th:value="1" th:checked="${morning == 1 }" disabled>저염</label>
+                <label><input type="radio" name="morning" th:value="2" th:checked="${morning == 2 }" disabled>보통</label>
+                <label><input type="radio" name="morning" th:value="3" th:checked="${morning == 3 }" disabled>고염</label>
             </span>
-            <span th:case = 1 >
-               <label><input type="radio" name="morning" th:value="0"  disabled>식사안함</label>
-                <label><input type="radio" name="morning" th:value="1"  checked disabled>저염</label>
-                <label><input type="radio" name="morning" th:value="2" disabled >보통</label>
-                <label><input type="radio" name="morning" th:value="3"  disabled>고염</label>
-            </span>
-            <span th:case= 2 >
-               <label><input type="radio" name="morning" th:value="0"  disabled>식사안함</label>
-                <label><input type="radio" name="morning" th:value="1" disabled >저염</label>
-                <label><input type="radio" name="morning" th:value="2"  checked disabled>보통</label>
-                <label><input type="radio" name="morning" th:value="3" disabled >고염</label>
-            </span>
-            <span th:case=3>
-                <label><input type="radio" name="morning" th:value="0" disabled >식사안함</label>
-                <label><input type="radio" name="morning" th:value="1" disabled >저염</label>
-                <label><input type="radio" name="morning" th:value="2" disabled >보통</label>
-                <label><input type="radio" name="morning" th:value="3"  checked disabled>고염</label>
-            </span>
-            <span th:case=4>
-                <label><input type="radio" name="morning" th:value="0" disabled >식사안함</label>
-                <label><input type="radio" name="morning" th:value="1" disabled >저염</label>
-                <label><input type="radio" name="morning" th:value="2" disabled >보통</label>
-                <label><input type="radio" name="morning" th:value="3" disabled >고염</label>
-            </span>
+
         </div>
-        <div  th:switch="${lunch}">점심
-            <span th:case = 0 >
-                <label><input type="radio" name="lunch" th:value="0" checked disabled>식사안함</label>
-                <label><input type="radio" name="lunch" th:value="1" disabled >저염</label>
-                <label><input type="radio" name="lunch" th:value="2" disabled >보통</label>
-                <label><input type="radio" name="lunch" th:value="3" disabled >고염</label>
-            </span>
-            <span th:case = 1 >
-               <label><input type="radio" name="lunch" th:value="0" disabled >식사안함</label>
-                <label><input type="radio" name="lunch" th:value="1"  checked disabled>저염</label>
-                <label><input type="radio" name="lunch" th:value="2" disabled >보통</label>
-                <label><input type="radio" name="lunch" th:value="3" disabled >고염</label>
-            </span>
-            <span th:case= 2 >
-               <label><input type="radio" name="lunch" th:value="0" disabled >식사안함</label>
-                <label><input type="radio" name="lunch" th:value="1" disabled  >저염</label>
-                <label><input type="radio" name="lunch" th:value="2"  checked disabled>보통</label>
-                <label><input type="radio" name="lunch" th:value="3" disabled >고염</label>
-            </span>
-            <span th:case=3>
-                <label><input type="radio" name="lunch" th:value="0" disabled >식사안함</label>
-                <label><input type="radio" name="lunch" th:value="1" disabled >저염</label>
-                <label><input type="radio" name="lunch" th:value="2" disabled >보통</label>
-                <label><input type="radio" name="lunch" th:value="3"  checked disabled>고염</label>
-            </span>
-            <span th:case=4>
-                <label><input type="radio" name="lunch" th:value="0" disabled >식사안함</label>
-                <label><input type="radio" name="lunch" th:value="1" disabled >저염</label>
-                <label><input type="radio" name="lunch" th:value="2" disabled >보통</label>
-                <label><input type="radio" name="lunch" th:value="3" disabled >고염</label>
-            </span>
+        <div>점심
+            <span >
+                <label><input type="radio" name="lunch" th:value="0" th:checked="${lunch == 0 }" disabled>식사안함</label>
+                <label><input type="radio" name="lunch" th:value="1" th:checked="${lunch == 1 }" disabled>저염</label>
+                <label><input type="radio" name="lunch" th:value="2" th:checked="${lunch == 2 }" disabled>보통</label>
+                <label><input type="radio" name="lunch" th:value="3" th:checked="${lunch == 3 }" disabled>고염</label>
+                </span>
         </div>
-        <div  th:switch="${dinner}">저녁
-            <span th:case = 0 >
-                <label><input type="radio" name="dinner" th:value="0" checked >식사안함</label>
-                <label><input type="radio" name="dinner" th:value="1" disabled >저염</label>
-                <label><input type="radio" name="dinner" th:value="2" disabled >보통</label>
-                <label><input type="radio" name="dinner" th:value="3" disabled >고염</label>
-            </span>
-            <span th:case = 1 >
-               <label><input type="radio" name="dinner" th:value="0" disabled  >식사안함</label>
-                <label><input type="radio" name="dinner" th:value="1"  checked disabled>저염</label>
-                <label><input type="radio" name="dinner" th:value="2" disabled >보통</label>
-                <label><input type="radio" name="dinner" th:value="3" disabled >고염</label>
-            </span>
-            <span th:case= 2 >
-               <label><input type="radio" name="dinner" th:value="0" disabled >식사안함</label>
-                <label><input type="radio" name="dinner" th:value="1" disabled >저염</label>
-                <label><input type="radio" name="dinner" th:value="2"  checked disabled>보통</label>
-                <label><input type="radio" name="dinner" th:value="3"  disabled>고염</label>
-            </span>
-            <span th:case=3>
-                <label><input type="radio" name="dinner" th:value="0" disabled >식사안함</label>
-                <label><input type="radio" name="dinner" th:value="1" disabled >저염</label>
-                <label><input type="radio" name="dinner" th:value="2" disabled >보통</label>
-                <label><input type="radio" name="dinner" th:value="3"  checked disabled>고염</label>
-            </span>
-            <span th:case=4>
-                <label><input type="radio" name="dinner" th:value="0" disabled >식사안함</label>
-                <label><input type="radio" name="dinner" th:value="1" disabled >저염</label>
-                <label><input type="radio" name="dinner" th:value="2"  disabled>보통</label>
-                <label><input type="radio" name="dinner" th:value="3" disabled >고염</label>
-            </span>
+
+        <div>저녁
+            <span>
+                <label><input type="radio" name="dinner" th:value="0" th:checked="${dinner == 0 }" disabled >식사안함</label>
+                <label><input type="radio" name="dinner" th:value="1" th:checked="${dinner == 1 }" disabled >저염</label>
+                <label><input type="radio" name="dinner" th:value="2" th:checked="${dinner == 2 }" disabled >보통</label>
+                <label><input type="radio" name="dinner" th:value="3" th:checked="${dinner == 3 }" disabled >고염</label>
+                </span>
         </div>
     </div>
     <div  th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">

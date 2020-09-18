@@ -126,10 +126,10 @@ public class AlarmController extends BaseController{
         String userId = getUsername();
         tbl_outpatient_visit_alarm.setId(userId);
         Result.Code code;
-        Tbl_outpatient_visit_alarm seved = null;
+        Tbl_outpatient_visit_alarm saved = null;
 
         try{
-            seved = alarmService.upsertOutPatientVisit(tbl_outpatient_visit_alarm);
+            saved = alarmService.upsertOutPatientVisit(tbl_outpatient_visit_alarm);
             code = Result.Code.OK;
         } catch (Exception exception){
             logger.error(exception.getLocalizedMessage(),exception);
@@ -137,7 +137,7 @@ public class AlarmController extends BaseController{
         }
         return Result.<Tbl_outpatient_visit_alarm>builder()
                 .setCode(code)
-                .setData(seved)
+                .setData(saved)
                 .createResult();
     }
 }

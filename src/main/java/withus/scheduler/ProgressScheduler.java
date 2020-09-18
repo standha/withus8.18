@@ -25,8 +25,7 @@ public class ProgressScheduler {
     @Autowired
     public ProgressScheduler(UserService userService , GoalService goalService) {
         this.goalService = goalService;
-        this.userService = userService
-        ;
+        this.userService = userService;
     }
 
     //cron = "0 0 0 * * MON"
@@ -34,7 +33,7 @@ public class ProgressScheduler {
     public void progressAutoIncrement(){
         List<User> allPatients = userService.getPatient(User.Type.PATIENT);
         for(User user : allPatients){
-            user.setProgress(user.getProgress()+1);
+            user.setWeek(user.getWeek()+1);
             userService.upsertUser(user);
         }
     }

@@ -38,7 +38,7 @@ function onFormSubmission(form) {
 		contact: caregiverValue
 	}
 	const caregiver = isEmpty(caregiverValue) ? null : user;
-	const progress = type(userType)? 0 : null;
+	const week = type(userType)? 0 : null;
 	const level = type(userType)? 1 : null;
 	const appToken = isEmpty(token) ? null : token;
 	const body = {
@@ -51,7 +51,7 @@ function onFormSubmission(form) {
 		type: userType,
 		caregiver: caregiver,
 		appToken:appToken,
-		progress: progress,
+		week: week,
 		level: level
 	};
 	const url = form.action;

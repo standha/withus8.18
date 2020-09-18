@@ -8,14 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import withus.auth.NoOpPasswordEncoder;
-import withus.entity.Tbl_goal;
-import withus.entity.Tbl_medication_alarm;
-import withus.entity.Tbl_outpatient_visit_alarm;
-import withus.entity.User;
-import withus.repository.GoalRepository;
-import withus.repository.MedicationAlarmRepository;
-import withus.repository.OutPatientVisitAlarmRepository;
-import withus.repository.UserRepository;
+import withus.entity.*;
+import withus.repository.*;
 
 import java.util.List;
 
@@ -25,13 +19,15 @@ public class UserService implements UserDetailsService {
 	private final MedicationAlarmRepository medicationAlarmRepository;
 	private final OutPatientVisitAlarmRepository outPatientVisitAlarmRepository;
 	private final GoalRepository goalRepositroy;
+	private final CountRepository countRepository;
 	@Autowired
 	public UserService(UserRepository userRepository, MedicationAlarmRepository medicationAlarmRepository, OutPatientVisitAlarmRepository outPatientVisitAlarmRepository,
-					   GoalRepository goalRepositroy) {
+					   GoalRepository goalRepositroy, CountRepository countRepository) {
 		this.userRepository = userRepository;
 		this.goalRepositroy = goalRepositroy;
 		this.medicationAlarmRepository = medicationAlarmRepository;
 		this.outPatientVisitAlarmRepository = outPatientVisitAlarmRepository;
+		this.countRepository = countRepository;
 	}
 
 	@Override
@@ -85,6 +81,24 @@ public class UserService implements UserDetailsService {
 					.goal(0)
 					.build();
 			goalRepositroy.save(tbl_goal);
+			for(int i = 1; i <= 24; i++) {
+				ProgressKey key = new ProgressKey(saved.getUserId(), i);
+				Tbl_button_count tbl_button_count = Tbl_button_count.builder()
+						.key(key)
+						.alarm(0)
+						.bloodPressure(0)
+						.diseaseInfo(0)
+						.exercise(0)
+						.goal(0)
+						.helper(0)
+						.level(0)
+						.natriumMoisture(0)
+						.symptom(0)
+						.weight(0)
+						.withusRang(0)
+						.build();
+				countRepository.save(tbl_button_count);
+			}
 		}
 		return saved;
 

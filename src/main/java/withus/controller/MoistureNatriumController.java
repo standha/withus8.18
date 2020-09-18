@@ -167,9 +167,9 @@ public class MoistureNatriumController extends BaseController{
         String username = getUsername();
         tbl_natrium_record.setPk(new RecordKey(username, LocalDate.now()));
         Result.Code code;
-        Tbl_natrium_record seved = null;
+        Tbl_natrium_record saved = null;
         try{
-            seved = moistureNatriumService.upsertNatriumRecord(tbl_natrium_record);
+            saved = moistureNatriumService.upsertNatriumRecord(tbl_natrium_record);
             code = Result.Code.OK;
         } catch (Exception exception){
             logger.error(exception.getLocalizedMessage(),exception);
@@ -177,7 +177,7 @@ public class MoistureNatriumController extends BaseController{
         }
         return Result.<Tbl_natrium_record>builder()
                 .setCode(code)
-                .setData(seved)
+                .setData(saved)
                 .createResult();
     }
 
