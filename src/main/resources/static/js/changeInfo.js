@@ -50,8 +50,8 @@ function onFormSubmission(form) {
         type: userType,
         caregiver: caregiver,
         appToken:appToken,
-                level:level,
-                week:week
+        level:level,
+        week:week
     };
     const url = form.action;
     const options = {
