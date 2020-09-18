@@ -17,48 +17,51 @@
 </head>
 <body>
 <input type="hidden" id="button-count" th:attr="value=@{/button-count}">
+<input type="hidden" id="helper-request" th:attr="value=@{/helper-request}">
 <div class="skip-navi">
 	<a href="#content">본문 바로가기</a>
 </div>
 
-<!-- wrap -->
 <div id="wrap" class="main-page" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 0 ">
-	
-	<!-- header -->
+
 	<header>
 		<div class="header-wrap">
             <div class="head">
-                <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'">
-                    <span class="ico-call"></span>
+				<div onclick="helperRequest()" >
+                <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <span class="ico-call" ></span>
                     <span class="txt-rt">도우미</span>
                 </a>
+				</div>
                 <a class="ico-my" th:href="@{/changeInfo.html}"></a>
                 <a class="btn xsm type07" href="javascript:void(0)" th:onclick="'addDiseaseInfo(parseInt(' + ${count.diseaseInfo} + '))'">
                     <span class="ico-info"></span>
                     <span class="txt-rt">질환정보</span>
                 </a>
             </div>
-            <div class="cont">
-                <span class="title-txt">
+			<lable style="cursor:pointer" onclick="location.href='/goal'">
+				<div class="cont" >
+                <span class="title-txt" th:onclick="'addGoal(parseInt(' + ${count.goal} + '))'">
                     <span class="ico-goal"></span>
-					<label th:onclick="'addGoal(parseInt(' + ${count.goal} + '))'">
-                    <span class="button" onclick="location.href='/goal'">이 주의 목표</span>
-					</label>
+                    <span class="button">이 주의 목표</span>
                 </span>
-                <div id="todoGoal" class="todo-txt" spanChange() > <p th:text="${goalNow}" onclick="location.href='/goal'">   </div>
-            </div>
-            <div class="target-img ico-leaf1" onclick="location.href='/achivement'" th:onclick="'addLevel(parseInt(' + ${count.level} + '))'"></div>
-            <!--
-            1,2,3,4 스텝 이미지
-            <div class="target-img ico-leaf2"></div>
-            <div class="target-img ico-leaf3"></div>
-            <div class="target-img ico-leaf4"></div>
-            -->
+					<div id="todoGoal" class="todo-txt" spanChange() > <p th:text="${goalNow}">   </div>
+				</div>
+			</lable>
+			<label th:onclick="'addLevel(parseInt(' + ${count.level} + '))'">
+				<div class="target-img ico-leaf1" style="cursor:pointer" th:if="${level} == 1"
+					 onclick="location.href='/achievement'"></div>
+				<div class="target-img ico-leaf2" style="cursor:pointer" th:if="${level} == 2"
+					 onclick="location.href='/achievement'"></div>
+				<div class="target-img ico-leaf3" style="cursor:pointer" th:if="${level} == 3"
+					 onclick="location.href='/achievement'"></div>
+				<div class="target-img ico-leaf4" style="cursor:pointer" th:if="${level} == 0"
+					 onclick="location.href='/achievement'"></div>
+			</label>
 		</div>
-	</header>
-	<!-- // header -->
 
-	<!-- content -->
+	</header>
+
 	<div class="container" id="content">
 		<ul class="main-icon">
 			<a th:href="@{/alarm}" th:onclick="'addAlarm(parseInt(' + ${count.alarm} + '))'">
@@ -129,8 +132,8 @@
 	<header>
 		<div class="header-wrap">
 			<div class="head">
-				<a class="btn xsm type07" href="tel:02-820-5198">
-					<span class="ico-call"></span>
+				<a class="btn xsm type07" href="tel:02-820-5198" onclick="helperRequest()">
+					<span class="ico-call" ></span>
 					<span class="txt-rt">도우미</span>
 				</a>
 				<a class="ico-my" th:href="@{/changeInfo.html}"></a>
@@ -139,31 +142,19 @@
 					<span class="txt-rt">질환정보</span>
 				</a>
 			</div>
-			<div class="cont">
-                <a class="btn xsm type07" href="tel:02-820-5198">
-                    <span class="ico-call"></span>
-                    <span class="txt-rt">도우미</span>
-                </a>
-                <a class="ico-my" th:href="@{/changeInfo.html}"></a>
-                <a class="btn xsm type07" href="javascript:void(0)">
-                    <span class="ico-info"></span>
-                    <span class="txt-rt">질환정보</span>
-                </a>
-            </div>
 			<lable style="cursor:pointer" onclick="location.href='/goal'">
-            <div class="cont">
+				<div class="cont" >
                 <span class="title-txt">
                     <span class="ico-goal"></span>
                     <span class="button">이 주의 목표</span>
                 </span>
-                <div id="todoGoal" class="todo-txt" spanChange() > <p th:text="${goalNow}">   </div>
-            </div>
+					<div id="todoGoal" class="todo-txt" spanChange() > <p th:text="${goalNow}">   </div>
+				</div>
 			</lable>
-            <div class="target-img ico-leaf1" style="cursor:pointer" th:if="${level} == 1" onclick="location.href='/achievement'"></div>
+			<div class="target-img ico-leaf1" style="cursor:pointer" th:if="${level} == 1" onclick="location.href='/achievement'"></div>
 			<div class="target-img ico-leaf2" style="cursor:pointer" th:if="${level} == 2" onclick="location.href='/achievement'"></div>
 			<div class="target-img ico-leaf3" style="cursor:pointer" th:if="${level} == 3" onclick="location.href='/achievement'"></div>
 			<div class="target-img ico-leaf4" style="cursor:pointer" th:if="${level} == 0" onclick="location.href='/achievement'"></div>
-
 		</div>
 	</header>
 	<!-- // header -->
@@ -198,9 +189,7 @@
 		</ul>
 
 	</div>
-	<!-- // content -->
 
-	<!-- footer -->
 	<footer>
 		<div class="footer-wrap">
 			<div class="chat-txt">
@@ -215,7 +204,7 @@
 			</a>
 		</div>
 	</footer>
-	<!-- // footer -->
+
 
 
 </div>

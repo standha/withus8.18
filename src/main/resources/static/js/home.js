@@ -346,8 +346,6 @@ function addHelper(count) {
         },
         body: JSON.stringify(body)
     };
-
-
     fetch(url, options)
         .then(response => response.json())
         .then(data => console.log(data));
@@ -480,6 +478,24 @@ function addLevel(count) {
     };
 
 
+    fetch(url, options)
+        .then(response => response.json())
+        .then(data => console.log(data));
+    return false;
+}
+
+function helperRequest(){
+    const url = document.querySelector("#helper-request").value;
+    const body = {
+        //body 처리 불필요
+    }
+    const options = {
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        },body: JSON.stringify(body)
+    };
     fetch(url, options)
         .then(response => response.json())
         .then(data => console.log(data));
