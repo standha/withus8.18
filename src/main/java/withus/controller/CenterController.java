@@ -151,8 +151,6 @@ public class CenterController extends BaseController
 	public Result<Tbl_helper_request> temp(@RequestBody Tbl_helper_request tbl_helper_request){
 		String userId = getUsername();
 		User user = userService.getUserById(userId);
-		//TimeKey key = new TimeKey(userId,LocalDate.now(),LocalTime.now());
-		//Tbl_helper_request tbl_helper_request = new Tbl_helper_request(key);
 		tbl_helper_request.setPk(new TimeKey(userId,LocalDate.now(),LocalTime.now()));
 		Result.Code code;
 		Tbl_helper_request saved = null;
