@@ -46,31 +46,31 @@ public class userInfoController extends BaseController {
         Result.Code code = Result.Code.ERROR;
         if (!isMissingMandatories(user)) {
             try {
-                    User.Type userType = user.getType();
-                    switch (userType) {
-                        case CAREGIVER:
+                User.Type userType = user.getType();
+                switch (userType) {
+                    case CAREGIVER:
+                        savedUser = userService.upsertUser(user);
+                        code = Result.Code.OK;
+                        break;
+                    case PATIENT:
+                        User caregiver = user.getCaregiver();
+                        if (caregiver == null) {
                             savedUser = userService.upsertUser(user);
                             code = Result.Code.OK;
-                            break;
-                        case PATIENT:
-                            User caregiver = user.getCaregiver();
-                            if (caregiver == null) {
+                        } else {
+                            User existCareGiver = userService.getUserByContact(user.getCaregiver().getContact());
+                            if (existCareGiver == null) {
+                                code = Result.Code.ERROR_NO_EXIST_CAREGIVER;
+                            } else {
+                                user.setCaregiver(existCareGiver);
                                 savedUser = userService.upsertUser(user);
                                 code = Result.Code.OK;
-                            } else {
-                                User existCareGiver = userService.getUserByContact(user.getCaregiver().getContact());
-                                if (existCareGiver == null) {
-                                    code = Result.Code.ERROR_NO_EXIST_CAREGIVER;
-                                } else {
-                                    user.setCaregiver(existCareGiver);
-                                    savedUser = userService.upsertUser(user);
-                                    code = Result.Code.OK;
-                                }
                             }
-                            break;
-                        default:
-                            throw new UnexpectedEnumValueException(userType, User.Type.class);
-                    }
+                        }
+                        break;
+                    default:
+                        throw new UnexpectedEnumValueException(userType, User.Type.class);
+                }
             } catch (Exception exception) {
                 logger.error(exception.getLocalizedMessage(), exception);
                 code = Result.Code.ERROR_DATABASE;

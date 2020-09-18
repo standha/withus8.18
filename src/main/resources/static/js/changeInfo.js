@@ -47,9 +47,7 @@ function onFormSubmission(form) {
         gender: sex,
         type: userType,
         caregiver: caregiver,
-        appToken:appToken,
-        level: level,
-        progress:progress
+        appToken:appToken
     };
     const url = form.action;
     const options = {
