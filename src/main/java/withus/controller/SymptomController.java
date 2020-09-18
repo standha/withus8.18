@@ -33,7 +33,7 @@ public class SymptomController extends BaseController{
 
     @GetMapping("/symptom")
     @Statistical
-    public ModelAndView getSymptom() throws NullPointerException{
+    public ModelAndView getSymptom(){
         ModelAndView modelAndView = new ModelAndView("Symptom/symptom");
         User.Type typeCheck = getUser().getType();
         if (symptomService.getSymptom(new RecordKey(getConnectId(), LocalDate.now()))==null) {

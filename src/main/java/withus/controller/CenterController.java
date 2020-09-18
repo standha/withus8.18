@@ -7,28 +7,37 @@ import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
-import withus.entity.Tbl_goal;
-import withus.entity.User;
+import withus.dto.Result;
+import withus.entity.*;
 import withus.entity.User.Type;
+import withus.service.CountService;
 import withus.service.GoalService;
 import withus.service.UserService;
+
+import java.time.LocalDate;
 
 @Controller
 public class CenterController extends BaseController
 {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	private final GoalService goalService;
+	private final CountService countService;
 
 	@Autowired
-	public CenterController(AuthenticationFacade authenticationFacade, UserService userService, GoalService goalService)
+	public CenterController(AuthenticationFacade authenticationFacade, UserService userService, GoalService goalService, CountService countService)
 	{
 		super(userService, authenticationFacade);
 		this.goalService = goalService;
+		this.countService = countService;
 	}
 	@GetMapping({ "/achivement" })
 	@Statistical
@@ -45,23 +54,30 @@ public class CenterController extends BaseController
 		}
 		return modelAndView;
 	}
+
 	@GetMapping({ "/center" })
 	public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response)
 	{
-
 		logger.info("center");
 		User user = getUser();
 		ModelAndView modelAndView = new ModelAndView();
 		if (user.getType().equals(Type.ADMINISTRATOR)){
 			modelAndView.setViewName("/Admin/admin_Home");
 		}
-		else{
-			modelAndView.addObject("type", user.getType());
+		else if (user.getType().equals(Type.PATIENT)) {
+			Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
 			modelAndView.setViewName("home");
+			modelAndView.addObject("count", count);
+			modelAndView.addObject("type", user.getType());
+			modelAndView.addObject("week", user.getWeek());
+		}
+		else{
+			modelAndView.setViewName("home");
+			modelAndView.addObject("type", user.getType());
+			modelAndView.addObject("week", user.getWeek());
 		}
 		modelAndView.addObject("goalNow",getGoalNow(getConnectId()));
 		modelAndView.addObject("user", user);
-
 		return modelAndView;
 	}
 
@@ -101,5 +117,26 @@ public class CenterController extends BaseController
 				break;
 		}
 		return goalNow;
+	}
+
+	@PutMapping(value = "/button-count",consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Result<Tbl_button_count> getSymptomCount(@RequestBody Tbl_button_count tbl_button_count){
+		String userId = getUsername();
+		User user = userService.getUserById(userId);
+		tbl_button_count.setKey(new ProgressKey(userId, user.getWeek()));
+		Result.Code code;
+		Tbl_button_count saved = null;
+		try{
+			saved = countService.upsertCount(tbl_button_count);
+			code = Result.Code.OK;
+		}catch (Exception exception){
+			logger.error(exception.getLocalizedMessage(), exception);
+			code = Result.Code.ERROR_DATABASE;
+		}
+		return Result.<Tbl_button_count>builder()
+				.setCode(code)
+				.setData(saved)
+				.createResult();
 	}
 }
