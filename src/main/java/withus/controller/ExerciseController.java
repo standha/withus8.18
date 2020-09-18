@@ -39,8 +39,8 @@ public class ExerciseController extends BaseController {
         switch (typeCheck){
             case PATIENT:
                 if(exerciseService.getExercise(new RecordKey(getUsername(), LocalDate.now()))==null){
-                    modelAndView.addObject("hour", "시간");
-                    modelAndView.addObject("minute", "분");
+                    modelAndView.addObject("hour", "");
+                    modelAndView.addObject("minute", "");
                 }else{
                     Tbl_Exercise_record exercise = exerciseService.getExercise(new RecordKey(getUsername(), LocalDate.now()));
                     modelAndView.addObject("hour", exercise.getHour());
@@ -49,8 +49,8 @@ public class ExerciseController extends BaseController {
                 break;
             case CAREGIVER:
                 if(exerciseService.getExercise(new RecordKey(getCaretaker().getUserId(), LocalDate.now()))==null){
-                    modelAndView.addObject("hour", "시간");
-                    modelAndView.addObject("minute", "분");
+                    modelAndView.addObject("hour", "");
+                    modelAndView.addObject("minute", "");
                 }else{
                     Tbl_Exercise_record exercise = exerciseService.getExercise(new RecordKey(getCaretaker().getUserId(), LocalDate.now()));
                     modelAndView.addObject("hour", exercise.getHour());
@@ -71,12 +71,14 @@ public class ExerciseController extends BaseController {
         switch (getUser().getType()){
             case PATIENT:
                 exerciseHistory = exerciseService.getExerciseAllRecord(username,-1, -1);
-                modelAndView.addObject("exerciseWeek",avgWeek());
+                modelAndView.addObject("exerciseWeekHour",avgWeek()/60);
+                modelAndView.addObject("exerciseWeekMin",avgWeek()%60);
                 modelAndView.addObject("exercise",exerciseHistory);
                 break;
             case CAREGIVER:
                 exerciseHistory = exerciseService.getExerciseAllRecord(getCaretaker().getUserId(), -1, -1);
-                modelAndView.addObject("exerciseWeek",avgWeek());
+                modelAndView.addObject("exerciseWeekHour",avgWeek()/60);
+                modelAndView.addObject("exerciseWeekMin",avgWeek()%60);
                 modelAndView.addObject("exercise",exerciseHistory);
                 break;
 
