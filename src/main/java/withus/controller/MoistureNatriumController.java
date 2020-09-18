@@ -196,9 +196,9 @@ public class MoistureNatriumController extends BaseController{
             code = Result.Code.ERROR_DATABASE;
         }
         return Result.<Tbl_mositrue_record>builder()
-                .setCode(code)
-                .setData(saved)
-                .createResult();
+                .code(code)
+                .data(saved)
+                .build();
     }
     public Integer avgWeek(){
         Integer avg = 0;

@@ -22,6 +22,7 @@ import withus.entity.User.Type;
 import withus.service.CountService;
 import withus.service.GoalService;
 import withus.service.UserService;
+import java.util.Optional;
 
 import java.time.LocalDate;
 
@@ -135,8 +136,8 @@ public class CenterController extends BaseController
 			code = Result.Code.ERROR_DATABASE;
 		}
 		return Result.<Tbl_button_count>builder()
-				.setCode(code)
-				.setData(saved)
-				.createResult();
+				.code(code)
+				.data(saved)
+				.build();
 	}
 }
