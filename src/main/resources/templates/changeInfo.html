@@ -48,7 +48,9 @@
     <form id="MemberInfo" th:action="@{/changeInfo}" method="post"  onsubmit="return onFormSubmission(this);">
         <!-- wrap -->
         <input type="hidden" name="user" th:value="${user.type}">
-
+        <input type="hidden" name="appToken" th:value="${user.appToken}">
+        <input type="hidden" name="level" th:value="${user.level}">
+        <input type="hidden" name="week" th:value="${user.week}">
         <!-- header -->
         <header>
             <div class="header-wrap type01">

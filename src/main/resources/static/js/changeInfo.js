@@ -4,7 +4,10 @@ function onFormSubmission(form) {
     const password = form.querySelector("input[name=password]").value;
     const name = form.querySelector("input[name=name]").value;
     const contact = form.querySelector("input[name=contact]").value;
-
+    const level = form.querySelector("input[name=level]").value;
+    const week = form.querySelector("input[name=week]").value;
+    const token = form.querySelector("input[name=appToken]").value;
+    const appToken = isEmpty(token) ? null : token;
     if(form.querySelector("input[name=birthdate]") == null){
         birthdateValue =  null;
         birthdate = null;
@@ -25,7 +28,6 @@ function onFormSubmission(form) {
     }else{
         caregiverValue = form.querySelector("input[name=caregiver]").value;
     }
-    const appToken = form.querySelector("input[name=appToken]").value;
     const user = {
         userId: null,
         password: null,
@@ -47,7 +49,9 @@ function onFormSubmission(form) {
         gender: sex,
         type: userType,
         caregiver: caregiver,
-        appToken:appToken
+        appToken:appToken,
+                level:level,
+                week:week
     };
     const url = form.action;
     const options = {

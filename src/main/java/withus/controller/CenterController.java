@@ -39,14 +39,6 @@ public class CenterController extends BaseController
 		this.goalService = goalService;
 		this.countService = countService;
 	}
-	@GetMapping({ "/achivement" })
-	@Statistical
-	public ModelAndView getGoal() {
-		ModelAndView modelAndView = new ModelAndView("achivement/achivement");
-		modelAndView.addObject("level",getUser().getLevel()/4);
-		modelAndView.addObject("previousUrl", "/center");
-		return modelAndView;
-	}
 
 	@GetMapping({ "/center" })
 	public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response)
