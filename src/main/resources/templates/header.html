@@ -1,8 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <div id="header">
-	<input type="hidden" id="help-request-url" th:attr="value=@{/home/help-request}">
 	<a th:if="${previousUrl != null}" th:href="${previousUrl}">뒤로가기</a>
-	<button id="helper" onclick="sendHelpRequest();">
+	<button id="helper" onclick="alert('도우미');">
 		<img th:src="@{/images/helper.png}"/>
 		<span>도우미</span>
 	</button>

@@ -15,7 +15,6 @@ function onFormSubmission(form) {
 			break;
 	}
 
-
 	const id = form.querySelector("input[name=id]").value;
 	const password = form.querySelector("input[name=password]").value;
 	const name = form.querySelector("input[name=name]").value;
@@ -107,7 +106,7 @@ function removeSpace(value) {
 }
 
 function doDisplay(user) {
-	console.log("user = " + user);
+	console.log(user)
 	const elems = document.getElementsByClassName("patient-only");
 
 	if (user === 'CAREGIVER') {
