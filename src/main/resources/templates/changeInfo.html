@@ -89,7 +89,7 @@
                     <div class="field" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
                         <div class="insert">
                             <label for="input4">생년월일</label>
-                            <input type="text" id="input4" th:value="${user.birthdate}" name="birthdate">
+                            <input type="date" id="input4" th:value="${user.birthdate}" name="birthdate">
                         </div>
                     </div>
                     <div class="field" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
