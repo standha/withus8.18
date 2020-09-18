@@ -1,13 +1,27 @@
 function onFormSubmission(form) {
-	// const userType = form.querySelector("input[name=user]:checked").value;
-	// const userType = document.getElementById("patient").getAttributeNode(value);
-	const userType = form.querySelector("input[id=patient]").value;
+	let userType = "";
+	switch (document.getElementById('checkType').className){
+		case "patient active":
+			userType = "PATIENT";
+			break;
+		case "patient":
+			userType = "CAREGIVER";
+			break;
+		case "":
+			alert("보호자와 환자 중 타입을 한가지 설정해 주세요.");
+			break;
+		default:
+			alert("보호자와 환자 중 타입을 한가지 설정해 주세요.");
+			break;
+	}
 
 
 	const id = form.querySelector("input[name=id]").value;
 	const password = form.querySelector("input[name=password]").value;
 	const name = form.querySelector("input[name=name]").value;
 	const contact = form.querySelector("input[name=contact]").value;
+	//const userType = form.querySelector("input[name=user]:checked").value;
+	/*const userType = document.querySelector(".PATIENT").dataset.value;*/
 
 	const birthdateValue = form.querySelector("input[name=birthdate]").value;
 	const birthdate = isEmpty(birthdateValue) ? null : birthdateValue;

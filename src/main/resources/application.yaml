@@ -3,7 +3,7 @@ server:
   shutdown: graceful
 
 spring:
-  application.name: withus
+  application.name: withus1
   datasource:
     url: jdbc:mysql://127.0.0.1/withus?serverTimezone=Asia/Seoul
     username: withus

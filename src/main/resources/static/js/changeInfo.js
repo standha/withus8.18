@@ -1,11 +1,13 @@
 function onFormSubmission(form) {
-    const userType = form.querySelector("input[name=user]:checked").value;
+    const userType = form.querySelector("input[name=user]").value;
     const id = form.querySelector("input[name=id]").value;
     const password = form.querySelector("input[name=password]").value;
     const name = form.querySelector("input[name=name]").value;
     const contact = form.querySelector("input[name=contact]").value;
     const level = form.querySelector("input[name=level]").value;
-    const progress = form.querySelector("input[name=progress]").value;
+    const week = form.querySelector("input[name=week]").value;
+    const token = form.querySelector("input[name=appToken]").value;
+    const appToken = isEmpty(token) ? null : token;
     if(form.querySelector("input[name=birthdate]") == null){
         birthdateValue =  null;
         birthdate = null;
@@ -26,7 +28,6 @@ function onFormSubmission(form) {
     }else{
         caregiverValue = form.querySelector("input[name=caregiver]").value;
     }
-    const appToken = form.querySelector("input[name=appToken]").value;
     const user = {
         userId: null,
         password: null,
@@ -49,8 +50,8 @@ function onFormSubmission(form) {
         type: userType,
         caregiver: caregiver,
         appToken:appToken,
-        level: level,
-        progress:progress
+                level:level,
+                week:week
     };
     const url = form.action;
     const options = {

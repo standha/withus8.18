@@ -1,47 +1,102 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="kr">
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <link th:href="@{/css/header.css}" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>위더스</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no">
+    <link th:href="@{/css/reset.css}" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <link th:href="@{/css/layout.css}" rel="stylesheet">
+    <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/bloodPressure/bloodPressure.js}"></script>
-    <title>혈압맥박 측정</title>
 </head>
 <body>
-<input type="hidden" id="bloodPressure-history-get-action" th:attr="value=@{/bloodPressure-all-history}">
-<div th:replace="header :: #header"></div>
-<div id="body">
-    <!-- TODO: 보호자일 경우 immutable 하도록 -->
-    <form id="bloodPressure-form" th:action="@{/bloodPressure}" onsubmit="return onFormSubmission(this);">
-        <div id="date"  th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
-            <p>Input Contraction/relaxation</p>
-                <p>
-                    <input type="number"  th:value="${contraction}"  name="contraction">
-                    <input type="number"  th:value="${relaxation}"  name="relaxation">mm/Hg
-                </p>
-            <p>Input Pressure</p>
-                <p>
-                    <input type="number"  th:value="${pressure}"  name="pressure">(회/분)
-                </p>
-            <input type="submit" value="Save >.<">
+<div class="skip-navi">
+    <a href="#content">본문 바로가기</a>
+</div>
+<div id="wrap" class="insert-page">
+    <!-- header -->
+    <header>
+        <div class="header-wrap type01">
+            <div class="head">
+                <a class="btn xsm type07" href="tel:02-820-5198">
+                    <span class="ico-call"></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+                <h2>
+                    <span class="ico-blood-s"></span>
+                    <span>혈압/맥박</span>
+                </h2>
+            </div>
         </div>
+    </header>
+    <!-- // header -->
 
-        <div id="date"  th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
-            <p>Input Contraction/relaxation</p>
-            <p>
-                <input type="number"  th:value="${contraction}"  name="contraction" disabled>
-                <input type="number"  th:value="${relaxation}"  name="relaxation" disabled>mm/Hg
-            </p>
-            <p>Input Pressure</p>
-            <p>
-                <input type="number"  th:value="${pressure}"  name="pressure" disabled>(회/분)
-            </p>
-            <input type="submit" value="Save >.<" disabled>
-        </div>
-    </form>
-    <div>
-        <br>
-        <button id="exerciseRecord" type="button" onclick="showHistory();">혈압맥박기록</button>
+    <!-- content -->
+    <div class="container" id="content">
+        <form id="bloodPressure-form" th:action="@{/bloodPressure}" onsubmit="return onFormSubmission(this);">
+            <div class="cont-wrap type01">
+                <div class="insert-wrap">
+                    <div class="tit-img ico-blood-l"></div>
+                    <div class="field-wrap type04">
+                        <div class="field">
+                            <label for="input1">혈압:수축기/이완기</label>
+                            <input type="hidden" id="bloodPressure-history-get-action" th:attr="value=@{/bloodPressure-all-history}">
+                            <div class="insert" id="date"  th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+                                <input type="number" class="num3" id="input1" th:value="${contraction}" placeholder="--" name="contraction">
+                                <span class="bar">/</span>
+                                <input type="number" class="num2" id="input2" th:value="${relaxation}" placeholder="--" name="relaxation">
+                                <span>mmHg</span>
+                            </div>
+                            <div class="insert" id="date"  th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
+                                <input type="number" class="num3" id="input1" th:value="${contraction}" placeholder="--" name="contraction" disabled>
+                                <span class="bar">/</span>
+                                <input type="number" class="num2" id="input2" th:value="${relaxation}" placeholder="--" name="relaxation" disabled>
+                                <span>mmHg</span>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="input2">맥박수</label>
+                            <div class="insert" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+                                <input type="number" id="input2" class="num2" th:value="${pressure}" placeholder="--" name="pressure">
+                                <span>(회/분)</span>
+                            </div>
+                            <div class="insert" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
+                                <input type="number" id="input2" class="num2" th:value="${pressure}" placeholder="--" name="pressure" disabled>
+                                <span>(회/분)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT}" class="btn-wrap type01">
+                    <button class="btn xlg type01" type="submit">입력</button>
+                </div>
+                <div th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}" class="btn-wrap type01">
+                    <button class="btn xlg type01" type="submit" disabled>입력</button>
+                </div>
+            </div>
+        </form>
     </div>
+
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="btn-wrap type02">
+                <span class="btn xlg arrow-type02" onclick="showHistory();">
+                    <span>혈압/맥박 기록</span>
+                    <span class="ico-arrow2"></span>
+                </span>
+            </div>
+        </div>
+    </footer>
+    <!-- // footer -->
+
+
 </div>
 </body>
 </html>
