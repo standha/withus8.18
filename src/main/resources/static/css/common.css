@@ -10,7 +10,7 @@
 .btn.xlg {font-weight: 700; height: 60px; line-height: 58px; font-size: 1.25rem;}
 .btn.xxlg {font-weight: 700; height: 68px; line-height: 66px; font-size: 1.5rem;}
 
-.btn.type01 {color: #fff; border: solid 2px #25cc85; border-radius: 10px; background-image: linear-gradient(98deg, #14bed2 0%, #0ddf6a 100%);}
+.btn.type01 {color: #ffffff; border: solid 2px #25cc85; border-radius: 10px; background-image: linear-gradient(98deg, #14bed2 0%, #0ddf6a 100%);}
 .btn.type01:disabled {color: #b7b7b7; border: solid 2px #dedede; background-color: #e5e5e5;}
 .btn.type02 {color: #fff; border: solid 2px #25cc85; border-radius: 10px; background-color: #19d585;}
 .btn.type02:disabled {color: #b7b7b7; border: solid 2px #dedede; background-color: #e5e5e5;}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/header.css}" rel="stylesheet">
+    <script th:src="@{/js/exercise/exercise.js}"></script>
+    <title>운동</title>
+</head>
+<body>
+<input type="hidden" id="exercise-history-get-action" th:attr="value=@{/exercise-all-history}">
+<div th:replace="header :: #header"></div>
+<div id="body">
+    <!-- TODO: 보호자일 경우 immutable 하도록 -->
+    <form id="exercise-form" th:action="@{/exercise}" onsubmit="return onFormSubmission(this);">
+        <div>Exercise record input</div>
+        <div th:if = "${type} == ${T(withus.entity.User.Type).PATIENT} ">
+            <p>Input Hour
+                <input type="text"  th:value="${hour}" name="hour"></p>
+            <p>Input Minute
+                <input type="text"  th:value="${minute}" name="minute"></p>
+        <input type="submit" value="Save >.<">
+        </div>
+        <div th:if = "${type} == ${T(withus.entity.User.Type).CAREGIVER} ">
+            <p>Input Hour
+                <input type="text"  th:value="${hour}" name="hour" disabled></p>
+            <p>Input Minute
+                <input type="text"  th:value="${minute}" name="minute" disabled></p>
+            <input type="submit" value="Save >.<" disabled>
+        </div>
+    </form>
+    <div>
+        <button id="exerciseRecord" type="button" onclick="showHistory();">운동기록</button>
+    </div>
+</div>
+</body>
+</html>
