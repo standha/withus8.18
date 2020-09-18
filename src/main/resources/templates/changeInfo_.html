@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <head>
@@ -11,8 +12,8 @@
     <div id="user-wrap">
         <label id = "changePatient">
             <input type="radio" name="user" th:value="${T(withus.entity.User.Type).PATIENT}"
-                th:checked="${user.type == T(withus.entity.User.Type).PATIENT}" th:disabled="${user.type != T(withus.entity.User.Type).PATIENT}"
-                onclick="doDisplay(this.value)">
+                   th:checked="${user.type == T(withus.entity.User.Type).PATIENT}" th:disabled="${user.type != T(withus.entity.User.Type).PATIENT}"
+                   onclick="doDisplay(this.value)">
             <div class="user">
                 <img th:src="@{/images/patient.png}">
                 <span id="patient">환자</span>
@@ -20,8 +21,8 @@
         </label>
         <label id = "changeCaregiver">
             <input type="radio" name="user" th:value="${T(withus.entity.User.Type).CAREGIVER}"
-                th:checked="${user.type == T(withus.entity.User.Type).CAREGIVER}" th:disabled="${user.type != T(withus.entity.User.Type).CAREGIVER}"
-                onclick="doDisplay(this.value)">
+                   th:checked="${user.type == T(withus.entity.User.Type).CAREGIVER}" th:disabled="${user.type != T(withus.entity.User.Type).CAREGIVER}"
+                   onclick="doDisplay(this.value)">
             <div class="user">
                 <img th:src="@{/images/protector.png}">
                 <span id="caregiver">보호자</span>
@@ -65,8 +66,6 @@
     </div>
     <div>
         <input type="hidden" name = "appToken" th:value = "${user.appToken}" style = "display:none">
-        <input type="hidden" name = "level" th:value = "${user.level}" style = "display:none">
-        <input type="hidden" name = "progress" th:value = "${user.progress}" style = "display:none">
     </div>
     <div>
         <input type="submit" value="정보수정">
