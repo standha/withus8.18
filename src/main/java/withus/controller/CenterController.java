@@ -22,7 +22,6 @@ import withus.entity.User.Type;
 import withus.service.CountService;
 import withus.service.GoalService;
 import withus.service.UserService;
-import java.util.Optional;
 
 import java.time.LocalDate;
 
