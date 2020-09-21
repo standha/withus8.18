@@ -104,6 +104,8 @@ public class MoistureNatriumController extends BaseController{
         int norCount =0;
         int highCount =0;
         List<Tbl_natrium_record> natriums = new ArrayList<>();
+        List<Tbl_natrium_record> allnatriums = new ArrayList<>();
+        allnatriums = moistureNatriumService.getNatriumAllRecord(getConnectId());
         for(int i=1; i<=7; i++){
             if(moistureNatriumService.getNatriumTodayRecord(new RecordKey(getConnectId(), today.with(DayOfWeek.of(i))))!=null){
                 Tbl_natrium_record sun = moistureNatriumService.getNatriumTodayRecord(new RecordKey(getConnectId(), today.with(DayOfWeek.of(i))));
@@ -155,7 +157,7 @@ public class MoistureNatriumController extends BaseController{
         modelAndView.addObject("low",lowCount);
         modelAndView.addObject("normal",norCount);
         modelAndView.addObject("high",highCount);
-        modelAndView.addObject("natrium",natriums);
+        modelAndView.addObject("natrium",allnatriums);
         modelAndView.addObject("previousUrl","/natrium")
 ;
         return modelAndView;

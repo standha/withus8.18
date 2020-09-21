@@ -77,7 +77,17 @@
 
 </div>
 
-<script>
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+    var natriumHistory = /*[[ ${natrium} ]]*/;
+    /*]]*/
+
+    for(i=0; i<natriumHistory.length; i++)
+    {
+        console.log(natriumHistory[i].pk.date);
+    }
+
     $.datepicker._generateHTML = (function () {
         var realGenerateHtml = $.datepicker._generateHTML;
         return function (instance) {
@@ -90,8 +100,92 @@
                         mm = $(this).parent().data("month"),
                         dd = +$(this).text();
 
-                    //색깔표시
-                    $(this).append("<span class='record-colorbar'> <span class='morning high'></span> <span class='lunch row'></span> <span class='dinner none'></span> </span>");
+                    var monthStr, dayStr;
+                    monthStr = (mm+1).toString();
+                    if(monthStr.length == 1){
+                        monthStr = "0" + monthStr;
+                    }
+                    dayStr = dd.toString();
+                    if(dayStr.length == 1){
+                        dayStr = "0" + dayStr;
+                    }
+
+                    var str = yy.toString() + "-" + monthStr + "-" + dayStr;
+
+                    for(i=0; i<natriumHistory.length; i++)
+                    {
+                        if(str == natriumHistory[i].pk.date)
+                        {
+                            switch(natriumHistory[i].morning)
+                            {
+                                case 0:
+                                    $(this).append("<span class='record-colorbar'> <span class='morning none'></span> <span></span> <span></span> </span>");
+                                    break;
+
+                                case 1:
+                                    $(this).append("<span class='record-colorbar'> <span class='morning row'></span> <span></span> <span></span> </span>");
+                                    break;
+
+                                case 2:
+                                    $(this).append("<span class='record-colorbar'> <span class='morning middle'></span> <span></span> <span></span> </span>");
+                                    break;
+
+                                case 3:
+                                    $(this).append("<span class='record-colorbar'> <span class='morning high'></span> <span></span> <span></span> </span>");
+                                    break;
+
+                                default:
+                                    $(this).append("<span class='record-colorbar'> <span class='morning blank'></span> <span></span> <span></span> </span>");
+                                    break;
+                            }
+
+                            switch(natriumHistory[i].lunch)
+                            {
+                                case 0:
+                                    $(this).append("<span class='record-colorbar'> <span></span> <span class='lunch none'></span> <span></span> </span>");
+                                    break;
+
+                                case 1:
+                                    $(this).append("<span class='record-colorbar'> <span></span> <span class='lunch row'></span> <span></span> </span>");
+                                    break;
+
+                                case 2:
+                                    $(this).append("<span class='record-colorbar'> <span></span> <span class='lunch middle'></span> <span></span> </span>");
+                                    break;
+
+                                case 3:
+                                    $(this).append("<span class='record-colorbar'> <span></span> <span class='lunch high'></span> <span></span> </span>");
+                                    break;
+
+                                default:
+                                    $(this).append("<span class='record-colorbar'> <span></span> <span class='lunch blank'></span> <span></span> </span>");
+                                    break;
+                            }
+
+                            switch(natriumHistory[i].dinner)
+                            {
+                                case 0:
+                                    $(this).append("<span class='record-colorbar'> <span></span> <span></span> <span class='dinner none'></span> </span>");
+                                    break;
+
+                                case 1:
+                                    $(this).append("<span class='record-colorbar'> <span></span> <span></span> <span class='dinner row'></span> </span>");
+                                    break;
+
+                                case 2:
+                                    $(this).append("<span class='record-colorbar'> <span></span> <span></span> <span class='dinner middle'></span> </span>");
+                                    break;
+
+                                case 3:
+                                    $(this).append("<span class='record-colorbar'> <span></span> <span></span> <span class='dinner high'></span> </span>");
+                                    break;
+
+                                default:
+                                    $(this).append("<span class='record-colorbar'> <span></span> <span></span> <span class='dinner blank'></span> </span>");
+                                    break;
+                            }
+                        }
+                    }
                 });
                 html = $temp[0].innerHTML;
             }
