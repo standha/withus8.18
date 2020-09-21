@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import withus.entity.Tbl_medication_alarm;
 import withus.entity.Tbl_outpatient_visit_alarm;
 import withus.entity.User;
-import withus.service.AlarmService;
-import withus.service.AndroidPushNotificationService;
-import withus.service.AndroidPushPeriodicNotifications;
-import withus.service.UserService;
+import withus.service.*;
 
 import javax.swing.text.html.Option;
 import java.time.LocalDate;
@@ -208,19 +205,32 @@ public class NoticeScheduler {
         }
     }
 
-    //***님 구현 예정
-    //cron = "0 0 20 * * *"
-    //매일 20시 위더스 알림
-    //@Scheduled(cron = "0 * * * * *")
+    //단일 PUSH cron = "0 0 20 * * *"
+    //매일 20시 위더스랑 진도체크 알림
+    @Scheduled(cron = "0 0 20 * * *")
+    public void noticeRecordAt20(){
+        List<User> patients = userService.getAllToken();
+        for(User patient:patients){
+            if(patient.getType().equals(User.Type.PATIENT)) {
+
+                try {
+                    send(patient.getAppToken(),patient.getName()+"님, 오늘 심장 건강을 위해 실천하신 내용을 [위더스]에 기록하셨나요?\n 기록하지 않았다면 지금 기록해주세요!");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    //단일 기기 PUSH 알림
     @RequestMapping(produces="application/json;charset=UTF-8")
-    public @ResponseBody ResponseEntity<String> send() throws JSONException, InterruptedException, NonUniqueResultException {
-        String messageBody = " 님, 오늘 심장 건강을 위해 실천하신 내용을 [위더스]에 기록하셨나요?\n 기록하지 않았다면 지금 기록해주세요!";
-        System.out.println("매일 20시 위더스 알림");
-        if(RunAt20AllToken().isEmpty()){
+    public @ResponseBody ResponseEntity<String> send(String token,String message) throws JSONException, InterruptedException, NonUniqueResultException {
+        if(token.isEmpty()){
             return new ResponseEntity<>("No Target!", HttpStatus.BAD_REQUEST);
         }
 
-        String notifications = AndroidPushPeriodicNotifications.PeriodicNotificationJson("yang",messageBody,RunAt20AllToken());
+        String notifications = AndriodSingleNotification.SingleNotificationJson("",message,token);
         HttpEntity<String> request = new HttpEntity<>(notifications);
 
         CompletableFuture<String> pushNotification = androidPushNotificationService.send(request);
@@ -238,16 +248,5 @@ public class NoticeScheduler {
             logger.debug("execution error!");
         }
         return new ResponseEntity<>("Push Notification ERROR!", HttpStatus.BAD_REQUEST);
-    }
-
-    public List<String> RunAt20AllToken(){
-        List<String>tokenList = new ArrayList<String>();
-        List<User> alltokens = userService.getAllToken();
-        for(User alltoken:alltokens){
-            if(alltoken.getType().equals(User.Type.PATIENT)) {
-                tokenList.add(alltoken.getAppToken());
-            }
-        }
-        return tokenList;
     }
 }

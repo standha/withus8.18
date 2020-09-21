@@ -1,3 +1,4 @@
+/*
 package withus.scheduler;
 
 import org.slf4j.Logger;
@@ -265,6 +266,7 @@ public class GoalScheduler {
         }
     }
 
+
     public @ResponseBody
     ResponseEntity<String> levelNotice(List<String>tokenList,String message) throws JSONException, InterruptedException  {
         if(tokenList.isEmpty()){
@@ -298,4 +300,6 @@ public class GoalScheduler {
             return true;
         }
     }
+
 }
+ */
