@@ -1,6 +1,5 @@
 package withus.service;
 
-import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 
@@ -21,7 +20,6 @@ public class AndriodSingleNotification {
             e.printStackTrace();
         }
         body.put("data", notification);
-        System.out.println(body.toString());
         return body.toString();
     }
 }

@@ -43,11 +43,11 @@ public class NoticeScheduler {
         this.userService = userService;
     }
 
-    public @ResponseBody ResponseEntity<String> notice(List<String>tokenList,String message) throws JSONException, InterruptedException  {
+    public @ResponseBody ResponseEntity<String> notice(String title , List<String>tokenList,String message) throws JSONException, InterruptedException  {
         if(tokenList.isEmpty()){
             return new ResponseEntity<>("No Target!", HttpStatus.BAD_REQUEST);
         }
-        String notifications = AndroidPushPeriodicNotifications.PeriodicNotificationJson("",message,tokenList);
+        String notifications = AndroidPushPeriodicNotifications.PeriodicNotificationJson(title,message,tokenList);
         HttpEntity<String> request = new HttpEntity<>(notifications);
 
         CompletableFuture<String> pushNotification = androidPushNotificationService.send(request);
@@ -99,9 +99,9 @@ public class NoticeScheduler {
             }
         }
         try {
-            notice(morningToken,"아침 약을 복용하실 시간이에요.\n 지금 약을 복용해주세요!");
-            notice(lunchToken,"점심 약을 복용하실 시간이에요.\n 지금 약을 복용해주세요!");
-            notice(dinnerToken,"저녁 약을 복용하실 시간이에요.\n 약 복용 후 복약 기록에 기록해주세요.");
+            notice("pill", morningToken,"아침 약을 복용하실 시간이에요.\n 지금 약을 복용해주세요!");
+            notice("pill", lunchToken,"점심 약을 복용하실 시간이에요.\n 지금 약을 복용해주세요!");
+            notice("pill", dinnerToken,"저녁 약을 복용하실 시간이에요.\n 약 복용 후 복약 기록에 기록해주세요.");
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -129,7 +129,7 @@ public class NoticeScheduler {
             }
         }
         try {
-            notice(visitToken,"내일 병원 진료 전 준비사항 (예: 금식)이 있는 지 확인해보세요!");
+            notice("visit", visitToken,"내일 병원 진료 전 준비사항 (예: 금식)이 있는 지 확인해보세요!");
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -159,7 +159,7 @@ public class NoticeScheduler {
             }
         }
         try {
-            notice(visitToken,"병원 진료 전 준비사항 (예: 금식)이 있는 지 확인해보세요!");
+            notice("visit", visitToken,"병원 진료 전 준비사항 (예: 금식)이 있는 지 확인해보세요!");
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -178,7 +178,7 @@ public class NoticeScheduler {
             }
         }
         try {
-            notice(tokenList," 방금 [ 위더스랑 ]에 메시지가 도착했어요. ");
+            notice("withus", tokenList," 방금 [ 위더스랑 ]에 메시지가 도착했어요. ");
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -197,7 +197,7 @@ public class NoticeScheduler {
             }
         }
         try {
-            notice(tokenList," 방금 [ 위더스랑 ]에 메시지가 도착했어요. ");
+            notice("withus", tokenList," 방금 [ 위더스랑 ]에 메시지가 도착했어요. ");
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -212,9 +212,8 @@ public class NoticeScheduler {
         List<User> patients = userService.getAllToken();
         for(User patient:patients){
             if(patient.getType().equals(User.Type.PATIENT)) {
-
                 try {
-                    send(patient.getAppToken(),patient.getName()+"님, 오늘 심장 건강을 위해 실천하신 내용을 [위더스]에 기록하셨나요?\n 기록하지 않았다면 지금 기록해주세요!");
+                    send("center",patient.getAppToken(),patient.getName()+"님, 오늘 심장 건강을 위해 실천하신 내용을 [위더스]에 기록하셨나요?\n 기록하지 않았다면 지금 기록해주세요!");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -225,12 +224,12 @@ public class NoticeScheduler {
     }
     //단일 기기 PUSH 알림
     @RequestMapping(produces="application/json;charset=UTF-8")
-    public @ResponseBody ResponseEntity<String> send(String token,String message) throws JSONException, InterruptedException, NonUniqueResultException {
+    public @ResponseBody ResponseEntity<String> send(String title, String token,String message) throws JSONException, InterruptedException, NonUniqueResultException {
         if(token.isEmpty()){
             return new ResponseEntity<>("No Target!", HttpStatus.BAD_REQUEST);
         }
 
-        String notifications = AndriodSingleNotification.SingleNotificationJson("",message,token);
+        String notifications = AndriodSingleNotification.SingleNotificationJson(title,message,token);
         HttpEntity<String> request = new HttpEntity<>(notifications);
 
         CompletableFuture<String> pushNotification = androidPushNotificationService.send(request);

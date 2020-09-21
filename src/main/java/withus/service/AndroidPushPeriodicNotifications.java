@@ -33,7 +33,6 @@ AndroidPushPeriodicNotifications {
             e.printStackTrace();
         }
         body.put("data", notification);
-        System.out.println(body.toString());
         return body.toString();
     }
 }

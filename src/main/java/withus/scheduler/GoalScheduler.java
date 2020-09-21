@@ -1,4 +1,4 @@
-/*
+
 package withus.scheduler;
 
 import org.slf4j.Logger;
@@ -116,6 +116,7 @@ public class GoalScheduler {
         }
         return count;
     }
+
     //cron = "0 0 21 * * SUN"
     @Scheduled(cron = "0 0 21 * * SUN")
     public void GoalList(){
@@ -256,9 +257,9 @@ public class GoalScheduler {
             }
         }
         try {
-            levelNotice(winToken,"이 주의 목표를 달성하셨네요!\n 꽃이 어디까지 피었는지 확인해주세요~");
-            levelNotice(noneToken,"이 주의 목표 설정이 되어있지 않아요.\n 목표를 설정하여 꽃을 피워보세요.");
-            levelNotice(loseToken,"아쉽게도 이 주의 목표를 달성하지 못하셨네요.\n 꽃이 어디까지 피었는지 확인해주세요.");
+            levelNotice("center", winToken,"이 주의 목표를 달성하셨네요!\n 꽃이 어디까지 피었는지 확인해주세요~");
+            levelNotice("center", noneToken,"이 주의 목표 설정이 되어있지 않아요.\n 목표를 설정하여 꽃을 피워보세요.");
+            levelNotice("center", loseToken,"아쉽게도 이 주의 목표를 달성하지 못하셨네요.\n 꽃이 어디까지 피었는지 확인해주세요.");
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -268,11 +269,11 @@ public class GoalScheduler {
 
 
     public @ResponseBody
-    ResponseEntity<String> levelNotice(List<String>tokenList,String message) throws JSONException, InterruptedException  {
+    ResponseEntity<String> levelNotice(String title, List<String>tokenList,String message) throws JSONException, InterruptedException  {
         if(tokenList.isEmpty()){
             return new ResponseEntity<>("No Target!", HttpStatus.BAD_REQUEST);
         }
-        String notifications = AndroidPushPeriodicNotifications.PeriodicNotificationJson("",message,tokenList);
+        String notifications = AndroidPushPeriodicNotifications.PeriodicNotificationJson(title,message,tokenList);
         HttpEntity<String> request = new HttpEntity<>(notifications);
 
         CompletableFuture<String> pushNotification = androidPushNotificationService.send(request);
@@ -302,4 +303,3 @@ public class GoalScheduler {
     }
 
 }
- */
