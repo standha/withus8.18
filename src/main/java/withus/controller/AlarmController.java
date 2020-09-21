@@ -62,7 +62,7 @@ public class AlarmController extends BaseController{
         ModelAndView modelAndView = new ModelAndView("alarm/pill-history");
         String username = getUsername();
         List<Tbl_medication_record> pillHistories;
-        pillHistories  = alarmService.getFinishedRecord(username);
+        pillHistories  = alarmService.getFinishedRecord(getConnectId());
         modelAndView.addObject("pillHistories", pillHistories);
         modelAndView.addObject("previousUrl", "/alarm");
 
