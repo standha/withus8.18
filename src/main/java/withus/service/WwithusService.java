@@ -101,7 +101,8 @@ public class WwithusService {
 	}
 
 	public List<WwithusEntry> getAnswerWwithusEntries(String currentCode) {
-		return wwithusEntryRepository.findAllAnswersByCodeStartsWithButNotExactlyOrderByCode(currentCode);
+		List<WwithusEntry> answerNode = wwithusEntryRepository.findAllAnswersByCodeStartsWithButNotExactlyOrderByCode(currentCode+"_A");
+		return answerNode;
 	}
 
 	@NonNull

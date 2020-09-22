@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.sun.istack.Nullable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import withus.entity.User;
@@ -35,4 +36,6 @@ public interface UserRepository extends JpaRepository<User, String> {
 	@Transactional(readOnly = true)
 	@Nullable
 	List<User> findByAppTokenIsNotNullAndType(User.Type type);
+
+
 }

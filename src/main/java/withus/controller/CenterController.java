@@ -24,6 +24,7 @@ import withus.service.GoalService;
 import withus.service.UserService;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 public class CenterController extends BaseController
@@ -66,6 +67,8 @@ public class CenterController extends BaseController
 			modelAndView.addObject("level", ViewLevel(user));
 			modelAndView.addObject("user", user);
 		}
+		List<User> patients = userService.getUserByName(user.getName());
+		System.out.println("안뇽"+patients);
 		return modelAndView;
 	}
 

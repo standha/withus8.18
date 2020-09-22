@@ -29,6 +29,8 @@ public class UserService implements UserDetailsService {
 		this.outPatientVisitAlarmRepository = outPatientVisitAlarmRepository;
 		this.countRepository = countRepository;
 	}
+	@Autowired
+	private UserRepositorySupport userRepositorySupport;
 
 	@Override
 	@NonNull
@@ -118,6 +120,9 @@ public class UserService implements UserDetailsService {
 	public List<User> getPatient(User.Type type){
 		return userRepository.findByType(type);
 	}
+
+	@Nullable
+	public List<User> getUserByName(String name){return userRepositorySupport.findByName(name);}
 
 	@Nullable
 	public List<User> getPatientToken(User.Type type){
