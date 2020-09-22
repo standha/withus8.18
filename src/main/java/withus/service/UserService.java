@@ -1,5 +1,6 @@
 package withus.service;
 
+import com.querydsl.core.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -123,6 +124,9 @@ public class UserService implements UserDetailsService {
 
 	@Nullable
 	public List<User> getUserByName(String name){return userRepositorySupport.findByName(name);}
+
+	@Nullable
+	public List<Tuple> getAllUser(){return userRepositorySupport.findByUserOrderBy();}
 
 	@Nullable
 	public List<User> getPatientToken(User.Type type){

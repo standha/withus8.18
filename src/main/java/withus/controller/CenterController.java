@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.querydsl.core.Tuple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +69,8 @@ public class CenterController extends BaseController
 			modelAndView.addObject("user", user);
 		}
 		List<User> patients = userService.getUserByName(user.getName());
-		System.out.println("안뇽"+patients);
+		List<Tuple> allPatients = userService.getAllUser();
+		System.out.println("안뇽2"+ allPatients);
 		return modelAndView;
 	}
 

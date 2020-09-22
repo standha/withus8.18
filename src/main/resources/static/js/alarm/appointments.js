@@ -48,13 +48,19 @@ function onFormSubmission(form) {
 	const enabled = form.querySelector("input[name=visitAlarm]").checked;
 	const date = form.querySelector("input[name=outPatientVisitDate]").value
 	const time = form.querySelector("input[name=outPatientVisitTime]").value;
-
+	const time2 = "11:20";
+	console.log(date);
+	console.log(time);
+	console.log(typeof (date));
+	console.log(typeof (time));
 	const body = {
 		visitAlarm: enabled,
 		outPatientVisitDate: date,
-		outPatientVisitTime: time
+		outPatientVisitTime: time2
 	};
 
+	console.log(typeof (body.outPatientVisitDate));
+	console.log(typeof (body.outPatientVisitTime));
 	const url = form.action;
 	const options = {
 		method: "POST",
