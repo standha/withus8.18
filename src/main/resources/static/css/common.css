@@ -10,7 +10,7 @@
 .btn.xlg {font-weight: 700; height: 60px; line-height: 58px; font-size: 1.25rem;}
 .btn.xxlg {font-weight: 700; height: 68px; line-height: 66px; font-size: 1.5rem;}
 
-.btn.type01 {color: #ffffff; border: solid 2px #25cc85; border-radius: 10px; background-image: linear-gradient(98deg, #14bed2 0%, #0ddf6a 100%);}
+.btn.type01 {color: #fff; border: solid 2px #25cc85; border-radius: 10px; background-image: linear-gradient(98deg, #14bed2 0%, #0ddf6a 100%);}
 .btn.type01:disabled {color: #b7b7b7; border: solid 2px #dedede; background-color: #e5e5e5;}
 .btn.type02 {color: #fff; border: solid 2px #25cc85; border-radius: 10px; background-color: #19d585;}
 .btn.type02:disabled {color: #b7b7b7; border: solid 2px #dedede; background-color: #e5e5e5;}
@@ -69,6 +69,7 @@ span[class*="ico-"], a[class*="ico-"], div[class*="ico-"], button[class*="ico-"]
 
 .ico-alarm {width: 37px; height: 37px; background-position: -2px -104px;}
 .ico-alarm-s {width: 24px; height: 22px; background-position: -2px -77px;}
+.ico-reservation-s {width: 22px; height: 22px; background-position: -26px -77px;}
 .ico-blood {width: 43px; height: 33px; background-position: -40px -103px;}
 .ico-blood-s {width: 26px; height: 22px; background-position: -50px -76px;}
 .ico-blood-l {width: 105px; height: 83px; background-position: -290px -225px;}
@@ -94,7 +95,6 @@ span[class*="ico-"], a[class*="ico-"], div[class*="ico-"], button[class*="ico-"]
 
 .alert-info {display: flex; align-items: center; padding: 15px; font-size: 0.93rem; color: #222; border-radius: 18px; border: 1px solid #ecedf0; background-color: #f7f8fa;}
 .alert-info span {margin: 0 3px;}
-
 
 /* field */
 .field .alert-notice {font-size: 0.88rem; color: #fc1d1a; font-weight: 500; margin: 10px 0 15px;}
@@ -142,9 +142,9 @@ span[class*="ico-"], a[class*="ico-"], div[class*="ico-"], button[class*="ico-"]
 .field-wrap.type04 .field {display: flex; flex-direction: column; padding: 5% 0; border-bottom: 1px solid #ebebeb;}
 .field-wrap.type04 .field label {font-size: 1.09rem; color: #666; font-weight: 500; text-align: center; margin-bottom: 3%;}
 .field-wrap.type04 .insert {margin: 0 auto;}
-.field-wrap.type04 .insert input {display: inline-block; width: 78px; height: 45px; line-height: 43px; padding: 0; text-align: center; font-size: 2.5rem; font-family: 'Roboto', sans-serif; font-weight: 500; color: #222; border: none; }
+.field-wrap.type04 .insert input {display: inline-block; width: 78px; height: 45px; line-height: 43px; padding: 0; text-align: center; font-size: 2.6rem; font-family: 'Roboto', sans-serif; font-weight: 500; color: #222; border: none; }
 .field-wrap.type04 .insert input.num2 {width: 60px;}
-.field-wrap.type04 .insert input.num3 {width: 80px;}
+.field-wrap.type04 .insert input.num3 {width: 78px;}
 .field-wrap.type04 .insert span {display: inline-block; font-size: 1rem; color: #222; font-weight: 500; line-height: 30px; vertical-align: bottom;}
 .field-wrap.type04 .insert span.bar {line-height: 46px; font-size: 2.6rem; font-family: 'Roboto', sans-serif; }
 
@@ -189,7 +189,9 @@ select:focus {border: 1px solid #111;}
 .rdo-wrap.grid2 .rdo-box {width: 48%;}
 .rdo-wrap.grid3 .rdo-box {width: 31%;}
 .rdo-wrap.grid-col {flex-direction: column;}
-.rdo-wrap.grid-col .rdo-box {width: 100%; margin-bottom: 10px;}
+.rdo-wrap.grid-col {flex-direction: column;}
+.rdo-wrap.inline {justify-content: center;}
+.rdo-wrap.inline .rdo-box {width: 30%; margin: 0 2%;}
 
 .rdo-wrap.type01 {}
 .rdo-wrap.type01 .rdo-box {position: relative; height: 52px; line-height: 50px; border-radius: 5px; border: 1px solid #d5d5d5; background-color: #fff;}
@@ -208,12 +210,13 @@ select:focus {border: 1px solid #111;}
 .rdo-wrap.type02 .rdo-box.checked .rdo-mark {background-position: -260px -115px;}
 .rdo-wrap.type02 .rdo-box.checked label {color: #fff;}
 
-.rdo-wrap.type03 {justify-content: center;}
-.rdo-wrap.type03 .rdo-box {position: relative; height: 36px; line-height: 34px; border: 2px solid #bebebe; background-color: #fff; border-radius: 8px 0 0 8px;}
+.rdo-wrap.type03 {justify-content: center; border: 2px solid #bebebe; border-radius: 8px;}
+.rdo-wrap.type03 .rdo-box {position: relative; width: 50%; height: 32px; line-height: 30px; background-color: #fff; border-radius: 8px 0 0 8px;}
 .rdo-wrap.type03 .rdo-box + .rdo-box {border-radius: 0 8px 8px 0;}
 .rdo-wrap.type03 .rdo-box .rdo-mark {position: absolute; left: 50%; top: 50%; width: 15px; height: 15px; margin-left: -15px; transform: translate(-50%, -50%); background-position: -260px -2px;}
 .rdo-wrap.type03 .rdo-box label {font-weight: 500; font-size: 1rem; color: #bebebe; text-align: center; display: block; padding-left: 20px; font-size: 1rem;}
-.rdo-wrap.type03 .rdo-box.checked {border: solid 2px #2d3654; background-color: #2d3654; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);}
+.rdo-wrap.type03 .rdo-box.checked {margin: -2px 0 -2px -2px; height: 36px; line-height: 32px; background-color: #2d3654; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);}
+.rdo-wrap.type03 .rdo-box + .rdo-box.checked {margin: -2px -2px -2px 0;}
 .rdo-wrap.type03 .rdo-box.checked .rdo-mark {background-position: -277px -2px;}
 .rdo-wrap.type03 .rdo-box.checked label {color: #fff;}
 

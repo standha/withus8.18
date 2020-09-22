@@ -99,13 +99,13 @@ footer {position: relative;}
 .step-page .ground-wrap {position: relative; height: 90px; background: url('../images/common/step/ground02.png') 50% 0 repeat-x; background-size: 360px 134px;}
 .step-page .ground-wrap:after {content: ''; display: block; position: absolute; width: 66px; height: 57px; right: 5%; top: -48%; background: url('../images/common/step/sp-img.png') 0 0 no-repeat; background-size: 218px 58px; z-index: 2;}
 
-.step-page.step02 .tit-wrap span.tit {width: 187px; background-position: 0 -30px;} 
+.step-page.step02 .tit-wrap span.tit {width: 187px; background-position: 0 -30px;}
 .step-page.step02 .seed {background-image: url('../images/common/step/step02.png');}
 .step-page.step02 .ground-wrap:after {content: ''; display: block; position: absolute; width: 70px; height: 57px; right: 5%; top: -48%; background: url('../images/common/step/sp-img.png') -67px 0 no-repeat; background-size: 218px 58px;}
-.step-page.step03 .tit-wrap span.tit {width: 233px; background-position: 0 -60px;} 
+.step-page.step03 .tit-wrap span.tit {width: 233px; background-position: 0 -60px;}
 .step-page.step03 .seed {background-image: url('../images/common/step/step03.png');}
 .step-page.step03 .ground-wrap:after {content: ''; display: block; position: absolute; width: 70px; height: 57px; right: 5%; top: -48%; background: url('../images/common/step/sp-img.png') -67px 0 no-repeat; background-size: 218px 58px;}
-.step-page.step04 .tit-wrap span.tit {width: 239px; background-position: 0 -90px;} 
+.step-page.step04 .tit-wrap span.tit {width: 239px; background-position: 0 -90px;}
 .step-page.step04 .seed {background-image: url('../images/common/step/step04.png');}
 .step-page.step04 .ground-wrap:after {content: ''; display: block; position: absolute; width: 82px; height: 57px; right: 0; top: -48%; background: url('../images/common/step/sp-img.png') -136px 0 no-repeat; background-size: 218px 58px;}
 
@@ -121,11 +121,11 @@ footer {position: relative;}
 .step04.level06 .container {background: url('../images/common/step/forest.png') 50% bottom no-repeat; background-size: 800px 117px;}
 .step04.level06 .flower {background-image: url('../images/common/step/flower06.png');}
 .step04.level06 .ground-wrap:after {display: none;}
-.step04.level02 .tit-wrap span.tit {width: 239px; background-position: 0 -120px;} 
-.step04.level03 .tit-wrap span.tit {width: 239px; background-position: 0 -150px;} 
-.step04.level04 .tit-wrap span.tit {width: 239px; background-position: 0 -180px;} 
-.step04.level05 .tit-wrap span.tit {width: 263px; background-position: 0 -210px;} 
-.step04.level06 .tit-wrap span.tit {width: 291px; background-position: 0 -240px;} 
+.step04.level02 .tit-wrap span.tit {width: 239px; background-position: 0 -120px;}
+.step04.level03 .tit-wrap span.tit {width: 239px; background-position: 0 -150px;}
+.step04.level04 .tit-wrap span.tit {width: 239px; background-position: 0 -180px;}
+.step04.level05 .tit-wrap span.tit {width: 263px; background-position: 0 -210px;}
+.step04.level06 .tit-wrap span.tit {width: 291px; background-position: 0 -240px;}
 
 /* insert (blood, exercise, weight) */
 .insert-page {}
@@ -160,6 +160,9 @@ footer {position: relative;}
 
 .size-lg .ui-datepicker td span,
 .size-lg .ui-datepicker td a {padding-bottom: 83%;}
+.size-sm .ui-datepicker {padding: 0 4% 3%; text-align: center; border-bottom: 1px solid #e6e6e6;}
+.size-sm .ui-datepicker td span,
+.size-sm .ui-datepicker td a {display: inline-block; width: 40px; padding: 13px; border-radius: 100%;}
 
 .record-review {display: flex; justify-content: space-between; align-items: center; padding: 4% 0;}
 .record-review .tit {font-size: 1.09rem; line-height: 1.5; padding-left: 11%; text-align: center; font-weight: 500; color: #222;}
@@ -180,6 +183,28 @@ footer {position: relative;}
 .box-wrap .box-list li .round-middle {background-color: #fdb100;}
 .box-wrap .box-list li .round-row {background-color: #22c172;}
 .box-wrap .box-list li .bold {font-size: 1.25rem; font-weight: 700;}
+
+/* alarm > insert & calendar */
+.time-page {}
+.time-page .container {margin-bottom: auto;}
+.time-page .cont-wrap {padding: 3% 0 7%;}
+.time-page .insert-wrap {padding: 0 5%;}
+.time-page .time-tit {font-size: 1.07rem; color: #666; font-weight: 500; padding: 5% 0 2%;}
+.time-page .chk-wrap {margin: 5% 0;}
+.time-page .alert-chk {padding: 8% 0 5%; color: #222; font-weight: 500; text-align: center; border-top: 1px solid #e6e6e6;}
+
+.time-submit {display: flex; justify-content: space-between; align-items: center; padding-bottom: 5%; border-bottom: 1px solid #ebebeb;}
+.time-submit .rdo-wrap {width: 43%;}
+.time-submit .field-wrap {position: relative; width: 50%; text-align: center; padding-right: 0; padding-left: 5%;}
+.time-submit .field-wrap:before {content: ''; display: block; position: absolute; left: 0; top: 50%; width: 1px; height: 24px; background-color: #ebebeb; transform: translateY(-50%);}
+.time-submit .field-wrap .field {border: none; padding: 0;}
+.time-submit .field-wrap .insert input.num2 {width: 50px; font-size: 2.7rem; letter-spacing: -0.05em;}
+
+/* reservation */
+.reser-page {}
+.reser-page .container {margin-bottom: auto;}
+.reser-page .insert-wrap {padding: 5%;}
+.reser-page .footer-wrap .btn-wrap {margin-bottom: 8%;}
 
 /* chat */
 .chat-page {background-image: linear-gradient(to bottom, #e2eff4, #edf2f2 83%);}
