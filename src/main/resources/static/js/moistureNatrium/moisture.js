@@ -1,6 +1,6 @@
 function setMinus(testNum) {
 	testNum = parseInt(testNum);
-	if(testNum <= 0){alert('물을 아직 한잔도 드시지 않으셨어요 ');
+	if(testNum <= 0){alert('아직 오늘 물을 한 잔도 마시지 않으셨어요.');
 	}else{ testNum = testNum - 1;}
 	const mbody = {
 		intake: testNum
@@ -21,16 +21,17 @@ function setMinus(testNum) {
 		.then(response => response.json())
 		.then(data => console.log(data));
 
-	location.reload(true);
-	top.document.location.reload();
-	opener.location.reload();
-	top.document.location.reload();
+	// location.reload(true);
+	// top.document.location.reload();
+	// opener.location.reload();
+	// top.document.location.reload();
+	window.location.reload();
 	return false;
 }
 
 function setAdd(testNum) {
 	testNum = parseInt(testNum);
-	if(testNum >= 10){alert('물을 너무 많이 드신거 같지 않나요?');
+	if(testNum >= 10){alert('오늘 마신 물의 양도 충분해요!\n너무 많은 수분을 섭취하지 마세요.');
 	}else{ testNum = testNum + 1;}
 	const body = {
 		intake: testNum
@@ -51,10 +52,11 @@ function setAdd(testNum) {
 		.then(response => response.json())
 		.then(data => console.log(data));
 
-	location.reload(true);
-	top.document.location.reload();
-	opener.location.reload();
-	top.document.location.reload();
+	// location.reload(true);
+	// top.document.location.reload();
+	// opener.location.reload();
+	// top.document.location.reload();
+	window.location.reload();
 	return false;
 }
 
