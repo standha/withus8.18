@@ -45,6 +45,7 @@ function showTime() {
 }
 
 function onFormSubmission(form) {
+
 	const enabled = form.querySelector("input[name=visitAlarm]").checked;
 	const date = form.querySelector("input[name=outPatientVisitDate]").value
 	const time = form.querySelector("input[name=outPatientVisitTime]").value;
