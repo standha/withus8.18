@@ -13,9 +13,9 @@ public class
 AndroidPushPeriodicNotifications {
 
     public static String PeriodicNotificationJson(String title, String data,List<String> tokenData) throws JSONException, NullPointerException {
+        List<String> tokenlist = new ArrayList<String>();
         JSONObject body = new JSONObject();
         JSONArray token = new JSONArray();
-        List<String> tokenlist = new ArrayList<String>();
         tokenlist = tokenData;
 
         for(int i=0; i<tokenlist.size(); i++) {
