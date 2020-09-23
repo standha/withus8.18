@@ -54,9 +54,9 @@
                             <input type="hidden" id="exercise-history-get-action" th:attr="value=@{/exercise-all-history}">
                             <!-- 환자가 로그인 중 -->
                             <div class="insert" th:if = "${type} == ${T(withus.entity.User.Type).PATIENT} ">
-                                <input type="number" class="num2" id="input1" name="hour" placeholder="--" th:value="${hour}">
+                                <input type="number" class="num2" id="input1" name="hour" placeholder="--" th:value="${hour}" min="0">
                                 <span>시간</span>
-                                <input type="number" class="num2" id="input2" name="minute" placeholder="--" th:value="${minute}">
+                                <input type="number" class="num2" id="input2" name="minute" placeholder="--" th:value="${minute}" min="0" max="59">
                                 <span>분</span>
                             </div>
 

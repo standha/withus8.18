@@ -1372,6 +1372,6 @@ a.ui-button:active,
 .reser-page .ui-datepicker .ui-datepicker-title {position: relative;}
 .reser-page .ui-datepicker .ui-datepicker-title:before {display: block; position: absolute; left: 50%; top: 50%; width: 20px; height: 20px; background-color: #ddd; transform: translate(-50%, -50%);}
 .reser-page .ui-datepicker select.ui-datepicker-month,
-.reser-page .ui-datepicker select.ui-datepicker-year {width: auto; padding: 0 3px; border: none; font-weight: 700; line-height: inherit;}
-.reser-page .ui-datepicker select.ui-datepicker-month {-webkit-appearance: auto; -moz-appearance: auto; appearance: auto;}
+.reser-page .ui-datepicker select.ui-datepicker-year {width: auto; padding: 0 3px; border: none; font-weight: 700; line-height: inherit; background-color: #ffffff;}
+.reser-page .ui-datepicker select.ui-datepicker-month {-webkit-appearance: auto; -moz-appearance: auto; appearance: auto;  background-color: #ffffff;}
 
