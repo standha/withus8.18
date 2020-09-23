@@ -60,6 +60,7 @@ span[class*="ico-"], a[class*="ico-"], div[class*="ico-"], button[class*="ico-"]
 .ico-arrow1 {display: inline-block; width: 18px; height: 15px; background-position: -304px -77px;}
 .ico-arrow2 {display: inline-block; width: 7px; height: 12px; background-position: -325px -77px;}
 .ico-join-chk {display: inline-block; width: 17px; height: 17px; background-position: -346px -2px;}
+.ico-tab-chk {display: inline-block; width: 15px; height: 15px; background-position: -365px -2px;}
 .ico-water {width: 52px; height: 70px; background-position: -400px -150px;}
 .ico-list {width: 58px; height: 65px; background-position: -342px -154px;}
 .ico-drug {width: 71px; height: 81px; background-position: -80px -226px;}
@@ -93,8 +94,11 @@ span[class*="ico-"], a[class*="ico-"], div[class*="ico-"], button[class*="ico-"]
 .ico-daily3 {width: 46px; height: 46px; background-position: -3px -29px;}
 .ico-daily4 {width: 46px; height: 46px; background-position: -150px -29px;}
 
-.alert-info {display: flex; align-items: center; padding: 15px; font-size: 0.93rem; color: #222; border-radius: 18px; border: 1px solid #ecedf0; background-color: #f7f8fa;}
+.alert-info {display: flex; line-height: 1.4; padding: 15px; font-size: 0.93rem; color: #222; border-radius: 18px; border: 1px solid #ecedf0; background-color: #f7f8fa;}
 .alert-info span {margin: 0 3px;}
+.alert-top {display: flex; flex-direction: column; align-items: center; padding: 15px; font-size: 0.93rem; color: #222; border-radius: 18px; border: 1px solid #ecedf0; background-color: #f7f8fa;}
+.alert-top span {display: block; color: #222; margin: 1% 0;}
+.alert-top span.sub {font-size: 0.75rem; color: #9c9c9c;}
 
 /* field */
 .field .alert-notice {font-size: 0.88rem; color: #fc1d1a; font-weight: 500; margin: 10px 0 15px;}
@@ -203,7 +207,7 @@ select:focus {border: 1px solid #111;}
 
 .rdo-wrap.type02 {padding: 3% 5%;}
 .rdo-wrap.type02 + .rdo-wrap.type02 {margin-top: 8px;}
-.rdo-wrap.type02 .rdo-box {position: relative; height: 55px; line-height: 53px; border-radius: 5px; border: 1px solid #efefef; background-color: #fff;}
+.rdo-wrap.type02 .rdo-box {position: relative; height: 55px; line-height: 53px; border-radius: 5px; border: 1px solid #efefef; background-color: #fff; margin-bottom: 3%;}
 .rdo-wrap.type02 .rdo-box .rdo-mark {position: absolute; left: 10px; top: 50%; width: 23px; height: 23px; transform: translateY(-50%); background-position: -2px -2px;}
 .rdo-wrap.type02 .rdo-box label {font-weight: 500; font-size: 1rem; color: #222; padding-left: 40px; font-size: 1.06rem;}
 .rdo-wrap.type02 .rdo-box.checked {border: solid 1px #25cc85; background-color: #19d585; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);}
@@ -249,6 +253,19 @@ select:focus {border: 1px solid #111;}
 .tab-wrap.type01 .tab-menu .patient.active:before {background-position-x: -74px;}
 .tab-wrap.type01 .tab-menu li.guardian:before {content: ''; display: block; position: absolute; bottom: 0; left: 50%; width: 55px; height: 44px; background: url('../images/common/sp-icon.png') -152px -179px no-repeat; transform: translateX(-50%); background-size: 600px 450px;}
 .tab-wrap.type01 .tab-menu .guardian.active:before {background-position-x: -209px;}
+
+.tab-wrap.type02 {padding: 5% 2%; border-bottom: 1px solid #ebebeb;}
+.tab-wrap.type02 .tab-tit {font-size: 1.07rem; color: #666; font-weight: 500; margin-bottom: 4%;}
+.tab-wrap.type02 .tab-menu {justify-content: space-between; border: 2px solid #bebebe; border-radius: 8px; overflow: hidden;}
+.tab-wrap.type02 .tab-menu li {display: flex; align-items: center; justify-content: center; width: 25%; height: 56px; color: #666; font-weight: 500; border-left: 1px solid #bebebe; border-right: 1px solid #bebebe;}
+.tab-wrap.type02 .tab-menu li:first-child {border-left: none;}
+.tab-wrap.type02 .tab-menu li:last-child {border-right: none;}
+.tab-wrap.type02 .tab-menu li span[class*="ico-"] {display: none;}
+.tab-wrap.type02 .tab-menu li.active {color: #fff; border-color: transparent; background-color: #bebebe;}
+.tab-wrap.type02 .tab-menu li.active span[class*="ico-"] {display: inline-block; margin-right: 5%;}
+.tab-wrap.type02 .tab-menu .active.high {background-color: #db4848;}
+.tab-wrap.type02 .tab-menu .active.middle {background-color: #fdb100;}
+.tab-wrap.type02 .tab-menu .active.row {background-color: #22c172;}
 
 
 /* table */
