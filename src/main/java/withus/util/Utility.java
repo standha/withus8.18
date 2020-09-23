@@ -27,7 +27,7 @@ public class Utility {
 	).sorted().collect(Collectors.toList());
 
 	private static final List<DayOfWeek> WWITHUS_DAYS_OF_WEEK_ON_TENTH_WEEK_OR_LATER = Stream.of(
-		DayOfWeek.TUESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SUNDAY
+		DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.SATURDAY
 	).sorted().collect(Collectors.toList());
 
 	public static LocalDate parseDate(String dateString) { return LocalDate.parse(dateString, DATE_FORMATTER); }

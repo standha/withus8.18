@@ -85,9 +85,10 @@ public class WwithusService {
 
 		return toChatBalloon(nextEntry, true);
 	}
-
+	//asnwerList 답변 노드를 List 로 받음.
 	public List<WwithusEntry> getAnswerWwithusEntries(String currentCode) {
-		return wwithusEntryRepository.findAllAnswersByCodeStartsWithButNotExactlyOrderByCode(currentCode);
+		List<WwithusEntry> answerList = wwithusEntryRepository.findAllAnswersByCodeStartsWithButNotExactlyOrderByCode(currentCode + "_A");
+		return answerList;
 	}
 
 	@NonNull
