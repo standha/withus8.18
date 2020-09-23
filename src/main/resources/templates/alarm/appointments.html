@@ -40,58 +40,69 @@
 		</div>
 	</header>
 	<!-- // header -->
-
-	<!-- content -->
-	<div class="container" id="content">
-		<div class="cont-wrap type01">
-			<div id="dateReserve" class="size-sm"></div>
+		<!-- content -->
+	<form class="container" id="appointment-form" th:action="@{/appointments}" onsubmit="return onFormSubmission(this);">
+		<div class="container" id="content">
+			<div class="cont-wrap type01">
+				<div id="dateReserve" class="size-sm"></div>
+			</div>
 		</div>
-	</div>
-	<!-- // content -->
+		<!-- // content -->
 
-	<!-- footer -->
-	<footer>
-		<div class="footer-wrap">
-			<div class="insert-wrap">
-				<div class="time-submit">
-					<div class="rdo-wrap grid2 type03">
-						<div class="rdo-box checked"> <!-- checked 삭제시 꺼짐 아이콘으로 변경-->
-							<span class="rdo-mark">
-                                <input type="radio" name="" id="rdo8">
+		<!-- footer -->
+		<footer>
+			<div class="footer-wrap">
+				<div class="insert-wrap">
+					<div class="time-submit">
+						<div class="rdo-wrap grid2 type03">
+							<div class="rdo-box" id="morning" onclick="check_radio(this)">
+                                <span class="rdo-mark">
+                                <input type="radio" name="time" id="rdo8" value=0>
                             </span>
-							<label for="rdo8">오전</label>
-						</div>
-						<div class="rdo-box">
+								<label for="rdo8">오전</label>
+							</div>
+							<div class="rdo-box" id="afternoon" onclick="check_radio(this)">
                             <span class="rdo-mark">
-                                <input type="radio" name="" id="rdo9">
+                                <input type="radio" name="time" id="rdo9" value=1>
                             </span>
-							<label for="rdo9">오후</label>
+								<label for="rdo9">오후</label>
+							</div>
 						</div>
-					</div>
-					<div class="field-wrap type04">
-						<div class="field">
-							<div class="insert">
-								<input type="number" class="num2" id="input1" name="" placeholder="- -" value="08">
-								<span>시</span>
-								<input type="number" class="num2" id="input2" name="" placeholder="- -" value="30">
-								<span>분</span>
+						<div class="field-wrap type04">
+							<div class="field">
+								<div class="insert">
+									<input type="number" class="num2" id="hour" name="hour" placeholder="- -" th:value="${hour}" max="12" maxlength="2">
+									<span>시</span>
+									<input type="number" class="num2" id="minute" name="minute" placeholder="- -" th:value="${minute}" max="59" maxlength="2">
+									<span>분</span>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="btn-wrap chk-wrap type02 grid2">
-				<div class="chk-box checked"> <!-- checked 삭제시 꺼짐 아이콘으로 변경-->
-					<span class="chk-mark">
-                        <input type="checkbox" name="" id="chk3">
+
+				<div class="btn-wrap chk-wrap type02 grid2">
+					<div class="chk-box checked" id="alarm" th:if = "${visitAlarm == true}">
+                        <span class="chk-mark" onclick="check_box()">
+                        <input type="checkbox" name="visitAlarm" id="on" >
                     </span>
-					<label for="chk3">켜짐</label> <!-- checked 삭제시 꺼짐으로 텍스트 변경돼야함 -->
+						<label id="label" for="on">켜짐</label>
+					</div>
+
+					<div class="chk-box" id="alarm" th:if = "${visitAlarm == false}">
+                        <span class="chk-mark" onclick="check_box()">
+                        <input type="checkbox" name="visitAlarm" id="off" >
+                        </span>
+						<label id="label" for="off">꺼짐</label>
+					</div>
+
+
+					<input type="submit" class="btn xlg type01">
 				</div>
-				<button class="btn xlg type01">저장</button>
 			</div>
-		</div>
-	</footer>
-	<!-- // footer -->
+		</footer>
+			</form>
+			<!-- // footer -->
 
 </div>
 <!--// wrap -->

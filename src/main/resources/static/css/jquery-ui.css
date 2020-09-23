@@ -1344,18 +1344,6 @@ a.ui-button:active,
 	font-weight: 700;
 	color: #ffffff;
 }
-
-.reser-page .ui-state-activee,
-.reser-page .ui-widget-content .ui-state-activee,
-.reser-page .ui-widget-header .ui-state-activee,
-.reser-page a.ui-button:active,
-.reser-page .ui-button:active,
-.reser-page .ui-button.ui-state-activee:hover {
-	background-image: linear-gradient(139deg, #ff3a96 24%, #ff5b5b 84%);
-	font-weight: 700;
-	color: #ffffff;
-}
-
 .reser-page .ui-icon-background,
 .reser-page .ui-state-active .ui-icon-background {
 	background-image: linear-gradient(139deg, #14bed2 24%, #0ddf6a 84%);
@@ -1366,6 +1354,16 @@ a.ui-button:active,
 .reser-page .ui-state-active a:visited {
 	color: #ffffff;
 	text-decoration: none;
+}
+.reser-page .ui-state-activee,
+.reser-page .ui-widget-content .ui-state-activee,
+.reser-page .ui-widget-header .ui-state-activee,
+.reser-page a.ui-button:active,
+.reser-page .ui-button:active,
+.reser-page .ui-button.ui-state-activee:hover {
+	background-image: linear-gradient(139deg, #ff3a96 24%, #ff5b5b 84%);
+	font-weight: 700;
+	color: #ffffff;
 }
 
 .reser-page .ui-datepicker .ui-datepicker-prev {left: 5%;}
