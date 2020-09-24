@@ -81,7 +81,6 @@ public class User implements Serializable, UserDetails {
 	@Getter
 	private Type type;
 
-
 	@OneToOne
 	@JoinColumn(name = "caregiver_contact", columnDefinition = "VARCHAR(32)", referencedColumnName = "contact")
 	@Nullable

@@ -3,6 +3,7 @@ package withus.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.google.gson.internal.$Gson$Types;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,18 +36,21 @@ public class WwithusController extends BaseController {
 	public ModelAndView getWwithus() {
 		ModelAndView modelAndView = new ModelAndView("wwithus/wwithus.html");
 		modelAndView.addObject("previousUrl", "/home");
+		modelAndView.addObject("userType", getUser().getType());
 
 		return modelAndView;
 	}
+
 
 	@GetMapping("/wwithus/histories")
 	@ResponseBody
 	public Result<List<ChatBalloon>> getHistories() {
 		Result.Code code = Result.Code.OK;
-
 		User user = getUser();
+		if(user.getType() == User.Type.CAREGIVER){
+			user = userService.getUserByCaregiverId(user.getUserId());
+		}
 		LocalDate today = LocalDate.now();
-
 		List<ChatBalloon> data;
 		try {
 			data = wwithusService.getWwithusEntryHistories(user, today);
@@ -64,6 +68,8 @@ public class WwithusController extends BaseController {
 			}*/
 		} catch (Utility.NoWithusException noWithusException) {
 			data = wwithusService.getCyaLaterChatBalloons(user);
+		} catch (Utility.NoHisException noHisException){
+			data = wwithusService.getNoPatientContent(user);
 		}
 
 		logger.debug("User ({}) has {} history(ies) of today.", user, data.size());
@@ -98,6 +104,10 @@ public class WwithusController extends BaseController {
 
 			data = wwithusService.getWwithusEntryAndSaveHistory(wwithusEntryRequest);
 			code = Result.Code.OK;
+
+		}catch (Utility.NoHisException nh){
+			User uesrTest = getUser();
+			data = wwithusService.getNoHis(uesrTest);
 		} catch (Exception exception) {
 			logger.error(exception.getLocalizedMessage(), exception);
 		}

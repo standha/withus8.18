@@ -39,8 +39,8 @@ public class ExerciseController extends BaseController {
         switch (typeCheck){
             case PATIENT:
                 if(exerciseService.getExercise(new RecordKey(getUsername(), LocalDate.now()))==null){
-                    modelAndView.addObject("hour", "시간");
-                    modelAndView.addObject("minute", "분");
+                    modelAndView.addObject("hour", "");
+                    modelAndView.addObject("minute", "");
                 }else{
                     Tbl_Exercise_record exercise = exerciseService.getExercise(new RecordKey(getUsername(), LocalDate.now()));
                     modelAndView.addObject("hour", exercise.getHour());
@@ -49,8 +49,8 @@ public class ExerciseController extends BaseController {
                 break;
             case CAREGIVER:
                 if(exerciseService.getExercise(new RecordKey(getCaretaker().getUserId(), LocalDate.now()))==null){
-                    modelAndView.addObject("hour", "시간");
-                    modelAndView.addObject("minute", "분");
+                    modelAndView.addObject("hour", "");
+                    modelAndView.addObject("minute", "");
                 }else{
                     Tbl_Exercise_record exercise = exerciseService.getExercise(new RecordKey(getCaretaker().getUserId(), LocalDate.now()));
                     modelAndView.addObject("hour", exercise.getHour());
@@ -71,12 +71,14 @@ public class ExerciseController extends BaseController {
         switch (getUser().getType()){
             case PATIENT:
                 exerciseHistory = exerciseService.getExerciseAllRecord(username,-1, -1);
-                modelAndView.addObject("exerciseWeek",avgWeek());
+                modelAndView.addObject("exerciseWeekHour",avgWeek()/60);
+                modelAndView.addObject("exerciseWeekMin",avgWeek()%60);
                 modelAndView.addObject("exercise",exerciseHistory);
                 break;
             case CAREGIVER:
                 exerciseHistory = exerciseService.getExerciseAllRecord(getCaretaker().getUserId(), -1, -1);
-                modelAndView.addObject("exerciseWeek",avgWeek());
+                modelAndView.addObject("exerciseWeekHour",avgWeek()/60);
+                modelAndView.addObject("exerciseWeekMin",avgWeek()%60);
                 modelAndView.addObject("exercise",exerciseHistory);
                 break;
 
@@ -91,9 +93,9 @@ public class ExerciseController extends BaseController {
         String userId = getUsername();
         tbl_exercise_record.setPk(new RecordKey(userId, LocalDate.now()));
         Result.Code code;
-        Tbl_Exercise_record seved = null;
+        Tbl_Exercise_record saved = null;
         try{
-            seved = exerciseService.upsertExerciseRecord(tbl_exercise_record);
+            saved = exerciseService.upsertExerciseRecord(tbl_exercise_record);
             code = Result.Code.OK;
         } catch (Exception exception){
             logger.error(exception.getLocalizedMessage(),exception);
@@ -101,7 +103,7 @@ public class ExerciseController extends BaseController {
         }
         return Result.<Tbl_Exercise_record>builder()
                 .code(code)
-                .data(seved)
+                .data(saved)
                 .build();
     }
     public Integer avgWeek(){

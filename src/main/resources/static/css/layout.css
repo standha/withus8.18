@@ -3,10 +3,10 @@
 body > form {height: 100%;}
 #wrap {display: flex; flex-direction: column; justify-content: space-between; height: 100%; overflow-y: auto;}
 header {position: relative;}
-header .header-wrap {padding: 3% 5%;}
+header .header-wrap {padding: 10px 15px;}
 header .header-wrap .head {display: flex; justify-content: space-between;}
 header .header-wrap .head .btn {display: flex; align-items: center; width: auto; padding: 0 10px;}
-.header-wrap.type01 {display: flex; flex-direction: column; justify-content: space-between; border-bottom: 1px solid #edeeef; background-color: #fff;}
+.header-wrap.type01 {height: 58px; display: flex; flex-direction: column; justify-content: space-between; border-bottom: 1px solid #edeeef; background-color: #fff;}
 .header-wrap.type01 h2 {position: absolute; display: flex; left: 50%; align-items: center; line-height: 36px; font-size: 1.25rem; color: #222; font-weight: 700; transform: translateX(-50%);}
 .header-wrap.type01 h2 span {display: inline-block; margin: 0 3px;}
 .header-wrap.type02 {display: flex; flex-direction: column; justify-content: space-between; border-bottom: 1px solid #edeeef; background-image: linear-gradient(98deg, #14bed2 4%, #0ddf6a 100%);}
@@ -99,13 +99,13 @@ footer {position: relative;}
 .step-page .ground-wrap {position: relative; height: 90px; background: url('../images/common/step/ground02.png') 50% 0 repeat-x; background-size: 360px 134px;}
 .step-page .ground-wrap:after {content: ''; display: block; position: absolute; width: 66px; height: 57px; right: 5%; top: -48%; background: url('../images/common/step/sp-img.png') 0 0 no-repeat; background-size: 218px 58px; z-index: 2;}
 
-.step-page.step02 .tit-wrap span.tit {width: 187px; background-position: 0 -30px;} 
+.step-page.step02 .tit-wrap span.tit {width: 187px; background-position: 0 -30px;}
 .step-page.step02 .seed {background-image: url('../images/common/step/step02.png');}
 .step-page.step02 .ground-wrap:after {content: ''; display: block; position: absolute; width: 70px; height: 57px; right: 5%; top: -48%; background: url('../images/common/step/sp-img.png') -67px 0 no-repeat; background-size: 218px 58px;}
-.step-page.step03 .tit-wrap span.tit {width: 233px; background-position: 0 -60px;} 
+.step-page.step03 .tit-wrap span.tit {width: 233px; background-position: 0 -60px;}
 .step-page.step03 .seed {background-image: url('../images/common/step/step03.png');}
 .step-page.step03 .ground-wrap:after {content: ''; display: block; position: absolute; width: 70px; height: 57px; right: 5%; top: -48%; background: url('../images/common/step/sp-img.png') -67px 0 no-repeat; background-size: 218px 58px;}
-.step-page.step04 .tit-wrap span.tit {width: 239px; background-position: 0 -90px;} 
+.step-page.step04 .tit-wrap span.tit {width: 239px; background-position: 0 -90px;}
 .step-page.step04 .seed {background-image: url('../images/common/step/step04.png');}
 .step-page.step04 .ground-wrap:after {content: ''; display: block; position: absolute; width: 82px; height: 57px; right: 0; top: -48%; background: url('../images/common/step/sp-img.png') -136px 0 no-repeat; background-size: 218px 58px;}
 
@@ -121,11 +121,11 @@ footer {position: relative;}
 .step04.level06 .container {background: url('../images/common/step/forest.png') 50% bottom no-repeat; background-size: 800px 117px;}
 .step04.level06 .flower {background-image: url('../images/common/step/flower06.png');}
 .step04.level06 .ground-wrap:after {display: none;}
-.step04.level02 .tit-wrap span.tit {width: 239px; background-position: 0 -120px;} 
-.step04.level03 .tit-wrap span.tit {width: 239px; background-position: 0 -150px;} 
-.step04.level04 .tit-wrap span.tit {width: 239px; background-position: 0 -180px;} 
-.step04.level05 .tit-wrap span.tit {width: 263px; background-position: 0 -210px;} 
-.step04.level06 .tit-wrap span.tit {width: 291px; background-position: 0 -240px;} 
+.step04.level02 .tit-wrap span.tit {width: 239px; background-position: 0 -120px;}
+.step04.level03 .tit-wrap span.tit {width: 239px; background-position: 0 -150px;}
+.step04.level04 .tit-wrap span.tit {width: 239px; background-position: 0 -180px;}
+.step04.level05 .tit-wrap span.tit {width: 263px; background-position: 0 -210px;}
+.step04.level06 .tit-wrap span.tit {width: 291px; background-position: 0 -240px;}
 
 /* insert (blood, exercise, weight) */
 .insert-page {}
@@ -160,6 +160,9 @@ footer {position: relative;}
 
 .size-lg .ui-datepicker td span,
 .size-lg .ui-datepicker td a {padding-bottom: 83%;}
+.size-sm .ui-datepicker {padding: 0 4% 3%; text-align: center; border-bottom: 1px solid #e6e6e6;}
+.size-sm .ui-datepicker td span,
+.size-sm .ui-datepicker td a {display: inline-block; width: 40px; padding: 13px; border-radius: 100%;}
 
 .record-review {display: flex; justify-content: space-between; align-items: center; padding: 4% 0;}
 .record-review .tit {font-size: 1.09rem; line-height: 1.5; padding-left: 11%; text-align: center; font-weight: 500; color: #222;}
@@ -180,6 +183,72 @@ footer {position: relative;}
 .box-wrap .box-list li .round-middle {background-color: #fdb100;}
 .box-wrap .box-list li .round-row {background-color: #22c172;}
 .box-wrap .box-list li .bold {font-size: 1.25rem; font-weight: 700;}
+.box-wrap .box-list li .normal {font-size: 1.25rem; font-weight: 500; font-family: 'Roboto', sans-serif;}
+.box-wrap .box-list li .normal > span {display: inline-block; font-size: 1rem;}
+
+/* alarm > insert & calendar */
+.time-page {}
+.time-page .container {margin-bottom: auto;}
+.time-page .cont-wrap {padding: 3% 0 7%;}
+.time-page .insert-wrap {padding: 0 5%;}
+.time-page .time-tit {font-size: 1.07rem; color: #666; font-weight: 500; padding: 5% 0 2%;}
+.time-page .chk-wrap {margin: 5% 0;}
+.time-page .alert-chk {padding: 8% 0 5%; color: #222; font-weight: 500; text-align: center; border-top: 1px solid #e6e6e6;}
+
+.time-submit {display: flex; justify-content: space-between; align-items: center; padding-bottom: 5%; border-bottom: 1px solid #ebebeb;}
+.time-submit .rdo-wrap {width: 43%;}
+.time-submit .field-wrap {position: relative; width: 50%; text-align: center; padding-right: 0; padding-left: 5%;}
+.time-submit .field-wrap:before {content: ''; display: block; position: absolute; left: 0; top: 50%; width: 1px; height: 24px; background-color: #ebebeb; transform: translateY(-50%);}
+.time-submit .field-wrap .field {border: none; padding: 0;}
+.time-submit .field-wrap .insert input.num2 {width: 50px; font-size: 2.7rem; letter-spacing: -0.05em;}
+
+/* reservation */
+.reser-page {}
+.reser-page .container {margin-bottom: auto;}
+.reser-page .insert-wrap {padding: 5%;}
+.reser-page .footer-wrap .btn-wrap {margin-bottom: 8%;}
+
+/* guide */
+.guide-page {}
+.guide-page .container {margin-bottom: auto;}
+.guide-page .guide-wrap {padding: 5%;}
+.guide-page .guide-wrap .guide-list {display: flex; flex-direction: column;}
+.guide-page .guide-wrap .guide-list > a {position: relative; display: flex; align-items: center; padding: 10% 3%; border-bottom: 1px solid #ebebeb;}
+.guide-page .guide-wrap .guide-list > a:after {content: ''; display: block; position: absolute; width: 12px; height: 19px; right: 5%; top: 50%; transform: translateY(-50%); background-image: url(../images/common/sp-icon.png); background-position: -334px -77px; background-size: 600px 450px; background-repeat: no-repeat;}
+.guide-page .guide-wrap .guide-list > a > span {font-size: 1.25rem; font-weight: 500;}
+.guide-page .guide-wrap .guide-list > a > span.num {color: #666;}
+.guide-page .guide-wrap .guide-list > a > span.txt {padding-left: 5%; color: #222;}
+
+/* salt */
+.salt-page {}
+.salt-page .container {margin-bottom: auto;}
+.salt-page .insert-wrap {padding: 5%;}
+.salt-page .box-wrap {margin: 0;}
+
+/* water */
+.water-page {}
+.water-page .container {margin-bottom: auto;}
+.water-page .insert-wrap {padding: 5%;}
+.water-page .bottle-wrap {position: relative; display: flex; justify-content: space-between; align-items: center; margin: 8% 10%;}
+.water-page .bottle-wrap .first-bottle,
+.water-page .bottle-wrap .second-bottle {position: relative; width: 80px; height: 190px; background-image: url('../images/common/sp-bottle.png'); background-size: 500px 200px; background-position: -1px 0; z-index: 10;}
+.water-page .bottle-wrap.step01 .first-bottle,
+.water-page .bottle-wrap.step01 .second-bottle {background-position: -84px 0;}
+.water-page .bottle-wrap.step02 .first-bottle,
+.water-page .bottle-wrap.step02 .second-bottle {background-position: -167px 0;}
+.water-page .bottle-wrap.step03 .first-bottle,
+.water-page .bottle-wrap.step03 .second-bottle {background-position: -250px 0;}
+.water-page .bottle-wrap.step04 .first-bottle,
+.water-page .bottle-wrap.step04 .second-bottle {background-position: -333px 0;}
+.water-page .bottle-wrap.step05 .first-bottle,
+.water-page .bottle-wrap.step05 .second-bottle {background-position: -416px 0;}
+.water-page .bottle-wrap.full .first-bottle {background-position: -416px 0 !important;}
+.water-page .bottle-wrap.empty .second-bottle {background-position: -1px 0 !important;}
+
+.water-page .bottle-wrap .bottle-ml {position: absolute; width: 78%; left: 50%; top: 52%; transform: translate(-50%, -50%); z-index: 1;}
+.water-page .bottle-wrap .bottle-ml li {position: relative; font-size: 0.93rem; color: #333; text-align: center; line-height: 2.05;}
+.water-page .bottle-wrap .bottle-ml li:before {content: ''; display: block; position: absolute; top: 50%; width: 100%; height: 1px; background-color: #eaeaea; z-index: -1;}
+.water-page .bottle-wrap .bottle-ml li span {background-color: #fff; padding: 0 10px;}
 
 /* chat */
 .chat-page {background-image: linear-gradient(to bottom, #e2eff4, #edf2f2 83%);}

@@ -4,7 +4,7 @@ function onFormSubmission(form) {
         form.querySelector('input[name=ankle]:checked')==null ||
         form.querySelector('input[name=cough]:checked')==null )
     {
-        alert("아아안돼");
+        alert("항목 입력을 빠트리셨어요!\n입력해주세요!");
     }
     else{
         breath = form.querySelector('input[name=breath]:checked').value;

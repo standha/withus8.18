@@ -62,7 +62,7 @@ public class AlarmController extends BaseController{
         ModelAndView modelAndView = new ModelAndView("alarm/pill-history");
         String username = getUsername();
         List<Tbl_medication_record> pillHistories;
-        pillHistories  = alarmService.getFinishedRecord(username);
+        pillHistories  = alarmService.getFinishedRecord(getConnectId());
         modelAndView.addObject("pillHistories", pillHistories);
         modelAndView.addObject("previousUrl", "/alarm");
 
@@ -75,10 +75,10 @@ public class AlarmController extends BaseController{
         tbl_medication_alarm.setId(userId);
 
         Result.Code code;
-        Tbl_medication_alarm seved = null;
+        Tbl_medication_alarm saved = null;
 
         try{
-            seved = alarmService.upsertMedication(tbl_medication_alarm);
+            saved = alarmService.upsertMedication(tbl_medication_alarm);
             code = Result.Code.OK;
         } catch (Exception exception){
             logger.error(exception.getLocalizedMessage(),exception);
@@ -86,7 +86,7 @@ public class AlarmController extends BaseController{
         }
         return Result.<Tbl_medication_alarm>builder()
                 .code(code)
-                .data(seved)
+                .data(saved)
                 .build();
     }
     @PostMapping(value = "/pill-history", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -126,10 +126,10 @@ public class AlarmController extends BaseController{
         String userId = getUsername();
         tbl_outpatient_visit_alarm.setId(userId);
         Result.Code code;
-        Tbl_outpatient_visit_alarm seved = null;
+        Tbl_outpatient_visit_alarm saved = null;
 
         try{
-            seved = alarmService.upsertOutPatientVisit(tbl_outpatient_visit_alarm);
+            saved = alarmService.upsertOutPatientVisit(tbl_outpatient_visit_alarm);
             code = Result.Code.OK;
         } catch (Exception exception){
             logger.error(exception.getLocalizedMessage(),exception);
@@ -137,7 +137,7 @@ public class AlarmController extends BaseController{
         }
         return Result.<Tbl_outpatient_visit_alarm>builder()
                 .code(code)
-                .data(seved)
+                .data(saved)
                 .build();
     }
 }

@@ -17,7 +17,7 @@ let balloonsAreaElement;
  * /wwithus/histories
  */
 let urlToHistory;
-
+let userType;
 /**
  * @type {string}
  * /wwithus/request-next
@@ -35,6 +35,7 @@ function onDomLoad()
 	console.log("onDomLoad()");
 	balloonsAreaElement = document.querySelector("div#body");
 	urlToHistory = document.querySelector("#history-url").value;
+	userType=document.querySelector("#userType").value;
 	urlToRequestNext = document.querySelector("#request-next-url").value;
 
 	removeChildren(balloonsAreaElement);
@@ -145,8 +146,8 @@ function renderBalloon(chatBalloon)
 
 	balloonsAreaElement.appendChild(div);
 	window.scrollTo(0, document.body.scrollHeight);
-
-	if (chatBalloon.toScheduleForNextChatBalloon)
+	console.log(userType);
+	if (chatBalloon.toScheduleForNextChatBalloon && userType === 'PATIENT' )
 	{
 		setTimeout(requestNext, MESSAGE_INTERVAL_MILLIS, chatBalloon);
 	}
