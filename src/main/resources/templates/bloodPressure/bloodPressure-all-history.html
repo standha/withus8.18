@@ -17,7 +17,8 @@
 
     <!-- 처음 등록을 진행한 후, 이 버튼은 보여지면 안됨 -->
     <br>
-    <div th:each="bloodPressureHistory: ${bloodPressure}">
+    <div>주간 정보</div>
+    <div th:each="bloodPressureHistory: ${bloodWeek}">
         <div th:text="'유저 이름 :' + ${bloodPressureHistory.pk.id} + '       날짜 :' + ${bloodPressureHistory.pk.date}   + '       맥박 :' + ${bloodPressureHistory.contraction}+'/'
             + ${bloodPressureHistory.relaxation} + '       혈압 : '+ ${bloodPressureHistory.pressure}" ></div>
     </div>

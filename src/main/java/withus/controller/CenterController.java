@@ -72,12 +72,10 @@ public class CenterController extends BaseController
 		switch (user.getType()){
 			case PATIENT:
 				level = user.getLevel();
-				System.out.println("환자의 레벨 : " + level);
 				level = level % 4;
 				break;
 			case CAREGIVER:
 				level = getCaretaker().getLevel();
-				System.out.println("보호자의 환자 레벨 : " + level);
 				level = level % 4;
 				break;
 		}

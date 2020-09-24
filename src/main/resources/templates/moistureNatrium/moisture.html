@@ -65,7 +65,7 @@
                 <input type="hidden" id="moisture-history-get-action" th:attr="value=@{/moisture-all-history}">
                 <input type="hidden" id="moisture-put-action" th:attr="value=@{/moisture-history}">
                 <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT}" class="btn-wrap grid2 type01">
-                    <button class="btn xlg type03" th:onclick="'setMinus(parseInt(' + ${intakeMinus} + '))'">수정</button>
+                    <button id="test1" class="btn xlg type03" th:onclick="'setMinus(parseInt(' + ${intakeMinus} + '))'">수정</button>
                     <button class="btn xlg type01" th:onclick="'setAdd(parseInt(' + ${intakePlus} + '))'">입력</button>
                 </div>
                 <div th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}" class="btn-wrap grid2 type01">
@@ -143,6 +143,7 @@
             $('.bottle-wrap').attr('class','bottle-wrap full step05');
             break;
     }
+
 
 </script>
 </html>

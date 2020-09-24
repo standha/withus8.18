@@ -17,7 +17,9 @@ import withus.service.BloodPressureService;
 import withus.service.ExerciseService;
 import withus.service.UserService;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -56,6 +58,19 @@ public class BloodPressureController extends BaseController {
         ModelAndView modelAndView = new ModelAndView("bloodPressure/bloodPressure-all-history");
         List<Tbl_blood_pressure_pulse> bloodPressureHistory;
         bloodPressureHistory = bloodPressureService.getBloodAllRecord(getConnectId(),-1,-1,-1);
+        LocalDate today = LocalDate.now();
+
+        List<Tbl_blood_pressure_pulse> bloodWeek = new ArrayList<>();
+        for(int i=1; i<=7; i++)
+        {
+            if(bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(), today.with(DayOfWeek.of(i))))!=null)
+            {
+                Tbl_blood_pressure_pulse week = bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(), today.with(DayOfWeek.of(i))));
+                bloodWeek.add(week);
+            }
+        }
+
+        modelAndView.addObject("bloodWeek", bloodWeek);
         modelAndView.addObject("bloodPressure",bloodPressureHistory);
         modelAndView.addObject("previousUrl", "/center");
         return modelAndView;
