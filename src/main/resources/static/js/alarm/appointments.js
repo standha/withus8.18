@@ -7,7 +7,10 @@ function onFormSubmission(form) {
 		hour = parseInt(hour) + 12;
 	}
 	else if(form.querySelector("input[name=time]:checked").value == 0){
-		if(parseInt(hour) < 10){
+		if(hour == 12){
+			hour = "00";
+		}
+		else if(parseInt(hour) < 10){
 			if(parseInt(hour)==0){
 				hour = "0"+hour;
 			}

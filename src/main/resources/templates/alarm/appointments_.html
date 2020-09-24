@@ -170,7 +170,7 @@
                                 <div class="insert">
                                     <input type="number" class="num2" id="hour" name="hour" placeholder="- -" th:value="${hour}" min="1" max="12" maxlength="2" disabled>
                                     <span>시</span>
-                                    <input type="number" class="num2" id="minute" name="minute" placeholder="- -" th:value="${minute}" max="59" maxlength="2" disabled>
+                                    <input type="number" class="num2" id="minute" name="minute" placeholder="- -" th:value="${minute}" max="59" maxlength="2" min="0" disabled>
                                     <span>분</span>
                                 </div>
                             </div>
@@ -192,7 +192,6 @@
                         </span>
                         <label id="label" for="off">꺼짐</label>
                     </div>
-
 
                     <button type="submit" class="btn xlg type01">저장</button>
                 </div>

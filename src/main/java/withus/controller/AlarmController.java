@@ -38,19 +38,45 @@ public class AlarmController extends BaseController{
     @GetMapping("/medicationAlarm")
     @Statistical
     public ModelAndView getMedicationAlarm(){
-        ModelAndView modelAndView = new ModelAndView("alarm/medicationAlarm");
-        if(alarmService.getTodayAlarm(getConnectId())== null){
-            modelAndView.addObject("medicationTimeMorning","");
-            modelAndView.addObject("medicationTimeLunch","");
-            modelAndView.addObject("medicationTimeDinner","");
-            modelAndView.addObject("medicationAlarmOnoff","");
+        ModelAndView modelAndView = new ModelAndView("alarm/medicationAlarm_");
+
+        Tbl_medication_alarm alarm = alarmService.getTodayAlarm(getConnectId());
+        if(alarm.getMedicationTimeMorning() == null){
+            modelAndView.addObject("morningHour", null);
+            modelAndView.addObject("morningMinute", null);
+            modelAndView.addObject("morningTime", 0);
         }else{
-            Tbl_medication_alarm alarm = alarmService.getTodayAlarm(getConnectId());
-            modelAndView.addObject("medicationTimeMorning",alarm.getMedicationTimeMorning());
-            modelAndView.addObject("medicationTimeLunch",alarm.getMedicationTimeLunch());
-            modelAndView.addObject("medicationTimeDinner",alarm.getMedicationTimeDinner());
-            modelAndView.addObject("medicationAlarmOnoff",alarm.isMedicationAlarmOnoff());
+            modelAndView.addObject("morningHour", alarmService.transformHour(alarm.getMedicationTimeMorning().getHour()));
+            modelAndView.addObject("morningMinute", alarmService.transformMinute(alarm.getMedicationTimeMorning().getMinute()));
+            modelAndView.addObject("morningTime", alarmService.transformTime(alarm.getMedicationTimeMorning().getHour()));
         }
+        if(alarm.getMedicationTimeLunch() == null){
+            modelAndView.addObject("lunchHour", null);
+            modelAndView.addObject("lunchMinute", null);
+            modelAndView.addObject("lunchTime",0);
+        }else{
+            modelAndView.addObject("lunchHour", alarmService.transformHour(alarm.getMedicationTimeLunch().getHour()));
+            modelAndView.addObject("lunchMinute", alarmService.transformMinute(alarm.getMedicationTimeLunch().getMinute()));
+            modelAndView.addObject("lunchTime", alarmService.transformTime(alarm.getMedicationTimeLunch().getHour()));
+        }
+        if(alarm.getMedicationTimeDinner() == null){
+            modelAndView.addObject("dinnerHour", null);
+            modelAndView.addObject("dinnerMinute", null);
+            modelAndView.addObject("dinnerTime", 0);
+        }else{
+            modelAndView.addObject("dinnerHour", alarmService.transformHour(alarm.getMedicationTimeDinner().getHour()));
+            modelAndView.addObject("dinnerMinute", alarmService.transformMinute(alarm.getMedicationTimeDinner().getMinute()));
+            modelAndView.addObject("dinnerTime", alarmService.transformTime(alarm.getMedicationTimeDinner().getHour()));
+        }
+
+        if(alarmService.getMedicationRecordToday(new RecordKey(getConnectId(),LocalDate.now()))==null){
+            modelAndView.addObject("medicationRecord", false);
+        }
+        else{
+            Tbl_medication_record record = alarmService.getMedicationRecordToday(new RecordKey(getConnectId(),LocalDate.now()));
+            modelAndView.addObject("medicationRecord", record.isFinished());
+        }
+        modelAndView.addObject("medicationAlarmOnoff",alarm.isMedicationAlarmOnoff());
         modelAndView.addObject("type",getUser().getType());
         modelAndView.addObject("previousUrl","/alarm");
 
@@ -67,12 +93,12 @@ public class AlarmController extends BaseController{
 
         return modelAndView;
     }
-    @PostMapping(value = "/medicationAlarm", consumes = MediaType.APPLICATION_JSON_VALUE)
+
+    @PostMapping("/medicationAlarm")
     @ResponseBody
     public Result<Tbl_medication_alarm> postMedicationAlarm(@RequestBody Tbl_medication_alarm tbl_medication_alarm){
         String userId = getUsername();
         tbl_medication_alarm.setId(userId);
-
         Result.Code code;
         Tbl_medication_alarm seved = null;
 
@@ -88,6 +114,7 @@ public class AlarmController extends BaseController{
                 .setData(seved)
                 .createResult();
     }
+
     @PostMapping(value = "/pill-history", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<Tbl_medication_record> getPillHistoryTrue(@RequestBody Tbl_medication_record tbl_medication_record) {
@@ -116,45 +143,14 @@ public class AlarmController extends BaseController{
         ModelAndView modelAndView = new ModelAndView("alarm/appointments_");
         Tbl_outpatient_visit_alarm appointment = alarmService.getPatientAppointment(getConnectId());
         if(appointment.getOutPatientVisitTime()==null || appointment.getOutPatientVisitDate()==null){
-            modelAndView.addObject("hour",00);
-            modelAndView.addObject("minute",00);
+            modelAndView.addObject("hour",null);
+            modelAndView.addObject("minute",null);
             modelAndView.addObject("time", 0 );
         }
         else {
-            if (appointment.getOutPatientVisitTime().getHour() > 12) {
-                hour = appointment.getOutPatientVisitTime().getHour() - 12;
-                minute = appointment.getOutPatientVisitTime().getMinute();
-                if(hour >= 10) {
-                    modelAndView.addObject("hour", hour);
-                }
-                else {
-                    modelAndView.addObject("hour", "0"+hour);
-                }
-                if(minute >= 10) {
-                    modelAndView.addObject("minute", minute);
-                }
-                else {
-                    modelAndView.addObject("minute", "0"+minute);
-                }
-                modelAndView.addObject("time", 1);
-            }
-            else{
-                hour = appointment.getOutPatientVisitTime().getHour();
-                minute = appointment.getOutPatientVisitTime().getMinute();
-                if(hour >= 10) {
-                    modelAndView.addObject("hour", hour);
-                }
-                else {
-                    modelAndView.addObject("hour", "0"+hour);
-                }
-                if(minute >= 10) {
-                    modelAndView.addObject("minute", minute);
-                }
-                else {
-                    modelAndView.addObject("minute", "0"+minute);
-                }
-                modelAndView.addObject("time", 0);
-            }
+            modelAndView.addObject("hour",alarmService.transformHour(appointment.getOutPatientVisitTime().getHour()));
+            modelAndView.addObject("minute",alarmService.transformMinute(appointment.getOutPatientVisitTime().getMinute()));
+            modelAndView.addObject("time", alarmService.transformTime(appointment.getOutPatientVisitTime().getHour()));
         }
         modelAndView.addObject("appointment",appointment);
         modelAndView.addObject("type",getUser().getType());
