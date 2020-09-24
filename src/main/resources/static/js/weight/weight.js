@@ -1,6 +1,5 @@
 function onFormSubmission(form) {
-	if(form.querySelector("input[name=weight]").value == 0)
-		alert("몸무게를 입력해 주세요!");
+	if(form.querySelector("input[name=weight]").value == 0){}
 	else
 		weight = form.querySelector("input[name=weight]").value;
 
