@@ -50,16 +50,27 @@ public class CenterController extends BaseController
 			modelAndView.setViewName("/Admin/admin_Home");
 		}
 		else if (user.getType().equals(Type.PATIENT)) {
-			Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
-			modelAndView.setViewName("home");
-			modelAndView.addObject("count", count);
-			modelAndView.addObject("type", user.getType());
-			modelAndView.addObject("week", user.getWeek());
+			//환자 로그인 중
+			if(user.getWeek() == 0){
+				modelAndView.setViewName("home_0week");
+			}
+			else {
+				Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+				modelAndView.setViewName("home");
+				modelAndView.addObject("count", count);
+				modelAndView.addObject("type", user.getType());
+				modelAndView.addObject("week", user.getWeek());
+			}
 		}
-		else{
-			modelAndView.setViewName("home");
-			modelAndView.addObject("type", user.getType());
-			modelAndView.addObject("week", user.getWeek());
+		else{	//보호자 로그인 중
+			if(getCaretaker().getWeek() == 0) {
+				modelAndView.setViewName("home_0week");
+			}
+			else{
+				modelAndView.setViewName("home");
+				modelAndView.addObject("type", user.getType());
+				modelAndView.addObject("week", getCaretaker().getWeek());
+			}
 		}
 		modelAndView.addObject("goalNow",getGoalNow(getConnectId()));
 		modelAndView.addObject("level", ViewLevel(user));

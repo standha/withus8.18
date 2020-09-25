@@ -76,9 +76,58 @@
 		weight[i] = weightRecord[i].weight;
 	}
 
+	$.datepicker._generateHTML = (function (){
+		var realGenerateHtml = $.datepicker._generateHTML;
+		return function (instance) {
+			var html = realGenerateHtml.apply(this, arguments), $temp;
+
+			if ( instance.input.is(".size-lg") ) {
+				$temp = $("<table></table>").append(html);
+				$temp.find(".ui-datepicker-calendar").each(function () {
+					var yy = $(this).parent().data("year"),
+							mm = $(this).parent().data("month");
+
+					var jsDate = $('#dateRecord').datepicker('getDate');
+					var year = jsDate.getFullYear();
+					var month = jsDate.getMonth() + 1;
+
+					if(month.toString().length == 1){
+						month = "0" + month;
+					}
+
+					var str = year + "-" + month;
+
+					console.log(str);
+
+				});
+				html = $temp[0].innerHTML;
+			}
+
+			$(".ui-datepicker-next").click(function (){
+				console.log("다음달 클릭");
+			});
+			return html;
+		};
+	})();
+
 	$( function() {
-		$( "#dateRecord" ).datepicker();
+		$( "#dateRecord" ).datepicker({
+
+		});
+
+		// var jsDate = $('#dateRecord').datepicker('getDate');
+		// var year = jsDate.getFullYear();
+		// var month = jsDate.getMonth() + 1;
+		//
+		// if(month.toString().length == 1){
+		// 	month = "0" + month;
+		// }
+		//
+		// var str = year + "-" + month;
+		//
+		// console.log(str);
 	} );
+
 
 	let draw = Chart.controllers.line.prototype.draw;
 	var ctx = document.getElementById('myChart').getContext('2d');
