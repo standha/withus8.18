@@ -34,7 +34,7 @@ public class ExerciseController extends BaseController {
     @GetMapping("/exercise")
     @Statistical
     public ModelAndView getExercise() {
-        ModelAndView modelAndView = new ModelAndView("exercise/exercise");
+        ModelAndView modelAndView = new ModelAndView("exercise/exercise_");
         User.Type typeCheck = getUser().getType();
         switch (typeCheck){
             case PATIENT:
