@@ -43,8 +43,10 @@ public class CenterController extends BaseController
 	@GetMapping({ "/center" })
 	public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response)
 	{
-		logger.info("center");
 		User user = getUser();
+
+		logger.info("url:{}, id:{}, type:{}, level:{}, week:{}, level:{}", request.getRequestURL(), user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), user.getLevel());
+
 		ModelAndView modelAndView = new ModelAndView();
 		if (user.getType().equals(Type.ADMINISTRATOR)){
 			modelAndView.setViewName("/Admin/admin_Home");
