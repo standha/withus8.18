@@ -27,7 +27,7 @@ public class Utility {
 	).sorted().collect(Collectors.toList());
 
 	private static final List<DayOfWeek> WWITHUS_DAYS_OF_WEEK_ON_TENTH_WEEK_OR_LATER = Stream.of(
-		DayOfWeek.TUESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SUNDAY
+		DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, DayOfWeek.SATURDAY
 	).sorted().collect(Collectors.toList());
 
 	public static LocalDate parseDate(String dateString) { return LocalDate.parse(dateString, DATE_FORMATTER); }
@@ -148,6 +148,11 @@ public class Utility {
 	public static class NoWithusException extends RuntimeException {
 		public NoWithusException(DayOfWeek dayOfWeek, int week) {
 			super(String.format("No Wwithus on %s week #%d.", dayOfWeek, week));
+		}
+	}
+	public static class NoHisException extends RuntimeException{
+		public NoHisException(){
+			super("No Wwithus history of Caregiver .");
 		}
 	}
 }

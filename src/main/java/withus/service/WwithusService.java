@@ -46,13 +46,16 @@ public class WwithusService {
 
 	public ChatBalloon getWwithusEntryAndSaveHistory(WwithusEntryRequest wwithusEntryRequest) {
 		User user = wwithusEntryRequest.getUser();
-		System.out.println(user);
-		if(user.getType() == User.Type.CAREGIVER){
-				user = userService.getUserByCaregiverId(user.getUserId());
-				System.out.println(user);
-		}
 		List<String> codesToSaveAsHistories = wwithusEntryRequest.getCodesToSaveAsHistories();
 		String currentCode = wwithusEntryRequest.getCurrentCode();
+		if(user.getType() == User.Type.CAREGIVER){
+			user = userService.getUserByCaregiverId(user.getUserId());
+			if(currentCode == null){
+				throw new Utility.NoHisException();
+			}
+		}
+		System.out.println(currentCode);
+		System.out.println(user.getType());
 		if (currentCode != null) { codesToSaveAsHistories.add(currentCode); }
 
 		for (String codeToSaveAsHistory : codesToSaveAsHistories) {
@@ -60,10 +63,21 @@ public class WwithusService {
 				throw new RuntimeException(String.format("Failed to select entry by the code \"%s\".", currentCode));
 			});
 
+			user = wwithusEntryRequest.getUser();
+			System.out.println(user.getType());
 			WwithusEntryHistory wwithusEntryHistory = toWwithusEntryHistory(wwithusEntryRequest.getUser(), currentEntry);
 			WwithusEntryHistory existingHistory = wwithusEntryHistoryRepository.findById(wwithusEntryHistory.getKey()).orElse(null);
 			if (existingHistory == null) {
-				wwithusEntryHistoryRepository.save(wwithusEntryHistory);
+				if(user.getType() == User.Type.PATIENT){
+					System.out.println("--------------save history---------------");
+					wwithusEntryHistoryRepository.save(wwithusEntryHistory);
+				}else{
+					user = userService.getUserByCaregiverId(user.getUserId());
+					if(currentCode == null){
+						throw new Utility.NoHisException();
+					}
+					System.out.println("Caregiver never save history");
+				}
 			} else {
 				log.debug("Chose not to overwrite a {}: {}", WwithusEntry.class.getSimpleName(), wwithusEntryHistory);
 			}
@@ -239,6 +253,23 @@ public class WwithusService {
 
 		return chatBalloonBuilder.build();
 	}
+	@NonNull
+	public List<ChatBalloon> getNoPatientContent(User user) {
+		List<ChatBalloon> NoPatientChatBalloons = new ArrayList<>();
+		ChatBalloon noHisBalloon = ChatBalloon.builder()
+				.code("AN ARBITRARY CODE")
+				.direction(ChatBalloon.Direction.LEFT)
+				.isMostRecent(false)
+				.isToTerminate(true)
+				.isAnswerExpected(false)
+				.content("반갑습니다. 오늘은 저 위더스랑과 대화가 있는 날이에요. 오늘의 대화를 시작해 주세요.")
+				.build();
+
+		NoPatientChatBalloons.add(noHisBalloon);
+
+		return NoPatientChatBalloons;
+	}
+
 
 	private List<AnswerButton> getAnswerButtons(WwithusEntry wwithusEntry) {
 
@@ -278,5 +309,14 @@ public class WwithusService {
 		}else{
 			return  content;
 		}
+	}
+	@NonNull
+	public ChatBalloon getNoHis(User user){
+		ChatBalloon noHisBalloon = ChatBalloon.builder()
+				.code("NO HISTORY HERE")
+				.content("반갑습니다. 오늘은 저 위더스랑과 대화가 있는 날이에요. 오늘의 대화를 시작해 주세요.")
+				.build();
+
+		return noHisBalloon;
 	}
 }
