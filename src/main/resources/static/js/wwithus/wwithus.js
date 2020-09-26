@@ -108,41 +108,90 @@ function renderBalloons(objects)
 /**
  * @param {ChatBalloon} chatBalloon
  */
+function audio_play_pulse(){
+	const myAudio = document.getElementById("myAudio");
+	console.log(myAudio);
+	if(document.getElementById('p-con').className === "ico-play"){
+		myAudio.play();
+		document.getElementById('p-con').className = "ico-pause";
+	}else if(myAudio.play()){
+		myAudio.pause();
+		document.getElementById('p-con').className = "ico-play";
+	}
+}
+function getCurrentTime(){
+	const myAudio = document.getElementById("myAudio");
+	console.log("계산하고있니?");
+	console.log(myAudio.duration);
+	return myAudio.duration;
+}
 function renderBalloon(chatBalloon)
 {
 	const div = document.createElement("div");
 	div.id = chatBalloon.sequence.toString();
-	div.className = "balloons";
+	div.className = "chat-wrap manager";
 
 	const input = `<input type="hidden" value="${chatBalloon.sequence}">`;
 
 	let img = "";
 	if (chatBalloon.urlToImageFile)
 	{
-		img = `<img src="${chatBalloon.urlToImageFile}" alt="이미지가 표시되지 않고 있습니다.">`;
+		<!--href="#"-->
+		img = `<a class="img-thumb"> <span class="img-name">그림</span> <img src="${chatBalloon.urlToImageFile}" alt="이미지가 표시되지 않고 있습니다."></a>`;
 	}
+
 
 	let audio = "";
-	if (chatBalloon.urlToAudioFile)
-	{
-		audio = `<audio src="${chatBalloon.urlToAudioFile}" controls></audio>`;
-	}
-	const contentSpan = `<div class ="container" id = "content"><div class ="cont-wrap"><div class = "chat-wrap manager"><div class ="msg-wrap">${chatBalloon.content}</div></div></div></div>`;
-	const contentSpan1 = `<div class="txt-wrap">${chatBalloon.content}</div>`;
-	const dateTimeSpan = `<span class="date-time">${chatBalloon.dateString}</span>`;
+	let audio2 = "";
+	if (chatBalloon.urlToAudioFile) {
+		audio = `<div class="player-wrap">
+<audio src="${chatBalloon.urlToAudioFile}" controls ></audio>
+</div>`
 
+		audio2 = `<div class="player-wrap">
+						<audio id = "myAudio" src="${chatBalloon.urlToAudioFile}" hidden></audio>
+								<button onclick= "audio_play_pulse()">
+									<span class="ico-play" id="p-con"></span>
+								</button>
+						<div class="line-wrap">
+						<div class ="play-line">
+							<span class = "play-bar" style="width: 20%;"></span>
+						</div>
+						<div class="play-time">
+							<span onclick="getCurrentTime();">1:00</span>
+							<span>1:00</span>
+						</div>
+					</div>
+				</div>`
+
+	}
 	let answerButtonsSpan = "";
 	if (chatBalloon.answerButtons && chatBalloon.answerButtons.length > 0)
 	{
+		var positive = "예";
 		answerButtonsSpan = renderButtons(chatBalloon);
+		console.log(answerButtonsSpan)
+
 	}
+
+	const contentSpan = `<div class = "chat-wrap manager"><div class ="name-wrap">&nbsp;<span class="ico-withus"></span>
+		<span class="  name">  위더스</span></div>
+		<div class ="msg-wrap">`
+		+audio+
+		`<div class="text-wrap">${chatBalloon.content}</div>
+		<div class = "btn-wrap grid-col">`
+		+answerButtonsSpan+
+		img+`</div>
+		</div></div>`;
+	//TODO: 나중에 날짜가 필요하다 하면 이걸 쓰면
+	const dateTimeSpan = `<span class="date-time">${chatBalloon.dateString}</span>`;
 
 	if (chatBalloon.direction === "RIGHT")
 	{
 		div.classList.add("right");
 	}
 
-	div.innerHTML = (input + audio + contentSpan + img + answerButtonsSpan + dateTimeSpan);
+	div.innerHTML = (input /*+ audio*/ + contentSpan /*+ img*/ /*+ answerButtonsSpan*/ /*+ dateTimeSpan*/);
 
 	balloonsAreaElement.appendChild(div);
 	window.scrollTo(0, document.body.scrollHeight);
@@ -160,7 +209,7 @@ function renderAnswer(answerButtonContent)
 {
 	const div = document.createElement("div");
 	div.className = "answer balloons right";
-	div.innerHTML = `<span class="content">${answerButtonContent}</span>`;
+	div.innerHTML = `<div class="chat-wrap client"><div class="msg-wrap"><div class="txt-wrap">${answerButtonContent}</div></div></div>`;
 
 	balloonsAreaElement.appendChild(div);
 }
@@ -171,8 +220,9 @@ function renderAnswer(answerButtonContent)
  */
 function renderButtons(chatBalloon)
 {
+	var positive ='';
 	let answerButtonsSpan = `<span class="answer-buttons">`;
-
+	let checkButtonType ='';
 	chatBalloon.answerButtons.forEach(answerButton => {
 		if (chatBalloon.isMostRecent) {
 			let href = "javascript:";
@@ -195,23 +245,35 @@ function renderButtons(chatBalloon)
 					href += ` answer('${answerButton.code}', '${answerButton.nextCode}', '${answerButton.content}', '${chatBalloon.code}', false);`;
 				}
 			}
-
+			checkButtonType = `${answerButton.content}`;
+			console.log(checkButtonType);
+			positive = "예";
+			let help = "[위더스 도우미]";
+			let negative = "아니요";
 			let replacedHref = href.replaceAll(/ {2,}/g, ' ');
-			answerButtonsSpan += `<a href="${replacedHref}">`;
+			if(checkButtonType.indexOf(positive) === 0){
+			/*answerButtonsSpan += `<button class ="btn md type11" onclick="" href="${replacedHref}">`;*/
+			answerButtonsSpan += `<button class ="btn md type11" th:onclick="'location.href=\''+ ${replacedHref} +'\';'">`;
+				/*answerButtonsSpan += `<button class ="btn md type11" th:onclick="|location.href='${replacedHref}'|">`;*/
+			}else if(checkButtonType.indexOf(help) === 0){
+				answerButtonsSpan += `<button class ="btn md type10" href="${replacedHref}">`;
+			}
+			else if(checkButtonType.indexOf(negative) === 0){
+				answerButtonsSpan += `<button class ="btn md type09" href='${replacedHref}'">`;
+			}
+			answerButtonsSpan += `<a di style='color: white' href="${replacedHref}">`;
 		} else {
-			answerButtonsSpan += "<a>";
+			answerButtonsSpan += "<a><button  id = 'checkType2' class = 'btn md type09'>";
 		}
-
-		answerButtonsSpan += `${answerButton.content}</a><br>`;
-
+		answerButtonsSpan += `${answerButton.content}</a></button><br>`;
 		if (answerButton.urlToImageFile) {
 			answerButtonsSpan += `<img src="${answerButton.urlToImageFile}" alt="이미지가 표시되지 않고 있습니다."><br>`;
 		}
 	});
 
 	answerButtonsSpan += "</span>";
-
 	return answerButtonsSpan;
+
 }
 
 /**

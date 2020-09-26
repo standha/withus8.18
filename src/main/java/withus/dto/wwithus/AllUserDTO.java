@@ -1,0 +1,34 @@
+package withus.dto.wwithus;
+
+import lombok.Builder;
+import lombok.Getter;
+import withus.entity.User;
+import withus.util.Utility;
+
+import java.time.LocalDate;
+
+@Builder
+@Getter
+public class AllUserDTO {
+    private String name;
+    private String userId;
+    private String password;
+    private LocalDate birthdate;
+    private User.Gender gender;
+    private String guserName;
+    private String guserId;
+    private String guserPassword;
+    private String currentCode;
+
+    public static AllUserDTO fromString(String queryResult) {
+        String[] array = queryResult.split(",");
+
+        return AllUserDTO.builder()
+                .name(array[0])
+                .userId(array[1])
+                .password(array[2])
+                .birthdate(Utility.parseDate(array[3]))
+                .gender(User.Gender.byName(array[4]))
+                .build();
+    }
+}

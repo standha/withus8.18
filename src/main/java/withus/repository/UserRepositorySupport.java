@@ -1,12 +1,12 @@
 package withus.repository;
 
-import com.querydsl.core.Query;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 import withus.entity.*;
@@ -44,6 +44,5 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .orderBy(history.dateTime.desc())
                 .fetchFirst();
     }
-
 }
 

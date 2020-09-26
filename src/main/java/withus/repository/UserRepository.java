@@ -1,20 +1,19 @@
 package withus.repository;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 import com.sun.istack.Nullable;
-import org.hibernate.sql.Select;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.querydsl.QuerydslPredicateExecutor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import withus.dto.UserInfoDTO;
 import withus.entity.User;
 
-import javax.persistence.criteria.From;
+import javax.persistence.SqlResultSetMapping;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
@@ -43,9 +42,23 @@ public interface UserRepository extends JpaRepository<User, String> {
 	@Nullable
 	List<User> findByAppTokenIsNotNullAndType(User.Type type);
 
-/*	@Query("select u.userId, u.name " +
-			"from User u left join User c on c.contact = u.caregiver.contact " +
-			"left join (select )")
-	List<User> findByAll();*/
+	@Transactional(readOnly = true)
+	@Nullable
+	@Query(value = "select u.name as patientName ,u.id as patientId, u.password as patientPassword, u.birthdate as passwordBirthdate," +
+			" u.gender as patientGender, u.contact as patientContact, c.name as caregiverName," +
+			"c.id as caregiverId, c.password as caregiverPassword, c.contact as caregiverContact, code as currentCode" +
+			" from user as u left join user as c on c.contact = u.caregiver_contact " +
+			"left join(select any_value(t.entry_code) as 'code' , any_value(t.date_time), t.user_id from" +
+			"(select wwh.user_id, wwh.date_time, wwh.entry_code" +
+			" from wwithus_entry_history as wwh" +
+			" where(wwh.user_id, wwh.date_time)in(" +
+			"select wh.user_id,max(wh.date_time)as dt" +
+			" from wwithus_entry_history as wh group by wh.user_id)" +
+			"order by wwh.date_time desc" +
+			")t " +
+			"group by t.user_id)t on(u.id = t.user_id)" +
+			"where u.type = 'PATIENT'" +
+			" order by u.registration_date_time asc;" , nativeQuery = true)
+	ArrayList<String> findByAll();
 
 }

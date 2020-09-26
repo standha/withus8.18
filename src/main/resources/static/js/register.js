@@ -29,8 +29,8 @@ function onFormSubmission(form) {
 	const sex = sexElement? sexElement.value: null;
 
 	const caregiverValue = form.querySelector("input[name=caregiver]").value;
-	const token = form.querySelector("input[name=appToken]").value;
-
+	var token = form.querySelector("input[name=appToken]").value;
+	token = "testToken";
 	const user = {
 		userId: null,
 		password: null,

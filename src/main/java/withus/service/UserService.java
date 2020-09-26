@@ -9,9 +9,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import withus.auth.NoOpPasswordEncoder;
+import withus.dto.UserInfoDTO;
 import withus.entity.*;
 import withus.repository.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -130,6 +133,9 @@ public class UserService implements UserDetailsService {
 
 	@Nullable
 	public List<String> getUserIdPatient(){return userRepositorySupport.findByUserIdPatient();}
+
+	@Nullable
+	public ArrayList<String> getAllUserPlz(){return userRepository.findByAll();}
 
 	@Nullable
 	public List<User> getPatientToken(User.Type type){

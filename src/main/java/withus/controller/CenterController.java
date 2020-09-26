@@ -3,7 +3,6 @@ package withus.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
 import com.querydsl.core.Tuple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,17 +14,21 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
+import withus.dto.UserInfoDTO;
+import withus.dto.wwithus.AllUserDTO;
 import withus.entity.*;
 import withus.entity.User.Type;
 import withus.service.CountService;
 import withus.service.GoalService;
 import withus.service.UserService;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class CenterController extends BaseController
@@ -74,6 +77,16 @@ public class CenterController extends BaseController
 		System.out.println(userIdList.get(0));
 		System.out.println(userService.getHistory(userIdList.get(1)));
 
+		List<AllUserDTO> resultList = new ArrayList<>();
+		ArrayList<String> userFin = userService.getAllUserPlz();
+		for (String aUserFin : userFin) {
+			resultList.add(AllUserDTO.fromString(aUserFin));
+		}
+		System.out.println(userFin);
+		for(int index=0; index<userFin.size(); index++){
+			System.out.println(userFin.get(index));
+		}
+		System.out.println(resultList.get(0).getUserId());
 
 		return modelAndView;
 	}

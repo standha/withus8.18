@@ -12,9 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import withus.WithusApplication;
+import withus.auth.AuthenticationFacade;
 import withus.repository.MedicationRecordRepository;
 import withus.repository.UserRepository;
 import withus.repository.UserRepositorySupport;
+import withus.service.CountService;
+import withus.service.GoalService;
+import withus.service.UserService;
 
 
 @SpringBootTest
@@ -28,7 +32,8 @@ public class UserTest {
 
 	@Autowired
 	UserRepository userRepository;
-
+	@Autowired
+	UserService userService;
 	@Test
 	public void testUserRelation() {
 		User caregiver = User.builder()
@@ -83,4 +88,5 @@ public class UserTest {
 
 		System.out.println(result);*/
 	}
+
 }

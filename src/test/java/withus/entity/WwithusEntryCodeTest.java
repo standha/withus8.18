@@ -1,11 +1,16 @@
 package withus.entity;
 
+import java.util.List;
 import java.util.regex.Matcher;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import withus.service.UserService;
 
 public class WwithusEntryCodeTest {
+	@Autowired
+	UserService userService;
 	@Test
 	public void testWwithusCodeFormat1() {
 		String format = "W1d1_1";
@@ -34,4 +39,5 @@ public class WwithusEntryCodeTest {
 		Matcher matcher = WwithusEntry.createMatcherForCode(format);
 		Assertions.assertThat(matcher.find()).isFalse();
 	}
+
 }

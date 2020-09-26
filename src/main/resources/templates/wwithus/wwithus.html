@@ -10,9 +10,11 @@
 	<link th:href="@{/css/reset.css}" rel="stylesheet">
 	<link th:href="@{/css/common.css}" rel="stylesheet">
 	<link th:href="@{/css/layout.css}" rel="stylesheet">
+	<link th:href="@{/css/my.css}" rel="stylesheet">
 	<script th:src="@{/js/jquery-1.12.4.min.js}"></script>
-	<script th:src="@{/js/commons.js}"></script>
-	<script th:src="@{/js/header.js}"></script>
+	<script th:src="@{/js/common.js}"></script>
+	<!--<script th:src="@{/js/commons.js}"></script>-->
+	<!--<script th:src="@{/js/header.js}"></script>-->
 	<script th:src="@{/js/wwithus/wwithus.js}"></script>
 	<script th:src="@{/js/wwithus/answer-button.js}"></script>
 	<script th:src="@{/js/wwithus/chat-balloon.js}"></script>
@@ -40,19 +42,13 @@
 	<input type="hidden" id="history-url" th:attr="value=@{/wwithus/histories}">
 	<input type="hidden" id="userType" name="userType" th:value="${userType}">
 	<input type="hidden" id="request-next-url" th:attr="value=@{/wwithus/request-next}">
-	<div id = body></div>
-	<div class="container" id="content">
-	<div class="cont-wrap">
-	<div class="chat-wrap manager">
-		<div class="name-wrap">
-			<span class="ico-withus"></span>
-			<span class="name">위더스</span>
-		</div>
-		<div class="msg-wrap">
-			<div class="txt-wrap">안녕하세요? **님,<br>궁금한 점이 있으면 문의주세요.</div>
+	<div class = "container" id ="content">
+		<div class="cont-wrap">
+			<div class="chat-wrap manager">
+				<div id="body"></div>
+			</div>
 		</div>
 	</div>
-	</div>
-	</div>
+
 </div>
 </body>
