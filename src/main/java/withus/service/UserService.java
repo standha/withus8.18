@@ -122,11 +122,14 @@ public class UserService implements UserDetailsService {
 		return userRepository.findByType(type);
 	}
 
-	@Nullable
-	public List<User> getUserByName(String name){return userRepositorySupport.findByName(name);}
+/*	@Nullable
+	public List<User> getUserByName(){return userRepository.findByAll();}*/
 
 	@Nullable
-	public List<Tuple> getAllUser(){return userRepositorySupport.findByUserOrderBy();}
+	public Tuple getHistory(String userid){return userRepositorySupport.findByOneUser(userid);}
+
+	@Nullable
+	public List<String> getUserIdPatient(){return userRepositorySupport.findByUserIdPatient();}
 
 	@Nullable
 	public List<User> getPatientToken(User.Type type){

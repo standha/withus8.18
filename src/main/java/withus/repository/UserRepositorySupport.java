@@ -1,46 +1,49 @@
 package withus.repository;
 
+import com.querydsl.core.Query;
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.dsl.StringPath;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
-import withus.entity.QUser;
-import withus.entity.QWwithusEntryHistory;
-import withus.entity.User;
+import withus.entity.*;
 
-
-import java.time.LocalDate;
+import java.security.PublicKey;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.function.IntPredicate;
 
 @Repository
 public class UserRepositorySupport extends QuerydslRepositorySupport {
     private final JPAQueryFactory queryFactory;
 
-    public UserRepositorySupport(JPAQueryFactory queryFactory){
+    public UserRepositorySupport(JPAQueryFactory queryFactory) {
         super(User.class);
         this.queryFactory = queryFactory;
     }
-
-    public List<User> findByName(String name){
-        QUser user = QUser.user;
-        return queryFactory.selectFrom(user)
-                .where(user.name.eq(name) , user.gender.eq(User.Gender.MALE))
+    public List<String> findByUserIdPatient(){
+        QUser patient = QUser.user;
+        return queryFactory.select(patient.userId).from(patient)
+                .where(patient.type.eq(User.Type.PATIENT))
+                .orderBy(patient.registrationDateTime.asc())
                 .fetch();
     }
-    public List<Tuple> findByUserOrderBy(){
-        QUser user = QUser.user;
+    public Tuple findByOneUser(String userid){
+        QUser patient = QUser.user;
         QUser caregiver = QUser.user.caregiver;
         QWwithusEntryHistory history = QWwithusEntryHistory.wwithusEntryHistory;
-        return queryFactory.select(user.registrationDateTime, user.name, user.userId, user.password, user.birthdate, user.gender,
-                user.contact, caregiver.name , caregiver.userId, caregiver.contact, history.key.entry.code)
-                .from(user)
-                .join(user)
-                .on(user.caregiver.contact.eq(caregiver.contact))
-                .join(history)
-                .on(history.key.user.userId.eq(user.userId))
-                .orderBy(history.dateTime.asc()).limit(1)
-                .fetch();
+        return queryFactory.select(patient.userId, patient.password, patient.name
+        ,caregiver.userId, caregiver.password, history.key.entry.code).from(patient)
+                .leftJoin(caregiver).on(patient.caregiver.contact.eq(caregiver.contact))
+                .leftJoin(history).on(patient.userId.eq(history.key.user.userId))
+                .where(patient.type.eq(User.Type.PATIENT))
+                .where(patient.userId.eq(userid))
+                .orderBy(history.dateTime.desc())
+                .fetchFirst();
     }
 
 }
+

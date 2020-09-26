@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="kr">
+<html lang="ko">
 <head>
 	<meta charset="UTF-8">
-	<link th:href="@{/css/header.css}" rel="stylesheet">
-	<link th:href="@{/css/wwithus/wwithus.css}" rel="stylesheet">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>위더스</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+	<meta name="format-detection" content="telephone=no">
+	<link th:href="@{/css/reset.css}" rel="stylesheet">
+	<link th:href="@{/css/common.css}" rel="stylesheet">
+	<link th:href="@{/css/layout.css}" rel="stylesheet">
+	<script th:src="@{/js/jquery-1.12.4.min.js}"></script>
 	<script th:src="@{/js/commons.js}"></script>
 	<script th:src="@{/js/header.js}"></script>
 	<script th:src="@{/js/wwithus/wwithus.js}"></script>
@@ -12,9 +19,40 @@
 	<title>위더스랑</title>
 </head>
 <body>
+<div class="skip-navi">
+	<a href="#content">본문 바로가기</a>
+</div>
+<div id="wrap" class="chat-page">
+
+	<!-- header -->
+	<header>
+		<div class="header-wrap type01">
+			<div class="head">
+				<a class="btn xsm type07" href="javascript:void(0)">
+					<span class="ico-call"></span>
+					<span class="txt-rt">도우미</span>
+				</a>
+				<h2>위더스랑</h2>
+			</div>
+		</div>
+	</header>
+
 	<input type="hidden" id="history-url" th:attr="value=@{/wwithus/histories}">
 	<input type="hidden" id="userType" name="userType" th:value="${userType}">
 	<input type="hidden" id="request-next-url" th:attr="value=@{/wwithus/request-next}">
-	<div th:replace="header :: #header"></div>
-	<div id="body"></div>
+	<div id = body></div>
+	<div class="container" id="content">
+	<div class="cont-wrap">
+	<div class="chat-wrap manager">
+		<div class="name-wrap">
+			<span class="ico-withus"></span>
+			<span class="name">위더스</span>
+		</div>
+		<div class="msg-wrap">
+			<div class="txt-wrap">안녕하세요? **님,<br>궁금한 점이 있으면 문의주세요.</div>
+		</div>
+	</div>
+	</div>
+	</div>
+</div>
 </body>

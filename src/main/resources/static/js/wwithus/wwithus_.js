@@ -127,8 +127,8 @@ function renderBalloon(chatBalloon)
 	{
 		audio = `<audio src="${chatBalloon.urlToAudioFile}" controls></audio>`;
 	}
-	const contentSpan = `<div class ="container" id = "content"><div class ="cont-wrap"><div class = "chat-wrap manager"><div class ="msg-wrap">${chatBalloon.content}</div></div></div></div>`;
-	const contentSpan1 = `<div class="txt-wrap">${chatBalloon.content}</div>`;
+
+	const contentSpan = `<div class="txt-wrap">${chatBalloon.content}</div>`;
 	const dateTimeSpan = `<span class="date-time">${chatBalloon.dateString}</span>`;
 
 	let answerButtonsSpan = "";
@@ -161,7 +161,6 @@ function renderAnswer(answerButtonContent)
 	const div = document.createElement("div");
 	div.className = "answer balloons right";
 	div.innerHTML = `<span class="content">${answerButtonContent}</span>`;
-
 	balloonsAreaElement.appendChild(div);
 }
 

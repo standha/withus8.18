@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="kr">
+<head>
+	<meta charset="UTF-8">
+	<link th:href="@{/css/header.css}" rel="stylesheet">
+	<link th:href="@{/css/wwithus/wwithus.css}" rel="stylesheet">
+	<script th:src="@{/js/commons.js}"></script>
+	<script th:src="@{/js/header.js}"></script>
+	<script th:src="@{/js/wwithus/wwithus.js}"></script>
+	<script th:src="@{/js/wwithus/answer-button.js}"></script>
+	<script th:src="@{/js/wwithus/chat-balloon.js}"></script>
+	<title>위더스랑</title>
+</head>
+<body>
+	<input type="hidden" id="history-url" th:attr="value=@{/wwithus/histories}">
+	<input type="hidden" id="userType" name="userType" th:value="${userType}">
+	<input type="hidden" id="request-next-url" th:attr="value=@{/wwithus/request-next}">
+	<div th:replace="header :: #header"></div>
+	<div id="body"></div>
+</body>

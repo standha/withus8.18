@@ -68,9 +68,13 @@ public class CenterController extends BaseController
 			modelAndView.addObject("level", ViewLevel(user));
 			modelAndView.addObject("user", user);
 		}
-		List<User> patients = userService.getUserByName(user.getName());
-		List<Tuple> allPatients = userService.getAllUser();
-		System.out.println("안뇽2"+ allPatients);
+
+		List<String> userIdList = userService.getUserIdPatient();
+		Tuple oneUser = userService.getHistory(getUser().getUserId());
+		System.out.println(userIdList.get(0));
+		System.out.println(userService.getHistory(userIdList.get(1)));
+
+
 		return modelAndView;
 	}
 
