@@ -45,10 +45,46 @@ public class CenterController extends BaseController
 
 
 	@GetMapping({ "/center" })
-	public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response)
+	public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response,@RequestParam(required = false) String token)
 	{
 		logger.info("center");
 		User user = getUser();
+		if(user.getAppToken() != null){
+			if(token != null) {
+				if (user.getAppToken().equals(token) == false) {
+					Result.Code code;
+					user.setAppToken(token);
+					try {
+						user = userService.upsertUser(user);
+						code = Result.Code.OK;
+					} catch (Exception exception) {
+						logger.error(exception.getLocalizedMessage(), exception);
+						code = Result.Code.ERROR_DATABASE;
+					}
+					Result.<User>builder()
+							.setCode(code)
+							.setData(user)
+							.createResult();
+				}
+			}
+		}else{
+			if(token != null){
+				Result.Code code;
+				user.setAppToken(token);
+				try {
+					user = userService.upsertUser(user);
+					code = Result.Code.OK;
+				} catch (Exception exception) {
+					logger.error(exception.getLocalizedMessage(), exception);
+					code = Result.Code.ERROR_DATABASE;
+				}
+				Result.<User>builder()
+						.setCode(code)
+						.setData(user)
+						.createResult();
+			}
+		}
+
 		ModelAndView modelAndView = new ModelAndView();
 		if (user.getType().equals(Type.ADMINISTRATOR)){
 			modelAndView.setViewName("/Admin/admin_Home");
@@ -63,7 +99,7 @@ public class CenterController extends BaseController
 		else{
 			modelAndView.setViewName("home");
 			modelAndView.addObject("type", user.getType());
-			modelAndView.addObject("week", user.getWeek());
+			modelAndView.addObject("week", getCaretaker().getWeek());
 		}
 		modelAndView.addObject("goalNow",getGoalNow(getConnectId()));
 		modelAndView.addObject("level", ViewLevel(user));
