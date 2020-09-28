@@ -13,7 +13,7 @@ import withus.service.UserService;
 public class InfoController extends BaseController{
 
     @Autowired
-    public InfoController(AuthenticationFacade authenticationFacade, UserService userService, GoalService goalService) {
+    public InfoController(AuthenticationFacade authenticationFacade, UserService userService) {
         super(userService, authenticationFacade);
     }
 

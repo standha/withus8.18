@@ -207,13 +207,16 @@ public class NoticeScheduler {
 
     //단일 PUSH cron = "0 0 20 * * *"
     //매일 20시 위더스랑 진도체크 알림
-    @Scheduled(cron = "0 0 20 * * *")
+    @Scheduled(fixedRate = 20000)
     public void noticeRecordAt20(){
+        System.out.println("20시 알림");
         List<User> patients = userService.getAllToken();
         for(User patient:patients){
             if(patient.getType().equals(User.Type.PATIENT)) {
                 try {
-                    send("center",patient.getAppToken(),patient.getName()+"님, 오늘 심장 건강을 위해 실천하신 내용을 [위더스]에 기록하셨나요?\n 기록하지 않았다면 지금 기록해주세요!");
+                    send("pill",patient.getAppToken(),
+                            patient.getName()+"님, 오늘 심장 건강을 위해 실천하신 내용을 [위더스]에 기록하셨나요?\n 기록하지 않았다면 지금 기록해주세요!");
+                    System.out.println("대상 이름 : "+patient.getName());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
