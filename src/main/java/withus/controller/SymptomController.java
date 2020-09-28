@@ -76,6 +76,7 @@ public class SymptomController extends BaseController{
     public Result<Tbl_symptom_log> PostSymptom(@RequestBody Tbl_symptom_log tbl_symptom_log){
         String userId = getUsername();
         tbl_symptom_log.setPk(new RecordKey(userId,LocalDate.now()));
+        tbl_symptom_log.setWeek(getUser().getWeek());
         Result.Code code;
         Tbl_symptom_log saved = null;
         try{

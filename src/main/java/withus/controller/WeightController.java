@@ -62,6 +62,7 @@ public class WeightController extends BaseController {
     public Result<Tbl_weight> getWeight(@RequestBody Tbl_weight tbl_weight){
         String userId = getUsername();
         tbl_weight.setPk(new RecordKey(userId, LocalDate.now()));
+        tbl_weight.setWeek(getUser().getWeek());
         Result.Code code;
         Tbl_weight saved = null;
         try{

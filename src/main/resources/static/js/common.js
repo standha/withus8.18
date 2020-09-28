@@ -60,5 +60,6 @@ function openLayer(el) {
 		}
 		$('body, html, #wrap').css('overflow','').css('height','');
 	});
+
 }
 

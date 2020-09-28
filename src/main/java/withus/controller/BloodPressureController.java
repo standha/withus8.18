@@ -67,6 +67,7 @@ public class BloodPressureController extends BaseController {
     public Result<Tbl_blood_pressure_pulse> PostPatientVisit(@RequestBody Tbl_blood_pressure_pulse tbl_blood_pressure_pulse){
         String userId = getUsername();
         tbl_blood_pressure_pulse.setPk(new RecordKey(userId, LocalDate.now()));
+        tbl_blood_pressure_pulse.setWeek(getUser().getWeek());
         Result.Code code;
         Tbl_blood_pressure_pulse seved = null;
         try{

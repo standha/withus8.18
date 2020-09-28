@@ -24,6 +24,8 @@ public class QTbl_weight extends EntityPathBase<Tbl_weight> {
 
     public final QRecordKey pk;
 
+    public final NumberPath<Integer> week = createNumber("week", Integer.class);
+
     public final NumberPath<Float> weight = createNumber("weight", Float.class);
 
     public QTbl_weight(String variable) {

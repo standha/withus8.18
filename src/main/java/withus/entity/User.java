@@ -5,7 +5,15 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -63,7 +71,7 @@ public class User implements Serializable, UserDetails {
 	@Getter
 	private Gender gender;
 
-	@Column(name = "app_token" , columnDefinition = "VARCHAR(256)", length = 256)
+	@Column(columnDefinition = "VARCHAR(256)", length = 256)
 	@Nullable
 	@Getter
 	private String appToken;
@@ -115,12 +123,12 @@ public class User implements Serializable, UserDetails {
 				}
 
 			}
-				return null;
+			return null;
 		}
 	}
+
 
 	public enum Type {
 		PATIENT, CAREGIVER, ADMINISTRATOR
 	}
-
 }

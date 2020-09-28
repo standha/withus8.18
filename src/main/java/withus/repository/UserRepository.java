@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import withus.dto.UserInfoDTO;
 import withus.entity.User;
 
 import javax.persistence.SqlResultSetMapping;
@@ -44,7 +43,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 
 	@Transactional(readOnly = true)
 	@Nullable
-	@Query(value = "select u.name as patientName ,u.id as patientId, u.password as patientPassword, u.birthdate as passwordBirthdate," +
+	@Query(value = "select u.name as patientName ,u.id as patientId, u.password as patientPassword, u.birthdate as patientBirthdate," +
 			" u.gender as patientGender, u.contact as patientContact, c.name as caregiverName," +
 			"c.id as caregiverId, c.password as caregiverPassword, c.contact as caregiverContact, code as currentCode" +
 			" from user as u left join user as c on c.contact = u.caregiver_contact " +

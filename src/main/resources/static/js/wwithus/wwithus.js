@@ -1,3 +1,5 @@
+
+
 const MESSAGE_INTERVAL_MILLIS = 2000;
 const GET_FETCH_OPTIONS = {
 	method: "GET",
@@ -41,10 +43,24 @@ function onDomLoad()
 	removeChildren(balloonsAreaElement);
 	loadHistory();
 }
-
+//이미지 클릭시 원본 크기로 팝업 보기
+function popupImage(url){
+	var img = new Image();
+	var scWidth = screen.availWidth; //현재 사용중인 스크린 크기를 구함
+	var scHeight = screen.availHeight;
+	var left = (parseInt(scWidth)-650)/2; //팝업창 위치 조절
+	var top = (parseInt(scHeight)-900)/2;
+	img.src = url;
+	var img_width = img.width-500; //팝업창 크기 조절
+	var win_width = img.width-500;
+	var height = scHeight;
+	var openImage = window.open('','_blank','width='+img_width+',height='+height+',top='+top+',left='+left+',menubars=no,scrollbars=auto');
+	openImage.document.write("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=2, minimum-scale=1, user-scalable=yes,target-densitydpi=medium-dpi\"/><style>body{margin:0px;background-color: black}</style><div style='height:100vh;  display: table-cell; vertical-align: middle'><img style='width: 100%'  src = '"+url+"'width='"+win_width+"' ></div>");
+}
 /**
  * @param {Element} parent
  */
+
 function removeChildren(parent)
 {
 	console.log("removeChildren()");
@@ -132,12 +148,14 @@ function renderBalloon(chatBalloon)
 	div.className = "chat-wrap manager";
 
 	const input = `<input type="hidden" value="${chatBalloon.sequence}">`;
-
+	/*th:onclick="'doImgPop(' + ${${chatBalloon.urlToImageFile}} + ')'"*/
 	let img = "";
 	if (chatBalloon.urlToImageFile)
 	{
 		<!--href="#"-->
-		img = `<a class="img-thumb"> <span class="img-name">그림</span> <img src="${chatBalloon.urlToImageFile}" alt="이미지가 표시되지 않고 있습니다."></a>`;
+		img = `<div class ="img-wrap>" style="width: 100%"><a class="img-thumb" style="width: 100%"> <span class="img-name"></span> <img style="width: 100%" src="${chatBalloon.urlToImageFile}" 
+onclick="popupImage('${chatBalloon.urlToImageFile}')"
+alt="이미지가 표시되지 않고 있습니다."></a></div>`
 	}
 
 
@@ -148,21 +166,6 @@ function renderBalloon(chatBalloon)
 <audio src="${chatBalloon.urlToAudioFile}" controls ></audio>
 </div>`
 
-		audio2 = `<div class="player-wrap">
-						<audio id = "myAudio" src="${chatBalloon.urlToAudioFile}" hidden></audio>
-								<button onclick= "audio_play_pulse()">
-									<span class="ico-play" id="p-con"></span>
-								</button>
-						<div class="line-wrap">
-						<div class ="play-line">
-							<span class = "play-bar" style="width: 20%;"></span>
-						</div>
-						<div class="play-time">
-							<span onclick="getCurrentTime();">1:00</span>
-							<span>1:00</span>
-						</div>
-					</div>
-				</div>`
 
 	}
 	let answerButtonsSpan = "";
@@ -174,15 +177,15 @@ function renderBalloon(chatBalloon)
 
 	}
 
-	const contentSpan = `<div class = "chat-wrap manager"><div class ="name-wrap">&nbsp;<span class="ico-withus"></span>
+	const contentSpan = `<div class ="name-wrap"><span class="ico-withus"></span>
 		<span class="  name">  위더스</span></div>
 		<div class ="msg-wrap">`
 		+audio+
 		`<div class="text-wrap">${chatBalloon.content}</div>
 		<div class = "btn-wrap grid-col">`
-		+answerButtonsSpan+
-		img+`</div>
-		</div></div>`;
+		+answerButtonsSpan+ `</div>` +
+		img+`
+		</div>`;
 	//TODO: 나중에 날짜가 필요하다 하면 이걸 쓰면
 	const dateTimeSpan = `<span class="date-time">${chatBalloon.dateString}</span>`;
 

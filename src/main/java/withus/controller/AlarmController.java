@@ -94,6 +94,7 @@ public class AlarmController extends BaseController{
     public Result<Tbl_medication_record> getPillHistoryTrue(@RequestBody Tbl_medication_record tbl_medication_record) {
         String userId = getUsername();
         tbl_medication_record.setPk(new RecordKey(userId, LocalDate.now()));
+        tbl_medication_record.setWeek(getUser().getWeek());
         Result.Code code;
         Tbl_medication_record saved = null;
         try {

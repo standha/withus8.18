@@ -90,6 +90,7 @@ public class ExerciseController extends BaseController {
     public Result<Tbl_Exercise_record> PostPatientVisit(@RequestBody Tbl_Exercise_record tbl_exercise_record){
         String userId = getUsername();
         tbl_exercise_record.setPk(new RecordKey(userId, LocalDate.now()));
+        tbl_exercise_record.setWeek(getUser().getWeek());
         Result.Code code;
         Tbl_Exercise_record seved = null;
         try{

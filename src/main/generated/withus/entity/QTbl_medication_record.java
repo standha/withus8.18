@@ -26,6 +26,8 @@ public class QTbl_medication_record extends EntityPathBase<Tbl_medication_record
 
     public final QRecordKey pk;
 
+    public final NumberPath<Integer> week = createNumber("week", Integer.class);
+
     public QTbl_medication_record(String variable) {
         this(Tbl_medication_record.class, forVariable(variable), INITS);
     }

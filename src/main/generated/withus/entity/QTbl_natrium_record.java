@@ -30,6 +30,8 @@ public class QTbl_natrium_record extends EntityPathBase<Tbl_natrium_record> {
 
     public final QRecordKey pk;
 
+    public final NumberPath<Integer> week = createNumber("week", Integer.class);
+
     public QTbl_natrium_record(String variable) {
         this(Tbl_natrium_record.class, forVariable(variable), INITS);
     }

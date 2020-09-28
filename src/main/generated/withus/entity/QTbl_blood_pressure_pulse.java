@@ -30,6 +30,8 @@ public class QTbl_blood_pressure_pulse extends EntityPathBase<Tbl_blood_pressure
 
     public final NumberPath<Integer> relaxation = createNumber("relaxation", Integer.class);
 
+    public final NumberPath<Integer> week = createNumber("week", Integer.class);
+
     public QTbl_blood_pressure_pulse(String variable) {
         this(Tbl_blood_pressure_pulse.class, forVariable(variable), INITS);
     }

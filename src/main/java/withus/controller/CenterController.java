@@ -1,5 +1,6 @@
 package withus.controller;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
-import withus.dto.UserInfoDTO;
 import withus.dto.wwithus.AllUserDTO;
 import withus.entity.*;
 import withus.entity.User.Type;
@@ -52,6 +52,16 @@ public class CenterController extends BaseController
 		User user = getUser();
 		ModelAndView modelAndView = new ModelAndView();
 		if (user.getType().equals(Type.ADMINISTRATOR)){
+			List<AllUserDTO> resultList = new ArrayList<>();
+			ArrayList<String> userFin = userService.getAllUserPlz();
+			for (String aUserFin : userFin) {
+				resultList.add(AllUserDTO.fromString(aUserFin));
+			}
+			System.out.println("---------------1---------------------");
+			System.out.println(userFin);
+			System.out.println("---------------2---------------------");
+			modelAndView.addObject("user", resultList);
+			System.out.println("---------------2---------------------");
 			modelAndView.setViewName("/Admin/admin_Home");
 		}
 		else if (user.getType().equals(Type.PATIENT)) {
@@ -72,12 +82,7 @@ public class CenterController extends BaseController
 			modelAndView.addObject("user", user);
 		}
 
-		List<String> userIdList = userService.getUserIdPatient();
-		Tuple oneUser = userService.getHistory(getUser().getUserId());
-		System.out.println(userIdList.get(0));
-		System.out.println(userService.getHistory(userIdList.get(1)));
-
-		List<AllUserDTO> resultList = new ArrayList<>();
+	List<AllUserDTO> resultList = new ArrayList<>();
 		ArrayList<String> userFin = userService.getAllUserPlz();
 		for (String aUserFin : userFin) {
 			resultList.add(AllUserDTO.fromString(aUserFin));
@@ -85,9 +90,9 @@ public class CenterController extends BaseController
 		System.out.println(userFin);
 		for(int index=0; index<userFin.size(); index++){
 			System.out.println(userFin.get(index));
-		}
-		System.out.println(resultList.get(0).getUserId());
+		};
 
+		System.out.println("resultList = " + resultList.get(0).getGuserId());
 		return modelAndView;
 	}
 

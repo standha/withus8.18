@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import withus.auth.NoOpPasswordEncoder;
-import withus.dto.UserInfoDTO;
 import withus.entity.*;
 import withus.repository.*;
 
