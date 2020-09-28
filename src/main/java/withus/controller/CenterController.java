@@ -5,16 +5,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.querydsl.core.Tuple;
+import com.google.gson.Gson;
+import org.apache.tomcat.jni.Local;
+import org.apache.tomcat.jni.Time;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
 import withus.dto.wwithus.AllUserDTO;
@@ -22,6 +23,7 @@ import withus.entity.*;
 import withus.entity.User.Type;
 import withus.service.CountService;
 import withus.service.GoalService;
+import withus.service.HelperRequestService;
 import withus.service.UserService;
 
 import java.util.ArrayList;
@@ -29,6 +31,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Controller
 public class CenterController extends BaseController
@@ -36,20 +40,74 @@ public class CenterController extends BaseController
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	private final GoalService goalService;
 	private final CountService countService;
+	private final HelperRequestService helperRequestService;
 
 	@Autowired
-	public CenterController(AuthenticationFacade authenticationFacade, UserService userService, GoalService goalService, CountService countService)
+	public CenterController(AuthenticationFacade authenticationFacade, UserService userService, GoalService goalService, CountService countService, HelperRequestService helperRequestService)
 	{
 		super(userService, authenticationFacade);
 		this.goalService = goalService;
 		this.countService = countService;
+		this.helperRequestService = helperRequestService;
+	}
+
+	@GetMapping({ "/achivement" })
+	@Statistical
+	public ModelAndView getGoal() {
+		ModelAndView modelAndView = new ModelAndView("achivement/achivement");
+		switch (getUser().getType()){
+			case PATIENT:
+				modelAndView.addObject("level",getUser().getLevel()/4);
+				modelAndView.addObject("previousUrl", "/center");
+				break;
+			case CAREGIVER:
+				modelAndView.addObject("level", getCaretaker().getLevel()/4);
+				modelAndView.addObject("previousUrl", "/center");
+		}
+		return modelAndView;
 	}
 
 	@GetMapping({ "/center" })
-	public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response)
+	public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response,@RequestParam(required = false) String token)
 	{
 		logger.info("center");
 		User user = getUser();
+		if(user.getAppToken() != null){
+			if(token != null) {
+				if (user.getAppToken().equals(token) == false) {
+					Result.Code code;
+					user.setAppToken(token);
+					try {
+						user = userService.upsertUser(user);
+						code = Result.Code.OK;
+					} catch (Exception exception) {
+						logger.error(exception.getLocalizedMessage(), exception);
+						code = Result.Code.ERROR_DATABASE;
+					}
+					Result.<User>builder()
+							.setCode(code)
+							.setData(user)
+							.createResult();
+				}
+			}
+		}else{
+			if(token != null){
+				Result.Code code;
+				user.setAppToken(token);
+				try {
+					user = userService.upsertUser(user);
+					code = Result.Code.OK;
+				} catch (Exception exception) {
+					logger.error(exception.getLocalizedMessage(), exception);
+					code = Result.Code.ERROR_DATABASE;
+				}
+				Result.<User>builder()
+						.setCode(code)
+						.setData(user)
+						.createResult();
+			}
+		}
+
 		ModelAndView modelAndView = new ModelAndView();
 		if (user.getType().equals(Type.ADMINISTRATOR)){
 			List<AllUserDTO> resultList = new ArrayList<>();
@@ -74,8 +132,12 @@ public class CenterController extends BaseController
 		else{
 			modelAndView.setViewName("home");
 			modelAndView.addObject("type", user.getType());
-			modelAndView.addObject("week", user.getWeek());
+			modelAndView.addObject("week", getCaretaker().getWeek());
 		}
+		modelAndView.addObject("goalNow",getGoalNow(getConnectId()));
+		modelAndView.addObject("level", ViewLevel(user));
+		modelAndView.addObject("user", user);
+		modelAndView.addObject("name",user.getName());
 		if(user.getType()== Type.CAREGIVER || user.getType()== Type.PATIENT){
 			modelAndView.addObject("goalNow",getGoalNow(getConnectId()));
 			modelAndView.addObject("level", ViewLevel(user));
@@ -101,12 +163,10 @@ public class CenterController extends BaseController
 		switch (user.getType()){
 			case PATIENT:
 				level = user.getLevel();
-				System.out.println("환자의 레벨 : " + level);
 				level = level % 4;
 				break;
 			case CAREGIVER:
 				level = getCaretaker().getLevel();
-				System.out.println("보호자의 환자 레벨 : " + level);
 				level = level % 4;
 				break;
 		}
@@ -171,4 +231,27 @@ public class CenterController extends BaseController
 				.data(saved)
 				.build();
 	}
+
+	@PostMapping(value = "helper-request",consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Result<Tbl_helper_request> temp(@RequestBody Tbl_helper_request tbl_helper_request){
+		String userId = getUsername();
+		User user = userService.getUserById(userId);
+		tbl_helper_request.setPk(new TimeKey(userId,LocalDate.now(),LocalTime.now()));
+		Result.Code code;
+		Tbl_helper_request saved = null;
+		try{
+			saved = helperRequestService.upsertHelperRequest(tbl_helper_request);
+			code = Result.Code.OK;
+		}catch (Exception exception){
+			logger.error(exception.getLocalizedMessage(), exception);
+			code = Result.Code.ERROR_DATABASE;
+		}
+		return Result.<Tbl_helper_request>builder()
+				.setCode(code)
+				.setData(saved)
+				.createResult();
+	}
+
+
 }

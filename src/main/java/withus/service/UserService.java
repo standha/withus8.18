@@ -78,6 +78,7 @@ public class UserService implements UserDetailsService {
 
 			Tbl_outpatient_visit_alarm tbl_outpatient_visit_alarm = Tbl_outpatient_visit_alarm.builder()
 					.id(saved.getUserId())
+					.visitAlarm(false)
 					.build();
 			outPatientVisitAlarmRepository.save(tbl_outpatient_visit_alarm);
 

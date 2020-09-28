@@ -1,26 +1,57 @@
 <!DOCTYPE html>
+<html lang="ko">
 <html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <head>
 	<meta charset="UTF-8">
-	<link th:href="@{/css/header.css}" rel="stylesheet">
-	<link th:href="@{/css/alarm/alarm.css}" rel="stylesheet">
-	<title>알람</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>위더스</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+	<meta name="format-detection" content="telephone=no">
+	<link th:href="@{/css/reset.css}" rel="stylesheet">
+	<link th:href="@{/css/common.css}" rel="stylesheet">
+	<link th:href="@{/css/layout.css}" rel="stylesheet">
+	<script th:src="@{/js/jquery-1.12.4.min.js}"></script>
+	<script th:src="@{/js/common.js}"></script>
 </head>
 <body>
-<div th:replace="header :: #header"></div>
-<div id="body">
-	<div id="level-1" class="level">
-		<a th:href="@{/medicationAlarm.html}" class="icon">
-			<img th:src="@{/images/alarm/pill.png}">
-			<button>복약</button>
-		</a>
-	</div>
-	<div id="level-2" class="level">
-		<a th:href="@{/appointments}" class="icon">
-			<img th:src="@{/images/alarm/appointments.png}">
-			<button>외래 방문 시간</button>
-		</a>
-	</div>
+<div class="skip-navi">
+	<a href="#content">본문 바로가기</a>
 </div>
+
+<!-- wrap -->
+<div id="wrap" class="list-page">
+
+	<!-- header -->
+	<header>
+		<div class="header-wrap type02">
+			<div class="head">
+				<a class="btn xsm type07" href="javascript:void(0)">
+					<span class="ico-call"></span>
+					<span class="txt-rt">도우미</span>
+				</a>
+				<h2>알람</h2>
+			</div>
+		</div>
+	</header>
+	<!-- // header -->
+
+	<!-- content -->
+	<div class="container" id="content">
+		<div class="cont-wrap">
+			<a href="#" class="list-card" th:href="@{/medicationAlarm.html}">
+				<span class="ico-drug"></span>
+				<span class="btn xxlg arrow-type01">복약</span>
+			</a>
+			<a href="#" class="list-card" th:href="@{/appointments}">
+				<span class="ico-date"></span>
+				<span class="btn xxlg arrow-type01">외래 방문 시간</span>
+			</a>
+		</div>
+	</div>
+	<!-- // content -->
+
+</div>
+<!--// wrap -->
+
 </body>
 </html>

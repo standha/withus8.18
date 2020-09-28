@@ -79,4 +79,49 @@ public class AlarmService{
     public Tbl_medication_record getMedicationRecord(RecordKey pk){
         return medicationRecordRepository.findByPkAndFinishedIsTrue(pk).orElse(null);
     }
+
+    @Nullable
+    public Tbl_medication_record getMedicationRecordToday(RecordKey pk){
+        return medicationRecordRepository.findByPk(pk).orElse(null);
+    }
+
+    public int transformTime(int hour){
+        if(hour >= 12 )
+            return 1;
+        else
+            return 0;
+    }
+
+    public String transformHour(int hour){
+        if (hour > 12) {
+            hour = hour - 12;
+            String transHour = Integer.toString(hour);
+            if(hour >= 10) {
+                return transHour;
+            }
+            else {
+                return "0"+transHour;
+            }
+        }
+        else{
+            String transHour = Integer.toString(hour);
+            if(hour >= 10) {
+                return transHour;
+            }
+            else {
+                return "0"+transHour;
+            }
+        }
+    }
+
+    public String transformMinute(int minute){
+        if(minute >= 10) {
+            String transMinute = Integer.toString(minute);
+            return transMinute;
+        }
+        else {
+            String transMinute = Integer.toString(minute);
+            return "0"+transMinute;
+        }
+    }
 }
