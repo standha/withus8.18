@@ -59,81 +59,9 @@
                 <div class="tbl-chart">
                     <div class="tbl-wrap type01">
                         <table>
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>월</th>
-                                <th>화</th>
-                                <th>수</th>
-                                <th>목</th>
-                                <th>금</th>
-                                <th>토</th>
-                                <th>일</th>
-                            </tr>
+                            <thead id="history-table-day">
                             </thead>
-                            <tbody>
-                            <tr>
-                                <th>
-                                    <span class="bold">혈압</span>
-                                    <span>mmHg</span>
-                                </th>
-                                <td>
-                                    <span class="red">120</span>
-                                    <span class="blue">80</span>
-                                </td>
-                                <td>
-                                    <span class="red">120</span>
-                                    <span class="blue">80</span>
-                                </td>
-                                <td>
-                                    <span class="red">120</span>
-                                    <span class="blue">80</span>
-                                </td>
-                                <td>
-                                    <span class="red">120</span>
-                                    <span class="blue">80</span>
-                                </td>
-                                <td>
-                                    <span class="red">120</span>
-                                    <span class="blue">80</span>
-                                </td>
-                                <td>
-                                    <span class="red">120</span>
-                                    <span class="blue">80</span>
-                                </td>
-                                <td>
-                                    <span class="red">120</span>
-                                    <span class="blue">80</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    <span class="bold">맥박</span>
-                                    <span>회/분</span>
-                                </th>
-                                <td>
-                                    <span class="black">120</span>
-                                </td>
-                                <td>
-                                    <span class="black">120</span>
-                                </td>
-                                <td>
-                                    <span class="black">120</span>
-                                </td>
-                                <td>
-                                    <span class="black">120</span>
-                                </td>
-                                <td>
-                                    <span class="black">120</span>
-                                </td>
-                                <td>
-                                    <span class="black">120</span>
-                                </td>
-                                <td>
-                                    <span class="black">120</span>
-                                </td>
-                            </tr>
-                            </tbody>
+                            <tbody id="history-table-data"></tbody>
                         </table>
                     </div>
                 </div>
@@ -156,9 +84,48 @@
     var relaxation = [];
     var pressure = [];
 
+    //요일 데이터 테이블
+    var rowItem = "<tr><th></th>";
+    var week = ['일', '월', '화', '수', '목', '금', '토'];
     for(i=0; i<bloodRecord.length; i++)
     {
-        date[i] = bloodRecord[i].pk.date;
+        var day = new Date(bloodRecord[i].pk.date.substr(0, 4), bloodRecord[i].pk.date.substr(5, 2)-1, bloodRecord[i].pk.date.substr(8, 2)).getDay();
+        var dayLabel = week[day];
+        rowItem += "<th>" + dayLabel + "</th>";
+    }
+    rowItem += "</tr>"
+    $('#history-table-day').append(rowItem);
+
+    //수축기 이완기 데이터 테이블
+    var bloodItem = "<tr>";
+    bloodItem += "<th><span class=\"bold\">혈압</span><span>mmHg</span></th>";
+    for(i=0; i<bloodRecord.length; i++)
+    {
+        bloodItem += "<td>";
+        bloodItem += "<span class=\"red\">" + bloodRecord[i].contraction + "</span>";
+        bloodItem += "<span class=\"blue\">" + bloodRecord[i].relaxation + "</span>";
+        bloodItem += "</td>";
+    }
+    bloodItem += "</tr>"
+    $('#history-table-data').append(bloodItem);
+
+    //혈압 데이터 테이블
+    var pulse = "<tr>";
+    pulse += "<th><span class=\"bold\">맥박</span><span>회/분</span></th>";
+    for(i=0; i<bloodRecord.length; i++)
+    {
+        pulse += "<td>";
+        pulse += "<span class=\"black\">" + bloodRecord[i].pressure + "</span>";
+        pulse += "</td>";
+    }
+    pulse += "</tr>"
+    $('#history-table-data').append(pulse);
+
+    for(i=0; i<bloodRecord.length; i++)
+    {
+        //x축 라벨 바꾸기
+        date[i] = bloodRecord[i].pk.date.substr(5,5);
+        //date[i] = bloodRecord[i].pk.date;
         contraction[i] = bloodRecord[i].contraction;
         relaxation[i] = bloodRecord[i].relaxation;
         pressure[i] = bloodRecord[i].pressure;

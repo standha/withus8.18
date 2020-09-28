@@ -12,10 +12,10 @@
 	<link th:href="@{/css/common.css}" rel="stylesheet">
 	<link th:href="@{/css/layout.css}" rel="stylesheet">
 	<script th:src="@{/js/jquery-1.12.4.min.js}"></script>
-	<script th:src="@{/js/chart.js}"></script>
-	<script th:src="@{js/chartjs-plugin-style.min.js}"></script>
 	<script th:src="@{/js/jquery-ui.js}"></script>
 	<script th:src="@{/js/datepicker-ko.js}"></script>
+	<script th:src="@{/js/chart.js}"></script>
+	<script th:src="@{js/chartjs-plugin-style.min.js}"></script>
 	<script th:src="@{/js/common.js}"></script>
 </head>
 <body>
@@ -54,6 +54,12 @@
 					</ul>
 				</div>
 				<canvas id="myChart" class="chart-blood" style="height:90vw; width:100vw"></canvas>
+				<div class="chart-legend">
+					<span class="tit"></span>
+					<ul class="list">
+						<li >(일)</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -64,18 +70,6 @@
 
 <script th:inline="javascript">
 
-	/*<![CDATA[*/
-	var weightRecord = /*[[ ${weightRecord} ]]*/;
-	/*]]*/
-
-	var date = [];
-	var weight = [];
-	for(i=0; i<weightRecord.length; i++)
-	{
-		date[i] = weightRecord[i].pk.date;
-		weight[i] = weightRecord[i].weight;
-	}
-
 	$.datepicker._generateHTML = (function (){
 		var realGenerateHtml = $.datepicker._generateHTML;
 		return function (instance) {
@@ -83,133 +77,126 @@
 
 			if ( instance.input.is(".size-lg") ) {
 				$temp = $("<table></table>").append(html);
-				$temp.find(".ui-datepicker-calendar").each(function () {
-					var yy = $(this).parent().data("year"),
-							mm = $(this).parent().data("month");
+				$temp.find(".ui-datepicker-title").each(function () {
 
-					var jsDate = $('#dateRecord').datepicker('getDate');
-					var year = jsDate.getFullYear();
-					var month = jsDate.getMonth() + 1;
-
-					if(month.toString().length == 1){
-						month = "0" + month;
-					}
-
+					var year = $(this).find('.ui-datepicker-year').text();
+					var month = $(this).find('.ui-datepicker-month').text();
 					var str = year + "-" + month;
 
-					console.log(str);
+					/*<![CDATA[*/
+					var weightRecord = /*[[ ${weightRecord} ]]*/;
+					/*]]*/
 
+					var date = [];
+					var weight = [];
+					var j = 0;
+					for(i=0; i<weightRecord.length; i++)
+					{
+						if(str == weightRecord[i].pk.date.substr(0, 7))
+						{
+							date[j] = weightRecord[i].pk.date.substr(8, 2);
+							weight[j] = weightRecord[i].weight;
+							j++;
+						}
+					}
+
+					let draw = Chart.controllers.line.prototype.draw;
+					var ctx = document.getElementById('myChart').getContext('2d');
+					var data = {
+						labels: date,
+						datasets: [{
+							label: '체중',
+							data: weight,
+							fill: true,
+							spanGaps: false,
+							borderWidth: 2,
+							borderColor: '#21bc97',
+							pointBackgroundColor: '#21bc97',
+							pointBorderColor: '#21bc97',
+							pointRadius: 1.5
+						}]
+					};
+
+					var myChart = new Chart(ctx, {
+						plugins: [
+							{
+								id: "responsiveGradient",
+								afterLayout: function(chart, options) {
+									var scales = chart.scales;
+
+									// create a linear gradient with the dimentions of the scale
+									var color = chart.ctx.createLinearGradient(0,scales["y-axis-0"].bottom,0,0);
+									// add gradients stops
+									color.addColorStop(0, "rgba(33,188,151,0)");
+									color.addColorStop(0.25, "rgba(33,188,151,0)");
+									color.addColorStop(0.5, "rgba(33,188,151,0)");
+									color.addColorStop(0.75, "rgba(33,188,151,0.1)");
+									color.addColorStop(1, "rgba(33,188,151,0.7)");
+
+									// changes the background color option
+									chart.data.datasets[0].backgroundColor = color;
+								}
+							}
+						],
+
+						// The type of chart we want to create
+						type: 'line',
+
+						// The data for our dataset
+						data: data,
+
+						// Configuration options go here
+						options: {
+							scales:{
+								yAxes:[{
+									ticks: {
+										beginAtZero: true,
+										min: 0,
+										max: 100,
+										stepSize: 10,
+										maxTicksLimit: 20,
+										callback: function(value, index, values) {
+											return value == 0 || value == 20 || value == 40 || value == 60 ||  value == 80 || value == 100?value:'';
+										}
+									}
+								}]
+								,
+								xAxes:[{
+									gridLines: {
+										display: false
+									}
+								}]
+							},
+							legend: {
+								display: false,
+								position: 'top',
+								align: 'right', // 안먹음 ㅠㅠ
+								fullWidth: false,
+								labels: {
+									usePointStyle: true,
+									fontSize: 13,
+									fontStyle: '',
+									padding: 30
+								}
+							}
+						}
+					});
 				});
 				html = $temp[0].innerHTML;
 			}
 
-			$(".ui-datepicker-next").click(function (){
-				console.log("다음달 클릭");
-			});
 			return html;
 		};
 	})();
+
 
 	$( function() {
 		$( "#dateRecord" ).datepicker({
 
 		});
-
-		// var jsDate = $('#dateRecord').datepicker('getDate');
-		// var year = jsDate.getFullYear();
-		// var month = jsDate.getMonth() + 1;
-		//
-		// if(month.toString().length == 1){
-		// 	month = "0" + month;
-		// }
-		//
-		// var str = year + "-" + month;
-		//
-		// console.log(str);
 	} );
 
 
-	let draw = Chart.controllers.line.prototype.draw;
-	var ctx = document.getElementById('myChart').getContext('2d');
-	var data = {
-		labels: date,
-		datasets: [{
-			label: '체중',
-			data: weight,
-			fill: true,
-			spanGaps: false,
-			borderWidth: 2,
-			borderColor: '#21bc97',
-			pointBackgroundColor: '#21bc97',
-			pointBorderColor: '#21bc97',
-			pointRadius: 1.5
-		}]
-	};
-
-	var myChart = new Chart(ctx, {
-		plugins: [
-			{
-				id: "responsiveGradient",
-				afterLayout: function(chart, options) {
-					var scales = chart.scales;
-
-					// create a linear gradient with the dimentions of the scale
-					var color = chart.ctx.createLinearGradient(0,scales["y-axis-0"].bottom,0,0);
-					// add gradients stops
-					color.addColorStop(0, "rgba(33,188,151,0)");
-					color.addColorStop(0.25, "rgba(33,188,151,0)");
-					color.addColorStop(0.5, "rgba(33,188,151,0)");
-					color.addColorStop(0.75, "rgba(33,188,151,0.1)");
-					color.addColorStop(1, "rgba(33,188,151,0.7)");
-
-					// changes the background color option
-					chart.data.datasets[0].backgroundColor = color;
-				}
-			}
-		],
-
-		// The type of chart we want to create
-		type: 'line',
-
-		// The data for our dataset
-		data: data,
-
-		// Configuration options go here
-		options: {
-			scales:{
-				yAxes:[{
-					ticks: {
-						beginAtZero: true,
-						min: 0,
-						max: 100,
-						stepSize: 10,
-						maxTicksLimit: 20,
-						callback: function(value, index, values) {
-							return value == 0 || value == 20 || value == 40 || value == 60 ||  value == 80 || value == 100?value:'';
-						}
-					}
-				}]
-				,
-				xAxes:[{
-					gridLines: {
-						display: false
-					}
-				}]
-			},
-			legend: {
-				display: false,
-				position: 'top',
-				align: 'right', // 안먹음 ㅠㅠ
-				fullWidth: false,
-				labels: {
-					usePointStyle: true,
-					fontSize: 13,
-					fontStyle: '',
-					padding: 30
-				}
-			}
-		}
-	});
 </script>
 
 </body>
