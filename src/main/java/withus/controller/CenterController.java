@@ -85,9 +85,9 @@ public class CenterController extends BaseController
 						code = Result.Code.ERROR_DATABASE;
 					}
 					Result.<User>builder()
-							.setCode(code)
-							.setData(user)
-							.createResult();
+							.code(code)
+							.data(user)
+							.build();
 				}
 			}
 		}else{
@@ -102,9 +102,9 @@ public class CenterController extends BaseController
 					code = Result.Code.ERROR_DATABASE;
 				}
 				Result.<User>builder()
-						.setCode(code)
-						.setData(user)
-						.createResult();
+						.code(code)
+						.data(user)
+						.build();
 			}
 		}
 
@@ -134,10 +134,7 @@ public class CenterController extends BaseController
 			modelAndView.addObject("type", user.getType());
 			modelAndView.addObject("week", getCaretaker().getWeek());
 		}
-		modelAndView.addObject("goalNow",getGoalNow(getConnectId()));
-		modelAndView.addObject("level", ViewLevel(user));
-		modelAndView.addObject("user", user);
-		modelAndView.addObject("name",user.getName());
+
 		if(user.getType()== Type.CAREGIVER || user.getType()== Type.PATIENT){
 			modelAndView.addObject("goalNow",getGoalNow(getConnectId()));
 			modelAndView.addObject("level", ViewLevel(user));
@@ -248,9 +245,9 @@ public class CenterController extends BaseController
 			code = Result.Code.ERROR_DATABASE;
 		}
 		return Result.<Tbl_helper_request>builder()
-				.setCode(code)
-				.setData(saved)
-				.createResult();
+				.code(code)
+				.data(saved)
+				.build();
 	}
 
 

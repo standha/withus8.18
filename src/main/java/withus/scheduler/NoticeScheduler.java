@@ -216,7 +216,6 @@ public class NoticeScheduler {
                 try {
                     send("pill",patient.getAppToken(),
                             patient.getName()+"님, 오늘 심장 건강을 위해 실천하신 내용을 [위더스]에 기록하셨나요?\n 기록하지 않았다면 지금 기록해주세요!");
-                    System.out.println("대상 이름 : "+patient.getName());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
