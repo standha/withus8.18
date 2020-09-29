@@ -34,7 +34,7 @@ public class ExerciseController extends BaseController {
     @GetMapping("/exercise")
     @Statistical
     public ModelAndView getExercise() {
-        ModelAndView modelAndView = new ModelAndView("exercise/exercise");
+        ModelAndView modelAndView = new ModelAndView("exercise/exercise_");
         User.Type typeCheck = getUser().getType();
         switch (typeCheck){
             case PATIENT:
@@ -92,19 +92,20 @@ public class ExerciseController extends BaseController {
     public Result<Tbl_Exercise_record> PostPatientVisit(@RequestBody Tbl_Exercise_record tbl_exercise_record){
         String userId = getUsername();
         tbl_exercise_record.setPk(new RecordKey(userId, LocalDate.now()));
+        tbl_exercise_record.setWeek(getUser().getWeek());
         Result.Code code;
-        Tbl_Exercise_record saved = null;
+        Tbl_Exercise_record seved = null;
         try{
-            saved = exerciseService.upsertExerciseRecord(tbl_exercise_record);
+            seved = exerciseService.upsertExerciseRecord(tbl_exercise_record);
             code = Result.Code.OK;
         } catch (Exception exception){
             logger.error(exception.getLocalizedMessage(),exception);
             code = Result.Code.ERROR_DATABASE;
         }
         return Result.<Tbl_Exercise_record>builder()
-                .setCode(code)
-                .setData(saved)
-                .createResult();
+                .code(code)
+                .data(seved)
+                .build();
     }
     public Integer avgWeek(){
         Integer avg = 0;

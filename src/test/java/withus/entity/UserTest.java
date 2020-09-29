@@ -1,14 +1,24 @@
 package withus.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import com.google.gson.internal.$Gson$Types;
+import org.aspectj.lang.annotation.After;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.commons.util.AnnotationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import withus.WithusApplication;
+import withus.auth.AuthenticationFacade;
 import withus.repository.MedicationRecordRepository;
+import withus.repository.UserRepository;
+import withus.repository.UserRepositorySupport;
+import withus.service.CountService;
+import withus.service.GoalService;
+import withus.service.UserService;
 
 
 @SpringBootTest
@@ -16,6 +26,14 @@ import withus.repository.MedicationRecordRepository;
 public class UserTest {
 	@Autowired
 	MedicationRecordRepository medicationRecordRepository;
+
+	@Autowired
+	private UserRepositorySupport userRepositorySupport;
+
+	@Autowired
+	UserRepository userRepository;
+	@Autowired
+	UserService userService;
 	@Test
 	public void testUserRelation() {
 		User caregiver = User.builder()
@@ -55,4 +73,20 @@ public class UserTest {
 			.build();
 		medicationRecordRepository.save(recorTest);
 	}
+
+	@Test
+	public void queryDsl_기능확인(){
+
+		User user = new User();
+		user.setUserId("석");
+		user.setType(User.Type.PATIENT);
+		user.setPassword("pw");
+		user.setName("name");
+		userRepository.save(new User());
+	/*	String name = "name";
+		List<User> result = userRepositorySupport.findByName(name);
+
+		System.out.println(result);*/
+	}
+
 }

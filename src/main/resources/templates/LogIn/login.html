@@ -9,6 +9,7 @@
 <link th:href="@{/css/reset.css}" rel="stylesheet" >
 <link th:href="@{/css/common.css}" rel="stylesheet" >
 <link th:href="@{/css/layout.css}" rel="stylesheet" >
+	<link th:href="@{/css/layup.css}" rel="stylesheet" >
 <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
 <script th:src="@{/js/common.js}"></script>
 
@@ -33,7 +34,6 @@ function remember_ckeckbox()
 	<div class="skip-navi">
 		<a href="#content">본문 바로가기</a>
 	</div>
-
 	<input type="hidden" id="registration-url" th:attr="value=@{/registerUser}">
 	<form id="login-info" th:action="@{/login-process}" method="post" style="height : 100%;">
 		<div id="wrap" class="index-page">

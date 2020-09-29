@@ -82,18 +82,19 @@ public class BloodPressureController extends BaseController {
     public Result<Tbl_blood_pressure_pulse> PostPatientVisit(@RequestBody Tbl_blood_pressure_pulse tbl_blood_pressure_pulse){
         String userId = getUsername();
         tbl_blood_pressure_pulse.setPk(new RecordKey(userId, LocalDate.now()));
+        tbl_blood_pressure_pulse.setWeek(getUser().getWeek());
         Result.Code code;
-        Tbl_blood_pressure_pulse saved = null;
+        Tbl_blood_pressure_pulse seved = null;
         try{
-            saved = bloodPressureService.upsertBloodPressureRecord(tbl_blood_pressure_pulse);
+            seved = bloodPressureService.upsertBloodPressureRecord(tbl_blood_pressure_pulse);
             code = Result.Code.OK;
         } catch (Exception exception){
             logger.error(exception.getLocalizedMessage(),exception);
             code = Result.Code.ERROR_DATABASE;
         }
         return Result.<Tbl_blood_pressure_pulse>builder()
-                .setCode(code)
-                .setData(saved)
-                .createResult();
+                .code(code)
+                .data(seved)
+                .build();
     }
 }

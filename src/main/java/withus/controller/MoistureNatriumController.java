@@ -168,19 +168,20 @@ public class MoistureNatriumController extends BaseController{
     public Result<Tbl_natrium_record> postNatrium(@RequestBody Tbl_natrium_record tbl_natrium_record){
         String username = getUsername();
         tbl_natrium_record.setPk(new RecordKey(username, LocalDate.now()));
+        tbl_natrium_record.setWeek(getUser().getWeek());
         Result.Code code;
-        Tbl_natrium_record saved = null;
+        Tbl_natrium_record seved = null;
         try{
-            saved = moistureNatriumService.upsertNatriumRecord(tbl_natrium_record);
+            seved = moistureNatriumService.upsertNatriumRecord(tbl_natrium_record);
             code = Result.Code.OK;
         } catch (Exception exception){
             logger.error(exception.getLocalizedMessage(),exception);
             code = Result.Code.ERROR_DATABASE;
         }
         return Result.<Tbl_natrium_record>builder()
-                .setCode(code)
-                .setData(saved)
-                .createResult();
+                .code(code)
+                .data(seved)
+                .build();
     }
 
     @PutMapping(value = "/moisture-history",consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -188,6 +189,7 @@ public class MoistureNatriumController extends BaseController{
     public Result<Tbl_mositrue_record> getMoisture(@RequestBody Tbl_mositrue_record tbl_mositrue_record){
         String userId = getUsername();
         tbl_mositrue_record.setPk(new RecordKey(userId,LocalDate.now()));
+        tbl_mositrue_record.setWeek(getUser().getWeek());
         Result.Code code;
         Tbl_mositrue_record saved = null;
         try{
@@ -198,9 +200,9 @@ public class MoistureNatriumController extends BaseController{
             code = Result.Code.ERROR_DATABASE;
         }
         return Result.<Tbl_mositrue_record>builder()
-                .setCode(code)
-                .setData(saved)
-                .createResult();
+                .code(code)
+                .data(saved)
+                .build();
     }
     public Integer avgWeek(){
         Integer avg = 0;

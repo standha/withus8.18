@@ -62,6 +62,7 @@ public class WeightController extends BaseController {
     public Result<Tbl_weight> getWeight(@RequestBody Tbl_weight tbl_weight){
         String userId = getUsername();
         tbl_weight.setPk(new RecordKey(userId, LocalDate.now()));
+        tbl_weight.setWeek(getUser().getWeek());
         Result.Code code;
         Tbl_weight saved = null;
         try{
@@ -72,9 +73,9 @@ public class WeightController extends BaseController {
             code = Result.Code.ERROR_DATABASE;
         }
         return Result.<Tbl_weight>builder()
-                .setCode(code)
-                .setData(saved)
-                .createResult();
+                .code(code)
+                .data(saved)
+                .build();
     }
 
 

@@ -21,4 +21,7 @@ public class Tbl_Exercise_record {
     @Column(name = "minute", columnDefinition = "int default 0")
     private Integer minute;
 
+    @Column(name = "week")
+    private Integer week;
+
 }

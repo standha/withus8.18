@@ -30,7 +30,6 @@ public class AdminLoginController extends AdminBaseController
 			AlarmService alarmService){
 		super(userService, authenticationFacade);
 	}
-
 	@GetMapping({ "/admin_login" })
 	public ModelAndView getLogin(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView modelAndView = new ModelAndView("Login/admin_login");

@@ -49,8 +49,8 @@ public class GoalController extends BaseController {
             code = Result.Code.ERROR_DATABASE;
         }
         return Result.<Tbl_goal>builder()
-                .setCode(code)
-                .setData(saved)
-                .createResult();
+                .code(code)
+                .data(saved)
+                .build();
     }
 }

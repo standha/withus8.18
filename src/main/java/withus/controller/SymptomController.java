@@ -34,7 +34,7 @@ public class SymptomController extends BaseController{
     @GetMapping("/symptom")
     @Statistical
     public ModelAndView getSymptom(){
-        ModelAndView modelAndView = new ModelAndView("Symptom/symptom");
+        ModelAndView modelAndView = new ModelAndView("Symptom/symptom_");
         User.Type typeCheck = getUser().getType();
         if (symptomService.getSymptom(new RecordKey(getConnectId(), LocalDate.now()))==null) {
            modelAndView.addObject("tired", 2);
@@ -76,6 +76,7 @@ public class SymptomController extends BaseController{
     public Result<Tbl_symptom_log> PostSymptom(@RequestBody Tbl_symptom_log tbl_symptom_log){
         String userId = getUsername();
         tbl_symptom_log.setPk(new RecordKey(userId,LocalDate.now()));
+        tbl_symptom_log.setWeek(getUser().getWeek());
         Result.Code code;
         Tbl_symptom_log saved = null;
         try{
@@ -86,8 +87,8 @@ public class SymptomController extends BaseController{
             code = Result.Code.ERROR_DATABASE;
         }
         return Result.<Tbl_symptom_log>builder()
-                .setCode(code)
-                .setData(saved)
-                .createResult();
+                .code(code)
+                .data(saved)
+                .build();
     }
 }

@@ -1,5 +1,12 @@
 package withus.dto;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
+@Builder
+@Getter
+@Setter
 public class Result<T>
 {
 	private final Code code;
@@ -11,47 +18,9 @@ public class Result<T>
 		this.data = data;
 	}
 
-	public Code getCode()
-	{
-		return code;
-	}
-
-	public T getData()
-	{
-		return data;
-	}
-
-	public static <T> Builder<T> builder()
-	{
-		return new Builder<>();
-	}
-
-	public static class Builder<T>
-	{
-		private Code code;
-		private T data;
-
-		public Builder<T> setCode(Code code)
-		{
-			this.code = code;
-			return this;
-		}
-
-		public Builder<T> setData(T data)
-		{
-			this.data = data;
-			return this;
-		}
-
-		public Result<T> createResult()
-		{
-			return new Result<>(code, data);
-		}
-	}
-
 	public enum Code
 	{
 		OK, OK_NULL, ERROR, ERROR_DUPLICATE_ID, ERROR_DUPLICATE_CONTACT, ERROR_NO_EXIST_CAREGIVER, ERROR_DATABASE,
-		ERROR_MODIFYING_NULL
+		ERROR_MODIFYING_NULL, ERROR_NOTHING_TO_DELETE
 	}
 }

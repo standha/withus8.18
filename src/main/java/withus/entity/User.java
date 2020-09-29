@@ -5,15 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -81,7 +73,8 @@ public class User implements Serializable, UserDetails {
 	@Getter
 	private Type type;
 
-	@OneToOne
+
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "caregiver_contact", columnDefinition = "VARCHAR(32)", referencedColumnName = "contact")
 	@Nullable
 	@Getter
@@ -113,8 +106,19 @@ public class User implements Serializable, UserDetails {
 	public boolean isEnabled() { return true; }
 
 	public enum Gender {
-		MALE, FEMALE
+		MALE, FEMALE;
+
+		public static Gender byName(String name) {
+			for (Gender gender : values()) {
+				if (gender.name().equals(name)) {
+					return gender;
+				}
+
+			}
+			return null;
+		}
 	}
+
 
 	public enum Type {
 		PATIENT, CAREGIVER, ADMINISTRATOR

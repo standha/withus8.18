@@ -21,4 +21,7 @@ public class Tbl_weight {
 
     @Column(name = "weight")
     private float weight;
+
+    @Column(name = "week")
+    private Integer week;
 }

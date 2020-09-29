@@ -3,10 +3,7 @@ package withus.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
@@ -22,6 +19,13 @@ public class userInfoController extends BaseController {
     public userInfoController(AuthenticationFacade authenticationFacade, UserService userService){
         super(userService, authenticationFacade);
     }
+/*
+
+    @GetMapping("/user/{userId}")
+    public ModelAndView aaa(@PathVariable("userId") String userId) {
+        // @pathVariable, @ParameterValue, @Header에
+    }
+*/
 
     @GetMapping("/changeInfo")
     public ModelAndView getUserInfo() {
@@ -78,9 +82,9 @@ public class userInfoController extends BaseController {
         }
 
         return Result.<User>builder()
-                .setCode(code)
-                .setData(savedUser)
-                .createResult();
+                .code(code)
+                .data(savedUser)
+                .build();
     }
     public boolean isMissingMandatories(User user){
 
