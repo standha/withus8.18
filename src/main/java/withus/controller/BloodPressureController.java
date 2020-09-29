@@ -13,6 +13,7 @@ import withus.dto.Result;
 import withus.entity.RecordKey;
 import withus.entity.Tbl_Exercise_record;
 import withus.entity.Tbl_blood_pressure_pulse;
+import withus.entity.User;
 import withus.service.BloodPressureService;
 import withus.service.ExerciseService;
 import withus.service.UserService;
@@ -35,17 +36,20 @@ public class BloodPressureController extends BaseController {
     @GetMapping("/bloodPressure")
     @Statistical
     public ModelAndView getBloodPressure() {
+        User user = getUser();
         ModelAndView modelAndView = new ModelAndView("bloodPressure/bloodPressure");
         if(bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(),LocalDate.now())) == null){
             modelAndView.addObject("contraction","");
             modelAndView.addObject("pressure", "");
             modelAndView.addObject("relaxation", "");
+            logger.info("id:{}, today bloodPressure:null", user.getUserId());
         }
         else{
             Tbl_blood_pressure_pulse today= bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(),LocalDate.now()));
             modelAndView.addObject("contraction", today.getContraction());
             modelAndView.addObject("pressure", today.getPressure());
             modelAndView.addObject("relaxation", today.getRelaxation());
+            logger.info("id:{}, contraction:{}, pressure:{}, relaxation:{}", user.getUserId(), today.getContraction(), today.getPressure(), today.getRelaxation());
         }
         modelAndView.addObject("type", getUser().getType());
         modelAndView.addObject("previousUrl", "/center");

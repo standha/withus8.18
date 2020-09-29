@@ -54,8 +54,8 @@ public class CenterController extends BaseController
 	@GetMapping({ "/center" })
 	public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response,@RequestParam(required = false) String token)
 	{
-		logger.info("center");
 		User user = getUser();
+		logger.info("url:{}, id:{}, type:{}, level:{}, week:{}", request.getRequestURL(), user.getUserId(), user.getType(), user.getLevel(), user.getWeek());
 		if(user.getAppToken() != null){
 			if(token != null) {
 				if (user.getAppToken().equals(token) == false) {
@@ -159,6 +159,7 @@ public class CenterController extends BaseController
 				break;
 			case CAREGIVER:
 				level = getCaretaker().getLevel();
+				System.out.println("보호자의 환자 레벨 : " + level);
 				level = level % 4;
 				break;
 		}

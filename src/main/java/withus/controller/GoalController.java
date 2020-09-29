@@ -32,6 +32,8 @@ public class GoalController extends BaseController {
         modelAndView.addObject("goal", goal.getGoal());
         modelAndView.addObject("type",typeCheck);
         modelAndView.addObject("previousUrl", "/center");
+        logger.info("id:{}, goal:{}", getUser().getUserId(), goal.getGoal());
+
         return modelAndView;
     }
 

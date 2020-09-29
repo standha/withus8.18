@@ -13,25 +13,20 @@ buildscript {
 		classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:${'1.0.10'}")
 	}
 }
-
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.3.3.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE' //gradle 6.6
 	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
-
 group = 'com.bluecore'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
-
 repositories {
 	mavenCentral()
 }
-
 apply plugin: "com.ewerk.gradle.plugins.querydsl" // Plugin 적용
-
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -45,7 +40,6 @@ dependencies {
 	testAnnotationProcessor('org.projectlombok:lombok')
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
@@ -55,13 +49,11 @@ dependencies {
 	compile("com.querydsl:querydsl-apt") // querydsl
 }
 def querydslSrcDir = 'src/main/generated' // QClass 생성 위치
-
 querydsl {
 	library = "com.querydsl:querydsl-apt"
 	jpa = true
 	querydslSourcesDir = querydslSrcDir
 }
-
 sourceSets {
 	main {
 		java {
@@ -69,23 +61,19 @@ sourceSets {
 		}
 	}
 }
-
 configurations {
 	querydsl.extendsFrom compileClasspath
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
 }
-
 compileQuerydsl{
 	options.annotationProcessorPath = configurations.querydsl
 }
 
-
 test {
 	useJUnitPlatform()
 }
-
 bootJar {
 	archiveFileName = "${archiveBaseName.get()}.${archiveExtension.get()}"
 }

@@ -38,7 +38,7 @@ public class AlarmController extends BaseController{
     @GetMapping("/medicationAlarm")
     @Statistical
     public ModelAndView getMedicationAlarm(){
-        ModelAndView modelAndView = new ModelAndView("alarm/medicationAlarm_");
+        ModelAndView modelAndView = new ModelAndView("alarm/medicationAlarm");
 
         Tbl_medication_alarm alarm = alarmService.getTodayAlarm(getConnectId());
         if(alarm.getMedicationTimeMorning() == null){

@@ -34,17 +34,20 @@ public class ExerciseController extends BaseController {
     @GetMapping("/exercise")
     @Statistical
     public ModelAndView getExercise() {
-        ModelAndView modelAndView = new ModelAndView("exercise/exercise_");
+        ModelAndView modelAndView = new ModelAndView("exercise/exercise");
         User.Type typeCheck = getUser().getType();
+        User user = getUser();
         switch (typeCheck){
             case PATIENT:
                 if(exerciseService.getExercise(new RecordKey(getUsername(), LocalDate.now()))==null){
                     modelAndView.addObject("hour", "");
                     modelAndView.addObject("minute", "");
+                    logger.info("id:{}, today exercise:null", user.getUserId());
                 }else{
                     Tbl_Exercise_record exercise = exerciseService.getExercise(new RecordKey(getUsername(), LocalDate.now()));
                     modelAndView.addObject("hour", exercise.getHour());
                     modelAndView.addObject("minute", exercise.getMinute());
+                    logger.info("id:{}, exerciseHour:{}, exerciseMinute:{}", user.getUserId(), exercise.getHour(), exercise.getMinute());
                 }
                 break;
             case CAREGIVER:

@@ -207,9 +207,8 @@ public class NoticeScheduler {
 
     //단일 PUSH cron = "0 0 20 * * *"
     //매일 20시 위더스랑 진도체크 알림
-    @Scheduled(fixedRate = 20000)
+    @Scheduled(cron = "0 0 20 * * *")
     public void noticeRecordAt20(){
-        System.out.println("20시 알림");
         List<User> patients = userService.getAllToken();
         for(User patient:patients){
             if(patient.getType().equals(User.Type.PATIENT)) {

@@ -133,6 +133,8 @@ function radioClick(){
             .then(data =>console.log(data));
 
         location.href='center';
+        //window.location.reload();
+        return false;
     });
 
     $("#buttonNo").click(function(){

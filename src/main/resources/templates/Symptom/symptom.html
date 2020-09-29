@@ -414,9 +414,9 @@
             <div class="btn-wrap type01" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
                 <input type="submit" class="btn xlg type02" disabled>
             </div>
-            <div class="btn-wrap type02">
+            <div class="btn-wrap type02" onclick="showHistory();">
                 <span class="btn xlg arrow-type02">
-                    <span onclick="showHistory();">증상 변화 기록</span>
+                    <span>증상 변화 기록</span>
                     <span class="ico-arrow2"></span>
                 </span>
             </div>
