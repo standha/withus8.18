@@ -63,6 +63,7 @@ public class CenterController extends BaseController
 			modelAndView.addObject("type", user.getType());
 			modelAndView.addObject("week", user.getWeek());
 		}
+
 		if(user.getType()== Type.CAREGIVER || user.getType()== Type.PATIENT){
 			modelAndView.addObject("goalNow",getGoalNow(getConnectId()));
 			modelAndView.addObject("level", ViewLevel(user));
