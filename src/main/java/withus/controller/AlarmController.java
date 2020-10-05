@@ -38,7 +38,7 @@ public class AlarmController extends BaseController{
     @GetMapping("/medicationAlarm")
     @Statistical
     public ModelAndView getMedicationAlarm(){
-        ModelAndView modelAndView = new ModelAndView("alarm/medicationAlarm_");
+        ModelAndView modelAndView = new ModelAndView("alarm/medicationAlarm");
 
         Tbl_medication_alarm alarm = alarmService.getTodayAlarm(getConnectId());
         if(alarm.getMedicationTimeMorning() == null){
@@ -77,8 +77,10 @@ public class AlarmController extends BaseController{
             modelAndView.addObject("medicationRecord", record.isFinished());
         }
         modelAndView.addObject("medicationAlarmOnoff",alarm.isMedicationAlarmOnoff());
-        modelAndView.addObject("type",getUser().getType());
+        User user = getUser();
+        modelAndView.addObject("type",user.getType());
         modelAndView.addObject("previousUrl","/alarm");
+        logger.info("id:'{}', alarmOnOff:'{}', morning:'{}', lunch:'{}', dinner:'{}'", user.getUserId(), alarm.isMedicationAlarmOnoff(), alarm.getMedicationTimeMorning(), alarm.getMedicationTimeLunch(), alarm.getMedicationTimeDinner());
 
         return modelAndView;
     }
@@ -87,9 +89,10 @@ public class AlarmController extends BaseController{
         ModelAndView modelAndView = new ModelAndView("alarm/pill-history");
         String username = getUsername();
         List<Tbl_medication_record> pillHistories;
-        pillHistories  = alarmService.getFinishedRecord(username);
+        pillHistories  = alarmService.getFinishedRecord(getConnectId());
         modelAndView.addObject("pillHistories", pillHistories);
         modelAndView.addObject("previousUrl", "/alarm");
+        logger.info("id:'{}'",username);
 
         return modelAndView;
     }
@@ -100,7 +103,7 @@ public class AlarmController extends BaseController{
         tbl_medication_alarm.setId(userId);
         Result.Code code;
         Tbl_medication_alarm seved = null;
-
+        logger.info("id:'{}'",userId);
         try{
             seved = alarmService.upsertMedication(tbl_medication_alarm);
             code = Result.Code.OK;
@@ -112,6 +115,7 @@ public class AlarmController extends BaseController{
                 .code(code)
                 .data(seved)
                 .build();
+
     }
 
     @PostMapping(value = "/pill-history", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -142,6 +146,7 @@ public class AlarmController extends BaseController{
         int minute = 0;
         ModelAndView modelAndView = new ModelAndView("alarm/appointments");
         Tbl_outpatient_visit_alarm appointment = alarmService.getPatientAppointment(getConnectId());
+        logger.info("id:'{}', hour:'{}', min:'{}'",appointment.getId(), appointment.getOutPatientVisitTime().getHour(), appointment.getOutPatientVisitTime().getMinute());
         if(appointment.getOutPatientVisitTime()==null || appointment.getOutPatientVisitDate()==null){
             modelAndView.addObject("hour",null);
             modelAndView.addObject("minute",null);

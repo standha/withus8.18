@@ -113,7 +113,6 @@ public class User implements Serializable, UserDetails {
 				if (gender.name().equals(name)) {
 					return gender;
 				}
-
 			}
 			return null;
 		}

@@ -244,7 +244,11 @@ function transMinute(min){
 			return min;
 		}
 		else if(min == 0){
-			return null;
+			min = "0"+min;
+			if(min.startsWith("00") )
+				return min;
+			else
+				return "0"+min;
 		}
 		else if(min.startsWith("0")){
 			return min;

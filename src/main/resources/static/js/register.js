@@ -30,7 +30,6 @@ function onFormSubmission(form) {
 
 	const caregiverValue = form.querySelector("input[name=caregiver]").value;
 	var token = form.querySelector("input[name=appToken]").value;
-	token = "testToken";
 	const user = {
 		userId: null,
 		password: null,

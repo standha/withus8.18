@@ -4,6 +4,7 @@ server:
 
 spring:
   application.name: withus1
+
   datasource:
     url: jdbc:mysql://192.168.0.223/withus?serverTimezone=Asia/Seoul
     username: withus

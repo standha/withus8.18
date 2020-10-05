@@ -19,4 +19,5 @@ public interface NatriumRecordRepository extends JpaRepository<Tbl_natrium_recor
 
     @Transactional(readOnly = true)
     List<Tbl_natrium_record>findByPk_Id(String id);
+
 }

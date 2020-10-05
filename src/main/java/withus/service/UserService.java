@@ -129,10 +129,7 @@ public class UserService implements UserDetailsService {
 	public List<User> getUserByName(){return userRepository.findByAll();}*/
 
 	@Nullable
-	public Tuple getHistory(String userid){return userRepositorySupport.findByOneUser(userid);}
-
-	@Nullable
-	public List<String> getUserIdPatient(){return userRepositorySupport.findByUserIdPatient();}
+	public List<Tuple> getMoisture(String userId){return userRepositorySupport.findMoistureWeek(userId);}
 
 	@Nullable
 	public ArrayList<String> getAllUserPlz(){return userRepository.findByAll();}

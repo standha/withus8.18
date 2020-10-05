@@ -51,27 +51,17 @@ public class CenterController extends BaseController
 		this.helperRequestService = helperRequestService;
 	}
 
-	@GetMapping({ "/achivement" })
-	@Statistical
-	public ModelAndView getGoal() {
-		ModelAndView modelAndView = new ModelAndView("achivement/achivement");
-		switch (getUser().getType()){
-			case PATIENT:
-				modelAndView.addObject("level",getUser().getLevel()/4);
-				modelAndView.addObject("previousUrl", "/center");
-				break;
-			case CAREGIVER:
-				modelAndView.addObject("level", getCaretaker().getLevel()/4);
-				modelAndView.addObject("previousUrl", "/center");
-		}
-		return modelAndView;
-	}
-
 	@GetMapping({ "/center" })
 	public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response,@RequestParam(required = false) String token)
 	{
-		logger.info("center");
 		User user = getUser();
+/*		List<Tuple> moistureTesst = userService.getMoisture(user.getUserId());
+		System.out.println(moistureTesst);
+		for(int index =0; index< moistureTesst.size(); index++){
+			System.out.println("moistureTesst = " + moistureTesst.get(index));
+		}*/
+
+		logger.info("url:{}, id:{}, type:{}, level:{}, week:{}", request.getRequestURL(), user.getUserId(), user.getType(), user.getLevel(), user.getWeek());
 		if(user.getAppToken() != null){
 			if(token != null) {
 				if (user.getAppToken().equals(token) == false) {
@@ -109,6 +99,7 @@ public class CenterController extends BaseController
 		}
 
 		ModelAndView modelAndView = new ModelAndView();
+
 		if (user.getType().equals(Type.ADMINISTRATOR)){
 			List<AllUserDTO> resultList = new ArrayList<>();
 			ArrayList<String> userFin = userService.getAllUserPlz();
@@ -123,16 +114,27 @@ public class CenterController extends BaseController
 			modelAndView.setViewName("/Admin/admin_Home");
 		}
 		else if (user.getType().equals(Type.PATIENT)) {
-			Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
-			modelAndView.setViewName("home");
-			modelAndView.addObject("count", count);
-			modelAndView.addObject("type", user.getType());
-			modelAndView.addObject("week", user.getWeek());
+			//환자 로그인 중
+			if(user.getWeek() == 0){
+				modelAndView.setViewName("home_0week");
+			}
+			else {
+				Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+				modelAndView.setViewName("home");
+				modelAndView.addObject("count", count);
+				modelAndView.addObject("type", user.getType());
+				modelAndView.addObject("week", user.getWeek());
+			}
 		}
-		else{
-			modelAndView.setViewName("home");
-			modelAndView.addObject("type", user.getType());
-			modelAndView.addObject("week", getCaretaker().getWeek());
+		else{	//보호자 로그인 중
+			if(getCaretaker().getWeek() == 0) {
+				modelAndView.setViewName("home_0week");
+			}
+			else{
+				modelAndView.setViewName("home");
+				modelAndView.addObject("type", user.getType());
+				modelAndView.addObject("week", getCaretaker().getWeek());
+			}
 		}
 
 		if(user.getType()== Type.CAREGIVER || user.getType()== Type.PATIENT){
@@ -150,7 +152,6 @@ public class CenterController extends BaseController
 		for(int index=0; index<userFin.size(); index++){
 			System.out.println(userFin.get(index));
 		};
-
 		System.out.println("resultList = " + resultList.get(0).getGuserId());
 		return modelAndView;
 	}
@@ -164,6 +165,7 @@ public class CenterController extends BaseController
 				break;
 			case CAREGIVER:
 				level = getCaretaker().getLevel();
+				System.out.println("보호자의 환자 레벨 : " + level);
 				level = level % 4;
 				break;
 		}

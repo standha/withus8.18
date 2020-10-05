@@ -23,26 +23,17 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
     public UserRepositorySupport(JPAQueryFactory queryFactory) {
         super(User.class);
         this.queryFactory = queryFactory;
+
     }
-    public List<String> findByUserIdPatient(){
-        QUser patient = QUser.user;
-        return queryFactory.select(patient.userId).from(patient)
-                .where(patient.type.eq(User.Type.PATIENT))
-                .orderBy(patient.registrationDateTime.asc())
+
+
+    public List<Tuple> findMoistureWeek(String userId){
+        QTbl_mositrue_record mr = QTbl_mositrue_record.tbl_mositrue_record;
+        return queryFactory.select(mr.intake, mr.week)
+                .from(mr)
+                .where(mr.pk.id.eq(userId))
+                .groupBy(mr.week)
                 .fetch();
-    }
-    public Tuple findByOneUser(String userid){
-        QUser patient = QUser.user;
-        QUser caregiver = QUser.user.caregiver;
-        QWwithusEntryHistory history = QWwithusEntryHistory.wwithusEntryHistory;
-        return queryFactory.select(patient.userId, patient.password, patient.name
-        ,caregiver.userId, caregiver.password, history.key.entry.code).from(patient)
-                .leftJoin(caregiver).on(patient.caregiver.contact.eq(caregiver.contact))
-                .leftJoin(history).on(patient.userId.eq(history.key.user.userId))
-                .where(patient.type.eq(User.Type.PATIENT))
-                .where(patient.userId.eq(userid))
-                .orderBy(history.dateTime.desc())
-                .fetchFirst();
     }
 }
 

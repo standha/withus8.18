@@ -1,5 +1,5 @@
 $(function(){
-	
+
 	jQuery.fn.center = function () {
 		this.css("position","fixed");
 		return this;

@@ -25,7 +25,7 @@
 		<tr th:each="user : ${user}">
 			<td th:text="${user.name}">환자 이름</td>
 			<td th:text="${user.userId}">환자 ID</td>
-"			<td th:text="${user.password}">환자 PW</td>
+			<td th:text="${user.password}">환자 PW</td>
 			<td th:text="${user.birthdate}">환자 생년월일</td>
 			<td th:text="${user.gender}">환자 전화번호</td>
 			<td th:text="${user.contact}">환자 성별</td>
@@ -34,7 +34,8 @@
 			<td th:text="${user.guserPassword}">보호자 PW</td>
 			<td th:text="${user.guserContact}">보호자 전화번호</td>
 			<td th:text="${user.currentCode}">위더스랑 최근 코드</td>
-			<td><input type="button" id="test" class="test" value="상세보기" th:onclick="location.href=/user/'${user.userId})'"></td>
+			<!--<td><input type="button" id="test" class="test" value="상세보기" th:onclick="'location.href=/user/'+'@{user.userId}'"></td>-->
+			<td><input type="button" id="test" class="test" value="상세보기" th:onclick="'window.location.href = \'' + @{/user/{userId}(userId=${user.userId})} + '\''"></td>
 		</tr>
 		</tbody>
 	</table>

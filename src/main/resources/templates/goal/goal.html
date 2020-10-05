@@ -166,6 +166,25 @@
         </div>
     </div>
 
+    <div class="popup pop-type01" id="layerSelectType" style="display: none">
+        <div class="pop-wrap">
+            <!-- <a href="javascript:void(0);" class="pop-close"></a> -->
+            <div class="popup-header"></div>
+            <div class="popup-body">
+                <div class="pop-tit" id="popUp1">
+                </div>
+                <div class="pop-cont" id="popUp2">
+                </div>
+                <div class="pop-desc">목표를 변경하고 싶으면 ‘수정’ 버튼을 눌러주세요.</div>
+            </div>
+            <div class="btn-wrap grid2">
+                <button class="btn xlg type07" id="buttonNo">수정</button>
+                <button class="btn xlg type02" id="buttonOk">확인</button>
+            </div>
+        </div>
+    </div>
+    <div class="dim-layer" style="display: none" id="dim"></div>
+
 
     <div class = "container" id="content" th:if = "${type} == ${T(withus.entity.User.Type).CAREGIVER} ">
         <div class="cont-wrap type01">

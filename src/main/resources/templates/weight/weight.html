@@ -56,18 +56,14 @@
                             <input type="hidden" id="weight-put-action" th:attr="value=@{/weight-history}">
                             <!-- 환자가 로그인 중 -->
                             <div class="insert" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
-                                <input id="input1" class="num3" placeholder="--.-"
-                                       type="text" name="weight" onkeypress="return isNumberKey(event)"
-                                       onkeyup="this.value=this.value.replace(/[\ㄱ-ㅎㅏ-ㅣ가-힣]/g, '');"
-                                        value="0" th:value="${weight}">
+                                    <input id="input1" class="num3" placeholder="--.-" min="0"
+                                           type="number" name="weight" th:value="${weight}" step="0.1">
                                 <span>Kg</span>
                             </div>
                             <!-- 보호자가 로그인 중 -->
                             <div class="insert" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
-                                <input id="input1" class="num3"  placeholder="--"
-                                       type="text" name="weight" onkeypress="return isNumberKey(event)"
-                                       onkeyup="this.value=this.value.replace(/[\ㄱ-ㅎㅏ-ㅣ가-힣]/g, '');"
-                                       value="0" th:value="${weight}" disabled>
+                                <input id="input1" class="num3" placeholder="--.-"
+                                        type="number" name="weight" th:value="${weight}" step="0.1" disabled>
                                 <span>Kg</span>
                             </div>
                         </div>
@@ -78,7 +74,7 @@
                 <button class="btn xlg type01" type="submit">입력</button>
             </div>
             <div th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}" class="btn-wrap type01">
-                <button class="btn xlg type01" type="submit" disabled>입력</button>
+                <button class="btn xlg type02" type="submit" disabled>입력</button>
             </div>
             </form>
         </div>

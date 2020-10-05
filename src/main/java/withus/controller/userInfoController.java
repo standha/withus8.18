@@ -19,18 +19,12 @@ public class userInfoController extends BaseController {
     public userInfoController(AuthenticationFacade authenticationFacade, UserService userService){
         super(userService, authenticationFacade);
     }
-/*
-
-    @GetMapping("/user/{userId}")
-    public ModelAndView aaa(@PathVariable("userId") String userId) {
-        // @pathVariable, @ParameterValue, @Header에
-    }
-*/
 
     @GetMapping("/changeInfo")
     public ModelAndView getUserInfo() {
         ModelAndView modelAndView = new ModelAndView("/changeInfo");
         User user = getUser();
+        logger.info("id:'{}',name:'{}', contact:'{}'", user.getUserId(), user.getUsername(), user.getContact());
         if(user.getType() == User.Type.PATIENT && user.getCaregiver() != null){
             modelAndView.addObject("caregiver_contact", user.getCaregiver().getContact());
         }else if(user.getType() == User.Type.PATIENT && user.getCaregiver() == null){
