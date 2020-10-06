@@ -18,12 +18,12 @@
 등록 환자 목록
 	<table id="foo-table" class="table table-bordered">
 		<thead>
-		<tr><th>No </th><th>환자 이름</th><th>환자 ID</th><th>환자 PW</th><th>환자 생년월일</th><th>환자 전화번호</th><th>환자 성별</th>
+		<tr><th>No</th><th>환자 이름</th><th>환자 ID</th><th>환자 PW</th><th>환자 생년월일</th><th>환자 전화번호</th><th>환자 성별</th>
 			<th>보호자 이름</th><th>보호자 ID</th><th>보호자 PW</th><th>보호자 전화번호</th><th>위더스랑 최근 코드</th><th>환자 상세보기</th></tr>
 		</thead>
 		<tbody>
 		<tr th:each="user : ${user}">
-			<td th:text= "0"> no </td>
+			<td th:text= "0">no</td>
 			<td th:text="${user.name}">환자 이름</td>
 			<td th:text="${user.userId}">환자 ID</td>
 			<td th:text="${user.password}">환자 PW</td>

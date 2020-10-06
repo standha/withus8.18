@@ -49,29 +49,79 @@
 
     <table id="foo-table" class="table table-bordered">
         <thead>
-        <tr><th>주차</th><th>요</th><th>수분섭취량</th></tr>
+        <tr><th>주차</th><th>요일</th><th>수분섭취량</th></tr>
         </thead>
-        <tbody>
-        <tr th:each="weekAsc : ${weekAsc}">
-            <td th:text="${weekAsc.week}">주차</td>
-            <td th:text="${weekAsc.pk.date}">요일</td>
-            <td th:text="${weekAsc.intake}">수분섭취량</td>
-        </tr>
+        <tbody id="history-table-data">
+<!--        <tr th:each="weekAsc : ${weekAsc}">a-->
+<!--            <td th:text="${weekAsc.week}">주차</td>-->
+<!--            <td th:text="${weekAsc.pk.date}">요일</td>-->
+<!--            <td th:text="${weekAsc.intake}">수분섭취량</td>-->
+<!--        </tr>-->
         </tbody>
     </table>
-    <table id="foo-table" class="table table-bordered">
-        <thead>
-        <tr><th>주차</th><th>평균</th><th>수분섭취량</th></tr>
-        </thead>
-        <tbody>
-        <tr th:each="weekAvg : ${weekAvg}">
-            <td th:text="${weekAvg.week}">주차</td>
-            <td th:text="${weekAvg.week} + '주차 평균'">요일</td>
-            <td th:text="${weekAvg.intake}">수분섭취량</td>
-        </tr>
-        </tbody>
-    </table>
+<!--    <table id="foo-table" class="table table-bordered">-->
+<!--        <thead>-->
+<!--        <tr><th>주차</th><th>평균</th><th>수분섭취량</th></tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="weekAvg : ${weekAvg}">-->
+<!--            <td th:text="${weekAvg.week}">주차</td>-->
+<!--            <td th:text="${weekAvg.week} + '주차 평균'">요일</td>-->
+<!--            <td th:text="${weekAvg.intake}">수분섭취량</td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
 </div>
+<script th:inline="javascript">
 
+    /*<![CDATA[*/
+    var weekAsc = /*[[ ${weekAsc} ]]*/;
+    var weekAvg = /*[[ ${weekAvg} ]]*/;
+    /*]]*/
+
+    //var weekAscItem = "<tr>";
+    var week = ['일', '월', '화', '수', '목', '금', '토'];
+    var weekcount = 0;
+    var temp;
+    for(i=0; i<weekAsc.length; i++)
+    {
+        temp = weekAsc[i].week;
+        if(temp != weekAvg[weekcount].week)
+        {
+            var weekAvgItem = "<tr>";
+            weekAvgItem += "<td>" + weekAvg[weekcount].week + "주차" +"</td>";
+            weekAvgItem += "<td>" + weekAvg[weekcount].week + "주차 평균" +"</td>";
+            weekAvgItem += "<td>" + weekAvg[weekcount].intake +"</td>";
+            weekAvgItem += "</tr>";
+            $('#history-table-data').append(weekAvgItem);
+            weekcount++;
+        }
+
+        var weekAscItem = "<tr>";
+        weekAscItem += "<td>" + weekAsc[i].week + "</td>";
+        var day = new Date(weekAsc[i].pk.date.substr(0, 4), weekAsc[i].pk.date.substr(5, 2)-1, weekAsc[i].pk.date.substr(8, 2)).getDay();
+        var dayLabel = week[day];
+        weekAscItem += "<td>" + dayLabel + "</td>";
+        weekAscItem += "<td>" + weekAsc[i].intake + "</td>";
+        weekAscItem += "</tr>";
+        $('#history-table-data').append(weekAscItem);
+
+        if(i == weekAsc.length-1)       //마지막 주차
+        {
+            var weekAvgItem = "<tr>";
+            weekAvgItem += "<td>" + weekAvg[weekcount].week + "주차" +"</td>";
+            weekAvgItem += "<td>" + weekAvg[weekcount].week + "주차 평균" +"</td>";
+            weekAvgItem += "<td>" + weekAvg[weekcount].intake +"</td>";
+            weekAvgItem += "</tr>";
+            $('#history-table-data').append(weekAvgItem);
+        }
+
+    }
+
+
+
+    var temp;
+
+</script>
 </body>
 </html>
