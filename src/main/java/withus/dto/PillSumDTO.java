@@ -12,7 +12,7 @@ public class PillSumDTO {
         return recordSum;
     }
 
-    public PillSumDTO(Integer week, Long recordSum){
+    public PillSumDTO(Integer week, Long recordSum) {
         this.week = week;
         this.recordSum = recordSum;
     }

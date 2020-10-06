@@ -52,12 +52,14 @@ public class CenterController extends BaseController {
     @GetMapping({"/center"})
     public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response, @RequestParam(required = false) String token) {
         User user = getUser();
-        logger.trace("id:{}, url:{}, type:{}, level:{}, week:{}", user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek());
+        logger.info("id:{}, url:{}, type:{}, level:{}, week:{}", user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek());
+
         if (user.getAppToken() != null) {
             if (token != null) {
                 if (user.getAppToken().equals(token) == false) {
                     Result.Code code;
                     user.setAppToken(token);
+
                     try {
                         user = userService.upsertUser(user);
                         code = Result.Code.OK;
@@ -65,6 +67,7 @@ public class CenterController extends BaseController {
                         logger.error(exception.getLocalizedMessage(), exception);
                         code = Result.Code.ERROR_DATABASE;
                     }
+
                     Result.<User>builder()
                             .code(code)
                             .data(user)
@@ -75,6 +78,7 @@ public class CenterController extends BaseController {
             if (token != null) {
                 Result.Code code;
                 user.setAppToken(token);
+
                 try {
                     user = userService.upsertUser(user);
                     code = Result.Code.OK;
@@ -82,6 +86,7 @@ public class CenterController extends BaseController {
                     logger.error(exception.getLocalizedMessage(), exception);
                     code = Result.Code.ERROR_DATABASE;
                 }
+
                 Result.<User>builder()
                         .code(code)
                         .data(user)
@@ -90,9 +95,11 @@ public class CenterController extends BaseController {
         }
 
         ModelAndView modelAndView = new ModelAndView();
+
         if (user.getType().equals(Type.ADMINISTRATOR)) {
             List<AllUserDTO> resultList = new ArrayList<>();
             ArrayList<String> userFin = userService.getAllUserPlz();
+
             for (String aUserFin : userFin) {
                 resultList.add(AllUserDTO.fromString(aUserFin));
             }
@@ -134,9 +141,9 @@ public class CenterController extends BaseController {
             resultList.add(AllUserDTO.fromString(aUserFin));
         }
 
-
         return modelAndView;
     }
+
 
     public Integer ViewLevel(User user) {
         Integer level = 1;
@@ -153,6 +160,7 @@ public class CenterController extends BaseController {
         }
         return level;
     }
+
 
     public String getGoalNow(String username) {
         Integer goalCheck = goalService.getGoalId(username).getGoal();
@@ -190,6 +198,7 @@ public class CenterController extends BaseController {
                 goalNow = "주 3회, 최소 30분 이상 운동";
                 break;
         }
+
         return goalNow;
     }
 }

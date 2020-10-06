@@ -14,7 +14,7 @@ public class MoistureAvgDTO {
     }
 
 
-    public MoistureAvgDTO(Integer week, Double intake){
+    public MoistureAvgDTO(Integer week, Double intake) {
         this.week = week;
         this.intake = intake;
     }

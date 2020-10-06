@@ -20,8 +20,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(indexes = {
-	@Index(columnList = "dateTime"),
-	@Index(columnList = "dealtWith")
+        @Index(columnList = "dateTime"),
+        @Index(columnList = "dealtWith")
 })
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
@@ -29,26 +29,26 @@ import lombok.NoArgsConstructor;
 @Builder
 @Getter
 public class WithusHelpRequest {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	@EqualsAndHashCode.Include
-	private int requestId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    @EqualsAndHashCode.Include
+    private int requestId;
 
-	@Column(columnDefinition = "TIMESTAMP")
-	@Builder.Default
-	private final LocalDateTime dateTime = LocalDateTime.now();
+    @Column(columnDefinition = "TIMESTAMP")
+    @Builder.Default
+    private final LocalDateTime dateTime = LocalDateTime.now();
 
-	/**
-	 * 위더스 도우미 호출 처리가 완료되었는지 (호출한 환자와의 면담 완료 등)
-	 */
-	@Column(columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE COMMENT '위더스 도우미 호출 처리가 완료되었는지 여부 (호출한 환자와의 면담 완료 등)'")
-	private boolean dealtWith;
+    /**
+     * 위더스 도우미 호출 처리가 완료되었는지 (호출한 환자와의 면담 완료 등)
+     */
+    @Column(columnDefinition = "BIT(1) NOT NULL DEFAULT FALSE COMMENT '위더스 도우미 호출 처리가 완료되었는지 여부 (호출한 환자와의 면담 완료 등)'")
+    private boolean dealtWith;
 
-	@OneToOne
-	@JoinColumn(columnDefinition = "VARCHAR(128) NOT NULL")
-	private User user;
+    @OneToOne
+    @JoinColumn(columnDefinition = "VARCHAR(128) NOT NULL")
+    private User user;
 
-	@Column(name = "helpCode")
-	private String helpCode;
+    @Column(name = "helpCode")
+    private String helpCode;
 }

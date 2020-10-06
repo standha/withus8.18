@@ -41,14 +41,16 @@ public class WwithusController extends BaseController {
     @GetMapping("/wwithus")
     public ModelAndView getWwithus(HttpServletRequest request) {
         User user = getUser();
-        logger.info("id:{},type:{} ,url:{}", user.getUserId(), user.getType(), request.getRequestURL());
+        logger.info("wwithus id:{}, type:{}, week:{}, url:{}", user.getUserId(), user.getType(), user.getWeek(), request.getRequestURL());
         ModelAndView modelAndView = new ModelAndView("wwithus/wwithus.html");
         modelAndView.addObject("previousUrl", "/home");
         modelAndView.addObject("userType", user.getType());
+
         if (user.getType() == User.Type.PATIENT) {
             Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
+
         return modelAndView;
     }
 
@@ -58,14 +60,17 @@ public class WwithusController extends BaseController {
     public Result<List<ChatBalloon>> getHistories(HttpServletRequest request) {
         Result.Code code = Result.Code.OK;
         User user = getUser();
+
         if (user.getType() == User.Type.CAREGIVER) {
             user = userService.getUserByCaregiverId(user.getUserId());
         }
+
         LocalDate today = LocalDate.now();
         List<ChatBalloon> data;
+
         try {
             data = wwithusService.getWwithusEntryHistories(user, today);
-            logger.info("id:{},type:{} ,url:{}, withusHistory:{}", user.getUserId(), user.getType(), request.getRequestURL(), data.size());
+            logger.info("histories id:{}, type:{}, week:{}, url:{}, withusHistory:{}", user.getUserId(), user.getType(), user.getWeek(), request.getRequestURL(), data.size());
             /*
              * TODO: 재진입 시에 취할 행동.
              *  의도한 것은
@@ -120,7 +125,7 @@ public class WwithusController extends BaseController {
         } catch (Utility.NoHisException nh) {
             User uesrTest = getUser();
             data = wwithusService.getNoHis(uesrTest);
-            logger.info("id:{},type:{}, withusHistory:{}", uesrTest.getUserId(), uesrTest.getType(), data.getCode());
+            logger.error("request-next history none id:{}, type:{}, NextCode:{}", uesrTest.getUserId(), uesrTest.getType(), wwithusEntryRequest.getNextCode());
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
         }

@@ -31,81 +31,80 @@ import java.time.Month;
 import java.util.List;
 
 @Controller
-public class AdminHomeController extends AdminBaseController
-{
-	protected final Logger logger = LoggerFactory.getLogger(getClass());
-	private final GoalService goalService;
-	private final MoistureNatriumService moistureNatriumService;
-	private final AdminService adminService;
+public class AdminHomeController extends AdminBaseController {
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
+    private final GoalService goalService;
+    private final MoistureNatriumService moistureNatriumService;
+    private final AdminService adminService;
 
-	@Autowired
-	public AdminHomeController(AuthenticationFacade authenticationFacade, UserService userService, GoalService goalService, AdminService adminService,
-							   MoistureNatriumService moistureNatriumService)
-	{
-		super(userService, authenticationFacade);
-		this.goalService = goalService;
-		this.moistureNatriumService = moistureNatriumService;
-		this.adminService = adminService;
-	}
+    @Autowired
+    public AdminHomeController(AuthenticationFacade authenticationFacade, UserService userService, GoalService goalService, AdminService adminService,
+                               MoistureNatriumService moistureNatriumService) {
+        super(userService, authenticationFacade);
+        this.goalService = goalService;
+        this.moistureNatriumService = moistureNatriumService;
+        this.adminService = adminService;
+    }
 
-	@GetMapping({ "/adminHome" })
-	public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response)
-	{
-		ModelAndView modelAndView = new ModelAndView("/Admin/admin_home");
-		return modelAndView;
-	}
-	@GetMapping("/user/{userId}")
-	public ModelAndView viewPatient(@PathVariable("userId") String userId) {
-		// @pathVariable, @ParameterValue, @Header
-		ModelAndView mav = new ModelAndView();
-		HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
-		mav.addObject("patient", headerInfo);
-		List<HelpRequestDTO> helpRequestAsc = adminService.getHelpRequestAsc();
+    @GetMapping({"/adminHome"})
+    public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response) {
+        ModelAndView modelAndView = new ModelAndView("/Admin/admin_home");
+        return modelAndView;
+    }
 
-		mav.setViewName("/Admin/admin_center");
-		return mav;
-	}
-	@GetMapping("/admin_moistureRecord/{userId}")
-	public ModelAndView adminMoistureRecord(@PathVariable("userId") String userId) {
-		ModelAndView mav = new ModelAndView();
-		HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
-		List<MoistureAvgDTO> moistureAvg = adminService.getMoistureAvg(userId) == null ? null : adminService.getMoistureAvg(userId);
-		List<Tbl_mositrue_record> moistureAsc = adminService.getMoistureAsc(userId) == null ? null : adminService.getMoistureAsc(userId);
-		mav.addObject("weekAsc", moistureAsc);
-		mav.addObject("weekAvg", moistureAvg);
-		mav.addObject("patient", headerInfo);
-		mav.setViewName("/Admin/admin_moistureRecord");
-		return mav;
-	}
+    @GetMapping("/user/{userId}")
+    public ModelAndView viewPatient(@PathVariable("userId") String userId) {
+        // @pathVariable, @ParameterValue, @Header
+        ModelAndView mav = new ModelAndView();
+        HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
+        mav.addObject("patient", headerInfo);
+        List<HelpRequestDTO> helpRequestAsc = adminService.getHelpRequestAsc();
 
-	@GetMapping("/admin_pillRecord/{userId}")
-	public ModelAndView adminPillRecord(@PathVariable("userId") String userId){
-		ModelAndView mav = new ModelAndView();
-		HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
-		List<PillSumDTO> pillSum = adminService.getPillSum(userId);
-		List<Tbl_medication_record> pillAsc = adminService.getPillAsc(userId);
-		mav.addObject("pillSum",pillSum);
-		mav.addObject("patient", headerInfo);
-		mav.addObject("pillAsc", pillAsc);
-		mav.setViewName("/Admin/admin_pillRecord");
-		return mav;
-	 }
+        mav.setViewName("/Admin/admin_center");
+        return mav;
+    }
 
-	@GetMapping("/adimn_withusHelpRequest")
-	public ModelAndView adminWithusHelpRequest(){
-		ModelAndView mav = new ModelAndView();
-		List<HelpRequestDTO> helpRequestAsc = adminService.getHelpRequestAsc();
-		mav.addObject("helpRequestAsc",helpRequestAsc);
-		mav.setViewName("/Admin/admin_withusHelpRequest");
-		return mav;
-	}
+    @GetMapping("/admin_moistureRecord/{userId}")
+    public ModelAndView adminMoistureRecord(@PathVariable("userId") String userId) {
+        ModelAndView mav = new ModelAndView();
+        HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
+        List<MoistureAvgDTO> moistureAvg = adminService.getMoistureAvg(userId) == null ? null : adminService.getMoistureAvg(userId);
+        List<Tbl_mositrue_record> moistureAsc = adminService.getMoistureAsc(userId) == null ? null : adminService.getMoistureAsc(userId);
+        mav.addObject("weekAsc", moistureAsc);
+        mav.addObject("weekAvg", moistureAvg);
+        mav.addObject("patient", headerInfo);
+        mav.setViewName("/Admin/admin_moistureRecord");
+        return mav;
+    }
 
-	@PostMapping(value="/logout")
-	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (auth != null){
-			new SecurityContextLogoutHandler().logout(request, response, auth);
-		}
-		return "redirect:/Login/admin_login?logout";
-	}
+    @GetMapping("/admin_pillRecord/{userId}")
+    public ModelAndView adminPillRecord(@PathVariable("userId") String userId) {
+        ModelAndView mav = new ModelAndView();
+        HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
+        List<PillSumDTO> pillSum = adminService.getPillSum(userId);
+        List<Tbl_medication_record> pillAsc = adminService.getPillAsc(userId);
+        mav.addObject("pillSum", pillSum);
+        mav.addObject("patient", headerInfo);
+        mav.addObject("pillAsc", pillAsc);
+        mav.setViewName("/Admin/admin_pillRecord");
+        return mav;
+    }
+
+    @GetMapping("/adimn_withusHelpRequest")
+    public ModelAndView adminWithusHelpRequest() {
+        ModelAndView mav = new ModelAndView();
+        List<HelpRequestDTO> helpRequestAsc = adminService.getHelpRequestAsc();
+        mav.addObject("helpRequestAsc", helpRequestAsc);
+        mav.setViewName("/Admin/admin_withusHelpRequest");
+        return mav;
+    }
+
+    @PostMapping(value = "/logout")
+    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "redirect:/Login/admin_login?logout";
+    }
 }

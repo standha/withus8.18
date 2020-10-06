@@ -120,13 +120,13 @@ public class NoticeScheduler {
             if (tomorrow.equals(visit.getOutPatientVisitDate())) {
                 User user = userService.getUserById(visit.getId());
                 visitToken.add(user.getAppToken());
-                logger.trace("id:{}, type:{}, push:{}", user.getUserId(),user.getType(), "One day before the outpatient treatment");
+                logger.trace("id:{}, type:{}, push:{}", user.getUserId(), user.getType(), "One day before the outpatient treatment");
                 User guser = user.getCaregiver();
                 if (guser == null) {
                     break;
                 } else {
                     visitToken.add(guser.getAppToken());
-                    logger.trace("id:{}, type:{}, patientId:{}, push:{}", guser.getUserId(),guser.getType(), user.getUserId(),"One day before the outpatient treatment");
+                    logger.trace("id:{}, type:{}, patientId:{}, push:{}", guser.getUserId(), guser.getType(), user.getUserId(), "One day before the outpatient treatment");
                 }
             }
         }
@@ -149,13 +149,13 @@ public class NoticeScheduler {
             if (date.isEqual(visit.getOutPatientVisitDate()) && time.getHour() == visit.getOutPatientVisitTime().getHour() && time.getMinute() == visit.getOutPatientVisitTime().getMinute()) {
                 User user = userService.getUserById(visit.getId());
                 visitToken.add(user.getAppToken());
-                logger.trace("id:{}, type:{}, push:{}", user.getUserId(),user.getType(), "2 hours before the outpatient treatment");
+                logger.trace("id:{}, type:{}, push:{}", user.getUserId(), user.getType(), "2 hours before the outpatient treatment");
                 User guser = user.getCaregiver();
                 if (guser == null) {
                     break;
                 } else {
                     visitToken.add(guser.getAppToken());
-                    logger.trace("id:{}, type:{}, patientId:{}, push:{}", guser.getUserId(),guser.getType(), user.getUserId(), "2 hours before the outpatient treatment");
+                    logger.trace("id:{}, type:{}, patientId:{}, push:{}", guser.getUserId(), guser.getType(), user.getUserId(), "2 hours before the outpatient treatment");
                 }
             }
         }

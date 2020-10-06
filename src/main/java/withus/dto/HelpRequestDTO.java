@@ -12,7 +12,7 @@ public class HelpRequestDTO {
     private String helpCode;
 
 
-    public HelpRequestDTO(LocalDateTime requestDateTime, String name, String userID, String contact, String caregiverContact, String helpCode){
+    public HelpRequestDTO(LocalDateTime requestDateTime, String name, String userID, String contact, String caregiverContact, String helpCode) {
         this.requestDateTime = requestDateTime;
         this.name = name;
         this.userId = userID;
