@@ -106,11 +106,7 @@ public class CenterController extends BaseController
 			for (String aUserFin : userFin) {
 				resultList.add(AllUserDTO.fromString(aUserFin));
 			}
-			System.out.println("---------------1---------------------");
-			System.out.println(userFin);
-			System.out.println("---------------2---------------------");
 			modelAndView.addObject("user", resultList);
-			System.out.println("---------------2---------------------");
 			modelAndView.setViewName("/Admin/admin_Home");
 		}
 		else if (user.getType().equals(Type.PATIENT)) {
@@ -142,17 +138,6 @@ public class CenterController extends BaseController
 			modelAndView.addObject("level", ViewLevel(user));
 			modelAndView.addObject("user", user);
 		}
-
-	List<AllUserDTO> resultList = new ArrayList<>();
-		ArrayList<String> userFin = userService.getAllUserPlz();
-		for (String aUserFin : userFin) {
-			resultList.add(AllUserDTO.fromString(aUserFin));
-		}
-		System.out.println(userFin);
-		for(int index=0; index<userFin.size(); index++){
-			System.out.println(userFin.get(index));
-		};
-		System.out.println("resultList = " + resultList.get(0).getGuserId());
 		return modelAndView;
 	}
 

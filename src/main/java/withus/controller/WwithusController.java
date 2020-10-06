@@ -21,6 +21,8 @@ import withus.service.UserService;
 import withus.service.WwithusService;
 import withus.util.Utility;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class WwithusController extends BaseController {
 	private final WwithusService wwithusService;
@@ -33,7 +35,10 @@ public class WwithusController extends BaseController {
 	}
 
 	@GetMapping("/wwithus")
-	public ModelAndView getWwithus() {
+	public ModelAndView getWwithus(HttpServletRequest request)
+	{
+		User user = getUser();
+		logger.info("id:{},type:{} ,url:{}", user.getUserId(),user.getType(), request.getRequestURL());
 		ModelAndView modelAndView = new ModelAndView("wwithus/wwithus.html");
 		modelAndView.addObject("previousUrl", "/home");
 		modelAndView.addObject("userType", getUser().getType());
@@ -44,7 +49,7 @@ public class WwithusController extends BaseController {
 
 	@GetMapping("/wwithus/histories")
 	@ResponseBody
-	public Result<List<ChatBalloon>> getHistories() {
+	public Result<List<ChatBalloon>> getHistories(HttpServletRequest request) {
 		Result.Code code = Result.Code.OK;
 		User user = getUser();
 		if(user.getType() == User.Type.CAREGIVER){
@@ -54,6 +59,7 @@ public class WwithusController extends BaseController {
 		List<ChatBalloon> data;
 		try {
 			data = wwithusService.getWwithusEntryHistories(user, today);
+			logger.info("id:{},type:{} ,url:{}, withusHistory:{}", user.getUserId(),user.getType(), request.getRequestURL(), data.size());
 			/*
 			 * TODO: 재진입 시에 취할 행동.
 			 *  의도한 것은
@@ -85,6 +91,7 @@ public class WwithusController extends BaseController {
 	public Result.Code deleteHistories() {
 		User user = getUser();
 		LocalDate today = LocalDate.now();
+		logger.info("id:{}, type:{}", user.getUserId(), user.getType());
 
 		return wwithusService.deleteWwithusEntryHistories(user, today);
 	}
@@ -98,16 +105,16 @@ public class WwithusController extends BaseController {
 		try {
 			User user = getUser();
 			wwithusEntryRequest.setUser(user);
-
+			logger.info("id:{},type:{}", user.getUserId(),user.getType());
 			LocalDate today = LocalDate.now();
 			wwithusEntryRequest.setDate(today);
-
 			data = wwithusService.getWwithusEntryAndSaveHistory(wwithusEntryRequest);
 			code = Result.Code.OK;
 
 		}catch (Utility.NoHisException nh){
 			User uesrTest = getUser();
 			data = wwithusService.getNoHis(uesrTest);
+			logger.info("id:{},type:{}, withusHistory:{}", uesrTest.getUserId(), uesrTest.getType(), data.getCode());
 		} catch (Exception exception) {
 			logger.error(exception.getLocalizedMessage(), exception);
 		}

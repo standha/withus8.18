@@ -22,7 +22,6 @@
             <lable style="cursor:pointer">
                 <div class="cont" >
                 <span class="title-txt">
-                    <span style="font-size: xx-large">간호사는 영어로 Nurse 일본어로 看護師 중국어로 護士</span>
                 </span>
                     <div style="text-align: left" class="todo-txt" spanChange() > <p th:text="'환자 이름 : '+' '+ ${patient.name}"></div>
                     <div style="text-align: left" class="todo-txt" spanChange() > <p th:text="'환자 아이디-'+' '+ ${patient.userId}"></div>
@@ -43,40 +42,9 @@
     </header>
 
     <div class="container" id="content">
-        <ul class="main-icon">
-            <a th:href="@{/admin_pillHistory/{userId}(userId=${patient.userId})}">
-                <span class="ico-drug"></span>
-                <span>복약 기록</span>
-            </a>
-            <a th:href="@{/bloodPressure}">
-                <span class="ico-blood"></span>
-                <span>혈액/맥박 기록</span>
-            </a>
-            <a th:href="@{/exercise}">
-                <span class="ico-exercise"></span>
-                <span>운동 기록</span>
-            </a>
-            <a th:href="@{/symptom}">
-                <span class="ico-water2"></span>
-                <span>수분 기록</span>
-            </a>
-            <a th:href="@{/moistureNatrium}">
-                <span class="ico-salt"></span>
-                <span>저염식 기</span>
-            </a>
-            <a th:href="@{/weight}">
-                <span class="ico-weight"></span>
-                <span>체중 기록</span>
-            </a>
-            <a th:href="@{/weight}">
-                <span class="ico-symptom"></span>
-                <span>증상일지 기록</span>
-            </a>
-            <a th:href="@{/weight}">
-                <span class="ui-button-icon-only"></span>
-                <span>버튼클릭 기록</span>
-            </a>
-        </ul>
+       <table>
+           <!--복약기록 테이블 작성-->
+       </table>
     </div>
 </div>
 

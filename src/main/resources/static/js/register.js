@@ -77,7 +77,7 @@ function onFormSubmission(form) {
 		.then(data => {
 			console.log(data);
 			if (data.code === 'OK') {
-				window.location.href = "/home";
+				window.location.href = "/login";
 				alert("정상 적으로 회원 가입 되었습니다.");
 			} else if (data.code === 'ERROR_DUPLICATE_ID') {
 				alert("이미 존재하는 아이디 입니다.");

@@ -15,6 +15,7 @@ buildscript {
 }
 plugins {
 	id 'java'
+	id 'jacoco'
 	id 'org.springframework.boot' version '2.3.3.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE' //gradle 6.6
 	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
@@ -76,4 +77,32 @@ test {
 }
 bootJar {
 	archiveFileName = "${archiveBaseName.get()}.${archiveExtension.get()}"
+}
+jacoco {
+	toolVersion = "0.8.5"
+}
+jacocoTestReport {
+	reports {
+		html.enabled true
+		csv.enabled true
+		xml.enabled true
+	}
+}
+tasks.jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			enabled = true
+			element = 'CLASS'
+			// includes = []
+
+			limit {
+				counter = 'LINE'
+				value = 'COVEREDRATIO'
+				minimum = 0.60
+			}
+
+			excludes = []
+		}
+
+	}
 }

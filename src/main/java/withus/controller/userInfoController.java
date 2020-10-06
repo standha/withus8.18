@@ -12,6 +12,8 @@ import withus.exception.UnexpectedEnumValueException;
 import withus.service.UserService;
 import withus.util.Utility;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 @Controller
 public class userInfoController extends BaseController {
@@ -21,10 +23,10 @@ public class userInfoController extends BaseController {
     }
 
     @GetMapping("/changeInfo")
-    public ModelAndView getUserInfo() {
+    public ModelAndView getUserInfo(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("/changeInfo");
         User user = getUser();
-        logger.info("id:'{}',name:'{}', contact:'{}'", user.getUserId(), user.getUsername(), user.getContact());
+        logger.info("id:{},type:{} ,url:{}", user.getUserId(),user.getType(), request.getRequestURL());
         if(user.getType() == User.Type.PATIENT && user.getCaregiver() != null){
             modelAndView.addObject("caregiver_contact", user.getCaregiver().getContact());
         }else if(user.getType() == User.Type.PATIENT && user.getCaregiver() == null){
@@ -45,6 +47,7 @@ public class userInfoController extends BaseController {
         if (!isMissingMandatories(user)) {
             try {
                 User.Type userType = user.getType();
+                logger.info("id:{},type:{}", user.getUserId(),user.getType());
                 switch (userType) {
                     case CAREGIVER:
                         savedUser = userService.upsertUser(user);
@@ -70,6 +73,7 @@ public class userInfoController extends BaseController {
                         throw new UnexpectedEnumValueException(userType, User.Type.class);
                 }
             } catch (Exception exception) {
+                logger.info("id:{},type:{}", user.getUserId(),user.getType());
                 logger.error(exception.getLocalizedMessage(), exception);
                 code = Result.Code.ERROR_DATABASE;
             }
