@@ -48,6 +48,7 @@ public class WwithusService {
         User user = wwithusEntryRequest.getUser();
         List<String> codesToSaveAsHistories = wwithusEntryRequest.getCodesToSaveAsHistories();
         String currentCode = wwithusEntryRequest.getCurrentCode();
+
         if (user.getType() == User.Type.CAREGIVER) {
             user = userService.getUserByCaregiverId(user.getUserId());
             if (currentCode == null) {

@@ -4,6 +4,10 @@ function setMinus(testNum) {
 		//alert('아직 오늘 물을 한 잔도 마시지 않으셨어요.');
 	}else{
 		testNum = testNum - 1;
+		setTimeout(function (){
+			window.location.reload();
+		}, 300);
+
 	}
 	const mbody = {
 		intake: testNum
@@ -24,7 +28,6 @@ function setMinus(testNum) {
 		.then(response => response.json())
 		.then(data => console.log(data));
 
-	window.location.reload();
 	return false;
 }
 
@@ -46,6 +49,9 @@ function setAdd(testNum) {
 	}
 	else{
 		testNum = testNum + 1;
+		setTimeout(function (){
+			window.location.reload();
+		}, 300);
 
 	}
 	const body = {
@@ -68,7 +74,6 @@ function setAdd(testNum) {
 		.then(response => response.json())
 		.then(data => console.log(data));
 
-	window.location.reload();
 	return false;
 }
 

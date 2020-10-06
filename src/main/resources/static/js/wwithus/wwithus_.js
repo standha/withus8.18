@@ -182,7 +182,7 @@ function renderButtons(chatBalloon)
 			 * 보험 필드 toTerminate/toRewind도 같이 확인 (2020.09.11)
 			 */
 			if (answerButton.isToRewind || answerButton.toRewind) {
-				href += " deleteHistory(); sleep(666).then(() => location.reload());";
+				href += " deleteHistory(); .then(() => location.reload());";
 			} else {
 				if (answerButton.isHelpRequest || answerButton.helpRequest) {
 					href += " sendHelpRequest();";

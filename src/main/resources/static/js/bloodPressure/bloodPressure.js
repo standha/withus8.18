@@ -3,6 +3,7 @@ function onFormSubmission(form) {
         form.querySelector("input[name=pressure]").value==0 ||
         form.querySelector("input[name=relaxation]").value==0 )
     {
+        alert("모든 데이터를 입력해주세요.");
     }
     else{
          contraction = form.querySelector("input[name=contraction]").value;
