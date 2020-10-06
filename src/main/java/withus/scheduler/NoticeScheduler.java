@@ -110,23 +110,26 @@ public class NoticeScheduler {
         }
     }
 
-    //외래 진료 전날 PUSH 알림
+    //외래 진료 전날 PUSH 알림cron = "0 0 18 * * *"
     @Scheduled(cron = "0 0 18 * * *")
     public void visitNotice() {
         List<String> visitToken = new ArrayList<String>();
         LocalDate tomorrow = LocalDate.now().plusDays(1);
         List<Tbl_outpatient_visit_alarm> visits = alarmService.getVisitAlarmOn();
+
+        logger.info("tomorrow:{}", tomorrow);
+
         for (Tbl_outpatient_visit_alarm visit : visits) {
             if (tomorrow.equals(visit.getOutPatientVisitDate())) {
                 User user = userService.getUserById(visit.getId());
                 visitToken.add(user.getAppToken());
-                logger.trace("id:{}, type:{}, push:{}", user.getUserId(), user.getType(), "One day before the outpatient treatment");
+                logger.info("id:{}, type:{}, push:{}", user.getUserId(), user.getType(), "One day before the outpatient treatment");
                 User guser = user.getCaregiver();
                 if (guser == null) {
                     break;
                 } else {
                     visitToken.add(guser.getAppToken());
-                    logger.trace("id:{}, type:{}, patientId:{}, push:{}", guser.getUserId(), guser.getType(), user.getUserId(), "One day before the outpatient treatment");
+                    logger.info("id:{}, type:{}, patientId:{}, push:{}", guser.getUserId(), guser.getType(), user.getUserId(), "One day before the outpatient treatment");
                 }
             }
         }
@@ -145,11 +148,16 @@ public class NoticeScheduler {
         LocalDate date = now.toLocalDate();
         LocalTime time = now.toLocalTime().plusHours(2);
         List<Tbl_outpatient_visit_alarm> visits = alarmService.getVisitAlarmOn();
+
+        logger.info("visitNotice2 time:{}", time);
+        logger.info("visitNotice2 visits:{}", visits);
+
         for (Tbl_outpatient_visit_alarm visit : visits) {
             if (date.isEqual(visit.getOutPatientVisitDate()) && time.getHour() == visit.getOutPatientVisitTime().getHour() && time.getMinute() == visit.getOutPatientVisitTime().getMinute()) {
+
                 User user = userService.getUserById(visit.getId());
                 visitToken.add(user.getAppToken());
-                logger.trace("id:{}, type:{}, push:{}", user.getUserId(), user.getType(), "2 hours before the outpatient treatment");
+                logger.info("id:{}, type:{}, push:{}, token:{}", user.getUserId(), user.getType(), "2 hours before the outpatient treatment", user.getAppToken());
                 User guser = user.getCaregiver();
                 if (guser == null) {
                     break;
@@ -166,7 +174,7 @@ public class NoticeScheduler {
         }
     }
 
-    //위더스랑 1~8주차 PUSH알림
+    //위더스랑 1~8주차 PUSH알림 cron = "0 0 8 * * MON,TUE,THU,SAT"
     @Scheduled(cron = "0 0 8 * * MON,TUE,THU,SAT")
     public void withusNotice1() {
         List<String> tokenList = new ArrayList<String>();
@@ -211,7 +219,7 @@ public class NoticeScheduler {
             if (patient.getType().equals(User.Type.PATIENT)) {
                 logger.trace("id:{}, name:{}, push:{}", patient.getUserId(), patient.getName(), "Daily 20:00 record");
                 try {
-                    send("pill", patient.getAppToken(),
+                    send("center", patient.getAppToken(),
                             patient.getName() + "님, 오늘 심장 건강을 위해 실천하신 내용을 [위더스]에 기록하셨나요?\n 기록하지 않았다면 지금 기록해주세요!");
                 } catch (InterruptedException e) {
                     e.printStackTrace();
