@@ -64,7 +64,15 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .fetch();
         return pillSum;
     }
-
+    public List<Tbl_medication_record> findPillAsc(String userId){
+        QTbl_medication_record mr =QTbl_medication_record.tbl_medication_record;
+        List<Tbl_medication_record> pillAsc = queryFactory.selectFrom(mr)
+                .where(mr.pk.id.eq(userId))
+                .orderBy(mr.week.asc())
+                .orderBy(mr.pk.date.asc())
+                .fetch();
+        return pillAsc;
+    }
 
 }
 

@@ -56,4 +56,6 @@ public class AdminService {
 	// 3.복약기록
 	@Nullable
 	public List<PillSumDTO> getPillSum(String userId){return userRepositorySupport.findPillSum(userId);}
+	@Nullable
+	public List<Tbl_medication_record> getPillAsc(String userId){return userRepositorySupport.findPillAsc(userId);}
 }

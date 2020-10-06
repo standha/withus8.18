@@ -44,9 +44,9 @@
 
     <div class="container" id="content">
         <ul class="main-icon">
-            <a th:href="@{/bloodPressure}">
+            <a th:href="@{/admin_pillRecord/{userId}(userId=${patient.userId})}">
                 <span class="ico-drug"></span>
-                <span>복약 기록(중)</span>
+                <span>복약 기록(완)</span>
             </a>
             <a th:href="@{/bloodPressure}">
                 <span class="ico-blood"></span>

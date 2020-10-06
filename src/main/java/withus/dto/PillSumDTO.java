@@ -2,19 +2,17 @@ package withus.dto;
 
 public class PillSumDTO {
     private Integer week;
-
-
-    private Integer recordSum;
+    private Long recordSum;
 
     public Integer getWeek() {
         return week;
     }
 
-    public Integer getRecordSum() {
+    public Long getRecordSum() {
         return recordSum;
     }
 
-    public PillSumDTO(Integer week, Integer recordSum){
+    public PillSumDTO(Integer week, Long recordSum){
         this.week = week;
         this.recordSum = recordSum;
     }

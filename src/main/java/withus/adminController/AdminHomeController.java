@@ -19,6 +19,7 @@ import withus.auth.AuthenticationFacade;
 import withus.dto.HeaderInfoDTO;
 import withus.dto.MoistureAvgDTO;
 import withus.dto.PillSumDTO;
+import withus.entity.Tbl_medication_record;
 import withus.entity.Tbl_mositrue_record;
 import withus.service.AdminService;
 import withus.service.GoalService;
@@ -64,8 +65,8 @@ public class AdminHomeController extends AdminBaseController
 	public ModelAndView adminMoistureRecord(@PathVariable("userId") String userId) {
 		ModelAndView mav = new ModelAndView();
 		HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
-		List<MoistureAvgDTO> moistureAvg = adminService.getMoistureAvg(userId) == null ? null : userService.getMoistureAvg(userId);
-		List<Tbl_mositrue_record> moistureAsc = adminService.getMoistureAsc(userId) == null ? null : userService.getMoistureAsc(userId);
+		List<MoistureAvgDTO> moistureAvg = adminService.getMoistureAvg(userId) == null ? null : adminService.getMoistureAvg(userId);
+		List<Tbl_mositrue_record> moistureAsc = adminService.getMoistureAsc(userId) == null ? null : adminService.getMoistureAsc(userId);
 		mav.addObject("weekAsc", moistureAsc);
 		mav.addObject("weekAvg", moistureAvg);
 		mav.addObject("patient", headerInfo);
@@ -77,8 +78,11 @@ public class AdminHomeController extends AdminBaseController
 		ModelAndView mav = new ModelAndView();
 		HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
 		List<PillSumDTO> pillSum = adminService.getPillSum(userId);
-
+		List<Tbl_medication_record> pillAsc = adminService.getPillAsc(userId);
 		mav.addObject("pillSum",pillSum);
+		mav.addObject("patient", headerInfo);
+		mav.addObject("pillAsc", pillAsc);
+		mav.setViewName("/Admin/admin_pillRecord");
 		return mav;
 	 }
 
