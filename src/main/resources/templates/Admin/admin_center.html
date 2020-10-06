@@ -44,9 +44,9 @@
 
     <div class="container" id="content">
         <ul class="main-icon">
-            <a th:href="@{/admin_pillHistory/{userId}(userId=${patient.userId})}">
+            <a th:href="@{/bloodPressure}">
                 <span class="ico-drug"></span>
-                <span>복약 기록</span>
+                <span>복약 기록(중)</span>
             </a>
             <a th:href="@{/bloodPressure}">
                 <span class="ico-blood"></span>
@@ -56,13 +56,13 @@
                 <span class="ico-exercise"></span>
                 <span>운동 기록</span>
             </a>
-            <a th:href="@{/symptom}">
+            <a th:href="@{/admin_moistureRecord/{userId}(userId=${patient.userId})}">
                 <span class="ico-water2"></span>
-                <span>수분 기록</span>
+                <span>수분 기록(완)</span>
             </a>
             <a th:href="@{/moistureNatrium}">
                 <span class="ico-salt"></span>
-                <span>저염식 기</span>
+                <span>저염식 기록</span>
             </a>
             <a th:href="@{/weight}">
                 <span class="ico-weight"></span>

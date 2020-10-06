@@ -1,4 +1,4 @@
-package withus.dto.wwithus;
+package withus.dto;
 
 public class MoistureAvgDTO {
     Integer week;

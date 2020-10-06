@@ -1,4 +1,4 @@
-package withus.dto.wwithus;
+package withus.dto;
 
 import lombok.Builder;
 import lombok.Getter;

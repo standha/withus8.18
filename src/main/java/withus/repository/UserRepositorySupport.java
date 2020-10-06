@@ -4,8 +4,9 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
-import withus.dto.wwithus.HeaderInfoDTO;
-import withus.dto.wwithus.MoistureAvgDTO;
+import withus.dto.HeaderInfoDTO;
+import withus.dto.MoistureAvgDTO;
+import withus.dto.PillSumDTO;
 import withus.entity.*;
 
 import java.util.List;
@@ -52,5 +53,18 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
 
         return headerInfo;
     }
+    public List<PillSumDTO> findPillSum(String userId){
+        QTbl_medication_record mr = QTbl_medication_record.tbl_medication_record;
+        List<PillSumDTO> pillSum = queryFactory.select(Projections.constructor(PillSumDTO.class, mr.week, mr.finished.count()))
+                .from(mr)
+                .groupBy(mr.week)
+                .orderBy(mr.week.asc())
+                .where(mr.finished.eq(true))
+                .where(mr.pk.id.eq(userId))
+                .fetch();
+        return pillSum;
+    }
+
+
 }
 
