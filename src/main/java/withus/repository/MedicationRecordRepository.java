@@ -16,7 +16,7 @@ import java.util.Optional;
 @Repository
 public interface MedicationRecordRepository extends JpaRepository<Tbl_medication_record, RecordKey> {
     @Transactional(readOnly = true)
-    Optional<Tbl_medication_record>findByPk(RecordKey id); //실질적으로 하나의 클래인 RecordKey를 findBy함. Getter, Setter 사용에 유의
+    Optional<Tbl_medication_record>findByPk(RecordKey pk); //실질적으로 하나의 클래인 RecordKey를 findBy함. Getter, Setter 사용에 유의
 
     @Transactional(readOnly = true)
     List<Tbl_medication_record>findByPk_IdAndFinishedIsTrue(String id);

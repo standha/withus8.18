@@ -2,7 +2,7 @@ function radioClick(){
     var checklength = document.getElementsByName("check_radio").length;
     var checked;
     var goalNum;
-
+    var Item, Item2;
     for(var i=0; i<checklength; i++){
         if(document.getElementsByName("check_radio")[i].checked == true){
             checked = document.getElementsByName("check_radio")[i].value;
@@ -12,79 +12,108 @@ function radioClick(){
 
     switch(goalNum){
         case 1:
-            checked = "'" + checked +
-                "'으로 목표를 설정하셨군요.\n" +
-                "매일 심장약을 복용하신 후\n" +
-                "[위더스->알람->약물]에 기록해주세요.\n" +
-                "목표를 변경하고 싶으면 '수정'버튼을 눌러주세요";
+            $("#layerSelectType").show();
+            $("#dim").show();
+            Item = "<span class=\"bold\">'" + checked  + "'</span>";
+            Item += "<span>으로 목표를 설정하셨군요.</span>";
+            $('#popUp1').append(Item);
+            Item2 = "<span>매일 심장약을 복용하신 후<br></span>";
+            Item2 += "<span class=\"route\">" + "위더스" + "<span>" + " > " + "</span>" + "알람" +  "<span>" + " > " + "</span>" + "약물" + "</span>" + "에 기록해주세요.";
+            $('#popUp2').append(Item2);
             break;
 
         case 2:
-            checked = "'" + checked +
-                "'으로 목표를 설정하셨군요.\n" +
-                "매일 정해진 시간에 측정한 뒤\n" +
-                "[위더스->혈압/맥박]에 입력해주세요.\n" +
-                "목표를 변경하고 싶으면 '수정'버튼을 눌러주세요"
+            $("#layerSelectType").show();
+            $("#dim").show();
+            Item = "<span class=\"bold\">'" + checked  + "'</span>";
+            Item += "<span>으로 목표를 설정하셨군요.</span>";
+            $('#popUp1').append(Item);
+            Item2 = "<span>매일 정해진 시간에 측정한 뒤<br></span>";
+            Item2 += "<span class=\"route\">" + "위더스" + "<span>" + " > " + "</span>" + "혈압/맥박" + "</span>" + "</span>" + "에 기록해주세요.";
+            $('#popUp2').append(Item2);
             break;
 
         case 3:
-            checked = "'" + checked +
-                "'으로 목표를 설정하셨군요.\n" +
-                "매일 정해진 시간에 측정한 뒤\n" +
-                "[위더스->체중]에 입력해주세요.\n" +
-                "목표를 변경하고 싶으면 '수정'버튼을 눌러주세요"
+            $("#layerSelectType").show();
+            $("#dim").show();
+            Item = "<span class=\"bold\">'" + checked  + "'</span>";
+            Item += "<span>으로 목표를 설정하셨군요.</span>";
+            $('#popUp1').append(Item);
+            Item2 = "<span>매일 정해진 시간에 측정한 뒤<br></span>";
+            Item2 += "<span class=\"route\">" + "위더스" + "<span>" + " > " + "</span>" + "체중" + "</span>" + "</span>" + "에 입력해주세요.";
+            $('#popUp2').append(Item2);
             break;
 
         case 4:
-            checked = "'" + checked +
-                "'으로 목표를 설정하셨군요.\n" +
-                "하루동안 증상이 있었는지 생각하며\n" +
-                "[위더스->증상일지]에 입력해주세요.\n" +
-                "목표를 변경하고 싶으면 '수정'버튼을 눌러주세요"
+            $("#layerSelectType").show();
+            $("#dim").show();
+            Item = "<span class=\"bold\">'" + checked  + "'</span>";
+            Item += "<span>으로 목표를 설정하셨군요.</span>";
+            $('#popUp1').append(Item);
+            Item2 = "<span>하루동안 증상이 있었는지 생각하며<br></span>";
+            Item2 += "<span class=\"route\">" + "위더스" + "<span>" + " > " + "</span>" + "증상일지" + "</span>" + "</span>" + "에 입력해주세요.";
+            $('#popUp2').append(Item2);
             break;
 
         case 5:
-            checked = "'" + checked +
-                "'으로 목표를 설정하셨군요.\n" +
-                "하루동안 증상이 있었는지 생각하며\n" +
-                "[위더스->증상일지]에 입력해주세요.\n" +
-                "목표를 변경하고 싶으면 '수정'버튼을 눌러주세요"
+            $("#layerSelectType").show();
+            $("#dim").show();
+            Item = "<span class=\"bold\">'" + checked  + "'</span>";
+            Item += "<span>으로 목표를 설정하셨군요.</span>";
+            $('#popUp1').append(Item);
+            Item2 = "<span>하루동안 증상이 있었는지 생각하며<br></span>";
+            Item2 += "<span class=\"route\">" + "위더스" + "<span>" + " > " + "</span>" + "증상일지" + "</span>" + "</span>" + "에 입력해주세요.";
+            $('#popUp2').append(Item2);
             break;
 
         case 6:
-            checked = "'" + checked +
-                "'을 설정하셨군요.\n" +
-                "식사 시 염도계로 음식의 소금양을 측정하고\n" +
-                "[위더스->염분/수분]에 입력해주세요.\n" +
-                "목표를 변경하고 싶으면 '수정'버튼을 눌러주세요"
+            $("#layerSelectType").show();
+            $("#dim").show();
+            Item = "<span class=\"bold\">'" + checked  + "'</span>";
+            Item += "<span>으로 목표를 설정하셨군요.</span>";
+            $('#popUp1').append(Item);
+            Item2 = "<span>식사 시 염도계로 음식의 소금양을 측정하고<br></span>";
+            Item2 += "<span class=\"route\">" + "위더스" + "<span>" + " > " + "</span>" + "염분/수분" + "</span>" + "</span>" + "에 입력해주세요.";
+            $('#popUp2').append(Item2);
             break;
 
         case 7:
-            checked = "'" + checked +
-                "'을 목표로 설정하셨군요.\n" +
-                "매일 식사 시 염도계로 음식의 소금양을 측정하고\n" +
-                "[위더스->염분/수분]에 입력해주세요.\n" +
-                "목표를 변경하고 싶으면 '수정'버튼을 눌러주세요"
+            $("#layerSelectType").show();
+            $("#dim").show();
+            Item = "<span class=\"bold\">'" + checked  + "'</span>";
+            Item += "<span>으로 목표를 설정하셨군요.</span>";
+            $('#popUp1').append(Item);
+            Item2 = "<span>매일 식사 시 염도계로 음식의 소금양을 측정하고<br></span>";
+            Item2 += "<span class=\"route\">" + "위더스" + "<span>" + " > " + "</span>" + "염분/수분" + "</span>" + "</span>" + "에 입력해주세요.";
+            $('#popUp2').append(Item2);
             break;
 
         case 8:
-            checked = "'" + checked +
-                "'을 목표를 설정하셨군요.\n" +
-                "운동한 후 [위더스->운동]에 입력해주세요.\n" +
-                "목표를 변경하고 싶으면 '수정'버튼을 눌러주세요"
+            $("#layerSelectType").show();
+            $("#dim").show();
+            Item = "<span class=\"bold\">'" + checked  + "'</span>";
+            Item += "<span>으로 목표를 설정하셨군요.</span>";
+            $('#popUp1').append(Item);
+            Item2 = "<span>운동한 후</span>";
+            Item2 += "<span class=\"route\">" + "위더스" + "<span>" + " > " + "</span>" + "운동" + "</span>" + "</span>" + "에 입력해주세요.";
+            $('#popUp2').append(Item2);
             break;
 
         case 9:
-            checked = "'" + checked +
-                "'을 목표를 설정하셨군요.\n" +
-                "운동한 후 [위더스->운동]에 입력해주세요.\n" +
-                "목표를 변경하고 싶으면 '수정'버튼을 눌러주세요"
+            $("#layerSelectType").show();
+            $("#dim").show();
+            Item = "<span class=\"bold\">'" + checked  + "'</span>";
+            Item += "<span>으로 목표를 설정하셨군요.</span>";
+            $('#popUp1').append(Item);
+            Item2 = "<span>운동한 후</span>";
+            Item2 += "<span class=\"route\">" + "위더스" + "<span>" + " > " + "</span>" + "운동" + "</span>" + "</span>" + "에 입력해주세요.";
+            $('#popUp2').append(Item2);
             break;
+
     }
 
-    if(confirm(checked)==true){
-        console.log(goalNum + "번 목표 설정");
 
+    $("#buttonOk").click(function(){
         const body = {
             goal: goalNum
         };
@@ -105,11 +134,24 @@ function radioClick(){
 
         location.href='center';
         //window.location.reload();
-    }
-    else{
-        console.log("목표 설정 취소");
+        return false;
+    });
+
+    $("#buttonNo").click(function(){
+        $("#layerSelectType").hide();
+        $("#dim").hide();
         window.location.reload();
-    }
+        return false;
+    });
+
+    // if(confirm(checked)==true){
+    //     console.log(goalNum + "번 목표 설정");
+    //     //window.location.reload();
+    // }
+    // else{
+    //     console.log("목표 설정 취소");
+    //     window.location.reload();
+    // }
 
     return false;
 }

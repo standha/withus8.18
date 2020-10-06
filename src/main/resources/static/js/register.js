@@ -29,8 +29,7 @@ function onFormSubmission(form) {
 	const sex = sexElement? sexElement.value: null;
 
 	const caregiverValue = form.querySelector("input[name=caregiver]").value;
-	const token = form.querySelector("input[name=appToken]").value;
-
+	var token = form.querySelector("input[name=appToken]").value;
 	const user = {
 		userId: null,
 		password: null,
@@ -80,11 +79,12 @@ function onFormSubmission(form) {
 			if (data.code === 'OK') {
 				window.location.href = "/home";
 				alert("정상 적으로 회원 가입 되었습니다.");
-			} else if (data.code === 'ERROR_DUPLICATE_ID'){
+			} else if (data.code === 'ERROR_DUPLICATE_ID') {
 				alert("이미 존재하는 아이디 입니다.");
-			} else if (data.code === 'ERROR_NO_EXIST_CAREGIVER'){
+			}
+			/*} else if (data.code === 'ERROR_NO_EXIST_CAREGIVER'){
 				alert("존재하지 않는 보호자 번호 입니다. (공백 입력 또는 보호자 등록 해주세요)");
-			} else {
+			}*/ else {
 				alert("회원 가입 실패");
 			}
 		});

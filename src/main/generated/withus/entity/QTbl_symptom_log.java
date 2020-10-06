@@ -34,6 +34,8 @@ public class QTbl_symptom_log extends EntityPathBase<Tbl_symptom_log> {
 
     public final NumberPath<Integer> todaysymptom = createNumber("todaysymptom", Integer.class);
 
+    public final NumberPath<Integer> week = createNumber("week", Integer.class);
+
     public QTbl_symptom_log(String variable) {
         this(Tbl_symptom_log.class, forVariable(variable), INITS);
     }

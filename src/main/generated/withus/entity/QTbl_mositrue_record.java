@@ -26,6 +26,8 @@ public class QTbl_mositrue_record extends EntityPathBase<Tbl_mositrue_record> {
 
     public final QRecordKey pk;
 
+    public final NumberPath<Integer> week = createNumber("week", Integer.class);
+
     public QTbl_mositrue_record(String variable) {
         this(Tbl_mositrue_record.class, forVariable(variable), INITS);
     }

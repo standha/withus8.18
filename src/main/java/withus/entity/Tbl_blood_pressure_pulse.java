@@ -23,4 +23,7 @@ public class Tbl_blood_pressure_pulse {
 
     @Column(name = "pressure", columnDefinition = "int default 0")
     private Integer pressure;
+
+    @Column(name = "week")
+    private Integer week;
 }

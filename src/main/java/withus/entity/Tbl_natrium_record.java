@@ -24,5 +24,6 @@ public class Tbl_natrium_record {
     @Column(name = "dinner")
     private Integer dinner;
 
-
+    @Column(name = "week")
+    private Integer week;
 }

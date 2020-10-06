@@ -1,5 +1,6 @@
 package withus.service;
 
+import com.querydsl.core.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -11,6 +12,8 @@ import withus.auth.NoOpPasswordEncoder;
 import withus.entity.*;
 import withus.repository.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -29,6 +32,8 @@ public class UserService implements UserDetailsService {
 		this.outPatientVisitAlarmRepository = outPatientVisitAlarmRepository;
 		this.countRepository = countRepository;
 	}
+	@Autowired
+	private UserRepositorySupport userRepositorySupport;
 
 	@Override
 	@NonNull
@@ -73,6 +78,7 @@ public class UserService implements UserDetailsService {
 
 			Tbl_outpatient_visit_alarm tbl_outpatient_visit_alarm = Tbl_outpatient_visit_alarm.builder()
 					.id(saved.getUserId())
+					.visitAlarm(false)
 					.build();
 			outPatientVisitAlarmRepository.save(tbl_outpatient_visit_alarm);
 
@@ -118,6 +124,18 @@ public class UserService implements UserDetailsService {
 	public List<User> getPatient(User.Type type){
 		return userRepository.findByType(type);
 	}
+
+/*	@Nullable
+	public List<User> getUserByName(){return userRepository.findByAll();}*/
+
+	@Nullable
+	public Tuple getHistory(String userid){return userRepositorySupport.findByOneUser(userid);}
+
+	@Nullable
+	public List<String> getUserIdPatient(){return userRepositorySupport.findByUserIdPatient();}
+
+	@Nullable
+	public ArrayList<String> getAllUserPlz(){return userRepository.findByAll();}
 
 	@Nullable
 	public List<User> getPatientToken(User.Type type){

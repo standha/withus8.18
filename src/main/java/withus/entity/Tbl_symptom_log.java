@@ -34,4 +34,7 @@ public class Tbl_symptom_log {
 
     @Column(name = "todaySymptom")
     private Integer todaysymptom;
+
+    @Column(name = "week")
+    private Integer week;
 }

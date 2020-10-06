@@ -18,4 +18,7 @@ public class Tbl_mositrue_record {
 
     @Column(name = "moistureIntake")
     private Integer intake;
+
+    @Column(name = "week")
+    private Integer week;
 }

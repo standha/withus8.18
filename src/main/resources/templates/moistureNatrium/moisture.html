@@ -65,7 +65,7 @@
                 <input type="hidden" id="moisture-history-get-action" th:attr="value=@{/moisture-all-history}">
                 <input type="hidden" id="moisture-put-action" th:attr="value=@{/moisture-history}">
                 <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT}" class="btn-wrap grid2 type01">
-                    <button class="btn xlg type03" th:onclick="'setMinus(parseInt(' + ${intakeMinus} + '))'">수정</button>
+                    <button id="test1" class="btn xlg type03" th:onclick="'setMinus(parseInt(' + ${intakeMinus} + '))'">수정</button>
                     <button class="btn xlg type01" th:onclick="'setAdd(parseInt(' + ${intakePlus} + '))'">입력</button>
                 </div>
                 <div th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}" class="btn-wrap grid2 type01">
@@ -75,6 +75,23 @@
             </div>
         </div>
     </div>
+
+    <div class="popup pop-type02" id="popup" style="display:none">
+        <div class="pop-wrap">
+            <!-- <a href="javascript:void(0);" class="pop-close"></a> -->
+            <div class="popup-body">
+                <div class="pop-img">
+                    <span class="ico-water"></span>
+                </div>
+                <div class="pop-cont">
+                    <span class="bold">오늘 마신 물의 양도 충분해요!</span>
+                    <span>너무 많은 수분을 섭취하지 마세요.</span>
+                </div>
+            </div>
+            <button class="btn xlg type02" onclick="popupClose()">확인</button>
+        </div>
+    </div>
+    <div class="dim-layer" id="dim" style="display:none"></div>
     <!-- // content -->
 
     <!-- footer -->
@@ -143,6 +160,7 @@
             $('.bottle-wrap').attr('class','bottle-wrap full step05');
             break;
     }
+
 
 </script>
 </html>

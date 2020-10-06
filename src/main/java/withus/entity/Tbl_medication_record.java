@@ -18,5 +18,8 @@ public class Tbl_medication_record {
     @Column(name = "finished")
     private boolean finished;
 
+    @Column(name = "week")
+    private Integer week;
+
     public String getDateString() { return Utility.format(pk.getDate()); }
 }

@@ -1,3 +1,5 @@
+
+
 const MESSAGE_INTERVAL_MILLIS = 2000;
 const GET_FETCH_OPTIONS = {
 	method: "GET",
@@ -41,10 +43,24 @@ function onDomLoad()
 	removeChildren(balloonsAreaElement);
 	loadHistory();
 }
-
+//이미지 클릭시 원본 크기로 팝업 보기
+function popupImage(url){
+	var img = new Image();
+	var scWidth = screen.availWidth; //현재 사용중인 스크린 크기를 구함
+	var scHeight = screen.availHeight;
+	var left = (parseInt(scWidth)-650)/2; //팝업창 위치 조절
+	var top = (parseInt(scHeight)-900)/2;
+	img.src = url;
+	var img_width = img.width-500; //팝업창 크기 조절
+	var win_width = img.width-500;
+	var height = scHeight;
+	var openImage = window.open('','_blank','width='+img_width+',height='+height+',top='+top+',left='+left+',menubars=no,scrollbars=auto');
+	openImage.document.write("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=2, minimum-scale=1, user-scalable=yes,target-densitydpi=medium-dpi\"/><style>body{margin:0px;background-color: black}</style><div style='height:100vh;  display: table-cell; vertical-align: middle'><img style='width: 100%'  src = '"+url+"'width='"+win_width+"' ></div>");
+}
 /**
  * @param {Element} parent
  */
+
 function removeChildren(parent)
 {
 	console.log("removeChildren()");
@@ -108,41 +124,77 @@ function renderBalloons(objects)
 /**
  * @param {ChatBalloon} chatBalloon
  */
+function audio_play_pulse(){
+	const myAudio = document.getElementById("myAudio");
+	console.log(myAudio);
+	if(document.getElementById('p-con').className === "ico-play"){
+		myAudio.play();
+		document.getElementById('p-con').className = "ico-pause";
+	}else if(myAudio.play()){
+		myAudio.pause();
+		document.getElementById('p-con').className = "ico-play";
+	}
+}
+function getCurrentTime(){
+	const myAudio = document.getElementById("myAudio");
+	console.log("계산하고있니?");
+	console.log(myAudio.duration);
+	return myAudio.duration;
+}
 function renderBalloon(chatBalloon)
 {
 	const div = document.createElement("div");
 	div.id = chatBalloon.sequence.toString();
-	div.className = "balloons";
+	div.className = "chat-wrap manager";
 
 	const input = `<input type="hidden" value="${chatBalloon.sequence}">`;
-
+	/*th:onclick="'doImgPop(' + ${${chatBalloon.urlToImageFile}} + ')'"*/
 	let img = "";
 	if (chatBalloon.urlToImageFile)
 	{
-		img = `<img src="${chatBalloon.urlToImageFile}" alt="이미지가 표시되지 않고 있습니다.">`;
+		<!--href="#"-->
+		img = `<div class ="img-wrap>" style="width: 100%"><a class="img-thumb" style="width: 100%"> <span class="img-name"></span> <img style="width: 100%" src="${chatBalloon.urlToImageFile}" 
+onclick="popupImage('${chatBalloon.urlToImageFile}')"
+alt="이미지가 표시되지 않고 있습니다."></a></div>`
 	}
+
 
 	let audio = "";
-	if (chatBalloon.urlToAudioFile)
-	{
-		audio = `<audio src="${chatBalloon.urlToAudioFile}" controls></audio>`;
+	let audio2 = "";
+	if (chatBalloon.urlToAudioFile) {
+		audio = `<div class="player-wrap">
+<audio src="${chatBalloon.urlToAudioFile}" controls ></audio>
+</div>`
+
+
 	}
-
-	const contentSpan = `<span class="content">${chatBalloon.content}</span>`;
-	const dateTimeSpan = `<span class="date-time">${chatBalloon.dateString}</span>`;
-
 	let answerButtonsSpan = "";
 	if (chatBalloon.answerButtons && chatBalloon.answerButtons.length > 0)
 	{
+		var positive = "예";
 		answerButtonsSpan = renderButtons(chatBalloon);
+		console.log(answerButtonsSpan)
+
 	}
+
+	const contentSpan = `<div class ="name-wrap"><span class="ico-withus"></span>
+		<span class="  name">  위더스</span></div>
+		<div class ="msg-wrap">`
+		+audio+
+		`<div class="text-wrap">${chatBalloon.content}</div>
+		<div class = "btn-wrap grid-col">`
+		+answerButtonsSpan+ `</div>` +
+		img+`
+		</div>`;
+	//TODO: 나중에 날짜가 필요하다 하면 이걸 쓰면
+	const dateTimeSpan = `<span class="date-time">${chatBalloon.dateString}</span>`;
 
 	if (chatBalloon.direction === "RIGHT")
 	{
 		div.classList.add("right");
 	}
 
-	div.innerHTML = (input + audio + contentSpan + img + answerButtonsSpan + dateTimeSpan);
+	div.innerHTML = (input /*+ audio*/ + contentSpan /*+ img*/ /*+ answerButtonsSpan*/ /*+ dateTimeSpan*/);
 
 	balloonsAreaElement.appendChild(div);
 	window.scrollTo(0, document.body.scrollHeight);
@@ -160,7 +212,7 @@ function renderAnswer(answerButtonContent)
 {
 	const div = document.createElement("div");
 	div.className = "answer balloons right";
-	div.innerHTML = `<span class="content">${answerButtonContent}</span>`;
+	div.innerHTML = `<div class="chat-wrap client"><div class="msg-wrap"><div class="txt-wrap">${answerButtonContent}</div></div></div>`;
 
 	balloonsAreaElement.appendChild(div);
 }
@@ -171,8 +223,9 @@ function renderAnswer(answerButtonContent)
  */
 function renderButtons(chatBalloon)
 {
+	var positive ='';
 	let answerButtonsSpan = `<span class="answer-buttons">`;
-
+	let checkButtonType ='';
 	chatBalloon.answerButtons.forEach(answerButton => {
 		if (chatBalloon.isMostRecent) {
 			let href = "javascript:";
@@ -195,23 +248,35 @@ function renderButtons(chatBalloon)
 					href += ` answer('${answerButton.code}', '${answerButton.nextCode}', '${answerButton.content}', '${chatBalloon.code}', false);`;
 				}
 			}
-
+			checkButtonType = `${answerButton.content}`;
+			console.log(checkButtonType);
+			positive = "예";
+			let help = "[위더스 도우미]";
+			let negative = "아니요";
 			let replacedHref = href.replaceAll(/ {2,}/g, ' ');
-			answerButtonsSpan += `<a href="${replacedHref}">`;
+			if(checkButtonType.indexOf(positive) === 0){
+			/*answerButtonsSpan += `<button class ="btn md type11" onclick="" href="${replacedHref}">`;*/
+			answerButtonsSpan += `<button class ="btn md type11" th:onclick="'location.href=\''+ ${replacedHref} +'\';'">`;
+				/*answerButtonsSpan += `<button class ="btn md type11" th:onclick="|location.href='${replacedHref}'|">`;*/
+			}else if(checkButtonType.indexOf(help) === 0){
+				answerButtonsSpan += `<button class ="btn md type10" href="${replacedHref}">`;
+			}
+			else if(checkButtonType.indexOf(negative) === 0){
+				answerButtonsSpan += `<button class ="btn md type09" href='${replacedHref}'">`;
+			}
+			answerButtonsSpan += `<a di style='color: white' href="${replacedHref}">`;
 		} else {
-			answerButtonsSpan += "<a>";
+			answerButtonsSpan += "<a><button  id = 'checkType2' class = 'btn md type09'>";
 		}
-
-		answerButtonsSpan += `${answerButton.content}</a><br>`;
-
+		answerButtonsSpan += `${answerButton.content}</a></button><br>`;
 		if (answerButton.urlToImageFile) {
 			answerButtonsSpan += `<img src="${answerButton.urlToImageFile}" alt="이미지가 표시되지 않고 있습니다."><br>`;
 		}
 	});
 
 	answerButtonsSpan += "</span>";
-
 	return answerButtonsSpan;
+
 }
 
 /**

@@ -1,5 +1,7 @@
 function onFormSubmission(form) {
-	const weight = form.querySelector("input[name=weight]").value;
+	if(form.querySelector("input[name=weight]").value == 0){}
+	else
+		weight = form.querySelector("input[name=weight]").value;
 
 	const body = {
 		weight: weight

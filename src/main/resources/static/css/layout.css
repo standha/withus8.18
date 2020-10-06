@@ -251,9 +251,60 @@ footer {position: relative;}
 .water-page .bottle-wrap .bottle-ml li span {background-color: #fff; padding: 0 10px;}
 
 /* chat */
-.chat-page {background-image: linear-gradient(to bottom, #e2eff4, #edf2f2 83%);}
-.chat-page .cont-wrap {background: url('../images/common/bg-chat.png'); background-size: 281px 400px;}
+.chat-page {background-color: #f4f7fa;}
+.chat-page .container {height: 100vh; background: url('../images/common/bg-chat.png'); background-size: 281px 400px;}
+.chat-page .cont-wrap {padding: 25px 15px;}
 
+.chat-page .date-bar {position: relative; display: flex; justify-content: center; margin: 20px 0;}
+.chat-page .date-bar:before {content: ''; display: block; position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background-color: #e5eaef;}
+.chat-page .date-bar span {position: relative; font-size: 0.75rem; color: #666; padding: 5px 10px; background-color: #ecf0f5; border-radius: 14px; z-index: 1;}
+.chat-page .chat-wrap {padding: 10px 0;}
+.chat-page .chat-wrap .name-wrap {display: flex; align-items: center;}
+.chat-page .chat-wrap .name-wrap span {}
+.chat-page .chat-wrap .name-wrap span.name {padding-left: 3px; font-weight: 700; font-size: 1.13rem; color: #222;}
+.chat-page .chat-wrap .msg-wrap {padding: 15px 20px; box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.03); }
+.chat-page .chat-wrap .msg-wrap .player-wrap {margin-bottom: 10px;}
+.chat-page .chat-wrap .msg-wrap .txt-wrap {font-size: 1rem; line-height: 1.5;}
+.chat-page .chat-wrap .msg-wrap .btn-wrap {margin-top: 20px;}
+.chat-page .chat-wrap .msg-wrap .btn-wrap .btn {font-weight: 700;}
 
+.chat-page .chat-wrap.manager {}
+.chat-page .chat-wrap.manager .msg-wrap {margin-left: 28px; margin-top: 10px; max-width: 78%; border-radius: 0 15px 15px 15px; background-color: #fff;}
+.chat-page .chat-wrap.manager .msg-wrap .txt-wrap {color: #222;}
+.chat-page .chat-wrap.client {display: flex; justify-content: flex-end;}
+.chat-page .chat-wrap.client .msg-wrap {display: inline-block; margin-left: 0; margin-top: 0; max-width: 50%; border-radius: 30px 0 30px 30px; background-color: #19d585; padding: 10px 20px;}
+.chat-page .chat-wrap.client .msg-wrap .txt-wrap {color: #fff; font-weight: 700;}
 
+.player-wrap {display: flex; border: 1px solid #d3d3d3;}
+.player-wrap button {width: 44px; height: 44px; border-right: 1px solid #d3d3d3;}
+.player-wrap .line-wrap {flex: 1; display: flex; flex-direction: column; padding: 8px; margin-top: auto;}
+.player-wrap .line-wrap .play-line {position: relative; height: 6px; border-radius: 6px; background-color: #ededed; margin-bottom: 5px; overflow: hidden;}
+.player-wrap .line-wrap .play-line .play-bar {position: absolute; height: 100%; left: 0; top: 0; background-color: #27d585;}
+.player-wrap .line-wrap .play-time {display: flex; justify-content: space-between;}
+.player-wrap .line-wrap .play-time span {font-family: 'Roboto', sans-serif; letter-spacing: 0em; font-size: 0.7rem; color: #727272; }
 
+.img-wrap {margin-top: 10px;}
+.img-wrap .img-thumb {position: relative; display: block; border-radius: 5px; border: 1px solid #ddd; overflow: hidden;}
+.img-wrap .img-thumb + .img-thumb {margin-top: 6px;}
+.img-wrap .img-thumb .img-name {position: absolute; left: 6%; top: 6%; padding: 5px 15px; border-radius: 22px; font-size: 0.88rem; font-weight: 500; color: #fff; background-color: rgba(0,0,0,0.7);}
+.img-wrap .img-thumb img {width: 100%;}
+
+/* chat img */
+.img-page .img-wrap {margin: 0;}
+
+/* chart */
+.chart-page {}
+.chart-page .container {margin-bottom: auto;}
+.chart-page .chart-wrap {padding: 5% 3%;}
+.chart-page .chart-wrap .chart-legend {display: flex; justify-content: space-between; padding-bottom: 10px;}
+.chart-page .chart-wrap .chart-legend .tit {font-size: 0.8rem; color: #222; font-weight: 500; margin-left: 35px;}
+.chart-page .chart-wrap .chart-legend .list {display: flex; margin-right: 10px;}
+.chart-page .chart-wrap .chart-legend li {position: relative; padding-left: 15px; margin-left: 10px; font-size: 0.8rem; color: #222; font-weight: 500;}
+.chart-page .chart-wrap .chart-legend li:before {content: ''; display: block; position: absolute; left: 0; top: 50%; width: 10px; height: 10px; transform: translateY(-50%); border-radius: 100%; }
+.chart-page .chart-wrap .chart-legend li.red:before {background-color: #fc4d4d;}
+.chart-page .chart-wrap .chart-legend li.blue:before {background-color: #3ca5ff;}
+.chart-page .chart-wrap .chart-legend li.black:before {background-color: #515558;}
+.chart-page .chart-wrap .chart-legend li.green:before {background-color: #21bc97;}
+
+.chart-page .tbl-chart {padding-top: 7%; margin-top: 5%; border-top: 1px solid #e6e6e6;}
+.chart-page .ui-datepicker-calendar {display: none;}

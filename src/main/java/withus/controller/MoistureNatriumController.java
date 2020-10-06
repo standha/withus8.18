@@ -168,6 +168,7 @@ public class MoistureNatriumController extends BaseController{
     public Result<Tbl_natrium_record> postNatrium(@RequestBody Tbl_natrium_record tbl_natrium_record){
         String username = getUsername();
         tbl_natrium_record.setPk(new RecordKey(username, LocalDate.now()));
+        tbl_natrium_record.setWeek(getUser().getWeek());
         Result.Code code;
         Tbl_natrium_record saved = null;
         try{
@@ -188,6 +189,7 @@ public class MoistureNatriumController extends BaseController{
     public Result<Tbl_mositrue_record> getMoisture(@RequestBody Tbl_mositrue_record tbl_mositrue_record){
         String userId = getUsername();
         tbl_mositrue_record.setPk(new RecordKey(userId,LocalDate.now()));
+        tbl_mositrue_record.setWeek(getUser().getWeek());
         Result.Code code;
         Tbl_mositrue_record saved = null;
         try{

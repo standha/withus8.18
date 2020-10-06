@@ -44,108 +44,108 @@
 <!-- wrap -->
 <div id="wrap" class="join-page">
 
-<form id="MemberInfo" th:action="@{/saveUser}" method="post"  onsubmit="return onFormSubmission(this);">
+	<form id="MemberInfo" th:action="@{/saveUser}" method="post"  onsubmit="return onFormSubmission(this);">
 
-	<!-- header -->
-	<header>
-		<div class="header-wrap">
-			<div class="tab-wrap type01">
-				<ul class="tab-menu">
-					<li id="checkType" class="patient active" onclick="doDisplay('PATIENT')">
-						<div class="menu-tit">
-							<span class="ico-join-chk"></span>
-							<span>환자</span>
-						</div>
-					</li>
-					<li class="guardian" onclick="doDisplay('CAREGIVER')">
-						<div class="menu-tit" >
-							<span class="ico-join-chk"></span>
-							<span>보호자</span>
-						</div>
-					</li>
-				</ul>
+		<!-- header -->
+		<header>
+			<div class="header-wrap">
+				<div class="tab-wrap type01">
+					<ul class="tab-menu">
+						<li id="checkType" class="patient active" onclick="doDisplay('PATIENT')">
+							<div class="menu-tit">
+								<span class="ico-join-chk"></span>
+								<span>환자</span>
+							</div>
+						</li>
+						<li class="guardian" onclick="doDisplay('CAREGIVER')">
+							<div class="menu-tit" >
+								<span class="ico-join-chk"></span>
+								<span>보호자</span>
+							</div>
+						</li>
+					</ul>
+				</div>
 			</div>
-		</div>
-	</header>
-	<!-- // header -->
+		</header>
+		<!-- // header -->
 
-	<!-- content -->
-	<div class="container" id="content">
-		<div class="field-wrap type02">
-			<div class="field">
-				<div class="insert">
-					<label for="input1">아이디</label>
-					<input type="text" name="id" id="input1" placeholder="아이디를 입력해주세요">
+		<!-- content -->
+		<div class="container" id="content">
+			<div class="field-wrap type02">
+				<div class="field">
+					<div class="insert">
+						<label for="input1">아이디</label>
+						<input type="text" name="id" id="input1" placeholder="아이디를 입력해주세요">
+					</div>
+					<!--<p class="alert-notice">한글 아이디는 사용하실 수 없습니다.</p>-->
 				</div>
-				<!--<p class="alert-notice">한글 아이디는 사용하실 수 없습니다.</p>-->
-			</div>
-			<div class="field">
-				<div class="insert">
-					<label for="input2">비밀번호</label>
-					<input type="password" name="password" id="input2" placeholder="비밀번호를 입력해주세요">
-				</div>
-			</div>
-		</div>
-		<div class="field-wrap type02">
-			<div class="field">
-				<div class="insert">
-					<label for="input3">이름</label>
-					<input type="text" name="name" id="input3" placeholder="성함을 입력해주세요" value="">
-				</div>
-			</div>
-			<div class="field patient-only">
-				<div class="insert">
-					<label for="input4">생년월일</label>
-					<input type="date" name="birthdate" id="input4" placeholder="ex) 601231">
-				</div>
-			</div>
-			<div class="field patient-only">
-				<div class="insert">
-					<span class="label-txt">성별</span>
-					<div class="rdo-wrap grid2 type01">
-						<div class="rdo-box checked" id = "maleCheck" onclick="check_radio(this)">
-                            <span class="rdo-mark" >
-                                <input type="radio" name="gender" value="MALE" id="rdo1" checked>
-                            </span>
-							<label for="rdo1">남자</label>
-						</div>
-						<div class="rdo-box" id = "femaleCheck" onclick="check_radio(this)">
-                            <span class="rdo-mark" >
-                                <input type="radio" name="gender" value="FEMALE" id="rdo2" >
-                            </span>
-							<label for="rdo2">여자</label>
-						</div>
+				<div class="field">
+					<div class="insert">
+						<label for="input2">비밀번호</label>
+						<input type="password" name="password" id="input2" placeholder="비밀번호를 입력해주세요">
 					</div>
 				</div>
 			</div>
-			<div class="field">
-				<div class="insert">
-					<label for="input5">연락처(본인)</label>
-					<input type="text" name="contact" id="input5" placeholder="ex) 01012345678">
+			<div class="field-wrap type02">
+				<div class="field">
+					<div class="insert">
+						<label for="input3">이름</label>
+						<input type="text" name="name" id="input3" placeholder="성함을 입력해주세요" value="">
+					</div>
 				</div>
-			</div>
-			<div class="field patient-only">
-				<div class="insert">
-					<label for="input6">연락처(보호자)</label>
-					<input type="text" name="caregiver" id="input6" placeholder="ex) 01012345678">
+				<div class="field patient-only">
+					<div class="insert">
+						<label for="input4">생년월일</label>
+						<input type="date" name="birthdate" id="input4" placeholder="ex) 601231">
+					</div>
+				</div>
+				<div class="field patient-only">
+					<div class="insert">
+						<span class="label-txt">성별</span>
+						<div class="rdo-wrap grid2 type01">
+							<div class="rdo-box checked" id = "maleCheck" onclick="check_radio(this)">
+                            <span class="rdo-mark" >
+                                <input type="radio" name="gender" value="MALE" id="rdo1" checked>
+                            </span>
+								<label for="rdo1">남자</label>
+							</div>
+							<div class="rdo-box" id = "femaleCheck" onclick="check_radio(this)">
+                            <span class="rdo-mark" >
+                                <input type="radio" name="gender" value="FEMALE" id="rdo2" >
+                            </span>
+								<label for="rdo2">여자</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="field">
+					<div class="insert">
+						<label for="input5">연락처(본인)</label>
+						<input type="text" name="contact" id="input5" placeholder="ex) 01012345678">
+					</div>
+				</div>
+				<div class="field patient-only">
+					<div class="insert">
+						<label for="input6">연락처(보호자)</label>
+						<input type="text" name="caregiver" id="input6" placeholder="ex) 01012345678">
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- // content -->
-	<input tpye = 'hidden' name = "appToken" th:value = "${appToken}" style = "display:none">
-	<!-- footer -->
-	<footer>
-		<div class="footer-wrap">
-			<div class="btn-wrap type01">
-				<input type="submit" class="btn xlg type01" value="회원가입">
+		<!— // content —>
+		<input tpye = 'hidden' name = "appToken" th:value = "${appToken}" style = "display:none">
+		<!— footer —>
+		<footer>
+			<div class="footer-wrap">
+				<div class="btn-wrap type01">
+					<input type="submit" class="btn xlg type01" value="회원가입">
+				</div>
 			</div>
-		</div>
-	</footer>
-	<!-- // footer -->
-</form>
+		</footer>
+		<!— // footer —>
+	</form>
 </div>
-<!-- wrap -->
+<!— wrap —>
 
 </body>
 </html>

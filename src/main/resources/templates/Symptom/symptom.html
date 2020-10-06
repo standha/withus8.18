@@ -246,7 +246,27 @@
         </div>
     </div>
 
-    <div class="container" id="content" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
+
+    <div class="popup pop-type02" id="popup" style="display:none">
+        <div class="pop-wrap">
+            <!-- <a href="javascript:void(0);" class="pop-close"></a> -->
+            <div class="popup-body">
+                <div class="pop-img">
+                    <span class="ico-list"></span>
+                </div>
+                <div class="pop-cont">
+                    <span class="bold">항목 입력을 빠트리셨어요!</span>
+                    <span>입력해주세요!</span>
+                </div>
+            </div>
+            <button class="btn xlg type02" id="okButton">확인</button>
+        </div>
+    </div>
+    <div class="dim-layer" id="dim" style="display:none"></div>
+
+
+
+    <div class="container" id="content2" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
         <div class="cont-wrap type01">
             <div class="insert-wrap">
                 <div class="daily-box">
@@ -394,9 +414,9 @@
             <div class="btn-wrap type01" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
                 <input type="submit" class="btn xlg type02" disabled>
             </div>
-            <div class="btn-wrap type02">
+            <div class="btn-wrap type02" onclick="showHistory();">
                 <span class="btn xlg arrow-type02">
-                    <span onclick="showHistory();">증상 변화 기록</span>
+                    <span>증상 변화 기록</span>
                     <span class="ico-arrow2"></span>
                 </span>
             </div>

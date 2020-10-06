@@ -36,17 +36,20 @@ public class SymptomController extends BaseController{
     public ModelAndView getSymptom(){
         ModelAndView modelAndView = new ModelAndView("Symptom/symptom");
         User.Type typeCheck = getUser().getType();
+        User user = getUser();
         if (symptomService.getSymptom(new RecordKey(getConnectId(), LocalDate.now()))==null) {
            modelAndView.addObject("tired", 2);
            modelAndView.addObject("ankle", 2);
            modelAndView.addObject("breath", 2);
            modelAndView.addObject("cough", 2);
+            logger.info("id:{}, today Symptom null", user.getUserId());
         } else {
            Tbl_symptom_log symptom = symptomService.getSymptom(new RecordKey(getConnectId(), LocalDate.now()));
            modelAndView.addObject("tired", symptom.getTired());
            modelAndView.addObject("ankle", symptom.getAnkle());
            modelAndView.addObject("breath", symptom.getOutofbreath());
            modelAndView.addObject("cough", symptom.getCough());
+            logger.info("id:{}, tired:{}, ankle:{}, breath:{}, cough:{}", user.getUserId(), symptom.getTired(), symptom.getAnkle(), symptom.getOutofbreath(), symptom.getCough());
         }
         modelAndView.addObject("type",typeCheck);
         modelAndView.addObject("previousUrl", "/center");
@@ -76,6 +79,7 @@ public class SymptomController extends BaseController{
     public Result<Tbl_symptom_log> PostSymptom(@RequestBody Tbl_symptom_log tbl_symptom_log){
         String userId = getUsername();
         tbl_symptom_log.setPk(new RecordKey(userId,LocalDate.now()));
+        tbl_symptom_log.setWeek(getUser().getWeek());
         Result.Code code;
         Tbl_symptom_log saved = null;
         try{

@@ -36,15 +36,18 @@ public class ExerciseController extends BaseController {
     public ModelAndView getExercise() {
         ModelAndView modelAndView = new ModelAndView("exercise/exercise");
         User.Type typeCheck = getUser().getType();
+        User user = getUser();
         switch (typeCheck){
             case PATIENT:
                 if(exerciseService.getExercise(new RecordKey(getUsername(), LocalDate.now()))==null){
                     modelAndView.addObject("hour", "");
                     modelAndView.addObject("minute", "");
+                    logger.info("id:{}, today exercise:null", user.getUserId());
                 }else{
                     Tbl_Exercise_record exercise = exerciseService.getExercise(new RecordKey(getUsername(), LocalDate.now()));
                     modelAndView.addObject("hour", exercise.getHour());
                     modelAndView.addObject("minute", exercise.getMinute());
+                    logger.info("id:{}, exerciseHour:{}, exerciseMinute:{}", user.getUserId(), exercise.getHour(), exercise.getMinute());
                 }
                 break;
             case CAREGIVER:
@@ -92,10 +95,11 @@ public class ExerciseController extends BaseController {
     public Result<Tbl_Exercise_record> PostPatientVisit(@RequestBody Tbl_Exercise_record tbl_exercise_record){
         String userId = getUsername();
         tbl_exercise_record.setPk(new RecordKey(userId, LocalDate.now()));
+        tbl_exercise_record.setWeek(getUser().getWeek());
         Result.Code code;
-        Tbl_Exercise_record saved = null;
+        Tbl_Exercise_record seved = null;
         try{
-            saved = exerciseService.upsertExerciseRecord(tbl_exercise_record);
+            seved = exerciseService.upsertExerciseRecord(tbl_exercise_record);
             code = Result.Code.OK;
         } catch (Exception exception){
             logger.error(exception.getLocalizedMessage(),exception);
@@ -103,7 +107,7 @@ public class ExerciseController extends BaseController {
         }
         return Result.<Tbl_Exercise_record>builder()
                 .code(code)
-                .data(saved)
+                .data(seved)
                 .build();
     }
     public Integer avgWeek(){

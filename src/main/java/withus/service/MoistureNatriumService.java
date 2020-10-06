@@ -55,11 +55,6 @@ public class MoistureNatriumService {
         return natriumRecordRepository.save(tbl_natrium_record);
     }
 
-    @Nonnull
-    public List<Tbl_natrium_record> getNatriumRecord(){
-        return natriumRecordRepository.findByPkIsNotNull();
-    }
-
     @Nullable
     public Tbl_mositrue_record getMoisture(RecordKey pk){
         return moistureRecordRepository.findById(pk).orElse(null);
@@ -69,10 +64,8 @@ public class MoistureNatriumService {
     public Tbl_natrium_record getNatriumTodayRecord(RecordKey pk){
         return natriumRecordRepository.findByPk(pk).orElse(null);
     }
-
     @Nonnull
     public List<Tbl_natrium_record> getNatriumAllRecord(String id){
         return natriumRecordRepository.findByPk_Id(id);
     }
-
 }
