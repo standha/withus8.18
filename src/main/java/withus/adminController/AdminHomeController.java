@@ -17,24 +17,32 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
 import withus.dto.wwithus.HeaderInfoDTO;
+import withus.dto.wwithus.MoistureAvgDTO;
 import withus.entity.Tbl_goal;
+import withus.entity.Tbl_mositrue_record;
 import withus.entity.User;
 import withus.service.GoalService;
+import withus.service.MoistureNatriumService;
 import withus.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class AdminHomeController extends AdminBaseController
 {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	private final GoalService goalService;
+	
+	private final MoistureNatriumService moistureNatriumService;
 
 	@Autowired
-	public AdminHomeController(AuthenticationFacade authenticationFacade, UserService userService, GoalService goalService)
+	public AdminHomeController(AuthenticationFacade authenticationFacade, UserService userService, GoalService goalService,
+							   MoistureNatriumService moistureNatriumService)
 	{
 		super(userService, authenticationFacade);
 		this.goalService = goalService;
+		this.moistureNatriumService = moistureNatriumService;
 	}
 
 	@GetMapping({ "/adminHome" })
@@ -46,16 +54,9 @@ public class AdminHomeController extends AdminBaseController
 	@GetMapping("/user/{userId}")
 	public ModelAndView viewPatient(@PathVariable("userId") String userId) {
 		// @pathVariable, @ParameterValue, @Header
-		User patient = userService.getUserById(userId);
 		ModelAndView mav = new ModelAndView();
-		Tbl_goal goal = goalService.getGoalId(userId);
-		List<Tuple> moistureAvg = userService.getMoistureAvg(userId);
-		for(int i=0; i<moistureAvg.size(); i++){
-			System.out.println("moistureAvg.get(0) = " + moistureAvg.get(i));
-		}
-
-		mav.addObject("patient", patient);
-		mav.addObject("goal",goal.getGoal());
+		HeaderInfoDTO headerInfo = userService.getHeaderInfo(userId);
+		mav.addObject("patient", headerInfo);
 		mav.setViewName("/Admin/admin_center");
 		return mav;
 	}
@@ -63,13 +64,13 @@ public class AdminHomeController extends AdminBaseController
 	public ModelAndView adminPillHistory(@PathVariable("userId") String userId) {
 		ModelAndView mav = new ModelAndView();
 		HeaderInfoDTO headerInfo = userService.getHeaderInfo(userId);
-		List<Tuple> moistureAvg = userService.getMoistureAvg(userId);
-		System.out.println("moistureAvg.size() = " + moistureAvg.size());
-		System.out.println("moistureAvg = " + moistureAvg);
-		System.out.println(" hell- ");
-		for(int i=0; i<moistureAvg.size(); i++){
-			System.out.println("moistureAvg.get(0) = " + moistureAvg.get(i));
+		List<MoistureAvgDTO> moistureAvg = userService.getMoistureAvg(userId) == null ? null : userService.getMoistureAvg(userId);
+		List<Tbl_mositrue_record> moistureAsc = userService.getMoistureAsc(userId) == null ? null : userService.getMoistureAsc(userId);
+		for (int i = 0; i < moistureAsc.size(); i++) {
+			System.out.println("moistureAsc = " + moistureAsc.get(i));
 		}
+		mav.addObject("weekAsc", moistureAsc);
+		mav.addObject("weekAvg", moistureAvg);
 		mav.addObject("patient", headerInfo);
 		mav.setViewName("/Admin/admin_pillHistory");
 		return mav;

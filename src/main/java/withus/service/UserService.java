@@ -1,6 +1,5 @@
 package withus.service;
 
-import com.querydsl.core.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -10,11 +9,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import withus.auth.NoOpPasswordEncoder;
 import withus.dto.wwithus.HeaderInfoDTO;
+import withus.dto.wwithus.MoistureAvgDTO;
 import withus.entity.*;
 import withus.repository.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -127,9 +126,6 @@ public class UserService implements UserDetailsService {
 	}
 
 	@Nullable
-	public List<Tuple> getMoisture(String userId){return userRepositorySupport.findMoistureWeek(userId);}
-
-	@Nullable
 	public ArrayList<String> getAllUserPlz(){return userRepository.findByAll();}
 
 	@Nullable
@@ -143,5 +139,9 @@ public class UserService implements UserDetailsService {
 	public HeaderInfoDTO getHeaderInfo(String userId){return userRepositorySupport.findHeaderInfo(userId);}
 
 	@Nullable
-	public  List<Tuple> getMoistureAvg(String userId){return userRepositorySupport.findMoistureWeek(userId);}
+	public  List<MoistureAvgDTO> getMoistureAvg(String userId){return userRepositorySupport.findMoistureWeek(userId);}
+
+	@Nullable
+	public List<Tbl_mositrue_record> getMoistureAsc(String userId){return userRepositorySupport.findMoistureAsc(userId);}
+
 }

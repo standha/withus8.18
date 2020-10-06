@@ -1,22 +1,14 @@
 package withus.repository;
 
-import com.querydsl.core.Tuple;
-import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.Expressions;
-import com.querydsl.core.types.dsl.StringPath;
-import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 import withus.dto.wwithus.HeaderInfoDTO;
+import withus.dto.wwithus.MoistureAvgDTO;
 import withus.entity.*;
 
-import java.security.PublicKey;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.function.IntPredicate;
 
 @Repository
 public class UserRepositorySupport extends QuerydslRepositorySupport {
@@ -28,15 +20,25 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
 
     }
 
-
-    public List<Tuple> findMoistureWeek(String userId){
+    public List<MoistureAvgDTO> findMoistureWeek(String userId){
         QTbl_mositrue_record mr = QTbl_mositrue_record.tbl_mositrue_record;
-        return queryFactory.select(mr.week, mr.intake.avg())
+
+        List<MoistureAvgDTO> moistureAvg = queryFactory.select(Projections.constructor(MoistureAvgDTO.class, mr.week, mr.intake.avg()))
                 .from(mr)
                 .groupBy(mr.week)
-                .orderBy(mr.week.desc())
+                .orderBy(mr.week.asc())
                 .where(mr.pk.id.eq(userId))
                 .fetch();
+        return moistureAvg;
+    }
+    public List<Tbl_mositrue_record> findMoistureAsc(String userId){
+        QTbl_mositrue_record mr =QTbl_mositrue_record.tbl_mositrue_record;
+        List<Tbl_mositrue_record> moistureAsc = queryFactory.selectFrom(mr)
+                .where(mr.pk.id.eq(userId))
+                .orderBy(mr.week.asc())
+                .orderBy(mr.pk.date.asc())
+                .fetch();
+        return moistureAsc;
     }
     public HeaderInfoDTO findHeaderInfo(String userID){
         QUser user = QUser.user;

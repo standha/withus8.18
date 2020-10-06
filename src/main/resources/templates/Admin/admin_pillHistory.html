@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css"/>
+<script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,7 +16,11 @@
     <script th:src="@{/js/common.js}"></script>
     <title>Admin center</title>
 </head>
-
+<script>
+    jQuery(function($){
+        $("#foo-table").DataTable();
+    });
+</script>
 <body>
 <div id="wrap" class="main-page">
     <header>
@@ -41,11 +47,30 @@
         </nav>
     </header>
 
-    <div class="container" id="content">
-       <table>
-           <!--복약기록 테이블 작성-->
-       </table>
-    </div>
+    <table id="foo-table" class="table table-bordered">
+        <thead>
+        <tr><th>주차</th><th>요</th><th>수분섭취량</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="weekAsc : ${weekAsc}">
+            <td th:text="${weekAsc.week}">주차</td>
+            <td th:text="${weekAsc.pk.date}">요일</td>
+            <td th:text="${weekAsc.intake}">수분섭취량</td>
+        </tr>
+        </tbody>
+    </table>
+    <table id="foo-table" class="table table-bordered">
+        <thead>
+        <tr><th>주차</th><th>평균</th><th>수분섭취량</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="weekAvg : ${weekAvg}">
+            <td th:text="${weekAvg.week}">주차</td>
+            <td th:text="${weekAvg.week} + '주차 평균'">요일</td>
+            <td th:text="${weekAvg.intake}">수분섭취량</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 </body>

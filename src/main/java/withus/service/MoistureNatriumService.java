@@ -69,5 +69,4 @@ public class MoistureNatriumService {
         return natriumRecordRepository.findByPk_Id(id);
     }
 
-
 }

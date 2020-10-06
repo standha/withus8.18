@@ -21,5 +21,6 @@ public interface MoistureRecordRepository extends JpaRepository<Tbl_mositrue_rec
 
     @Transactional
     Optional<Tbl_mositrue_record>findByPkAndIntakeIsNotNull(RecordKey pk);
+
 }
 
