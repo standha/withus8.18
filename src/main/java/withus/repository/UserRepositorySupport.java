@@ -31,21 +31,23 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
 
     public List<Tuple> findMoistureWeek(String userId){
         QTbl_mositrue_record mr = QTbl_mositrue_record.tbl_mositrue_record;
-        return queryFactory.select(mr.intake, mr.week)
+        return queryFactory.select(mr.week, mr.intake.avg())
                 .from(mr)
-                .where(mr.pk.id.eq(userId))
                 .groupBy(mr.week)
+                .orderBy(mr.week.desc())
+                .where(mr.pk.id.eq(userId))
                 .fetch();
     }
     public HeaderInfoDTO findHeaderInfo(String userID){
         QUser user = QUser.user;
         QTbl_goal goal = QTbl_goal.tbl_goal;
 
-        HeaderInfoDTO headerInfo = queryFactory.select(Projections.constructor(HeaderInfoDTO.class, user.name, user.userId, user.birthdate, goal.goal))
+        HeaderInfoDTO headerInfo = queryFactory.select(Projections.constructor(HeaderInfoDTO.class, user.name, user.userId, user.birthdate, goal.goal, user.level))
                 .from(user)
                 .leftJoin(goal).on(user.userId.eq(goal.goalId))
                 .where(user.userId.eq(userID))
                 .fetchFirst();
+
         return headerInfo;
     }
 }

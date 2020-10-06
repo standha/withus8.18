@@ -15,6 +15,12 @@ public class HeaderInfoDTO {
 
     private String name;
 
+    private Integer level;
+
+    public Integer getLevel() {
+        return level;
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -32,10 +38,11 @@ public class HeaderInfoDTO {
     }
 
 
-    public HeaderInfoDTO(String name, String userId, LocalDate birthdate, Integer goal) {
+    public HeaderInfoDTO(String name, String userId, LocalDate birthdate, Integer goal, Integer level) {
         this.name = name;
         this.userId = userId;
         this.birthdate = birthdate;
         this.goal = goal;
+        this.level = level;
     }
 }

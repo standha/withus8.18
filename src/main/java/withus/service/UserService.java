@@ -141,4 +141,7 @@ public class UserService implements UserDetailsService {
 	// 1. Html head 에 포함 되는 정보 DTO
 	@Nullable
 	public HeaderInfoDTO getHeaderInfo(String userId){return userRepositorySupport.findHeaderInfo(userId);}
+
+	@Nullable
+	public  List<Tuple> getMoistureAvg(String userId){return userRepositorySupport.findMoistureWeek(userId);}
 }

@@ -3,6 +3,7 @@ package withus.adminController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.querydsl.core.Tuple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,10 @@ public class AdminHomeController extends AdminBaseController
 		User patient = userService.getUserById(userId);
 		ModelAndView mav = new ModelAndView();
 		Tbl_goal goal = goalService.getGoalId(userId);
+		List<Tuple> moistureAvg = userService.getMoistureAvg(userId);
+		for(int i=0; i<moistureAvg.size(); i++){
+			System.out.println("moistureAvg.get(0) = " + moistureAvg.get(i));
+		}
 
 		mav.addObject("patient", patient);
 		mav.addObject("goal",goal.getGoal());
@@ -58,12 +63,17 @@ public class AdminHomeController extends AdminBaseController
 	public ModelAndView adminPillHistory(@PathVariable("userId") String userId) {
 		ModelAndView mav = new ModelAndView();
 		HeaderInfoDTO headerInfo = userService.getHeaderInfo(userId);
-		System.out.println("headerInfo.get(0).getGoalId() = " + headerInfo.getGoal());
-		System.out.println("headerInfo = " + headerInfo);
+		List<Tuple> moistureAvg = userService.getMoistureAvg(userId);
+		System.out.println("moistureAvg.size() = " + moistureAvg.size());
+		System.out.println("moistureAvg = " + moistureAvg);
+		System.out.println(" hell- ");
+		for(int i=0; i<moistureAvg.size(); i++){
+			System.out.println("moistureAvg.get(0) = " + moistureAvg.get(i));
+		}
 		mav.addObject("patient", headerInfo);
-		mav.addObject("goal", headerInfo.getGoal());
 		mav.setViewName("/Admin/admin_pillHistory");
 		return mav;
+
 	}
 
 	@PostMapping(value="/logout")
