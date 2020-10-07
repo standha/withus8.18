@@ -7,6 +7,7 @@ import sun.security.ssl.Record;
 import withus.entity.RecordKey;
 import withus.entity.Tbl_Exercise_record;
 import withus.entity.Tbl_weight;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +15,7 @@ import java.util.Optional;
 @Repository
 public interface WeightRecordRepository extends JpaRepository<Tbl_weight, RecordKey> {
     @Transactional(readOnly = true)
-    List<Tbl_weight>findByPk_IdAndWeightGreaterThan(String pk_id, float weight);
+    List<Tbl_weight> findByPk_IdAndWeightGreaterThan(String pk_id, float weight);
 
     @Transactional
     Optional<Tbl_weight> findByPk(RecordKey pk);

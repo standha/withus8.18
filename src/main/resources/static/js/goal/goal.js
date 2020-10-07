@@ -112,7 +112,6 @@ function radioClick(){
 
     }
 
-
     $("#buttonOk").click(function(){
         const body = {
             goal: goalNum
@@ -132,8 +131,9 @@ function radioClick(){
             .then(response => response.json())
             .then(data =>console.log(data));
 
-        location.href='center';
-        //window.location.reload();
+        setTimeout(function (){
+            location.href='center';
+        }, 300);
         return false;
     });
 
@@ -143,15 +143,6 @@ function radioClick(){
         window.location.reload();
         return false;
     });
-
-    // if(confirm(checked)==true){
-    //     console.log(goalNum + "번 목표 설정");
-    //     //window.location.reload();
-    // }
-    // else{
-    //     console.log("목표 설정 취소");
-    //     window.location.reload();
-    // }
 
     return false;
 }

@@ -19,9 +19,9 @@ import java.util.Optional;
 public interface MedicationAlarmRepository extends JpaRepository<Tbl_medication_alarm, String> {
     @Transactional(readOnly = true)
     @Nonnull
-    Optional<Tbl_medication_alarm>findById(String id);
+    Optional<Tbl_medication_alarm> findById(String id);
 
     @Transactional(readOnly = true)
     @Nonnull
-    List<Tbl_medication_alarm>findByMedicationAlarmOnoffIsTrue();
+    List<Tbl_medication_alarm> findByMedicationAlarmOnoffIsTrue();
 }

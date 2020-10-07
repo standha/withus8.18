@@ -29,97 +29,115 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Setter
 @ToString
 public class User implements Serializable, UserDetails {
-	@Id
-	@Column(name = "id", columnDefinition = "VARCHAR(128) NOT NULL", length = 128, unique = true)
-	@EqualsAndHashCode.Include
-	@Getter
-	private String userId;
+    @Id
+    @Column(name = "id", columnDefinition = "VARCHAR(128) NOT NULL", length = 128, unique = true)
+    @EqualsAndHashCode.Include
+    @Getter
+    private String userId;
 
-	@Column(columnDefinition = "VARCHAR(255) NOT NULL")
-	private String password;
+    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
+    private String password;
 
-	@Column(columnDefinition = "VARCHAR(32) NOT NULL", length = 32)
-	@Getter
-	private String name;
+    @Column(columnDefinition = "VARCHAR(32) NOT NULL", length = 32)
+    @Getter
+    private String name;
 
-	@Column(columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP")
-	@Builder.Default
-	@Getter
-	private LocalDateTime registrationDateTime = LocalDateTime.now();
+    @Column(columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP")
+    @Builder.Default
+    @Getter
+    private LocalDateTime registrationDateTime = LocalDateTime.now();
 
-	@Column(columnDefinition = "VARCHAR(32) NOT NULL", length = 32, unique = true)
-	@NonNull
-	@Getter
-	private String contact;
+    @Column(columnDefinition = "VARCHAR(32) NOT NULL", length = 32, unique = true)
+    @NonNull
+    @Getter
+    private String contact;
 
-	@Column(columnDefinition = "DATE")
-	@Nullable
-	@Getter
-	private LocalDate birthdate;
+    @Column(columnDefinition = "DATE")
+    @Nullable
+    @Getter
+    private LocalDate birthdate;
 
-	@Column(columnDefinition = "VARCHAR(6)", length = 6)
-	@Enumerated(EnumType.STRING)
-	@Nullable
-	@Getter
-	private Gender gender;
+    @Column(columnDefinition = "VARCHAR(6)", length = 6)
+    @Enumerated(EnumType.STRING)
+    @Nullable
+    @Getter
+    private Gender gender;
 
-	@Column(columnDefinition = "VARCHAR(256)", length = 256)
-	@Nullable
-	@Getter
-	private String appToken;
+    @Column(columnDefinition = "VARCHAR(256)", length = 256)
+    @Nullable
+    @Getter
+    private String appToken;
 
-	@Column(columnDefinition = "VARCHAR(16) NOT NULL", length = 16)
-	@Enumerated(EnumType.STRING)
-	@Getter
-	private Type type;
-
-
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "caregiver_contact", columnDefinition = "VARCHAR(32)", referencedColumnName = "contact")
-	@Nullable
-	@Getter
-	private User caregiver;
-
-	@Column(name = "week")
-	@Getter
-	private Integer week;
-
-	@Column(name = "level")
-	@Getter
-	private Integer level;
-
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return new ArrayList<>();
-	}
-	@Override
-	public String getPassword() { return password; }
-	@Override
-	public String getUsername() { return userId; }
-	@Override
-	public boolean isAccountNonExpired() { return true; }
-	@Override
-	public boolean isAccountNonLocked() { return true; }
-	@Override
-	public boolean isCredentialsNonExpired() { return true; }
-	@Override
-	public boolean isEnabled() { return true; }
-
-	public enum Gender {
-		MALE, FEMALE;
-
-		public static Gender byName(String name) {
-			for (Gender gender : values()) {
-				if (gender.name().equals(name)) {
-					return gender;
-				}
-			}
-			return null;
-		}
-	}
+    @Column(columnDefinition = "VARCHAR(16) NOT NULL", length = 16)
+    @Enumerated(EnumType.STRING)
+    @Getter
+    private Type type;
 
 
-	public enum Type {
-		PATIENT, CAREGIVER, ADMINISTRATOR
-	}
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "caregiver_contact", columnDefinition = "VARCHAR(32)", referencedColumnName = "contact")
+    @Nullable
+    @Getter
+    private User caregiver;
+
+    @Column(name = "week")
+    @Getter
+    private Integer week;
+
+    @Column(name = "level")
+    @Getter
+    private Integer level;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return userId;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public enum Gender {
+        MALE, FEMALE;
+
+        public static Gender byName(String name) {
+            for (Gender gender : values()) {
+                if (gender.name().equals(name)) {
+                    return gender;
+                }
+            }
+            return null;
+        }
+    }
+
+
+    public enum Type {
+        PATIENT, CAREGIVER, ADMINISTRATOR
+    }
 }

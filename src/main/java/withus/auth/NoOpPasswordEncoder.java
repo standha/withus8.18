@@ -5,24 +5,26 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class NoOpPasswordEncoder implements PasswordEncoder {
-	private static NoOpPasswordEncoder singleton;
+    private static NoOpPasswordEncoder singleton;
 
-	private NoOpPasswordEncoder() { }
+    private NoOpPasswordEncoder() {
+    }
 
-	public static NoOpPasswordEncoder getInstance() {
-		if (singleton == null) {
-			singleton = new NoOpPasswordEncoder();
-		}
+    public static NoOpPasswordEncoder getInstance() {
+        if (singleton == null) {
+            singleton = new NoOpPasswordEncoder();
+        }
 
-		return singleton;
-	}
+        return singleton;
+    }
 
-	@Override
-	public String encode(CharSequence rawPassword) {
-		return String.valueOf(rawPassword);
-	}
-	@Override
-	public boolean matches(CharSequence rawPassword, String encodedPassword) {
-		return String.valueOf(rawPassword).equals(encodedPassword);
-	}
+    @Override
+    public String encode(CharSequence rawPassword) {
+        return String.valueOf(rawPassword);
+    }
+
+    @Override
+    public boolean matches(CharSequence rawPassword, String encodedPassword) {
+        return String.valueOf(rawPassword).equals(encodedPassword);
+    }
 }

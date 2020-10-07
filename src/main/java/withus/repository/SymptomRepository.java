@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface SymptomRepository extends JpaRepository <Tbl_symptom_log, RecordKey> {
+public interface SymptomRepository extends JpaRepository<Tbl_symptom_log, RecordKey> {
     @Transactional(readOnly = true)
-    List<Tbl_symptom_log>findByPk_IdAndTodaysymptomGreaterThan(String pk_id, Integer todaySymptom);
+    List<Tbl_symptom_log> findByPk_IdAndTodaysymptomGreaterThan(String pk_id, Integer todaySymptom);
 
     @Transactional(readOnly = true)
     Optional<Tbl_symptom_log> findByPk(RecordKey recordKey);

@@ -69,6 +69,9 @@ function onFormSubmission(form) {
 		.then(response => response.json())
 		.then(data => console.log(data));
 
+	setTimeout(function (){
+		location.reload(true);
+	}, 300);
 	return false;
 }
 
@@ -149,13 +152,16 @@ function check_box()
 	{
 		document.getElementById('alarm').className = "chk-box checked";
 		document.getElementById('label').textContent = "켜짐";
+		document.getElementById("onoff").setAttribute("checked", "");
 	}
 	else
 	{
 		document.getElementById('alarm').className = "chk-box";
 		document.getElementById('label').textContent = "꺼짐";
+		document.getElementById("onoff").removeAttribute("checked");
 	}
 }
+
 
 function check_morning(div) {
 	switch (div.id) {

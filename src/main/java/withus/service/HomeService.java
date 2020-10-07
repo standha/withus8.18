@@ -10,20 +10,19 @@ import withus.repository.WithusHelpRequestRepository;
 
 @Service
 public class HomeService {
-	private final WithusHelpRequestRepository withusHelpRequestRepository;
+    private final WithusHelpRequestRepository withusHelpRequestRepository;
 
-	@Autowired
-	public HomeService(WithusHelpRequestRepository withusHelpRequestRepository) {
-		this.withusHelpRequestRepository = withusHelpRequestRepository;
-	}
+    @Autowired
+    public HomeService(WithusHelpRequestRepository withusHelpRequestRepository) {
+        this.withusHelpRequestRepository = withusHelpRequestRepository;
+    }
 
-	public WithusHelpRequest createHelpRequest(User user, LocalDateTime dateTime, String helpCode) {
-		WithusHelpRequest withusHelpRequest = WithusHelpRequest.builder()
-			.user(user)
-			.dateTime(dateTime)
-			.helpCode(helpCode)
-			.build();
+    public WithusHelpRequest createHelpRequest(User user, LocalDateTime dateTime) {
+        WithusHelpRequest withusHelpRequest = WithusHelpRequest.builder()
+                .user(user)
+                .dateTime(dateTime)
+                .build();
 
-		return withusHelpRequestRepository.save(withusHelpRequest);
-	}
+        return withusHelpRequestRepository.save(withusHelpRequest);
+    }
 }

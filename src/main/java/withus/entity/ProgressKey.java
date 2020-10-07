@@ -18,24 +18,27 @@ import java.time.LocalDate;
 public class ProgressKey implements Serializable {
     private static final long serialVersionUID = 1L;
     @EqualsAndHashCode.Include
-    @Column(name="patient_id")
+    @Column(name = "patient_id")
     private String id;
 
     @EqualsAndHashCode.Include
-    @Column(name="week")
+    @Column(name = "week")
     private Integer week;
 
-    public ProgressKey(){}
+    public ProgressKey() {
+    }
 
     public ProgressKey(String id, Integer week) {
         super();
         this.id = id;
         this.week = week;
     }
-    public String getId(){
+
+    public String getId() {
         return id;
     }
-    public Integer getWeek(){
+
+    public Integer getWeek() {
         return week;
     }
 }

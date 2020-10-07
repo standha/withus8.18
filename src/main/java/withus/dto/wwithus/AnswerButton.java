@@ -13,19 +13,19 @@ import org.springframework.lang.Nullable;
 @Getter
 @ToString
 public class AnswerButton implements Comparable<AnswerButton> {
-	private final String code;
-	private final int ordinal;
-	private final boolean isHelpRequest;
-	private final boolean isToTerminate;
-	private final boolean isToRewind;
-	private final String content;
-	@Nullable
-	private final String urlToImageFile;
-	@Nullable
-	private final String nextCode;
+    private final String code;
+    private final int ordinal;
+    private final boolean isHelpRequest;
+    private final boolean isToTerminate;
+    private final boolean isToRewind;
+    private final String content;
+    @Nullable
+    private final String urlToImageFile;
+    @Nullable
+    private final String nextCode;
 
-	@Override
-	public int compareTo(@NonNull AnswerButton that) {
-		return Integer.compare(ordinal, that.ordinal);
-	}
+    @Override
+    public int compareTo(@NonNull AnswerButton that) {
+        return Integer.compare(ordinal, that.ordinal);
+    }
 }

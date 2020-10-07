@@ -15,7 +15,7 @@ import java.util.Optional;
 @Repository
 public interface ExerciseRecordRepository extends JpaRepository<Tbl_Exercise_record, RecordKey> {
     @Transactional(readOnly = true)
-    List<Tbl_Exercise_record>findByPk_IdAndHourGreaterThanAndMinuteGreaterThan(String username, Integer Hour, Integer Minute);
+    List<Tbl_Exercise_record> findByPk_IdAndHourGreaterThanAndMinuteGreaterThan(String username, Integer Hour, Integer Minute);
 
     @Transactional
     Optional<Tbl_Exercise_record> findByPkAndHourIsNotNullAndMinuteIsNotNull(RecordKey pk);

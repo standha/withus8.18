@@ -20,18 +20,19 @@ public class TimeKey implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @EqualsAndHashCode.Include
-    @Column(name="id")
+    @Column(name = "id")
     private String id;
 
     @EqualsAndHashCode.Include
-    @Column(name="date")
+    @Column(name = "date")
     private LocalDate date;
 
     @EqualsAndHashCode.Include
-    @Column(name="time")
+    @Column(name = "time")
     private LocalTime time;
 
-    public TimeKey(){}
+    public TimeKey() {
+    }
 
     public TimeKey(String id, LocalDate date, LocalTime time) {
         super();
@@ -39,11 +40,16 @@ public class TimeKey implements Serializable {
         this.date = date;
         this.time = time;
     }
-    public String getId(){
+
+    public String getId() {
         return id;
     }
-    public LocalDate getDate(){
+
+    public LocalDate getDate() {
         return date;
     }
-    public LocalTime getTime() { return time; }
+
+    public LocalTime getTime() {
+        return time;
+    }
 }

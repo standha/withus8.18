@@ -14,13 +14,12 @@ import java.util.Optional;
 @Repository
 public interface MoistureRecordRepository extends JpaRepository<Tbl_mositrue_record, RecordKey> {
     @Transactional(readOnly = true)
-    List<Tbl_mositrue_record>findByPk_IdAndIntakeGreaterThan(String pk_id, Integer intake);
+    List<Tbl_mositrue_record> findByPk_IdAndIntakeGreaterThan(String pk_id, Integer intake);
 
     @Transactional(readOnly = true)
-    List<Tbl_mositrue_record>findByPkAndIntakeGreaterThan(RecordKey pk, Integer intake);
+    List<Tbl_mositrue_record> findByPkAndIntakeGreaterThan(RecordKey pk, Integer intake);
 
     @Transactional
-    Optional<Tbl_mositrue_record>findByPkAndIntakeIsNotNull(RecordKey pk);
-
+    Optional<Tbl_mositrue_record> findByPkAndIntakeIsNotNull(RecordKey pk);
 }
 

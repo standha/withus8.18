@@ -10,16 +10,16 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class StatisticalAspect {
-	private static final Logger logger = LoggerFactory.getLogger(StatisticalAspect.class);
+    private static final Logger logger = LoggerFactory.getLogger(StatisticalAspect.class);
 
-	/**
-	 * Gets invoked before methods annotated with {@link withus.aspect.Statistical}.
-	 */
-	@Before("@annotation(withus.aspect.Statistical)")
-	public void updateStatisticsAround(JoinPoint joinPoint) {
-		logger.info("{}: About to update the statistics.", joinPoint.getSignature());
+    /**
+     * Gets invoked before methods annotated with {@link withus.aspect.Statistical}.
+     */
+    @Before("@annotation(withus.aspect.Statistical)")
+    public void updateStatisticsAround(JoinPoint joinPoint) {
+        logger.info("{}: About to update the statistics.", joinPoint.getSignature());
 
-		// TODO: UPDATE THE STATISTICS HERE.
-		logger.info("TODO: UPDATE THE STATISTICS HERE.");
-	}
+        // TODO: UPDATE THE STATISTICS HERE.
+        logger.info("TODO: UPDATE THE STATISTICS HERE.");
+    }
 }
