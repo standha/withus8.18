@@ -1,25 +1,24 @@
 package withus.service;
 
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
+import com.google.gson.JsonObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 public class AndriodSingleNotification {
-    public static String SingleNotificationJson(String title, String data, String tokenData) throws JSONException, NullPointerException {
-        JSONObject body = new JSONObject();
+    public static String SingleNotificationJson(String title, String data, String tokenData) throws NullPointerException {
+        JsonObject body = new JsonObject();
 
-        body.put("to", tokenData);
+        body.addProperty("to", tokenData);
         //알림 내용 지정
-        JSONObject notification = new JSONObject();
-        notification.put("title", title);
+        JsonObject notification = new JsonObject();
+        notification.addProperty("title", title);
         try {
-            notification.put("body", URLEncoder.encode(data, "EUC-KR"));
+            notification.addProperty("body", URLEncoder.encode(data, "EUC-KR"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        body.put("data", notification);
+        body.add("data", notification);
         return body.toString();
     }
 }

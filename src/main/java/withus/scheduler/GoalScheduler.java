@@ -4,8 +4,6 @@ package withus.scheduler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +24,6 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-@Configuration
 @Component
 @EnableAsync
 @EnableScheduling
@@ -130,140 +127,244 @@ public class GoalScheduler {
         List<String> noneToken = new ArrayList<>();
         List<String> loseToken = new ArrayList<>();
         List<String> winToken = new ArrayList<>();
+
+        if (users == null) {
+           return;
+        }
+
         for (User user : users) {
             Tbl_goal goalUser = goalService.getGoalId(user.getUsername());
-            logger.trace("id:{}, type:{}, level:{}, week:{} , goal:{}", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
+
+            if (goalUser == null) {
+               return;
+            }
             int success = 0;
+
             switch (goalUser.getGoal()) {
                 case 0:
+                    success = 2;
                     noneToken.add(user.getAppToken());
-                    logger.trace("id:{}, type:{}, level:{}, week:{} , goal:{} No goal set", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
-                    if (haveParent(user))
-                        noneToken.add(user.getAppToken());
+                    if (user.getCaregiver() == null)
+                        break;
+                    else {
+                        User guser = user.getCaregiver();
+                        noneToken.add(guser.getAppToken());
+                        logger.trace("id:{}, type:{}, patientId:{} No goal set", guser.getUserId(), guser.getType(), user.getUserId());
+                    }
                     break;
                 case 1:
                     if (PillCount(user.getUserId()) == 7) {
                         success = 1;
                         winToken.add(user.getAppToken());
-                        if (haveParent(user))
-                            winToken.add(user.getAppToken());
+                        if (user.getCaregiver() == null)
+                            break;
+                        else {
+                            User guser = user.getCaregiver();
+                            winToken.add(guser.getAppToken());
+                            logger.trace("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                        }
                     } else {
                         loseToken.add(user.getAppToken());
-                        if (haveParent(user))
-                            loseToken.add(user.getAppToken());
+                        if (user.getCaregiver() == null)
+                            break;
+                        else {
+                            User guser = user.getCaregiver();
+                            loseToken.add(guser.getAppToken());
+                            logger.trace("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                        }
                     }
                     break;
                 case 2:
                     if (BloodCount(user.getUserId()) == 7) {
                         success = 1;
                         winToken.add(user.getAppToken());
-                        if (haveParent(user))
-                            winToken.add(user.getAppToken());
+                        if (user.getCaregiver() == null)
+                            break;
+                        else {
+                            User guser = user.getCaregiver();
+                            winToken.add(guser.getAppToken());
+                            logger.trace("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                        }
                     } else {
                         loseToken.add(user.getAppToken());
-                        if (haveParent(user))
-                            loseToken.add(user.getAppToken());
+                        if (user.getCaregiver() == null)
+                            break;
+                        else {
+                            User guser = user.getCaregiver();
+                            loseToken.add(guser.getAppToken());
+                            logger.trace("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                        }
                     }
                     break;
                 case 3:
                     if (WeightCount(user.getUserId()) == 7) {
                         success = 1;
                         winToken.add(user.getAppToken());
-                        if (haveParent(user))
-                            winToken.add(user.getAppToken());
+                        if (user.getCaregiver() == null)
+                            break;
+                        else {
+                            User guser = user.getCaregiver();
+                            winToken.add(guser.getAppToken());
+                            logger.trace("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                        }
                     } else {
                         loseToken.add(user.getAppToken());
-                        if (haveParent(user))
-                            loseToken.add(user.getAppToken());
+                        if (user.getCaregiver() == null)
+                            break;
+                        else {
+                            User guser = user.getCaregiver();
+                            loseToken.add(guser.getAppToken());
+                            logger.trace("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                        }
                     }
                     break;
                 case 4:
                     if (SymptomCount(user.getUserId()) >= 3) {
                         success = 1;
                         winToken.add(user.getAppToken());
-                        if (haveParent(user))
-                            winToken.add(user.getAppToken());
+                        if (user.getCaregiver() == null)
+                            break;
+                        else {
+                            User guser = user.getCaregiver();
+                            winToken.add(guser.getAppToken());
+                            logger.trace("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                        }
                     } else {
                         loseToken.add(user.getAppToken());
-                        if (haveParent(user))
-                            loseToken.add(user.getAppToken());
+                        if (user.getCaregiver() == null)
+                            break;
+                        else {
+                            User guser = user.getCaregiver();
+                            loseToken.add(guser.getAppToken());
+                            logger.trace("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                        }
                     }
                     break;
                 case 5:
                     if (SymptomCount(user.getUserId()) == 7) {
                         success = 1;
                         winToken.add(user.getAppToken());
-                        if (haveParent(user))
-                            winToken.add(user.getAppToken());
+                        if (user.getCaregiver() == null)
+                            break;
+                        else {
+                            User guser = user.getCaregiver();
+                            winToken.add(guser.getAppToken());
+                            logger.trace("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                        }
                     } else {
                         loseToken.add(user.getAppToken());
-                        if (haveParent(user))
-                            loseToken.add(user.getAppToken());
+                        if (user.getCaregiver() == null)
+                            break;
+                        else {
+                            User guser = user.getCaregiver();
+                            loseToken.add(guser.getAppToken());
+                            logger.trace("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                        }
                     }
                     break;
                 case 6:
                     if (NatriumCount(user.getUserId()) >= 3) {
                         success = 1;
                         winToken.add(user.getAppToken());
-                        if (haveParent(user))
-                            winToken.add(user.getAppToken());
+                        if (user.getCaregiver() == null)
+                            break;
+                        else {
+                            User guser = user.getCaregiver();
+                            winToken.add(guser.getAppToken());
+                            logger.trace("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                        }
                     } else {
                         loseToken.add(user.getAppToken());
-                        if (haveParent(user))
-                            loseToken.add(user.getAppToken());
+                        if (user.getCaregiver() == null)
+                            break;
+                        else {
+                            User guser = user.getCaregiver();
+                            loseToken.add(guser.getAppToken());
+                            logger.trace("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                        }
                     }
                     break;
                 case 7:
                     if (NatriumCount(user.getUserId()) == 7) {
                         success = 1;
                         winToken.add(user.getAppToken());
-                        if (haveParent(user))
-                            winToken.add(user.getAppToken());
+                        if (user.getCaregiver() == null)
+                            break;
+                        else {
+                            User guser = user.getCaregiver();
+                            winToken.add(guser.getAppToken());
+                            logger.trace("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                        }
                     } else {
                         loseToken.add(user.getAppToken());
-                        if (haveParent(user))
-                            loseToken.add(user.getAppToken());
+                        if (user.getCaregiver() == null)
+                            break;
+                        else {
+                            User guser = user.getCaregiver();
+                            loseToken.add(guser.getAppToken());
+                            logger.trace("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                        }
                     }
                     break;
                 case 8:
                     if (ExerciseCount(user.getUserId()) >= 1) {
                         success = 1;
                         winToken.add(user.getAppToken());
-                        if (haveParent(user))
-                            winToken.add(user.getAppToken());
+                        if (user.getCaregiver() == null)
+                            break;
+                        else {
+                            User guser = user.getCaregiver();
+                            winToken.add(guser.getAppToken());
+                            logger.trace("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                        }
                     } else {
                         loseToken.add(user.getAppToken());
-                        if (haveParent(user))
-                            loseToken.add(user.getAppToken());
+                        if (user.getCaregiver() == null)
+                            break;
+                        else {
+                            User guser = user.getCaregiver();
+                            loseToken.add(guser.getAppToken());
+                            logger.trace("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                        }
                     }
                     break;
                 case 9:
                     if (ExerciseCount(user.getUserId()) >= 3) {
                         success = 1;
                         winToken.add(user.getAppToken());
-                        if (haveParent(user))
-                            winToken.add(user.getAppToken());
+                        if (user.getCaregiver() == null)
+                            break;
+                        else {
+                            User guser = user.getCaregiver();
+                            winToken.add(guser.getAppToken());
+                            logger.trace("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                        }
                     } else {
                         loseToken.add(user.getAppToken());
-                        if (haveParent(user))
-                            loseToken.add(user.getAppToken());
+                        if (user.getCaregiver() == null)
+                            break;
+                        else {
+                            User guser = user.getCaregiver();
+                            loseToken.add(guser.getAppToken());
+                            logger.trace("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                        }
                     }
                     break;
             }
             if (success == 1) {
                 user.setLevel(user.getLevel() + 1);
                 userService.upsertUser(user);
-                logger.trace("id:{}, type:{}, level:{}, week:{} Achieve the goal", user.getUserId(), user.getType(), user.getLevel(), user.getWeek());
-            } else {
-                logger.trace("id:{}, type:{}, level:{}, week:{} Not Achieve the goal", user.getUserId(), user.getType(), user.getLevel(), user.getWeek());
+                logger.trace("id:{}, type:{}, level:{}, week:{} goal:{} Achieve the goal", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
+            } else if(success == 2){
+                logger.trace("id:{}, type:{}, level:{}, week:{} , goal:{} No goal set", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
+            }else{
+                logger.trace("id:{}, type:{}, level:{}, week:{} goal:{} Not Achieve the goal", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
             }
         }
         try {
             levelNotice("center", winToken, "이 주의 목표를 달성하셨네요!\n 꽃이 어디까지 피었는지 확인해주세요~");
             levelNotice("center", noneToken, "이 주의 목표 설정이 되어있지 않아요.\n 목표를 설정하여 꽃을 피워보세요.");
             levelNotice("center", loseToken, "아쉽게도 이 주의 목표를 달성하지 못하셨네요.\n 꽃이 어디까지 피었는지 확인해주세요.");
-        } catch (JSONException e) {
-            e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -271,7 +372,7 @@ public class GoalScheduler {
 
 
     public @ResponseBody
-    ResponseEntity<String> levelNotice(String title, List<String> tokenList, String message) throws JSONException, InterruptedException {
+    ResponseEntity<String> levelNotice(String title, List<String> tokenList, String message) throws InterruptedException {
         if (tokenList.isEmpty()) {
             return new ResponseEntity<>("No Target!", HttpStatus.BAD_REQUEST);
         }
@@ -292,13 +393,4 @@ public class GoalScheduler {
         }
         return new ResponseEntity<>("Push Notification ERROR!", HttpStatus.BAD_REQUEST);
     }
-
-    public boolean haveParent(User user) {
-        if (user.getCaregiver() == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
 }
