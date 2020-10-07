@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
 import withus.dto.HeaderInfoDTO;
+import withus.dto.HelpRequestDTO;
 import withus.dto.MoistureAvgDTO;
 import withus.dto.PillSumDTO;
 import withus.entity.Tbl_medication_record;
@@ -26,6 +27,7 @@ import withus.service.GoalService;
 import withus.service.MoistureNatriumService;
 import withus.service.UserService;
 
+import java.time.Month;
 import java.util.List;
 
 @Controller
@@ -58,6 +60,8 @@ public class AdminHomeController extends AdminBaseController
 		ModelAndView mav = new ModelAndView();
 		HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
 		mav.addObject("patient", headerInfo);
+		List<HelpRequestDTO> helpRequestAsc = adminService.getHelpRequestAsc();
+
 		mav.setViewName("/Admin/admin_center");
 		return mav;
 	}
@@ -73,6 +77,7 @@ public class AdminHomeController extends AdminBaseController
 		mav.setViewName("/Admin/admin_moistureRecord");
 		return mav;
 	}
+
 	@GetMapping("/admin_pillRecord/{userId}")
 	public ModelAndView adminPillRecord(@PathVariable("userId") String userId){
 		ModelAndView mav = new ModelAndView();
@@ -85,6 +90,15 @@ public class AdminHomeController extends AdminBaseController
 		mav.setViewName("/Admin/admin_pillRecord");
 		return mav;
 	 }
+
+	@GetMapping("/adimn_withusHelpRequest")
+	public ModelAndView adminWithusHelpRequest(){
+		ModelAndView mav = new ModelAndView();
+		List<HelpRequestDTO> helpRequestAsc = adminService.getHelpRequestAsc();
+		mav.addObject("helpRequestAsc",helpRequestAsc);
+		mav.setViewName("/Admin/admin_withusHelpRequest");
+		return mav;
+	}
 
 	@PostMapping(value="/logout")
 	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {

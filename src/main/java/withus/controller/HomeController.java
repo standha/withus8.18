@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
@@ -39,14 +40,14 @@ public class HomeController extends BaseController {
 
 	@PostMapping("/home/help-request")
 	@ResponseBody
-	public Result<WithusHelpRequest> postHelpRequest() {
+	public Result<WithusHelpRequest> postHelpRequest(@RequestBody String helpCode) {
 		User user = getUser();
 		LocalDateTime now = LocalDateTime.now();
 
 		Result.Code code = Result.Code.ERROR;
 		WithusHelpRequest withusHelpRequest = null;
 		try {
-			withusHelpRequest = homeService.createHelpRequest(user, now);
+			withusHelpRequest = homeService.createHelpRequest(user, now, helpCode);
 			code = Result.Code.OK;
 		} catch (Exception exception) {
 //			log.error(exception.getLocalizedMessage(), exception);

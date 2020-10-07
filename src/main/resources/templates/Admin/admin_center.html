@@ -37,11 +37,10 @@
             <ul>
                 <li class="m"><a href="#" class="menu-01"><span>환자용 계정 기록</span></a>
                 </li> <li class="m"><a href="#" class="menu-02"><span>보호자용 계정 기록</span></a></li>
-                <li class="m"><a href="#" class="menu-03"><span>위더스랑 요청 기록</span></a></li>
+                <li class="m"><a th:href="@{/adimn_withusHelpRequest}"><span>위더스랑 요청 기록</span></a></li>
             </ul>
         </nav>
     </header>
-
     <div class="container" id="content">
         <ul class="main-icon">
             <a th:href="@{/admin_pillRecord/{userId}(userId=${patient.userId})}">

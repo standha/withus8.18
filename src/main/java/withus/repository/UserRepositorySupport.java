@@ -5,6 +5,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 import withus.dto.HeaderInfoDTO;
+import withus.dto.HelpRequestDTO;
 import withus.dto.MoistureAvgDTO;
 import withus.dto.PillSumDTO;
 import withus.entity.*;
@@ -72,6 +73,20 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .orderBy(mr.pk.date.asc())
                 .fetch();
         return pillAsc;
+    }
+
+    public List<HelpRequestDTO> findHelpRequestAsc(){
+        QWithusHelpRequest wr = QWithusHelpRequest.withusHelpRequest;
+        QUser u = QUser.user;
+        QUser c = QUser.user.caregiver;
+        List<HelpRequestDTO> requestAsc = queryFactory.select(Projections.constructor(HelpRequestDTO.class, wr.dateTime,u.name,
+                u.userId, u.contact, c.contact, wr.helpCode))
+                .from(wr)
+                .leftJoin(u).on(wr.user.userId.eq(u.userId))
+                .leftJoin(c).on(u.caregiver.contact.eq(c.contact))
+                .orderBy(wr.dateTime.asc())
+                .fetch();
+        return requestAsc;
     }
 
 }

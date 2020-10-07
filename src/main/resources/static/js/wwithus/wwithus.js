@@ -239,7 +239,7 @@ function renderButtons(chatBalloon)
 				href += " deleteHistory(); sleep(666).then(() => location.reload());";
 			} else {
 				if (answerButton.isHelpRequest || answerButton.helpRequest) {
-					href += " sendHelpRequest();";
+					href +=  `sendHelpRequest('${answerButton.code}');`;
 				}
 
 				if (answerButton.isToTerminate || answerButton.toTerminate) {

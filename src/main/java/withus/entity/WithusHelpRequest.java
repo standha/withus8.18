@@ -48,4 +48,7 @@ public class WithusHelpRequest {
 	@OneToOne
 	@JoinColumn(columnDefinition = "VARCHAR(128) NOT NULL")
 	private User user;
+
+	@Column(name = "helpCode")
+	private String helpCode;
 }

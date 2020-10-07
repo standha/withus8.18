@@ -26,6 +26,8 @@ public class QWithusHelpRequest extends EntityPathBase<WithusHelpRequest> {
 
     public final BooleanPath dealtWith = createBoolean("dealtWith");
 
+    public final StringPath helpCode = createString("helpCode");
+
     public final NumberPath<Integer> requestId = createNumber("requestId", Integer.class);
 
     public final QUser user;
