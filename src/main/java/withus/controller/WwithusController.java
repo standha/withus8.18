@@ -16,7 +16,10 @@ import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
 import withus.dto.wwithus.ChatBalloon;
 import withus.dto.wwithus.WwithusEntryRequest;
+import withus.entity.ProgressKey;
+import withus.entity.Tbl_button_count;
 import withus.entity.User;
+import withus.service.CountService;
 import withus.service.UserService;
 import withus.service.WwithusService;
 import withus.util.Utility;
@@ -26,11 +29,12 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class WwithusController extends BaseController {
 	private final WwithusService wwithusService;
+	private final CountService countService;
 
 	@Autowired
-	public WwithusController(UserService userService, AuthenticationFacade authenticationFacade, WwithusService wwithusService) {
+	public WwithusController(UserService userService, AuthenticationFacade authenticationFacade, WwithusService wwithusService ,CountService countService) {
 		super(userService, authenticationFacade);
-
+		this.countService = countService;
 		this.wwithusService = wwithusService;
 	}
 
@@ -41,8 +45,11 @@ public class WwithusController extends BaseController {
 		logger.info("id:{},type:{} ,url:{}", user.getUserId(),user.getType(), request.getRequestURL());
 		ModelAndView modelAndView = new ModelAndView("wwithus/wwithus.html");
 		modelAndView.addObject("previousUrl", "/home");
-		modelAndView.addObject("userType", getUser().getType());
-
+		modelAndView.addObject("userType", user.getType());
+		if(user.getType() == User.Type.PATIENT){
+			Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+			modelAndView.addObject("count", count);
+		}
 		return modelAndView;
 	}
 
