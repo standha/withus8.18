@@ -139,6 +139,6 @@ public class ExerciseController extends BaseController {
             avg = avg + exerciseService.getExerciseDayRecord(new RecordKey(username, now.with(DayOfWeek.of(i))));
         }
 
-        return avg / 7;
+        return avg;
     }
 }

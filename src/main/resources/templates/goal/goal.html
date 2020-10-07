@@ -27,7 +27,7 @@
 
     <!-- header -->
     <header>
-        <div class="header-wrap type01" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+        <div class="header-wrap type02" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
             <div class="head">
                 <div onclick="helperRequest()" >
                     <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
@@ -40,7 +40,7 @@
                 </h2>
             </div>
         </div>
-        <div class="header-wrap type01" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
+        <div class="header-wrap type02" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
             <div class="head">
                 <div onclick="helperRequest()" >
                     <a class="btn xsm type07" href="tel:02-820-5198">
