@@ -4,7 +4,6 @@ import org.hibernate.NonUniqueResultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +45,7 @@ public class NoticeScheduler {
     }
 
     public @ResponseBody
-    ResponseEntity<String> notice(String title, List<String> tokenList, String message) throws JSONException, InterruptedException {
+    ResponseEntity<String> notice(String title, List<String> tokenList, String message) throws InterruptedException {
         if (tokenList.isEmpty()) {
             return new ResponseEntity<>("No Target!", HttpStatus.BAD_REQUEST);
         }
@@ -106,8 +105,6 @@ public class NoticeScheduler {
             notice("pill", morningToken, "아침 약을 복용하실 시간이에요.\n 지금 약을 복용해주세요!");
             notice("pill", lunchToken, "점심 약을 복용하실 시간이에요.\n 지금 약을 복용해주세요!");
             notice("pill", dinnerToken, "저녁 약을 복용하실 시간이에요.\n 약 복용 후 복약 기록에 기록해주세요.");
-        } catch (JSONException e) {
-            e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -134,8 +131,6 @@ public class NoticeScheduler {
         }
         try {
             notice("visit", visitToken, "내일 병원 진료 전 준비사항 (예: 금식)이 있는 지 확인해보세요!");
-        } catch (JSONException e) {
-            e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -164,8 +159,6 @@ public class NoticeScheduler {
         }
         try {
             notice("visit", visitToken, "병원 진료 전 준비사항 (예: 금식)이 있는 지 확인해보세요!");
-        } catch (JSONException e) {
-            e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -184,8 +177,6 @@ public class NoticeScheduler {
         }
         try {
             notice("withus", tokenList, " 방금 [ 위더스랑 ]에 메시지가 도착했어요. ");
-        } catch (JSONException e) {
-            e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -204,8 +195,6 @@ public class NoticeScheduler {
         }
         try {
             notice("withus", tokenList, " 방금 [ 위더스랑 ]에 메시지가 도착했어요. ");
-        } catch (JSONException e) {
-            e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -222,8 +211,6 @@ public class NoticeScheduler {
                 try {
                     send("pill", patient.getAppToken(),
                             patient.getName() + "님, 오늘 심장 건강을 위해 실천하신 내용을 [위더스]에 기록하셨나요?\n 기록하지 않았다면 지금 기록해주세요!");
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -234,7 +221,7 @@ public class NoticeScheduler {
     //단일 기기 PUSH 알림
     @RequestMapping(produces = "application/json;charset=UTF-8")
     public @ResponseBody
-    ResponseEntity<String> send(String title, String token, String message) throws JSONException, InterruptedException, NonUniqueResultException {
+    ResponseEntity<String> send(String title, String token, String message) throws InterruptedException, NonUniqueResultException {
         if (token.isEmpty()) {
             return new ResponseEntity<>("No Target!", HttpStatus.BAD_REQUEST);
         }

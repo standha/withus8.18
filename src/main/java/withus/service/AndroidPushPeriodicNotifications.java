@@ -1,8 +1,7 @@
 package withus.service;
 
-import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -12,27 +11,27 @@ import java.util.List;
 public class
 AndroidPushPeriodicNotifications {
 
-    public static String PeriodicNotificationJson(String title, String data, List<String> tokenData) throws JSONException, NullPointerException {
+    public static String PeriodicNotificationJson(String title, String data, List<String> tokenData) throws NullPointerException {
         List<String> tokenlist = new ArrayList<String>();
-        JSONObject body = new JSONObject();
-        JSONArray token = new JSONArray();
+        JsonObject body = new JsonObject();
+        JsonArray token = new JsonArray();
         tokenlist = tokenData;
 
         for (int i = 0; i < tokenlist.size(); i++) {
-            token.put(tokenlist.get(i));
+            token.add(tokenlist.get(i));
         }
 
 
-        body.put("registration_ids", token);
+        body.add("registration_ids", token);
         //알림 내용 지정
-        JSONObject notification = new JSONObject();
-        notification.put("title", title);
+        JsonObject notification = new JsonObject();
+        notification.addProperty("title", title);
         try {
-            notification.put("body", URLEncoder.encode(data, "EUC-KR"));
+            notification.addProperty("body", URLEncoder.encode(data, "EUC-KR"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        body.put("data", notification);
+        body.add("data", notification);
         return body.toString();
     }
 }

@@ -4,7 +4,6 @@ package withus.scheduler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -128,10 +127,20 @@ public class GoalScheduler {
         List<String> noneToken = new ArrayList<>();
         List<String> loseToken = new ArrayList<>();
         List<String> winToken = new ArrayList<>();
+
+        if (users == null) {
+           return;
+        }
+
         for (User user : users) {
             Tbl_goal goalUser = goalService.getGoalId(user.getUsername());
+
+            if (goalUser == null) {
+               return;
+            }
             logger.trace("id:{}, type:{}, level:{}, week:{} , goal:{}", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
             int success = 0;
+
             switch (goalUser.getGoal()) {
                 case 0:
                     noneToken.add(user.getAppToken());
@@ -256,12 +265,11 @@ public class GoalScheduler {
                 logger.info("id:{}, type:{}, level:{}, week:{} 목표 미달성", user.getUserId(), user.getType(), user.getLevel(), user.getWeek());
             }
         }
+
         try {
             levelNotice("center", winToken, "이 주의 목표를 달성하셨네요!\n 꽃이 어디까지 피었는지 확인해주세요~");
             levelNotice("center", noneToken, "이 주의 목표 설정이 되어있지 않아요.\n 목표를 설정하여 꽃을 피워보세요.");
             levelNotice("center", loseToken, "아쉽게도 이 주의 목표를 달성하지 못하셨네요.\n 꽃이 어디까지 피었는지 확인해주세요.");
-        } catch (JSONException e) {
-            e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -269,10 +277,11 @@ public class GoalScheduler {
 
 
     public @ResponseBody
-    ResponseEntity<String> levelNotice(String title, List<String> tokenList, String message) throws JSONException, InterruptedException {
+    ResponseEntity<String> levelNotice(String title, List<String> tokenList, String message) throws InterruptedException {
         if (tokenList.isEmpty()) {
             return new ResponseEntity<>("No Target!", HttpStatus.BAD_REQUEST);
         }
+
         String notifications = AndroidPushPeriodicNotifications.PeriodicNotificationJson(title, message, tokenList);
         HttpEntity<String> request = new HttpEntity<>(notifications);
 
