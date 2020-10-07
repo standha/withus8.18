@@ -204,47 +204,4 @@ public class CenterController extends BaseController
 		return goalNow;
 	}
 
-	@PutMapping(value = "/button-count",consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public Result<Tbl_button_count> getSymptomCount(@RequestBody Tbl_button_count tbl_button_count){
-		String userId = getUsername();
-		User user = userService.getUserById(userId);
-		tbl_button_count.setKey(new ProgressKey(userId, user.getWeek()));
-		Result.Code code;
-		Tbl_button_count saved = null;
-		try{
-			saved = countService.upsertCount(tbl_button_count);
-			code = Result.Code.OK;
-		}catch (Exception exception){
-			logger.error(exception.getLocalizedMessage(), exception);
-			code = Result.Code.ERROR_DATABASE;
-		}
-		return Result.<Tbl_button_count>builder()
-				.code(code)
-				.data(saved)
-				.build();
-	}
-
-	@PostMapping(value = "helper-request",consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public Result<Tbl_helper_request> temp(@RequestBody Tbl_helper_request tbl_helper_request){
-		String userId = getUsername();
-		User user = userService.getUserById(userId);
-		tbl_helper_request.setPk(new TimeKey(userId,LocalDate.now(),LocalTime.now()));
-		Result.Code code;
-		Tbl_helper_request saved = null;
-		try{
-			saved = helperRequestService.upsertHelperRequest(tbl_helper_request);
-			code = Result.Code.OK;
-		}catch (Exception exception){
-			logger.error(exception.getLocalizedMessage(), exception);
-			code = Result.Code.ERROR_DATABASE;
-		}
-		return Result.<Tbl_helper_request>builder()
-				.code(code)
-				.data(saved)
-				.build();
-	}
-
-
 }

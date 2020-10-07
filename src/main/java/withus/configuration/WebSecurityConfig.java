@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 				.authorizeRequests()
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
 				.permitAll()
-				.antMatchers("/registerUser", "/saveUser", "/admin_login", "/login")
+				.antMatchers("/registerUser", "/saveUser", "/admin_login", "/login","/download/withus.apk")
 				.permitAll()
 				.anyRequest()
 				.authenticated()
@@ -72,9 +72,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
 		httpSecurity
 				.logout()
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.logoutSuccessUrl("/logout")
-				.invalidateHttpSession(true);
+					.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+						.logoutSuccessUrl("/admin_login")
+							.invalidateHttpSession(true);
 
 	}
 

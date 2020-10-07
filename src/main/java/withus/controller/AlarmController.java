@@ -11,6 +11,7 @@ import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
 import withus.entity.*;
 import withus.service.AlarmService;
+import withus.service.CountService;
 import withus.service.UserService;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -20,11 +21,13 @@ import java.util.List;
 @Controller
 public class AlarmController extends BaseController{
     private final AlarmService alarmService;
+    private final CountService countService;
 
     @Autowired
-    public AlarmController(AuthenticationFacade authenticationFacade, UserService userService, AlarmService alarmService){
+    public AlarmController(AuthenticationFacade authenticationFacade, UserService userService, AlarmService alarmService, CountService countService){
         super(userService, authenticationFacade);
         this.alarmService = alarmService;
+        this.countService = countService;
     }
 
     @GetMapping("/alarm")
@@ -32,6 +35,12 @@ public class AlarmController extends BaseController{
     public ModelAndView getAlarm() {
         ModelAndView modelAndView = new ModelAndView("alarm/alarm");
         modelAndView.addObject("previousUrl", "/center");
+        User user = getUser();
+        modelAndView.addObject("user", user);
+        if(user.getType() == User.Type.PATIENT){
+            Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("count", count);
+        }
         return modelAndView;
     }
 
@@ -39,7 +48,7 @@ public class AlarmController extends BaseController{
     @Statistical
     public ModelAndView getMedicationAlarm(){
         ModelAndView modelAndView = new ModelAndView("alarm/medicationAlarm");
-
+        User user = getUser();
         Tbl_medication_alarm alarm = alarmService.getTodayAlarm(getConnectId());
         if(alarm.getMedicationTimeMorning() == null){
             modelAndView.addObject("morningHour", null);
@@ -76,8 +85,12 @@ public class AlarmController extends BaseController{
             Tbl_medication_record record = alarmService.getMedicationRecordToday(new RecordKey(getConnectId(),LocalDate.now()));
             modelAndView.addObject("medicationRecord", record.isFinished());
         }
+        if(user.getType() == User.Type.PATIENT){
+            Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("count", count);
+        }
         modelAndView.addObject("medicationAlarmOnoff",alarm.isMedicationAlarmOnoff());
-        modelAndView.addObject("type",getUser().getType());
+        modelAndView.addObject("type",user.getType());
         modelAndView.addObject("previousUrl","/alarm");
 
         return modelAndView;
@@ -85,9 +98,14 @@ public class AlarmController extends BaseController{
     @GetMapping("/pill-history")
     public ModelAndView getPillHistory(@RequestParam(required = false) Integer year, @RequestParam(required = false) Integer month) {
         ModelAndView modelAndView = new ModelAndView("alarm/pill-history");
-        String username = getUsername();
         List<Tbl_medication_record> pillHistories;
         pillHistories  = alarmService.getFinishedRecord(getConnectId());
+        User user = getUser();
+        modelAndView.addObject("user", user);
+        if(user.getType() == User.Type.PATIENT){
+            Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("count", count);
+        }
         modelAndView.addObject("pillHistories", pillHistories);
         modelAndView.addObject("previousUrl", "/alarm");
 
@@ -99,10 +117,10 @@ public class AlarmController extends BaseController{
         String userId = getUsername();
         tbl_medication_alarm.setId(userId);
         Result.Code code;
-        Tbl_medication_alarm saved = null;
+        Tbl_medication_alarm seved = null;
 
         try{
-            saved = alarmService.upsertMedication(tbl_medication_alarm);
+            seved = alarmService.upsertMedication(tbl_medication_alarm);
             code = Result.Code.OK;
         } catch (Exception exception){
             logger.error(exception.getLocalizedMessage(),exception);
@@ -110,7 +128,7 @@ public class AlarmController extends BaseController{
         }
         return Result.<Tbl_medication_alarm>builder()
                 .code(code)
-                .data(saved)
+                .data(seved)
                 .build();
     }
 
@@ -142,6 +160,11 @@ public class AlarmController extends BaseController{
         int minute = 0;
         ModelAndView modelAndView = new ModelAndView("alarm/appointments");
         Tbl_outpatient_visit_alarm appointment = alarmService.getPatientAppointment(getConnectId());
+        User user = getUser();
+        if(user.getType() == User.Type.PATIENT){
+            Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("count", count);
+        }
         if(appointment.getOutPatientVisitTime()==null || appointment.getOutPatientVisitDate()==null){
             modelAndView.addObject("hour",null);
             modelAndView.addObject("minute",null);
@@ -153,7 +176,7 @@ public class AlarmController extends BaseController{
             modelAndView.addObject("time", alarmService.transformTime(appointment.getOutPatientVisitTime().getHour()));
         }
         modelAndView.addObject("appointment",appointment);
-        modelAndView.addObject("type",getUser().getType());
+        modelAndView.addObject("type",user.getType());
         modelAndView.addObject("previousUrl","/alarm");
 
         return modelAndView;

@@ -126,10 +126,12 @@ public class GoalScheduler {
         List<String>winToken = new ArrayList<>();
         for(User user : users){
             Tbl_goal goalUser = goalService.getGoalId(user.getUsername());
+            logger.trace("id:{}, type:{}, level:{}, week:{} , goal:{}", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
             int success = 0 ;
             switch (goalUser.getGoal()){
                 case 0:
                     noneToken.add(user.getAppToken());
+                    logger.info("id:{}, type:{}, level:{}, week:{} , goal:{} 목표 미설정", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
                     if(haveParent(user))
                         noneToken.add(user.getAppToken());
                     break;
@@ -254,6 +256,10 @@ public class GoalScheduler {
             if(success == 1){
                 user.setLevel(user.getLevel()+1);
                 userService.upsertUser(user);
+                logger.info("id:{}, type:{}, level:{}, week:{} 목표 달성", user.getUserId(), user.getType(), user.getLevel(), user.getWeek());
+            }
+            else{
+                logger.info("id:{}, type:{}, level:{}, week:{} 목표 미달성", user.getUserId(), user.getType(), user.getLevel(), user.getWeek());
             }
         }
         try {

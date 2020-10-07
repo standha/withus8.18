@@ -12,20 +12,21 @@ import org.springframework.web.servlet.ModelAndView;
 import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
-import withus.entity.RecordKey;
-import withus.entity.Tbl_weight;
-import withus.entity.User;
+import withus.entity.*;
+import withus.service.CountService;
 import withus.service.UserService;
 import withus.service.WeightService;
 
 @Controller
 public class WeightController extends BaseController {
     private final WeightService weightService;
+    private final CountService countService;
 
     @Autowired
-    public WeightController(UserService userService, AuthenticationFacade authenticationFacade, WeightService weightService) {
+    public WeightController(UserService userService, AuthenticationFacade authenticationFacade, WeightService weightService, CountService countService) {
         super(userService, authenticationFacade);
         this.weightService = weightService;
+        this.countService = countService;
     }
 
     @GetMapping("/weight")
@@ -43,7 +44,10 @@ public class WeightController extends BaseController {
             logger.info("id:{}, today weight:{}", user.getUserId(), weight.getWeight());
             modelAndView.addObject("weight", weight.getWeight());
         }
-
+        if(user.getType() == User.Type.PATIENT){
+            Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("count", count);
+        }
         modelAndView.addObject("type",typeCheck);
         modelAndView.addObject("previousUrl", "/center");
         return modelAndView;
@@ -54,6 +58,12 @@ public class WeightController extends BaseController {
     public ModelAndView getWeightHistory(){
         ModelAndView modelAndView = new ModelAndView("weight/weight-history");
         modelAndView.addObject("previousUrl", "/weight");
+        User user = getUser();
+        if(user.getType() == User.Type.PATIENT){
+            Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("count", count);
+        }
+        modelAndView.addObject("type",user.getType());
         List<Tbl_weight> weightRecord;
         weightRecord = weightService.getWeightRecord(getConnectId(),0);
         modelAndView.addObject("weightRecord",weightRecord);

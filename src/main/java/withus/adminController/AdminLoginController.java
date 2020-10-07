@@ -26,8 +26,7 @@ import withus.service.UserService;
 public class AdminLoginController extends AdminBaseController
 {
 	@Autowired
-	public AdminLoginController(AuthenticationFacade authenticationFacade, UserService userService,
-			AlarmService alarmService){
+	public AdminLoginController(AuthenticationFacade authenticationFacade, UserService userService){
 		super(userService, authenticationFacade);
 	}
 	@GetMapping({ "/admin_login" })

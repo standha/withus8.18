@@ -10,11 +10,9 @@ import org.springframework.web.servlet.ModelAndView;
 import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
-import withus.entity.RecordKey;
-import withus.entity.Tbl_Exercise_record;
-import withus.entity.Tbl_blood_pressure_pulse;
-import withus.entity.User;
+import withus.entity.*;
 import withus.service.BloodPressureService;
+import withus.service.CountService;
 import withus.service.ExerciseService;
 import withus.service.UserService;
 
@@ -26,11 +24,13 @@ import java.util.List;
 @Controller
 public class BloodPressureController extends BaseController {
     private final BloodPressureService bloodPressureService;
+    private final CountService countService;
 
     @Autowired
-    public BloodPressureController(AuthenticationFacade authenticationFacade, UserService userService, BloodPressureService bloodPressureService){
+    public BloodPressureController(AuthenticationFacade authenticationFacade, UserService userService, BloodPressureService bloodPressureService, CountService countService){
         super(userService, authenticationFacade);
         this.bloodPressureService = bloodPressureService;
+        this.countService = countService;
     }
 
     @GetMapping("/bloodPressure")
@@ -51,7 +51,11 @@ public class BloodPressureController extends BaseController {
             modelAndView.addObject("relaxation", today.getRelaxation());
             logger.info("id:{}, contraction:{}, pressure:{}, relaxation:{}", user.getUserId(), today.getContraction(), today.getPressure(), today.getRelaxation());
         }
-        modelAndView.addObject("type", getUser().getType());
+        if(user.getType() == User.Type.PATIENT){
+            Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("count", count);
+        }
+        modelAndView.addObject("type", user.getType());
         modelAndView.addObject("previousUrl", "/center");
         return modelAndView;
     }
@@ -73,7 +77,12 @@ public class BloodPressureController extends BaseController {
                 bloodWeek.add(week);
             }
         }
-
+        User user = getUser();
+        modelAndView.addObject("user", user);
+        if(user.getType() == User.Type.PATIENT){
+            Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("count", count);
+        }
         modelAndView.addObject("bloodWeek", bloodWeek);
         modelAndView.addObject("bloodPressure",bloodPressureHistory);
         modelAndView.addObject("previousUrl", "/center");

@@ -10,10 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
-import withus.entity.RecordKey;
-import withus.entity.Tbl_Exercise_record;
-import withus.entity.Tbl_symptom_log;
-import withus.entity.User;
+import withus.entity.*;
+import withus.service.CountService;
 import withus.service.ExerciseService;
 import withus.service.UserService;
 
@@ -24,21 +22,25 @@ import java.util.List;
 @Controller
 public class ExerciseController extends BaseController {
     private final ExerciseService exerciseService;
+    private final CountService countService;
 
     @Autowired
-    public ExerciseController(AuthenticationFacade authenticationFacade, UserService userService, ExerciseService exerciseService){
+    public ExerciseController(AuthenticationFacade authenticationFacade, UserService userService, ExerciseService exerciseService, CountService countService){
         super(userService, authenticationFacade);
         this.exerciseService = exerciseService;
+        this.countService = countService;
     }
 
     @GetMapping("/exercise")
     @Statistical
     public ModelAndView getExercise() {
         ModelAndView modelAndView = new ModelAndView("exercise/exercise");
-        User.Type typeCheck = getUser().getType();
         User user = getUser();
+        User.Type typeCheck = user.getType();
         switch (typeCheck){
             case PATIENT:
+                Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+                modelAndView.addObject("count", count);
                 if(exerciseService.getExercise(new RecordKey(getUsername(), LocalDate.now()))==null){
                     modelAndView.addObject("hour", "");
                     modelAndView.addObject("minute", "");
@@ -69,10 +71,13 @@ public class ExerciseController extends BaseController {
     @Statistical
     public ModelAndView getExerciseAll(){
         ModelAndView modelAndView = new ModelAndView("exercise/exercise-all-history");
+        User user = getUser();
         String username = getUsername();
         List<Tbl_Exercise_record> exerciseHistory;
         switch (getUser().getType()){
             case PATIENT:
+                Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+                modelAndView.addObject("count", count);
                 exerciseHistory = exerciseService.getExerciseAllRecord(username,-1, -1);
                 modelAndView.addObject("exerciseWeekHour",avgWeek()/60);
                 modelAndView.addObject("exerciseWeekMin",avgWeek()%60);

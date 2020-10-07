@@ -8,9 +8,8 @@ import org.springframework.web.servlet.ModelAndView;
 import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
-import withus.entity.RecordKey;
-import withus.entity.Tbl_mositrue_record;
-import withus.entity.Tbl_natrium_record;
+import withus.entity.*;
+import withus.service.CountService;
 import withus.service.MoistureNatriumService;
 import withus.service.UserService;
 
@@ -22,19 +21,27 @@ import java.util.List;
 @Controller
 public class MoistureNatriumController extends BaseController{
     private final MoistureNatriumService moistureNatriumService;
+    private final CountService countService;
 
     @Autowired
-    public MoistureNatriumController(AuthenticationFacade authenticationFacade, UserService userService, MoistureNatriumService moistureNatriumService){
+    public MoistureNatriumController(AuthenticationFacade authenticationFacade, UserService userService, MoistureNatriumService moistureNatriumService, CountService countService){
         super(userService, authenticationFacade);
         this.moistureNatriumService = moistureNatriumService;
+        this.countService = countService;
     }
 
     @GetMapping("/moistureNatrium")
     @Statistical
     public ModelAndView getMoistureNatrium() {
         ModelAndView modelAndView = new ModelAndView("moistureNatrium/moistureNatrium");
-        String user = getUsername();
         modelAndView.addObject("previousUrl", "/center");
+        User user = getUser();
+        modelAndView.addObject("user", user);
+        if(user.getType() == User.Type.PATIENT){
+            Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("count", count);
+        }
+        modelAndView.addObject("type", user.getType());
         return modelAndView;
     }
 
@@ -42,7 +49,6 @@ public class MoistureNatriumController extends BaseController{
     @Statistical
     public ModelAndView getMoisture(){
         ModelAndView modelAndView = new ModelAndView("moistureNatrium/moisture");
-        String username = getUsername();
         if(moistureNatriumService.getMoisture(new RecordKey(getConnectId(), LocalDate.now()))==null){
             modelAndView.addObject("intake", 0);
             modelAndView.addObject("intakeMinus", 0);
@@ -53,7 +59,12 @@ public class MoistureNatriumController extends BaseController{
             modelAndView.addObject("intakeMinus", moisture.getIntake());
             modelAndView.addObject("intakePlus", moisture.getIntake());
         }
-        modelAndView.addObject("type", getUser().getType());
+        User user = getUser();
+        if(user.getType() == User.Type.PATIENT){
+            Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("count", count);
+        }
+        modelAndView.addObject("type", user.getType());
         modelAndView.addObject("previousUrl","moistureNatrium");
         return modelAndView;
     }
@@ -61,7 +72,12 @@ public class MoistureNatriumController extends BaseController{
     @Statistical
     public ModelAndView getMoistureAll(){
         ModelAndView modelAndView = new ModelAndView("moistureNatrium/moisture-all-history");
-        String username = getUsername();
+        User user = getUser();
+        if(user.getType() == User.Type.PATIENT){
+            Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("count", count);
+        }
+        modelAndView.addObject("type", user.getType());
         Integer moistureWeek = 0;
         List<Tbl_mositrue_record> moistureAllHistory;
         moistureAllHistory = moistureNatriumService.getMoistureRecord(getConnectId(),0);
@@ -76,7 +92,6 @@ public class MoistureNatriumController extends BaseController{
     @Statistical
     public ModelAndView getNatrium(){
         ModelAndView modelAndView = new ModelAndView("moistureNatrium/natrium");
-        String username = getUsername();
         if (moistureNatriumService.getNatriumTodayRecord(new RecordKey(getConnectId(), LocalDate.now()))==null) {
             modelAndView.addObject("morning",4);
             modelAndView.addObject("lunch",4);
@@ -90,7 +105,12 @@ public class MoistureNatriumController extends BaseController{
             modelAndView.addObject("dinner",natrium.getDinner());
             modelAndView.addObject("previousUrl","moistureNatrium");
         }
-        modelAndView.addObject("type", getUser().getType());
+        User user = getUser();
+        if(user.getType() == User.Type.PATIENT){
+            Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("count", count);
+        }
+        modelAndView.addObject("type", user.getType());
         return modelAndView;
     }
 
@@ -98,7 +118,12 @@ public class MoistureNatriumController extends BaseController{
     @Statistical
     public ModelAndView getSymptomAll(){
         ModelAndView modelAndView = new ModelAndView("moistureNatrium/natrium-history");
-        String username = getUsername();
+        User user = getUser();
+        if(user.getType() == User.Type.PATIENT){
+            Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("count", count);
+        }
+        modelAndView.addObject("type", user.getType());
         LocalDate today = LocalDate.now();
         int lowCount =0;
         int norCount =0;
@@ -170,9 +195,9 @@ public class MoistureNatriumController extends BaseController{
         tbl_natrium_record.setPk(new RecordKey(username, LocalDate.now()));
         tbl_natrium_record.setWeek(getUser().getWeek());
         Result.Code code;
-        Tbl_natrium_record saved = null;
+        Tbl_natrium_record seved = null;
         try{
-            saved = moistureNatriumService.upsertNatriumRecord(tbl_natrium_record);
+            seved = moistureNatriumService.upsertNatriumRecord(tbl_natrium_record);
             code = Result.Code.OK;
         } catch (Exception exception){
             logger.error(exception.getLocalizedMessage(),exception);
@@ -180,7 +205,7 @@ public class MoistureNatriumController extends BaseController{
         }
         return Result.<Tbl_natrium_record>builder()
                 .code(code)
-                .data(saved)
+                .data(seved)
                 .build();
     }
 

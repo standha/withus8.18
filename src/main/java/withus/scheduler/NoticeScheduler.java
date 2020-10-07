@@ -81,6 +81,7 @@ public class NoticeScheduler {
                 if (localTime.getHour() == alarm.getMedicationTimeMorning().getHour() && localTime.getMinute() == alarm.getMedicationTimeMorning().getMinute()) {
                     User idToken = userService.getUserById(alarm.getId());
                     morningToken.add(idToken.getAppToken());
+                    logger.info("id:{}, push:{}", idToken.getUserId(),"아침 약 복용");
                 }
             }
 
@@ -88,6 +89,7 @@ public class NoticeScheduler {
                 if (localTime.getHour() == alarm.getMedicationTimeLunch().getHour() && localTime.getMinute() == alarm.getMedicationTimeLunch().getMinute()) {
                     User idToken = userService.getUserById(alarm.getId());
                     lunchToken.add(idToken.getAppToken());
+                    logger.info("id:{}, push:{}", idToken.getUserId(),"점심 약 복용");
                 }
             }
 
@@ -95,6 +97,7 @@ public class NoticeScheduler {
                 if (localTime.getHour() == alarm.getMedicationTimeDinner().getHour() && localTime.getMinute() == alarm.getMedicationTimeDinner().getMinute()) {
                     User idToken = userService.getUserById(alarm.getId());
                     dinnerToken.add(idToken.getAppToken());
+                    logger.info("id:{}, push:{}", idToken.getUserId(),"저녁 약 복용");
                 }
             }
         }
@@ -119,8 +122,8 @@ public class NoticeScheduler {
             if (tomorrow.equals(visit.getOutPatientVisitDate())) {
                 User user = userService.getUserById(visit.getId());
                 visitToken.add(user.getAppToken());
+                logger.info("id:{}, push:{}", user.getUserId(),"외래 진료 전날");
                 User guser = user.getCaregiver();
-
                 if (guser == null) {
                     break;
                 } else {
@@ -143,12 +146,13 @@ public class NoticeScheduler {
         List<String> visitToken = new ArrayList<String>();
         LocalDateTime now = LocalDateTime.now();
         LocalDate date = now.toLocalDate();
-        LocalTime time = now.toLocalTime();
+        LocalTime time = now.toLocalTime().plusHours(2);
         List<Tbl_outpatient_visit_alarm> visits = alarmService.getVisitAlarmOn();
         for (Tbl_outpatient_visit_alarm visit : visits) {
             if(date.isEqual(visit.getOutPatientVisitDate())&&time.getHour()==visit.getOutPatientVisitTime().getHour()&&time.getMinute()==visit.getOutPatientVisitTime().getMinute()){
                 User user = userService.getUserById(visit.getId());
                 visitToken.add(user.getAppToken());
+                logger.info("id:{}, push:{}", user.getUserId(),"외래 진료 2시간 전");
                 User guser = user.getCaregiver();
                 if(guser==null){
                     break;
@@ -175,6 +179,7 @@ public class NoticeScheduler {
         for(User patient : patients){
             if(patient.getWeek() > 0 && patient.getWeek() < 9){
                 tokenList.add(patient.getAppToken());
+                logger.info("id:{}, push:{}", patient.getUserId(),"위더스랑 1~8주차");
             }
         }
         try {
@@ -194,6 +199,7 @@ public class NoticeScheduler {
         for(User patient : patients){
             if(patient.getWeek() >= 9 && patient.getWeek() <= 24){
                 tokenList.add(patient.getAppToken());
+                logger.info("id:{}, push:{}", patient.getUserId(),"위더스랑 9~24주차");
             }
         }
         try {
@@ -212,6 +218,7 @@ public class NoticeScheduler {
         List<User> patients = userService.getAllToken();
         for(User patient:patients){
             if(patient.getType().equals(User.Type.PATIENT)) {
+                logger.info("id:{}, push:{}", patient.getUserId(),"매일 20시 진도체크");
                 try {
                     send("pill",patient.getAppToken(),
                             patient.getName()+"님, 오늘 심장 건강을 위해 실천하신 내용을 [위더스]에 기록하셨나요?\n 기록하지 않았다면 지금 기록해주세요!");

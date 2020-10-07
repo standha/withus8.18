@@ -63,21 +63,40 @@ function onFormSubmission(form) {
 		body: JSON.stringify(body)
 	};
 	console.log(options)
+	text = /^[A-Za-z0-9+]*$/;
+	phonenum = /^[0-9]+$/;
+	comma = /,/g;
 	if(isEmpty(removeSpace(id))){
 		alert("아이디가 공백입니다.");
-	} else if (isEmpty(removeSpace(password))){
+	}
+	else if(!text.test(id)){
+		alert("아이디는 영어와 숫자만 입력 가능합니다.");
+	}
+	else if (isEmpty(removeSpace(password))){
 		alert("비밀번호가 공백입니다.");
-	} else if (isEmpty(removeSpace(name))){
+	}
+	else if(!text.test(password)){
+		alert("비밀번호는 영어와 숫자만 입력 가능합니다.");
+	}
+	else if (isEmpty(removeSpace(name))){
 		alert("이름이 공백입니다.");
-	} else if (isEmpty(removeSpace(contact))){
+	}
+	else if(comma.test(name)){
+		alert("이름에 콤마는 사용 불가능 합니다.");
+	}
+	else if (isEmpty(removeSpace(contact))){
 		alert("연락처(본인)가 공백입니다.");
-	} else {
+	}
+	else if(!phonenum.test(contact)){
+		alert("연락처는 숫자만 입력 가능합니다.");
+	}
+	else {
 		fetch(url, options)
 		.then(response => response.json())
 		.then(data => {
 			console.log(data);
 			if (data.code === 'OK') {
-				window.location.href = "/home";
+				window.location.href = "/login";
 				alert("정상 적으로 회원 가입 되었습니다.");
 			} else if (data.code === 'ERROR_DUPLICATE_ID') {
 				alert("이미 존재하는 아이디 입니다.");

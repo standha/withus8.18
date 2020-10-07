@@ -56,12 +56,7 @@ function onFormSubmission(form) {
 	if (response && response.ok) {
 		console.log(response);
 	}
-
 	location.reload(true);
-	top.document.location.reload();
-	opener.location.reload();
-	top.document.location.reload();
-
 	return false;
 }
 

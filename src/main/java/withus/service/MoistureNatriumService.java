@@ -68,4 +68,6 @@ public class MoistureNatriumService {
     public List<Tbl_natrium_record> getNatriumAllRecord(String id){
         return natriumRecordRepository.findByPk_Id(id);
     }
+
+
 }

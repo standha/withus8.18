@@ -264,7 +264,7 @@ function renderButtons(chatBalloon)
 			else if(checkButtonType.indexOf(negative) === 0){
 				answerButtonsSpan += `<button class ="btn md type09" href='${replacedHref}'">`;
 			}
-			answerButtonsSpan += `<a di style='color: white' href="${replacedHref}">`;
+			answerButtonsSpan += `<a style='color: white' href="${replacedHref}">`;
 		} else {
 			answerButtonsSpan += "<a><button  id = 'checkType2' class = 'btn md type09'>";
 		}

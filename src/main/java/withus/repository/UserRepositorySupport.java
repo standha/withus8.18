@@ -2,6 +2,7 @@ package withus.repository;
 
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.JPAExpressions;
@@ -9,6 +10,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
+import withus.dto.wwithus.HeaderInfoDTO;
 import withus.entity.*;
 
 import java.security.PublicKey;
@@ -23,26 +25,30 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
     public UserRepositorySupport(JPAQueryFactory queryFactory) {
         super(User.class);
         this.queryFactory = queryFactory;
+
     }
-    public List<String> findByUserIdPatient(){
-        QUser patient = QUser.user;
-        return queryFactory.select(patient.userId).from(patient)
-                .where(patient.type.eq(User.Type.PATIENT))
-                .orderBy(patient.registrationDateTime.asc())
+
+
+    public List<Tuple> findMoistureWeek(String userId){
+        QTbl_mositrue_record mr = QTbl_mositrue_record.tbl_mositrue_record;
+        return queryFactory.select(mr.week, mr.intake.avg())
+                .from(mr)
+                .groupBy(mr.week)
+                .orderBy(mr.week.desc())
+                .where(mr.pk.id.eq(userId))
                 .fetch();
     }
-    public Tuple findByOneUser(String userid){
-        QUser patient = QUser.user;
-        QUser caregiver = QUser.user.caregiver;
-        QWwithusEntryHistory history = QWwithusEntryHistory.wwithusEntryHistory;
-        return queryFactory.select(patient.userId, patient.password, patient.name
-        ,caregiver.userId, caregiver.password, history.key.entry.code).from(patient)
-                .leftJoin(caregiver).on(patient.caregiver.contact.eq(caregiver.contact))
-                .leftJoin(history).on(patient.userId.eq(history.key.user.userId))
-                .where(patient.type.eq(User.Type.PATIENT))
-                .where(patient.userId.eq(userid))
-                .orderBy(history.dateTime.desc())
+    public HeaderInfoDTO findHeaderInfo(String userID){
+        QUser user = QUser.user;
+        QTbl_goal goal = QTbl_goal.tbl_goal;
+
+        HeaderInfoDTO headerInfo = queryFactory.select(Projections.constructor(HeaderInfoDTO.class, user.name, user.userId, user.birthdate, goal.goal, user.level))
+                .from(user)
+                .leftJoin(goal).on(user.userId.eq(goal.goalId))
+                .where(user.userId.eq(userID))
                 .fetchFirst();
+
+        return headerInfo;
     }
 }
 

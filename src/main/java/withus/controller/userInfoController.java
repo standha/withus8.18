@@ -1,5 +1,7 @@
 package withus.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -7,17 +9,25 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
+import withus.entity.ProgressKey;
+import withus.entity.Tbl_button_count;
 import withus.entity.User;
 import withus.exception.UnexpectedEnumValueException;
+import withus.service.CountService;
 import withus.service.UserService;
 import withus.util.Utility;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
 public class userInfoController extends BaseController {
+    private final CountService countService;
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
-    public userInfoController(AuthenticationFacade authenticationFacade, UserService userService){
+    public userInfoController(AuthenticationFacade authenticationFacade, UserService userService, CountService countService){
         super(userService, authenticationFacade);
+        this.countService = countService;
     }
 /*
 
@@ -28,24 +38,49 @@ public class userInfoController extends BaseController {
 */
 
     @GetMapping("/changeInfo")
-    public ModelAndView getUserInfo() {
+    public ModelAndView getUserInfo(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("/changeInfo");
         User user = getUser();
         if(user.getType() == User.Type.PATIENT && user.getCaregiver() != null){
+            Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("count", count);
             modelAndView.addObject("caregiver_contact", user.getCaregiver().getContact());
-        }else if(user.getType() == User.Type.PATIENT && user.getCaregiver() == null){
+            logger.info("id:{}, url:{}, type:{}, level:{}, week:{}, gender:{}, name:{}, contact:{}, caregiver_contact:{}, birthdate:{}"
+                    , user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek(), user.getGender(),user.getName(),user.getContact(),user.getCaregiver().getContact(),user.getBirthdate());
+        }
+        else if(user.getType() == User.Type.PATIENT && user.getCaregiver() == null){
+            Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("count", count);
             modelAndView.addObject("caregiver_contact", null);
-        }else{
+            logger.info("id:{}, url:{}, type:{}, level:{}, week:{}, gender:{}, name:{}, contact:{}, caregiver_contact:{}, birthdate:{}"
+                    , user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek(), user.getGender(),user.getName(),user.getContact(),null,user.getBirthdate());
+        }
+        else{
             modelAndView.addObject("caregiver_contact", null);
+            logger.info("id:{}, url:{}, type:{}, name:{}, contact:{}"
+                    , user.getUserId(), request.getRequestURL(), user.getType(), user.getName(), user.getContact());
         }
         modelAndView.addObject("user", user);
         modelAndView.addObject("previousUrl", "/center");
 
         return modelAndView;
     }
+
     @PostMapping(value = "/changeInfo", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Result<User> putMember(@RequestBody User user) {
+    public Result<User> putMember(@RequestBody User user, HttpServletRequest request) {
+        if(user.getType() == User.Type.PATIENT && user.getCaregiver() != null){
+            logger.info("id:{}, url:{}, type:{}, level:{}, week:{}, gender:{}, name:{}, contact:{}, caregiver_contact:{}, birthdate:{}"
+                    , user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek(), user.getGender(),user.getName(),user.getContact(),user.getCaregiver().getContact(),user.getBirthdate());
+        }
+        else if(user.getType() == User.Type.PATIENT && user.getCaregiver() == null){
+            logger.info("id:{}, url:{}, type:{}, level:{}, week:{}, gender:{}, name:{}, contact:{}, caregiver_contact:{}, birthdate:{}"
+                    , user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek(), user.getGender(),user.getName(),user.getContact(),null,user.getBirthdate());
+        }
+        else{
+            logger.info("id:{}, url:{}, type:{}, name:{}, contact:{}"
+                    , user.getUserId(), request.getRequestURL(), user.getType(), user.getName(), user.getContact());
+        }
         User savedUser = null;
         Result.Code code = Result.Code.ERROR;
         if (!isMissingMandatories(user)) {
