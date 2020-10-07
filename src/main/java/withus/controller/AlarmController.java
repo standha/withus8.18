@@ -13,7 +13,7 @@ import withus.entity.*;
 import withus.service.AlarmService;
 import withus.service.CountService;
 import withus.service.UserService;
-
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -47,7 +47,7 @@ public class AlarmController extends BaseController {
 
     @GetMapping("/medicationAlarm")
     @Statistical
-    public ModelAndView getMedicationAlarm() {
+    public ModelAndView getMedicationAlarm(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView("alarm/medicationAlarm");
         User user = getUser();
         Tbl_medication_alarm alarm = alarmService.getTodayAlarm(getConnectId());
@@ -63,26 +63,27 @@ public class AlarmController extends BaseController {
         if (alarm.getMedicationTimeLunch() == null) {
             modelAndView.addObject("lunchHour", null);
             modelAndView.addObject("lunchMinute", null);
-            modelAndView.addObject("lunchTime", 0);
-        } else {
+            modelAndView.addObject("lunchTime",0);
+        }else{
             modelAndView.addObject("lunchHour", alarmService.transformHour(alarm.getMedicationTimeLunch().getHour()));
             modelAndView.addObject("lunchMinute", alarmService.transformMinute(alarm.getMedicationTimeLunch().getMinute()));
             modelAndView.addObject("lunchTime", alarmService.transformTime(alarm.getMedicationTimeLunch().getHour()));
         }
-        if (alarm.getMedicationTimeDinner() == null) {
+        if(alarm.getMedicationTimeDinner() == null){
             modelAndView.addObject("dinnerHour", null);
             modelAndView.addObject("dinnerMinute", null);
             modelAndView.addObject("dinnerTime", 0);
-        } else {
+        }else{
             modelAndView.addObject("dinnerHour", alarmService.transformHour(alarm.getMedicationTimeDinner().getHour()));
             modelAndView.addObject("dinnerMinute", alarmService.transformMinute(alarm.getMedicationTimeDinner().getMinute()));
             modelAndView.addObject("dinnerTime", alarmService.transformTime(alarm.getMedicationTimeDinner().getHour()));
         }
 
-        if (alarmService.getMedicationRecordToday(new RecordKey(getConnectId(), LocalDate.now())) == null) {
+        if(alarmService.getMedicationRecordToday(new RecordKey(getConnectId(),LocalDate.now()))==null){
             modelAndView.addObject("medicationRecord", false);
-        } else {
-            Tbl_medication_record record = alarmService.getMedicationRecordToday(new RecordKey(getConnectId(), LocalDate.now()));
+        }
+        else{
+            Tbl_medication_record record = alarmService.getMedicationRecordToday(new RecordKey(getConnectId(),LocalDate.now()));
             modelAndView.addObject("medicationRecord", record.isFinished());
         }
         if (user.getType() == User.Type.PATIENT) {
@@ -92,6 +93,7 @@ public class AlarmController extends BaseController {
         modelAndView.addObject("medicationAlarmOnoff", alarm.isMedicationAlarmOnoff());
         modelAndView.addObject("type", user.getType());
         modelAndView.addObject("previousUrl", "/alarm");
+        logger.info("id:{}, url:{} , alarmOnOff:{}, morning:{}, lunch:{}, dinner:{}", user.getUserId(),request.getRequestURL() ,alarm.isMedicationAlarmOnoff(), alarm.getMedicationTimeMorning(), alarm.getMedicationTimeLunch(), alarm.getMedicationTimeDinner());
 
         return modelAndView;
     }
@@ -109,6 +111,7 @@ public class AlarmController extends BaseController {
         }
         modelAndView.addObject("pillHistories", pillHistories);
         modelAndView.addObject("previousUrl", "/alarm");
+        logger.info("id:'{}'",user.getUserId());
 
         return modelAndView;
     }
@@ -116,13 +119,15 @@ public class AlarmController extends BaseController {
     @PostMapping(value = "/medicationAlarm", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<Tbl_medication_alarm> postMedicationAlarm(@RequestBody Tbl_medication_alarm tbl_medication_alarm) {
-        String userId = getUsername();
-        tbl_medication_alarm.setId(userId);
+        User user = getUser();
+        tbl_medication_alarm.setId(user.getUserId());
         Result.Code code;
         Tbl_medication_alarm seved = null;
+        logger.info("id:'{}'",user.getUserId());
 
         try {
             seved = alarmService.upsertMedication(tbl_medication_alarm);
+            logger.info("id:{}, dinner:{}, lunch:{}, morning:{}", user.getUserId(), seved.getMedicationTimeDinner(), seved.getMedicationTimeLunch(), seved.getMedicationTimeMorning());
             code = Result.Code.OK;
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
@@ -137,13 +142,15 @@ public class AlarmController extends BaseController {
     @PostMapping(value = "/pill-history", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<Tbl_medication_record> getPillHistoryTrue(@RequestBody Tbl_medication_record tbl_medication_record) {
-        String userId = getUsername();
-        tbl_medication_record.setPk(new RecordKey(userId, LocalDate.now()));
-        tbl_medication_record.setWeek(getUser().getWeek());
+        User user = getUser();
+        tbl_medication_record.setPk(new RecordKey(user.getUserId(), LocalDate.now()));
+        tbl_medication_record.setWeek(user.getWeek());
+        logger.info("id:{},week:{}",user.getUserId(), user.getWeek());
         Result.Code code;
         Tbl_medication_record saved = null;
         try {
             saved = alarmService.upsertTrueRecord(tbl_medication_record);
+            logger.info("id:{}, finished:{}", user.getUserId(), saved.isFinished());
             code = Result.Code.OK;
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
@@ -157,12 +164,12 @@ public class AlarmController extends BaseController {
 
     @GetMapping("/appointments")
     @Statistical
-    public ModelAndView getAppointments(@RequestParam(required = false) Integer year, @RequestParam(required = false) Integer month) {
+    public ModelAndView getAppointments(HttpServletRequest request, @RequestParam(required = false) Integer year, @RequestParam(required = false) Integer month) {
         int hour = 0;
         int minute = 0;
         ModelAndView modelAndView = new ModelAndView("alarm/appointments");
-        Tbl_outpatient_visit_alarm appointment = alarmService.getPatientAppointment(getConnectId());
         User user = getUser();
+        Tbl_outpatient_visit_alarm appointment = alarmService.getPatientAppointment(getConnectId());
         if (user.getType() == User.Type.PATIENT) {
             Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
@@ -176,10 +183,10 @@ public class AlarmController extends BaseController {
             modelAndView.addObject("minute", alarmService.transformMinute(appointment.getOutPatientVisitTime().getMinute()));
             modelAndView.addObject("time", alarmService.transformTime(appointment.getOutPatientVisitTime().getHour()));
         }
-        modelAndView.addObject("appointment", appointment);
-        modelAndView.addObject("type", user.getType());
-        modelAndView.addObject("previousUrl", "/alarm");
-
+        modelAndView.addObject("appointment",appointment);
+        modelAndView.addObject("type",user.getType());
+        modelAndView.addObject("previousUrl","/alarm");
+        logger.info("id:{}, url:{}, appointDate:{}, appointTime:{}", user.getUserId(),request.getRequestURL(),appointment.getOutPatientVisitDate(),appointment.getOutPatientVisitTime());
         return modelAndView;
     }
 
@@ -191,11 +198,13 @@ public class AlarmController extends BaseController {
         Result.Code code;
         Tbl_outpatient_visit_alarm saved = null;
 
-        try {
+        try{
             saved = alarmService.upsertOutPatientVisit(tbl_outpatient_visit_alarm);
+            logger.info("id:{}, date:{}, time:{}", userId,saved.getOutPatientVisitTime(),saved.getOutPatientVisitDate());
             code = Result.Code.OK;
-        } catch (Exception exception) {
-            logger.error(exception.getLocalizedMessage(), exception);
+        } catch (Exception exception){
+            logger.info("id:{}, date:{}, time:{}", userId,saved.getOutPatientVisitTime(),saved.getOutPatientVisitDate());
+            logger.error(exception.getLocalizedMessage(),exception);
             code = Result.Code.ERROR_DATABASE;
         }
         return Result.<Tbl_outpatient_visit_alarm>builder()

@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import withus.auth.NoOpPasswordEncoder;
+import withus.dto.MoistureAvgDTO;
 import withus.dto.wwithus.HeaderInfoDTO;
 import withus.entity.*;
 import withus.repository.*;
@@ -136,7 +137,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Nullable
-    public List<Tuple> getMoisture(String userId) {
+    public List<MoistureAvgDTO> getMoisture(String userId) {
         return userRepositorySupport.findMoistureWeek(userId);
     }
 
@@ -148,17 +149,5 @@ public class UserService implements UserDetailsService {
     @Nullable
     public List<User> getPatientToken(User.Type type) {
         return userRepository.findByAppTokenIsNotNullAndType(type);
-    }
-
-    // 어드민 페이지
-    // 1. Html head 에 포함 되는 정보 DTO
-    @Nullable
-    public HeaderInfoDTO getHeaderInfo(String userId) {
-        return userRepositorySupport.findHeaderInfo(userId);
-    }
-
-    @Nullable
-    public List<Tuple> getMoistureAvg(String userId) {
-        return userRepositorySupport.findMoistureWeek(userId);
     }
 }

@@ -23,15 +23,15 @@ import withus.service.AlarmService;
 import withus.service.UserService;
 
 @Controller
-public class AdminLoginController extends AdminBaseController {
-    @Autowired
-    public AdminLoginController(AuthenticationFacade authenticationFacade, UserService userService) {
-        super(userService, authenticationFacade);
-    }
-
-    @GetMapping({"/admin_login"})
-    public ModelAndView getLogin(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView modelAndView = new ModelAndView("Login/admin_login");
-        return modelAndView;
-    }
+public class AdminLoginController extends AdminBaseController
+{
+	@Autowired
+	public AdminLoginController(AuthenticationFacade authenticationFacade, UserService userService){
+		super(userService, authenticationFacade);
+	}
+	@GetMapping({ "/admin_login" })
+	public ModelAndView getLogin(HttpServletRequest request, HttpServletResponse response){
+		ModelAndView modelAndView = new ModelAndView("Login/admin_login");
+		return modelAndView;
+	}
 }

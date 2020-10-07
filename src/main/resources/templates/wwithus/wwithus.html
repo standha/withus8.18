@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="kr">
 <html lang="ko">
 <head>
+	<input type="hidden" id="help-request-url" th:attr="value=@{/home/help-request}">
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>위더스</title>
@@ -12,6 +13,7 @@
 	<link th:href="@{/css/layout.css}" rel="stylesheet">
 	<link th:href="@{/css/my.css}" rel="stylesheet">
 	<script th:src="@{/js/jquery-1.12.4.min.js}"></script>
+	<script th:src="@{/js/header.js}"></script>
 	<script th:src="@{/js/wwithus/wwithus.js}"></script>
 	<script th:src="@{/js/wwithus/answer-button.js}"></script>
 	<script th:src="@{/js/wwithus/chat-balloon.js}"></script>
@@ -62,7 +64,6 @@
 			</div>
 		</div>
 	</header>
-
 	<input type="hidden" id="history-url" th:attr="value=@{/wwithus/histories}">
 	<input type="hidden" id="userType" name="userType" th:value="${userType}">
 	<input type="hidden" id="request-next-url" th:attr="value=@{/wwithus/request-next}">

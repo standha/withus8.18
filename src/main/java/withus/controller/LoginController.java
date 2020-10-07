@@ -40,7 +40,6 @@ public class LoginController {
         modelAndView.addObject("appToken", token);
         modelAndView.addObject("user", user);
         modelAndView.addObject("previousUrl", "LogIn/login");
-        System.out.println("token : " + token);
         return modelAndView;
     }
 

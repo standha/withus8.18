@@ -134,10 +134,6 @@ public class CenterController extends BaseController {
             resultList.add(AllUserDTO.fromString(aUserFin));
         }
 
-        System.out.println(userFin);
-        for (int index = 0; index < userFin.size(); index++) {
-            System.out.println(userFin.get(index));
-        }
 
         return modelAndView;
     }
@@ -152,7 +148,6 @@ public class CenterController extends BaseController {
                 break;
             case CAREGIVER:
                 level = getCaretaker().getLevel();
-                System.out.println("보호자의 환자 레벨 : " + level);
                 level = level % 4;
                 break;
         }

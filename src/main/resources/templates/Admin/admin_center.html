@@ -28,25 +28,24 @@
                     <div style="text-align: left" class="todo-txt" spanChange() > <p th:text="'환자 아이디-'+' '+ ${patient.userId}"></div>
                     <div class="todo-txt" spanChange() >
                         <p style="text-align: left"  th:text="'환자 생년월일-'+' '+ ${patient.birthdate}">
-                        <p style="text-align: center" th:text="'환자 이주의 목표-'+' '+ ${goal}">
+                        <p style="text-align: center" th:text="'환자 이주의 목표-'+' '+ ${patient.goal}">
                         <p style="text-align: right" th:text="'환자 레벨-'+' '+ ${patient.level}"> </div>
-                 </div>
+                </div>
             </lable>
         </div>
         <nav>
             <ul>
                 <li class="m"><a href="#" class="menu-01"><span>환자용 계정 기록</span></a>
                 </li> <li class="m"><a href="#" class="menu-02"><span>보호자용 계정 기록</span></a></li>
-                <li class="m"><a href="#" class="menu-03"><span>위더스랑 요청 기록</span></a></li>
+                <li class="m"><a th:href="@{/adimn_withusHelpRequest}"><span>위더스랑 요청 기록</span></a></li>
             </ul>
         </nav>
     </header>
-
     <div class="container" id="content">
         <ul class="main-icon">
-            <a th:href="@{/admin_pillHistory/{userId}(userId=${patient.userId})}">
+            <a th:href="@{/admin_pillRecord/{userId}(userId=${patient.userId})}">
                 <span class="ico-drug"></span>
-                <span>복약 기록</span>
+                <span>복약 기록(완)</span>
             </a>
             <a th:href="@{/bloodPressure}">
                 <span class="ico-blood"></span>
@@ -56,13 +55,13 @@
                 <span class="ico-exercise"></span>
                 <span>운동 기록</span>
             </a>
-            <a th:href="@{/symptom}">
+            <a th:href="@{/admin_moistureRecord/{userId}(userId=${patient.userId})}">
                 <span class="ico-water2"></span>
-                <span>수분 기록</span>
+                <span>수분 기록(완)</span>
             </a>
             <a th:href="@{/moistureNatrium}">
                 <span class="ico-salt"></span>
-                <span>저염식 기</span>
+                <span>저염식 기록</span>
             </a>
             <a th:href="@{/weight}">
                 <span class="ico-weight"></span>

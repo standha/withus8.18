@@ -4,7 +4,6 @@ function setMinus(testNum) {
 		//alert('아직 오늘 물을 한 잔도 마시지 않으셨어요.');
 	}else{
 		testNum = testNum - 1;
-		window.location.reload();
 	}
 	const mbody = {
 		intake: testNum
@@ -25,6 +24,7 @@ function setMinus(testNum) {
 		.then(response => response.json())
 		.then(data => console.log(data));
 
+	window.location.reload();
 	return false;
 }
 
@@ -40,18 +40,19 @@ function popupOpen(){
 
 function setAdd(testNum) {
 	testNum = parseInt(testNum);
+	console.log(testNum);
 	if(testNum >= 10){
 		popupOpen();
 	}
 	else{
 		testNum = testNum + 1;
 
-		window.location.reload();
 	}
 	const body = {
 		intake: testNum
 	};
 
+	console.log('After num: ' + testNum);
 	const url = document.querySelector("#moisture-put-action").value;
 	const options = {
 		method: "PUT",
@@ -67,6 +68,7 @@ function setAdd(testNum) {
 		.then(response => response.json())
 		.then(data => console.log(data));
 
+	window.location.reload();
 	return false;
 }
 

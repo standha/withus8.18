@@ -33,10 +33,10 @@ public class ProgressScheduler {
     public void progressAutoIncrement() {
         List<User> allPatients = userService.getPatient(User.Type.PATIENT);
         for (User user : allPatients) {
-            logger.info("id:{}, type:{}, week:{}", user.getUserId(), user.getType(), user.getWeek());
+            logger.trace("id:{}, type:{}, week:{}", user.getUserId(), user.getType(), user.getWeek());
             user.setWeek(user.getWeek() + 1);
             userService.upsertUser(user);
-            logger.info("id:{}, type:{}, week:{}", user.getUserId(), user.getType(), user.getWeek());
+            logger.trace("id:{}, type:{}, week:{}", user.getUserId(), user.getType(), user.getWeek());
         }
     }
 
@@ -44,10 +44,10 @@ public class ProgressScheduler {
     public void resetLevel() {
         List<Tbl_goal> goals = goalService.getAllGoal();
         for (Tbl_goal goal : goals) {
-            logger.info("id:{}, goal:{}", goal.getGoalId(), goal.getGoal());
+            logger.trace("id:{}, goal:{}", goal.getGoalId(), goal.getGoal());
             goal.setGoal(0);
             goalService.upsertGoal(goal);
-            logger.info("id:{}, goal:{}", goal.getGoalId(), goal.getGoal());
+            logger.trace("id:{}, goal:{}", goal.getGoalId(), goal.getGoal());
         }
     }
 }
