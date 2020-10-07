@@ -24,7 +24,7 @@ public class AllUserDTO {
     private String guserContact;
     private String currentCode;
 
-   public static AllUserDTO fromString(String queryResult) {
+    public static AllUserDTO fromString(String queryResult) {
         String[] array = queryResult.split(",");
 
         return AllUserDTO.builder()

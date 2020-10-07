@@ -35,11 +35,13 @@ public class ButtonCountController extends BaseController {
         String userId = getUsername();
         User user = userService.getUserById(userId);
         count.setKey(new ProgressKey(userId, user.getWeek()));
+        Result.Code code;
+        Tbl_button_count saved = null;
+
         logger.info("id:{}, week:{}, alarm:{}, blood_pressure:{}, disease_info:{}, exercise:{}, goal:{}, helper:{}, level:{}, natrium-moisture:{}, symptom:{}, weight:{}, chat:{}"
                 , count.getKey().getId(), count.getKey().getWeek(), count.getAlarm(), count.getBloodPressure(), count.getDiseaseInfo(), count.getExercise(), count.getGoal(), count.getHelper(),
                 count.getLevel(), count.getNatriumMoisture(), count.getSymptom(), count.getWeight(), count.getWithusRang());
-        Result.Code code;
-        Tbl_button_count saved = null;
+
         try {
             saved = countService.upsertCount(count);
             code = Result.Code.OK;

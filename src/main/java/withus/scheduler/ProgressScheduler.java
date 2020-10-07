@@ -23,27 +23,27 @@ public class ProgressScheduler {
     private final GoalService goalService;
 
     @Autowired
-    public ProgressScheduler(UserService userService , GoalService goalService) {
+    public ProgressScheduler(UserService userService, GoalService goalService) {
         this.goalService = goalService;
         this.userService = userService;
     }
 
     //cron = "0 0 0 * * MON"
     @Scheduled(cron = "0 0 0 * * MON")
-    public void progressAutoIncrement(){
+    public void progressAutoIncrement() {
         List<User> allPatients = userService.getPatient(User.Type.PATIENT);
-        for(User user : allPatients){
+        for (User user : allPatients) {
             logger.info("id:{}, type:{}, week:{}", user.getUserId(), user.getType(), user.getWeek());
-            user.setWeek(user.getWeek()+1);
+            user.setWeek(user.getWeek() + 1);
             userService.upsertUser(user);
             logger.info("id:{}, type:{}, week:{}", user.getUserId(), user.getType(), user.getWeek());
         }
     }
 
     @Scheduled(cron = "0 0 0 * * MON")
-    public void resetLevel(){
+    public void resetLevel() {
         List<Tbl_goal> goals = goalService.getAllGoal();
-        for(Tbl_goal goal : goals){
+        for (Tbl_goal goal : goals) {
             logger.info("id:{}, goal:{}", goal.getGoalId(), goal.getGoal());
             goal.setGoal(0);
             goalService.upsertGoal(goal);

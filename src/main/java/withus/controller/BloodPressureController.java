@@ -27,7 +27,7 @@ public class BloodPressureController extends BaseController {
     private final CountService countService;
 
     @Autowired
-    public BloodPressureController(AuthenticationFacade authenticationFacade, UserService userService, BloodPressureService bloodPressureService, CountService countService){
+    public BloodPressureController(AuthenticationFacade authenticationFacade, UserService userService, BloodPressureService bloodPressureService, CountService countService) {
         super(userService, authenticationFacade);
         this.bloodPressureService = bloodPressureService;
         this.countService = countService;
@@ -38,20 +38,19 @@ public class BloodPressureController extends BaseController {
     public ModelAndView getBloodPressure() {
         User user = getUser();
         ModelAndView modelAndView = new ModelAndView("bloodPressure/bloodPressure");
-        if(bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(),LocalDate.now())) == null){
-            modelAndView.addObject("contraction","");
+        if (bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(), LocalDate.now())) == null) {
+            modelAndView.addObject("contraction", "");
             modelAndView.addObject("pressure", "");
             modelAndView.addObject("relaxation", "");
             logger.info("id:{}, today bloodPressure:null", user.getUserId());
-        }
-        else{
-            Tbl_blood_pressure_pulse today= bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(),LocalDate.now()));
+        } else {
+            Tbl_blood_pressure_pulse today = bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(), LocalDate.now()));
             modelAndView.addObject("contraction", today.getContraction());
             modelAndView.addObject("pressure", today.getPressure());
             modelAndView.addObject("relaxation", today.getRelaxation());
             logger.info("id:{}, contraction:{}, pressure:{}, relaxation:{}", user.getUserId(), today.getContraction(), today.getPressure(), today.getRelaxation());
         }
-        if(user.getType() == User.Type.PATIENT){
+        if (user.getType() == User.Type.PATIENT) {
             Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
@@ -65,26 +64,24 @@ public class BloodPressureController extends BaseController {
     public ModelAndView getBloodPressureRecord() {
         ModelAndView modelAndView = new ModelAndView("bloodPressure/bloodPressure-all-history");
         List<Tbl_blood_pressure_pulse> bloodPressureHistory;
-        bloodPressureHistory = bloodPressureService.getBloodAllRecord(getConnectId(),-1,-1,-1);
+        bloodPressureHistory = bloodPressureService.getBloodAllRecord(getConnectId(), -1, -1, -1);
         LocalDate today = LocalDate.now();
 
         List<Tbl_blood_pressure_pulse> bloodWeek = new ArrayList<>();
-        for(int i=1; i<=7; i++)
-        {
-            if(bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(), today.with(DayOfWeek.of(i))))!=null)
-            {
+        for (int i = 1; i <= 7; i++) {
+            if (bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(), today.with(DayOfWeek.of(i)))) != null) {
                 Tbl_blood_pressure_pulse week = bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(), today.with(DayOfWeek.of(i))));
                 bloodWeek.add(week);
             }
         }
         User user = getUser();
         modelAndView.addObject("user", user);
-        if(user.getType() == User.Type.PATIENT){
+        if (user.getType() == User.Type.PATIENT) {
             Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
         modelAndView.addObject("bloodWeek", bloodWeek);
-        modelAndView.addObject("bloodPressure",bloodPressureHistory);
+        modelAndView.addObject("bloodPressure", bloodPressureHistory);
         modelAndView.addObject("previousUrl", "/center");
         return modelAndView;
     }
@@ -92,17 +89,17 @@ public class BloodPressureController extends BaseController {
     @PostMapping("/bloodPressure")
     @Statistical
     @ResponseBody
-    public Result<Tbl_blood_pressure_pulse> PostPatientVisit(@RequestBody Tbl_blood_pressure_pulse tbl_blood_pressure_pulse){
+    public Result<Tbl_blood_pressure_pulse> PostPatientVisit(@RequestBody Tbl_blood_pressure_pulse tbl_blood_pressure_pulse) {
         String userId = getUsername();
         tbl_blood_pressure_pulse.setPk(new RecordKey(userId, LocalDate.now()));
         tbl_blood_pressure_pulse.setWeek(getUser().getWeek());
         Result.Code code;
         Tbl_blood_pressure_pulse seved = null;
-        try{
+        try {
             seved = bloodPressureService.upsertBloodPressureRecord(tbl_blood_pressure_pulse);
             code = Result.Code.OK;
-        } catch (Exception exception){
-            logger.error(exception.getLocalizedMessage(),exception);
+        } catch (Exception exception) {
+            logger.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
         }
         return Result.<Tbl_blood_pressure_pulse>builder()

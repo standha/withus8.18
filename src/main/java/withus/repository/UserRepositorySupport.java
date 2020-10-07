@@ -29,7 +29,7 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
     }
 
 
-    public List<Tuple> findMoistureWeek(String userId){
+    public List<Tuple> findMoistureWeek(String userId) {
         QTbl_mositrue_record mr = QTbl_mositrue_record.tbl_mositrue_record;
         return queryFactory.select(mr.week, mr.intake.avg())
                 .from(mr)
@@ -38,7 +38,8 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .where(mr.pk.id.eq(userId))
                 .fetch();
     }
-    public HeaderInfoDTO findHeaderInfo(String userID){
+
+    public HeaderInfoDTO findHeaderInfo(String userID) {
         QUser user = QUser.user;
         QTbl_goal goal = QTbl_goal.tbl_goal;
 

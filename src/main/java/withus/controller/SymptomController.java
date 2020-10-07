@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class SymptomController extends BaseController{
+public class SymptomController extends BaseController {
     private final SymptomService symptomService;
     private final CountService countService;
 
@@ -35,30 +35,30 @@ public class SymptomController extends BaseController{
 
     @GetMapping("/symptom")
     @Statistical
-    public ModelAndView getSymptom(HttpServletRequest request){
+    public ModelAndView getSymptom(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("Symptom/symptom");
         User user = getUser();
         User.Type typeCheck = user.getType();
-        if (symptomService.getSymptom(new RecordKey(getConnectId(), LocalDate.now()))==null) {
-           modelAndView.addObject("tired", 2);
-           modelAndView.addObject("ankle", 2);
-           modelAndView.addObject("breath", 2);
-           modelAndView.addObject("cough", 2);
-           logger.info("id:{}, url:{}, type:{}, level:{}, week:{} , Today's Symptom Not Recorded", user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek());
+        if (symptomService.getSymptom(new RecordKey(getConnectId(), LocalDate.now())) == null) {
+            modelAndView.addObject("tired", 2);
+            modelAndView.addObject("ankle", 2);
+            modelAndView.addObject("breath", 2);
+            modelAndView.addObject("cough", 2);
+            logger.info("id:{}, url:{}, type:{}, level:{}, week:{} , Today's Symptom Not Recorded", user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek());
         } else {
-           Tbl_symptom_log symptom = symptomService.getSymptom(new RecordKey(getConnectId(), LocalDate.now()));
-           modelAndView.addObject("tired", symptom.getTired());
-           modelAndView.addObject("ankle", symptom.getAnkle());
-           modelAndView.addObject("breath", symptom.getOutofbreath());
-           modelAndView.addObject("cough", symptom.getCough());
-           logger.info("id:{}, url:{}, type:{}, level:{}, week:{}, tired:{}, ankle:{}, breath:{}, cough:{}"
-                   , user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek(), symptom.getTired(), symptom.getAnkle(), symptom.getOutofbreath(), symptom.getCough());
+            Tbl_symptom_log symptom = symptomService.getSymptom(new RecordKey(getConnectId(), LocalDate.now()));
+            modelAndView.addObject("tired", symptom.getTired());
+            modelAndView.addObject("ankle", symptom.getAnkle());
+            modelAndView.addObject("breath", symptom.getOutofbreath());
+            modelAndView.addObject("cough", symptom.getCough());
+            logger.info("id:{}, url:{}, type:{}, level:{}, week:{}, tired:{}, ankle:{}, breath:{}, cough:{}"
+                    , user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek(), symptom.getTired(), symptom.getAnkle(), symptom.getOutofbreath(), symptom.getCough());
         }
-        if(user.getType() == User.Type.PATIENT){
+        if (user.getType() == User.Type.PATIENT) {
             Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
-        modelAndView.addObject("type",typeCheck);
+        modelAndView.addObject("type", typeCheck);
         modelAndView.addObject("previousUrl", "/center");
         return modelAndView;
 
@@ -66,36 +66,36 @@ public class SymptomController extends BaseController{
 
     @GetMapping("/symptom-all-history")
     @Statistical
-    public ModelAndView getSymptomAll(){
+    public ModelAndView getSymptomAll() {
         ModelAndView modelAndView = new ModelAndView("Symptom/symptom-history");
         User user = getUser();
-        List<Tbl_symptom_log>symtomHistory;
-        symtomHistory = symptomService.getSymptomRecord(getConnectId(),-1);
+        List<Tbl_symptom_log> symtomHistory;
+        symtomHistory = symptomService.getSymptomRecord(getConnectId(), -1);
         logger.info("id:{}, type:{}, level:{}, week:{} ,symptom_record_count:{}", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), symtomHistory.size());
-        modelAndView.addObject("symptom",symtomHistory);
-        modelAndView.addObject("previousUrl","/symptom");
-        if(user.getType() == User.Type.PATIENT){
+        modelAndView.addObject("symptom", symtomHistory);
+        modelAndView.addObject("previousUrl", "/symptom");
+        if (user.getType() == User.Type.PATIENT) {
             Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
-        modelAndView.addObject("type",user.getType());
+        modelAndView.addObject("type", user.getType());
         return modelAndView;
     }
 
     @PostMapping("/symptom")
     @ResponseBody
-    public Result<Tbl_symptom_log> PostSymptom(@RequestBody Tbl_symptom_log tbl_symptom_log){
+    public Result<Tbl_symptom_log> PostSymptom(@RequestBody Tbl_symptom_log tbl_symptom_log) {
         String userId = getUsername();
-        tbl_symptom_log.setPk(new RecordKey(userId,LocalDate.now()));
+        tbl_symptom_log.setPk(new RecordKey(userId, LocalDate.now()));
         tbl_symptom_log.setWeek(getUser().getWeek());
         logger.info("id:{}, date:{}, week:{}, tired:{}, ankle:{}, breath:{}, cough:{}"
-                , tbl_symptom_log.getPk().getId(), tbl_symptom_log.getPk().getDate(),tbl_symptom_log.getWeek(), tbl_symptom_log.getTired(), tbl_symptom_log.getAnkle(), tbl_symptom_log.getOutofbreath(), tbl_symptom_log.getCough());
+                , tbl_symptom_log.getPk().getId(), tbl_symptom_log.getPk().getDate(), tbl_symptom_log.getWeek(), tbl_symptom_log.getTired(), tbl_symptom_log.getAnkle(), tbl_symptom_log.getOutofbreath(), tbl_symptom_log.getCough());
         Result.Code code;
         Tbl_symptom_log saved = null;
-        try{
+        try {
             saved = symptomService.upsertSymptomRecord(tbl_symptom_log);
             code = Result.Code.OK;
-        }catch (Exception exception){
+        } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
         }

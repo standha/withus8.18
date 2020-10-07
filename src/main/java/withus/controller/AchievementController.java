@@ -16,31 +16,31 @@ import withus.service.UserService;
 @Controller
 public class AchievementController extends BaseController {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
-	private final CountService countService;
+    private final CountService countService;
 
     public AchievementController(UserService userService, AuthenticationFacade authenticationFacade, CountService countService) {
         super(userService, authenticationFacade);
-		this.countService = countService;
+        this.countService = countService;
     }
 
-    @GetMapping({ "/achievement" })
-	@Statistical
-	public ModelAndView getGoal() {
-		ModelAndView modelAndView = new ModelAndView("achievement/achievement");
-		User user = getUser();
-		modelAndView.addObject("user", user);
-		switch (getUser().getType()){
-			case PATIENT:
-				Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
-				modelAndView.addObject("count", count);
-				modelAndView.addObject("level",getUser().getLevel());
-				modelAndView.addObject("previousUrl", "/center");
-				logger.info("id:'{}', level:'{}'",  getUser().getUserId(), getUser().getLevel());
-				break;
-			case CAREGIVER:
-				modelAndView.addObject("level", getCaretaker().getLevel());
-				modelAndView.addObject("previousUrl", "/center");
-		}
-		return modelAndView;
-	}
+    @GetMapping({"/achievement"})
+    @Statistical
+    public ModelAndView getGoal() {
+        ModelAndView modelAndView = new ModelAndView("achievement/achievement");
+        User user = getUser();
+        modelAndView.addObject("user", user);
+        switch (getUser().getType()) {
+            case PATIENT:
+                Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+                modelAndView.addObject("count", count);
+                modelAndView.addObject("level", getUser().getLevel());
+                modelAndView.addObject("previousUrl", "/center");
+                logger.info("id:'{}', level:'{}'", getUser().getUserId(), getUser().getLevel());
+                break;
+            case CAREGIVER:
+                modelAndView.addObject("level", getCaretaker().getLevel());
+                modelAndView.addObject("previousUrl", "/center");
+        }
+        return modelAndView;
+    }
 }

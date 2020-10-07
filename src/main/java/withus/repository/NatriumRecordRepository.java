@@ -12,12 +12,12 @@ import java.util.Optional;
 @Repository
 public interface NatriumRecordRepository extends JpaRepository<Tbl_natrium_record, RecordKey> {
     @Transactional(readOnly = true)
-    List<Tbl_natrium_record>findByPkIsNotNull();
+    List<Tbl_natrium_record> findByPkIsNotNull();
 
     @Transactional(readOnly = true)
     Optional<Tbl_natrium_record> findByPk(RecordKey pk);
 
     @Transactional(readOnly = true)
-    List<Tbl_natrium_record>findByPk_Id(String id);
+    List<Tbl_natrium_record> findByPk_Id(String id);
 
 }

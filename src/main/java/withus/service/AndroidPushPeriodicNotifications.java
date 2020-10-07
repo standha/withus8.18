@@ -12,13 +12,13 @@ import java.util.List;
 public class
 AndroidPushPeriodicNotifications {
 
-    public static String PeriodicNotificationJson(String title, String data,List<String> tokenData) throws JSONException, NullPointerException {
+    public static String PeriodicNotificationJson(String title, String data, List<String> tokenData) throws JSONException, NullPointerException {
         List<String> tokenlist = new ArrayList<String>();
         JSONObject body = new JSONObject();
         JSONArray token = new JSONArray();
         tokenlist = tokenData;
 
-        for(int i=0; i<tokenlist.size(); i++) {
+        for (int i = 0; i < tokenlist.size(); i++) {
             token.put(tokenlist.get(i));
         }
 
@@ -26,9 +26,9 @@ AndroidPushPeriodicNotifications {
         body.put("registration_ids", token);
         //알림 내용 지정
         JSONObject notification = new JSONObject();
-        notification.put("title",title);
+        notification.put("title", title);
         try {
-            notification.put("body", URLEncoder.encode(data,"EUC-KR"));
+            notification.put("body", URLEncoder.encode(data, "EUC-KR"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

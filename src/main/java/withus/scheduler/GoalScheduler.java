@@ -41,9 +41,9 @@ public class GoalScheduler {
     private final AndroidPushNotificationService androidPushNotificationService;
 
     @Autowired
-    public GoalScheduler(UserService userService , MoistureNatriumService moistureNatriumService , BloodPressureService bloodPressureService ,
-                         WeightService weightService ,SymptomService symptomService, ExerciseService exerciseService , AlarmService alarmService ,
-                         GoalService goalService,AndroidPushNotificationService androidPushNotificationService) {
+    public GoalScheduler(UserService userService, MoistureNatriumService moistureNatriumService, BloodPressureService bloodPressureService,
+                         WeightService weightService, SymptomService symptomService, ExerciseService exerciseService, AlarmService alarmService,
+                         GoalService goalService, AndroidPushNotificationService androidPushNotificationService) {
         this.moistureNatriumService = moistureNatriumService;
         this.userService = userService;
         this.bloodPressureService = bloodPressureService;
@@ -55,62 +55,66 @@ public class GoalScheduler {
         this.androidPushNotificationService = androidPushNotificationService;
     }
 
-    public int NatriumCount(String id){
+    public int NatriumCount(String id) {
         int count = 0;
         LocalDate today = LocalDate.now();
-        for(int i=1; i<=7; i++){
-            if(moistureNatriumService.getNatriumTodayRecord(new RecordKey(id, today.with(DayOfWeek.of(i))))!=null){
+        for (int i = 1; i <= 7; i++) {
+            if (moistureNatriumService.getNatriumTodayRecord(new RecordKey(id, today.with(DayOfWeek.of(i)))) != null) {
                 count++;
             }
         }
         return count;
     }
 
-    public int BloodCount(String id){
+    public int BloodCount(String id) {
         int count = 0;
         LocalDate today = LocalDate.now();
-        for(int i=1; i<=7; i++){
-            if(bloodPressureService.getTodayBloodRecord(new RecordKey(id, today.with(DayOfWeek.of(i))))!=null){
+        for (int i = 1; i <= 7; i++) {
+            if (bloodPressureService.getTodayBloodRecord(new RecordKey(id, today.with(DayOfWeek.of(i)))) != null) {
                 count++;
             }
         }
         return count;
     }
-    public int WeightCount(String id){
+
+    public int WeightCount(String id) {
         int count = 0;
         LocalDate today = LocalDate.now();
-        for(int i=1; i<=7; i++){
-            if(weightService.getTodayWeight(new RecordKey(id, today.with(DayOfWeek.of(i))))!=null){
+        for (int i = 1; i <= 7; i++) {
+            if (weightService.getTodayWeight(new RecordKey(id, today.with(DayOfWeek.of(i)))) != null) {
                 count++;
             }
         }
         return count;
     }
-    public int SymptomCount(String id){
+
+    public int SymptomCount(String id) {
         int count = 0;
         LocalDate today = LocalDate.now();
-        for(int i=1; i<=7; i++){
-            if(symptomService.getSymptom(new RecordKey(id, today.with(DayOfWeek.of(i))))!=null){
+        for (int i = 1; i <= 7; i++) {
+            if (symptomService.getSymptom(new RecordKey(id, today.with(DayOfWeek.of(i)))) != null) {
                 count++;
             }
         }
         return count;
     }
-    public int ExerciseCount(String id){
+
+    public int ExerciseCount(String id) {
         int count = 0;
         LocalDate today = LocalDate.now();
-        for(int i=1; i<=7; i++){
-            if(exerciseService.getExercise(new RecordKey(id, today.with(DayOfWeek.of(i))))!=null){
+        for (int i = 1; i <= 7; i++) {
+            if (exerciseService.getExercise(new RecordKey(id, today.with(DayOfWeek.of(i)))) != null) {
                 count++;
             }
         }
         return count;
     }
-    public int PillCount(String id){
+
+    public int PillCount(String id) {
         int count = 0;
         LocalDate today = LocalDate.now();
-        for(int i=1; i<=7; i++){
-            if(alarmService.getMedicationRecord(new RecordKey(id, today.with(DayOfWeek.of(i))))!=null){
+        for (int i = 1; i <= 7; i++) {
+            if (alarmService.getMedicationRecord(new RecordKey(id, today.with(DayOfWeek.of(i)))) != null) {
                 count++;
             }
         }
@@ -119,153 +123,143 @@ public class GoalScheduler {
 
     //cron = "0 0 21 * * SUN"
     @Scheduled(cron = "0 0 21 * * SUN")
-    public void GoalList(){
+    public void GoalList() {
         List<User> users = userService.getPatient(User.Type.PATIENT);
-        List<String>noneToken = new ArrayList<>();
-        List<String>loseToken = new ArrayList<>();
-        List<String>winToken = new ArrayList<>();
-        for(User user : users){
+        List<String> noneToken = new ArrayList<>();
+        List<String> loseToken = new ArrayList<>();
+        List<String> winToken = new ArrayList<>();
+        for (User user : users) {
             Tbl_goal goalUser = goalService.getGoalId(user.getUsername());
             logger.trace("id:{}, type:{}, level:{}, week:{} , goal:{}", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
-            int success = 0 ;
-            switch (goalUser.getGoal()){
+            int success = 0;
+            switch (goalUser.getGoal()) {
                 case 0:
                     noneToken.add(user.getAppToken());
                     logger.info("id:{}, type:{}, level:{}, week:{} , goal:{} 목표 미설정", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
-                    if(haveParent(user))
+                    if (haveParent(user))
                         noneToken.add(user.getAppToken());
                     break;
                 case 1:
-                    if(PillCount(user.getUserId()) == 7 ) {
+                    if (PillCount(user.getUserId()) == 7) {
                         success = 1;
                         winToken.add(user.getAppToken());
-                        if(haveParent(user))
+                        if (haveParent(user))
                             winToken.add(user.getAppToken());
-                    }
-                    else{
+                    } else {
                         loseToken.add(user.getAppToken());
-                        if(haveParent(user))
+                        if (haveParent(user))
                             loseToken.add(user.getAppToken());
                     }
                     break;
                 case 2:
-                    if(BloodCount(user.getUserId()) == 7 ) {
+                    if (BloodCount(user.getUserId()) == 7) {
                         success = 1;
                         winToken.add(user.getAppToken());
-                        if(haveParent(user))
+                        if (haveParent(user))
                             winToken.add(user.getAppToken());
-                    }
-                    else{
+                    } else {
                         loseToken.add(user.getAppToken());
-                        if(haveParent(user))
+                        if (haveParent(user))
                             loseToken.add(user.getAppToken());
                     }
                     break;
                 case 3:
-                    if(WeightCount(user.getUserId()) == 7 ) {
+                    if (WeightCount(user.getUserId()) == 7) {
                         success = 1;
                         winToken.add(user.getAppToken());
-                        if(haveParent(user))
+                        if (haveParent(user))
                             winToken.add(user.getAppToken());
-                    }
-                    else{
+                    } else {
                         loseToken.add(user.getAppToken());
-                        if(haveParent(user))
+                        if (haveParent(user))
                             loseToken.add(user.getAppToken());
                     }
                     break;
                 case 4:
-                    if(SymptomCount(user.getUserId()) >= 3 ) {
+                    if (SymptomCount(user.getUserId()) >= 3) {
                         success = 1;
                         winToken.add(user.getAppToken());
-                        if(haveParent(user))
+                        if (haveParent(user))
                             winToken.add(user.getAppToken());
-                    }
-                    else{
+                    } else {
                         loseToken.add(user.getAppToken());
-                        if(haveParent(user))
+                        if (haveParent(user))
                             loseToken.add(user.getAppToken());
                     }
                     break;
                 case 5:
-                    if(SymptomCount(user.getUserId()) == 7 ) {
+                    if (SymptomCount(user.getUserId()) == 7) {
                         success = 1;
                         winToken.add(user.getAppToken());
-                        if(haveParent(user))
+                        if (haveParent(user))
                             winToken.add(user.getAppToken());
-                    }
-                    else{
+                    } else {
                         loseToken.add(user.getAppToken());
-                        if(haveParent(user))
+                        if (haveParent(user))
                             loseToken.add(user.getAppToken());
                     }
                     break;
                 case 6:
-                    if(NatriumCount(user.getUserId()) >= 3 ) {
+                    if (NatriumCount(user.getUserId()) >= 3) {
                         success = 1;
                         winToken.add(user.getAppToken());
-                        if(haveParent(user))
+                        if (haveParent(user))
                             winToken.add(user.getAppToken());
-                    }
-                    else{
+                    } else {
                         loseToken.add(user.getAppToken());
-                        if(haveParent(user))
+                        if (haveParent(user))
                             loseToken.add(user.getAppToken());
                     }
                     break;
                 case 7:
-                    if(NatriumCount(user.getUserId()) == 7 ) {
+                    if (NatriumCount(user.getUserId()) == 7) {
                         success = 1;
                         winToken.add(user.getAppToken());
-                        if(haveParent(user))
+                        if (haveParent(user))
                             winToken.add(user.getAppToken());
-                    }
-                    else{
+                    } else {
                         loseToken.add(user.getAppToken());
-                        if(haveParent(user))
+                        if (haveParent(user))
                             loseToken.add(user.getAppToken());
                     }
                     break;
                 case 8:
-                    if(ExerciseCount(user.getUserId()) >= 1 ) {
+                    if (ExerciseCount(user.getUserId()) >= 1) {
                         success = 1;
                         winToken.add(user.getAppToken());
-                        if(haveParent(user))
+                        if (haveParent(user))
                             winToken.add(user.getAppToken());
-                    }
-                    else{
+                    } else {
                         loseToken.add(user.getAppToken());
-                        if(haveParent(user))
+                        if (haveParent(user))
                             loseToken.add(user.getAppToken());
                     }
                     break;
                 case 9:
-                    if(ExerciseCount(user.getUserId()) >= 3 ) {
+                    if (ExerciseCount(user.getUserId()) >= 3) {
                         success = 1;
                         winToken.add(user.getAppToken());
-                        if(haveParent(user))
+                        if (haveParent(user))
                             winToken.add(user.getAppToken());
-                    }
-                    else{
+                    } else {
                         loseToken.add(user.getAppToken());
-                        if(haveParent(user))
+                        if (haveParent(user))
                             loseToken.add(user.getAppToken());
                     }
                     break;
             }
-            if(success == 1){
-                user.setLevel(user.getLevel()+1);
+            if (success == 1) {
+                user.setLevel(user.getLevel() + 1);
                 userService.upsertUser(user);
                 logger.info("id:{}, type:{}, level:{}, week:{} 목표 달성", user.getUserId(), user.getType(), user.getLevel(), user.getWeek());
-            }
-            else{
+            } else {
                 logger.info("id:{}, type:{}, level:{}, week:{} 목표 미달성", user.getUserId(), user.getType(), user.getLevel(), user.getWeek());
             }
         }
         try {
-            levelNotice("center", winToken,"이 주의 목표를 달성하셨네요!\n 꽃이 어디까지 피었는지 확인해주세요~");
-            levelNotice("center", noneToken,"이 주의 목표 설정이 되어있지 않아요.\n 목표를 설정하여 꽃을 피워보세요.");
-            levelNotice("center", loseToken,"아쉽게도 이 주의 목표를 달성하지 못하셨네요.\n 꽃이 어디까지 피었는지 확인해주세요.");
+            levelNotice("center", winToken, "이 주의 목표를 달성하셨네요!\n 꽃이 어디까지 피었는지 확인해주세요~");
+            levelNotice("center", noneToken, "이 주의 목표 설정이 되어있지 않아요.\n 목표를 설정하여 꽃을 피워보세요.");
+            levelNotice("center", loseToken, "아쉽게도 이 주의 목표를 달성하지 못하셨네요.\n 꽃이 어디까지 피었는지 확인해주세요.");
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -275,35 +269,32 @@ public class GoalScheduler {
 
 
     public @ResponseBody
-    ResponseEntity<String> levelNotice(String title, List<String>tokenList,String message) throws JSONException, InterruptedException  {
-        if(tokenList.isEmpty()){
+    ResponseEntity<String> levelNotice(String title, List<String> tokenList, String message) throws JSONException, InterruptedException {
+        if (tokenList.isEmpty()) {
             return new ResponseEntity<>("No Target!", HttpStatus.BAD_REQUEST);
         }
-        String notifications = AndroidPushPeriodicNotifications.PeriodicNotificationJson(title,message,tokenList);
+        String notifications = AndroidPushPeriodicNotifications.PeriodicNotificationJson(title, message, tokenList);
         HttpEntity<String> request = new HttpEntity<>(notifications);
 
         CompletableFuture<String> pushNotification = androidPushNotificationService.send(request);
         CompletableFuture.allOf(pushNotification).join();
 
-        try{
+        try {
             String firebaseResponse = pushNotification.get();
             return new ResponseEntity<>(firebaseResponse, HttpStatus.OK);
-        }
-        catch (InterruptedException e){
+        } catch (InterruptedException e) {
             logger.debug("got interrupted!");
             throw new InterruptedException();
-        }
-        catch (ExecutionException e){
+        } catch (ExecutionException e) {
             logger.debug("execution error!");
         }
         return new ResponseEntity<>("Push Notification ERROR!", HttpStatus.BAD_REQUEST);
     }
 
-    public boolean haveParent(User user){
-        if(user.getCaregiver()==null){
+    public boolean haveParent(User user) {
+        if (user.getCaregiver() == null) {
             return false;
-        }
-        else{
+        } else {
             return true;
         }
     }

@@ -18,12 +18,12 @@ import withus.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public class InfoController extends BaseController{
+public class InfoController extends BaseController {
     private final CountService countService;
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public InfoController(AuthenticationFacade authenticationFacade, UserService userService ,CountService countService) {
+    public InfoController(AuthenticationFacade authenticationFacade, UserService userService, CountService countService) {
         super(userService, authenticationFacade);
         this.countService = countService;
     }
@@ -35,7 +35,7 @@ public class InfoController extends BaseController{
         User user = getUser();
         logger.info("id:{}, url:{}, type:{}, level:{}, week:{}", user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek());
         modelAndView.addObject("user", user);
-        if(user.getType() == User.Type.PATIENT){
+        if (user.getType() == User.Type.PATIENT) {
             Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }

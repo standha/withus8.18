@@ -1,6 +1,7 @@
 package withus.entity;
 
 import javax.persistence.*;
+
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import withus.util.Utility;

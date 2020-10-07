@@ -18,18 +18,18 @@ public class WeightService {
     private final WeightRecordRepository weightRecordRepository;
 
     @Autowired
-    public WeightService(WeightRecordRepository weightRecordRepository){
+    public WeightService(WeightRecordRepository weightRecordRepository) {
         this.weightRecordRepository = weightRecordRepository;
     }
 
     @NonNull
-    public Tbl_weight upsertWeightRecord(Tbl_weight tbl_weight){
+    public Tbl_weight upsertWeightRecord(Tbl_weight tbl_weight) {
         Tbl_weight saved = weightRecordRepository.save(tbl_weight);
         return saved;
     }
 
     @NonNull
-    public List<Tbl_weight> getWeightRecord(String id, float weight){
+    public List<Tbl_weight> getWeightRecord(String id, float weight) {
         return weightRecordRepository.findByPk_IdAndWeightGreaterThan(id, weight);
     }
 

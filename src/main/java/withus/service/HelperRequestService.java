@@ -12,12 +12,12 @@ public class HelperRequestService {
     private final HelperRequestRepository helperRequestRepository;
 
     @Autowired
-    public HelperRequestService(HelperRequestRepository helperRequestRepository){
+    public HelperRequestService(HelperRequestRepository helperRequestRepository) {
         this.helperRequestRepository = helperRequestRepository;
     }
 
     @NonNull
-    public Tbl_helper_request upsertHelperRequest(Tbl_helper_request tbl_helper_request){
+    public Tbl_helper_request upsertHelperRequest(Tbl_helper_request tbl_helper_request) {
         Tbl_helper_request saved = helperRequestRepository.save(tbl_helper_request);
         return saved;
     }

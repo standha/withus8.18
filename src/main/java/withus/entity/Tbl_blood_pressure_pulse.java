@@ -2,6 +2,7 @@ package withus.entity;
 
 
 import lombok.*;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,7 +20,7 @@ public class Tbl_blood_pressure_pulse {
     private Integer contraction;
 
     @Column(name = "relaxation ", columnDefinition = "int default 0")
-    private Integer relaxation ;
+    private Integer relaxation;
 
     @Column(name = "pressure", columnDefinition = "int default 0")
     private Integer pressure;

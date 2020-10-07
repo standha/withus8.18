@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableJpaRepositories(basePackages = "withus.repository")
 @EnableScheduling
 public class WithusApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(WithusApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(WithusApplication.class, args);
+    }
 }
