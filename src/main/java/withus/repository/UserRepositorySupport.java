@@ -25,7 +25,7 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
     public List<MoistureAvgDTO> findMoistureWeek(String userId){
         QTbl_mositrue_record mr = QTbl_mositrue_record.tbl_mositrue_record;
 
-        List<MoistureAvgDTO> moistureAvg = queryFactory.select(Projections.constructor(MoistureAvgDTO.class, mr.week, mr.intake.sum()))
+        List<MoistureAvgDTO> moistureAvg = queryFactory.select(Projections.constructor(MoistureAvgDTO.class, mr.week, mr.intake.avg()))
                 .from(mr)
                 .groupBy(mr.week)
                 .orderBy(mr.week.asc())

@@ -2,24 +2,19 @@ package withus.dto;
 
 public class MoistureAvgDTO {
     Integer week;
-    Integer intake;
+    Double intake;
 
     public Integer getWeek() {
         return week;
     }
-    public void setWeek(Integer week) {
-        this.week = week;
-    }
 
-    public Integer getIntake() {
+
+    public Double getIntake() {
         return intake;
     }
 
-    public void setIntake(Integer intake) {
-        this.intake = intake;
-    }
 
-    public MoistureAvgDTO(Integer week, Integer intake){
+    public MoistureAvgDTO(Integer week, Double intake){
         this.week = week;
         this.intake = intake;
     }
