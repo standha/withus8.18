@@ -16,7 +16,7 @@ public class Tbl_natrium_record {
     private RecordKey pk;
 
     @Column(name = "morning")
-    private  Integer morning;
+    private Integer morning;
 
     @Column(name = "lunch")
     private Integer lunch;

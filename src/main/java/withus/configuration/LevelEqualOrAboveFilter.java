@@ -6,26 +6,26 @@ import ch.qos.logback.core.filter.AbstractMatcherFilter;
 import ch.qos.logback.core.spi.FilterReply;
 
 public class LevelEqualOrAboveFilter extends AbstractMatcherFilter<ILoggingEvent> {
-	private Level level;
+    private Level level;
 
-	@Override
-	public FilterReply decide(ILoggingEvent event) {
-		if (!isStarted()) {
-			return FilterReply.NEUTRAL;
-		}
+    @Override
+    public FilterReply decide(ILoggingEvent event) {
+        if (!isStarted()) {
+            return FilterReply.NEUTRAL;
+        }
 
-		Level level = event.getLevel();
-		FilterReply filterReply;
-		if (level.isGreaterOrEqual(this.level)) {
-			filterReply = onMatch;
-		} else {
-			filterReply = onMismatch;
-		}
+        Level level = event.getLevel();
+        FilterReply filterReply;
+        if (level.isGreaterOrEqual(this.level)) {
+            filterReply = onMatch;
+        } else {
+            filterReply = onMismatch;
+        }
 
-		return filterReply;
-	}
+        return filterReply;
+    }
 
-	public void setLevel(Level level) {
-		this.level = level;
-	}
+    public void setLevel(Level level) {
+        this.level = level;
+    }
 }

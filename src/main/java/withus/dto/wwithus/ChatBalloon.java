@@ -19,37 +19,37 @@ import org.springframework.lang.Nullable;
 @Getter
 @ToString
 public class ChatBalloon implements Comparable<ChatBalloon> {
-	private final String code;
-	private final Direction direction;
-	private final boolean isMostRecent;
-	private final boolean isToTerminate;
-	private final boolean isAnswerExpected;
-	private final String content;
-	@Nullable
-	private final String urlToImageFile;
-	@Nullable
-	private final String urlToAudioFile;
-	@Builder.Default
-	private final LocalDateTime dateTime = LocalDateTime.now();
-	@Nullable
-	private final String nextCode;
-	@NonNull
-	@Builder.Default
-	private final List<AnswerButton> answerButtons = new ArrayList<>();
+    private final String code;
+    private final Direction direction;
+    private final boolean isMostRecent;
+    private final boolean isToTerminate;
+    private final boolean isAnswerExpected;
+    private final String content;
+    @Nullable
+    private final String urlToImageFile;
+    @Nullable
+    private final String urlToAudioFile;
+    @Builder.Default
+    private final LocalDateTime dateTime = LocalDateTime.now();
+    @Nullable
+    private final String nextCode;
+    @NonNull
+    @Builder.Default
+    private final List<AnswerButton> answerButtons = new ArrayList<>();
 
-	@Override
-	public int compareTo(@NonNull ChatBalloon that) {
-		return Comparator.comparing(ChatBalloon::getDateTime)
-			.thenComparing(ChatBalloon::getDirection)
-			.compare(this, that);
-	}
+    @Override
+    public int compareTo(@NonNull ChatBalloon that) {
+        return Comparator.comparing(ChatBalloon::getDateTime)
+                .thenComparing(ChatBalloon::getDirection)
+                .compare(this, that);
+    }
 
-	@JsonProperty("containsFinishingAnswer")
-	public boolean containsFinishingAnswer() {
-		return answerButtons.stream().anyMatch(AnswerButton::isToTerminate);
-	}
+    @JsonProperty("containsFinishingAnswer")
+    public boolean containsFinishingAnswer() {
+        return answerButtons.stream().anyMatch(AnswerButton::isToTerminate);
+    }
 
-	public enum Direction {
-		LEFT, RIGHT;
-	}
+    public enum Direction {
+        LEFT, RIGHT;
+    }
 }

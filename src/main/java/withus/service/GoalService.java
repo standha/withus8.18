@@ -16,12 +16,12 @@ public class GoalService {
     private final GoalRepository goalRepository;
 
     @Autowired
-    public GoalService(GoalRepository goalRepository){
+    public GoalService(GoalRepository goalRepository) {
         this.goalRepository = goalRepository;
     }
 
     @Nullable
-    public Tbl_goal getGoalId(String username){
+    public Tbl_goal getGoalId(String username) {
         return goalRepository.findByGoalId(username).orElse(null);
     }
 
@@ -31,5 +31,7 @@ public class GoalService {
     }
 
     @Nullable
-    public List<Tbl_goal> getAllGoal(){return goalRepository.findAll();}
+    public List<Tbl_goal> getAllGoal() {
+        return goalRepository.findAll();
+    }
 }

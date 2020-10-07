@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice(basePackages = "withus.controller")
 public class Advice {
-	private final Logger logger = LoggerFactory.getLogger(Advice.class);
+    private final Logger logger = LoggerFactory.getLogger(Advice.class);
 
-	@ExceptionHandler(value = Exception.class)
-	public void handleException(HttpServletRequest request, Exception exception) {
-		logger.error(exception.getLocalizedMessage(), exception);
-	}
+    @ExceptionHandler(value = Exception.class)
+    public void handleException(HttpServletRequest request, Exception exception) {
+        logger.error(exception.getLocalizedMessage(), exception);
+    }
 }

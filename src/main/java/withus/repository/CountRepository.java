@@ -12,6 +12,6 @@ import java.util.Optional;
 public interface CountRepository extends JpaRepository<Tbl_button_count, ProgressKey> {
 
     @Transactional(readOnly = true)
-    Optional<Tbl_button_count>findByKey(ProgressKey progressKey);
+    Optional<Tbl_button_count> findByKey(ProgressKey progressKey);
 
 }

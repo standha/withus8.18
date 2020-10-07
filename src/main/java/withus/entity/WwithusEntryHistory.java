@@ -26,38 +26,43 @@ import org.springframework.lang.NonNull;
 @Getter
 @ToString
 public class WwithusEntryHistory implements Comparable<WwithusEntryHistory> {
-	@EmbeddedId
-	@EqualsAndHashCode.Include
-	private Key key;
+    @EmbeddedId
+    @EqualsAndHashCode.Include
+    private Key key;
 
-	@Column(columnDefinition = "TIMESTAMP")
-	@Builder.Default
-	private final LocalDateTime dateTime = LocalDateTime.now();
+    @Column(columnDefinition = "TIMESTAMP")
+    @Builder.Default
+    private final LocalDateTime dateTime = LocalDateTime.now();
 
-	public User getUser() { return key.user; }
-	public WwithusEntry getEntry() { return key.entry; }
+    public User getUser() {
+        return key.user;
+    }
 
-	@Override
-	public int compareTo(@NonNull WwithusEntryHistory that) {
-		return dateTime.compareTo(that.dateTime);
-	}
+    public WwithusEntry getEntry() {
+        return key.entry;
+    }
 
-	@Embeddable
-	@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-	@NoArgsConstructor
-	@AllArgsConstructor(access = AccessLevel.PRIVATE)
-	@Builder
-	@Getter
-	@ToString
-	public static class Key implements Serializable {
-		@OneToOne
-		@JoinColumn(columnDefinition = "VARCHAR(128) NOT NULL")
-		@EqualsAndHashCode.Include
-		private User user;
+    @Override
+    public int compareTo(@NonNull WwithusEntryHistory that) {
+        return dateTime.compareTo(that.dateTime);
+    }
 
-		@OneToOne
-		@JoinColumn(columnDefinition = "VARCHAR(32)")
-		@EqualsAndHashCode.Include
-		private WwithusEntry entry;
-	}
+    @Embeddable
+    @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+    @NoArgsConstructor
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @Builder
+    @Getter
+    @ToString
+    public static class Key implements Serializable {
+        @OneToOne
+        @JoinColumn(columnDefinition = "VARCHAR(128) NOT NULL")
+        @EqualsAndHashCode.Include
+        private User user;
+
+        @OneToOne
+        @JoinColumn(columnDefinition = "VARCHAR(32)")
+        @EqualsAndHashCode.Include
+        private WwithusEntry entry;
+    }
 }

@@ -7,5 +7,5 @@ import withus.entity.Tbl_helper_request;
 import withus.entity.TimeKey;
 
 @Repository
-public interface HelperRequestRepository  extends JpaRepository<Tbl_helper_request, TimeKey> {
+public interface HelperRequestRepository extends JpaRepository<Tbl_helper_request, TimeKey> {
 }

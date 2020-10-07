@@ -9,11 +9,11 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Optional;
 
-public interface OutPatientVisitAlarmRepository extends JpaRepository<Tbl_outpatient_visit_alarm,String> {
+public interface OutPatientVisitAlarmRepository extends JpaRepository<Tbl_outpatient_visit_alarm, String> {
     @Transactional(readOnly = true)
-    Optional<Tbl_outpatient_visit_alarm> findById (String id);
+    Optional<Tbl_outpatient_visit_alarm> findById(String id);
 
     @Transactional(readOnly = true)
     @Nonnull
-    List<Tbl_outpatient_visit_alarm>findByVisitAlarmIsTrue();
+    List<Tbl_outpatient_visit_alarm> findByVisitAlarmIsTrue();
 }

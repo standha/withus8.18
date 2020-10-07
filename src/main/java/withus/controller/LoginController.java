@@ -18,103 +18,102 @@ import withus.util.Utility;
 
 @Controller
 public class LoginController {
-	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
-	private final UserService userService;
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+    private final UserService userService;
 
-	@Autowired
-	public LoginController(UserService userService) {
-		this.userService = userService;
-	}
+    @Autowired
+    public LoginController(UserService userService) {
+        this.userService = userService;
+    }
 
-	@GetMapping({ "/", "/login" })
-	public ModelAndView getLogin(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView modelAndView = new ModelAndView("LogIn/login");
+    @GetMapping({"/", "/login"})
+    public ModelAndView getLogin(HttpServletRequest request, HttpServletResponse response) {
+        ModelAndView modelAndView = new ModelAndView("LogIn/login");
 
-		return modelAndView;
-	}
+        return modelAndView;
+    }
 
-	@GetMapping({ "/registerUser" })
-	public ModelAndView getRegisterPage(HttpServletRequest request, HttpServletResponse response,@RequestParam(required = false) String token) {
-		System.out.println("INBOUND registerUser");
-		ModelAndView modelAndView = new ModelAndView("LogIn/register");
-		User user = new User();
-		modelAndView.addObject("appToken",token);
-		modelAndView.addObject("user", user);
-		modelAndView.addObject("previousUrl", "LogIn/login");
+    @GetMapping({"/registerUser"})
+    public ModelAndView getRegisterPage(HttpServletRequest request, HttpServletResponse response, @RequestParam(required = false) String token) {
+        ModelAndView modelAndView = new ModelAndView("LogIn/register");
+        User user = new User();
+        modelAndView.addObject("appToken", token);
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("previousUrl", "LogIn/login");
+        System.out.println("token : " + token);
+        return modelAndView;
+    }
 
-		return modelAndView;
-	}
 
+    @PostMapping(value = "/saveUser", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Result<User> putMember(@RequestBody User user) {
 
-	@PostMapping(value = "/saveUser", consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public Result<User> putMember(@RequestBody User user) {
+        User savedUser = null;
+        Result.Code code = Result.Code.ERROR;
 
-		User savedUser = null;
-		Result.Code code = Result.Code.ERROR;
+        if (!isMissingMandatories(user)) {
+            try {
+                User existId = userService.getUserById(user.getUserId());
+                User existContact = userService.getUserByContact(user.getContact());
 
-		if (!isMissingMandatories(user)) {
-			try {
-				User existId = userService.getUserById(user.getUserId());
-				User existContact = userService.getUserByContact(user.getContact());
+                if (existId == null && existContact == null) {
+                    User.Type userType = user.getType();
 
-				if (existId == null && existContact == null) {
-					User.Type userType = user.getType();
+                    switch (userType) {
+                        case CAREGIVER:
+                            savedUser = userService.upsertUserEncodingPassword(user);
+                            code = Result.Code.OK;
+                            break;
+                        case PATIENT:
+                            User caregiver = user.getCaregiver();
+                            if (caregiver == null) {
+                                savedUser = userService.upsertUserEncodingPassword(user);
+                                code = Result.Code.OK;
+                            } else {
+                                User existCareGiver = userService.getUserByContact(user.getCaregiver().getContact());
+                                if (existCareGiver == null) {
+                                    code = Result.Code.ERROR_NO_EXIST_CAREGIVER;
+                                } else {
+                                    user.setCaregiver(existCareGiver);
+                                    savedUser = userService.upsertUserEncodingPassword(user);
+                                    code = Result.Code.OK;
+                                }
+                            }
+                            break;
+                        default:
+                            throw new UnexpectedEnumValueException(userType, User.Type.class);
+                    }
+                }
 
-					switch (userType) {
-						case CAREGIVER:
-							savedUser = userService.upsertUserEncodingPassword(user);
-							code = Result.Code.OK;
-							break;
-						case PATIENT:
-							User caregiver = user.getCaregiver();
-							if (caregiver == null) {
-								savedUser = userService.upsertUserEncodingPassword(user);
-								code = Result.Code.OK;
-							} else {
-								User existCareGiver = userService.getUserByContact(user.getCaregiver().getContact());
-								if (existCareGiver == null) {
-									code = Result.Code.ERROR_NO_EXIST_CAREGIVER;
-								} else {
-									user.setCaregiver(existCareGiver);
-									savedUser = userService.upsertUserEncodingPassword(user);
-									code = Result.Code.OK;
-								}
-							}
-							break;
-						default:
-							throw new UnexpectedEnumValueException(userType, User.Type.class);
-					}
-				}
+                if (existContact != null) {
+                    savedUser = existContact;
+                    code = Result.Code.ERROR_DUPLICATE_CONTACT;
+                }
+                if (existId != null) {
+                    savedUser = existId;
+                    code = Result.Code.ERROR_DUPLICATE_ID;
+                }
+            } catch (Exception exception) {
+                logger.error(exception.getLocalizedMessage(), exception);
+                code = Result.Code.ERROR_DATABASE;
+            }
+        }
 
-				if (existContact != null) {
-					savedUser = existContact;
-					code = Result.Code.ERROR_DUPLICATE_CONTACT;
-				}
-				if (existId != null) {
-					savedUser = existId;
-					code = Result.Code.ERROR_DUPLICATE_ID;
-				}
-			} catch (Exception exception) {
-				logger.error(exception.getLocalizedMessage(), exception);
-				code = Result.Code.ERROR_DATABASE;
-			}
-		}
+        return Result.<User>builder()
+                .code(code)
+                .data(savedUser)
+                .build();
+    }
 
-		return Result.<User>builder()
-			.code(code)
-			.data(savedUser)
-			.build();
-	}
+    public boolean isMissingMandatories(User user) {
 
-	public boolean isMissingMandatories(User user){
-
-		if (Utility.nullOrEmptyOrSpace(user.getUserId()) ||
-			Utility.nullOrEmptyOrSpace(user.getPassword()) ||
-			Utility.nullOrEmptyOrSpace(user.getName()) ||
-			Utility.nullOrEmptyOrSpace(user.getContact())) {
-			return true;
-		}
-		return false;
-	}
+        if (Utility.nullOrEmptyOrSpace(user.getUserId()) ||
+                Utility.nullOrEmptyOrSpace(user.getPassword()) ||
+                Utility.nullOrEmptyOrSpace(user.getName()) ||
+                Utility.nullOrEmptyOrSpace(user.getContact())) {
+            return true;
+        }
+        return false;
+    }
 }

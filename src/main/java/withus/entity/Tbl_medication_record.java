@@ -2,6 +2,7 @@ package withus.entity;
 
 import lombok.*;
 import withus.util.Utility;
+
 import javax.persistence.*;
 
 @Entity
@@ -21,5 +22,7 @@ public class Tbl_medication_record {
     @Column(name = "week")
     private Integer week;
 
-    public String getDateString() { return Utility.format(pk.getDate()); }
+    public String getDateString() {
+        return Utility.format(pk.getDate());
+    }
 }

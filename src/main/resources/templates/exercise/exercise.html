@@ -13,10 +13,26 @@
     <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/exercise/exercise.js}"></script>
+    <script th:src="@{/js/help.js}"></script>
 </head>
 <body>
+<input type="hidden" id="button-count" th:attr="value=@{/button-count}">
+<input type="hidden" id="helper-request" th:attr="value=@{/helper-request}">
 <div class="skip-navi">
     <a href="#content">본문 바로가기</a>
+</div>
+<div th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+    <input tpye = 'hidden' name = "symptom"           th:value = "${count.symptom}" style = "display:none">
+    <input tpye = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
+    <input tpye = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">
+    <input tpye = 'hidden' name = "disease"           th:value = "${count.diseaseInfo}" style = "display:none">
+    <input tpye = 'hidden' name = "exercise"          th:value = "${count.exercise}" style = "display:none">
+    <input tpye = 'hidden' name = "goal"              th:value = "${count.goal}" style = "display:none">
+    <input tpye = 'hidden' name = "helper"            th:value = "${count.helper}" style = "display:none">
+    <input tpye = 'hidden' name = "level"             th:value = "${count.level}" style = "display:none">
+    <input tpye = 'hidden' name = "natriumMoisture"   th:value = "${count.natriumMoisture}" style = "display:none">
+    <input tpye = 'hidden' name = "weight"            th:value = "${count.weight}" style = "display:none">
+    <input tpye = 'hidden' name = "withusRang"        th:value = "${count.withusRang}" style = "display:none">
 </div>
 <!-- wrap -->
 <div id="wrap" class="insert-page">
@@ -24,11 +40,25 @@
     <!-- header -->
     <header>
         <div class="header-wrap type01">
-            <div class="head">
-                <a class="btn xsm type07" href="tel:02-820-5198">
-                    <span class="ico-call"></span>
-                    <span class="txt-rt">도우미</span>
-                </a>
+            <div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+                <div onclick="helperRequest()" >
+                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                        <span class="ico-call" ></span>
+                        <span class="txt-rt">도우미</span>
+                    </a>
+                </div>
+                <h2>
+                    <span class="ico-exercise-s"></span>
+                    <span>운동</span>
+                </h2>
+            </div>
+            <div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
+                <div onclick="helperRequest()" >
+                    <a class="btn xsm type07" href="tel:02-820-5198">
+                        <span class="ico-call" ></span>
+                        <span class="txt-rt">도우미</span>
+                    </a>
+                </div>
                 <h2>
                     <span class="ico-exercise-s"></span>
                     <span>운동</span>
