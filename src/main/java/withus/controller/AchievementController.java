@@ -19,7 +19,7 @@ public class AchievementController extends BaseController {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
     private final CountService countService;
 
-    public AchievementController(UserService userService, AuthenticationFacade authenticationFacade) {
+    public AchievementController(UserService userService, AuthenticationFacade authenticationFacade, CountService countService) {
         super(userService, authenticationFacade);
         this.countService = countService;
     }

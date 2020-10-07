@@ -54,8 +54,6 @@ public class WwithusService {
                 throw new Utility.NoHisException();
             }
         }
-        System.out.println(currentCode);
-        System.out.println(user.getType());
         if (currentCode != null) {
             codesToSaveAsHistories.add(currentCode);
         }
@@ -66,19 +64,16 @@ public class WwithusService {
             });
 
             user = wwithusEntryRequest.getUser();
-            System.out.println(user.getType());
             WwithusEntryHistory wwithusEntryHistory = toWwithusEntryHistory(wwithusEntryRequest.getUser(), currentEntry);
             WwithusEntryHistory existingHistory = wwithusEntryHistoryRepository.findById(wwithusEntryHistory.getKey()).orElse(null);
             if (existingHistory == null) {
                 if (user.getType() == User.Type.PATIENT) {
-                    System.out.println("--------------save history---------------");
                     wwithusEntryHistoryRepository.save(wwithusEntryHistory);
                 } else {
                     user = userService.getUserByCaregiverId(user.getUserId());
                     if (currentCode == null) {
                         throw new Utility.NoHisException();
                     }
-                    System.out.println("Caregiver never save history");
                 }
             } else {
                 log.debug("Chose not to overwrite a {}: {}", WwithusEntry.class.getSimpleName(), wwithusEntryHistory);
@@ -109,10 +104,8 @@ public class WwithusService {
 
     @NonNull
     public List<ChatBalloon> getWwithusEntryHistories(User user, LocalDate date) {
-        System.out.println(user);
         if (user.getType() == User.Type.CAREGIVER) {
             user = userService.getUserByCaregiverId(user.getUserId());
-            System.out.println(user);
         }
         int week = user.getWeek();
         int day = Utility.getDayDigitForWwithus(week, date.getDayOfWeek());
@@ -308,7 +301,6 @@ public class WwithusService {
 
         if (user.getType() == User.Type.CAREGIVER) {
             user = userService.getUserByCaregiverId(user.getUserId());
-            System.out.println(user);
         }
         String username = user.getName();
         if (content.startsWith("님 ")) {

@@ -119,14 +119,11 @@ public class AlarmController extends BaseController {
     @PostMapping(value = "/medicationAlarm", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<Tbl_medication_alarm> postMedicationAlarm(@RequestBody Tbl_medication_alarm tbl_medication_alarm) {
-        String userId = getUsername();
-    public Result<Tbl_medication_alarm> postMedicationAlarm(@RequestBody Tbl_medication_alarm tbl_medication_alarm){
         User user = getUser();
-        String userId = user.getUserId();
-        tbl_medication_alarm.setId(userId);
+        tbl_medication_alarm.setId(user.getUserId());
         Result.Code code;
         Tbl_medication_alarm seved = null;
-        logger.info("id:'{}'",userId);
+        logger.info("id:'{}'",user.getUserId());
 
         try {
             seved = alarmService.upsertMedication(tbl_medication_alarm);
@@ -173,7 +170,6 @@ public class AlarmController extends BaseController {
         ModelAndView modelAndView = new ModelAndView("alarm/appointments");
         User user = getUser();
         Tbl_outpatient_visit_alarm appointment = alarmService.getPatientAppointment(getConnectId());
-        User user = getUser();
         if (user.getType() == User.Type.PATIENT) {
             Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
