@@ -14,7 +14,12 @@
     <script th:src="@{/js/common.js}"></script>
     <title>Admin center</title>
 </head>
-
+<style>
+    .main-page .main-icon-admin {display: flex; flex-wrap: wrap; justify-content: space-between; margin: 60px 8% 20px;}
+    .main-page .main-icon-admin a {display: flex; flex-direction: column; justify-content: space-between; align-items: center; width: 31%; padding: 8% 0; margin-bottom: 15px; border-radius: 15px; box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.04); border: solid 1px #eff0f0; background-color: #ffffff;}
+    .main-page .main-icon-admin a span {text-align: center; font-size: 1.1rem; font-weight: 700;}
+    .main-page .main-icon-admin a span[class*="ico-"] {margin-bottom: 10px;}
+</style>
 <body>
 <div id="wrap" class="main-page">
     <header>
@@ -43,7 +48,7 @@
     </header>
 
     <div class="container" id="content">
-        <ul class="main-icon">
+        <ul class="main-icon-admin">
             <a th:href="@{/admin_pillHistory/{userId}(userId=${patient.userId})}">
                 <span class="ico-drug"></span>
                 <span>복약 기록</span>
@@ -57,7 +62,7 @@
                 <span>운동 기록</span>
             </a>
             <a th:href="@{/symptom}">
-                <span class="ico-water2"></span>
+                <span class="ico-intake"></span>
                 <span>수분 기록</span>
             </a>
         </ul>

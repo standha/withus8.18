@@ -79,48 +79,98 @@
     var weekAvg = /*[[ ${weekAvg} ]]*/;
     /*]]*/
 
-    //var weekAscItem = "<tr>";
-    var week = ['일', '월', '화', '수', '목', '금', '토'];
-    var weekcount = 0;
-    var temp;
-    for(i=0; i<weekAsc.length; i++)
+    //있는 데이터만 표시 ex) 월 화 목 토
+    // var week = ['일', '월', '화', '수', '목', '금', '토'];
+    // var weekcount = 0;
+    // var temp;
+    //
+    // for(i=0; i<weekAsc.length; i++)
+    // {
+    //     temp = weekAsc[i].week;
+    //     if(temp != weekAvg[weekcount].week)
+    //     {
+    //         var weekAvgItem = "<tr>";
+    //         weekAvgItem += "<td>" + weekAvg[weekcount].week + "주차" +"</td>";
+    //         weekAvgItem += "<td>" + weekAvg[weekcount].week + "주차 평균" +"</td>";
+    //         weekAvgItem += "<td>" + weekAvg[weekcount].intake +"</td>";
+    //         weekAvgItem += "</tr>";
+    //         $('#history-table-data').append(weekAvgItem);
+    //         weekcount++;
+    //     }
+    //
+    //     var weekAscItem = "<tr>";
+    //     weekAscItem += "<td>" + weekAsc[i].week + "</td>";
+    //     var day = new Date(weekAsc[i].pk.date.substr(0, 4), weekAsc[i].pk.date.substr(5, 2)-1, weekAsc[i].pk.date.substr(8, 2)).getDay();
+    //     var dayLabel = week[day];
+    //     //weekAscItem += "<td>" + dayLabel + "</td>";
+    //     weekAscItem += "<td>" + weekAsc[i].pk.date + " " + dayLabel + "</td>"
+    //     weekAscItem += "<td>" + weekAsc[i].intake + "</td>";
+    //     weekAscItem += "</tr>";
+    //     $('#history-table-data').append(weekAscItem);
+    //
+    //     if(i == weekAsc.length-1)       //마지막 주차
+    //     {
+    //         var weekAvgItem = "<tr>";
+    //         weekAvgItem += "<td>" + weekAvg[weekcount].week + "주차" +"</td>";
+    //         weekAvgItem += "<td>" + weekAvg[weekcount].week + "주차 평균" +"</td>";
+    //         weekAvgItem += "<td>" + weekAvg[weekcount].intake +"</td>";
+    //         weekAvgItem += "</tr>";
+    //         $('#history-table-data').append(weekAvgItem);
+    //     }
+    //
+    // }
+
+    //모든 요일 표시
+    var weekAscCount = 0;
+    var weekAvgCount = 0;
+    for(i=1; i<=24; i++)
     {
-        temp = weekAsc[i].week;
-        if(temp != weekAvg[weekcount].week)
+        for(j=0; j<7; j++)
         {
-            var weekAvgItem = "<tr>";
-            weekAvgItem += "<td>" + weekAvg[weekcount].week + "주차" +"</td>";
-            weekAvgItem += "<td>" + weekAvg[weekcount].week + "주차 평균" +"</td>";
-            weekAvgItem += "<td>" + weekAvg[weekcount].intake +"</td>";
-            weekAvgItem += "</tr>";
-            $('#history-table-data').append(weekAvgItem);
-            weekcount++;
+            var Item = "<tr>";
+            var weekText = ['월', '화', '수', '목', '금', '토', '일'];     //월요일부터 표시해주는 배열
+            if(j == 0)
+            {
+                Item += "<td rowspan='8'>" + i + "주차" +"</td>";
+            }
+            Item += "<td>" + weekText[j] +"</td>";
+            var day = new Date(weekAsc[weekAscCount].pk.date.substr(0, 4), weekAsc[weekAscCount].pk.date.substr(5, 2)-1, weekAsc[weekAscCount].pk.date.substr(8, 2)).getDay();
+            var week = ['일', '월', '화', '수', '목', '금', '토'];
+            var dayLabel = week[day];
+            if(weekAsc[weekAscCount].week == i && weekText[j] == dayLabel.toString())
+            {
+                Item += "<td>" + weekAsc[weekAscCount].intake +"</td>";
+                weekAscCount++;
+                if(weekAscCount >= weekAsc.length)
+                    weekAscCount--;
+            }
+            else
+                Item += "<td>" + "" +"</td>";
+
+            Item += "</tr>";
+            $('#history-table-data').append(Item);
+
+
+            if(j == 6)
+            {
+                Item = "<tr>";
+                Item += "<td>" + "일주일 평균 하루 수분 섭취량" + "</td>";
+
+                if(weekAvg[weekAvgCount].week == i)
+                {
+                    Item += "<td>" + weekAvg[weekAvgCount].intake + "</td>";
+                    weekAvgCount++;
+                    if(weekAvgCount >= weekAvg.length)
+                        weekAvgCount--;
+                }
+                else
+                    Item += "<td>" + "" + "</td>";
+                Item += "</tr>";
+                $('#history-table-data').append(Item);
+            }
+
         }
-
-        var weekAscItem = "<tr>";
-        weekAscItem += "<td>" + weekAsc[i].week + "</td>";
-        var day = new Date(weekAsc[i].pk.date.substr(0, 4), weekAsc[i].pk.date.substr(5, 2)-1, weekAsc[i].pk.date.substr(8, 2)).getDay();
-        var dayLabel = week[day];
-        weekAscItem += "<td>" + dayLabel + "</td>";
-        weekAscItem += "<td>" + weekAsc[i].intake + "</td>";
-        weekAscItem += "</tr>";
-        $('#history-table-data').append(weekAscItem);
-
-        if(i == weekAsc.length-1)       //마지막 주차
-        {
-            var weekAvgItem = "<tr>";
-            weekAvgItem += "<td>" + weekAvg[weekcount].week + "주차" +"</td>";
-            weekAvgItem += "<td>" + weekAvg[weekcount].week + "주차 평균" +"</td>";
-            weekAvgItem += "<td>" + weekAvg[weekcount].intake +"</td>";
-            weekAvgItem += "</tr>";
-            $('#history-table-data').append(weekAvgItem);
-        }
-
     }
-
-
-
-    var temp;
 
 </script>
 </body>
