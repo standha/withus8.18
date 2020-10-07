@@ -135,7 +135,7 @@ public class GoalScheduler {
             switch (goalUser.getGoal()) {
                 case 0:
                     noneToken.add(user.getAppToken());
-                    logger.info("id:{}, type:{}, level:{}, week:{} , goal:{} 목표 미설정", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
+                    logger.trace("id:{}, type:{}, level:{}, week:{} , goal:{} No goal set", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
                     if (haveParent(user))
                         noneToken.add(user.getAppToken());
                     break;
@@ -251,9 +251,9 @@ public class GoalScheduler {
             if (success == 1) {
                 user.setLevel(user.getLevel() + 1);
                 userService.upsertUser(user);
-                logger.info("id:{}, type:{}, level:{}, week:{} 목표 달성", user.getUserId(), user.getType(), user.getLevel(), user.getWeek());
+                logger.trace("id:{}, type:{}, level:{}, week:{} Achieve the goal", user.getUserId(), user.getType(), user.getLevel(), user.getWeek());
             } else {
-                logger.info("id:{}, type:{}, level:{}, week:{} 목표 미달성", user.getUserId(), user.getType(), user.getLevel(), user.getWeek());
+                logger.trace("id:{}, type:{}, level:{}, week:{} Not Achieve the goal", user.getUserId(), user.getType(), user.getLevel(), user.getWeek());
             }
         }
         try {

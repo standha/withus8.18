@@ -82,7 +82,7 @@ public class NoticeScheduler {
                 if (localTime.getHour() == alarm.getMedicationTimeMorning().getHour() && localTime.getMinute() == alarm.getMedicationTimeMorning().getMinute()) {
                     User idToken = userService.getUserById(alarm.getId());
                     morningToken.add(idToken.getAppToken());
-                    logger.info("id:{}, push:{}", idToken.getUserId(), "아침 약 복용");
+                    logger.trace("id:{}, push:{}", idToken.getUserId(), "Taking morning pills");
                 }
             }
 
@@ -90,7 +90,7 @@ public class NoticeScheduler {
                 if (localTime.getHour() == alarm.getMedicationTimeLunch().getHour() && localTime.getMinute() == alarm.getMedicationTimeLunch().getMinute()) {
                     User idToken = userService.getUserById(alarm.getId());
                     lunchToken.add(idToken.getAppToken());
-                    logger.info("id:{}, push:{}", idToken.getUserId(), "점심 약 복용");
+                    logger.trace("id:{}, push:{}", idToken.getUserId(), "Taking lunch pills");
                 }
             }
 
@@ -98,7 +98,7 @@ public class NoticeScheduler {
                 if (localTime.getHour() == alarm.getMedicationTimeDinner().getHour() && localTime.getMinute() == alarm.getMedicationTimeDinner().getMinute()) {
                     User idToken = userService.getUserById(alarm.getId());
                     dinnerToken.add(idToken.getAppToken());
-                    logger.info("id:{}, push:{}", idToken.getUserId(), "저녁 약 복용");
+                    logger.trace("id:{}, push:{}", idToken.getUserId(), "Taking dinner pills");
                 }
             }
         }
@@ -123,7 +123,7 @@ public class NoticeScheduler {
             if (tomorrow.equals(visit.getOutPatientVisitDate())) {
                 User user = userService.getUserById(visit.getId());
                 visitToken.add(user.getAppToken());
-                logger.info("id:{}, push:{}", user.getUserId(), "외래 진료 전날");
+                logger.trace("id:{}, push:{}", user.getUserId(), "One day before the outpatient treatment");
                 User guser = user.getCaregiver();
                 if (guser == null) {
                     break;
@@ -153,7 +153,7 @@ public class NoticeScheduler {
             if (date.isEqual(visit.getOutPatientVisitDate()) && time.getHour() == visit.getOutPatientVisitTime().getHour() && time.getMinute() == visit.getOutPatientVisitTime().getMinute()) {
                 User user = userService.getUserById(visit.getId());
                 visitToken.add(user.getAppToken());
-                logger.info("id:{}, push:{}", user.getUserId(), "외래 진료 2시간 전");
+                logger.trace("id:{}, push:{}", user.getUserId(), "2 hours before the outpatient treatment");
                 User guser = user.getCaregiver();
                 if (guser == null) {
                     break;
@@ -179,7 +179,7 @@ public class NoticeScheduler {
         for (User patient : patients) {
             if (patient.getWeek() > 0 && patient.getWeek() < 9) {
                 tokenList.add(patient.getAppToken());
-                logger.info("id:{}, push:{}", patient.getUserId(), "위더스랑 1~8주차");
+                logger.trace("id:{}, push:{}", patient.getUserId(), "1~8 Week WithusRang");
             }
         }
         try {
@@ -199,7 +199,7 @@ public class NoticeScheduler {
         for (User patient : patients) {
             if (patient.getWeek() >= 9 && patient.getWeek() <= 24) {
                 tokenList.add(patient.getAppToken());
-                logger.info("id:{}, push:{}", patient.getUserId(), "위더스랑 9~24주차");
+                logger.trace("id:{}, push:{}", patient.getUserId(), "9~24 Week WithusRang");
             }
         }
         try {
@@ -218,7 +218,7 @@ public class NoticeScheduler {
         List<User> patients = userService.getAllToken();
         for (User patient : patients) {
             if (patient.getType().equals(User.Type.PATIENT)) {
-                logger.info("id:{}, push:{}", patient.getUserId(), "매일 20시 진도체크");
+                logger.trace("id:{}, push:{}", patient.getUserId(), "Daily 20:00 record");
                 try {
                     send("pill", patient.getAppToken(),
                             patient.getName() + "님, 오늘 심장 건강을 위해 실천하신 내용을 [위더스]에 기록하셨나요?\n 기록하지 않았다면 지금 기록해주세요!");

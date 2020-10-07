@@ -236,16 +236,16 @@
 				<div class="btn-wrap chk-wrap type02 grid2" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
 					<div class="chk-box checked" id="alarm" th:if="${medicationAlarmOnoff == true}">
                         <span class="chk-mark" onclick="check_box()">
-                        <input type="checkbox" name="medicationAlarmOnoff" id="on">
+                        <input type="checkbox" name="medicationAlarmOnoff" id="onoff" checked>
                         </span>
-						<label id="label" for="on">켜짐</label>
+						<label id="label" for="onoff">켜짐</label>
 					</div>
 
 					<div class="chk-box" id="alarm" th:if="${medicationAlarmOnoff == false}">
                         <span class="chk-mark" onclick="check_box()">
-                        <input type="checkbox" name="medicationAlarmOnoff" id="off">
+                        <input type="checkbox" name="medicationAlarmOnoff" id="onoff">
                         </span>
-						<label id="label" for="off">꺼짐</label>
+						<label id="label" for="onoff">꺼짐</label>
 					</div>
 					<button type="submit" class="btn xlg type01">저장</button>
 				</div>
