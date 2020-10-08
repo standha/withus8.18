@@ -270,7 +270,7 @@ function renderButtons(chatBalloon)
 		}
 		answerButtonsSpan += `${answerButton.content}</a></button><br>`;
 		if (answerButton.urlToImageFile) {
-			answerButtonsSpan += `<img src="${answerButton.urlToImageFile}" alt="이미지가 표시되지 않고 있습니다."><br>`;
+			answerButtonsSpan += `<img style="width: 100%" src="${answerButton.urlToImageFile}"  onclick="popupImage('${answerButton.urlToImageFile}')" alt="이미지가 표시되지 않고 있습니다."><br>`;
 		}
 	});
 
