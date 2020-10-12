@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
 import withus.entity.*;
@@ -34,7 +33,6 @@ public class BloodPressureController extends BaseController {
     }
 
     @GetMapping("/bloodPressure")
-    @Statistical
     public ModelAndView getBloodPressure() {
         User user = getUser();
         ModelAndView modelAndView = new ModelAndView("bloodPressure/bloodPressure");
@@ -60,7 +58,6 @@ public class BloodPressureController extends BaseController {
     }
 
     @GetMapping("/bloodPressure-all-history")
-    @Statistical
     public ModelAndView getBloodPressureRecord() {
         ModelAndView modelAndView = new ModelAndView("bloodPressure/bloodPressure-all-history");
         List<Tbl_blood_pressure_pulse> bloodPressureHistory;
@@ -87,7 +84,6 @@ public class BloodPressureController extends BaseController {
     }
 
     @PostMapping("/bloodPressure")
-    @Statistical
     @ResponseBody
     public Result<Tbl_blood_pressure_pulse> PostPatientVisit(@RequestBody Tbl_blood_pressure_pulse tbl_blood_pressure_pulse) {
         String userId = getUsername();

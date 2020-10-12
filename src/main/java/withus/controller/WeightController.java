@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
 import withus.entity.*;
@@ -30,7 +29,6 @@ public class WeightController extends BaseController {
     }
 
     @GetMapping("/weight")
-    @Statistical
     public ModelAndView getWeight() {
 
         User user = getUser();
@@ -54,7 +52,6 @@ public class WeightController extends BaseController {
     }
 
     @GetMapping("/weight-history")
-    @Statistical
     public ModelAndView getWeightHistory() {
         ModelAndView modelAndView = new ModelAndView("weight/weight-history");
         modelAndView.addObject("previousUrl", "/weight");

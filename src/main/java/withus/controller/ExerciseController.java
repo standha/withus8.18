@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
 import withus.entity.*;
@@ -32,7 +31,6 @@ public class ExerciseController extends BaseController {
     }
 
     @GetMapping("/exercise")
-    @Statistical
     public ModelAndView getExercise() {
         ModelAndView modelAndView = new ModelAndView("exercise/exercise");
         User user = getUser();
@@ -71,7 +69,6 @@ public class ExerciseController extends BaseController {
     }
 
     @GetMapping("/exercise-all-history")
-    @Statistical
     public ModelAndView getExerciseAll() {
         ModelAndView modelAndView = new ModelAndView("exercise/exercise-all-history");
         User user = getUser();

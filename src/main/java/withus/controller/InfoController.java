@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
-import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.entity.ProgressKey;
 import withus.entity.Tbl_button_count;
@@ -29,7 +28,6 @@ public class InfoController extends BaseController {
     }
 
     @GetMapping("/info")
-    @Statistical
     public ModelAndView getInfo(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("info");
         User user = getUser();

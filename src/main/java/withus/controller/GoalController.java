@@ -5,7 +5,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
 import withus.entity.ProgressKey;
@@ -30,7 +29,6 @@ public class GoalController extends BaseController {
     }
 
     @GetMapping("/goal")
-    @Statistical
     public ModelAndView getGoal() {
         ModelAndView modelAndView = new ModelAndView("goal/goal");
         User.Type typeCheck = getUser().getType();

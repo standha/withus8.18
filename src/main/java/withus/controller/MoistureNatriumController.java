@@ -5,7 +5,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
 import withus.entity.*;
@@ -31,7 +30,6 @@ public class MoistureNatriumController extends BaseController {
     }
 
     @GetMapping("/moistureNatrium")
-    @Statistical
     public ModelAndView getMoistureNatrium() {
         ModelAndView modelAndView = new ModelAndView("moistureNatrium/moistureNatrium");
         modelAndView.addObject("previousUrl", "/center");
@@ -46,7 +44,6 @@ public class MoistureNatriumController extends BaseController {
     }
 
     @GetMapping("/moisture")
-    @Statistical
     public ModelAndView getMoisture() {
         ModelAndView modelAndView = new ModelAndView("moistureNatrium/moisture");
         if (moistureNatriumService.getMoisture(new RecordKey(getConnectId(), LocalDate.now())) == null) {
@@ -70,7 +67,6 @@ public class MoistureNatriumController extends BaseController {
     }
 
     @GetMapping("/moisture-all-history")
-    @Statistical
     public ModelAndView getMoistureAll() {
         ModelAndView modelAndView = new ModelAndView("moistureNatrium/moisture-all-history");
         User user = getUser();
@@ -90,7 +86,6 @@ public class MoistureNatriumController extends BaseController {
     }
 
     @GetMapping("/natrium")
-    @Statistical
     public ModelAndView getNatrium() {
         ModelAndView modelAndView = new ModelAndView("moistureNatrium/natrium");
         if (moistureNatriumService.getNatriumTodayRecord(new RecordKey(getConnectId(), LocalDate.now())) == null) {
@@ -115,7 +110,6 @@ public class MoistureNatriumController extends BaseController {
     }
 
     @GetMapping("/natrium-all-history")
-    @Statistical
     public ModelAndView getSymptomAll() {
         ModelAndView modelAndView = new ModelAndView("moistureNatrium/natrium-history");
         User user = getUser();

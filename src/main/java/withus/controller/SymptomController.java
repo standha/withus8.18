@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
 import withus.entity.*;
@@ -34,7 +33,6 @@ public class SymptomController extends BaseController {
     }
 
     @GetMapping("/symptom")
-    @Statistical
     public ModelAndView getSymptom(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("Symptom/symptom");
         User user = getUser();
@@ -65,7 +63,6 @@ public class SymptomController extends BaseController {
     }
 
     @GetMapping("/symptom-all-history")
-    @Statistical
     public ModelAndView getSymptomAll() {
         ModelAndView modelAndView = new ModelAndView("Symptom/symptom-history");
         User user = getUser();

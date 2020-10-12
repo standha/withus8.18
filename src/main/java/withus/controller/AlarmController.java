@@ -6,7 +6,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
 import withus.entity.*;
@@ -33,7 +32,6 @@ public class AlarmController extends BaseController {
     }
 
     @GetMapping("/alarm")
-    @Statistical
     public ModelAndView getAlarm() {
         ModelAndView modelAndView = new ModelAndView("alarm/alarm");
         modelAndView.addObject("previousUrl", "/center");
@@ -47,7 +45,6 @@ public class AlarmController extends BaseController {
     }
 
     @GetMapping("/medicationAlarm")
-    @Statistical
     public ModelAndView getMedicationAlarm(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("alarm/medicationAlarm");
         User user = getUser();
@@ -163,7 +160,6 @@ public class AlarmController extends BaseController {
     }
 
     @GetMapping("/appointments")
-    @Statistical
     public ModelAndView getAppointments(HttpServletRequest request, @RequestParam(required = false) Integer year, @RequestParam(required = false) Integer month) {
         int hour = 0;
         int minute = 0;
