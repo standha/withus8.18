@@ -54,11 +54,6 @@ public class CenterController extends BaseController {
         User user = getUser();
         logger.info("id:{}, url:{}, type:{}, level:{}, week:{}", user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek());
 
-        if (user.getType() == User. && user.getCaregiver() == null)
-        {
-
-        }
-        
         if (user.getAppToken() != null) {
             if (token != null) {
                 if (user.getAppToken().equals(token) == false) {

@@ -149,7 +149,7 @@ public class GoalScheduler {
                     else {
                         User guser = user.getCaregiver();
                         noneToken.add(guser.getAppToken());
-                        logger.trace("id:{}, type:{}, patientId:{} No goal set", guser.getUserId(), guser.getType(), user.getUserId());
+                        logger.info("id:{}, type:{}, patientId:{} No goal set", guser.getUserId(), guser.getType(), user.getUserId());
                     }
                     break;
                 case 1:
@@ -161,7 +161,7 @@ public class GoalScheduler {
                         else {
                             User guser = user.getCaregiver();
                             winToken.add(guser.getAppToken());
-                            logger.trace("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                            logger.info("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
                         }
                     } else {
                         loseToken.add(user.getAppToken());
@@ -170,7 +170,7 @@ public class GoalScheduler {
                         else {
                             User guser = user.getCaregiver();
                             loseToken.add(guser.getAppToken());
-                            logger.trace("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                            logger.info("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
                         }
                     }
                     break;
@@ -183,7 +183,7 @@ public class GoalScheduler {
                         else {
                             User guser = user.getCaregiver();
                             winToken.add(guser.getAppToken());
-                            logger.trace("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                            logger.info("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
                         }
                     } else {
                         loseToken.add(user.getAppToken());
@@ -192,7 +192,7 @@ public class GoalScheduler {
                         else {
                             User guser = user.getCaregiver();
                             loseToken.add(guser.getAppToken());
-                            logger.trace("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                            logger.info("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
                         }
                     }
                     break;
@@ -205,7 +205,7 @@ public class GoalScheduler {
                         else {
                             User guser = user.getCaregiver();
                             winToken.add(guser.getAppToken());
-                            logger.trace("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                            logger.info("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
                         }
                     } else {
                         loseToken.add(user.getAppToken());
@@ -214,7 +214,7 @@ public class GoalScheduler {
                         else {
                             User guser = user.getCaregiver();
                             loseToken.add(guser.getAppToken());
-                            logger.trace("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                            logger.info("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
                         }
                     }
                     break;
@@ -227,7 +227,7 @@ public class GoalScheduler {
                         else {
                             User guser = user.getCaregiver();
                             winToken.add(guser.getAppToken());
-                            logger.trace("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                            logger.info("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
                         }
                     } else {
                         loseToken.add(user.getAppToken());
@@ -236,7 +236,7 @@ public class GoalScheduler {
                         else {
                             User guser = user.getCaregiver();
                             loseToken.add(guser.getAppToken());
-                            logger.trace("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                            logger.info("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
                         }
                     }
                     break;
@@ -249,7 +249,7 @@ public class GoalScheduler {
                         else {
                             User guser = user.getCaregiver();
                             winToken.add(guser.getAppToken());
-                            logger.trace("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                            logger.info("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
                         }
                     } else {
                         loseToken.add(user.getAppToken());
@@ -258,7 +258,7 @@ public class GoalScheduler {
                         else {
                             User guser = user.getCaregiver();
                             loseToken.add(guser.getAppToken());
-                            logger.trace("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                            logger.info("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
                         }
                     }
                     break;
@@ -271,7 +271,7 @@ public class GoalScheduler {
                         else {
                             User guser = user.getCaregiver();
                             winToken.add(guser.getAppToken());
-                            logger.trace("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                            logger.info("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
                         }
                     } else {
                         loseToken.add(user.getAppToken());
@@ -280,7 +280,7 @@ public class GoalScheduler {
                         else {
                             User guser = user.getCaregiver();
                             loseToken.add(guser.getAppToken());
-                            logger.trace("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                            logger.info("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
                         }
                     }
                     break;
@@ -293,7 +293,7 @@ public class GoalScheduler {
                         else {
                             User guser = user.getCaregiver();
                             winToken.add(guser.getAppToken());
-                            logger.trace("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                            logger.info("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
                         }
                     } else {
                         loseToken.add(user.getAppToken());
@@ -302,7 +302,7 @@ public class GoalScheduler {
                         else {
                             User guser = user.getCaregiver();
                             loseToken.add(guser.getAppToken());
-                            logger.trace("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                            logger.info("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
                         }
                     }
                     break;
@@ -315,7 +315,7 @@ public class GoalScheduler {
                         else {
                             User guser = user.getCaregiver();
                             winToken.add(guser.getAppToken());
-                            logger.trace("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                            logger.info("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
                         }
                     } else {
                         loseToken.add(user.getAppToken());
@@ -324,7 +324,7 @@ public class GoalScheduler {
                         else {
                             User guser = user.getCaregiver();
                             loseToken.add(guser.getAppToken());
-                            logger.trace("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                            logger.info("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
                         }
                     }
                     break;
@@ -337,7 +337,7 @@ public class GoalScheduler {
                         else {
                             User guser = user.getCaregiver();
                             winToken.add(guser.getAppToken());
-                            logger.trace("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                            logger.info("id:{}, type:{}, patientId:{} Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
                         }
                     } else {
                         loseToken.add(user.getAppToken());
@@ -346,7 +346,7 @@ public class GoalScheduler {
                         else {
                             User guser = user.getCaregiver();
                             loseToken.add(guser.getAppToken());
-                            logger.trace("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
+                            logger.info("id:{}, type:{}, patientId:{} Not Achieve the goal", guser.getUserId(), guser.getType(), user.getUserId());
                         }
                     }
                     break;
@@ -354,11 +354,11 @@ public class GoalScheduler {
             if (success == 1) {
                 user.setLevel(user.getLevel() + 1);
                 userService.upsertUser(user);
-                logger.trace("id:{}, type:{}, level:{}, week:{} goal:{} Achieve the goal", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
+                logger.info("id:{}, type:{}, level:{}, week:{} goal:{} Achieve the goal", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
             } else if (success == 2) {
-                logger.trace("id:{}, type:{}, level:{}, week:{} , goal:{} No goal set", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
+                logger.info("id:{}, type:{}, level:{}, week:{} , goal:{} No goal set", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
             } else {
-                logger.trace("id:{}, type:{}, level:{}, week:{} goal:{} Not Achieve the goal", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
+                logger.info("id:{}, type:{}, level:{}, week:{} goal:{} Not Achieve the goal", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
             }
         }
 

@@ -81,7 +81,7 @@ public class NoticeScheduler {
                 if (localTime.getHour() == alarm.getMedicationTimeMorning().getHour() && localTime.getMinute() == alarm.getMedicationTimeMorning().getMinute()) {
                     User idToken = userService.getUserById(alarm.getId());
                     morningToken.add(idToken.getAppToken());
-                    logger.trace("id:{}, push:{}", idToken.getUserId(), "Taking morning pills");
+                    logger.info("id:{}, push:{}", idToken.getUserId(), "Taking morning pills");
                 }
             }
 
@@ -89,7 +89,7 @@ public class NoticeScheduler {
                 if (localTime.getHour() == alarm.getMedicationTimeLunch().getHour() && localTime.getMinute() == alarm.getMedicationTimeLunch().getMinute()) {
                     User idToken = userService.getUserById(alarm.getId());
                     lunchToken.add(idToken.getAppToken());
-                    logger.trace("id:{}, push:{}", idToken.getUserId(), "Taking lunch pills");
+                    logger.info("id:{}, push:{}", idToken.getUserId(), "Taking lunch pills");
                 }
             }
 
@@ -97,7 +97,7 @@ public class NoticeScheduler {
                 if (localTime.getHour() == alarm.getMedicationTimeDinner().getHour() && localTime.getMinute() == alarm.getMedicationTimeDinner().getMinute()) {
                     User idToken = userService.getUserById(alarm.getId());
                     dinnerToken.add(idToken.getAppToken());
-                    logger.trace("id:{}, push:{}", idToken.getUserId(), "Taking dinner pills");
+                    logger.info("id:{}, push:{}", idToken.getUserId(), "Taking dinner pills");
                 }
             }
         }
@@ -163,7 +163,7 @@ public class NoticeScheduler {
                     break;
                 } else {
                     visitToken.add(guser.getAppToken());
-                    logger.trace("id:{}, type:{}, patientId:{}, push:{}", guser.getUserId(), guser.getType(), user.getUserId(), "2 hours before the outpatient treatment");
+                    logger.info("id:{}, type:{}, patientId:{}, push:{}", guser.getUserId(), guser.getType(), user.getUserId(), "2 hours before the outpatient treatment");
                 }
             }
         }
@@ -182,7 +182,7 @@ public class NoticeScheduler {
         for (User patient : patients) {
             if (patient.getWeek() > 0 && patient.getWeek() < 9) {
                 tokenList.add(patient.getAppToken());
-                logger.trace("id:{}, push:{}", patient.getUserId(), "1~8 Week WithusRang");
+                logger.info("id:{}, push:{}", patient.getUserId(), "1~8 Week WithusRang");
             }
         }
         try {
@@ -200,7 +200,7 @@ public class NoticeScheduler {
         for (User patient : patients) {
             if (patient.getWeek() >= 9 && patient.getWeek() <= 24) {
                 tokenList.add(patient.getAppToken());
-                logger.trace("id:{}, push:{}", patient.getUserId(), "9~24 Week WithusRang");
+                logger.info("id:{}, push:{}", patient.getUserId(), "9~24 Week WithusRang");
             }
         }
         try {
@@ -217,7 +217,7 @@ public class NoticeScheduler {
         List<User> patients = userService.getAllToken();
         for (User patient : patients) {
             if (patient.getType().equals(User.Type.PATIENT)) {
-                logger.trace("id:{}, name:{}, push:{}", patient.getUserId(), patient.getName(), "Daily 20:00 record");
+                logger.info("id:{}, name:{}, push:{}", patient.getUserId(), patient.getName(), "Daily 20:00 record");
                 try {
                     send("center", patient.getAppToken(),
                             patient.getName() + "님, 오늘 심장 건강을 위해 실천하신 내용을 [위더스]에 기록하셨나요?\n 기록하지 않았다면 지금 기록해주세요!");
