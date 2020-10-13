@@ -106,7 +106,7 @@ public class CenterController extends BaseController {
             logger.debug("user:{}", userFin);
 
             modelAndView.addObject("user", resultList);
-            modelAndView.setViewName("/Admin/admin_Home");
+            modelAndView.setViewName("Admin/admin_home");
         } else if (user.getType().equals(Type.PATIENT)) { //환자 로그인 중
             if (user.getWeek() == 0) {
                 modelAndView.setViewName("home_0week");

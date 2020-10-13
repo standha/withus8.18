@@ -48,7 +48,8 @@ public class AdminHomeController extends AdminBaseController {
 
     @GetMapping({"/adminHome"})
     public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView modelAndView = new ModelAndView("/Admin/admin_home");
+        ModelAndView modelAndView = new ModelAndView("Admin/admin_home");
+
         return modelAndView;
     }
 

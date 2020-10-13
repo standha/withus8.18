@@ -40,7 +40,7 @@ public class userInfoController extends BaseController {
 
     @GetMapping("/changeInfo")
     public ModelAndView getUserInfo(HttpServletRequest request) {
-        ModelAndView modelAndView = new ModelAndView("/changeInfo");
+        ModelAndView modelAndView = new ModelAndView("changeInfo");
         User user = getUser();
         if (user.getType() == User.Type.PATIENT && user.getCaregiver() != null) {
             Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));

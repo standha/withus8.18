@@ -149,15 +149,13 @@ public class NoticeScheduler {
         LocalTime time = now.toLocalTime().plusHours(2);
         List<Tbl_outpatient_visit_alarm> visits = alarmService.getVisitAlarmOn();
 
-        logger.info("visitNotice2 time:{}", time);
-        logger.info("visitNotice2 visits:{}", visits);
+        logger.info("2 hours before outpatient time check time:{}, alarm_on_count:{}", time, visits.stream().count());
 
         for (Tbl_outpatient_visit_alarm visit : visits) {
             if (date.isEqual(visit.getOutPatientVisitDate()) && time.getHour() == visit.getOutPatientVisitTime().getHour() && time.getMinute() == visit.getOutPatientVisitTime().getMinute()) {
-
                 User user = userService.getUserById(visit.getId());
                 visitToken.add(user.getAppToken());
-                logger.info("id:{}, type:{}, push:{}, token:{}", user.getUserId(), user.getType(), "2 hours before the outpatient treatment", user.getAppToken());
+                logger.info("id:{}, type:{}, push:{}, token:{}", user.getUserId(), user.getType(), "2 hours before the outpatient noti", user.getAppToken());
                 User guser = user.getCaregiver();
                 if (guser == null) {
                     break;

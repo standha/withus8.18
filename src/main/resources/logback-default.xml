@@ -1,4 +1,4 @@
  <included>
-	 <property name="LOG_HOME" value="/withus/logs"/>
-<!--	 <property name="LOG_HOME" value="/home/withus/withus_web/logs"/>-->
+<!--	 <property name="LOG_HOME" value="/withus/logs"/>-->
+	 <property name="LOG_HOME" value="/home/withus/withus_web/logs"/>
 </included>
