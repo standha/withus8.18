@@ -109,11 +109,18 @@ public class AlarmService {
                 return "0" + transHour;
             }
         } else {
-            String transHour = Integer.toString(hour);
-            if (hour >= 10) {
+            if(hour == 0 ){
+                hour = hour + 12;
+                String transHour = Integer.toString(hour);
                 return transHour;
-            } else {
-                return "0" + transHour;
+            }
+            else {
+                String transHour = Integer.toString(hour);
+                if (hour >= 10) {
+                    return transHour;
+                } else {
+                    return "0" + transHour;
+                }
             }
         }
     }

@@ -189,7 +189,7 @@ public class MoistureNatriumController extends BaseController {
         modelAndView.addObject("normal", norCount);
         modelAndView.addObject("high", highCount);
         modelAndView.addObject("natrium", allnatriums);
-        modelAndView.addObject("previousUrl", "/natrium") ;
+        modelAndView.addObject("previousUrl", "/natrium");
 
         return modelAndView;
     }
@@ -241,12 +241,18 @@ public class MoistureNatriumController extends BaseController {
 
     public Integer avgWeek() {
         Integer avg = 0;
+        int count = 0 ;
         LocalDate now = LocalDate.now();
-
         for (int i = 1; i < 8; i++) {
-            avg = avg + moistureNatriumService.getMoistureDayRecord(new RecordKey(getConnectId(), now.with(DayOfWeek.of(i))));
+            int intake = moistureNatriumService.getMoistureDayRecord(new RecordKey(getConnectId(), now.with(DayOfWeek.of(i))));
+            if(intake != 0){
+                avg = avg + intake;
+                count++;
+            }
         }
-
-        return avg * 200 / 7;
+        if(count == 0)
+            return 0;
+        else
+            return avg * 200 / count;
     }
 }

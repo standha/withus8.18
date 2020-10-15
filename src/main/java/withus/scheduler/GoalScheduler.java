@@ -12,9 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ResponseBody;
-import withus.entity.RecordKey;
-import withus.entity.Tbl_goal;
-import withus.entity.User;
+import withus.entity.*;
 import withus.service.*;
 
 import java.time.DayOfWeek;
@@ -103,7 +101,10 @@ public class GoalScheduler {
         LocalDate today = LocalDate.now();
         for (int i = 1; i <= 7; i++) {
             if (exerciseService.getExercise(new RecordKey(id, today.with(DayOfWeek.of(i)))) != null) {
-                count++;
+                Tbl_Exercise_record exercise = exerciseService.getExercise(new RecordKey(id, today.with(DayOfWeek.of(i))));
+                int record = ( exercise.getHour() * 60 ) + exercise.getMinute();
+                if( record >= 30 )
+                    count++;
             }
         }
         return count;
@@ -114,7 +115,10 @@ public class GoalScheduler {
         LocalDate today = LocalDate.now();
         for (int i = 1; i <= 7; i++) {
             if (alarmService.getMedicationRecord(new RecordKey(id, today.with(DayOfWeek.of(i)))) != null) {
-                count++;
+                Tbl_medication_record record = alarmService.getMedicationRecord(new RecordKey(id, today.with(DayOfWeek.of(i))));
+                if(record.isFinished() == true){
+                    count++;
+                }
             }
         }
         return count;
@@ -371,10 +375,11 @@ public class GoalScheduler {
                     break;
             }
             if (success == 1) {
-                user.setLevel(user.getLevel() + 1);
-                userService.upsertUser(user);
-
-                logger.info("id:{}, type:{}, level:{}, week:{} goal:{} Achieve the goal", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
+                if(user.getLevel() < 24) {
+                    user.setLevel(user.getLevel() + 1);
+                    userService.upsertUser(user);
+                    logger.info("id:{}, type:{}, level:{}, week:{} goal:{} Achieve the goal", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
+                }
             } else if (success == 2) {
                 logger.info("id:{}, type:{}, level:{}, week:{} , goal:{} No goal set", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
             } else {
@@ -383,9 +388,9 @@ public class GoalScheduler {
         }
 
         try {
-            levelNotice("center", winToken, "이 주의 목표를 달성하셨네요!\n 꽃이 어디까지 피었는지 확인해주세요~");
-            levelNotice("center", noneToken, "이 주의 목표 설정이 되어있지 않아요.\n 목표를 설정하여 꽃을 피워보세요.");
-            levelNotice("center", loseToken, "아쉽게도 이 주의 목표를 달성하지 못하셨네요.\n 꽃이 어디까지 피었는지 확인해주세요.");
+            levelNotice("center", winToken, "이 주의 목표를 달성하셨네요!\n꽃이 어디까지 피었는지 확인해주세요~");
+            levelNotice("center", noneToken, "이 주의 목표 설정이 되어있지 않아요.\n목표를 설정하여 꽃을 피워보세요.");
+            levelNotice("center", loseToken, "아쉽게도 이 주의 목표를 달성하지 못하셨네요.\n꽃이 어디까지 피었는지 확인해주세요.");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -13,6 +13,7 @@
 	<script th:src="@{/js/common.js}"></script>
 	<script th:src="@{/js/alarm/pill.js}"></script>
 	<script th:src="@{/js/help.js}"></script>
+	<script th:src="@{/js/input_limit.js}"></script>
 </head>
 <body>
 <input type="hidden" id="pill-history-get-action" th:attr="value=@{/pill-history}">
@@ -109,9 +110,9 @@
 						<div class="field-wrap type04">
 							<div class="field" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
 								<div class="insert">
-									<input type="number" class="num2" id="input1" name="morningHour" placeholder="- -" th:value="${morningHour}" min="1" max="12" maxlength="2">
+									<input type="number" class="num2" id="input1" name="morningHour" placeholder="- -" th:value="${morningHour}" min="1" max="12" maxlength="2" oninput="maxLengthCheck(this)">
 									<span>시</span>
-									<input type="number" class="num2" id="input2" name="morningMinute" placeholder="- -" th:value="${morningMinute}" max="59" maxlength="2" min="0" >
+									<input type="number" class="num2" id="input2" name="morningMinute" placeholder="- -" th:value="${morningMinute}" max="59" maxlength="2" min="0" oninput="maxLengthCheck(this)">
 									<span>분</span>
 								</div>
 							</div>
@@ -162,9 +163,9 @@
 						<div class="field-wrap type04">
 							<div class="field" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
 								<div class="insert">
-									<input type="number" class="num2" id="input3" name="lunchHour" placeholder="- -" th:value="${lunchHour}" min="1" max="12" maxlength="2" >
+									<input type="number" class="num2" id="input3" name="lunchHour" placeholder="- -" th:value="${lunchHour}" min="1" max="12" maxlength="2" oninput="maxLengthCheck(this)">
 									<span>시</span>
-									<input type="number" class="num2" id="input4" name="lunchMinute" placeholder="- -" th:value="${lunchMinute}" max="59" maxlength="2" min="0" >
+									<input type="number" class="num2" id="input4" name="lunchMinute" placeholder="- -" th:value="${lunchMinute}" max="59" maxlength="2" min="0" oninput="maxLengthCheck(this)">
 									<span>분</span>
 								</div>
 							</div>
@@ -215,9 +216,9 @@
 						<div class="field-wrap type04">
 							<div class="field" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
 								<div class="insert">
-									<input type="number" class="num2" id="input5" name="dinnerHour" placeholder="- -" th:value="${dinnerHour}" min="1" max="12" maxlength="2">
+									<input type="number" class="num2" id="input5" name="dinnerHour" placeholder="- -" th:value="${dinnerHour}" min="1" max="12" maxlength="2" oninput="maxLengthCheck(this)">
 									<span>시</span>
-									<input type="number" class="num2" id="input6" name="dinnerMinute" placeholder="- -" th:value="${dinnerMinute}" max="59" maxlength="2" min="0" >
+									<input type="number" class="num2" id="input6" name="dinnerMinute" placeholder="- -" th:value="${dinnerMinute}" max="59" maxlength="2" min="0" oninput="maxLengthCheck(this)">
 									<span>분</span>
 								</div>
 							</div>

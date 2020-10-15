@@ -14,6 +14,7 @@
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/bloodPressure/bloodPressure.js}"></script>
     <script th:src="@{/js/help.js}"></script>
+    <script th:src="@{/js/input_limit.js}"></script>
 </head>
 <body>
 <input type="hidden" id="button-count" th:attr="value=@{/button-count}">
@@ -77,9 +78,9 @@
                             <label for="input1">혈압:수축기/이완기</label>
                             <input type="hidden" id="bloodPressure-history-get-action" th:attr="value=@{/bloodPressure-all-history}">
                             <div class="insert" id="date"  th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
-                                <input type="number" class="num3" id="input1" th:value="${contraction}" min="0" placeholder="--" name="contraction">
+                                <input type="number" class="num3" id="input1" th:value="${contraction}" min="0" placeholder="--" name="contraction" maxlength="3" oninput="maxLengthCheck(this)">
                                 <span class="bar">/</span>
-                                <input type="number" class="num2" id="input2" th:value="${relaxation}" min="0" placeholder="--" name="relaxation">
+                                <input type="number" class="num2" id="input2" th:value="${relaxation}" min="0" placeholder="--" name="relaxation" maxlength="3" oninput="maxLengthCheck(this)">
                                 <span>mmHg</span>
                             </div>
                             <div class="insert" id="date"  th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
@@ -92,7 +93,7 @@
                         <div class="field">
                             <label for="input2">맥박수</label>
                             <div class="insert" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
-                                <input type="number" id="input2" class="num2" th:value="${pressure}" min="0" placeholder="--" name="pressure">
+                                <input type="number" id="input2" class="num2" th:value="${pressure}" min="0" placeholder="--" name="pressure" maxlength="3" oninput="maxLengthCheck(this)">
                                 <span>(회/분)</span>
                             </div>
                             <div class="insert" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
