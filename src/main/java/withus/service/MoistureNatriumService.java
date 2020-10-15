@@ -1,6 +1,5 @@
 package withus.service;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,6 @@ import withus.entity.Tbl_mositrue_record;
 import withus.entity.Tbl_natrium_record;
 import withus.repository.MoistureRecordRepository;
 import withus.repository.NatriumRecordRepository;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
@@ -30,6 +28,7 @@ public class MoistureNatriumService {
     @NonNull
     public Tbl_mositrue_record upsertMoistureRecord(Tbl_mositrue_record tbl_mositrue_record) {
         Tbl_mositrue_record saved = moistureRecordRepository.save(tbl_mositrue_record);
+
         return saved;
     }
 
@@ -74,5 +73,4 @@ public class MoistureNatriumService {
     public List<Tbl_natrium_record> getNatriumAllRecord(String id) {
         return natriumRecordRepository.findByPk_Id(id);
     }
-
 }

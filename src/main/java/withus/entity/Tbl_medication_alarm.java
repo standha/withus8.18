@@ -26,14 +26,11 @@ public class Tbl_medication_alarm {
     @Column(name = "medication_Alarm_Onoff")
     private boolean medicationAlarmOnoff;
 
-
     @Column(name = "medication_Time_Morning")
     private LocalTime medicationTimeMorning;
 
-
     @Column(name = "medication_Time_Lunch")
     private LocalTime medicationTimeLunch;
-
 
     @Column(name = "medication_Time_Dinner")
     private LocalTime medicationTimeDinner;

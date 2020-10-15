@@ -3,10 +3,10 @@ server:
   shutdown: graceful
 
 spring:
-  application.name: withus
-
   profiles:
-    active: tb
+    active: cb
+
+  application.name: withus
 
   datasource:
     url: jdbc:mysql://127.0.0.1/withus?serverTimezone=Asia/Seoul

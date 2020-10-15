@@ -51,6 +51,7 @@ public class CenterController extends BaseController {
     @GetMapping({"/center"})
     public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response, @RequestParam(required = false) String token) {
         User user = getUser();
+
         logger.info("id:{}, url:{}, type:{}, level:{}, week:{}", user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek());
 
         if (user.getAppToken() != null) {
@@ -64,6 +65,7 @@ public class CenterController extends BaseController {
                         code = Result.Code.OK;
                     } catch (Exception exception) {
                         logger.error(exception.getLocalizedMessage(), exception);
+
                         code = Result.Code.ERROR_DATABASE;
                     }
 
@@ -143,7 +145,6 @@ public class CenterController extends BaseController {
         return modelAndView;
     }
 
-
     public Integer ViewLevel(User user) {
         Integer level = 1;
 
@@ -157,9 +158,9 @@ public class CenterController extends BaseController {
                 level = level % 4;
                 break;
         }
+
         return level;
     }
-
 
     public String getGoalNow(String username) {
         Integer goalCheck = goalService.getGoalId(username).getGoal();

@@ -47,8 +47,10 @@ public class HelpRequestController extends BaseController {
             code = Result.Code.OK;
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
+
             code = Result.Code.ERROR_DATABASE;
         }
+
         return Result.<Tbl_helper_request>builder()
                 .code(code)
                 .data(saved)

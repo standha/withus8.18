@@ -27,19 +27,32 @@ public class AchievementController extends BaseController {
     public ModelAndView getGoal() {
         ModelAndView modelAndView = new ModelAndView("achievement/achievement");
         User user = getUser();
+
         modelAndView.addObject("user", user);
+
         switch (getUser().getType()) {
             case PATIENT:
                 Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
                 modelAndView.addObject("count", count);
                 modelAndView.addObject("level", user.getLevel());
                 modelAndView.addObject("previousUrl", "/center");
-                logger.info("id:'{}', level:'{}'", user.getUserId(), user.getLevel());
+
+                logger.info("id:{}, level:{}, type:{}", user.getUserId(), user.getLevel(), getUser().getType());
+
                 break;
+
             case CAREGIVER:
                 modelAndView.addObject("level", getCaretaker().getLevel());
                 modelAndView.addObject("previousUrl", "/center");
+
+                logger.info("id:{}, type:{}", user.getUserId(), getUser().getType());
+
+                break;
+
+            default:
+                break;
         }
+
         return modelAndView;
     }
 }

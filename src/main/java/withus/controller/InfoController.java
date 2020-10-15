@@ -31,13 +31,17 @@ public class InfoController extends BaseController {
     public ModelAndView getInfo(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("info");
         User user = getUser();
+
         logger.info("id:{}, url:{}, type:{}, level:{}, week:{}", user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek());
+
         modelAndView.addObject("user", user);
         if (user.getType() == User.Type.PATIENT) {
             Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
+
         modelAndView.addObject("previousUrl", "/center");
+
         return modelAndView;
     }
 }

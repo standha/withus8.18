@@ -49,6 +49,7 @@ public class ButtonCountController extends BaseController {
             logger.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
         }
+
         return Result.<Tbl_button_count>builder()
                 .code(code)
                 .data(saved)

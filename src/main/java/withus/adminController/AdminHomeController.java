@@ -62,6 +62,7 @@ public class AdminHomeController extends AdminBaseController {
         List<HelpRequestDTO> helpRequestAsc = adminService.getHelpRequestAsc();
 
         mav.setViewName("/Admin/admin_center");
+
         return mav;
     }
 
@@ -75,6 +76,7 @@ public class AdminHomeController extends AdminBaseController {
         mav.addObject("weekAvg", moistureAvg);
         mav.addObject("patient", headerInfo);
         mav.setViewName("/Admin/admin_moistureRecord");
+
         return mav;
     }
 
@@ -88,6 +90,7 @@ public class AdminHomeController extends AdminBaseController {
         mav.addObject("patient", headerInfo);
         mav.addObject("pillAsc", pillAsc);
         mav.setViewName("/Admin/admin_pillRecord");
+
         return mav;
     }
 
@@ -97,6 +100,7 @@ public class AdminHomeController extends AdminBaseController {
         List<HelpRequestDTO> helpRequestAsc = adminService.getHelpRequestAsc();
         mav.addObject("helpRequestAsc", helpRequestAsc);
         mav.setViewName("/Admin/admin_withusHelpRequest");
+
         return mav;
     }
 
@@ -106,6 +110,7 @@ public class AdminHomeController extends AdminBaseController {
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
+
         return "redirect:/Login/admin_login?logout";
     }
 }

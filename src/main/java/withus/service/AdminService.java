@@ -39,7 +39,6 @@ public class AdminService {
     @Autowired
     private UserRepositorySupport userRepositorySupport;
 
-
     @Nullable
     public ArrayList<String> getAllUserPlz() {
         return userRepository.findByAll();

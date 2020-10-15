@@ -8,11 +8,9 @@ public class MoistureAvgDTO {
         return week;
     }
 
-
     public Double getIntake() {
         return intake;
     }
-
 
     public MoistureAvgDTO(Integer week, Double intake) {
         this.week = week;

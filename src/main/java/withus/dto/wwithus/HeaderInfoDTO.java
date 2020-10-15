@@ -7,7 +7,6 @@ import java.time.LocalDate;
 
 import lombok.Setter;
 
-
 public class HeaderInfoDTO {
     private String userId;
 
@@ -38,7 +37,6 @@ public class HeaderInfoDTO {
     public String getName() {
         return name;
     }
-
 
     public HeaderInfoDTO(String name, String userId, LocalDate birthdate, Integer goal, Integer level) {
         this.name = name;

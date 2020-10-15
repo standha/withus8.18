@@ -73,7 +73,6 @@ public class User implements Serializable, UserDetails {
     @Getter
     private Type type;
 
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "caregiver_contact", columnDefinition = "VARCHAR(32)", referencedColumnName = "contact")
     @Nullable
@@ -132,10 +131,10 @@ public class User implements Serializable, UserDetails {
                     return gender;
                 }
             }
+
             return null;
         }
     }
-
 
     public enum Type {
         PATIENT, CAREGIVER, ADMINISTRATOR

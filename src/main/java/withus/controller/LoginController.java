@@ -40,14 +40,13 @@ public class LoginController {
         modelAndView.addObject("appToken", token);
         modelAndView.addObject("user", user);
         modelAndView.addObject("previousUrl", "LogIn/login");
+
         return modelAndView;
     }
-
 
     @PostMapping(value = "/saveUser", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<User> putMember(@RequestBody User user) {
-
         User savedUser = null;
         Result.Code code = Result.Code.ERROR;
 
@@ -106,13 +105,14 @@ public class LoginController {
     }
 
     public boolean isMissingMandatories(User user) {
-
         if (Utility.nullOrEmptyOrSpace(user.getUserId()) ||
                 Utility.nullOrEmptyOrSpace(user.getPassword()) ||
                 Utility.nullOrEmptyOrSpace(user.getName()) ||
                 Utility.nullOrEmptyOrSpace(user.getContact())) {
+
             return true;
         }
+
         return false;
     }
 }

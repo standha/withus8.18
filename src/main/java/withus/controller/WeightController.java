@@ -35,11 +35,15 @@ public class WeightController extends BaseController {
         ModelAndView modelAndView = new ModelAndView("weight/weight");
         User.Type typeCheck = getUser().getType();
         if (weightService.getTodayWeight(new RecordKey(getConnectId(), LocalDate.now())) == null) {
+
             logger.info("id:{}, today weight:null", user.getUserId());
+
             modelAndView.addObject("weight", ""); //객체가 비어있어 타임리프에 null point 오류를 해결해주도록 한다. weight에 0kg을 뷰해줌
         } else {
             Tbl_weight weight = weightService.getTodayWeight(new RecordKey(getConnectId(), LocalDate.now()));
+
             logger.info("id:{}, today weight:{}", user.getUserId(), weight.getWeight());
+
             modelAndView.addObject("weight", weight.getWeight());
         }
         if (user.getType() == User.Type.PATIENT) {
@@ -48,6 +52,7 @@ public class WeightController extends BaseController {
         }
         modelAndView.addObject("type", typeCheck);
         modelAndView.addObject("previousUrl", "/center");
+
         return modelAndView;
     }
 
@@ -64,9 +69,9 @@ public class WeightController extends BaseController {
         List<Tbl_weight> weightRecord;
         weightRecord = weightService.getWeightRecord(getConnectId(), 0);
         modelAndView.addObject("weightRecord", weightRecord);
+
         return modelAndView;
     }
-
 
     @PostMapping(value = "/weight", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -81,13 +86,13 @@ public class WeightController extends BaseController {
             code = Result.Code.OK;
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
+
             code = Result.Code.ERROR_DATABASE;
         }
+
         return Result.<Tbl_weight>builder()
                 .code(code)
                 .data(saved)
                 .build();
     }
-
-
 }

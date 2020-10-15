@@ -1,6 +1,5 @@
 package withus.service;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -14,13 +13,11 @@ import javax.annotation.Nullable;
 import java.time.LocalDate;
 import java.util.List;
 
-
 @Service
 public class AlarmService {
     private final MedicationAlarmRepository medicationAlarmRepository;
     private final OutPatientVisitAlarmRepository outPatientVisitAlarmRepository;
     private final MedicationRecordRepository medicationRecordRepository;
-
 
     @Autowired
     public AlarmService(MedicationRecordRepository medicationRecordRepository, MedicationAlarmRepository medicationAlarmRepository, OutPatientVisitAlarmRepository outPatientVisitAlarmRepository) {
@@ -32,6 +29,7 @@ public class AlarmService {
     @Nonnull
     public Tbl_medication_record upsertTrueRecord(Tbl_medication_record tbl_medication_record) {
         Tbl_medication_record saved = medicationRecordRepository.save(tbl_medication_record);
+
         return saved;
     }
 
@@ -44,6 +42,7 @@ public class AlarmService {
         found.setMedicationAlarmOnoff(tbl_medication_alarm.isMedicationAlarmOnoff());
 
         Tbl_medication_alarm saved = medicationAlarmRepository.save(tbl_medication_alarm);
+
         return saved;
     }
 
@@ -53,6 +52,7 @@ public class AlarmService {
         found.setVisitAlarm(tbl_outpatient_visit_alarm.getVisitAlarm());
         found.setOutPatientVisitDate(tbl_outpatient_visit_alarm.getOutPatientVisitDate());
         found.setOutPatientVisitTime(tbl_outpatient_visit_alarm.getOutPatientVisitTime());
+
         return outPatientVisitAlarmRepository.save(found);
     }
 
@@ -92,10 +92,11 @@ public class AlarmService {
     }
 
     public int transformTime(int hour) {
-        if (hour >= 12)
+        if (hour >= 12) {
             return 1;
-        else
+        } else {
             return 0;
+        }
     }
 
     public String transformHour(int hour) {
@@ -120,9 +121,11 @@ public class AlarmService {
     public String transformMinute(int minute) {
         if (minute >= 10) {
             String transMinute = Integer.toString(minute);
+
             return transMinute;
         } else {
             String transMinute = Integer.toString(minute);
+
             return "0" + transMinute;
         }
     }

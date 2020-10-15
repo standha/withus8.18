@@ -22,7 +22,6 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Transactional(readOnly = true)
     Optional<User> findByCaregiverUserId(String caregiverUserId);
 
-
     @Transactional(readOnly = true)
     Optional<User> findByUserIdAndPassword(String id, String password);
 

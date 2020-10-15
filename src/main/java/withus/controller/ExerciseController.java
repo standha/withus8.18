@@ -43,28 +43,38 @@ public class ExerciseController extends BaseController {
                 if (exerciseService.getExercise(new RecordKey(getUsername(), LocalDate.now())) == null) {
                     modelAndView.addObject("hour", "");
                     modelAndView.addObject("minute", "");
+
                     logger.info("id:{}, today exercise:null", user.getUserId());
                 } else {
                     Tbl_Exercise_record exercise = exerciseService.getExercise(new RecordKey(getUsername(), LocalDate.now()));
                     modelAndView.addObject("hour", exercise.getHour());
                     modelAndView.addObject("minute", exercise.getMinute());
+
                     logger.info("id:{}, exerciseHour:{}, exerciseMinute:{}", user.getUserId(), exercise.getHour(), exercise.getMinute());
                 }
+
                 break;
+
             case CAREGIVER:
                 if (exerciseService.getExercise(new RecordKey(getCaretaker().getUserId(), LocalDate.now())) == null) {
                     modelAndView.addObject("hour", "");
                     modelAndView.addObject("minute", "");
+
+                    logger.info("id:{}, today exercise:null", user.getUserId());
                 } else {
                     Tbl_Exercise_record exercise = exerciseService.getExercise(new RecordKey(getCaretaker().getUserId(), LocalDate.now()));
                     modelAndView.addObject("hour", exercise.getHour());
                     modelAndView.addObject("minute", exercise.getMinute());
+
+                    logger.info("id:{}", user.getUserId());
                 }
+
                 break;
         }
 
         modelAndView.addObject("type", typeCheck);
         modelAndView.addObject("previousUrl", "/center");
+
         return modelAndView;
     }
 
@@ -85,14 +95,16 @@ public class ExerciseController extends BaseController {
                 modelAndView.addObject("exerciseWeekHour", avgWeek() / 60);
                 modelAndView.addObject("exerciseWeekMin", avgWeek() % 60);
                 modelAndView.addObject("exercise", exerciseHistory);
+
                 break;
+
             case CAREGIVER:
                 exerciseHistory = exerciseService.getExerciseAllRecord(getCaretaker().getUserId(), -1, -1);
                 modelAndView.addObject("exerciseWeekHour", avgWeek() / 60);
                 modelAndView.addObject("exerciseWeekMin", avgWeek() % 60);
                 modelAndView.addObject("exercise", exerciseHistory);
-                break;
 
+                break;
         }
 
         modelAndView.addObject("type", getUser().getType());

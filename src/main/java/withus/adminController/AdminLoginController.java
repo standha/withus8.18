@@ -31,6 +31,7 @@ public class AdminLoginController extends AdminBaseController {
     @GetMapping({"/admin_login"})
     public ModelAndView getLogin(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView modelAndView = new ModelAndView("Login/admin_login");
+
         return modelAndView;
     }
 }

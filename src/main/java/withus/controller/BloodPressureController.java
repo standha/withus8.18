@@ -36,6 +36,7 @@ public class BloodPressureController extends BaseController {
     public ModelAndView getBloodPressure() {
         User user = getUser();
         ModelAndView modelAndView = new ModelAndView("bloodPressure/bloodPressure");
+
         if (bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(), LocalDate.now())) == null) {
             modelAndView.addObject("contraction", "");
             modelAndView.addObject("pressure", "");
@@ -48,12 +49,15 @@ public class BloodPressureController extends BaseController {
             modelAndView.addObject("relaxation", today.getRelaxation());
             logger.info("id:{}, contraction:{}, pressure:{}, relaxation:{}", user.getUserId(), today.getContraction(), today.getPressure(), today.getRelaxation());
         }
+
         if (user.getType() == User.Type.PATIENT) {
             Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
+
         modelAndView.addObject("type", user.getType());
         modelAndView.addObject("previousUrl", "/center");
+
         return modelAndView;
     }
 
@@ -71,15 +75,19 @@ public class BloodPressureController extends BaseController {
                 bloodWeek.add(week);
             }
         }
+
         User user = getUser();
         modelAndView.addObject("user", user);
+
         if (user.getType() == User.Type.PATIENT) {
             Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
+
         modelAndView.addObject("bloodWeek", bloodWeek);
         modelAndView.addObject("bloodPressure", bloodPressureHistory);
         modelAndView.addObject("previousUrl", "/center");
+
         return modelAndView;
     }
 
@@ -91,6 +99,7 @@ public class BloodPressureController extends BaseController {
         tbl_blood_pressure_pulse.setWeek(getUser().getWeek());
         Result.Code code;
         Tbl_blood_pressure_pulse seved = null;
+
         try {
             seved = bloodPressureService.upsertBloodPressureRecord(tbl_blood_pressure_pulse);
             code = Result.Code.OK;
@@ -98,6 +107,7 @@ public class BloodPressureController extends BaseController {
             logger.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
         }
+
         return Result.<Tbl_blood_pressure_pulse>builder()
                 .code(code)
                 .data(seved)

@@ -58,6 +58,7 @@ public class SymptomController extends BaseController {
         }
         modelAndView.addObject("type", typeCheck);
         modelAndView.addObject("previousUrl", "/center");
+
         return modelAndView;
 
     }
@@ -76,6 +77,7 @@ public class SymptomController extends BaseController {
             modelAndView.addObject("count", count);
         }
         modelAndView.addObject("type", user.getType());
+
         return modelAndView;
     }
 
@@ -96,6 +98,7 @@ public class SymptomController extends BaseController {
             logger.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
         }
+
         return Result.<Tbl_symptom_log>builder()
                 .code(code)
                 .data(saved)

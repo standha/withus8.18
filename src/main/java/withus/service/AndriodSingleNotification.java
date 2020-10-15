@@ -10,15 +10,19 @@ public class AndriodSingleNotification {
         JsonObject body = new JsonObject();
 
         body.addProperty("to", tokenData);
+
         //알림 내용 지정
         JsonObject notification = new JsonObject();
         notification.addProperty("title", title);
+
         try {
             notification.addProperty("body", URLEncoder.encode(data, "EUC-KR"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+
         body.add("data", notification);
+
         return body.toString();
     }
 }

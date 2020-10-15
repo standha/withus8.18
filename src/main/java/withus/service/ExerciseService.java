@@ -26,6 +26,7 @@ public class ExerciseService {
     @NonNull
     public Tbl_Exercise_record upsertExerciseRecord(Tbl_Exercise_record tbl_exercise_record) {
         Tbl_Exercise_record saved = exerciseRecordRepository.save(tbl_exercise_record);
+
         return saved;
     }
 
@@ -38,6 +39,7 @@ public class ExerciseService {
     public Integer getExerciseDayRecord(RecordKey pk) {
         Tbl_Exercise_record getDay = exerciseRecordRepository.findByPkAndHourIsNotNullAndMinuteIsNotNull(pk).orElse(null);
         Integer dayHour, dayMinute, dayHourToMinute;
+
         if (getDay == null) {
             dayHour = 0;
             dayMinute = 0;
@@ -45,7 +47,9 @@ public class ExerciseService {
             dayHour = getDay.getHour();
             dayMinute = getDay.getMinute();
         }
+
         dayHourToMinute = (dayHour * 60) + dayMinute;
+
         return dayHourToMinute;
     }
 

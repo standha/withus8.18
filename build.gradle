@@ -74,6 +74,12 @@ compileQuerydsl{
 test {
 	useJUnitPlatform()
 }
+
 bootJar {
 	archiveFileName = "${archiveBaseName.get()}.${archiveExtension.get()}"
+}
+
+bootRun {
+	String activeProfile = System.properties['spring.profiles.active']
+	systemProperty "spring.profiles.active", activeProfile
 }
