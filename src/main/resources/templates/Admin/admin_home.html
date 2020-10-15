@@ -19,7 +19,7 @@
 	<table id="foo-table" class="table table-bordered">
 		<thead>
 		<tr><th>No</th><th>환자 이름</th><th>환자 ID</th><th>환자 PW</th><th>환자 생년월일</th><th>환자 전화번호</th><th>환자 성별</th>
-			<th>보호자 이름</th><th>보호자 ID</th><th>보호자 PW</th><th>보호자 전화번호</th><th>위더스랑 최근 코드</th><th>환자 상세보기</th></tr>
+			<th>보호자 이름</th><th>보호자 ID</th><th>보호자 PW</th><th>보호자 전화번호</th><th>최근 접속시간</th><th>위더스랑 최근 코드</th><th>환자 상세보기</th></tr>
 		</thead>
 		<tbody>
 		<tr th:each="user : ${user}">
@@ -34,6 +34,7 @@
 			<td th:text="${user.guserId}">보호자 ID</td>
 			<td th:text="${user.guserPassword}">보호자 PW</td>
 			<td th:text="${user.guserContact}">보호자 전화번호</td>
+			<td th:text="${user.userRecordDate}">최근 접속 날짜</td>
 			<td th:text="${user.currentCode}">위더스랑 최근 코드</td>
 			<!--<td><input type="button" id="test" class="test" value="상세보기" th:onclick="'location.href=/user/'+'@{user.userId}'"></td>-->
 			<td><input type="button" id="test" class="test" value="상세보기" th:onclick="'window.location.href = \'' + @{/user/{userId}(userId=${user.userId})} + '\''"></td>

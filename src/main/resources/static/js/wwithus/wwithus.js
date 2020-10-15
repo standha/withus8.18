@@ -1,3 +1,5 @@
+
+
 const MESSAGE_INTERVAL_MILLIS = 2000;
 const GET_FETCH_OPTIONS = {
     method: "GET",
@@ -24,49 +26,54 @@ let userType;
  */
 let urlToRequestNext;
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function()
+{
     onDomLoad();
 }, false);
 
+function ScrollDown(){
+    var objDiv2 = document.getElementById("content");
+    objDiv2.scrollTop = objDiv2.scrollHeight;
+}
 
-function onDomLoad() {
+function onDomLoad()
+{
     console.log("onDomLoad()");
     balloonsAreaElement = document.querySelector("div#body");
     urlToHistory = document.querySelector("#history-url").value;
-    userType = document.querySelector("#userType").value;
+    userType=document.querySelector("#userType").value;
     urlToRequestNext = document.querySelector("#request-next-url").value;
 
     removeChildren(balloonsAreaElement);
     loadHistory();
 }
-
 //이미지 클릭시 원본 크기로 팝업 보기
-function popupImage(url) {
+function popupImage(url){
     var img = new Image();
     var scWidth = screen.availWidth; //현재 사용중인 스크린 크기를 구함
     var scHeight = screen.availHeight;
-    var left = (parseInt(scWidth) - 650) / 2; //팝업창 위치 조절
-    var top = (parseInt(scHeight) - 900) / 2;
+    var left = (parseInt(scWidth)-650)/2; //팝업창 위치 조절
+    var top = (parseInt(scHeight)-900)/2;
     img.src = url;
-    var img_width = img.width - 500; //팝업창 크기 조절
-    var win_width = img.width - 500;
+    var img_width = img.width-500; //팝업창 크기 조절
+    var win_width = img.width-500;
     var height = scHeight;
-    var openImage = window.open('', '_blank', 'width=' + img_width + ',height=' + height + ',top=' + top + ',left=' + left + ',menubars=no,scrollbars=auto');
-    openImage.document.write("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=2, minimum-scale=1, user-scalable=yes,target-densitydpi=medium-dpi\"/><style>body{margin:0px;background-color: black}</style><div style='height:100vh;  display: table-cell; vertical-align: middle'><img style='width: 100%'  src = '" + url + "'width='" + win_width + "' ></div>");
+    var openImage = window.open('','_blank','width='+img_width+',height='+height+',top='+top+',left='+left+',menubars=no,scrollbars=auto');
+    openImage.document.write("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=2, minimum-scale=1, user-scalable=yes,target-densitydpi=medium-dpi\"/><style>body{margin:0px;background-color: black}</style><div style='height:100vh;  display: table-cell; vertical-align: middle'><img style='width: 100%'  src = '"+url+"'width='"+win_width+"' ></div>");
 }
 
 /**
  * @param {Element} parent
  */
 
-function removeChildren(parent) {
+function removeChildren(parent)
+{
     console.log("removeChildren()");
-    parent.childNodes.forEach(childNode => {
-        parent.removeChild(childNode);
-    });
+    parent.childNodes.forEach(childNode => { parent.removeChild(childNode); });
 }
 
-function loadHistory() {
+function loadHistory()
+{
     console.log("loadHistory()");
 
     fetch(urlToHistory, GET_FETCH_OPTIONS)
@@ -74,18 +81,23 @@ function loadHistory() {
         .then(object => {
             console.log(object);
 
-            if (object) {
+            if (object)
+            {
                 const data = object["data"];
-                if (data && data.length > 0) {
+                if (data && data.length > 0)
+                {
                     renderBalloons(data);
-                } else {
+                }
+                else
+                {
                     requestNext(null);
                 }
             }
         });
 }
 
-function deleteHistory() {
+function deleteHistory()
+{
     const options = {
         method: "DELETE",
         headers: {
@@ -105,8 +117,10 @@ function deleteHistory() {
  *
  * @param {Object[]} objects
  */
-function renderBalloons(objects) {
-    objects.forEach(object => {
+function renderBalloons(objects)
+{
+    objects.forEach(object =>
+    {
         const chatBalloon = ChatBalloon.fromObject(object);
         renderBalloon(chatBalloon);
     });
@@ -115,26 +129,25 @@ function renderBalloons(objects) {
 /**
  * @param {ChatBalloon} chatBalloon
  */
-function audio_play_pulse() {
+function audio_play_pulse(){
     const myAudio = document.getElementById("myAudio");
     console.log(myAudio);
-    if (document.getElementById('p-con').className === "ico-play") {
+    if(document.getElementById('p-con').className === "ico-play"){
         myAudio.play();
         document.getElementById('p-con').className = "ico-pause";
-    } else if (myAudio.play()) {
+    }else if(myAudio.play()){
         myAudio.pause();
         document.getElementById('p-con').className = "ico-play";
     }
 }
-
-function getCurrentTime() {
+function getCurrentTime(){
     const myAudio = document.getElementById("myAudio");
     console.log("계산하고있니?");
     console.log(myAudio.duration);
     return myAudio.duration;
 }
-
-function renderBalloon(chatBalloon) {
+function renderBalloon(chatBalloon)
+{
     const div = document.createElement("div");
     div.id = chatBalloon.sequence.toString();
     div.className = "chat-wrap manager";
@@ -142,7 +155,8 @@ function renderBalloon(chatBalloon) {
     const input = `<input type="hidden" value="${chatBalloon.sequence}">`;
     /*th:onclick="'doImgPop(' + ${${chatBalloon.urlToImageFile}} + ')'"*/
     let img = "";
-    if (chatBalloon.urlToImageFile) {
+    if (chatBalloon.urlToImageFile)
+    {
         <!--href="#"-->
         img = `<div class ="img-wrap>" style="width: 100%"><a class="img-thumb" style="width: 100%"> <span class="img-name"></span> <img style="width: 100%" src="${chatBalloon.urlToImageFile}" 
 onclick="popupImage('${chatBalloon.urlToImageFile}')"
@@ -154,13 +168,14 @@ alt="이미지가 표시되지 않고 있습니다."></a></div>`
     let audio2 = "";
     if (chatBalloon.urlToAudioFile) {
         audio = `<div class="player-wrap">
-<audio src="${chatBalloon.urlToAudioFile}" controls ></audio>
+<audio src="${chatBalloon.urlToAudioFile}" controls controlsList="nodownload" ></audio>
 </div>`
 
 
     }
     let answerButtonsSpan = ``;
-    if (chatBalloon.answerButtons && chatBalloon.answerButtons.length > 0) {
+    if (chatBalloon.answerButtons && chatBalloon.answerButtons.length > 0)
+    {
         var positive = "예";
         answerButtonsSpan = renderButtons(chatBalloon);
         console.log(answerButtonsSpan)
@@ -170,25 +185,29 @@ alt="이미지가 표시되지 않고 있습니다."></a></div>`
     const contentSpan = `<div class ="name-wrap"><span class="ico-withus"></span>
 		<span class="  name">  위더스</span></div>
 		<div class ="msg-wrap">`
-        + audio +
-        `<div class="text-wrap">${chatBalloon.content}</div>
+        +audio+
+        `<div style ="font-size: 1.25rem; line-height: 1.5; word-break: normal" class="text-wrap">${chatBalloon.content}</div>
 		<div class = "btn-wrap grid-col">`
-        + answerButtonsSpan + `</div>` +
-        img + `
+        +answerButtonsSpan+ `</div>` +
+        img+`
 		</div>`;
+    ScrollDown();
     //TODO: 나중에 날짜가 필요하다 하면 이걸 쓰면
     const dateTimeSpan = `<span class="date-time">${chatBalloon.dateString}</span>`;
 
-    if (chatBalloon.direction === "RIGHT") {
+    if (chatBalloon.direction === "RIGHT")
+    {
         div.classList.add("right");
     }
 
     div.innerHTML = (input /*+ audio*/ + contentSpan /*+ img*/ /*+ answerButtonsSpan*/ /*+ dateTimeSpan*/);
 
     balloonsAreaElement.appendChild(div);
-    window.scrollTo(0, document.body.scrollHeight);
+    /*window.scrollTo(0, document.body.scrollHeight);*/
+    ScrollDown();
     console.log(userType);
-    if (chatBalloon.toScheduleForNextChatBalloon && userType === 'PATIENT') {
+    if (chatBalloon.toScheduleForNextChatBalloon && userType === 'PATIENT' )
+    {
         setTimeout(requestNext, MESSAGE_INTERVAL_MILLIS, chatBalloon);
     }
 }
@@ -196,22 +215,25 @@ alt="이미지가 표시되지 않고 있습니다."></a></div>`
 /**
  * @param {string} answerButtonContent
  */
-function renderAnswer(answerButtonContent) {
+function renderAnswer(answerButtonContent)
+{
     const div = document.createElement("div");
     div.className = "answer balloons right";
-    div.innerHTML = `<div class="chat-wrap client"><div class="msg-wrap"><div class="txt-wrap">${answerButtonContent}</div></div></div>`;
+    div.innerHTML = `<div class="chat-wrap client"><div  class="msg-wrap"><div class="txt-wrap">${answerButtonContent}</div></div></div>`;
 
     balloonsAreaElement.appendChild(div);
+    ScrollDown();
 }
 
 /**
  * @param {ChatBalloon} chatBalloon
  * @returns {string}
  */
-function renderButtons(chatBalloon) {
-    var positive = '';
+function renderButtons(chatBalloon)
+{
+    var positive ='';
     let answerButtonsSpan = `<span class="answer-buttons">`;
-    let checkButtonType = '';
+    let checkButtonType ='';
     chatBalloon.answerButtons.forEach(answerButton => {
         if (chatBalloon.isMostRecent) {
             let href = "javascript:";
@@ -219,13 +241,13 @@ function renderButtons(chatBalloon) {
              * 나도 왜 이딴 짓을 해야 하는지 모르겠다.
              * 아마도 answerButton을 AnswerButton 타입으로 인지하지 못해서?
              * isToTerminate/isToRewind만으로 충분해야 하지만
-             * 보험 필드 toTerminate/toRewind도 같이 확인 (2020.09.11)
+             * 보험 필드 toTerminate/toRewind도 같이 확인 (2020.09.666)
              */
             if (answerButton.isToRewind || answerButton.toRewind) {
                 href += " deleteHistory(); sleep(666).then(() => location.reload());";
             } else {
                 if (answerButton.isHelpRequest || answerButton.helpRequest) {
-                    href += `sendHelpRequest('${answerButton.code}');`;
+                    href +=  `sendHelpRequest('${answerButton.code}');`;
                 }
 
                 if (answerButton.isToTerminate || answerButton.toTerminate) {
@@ -240,16 +262,17 @@ function renderButtons(chatBalloon) {
             let help = "[위더스 도우미]";
             let negative = "아니요";
             let replacedHref = href.replaceAll(/ {2,}/g, ' ');
-            if (checkButtonType.indexOf(" ") === 0) {
+            if(checkButtonType.indexOf(" ") === 0){
                 answerButtonsSpan += ` `;
-            } else if (checkButtonType.indexOf(positive) === 0) {
-                answerButtonsSpan += `<a><button  style='color: white' class ="btn md type11" href="${replacedHref}"> <a style='color: white' href="${replacedHref}">`;
-            } else if (checkButtonType.indexOf(negative) === 0) {
-                answerButtonsSpan += `<a><button  style='color: white' class ="btn md type09" href="${replacedHref}"> <a style='color: white' href="${replacedHref}">`;
-            } else if (checkButtonType.indexOf("X") === 0) {
-                answerButtonsSpan += `<a><button  style='color: white' class ="btn md type09" href="${replacedHref}"> <a style='color: white' href="${replacedHref}">`;
-            } else {
-                answerButtonsSpan += `<a><button  style='color: white' class ="btn md type10" href="${replacedHref}"> <a style='color: white' href="${replacedHref}">`;
+            }else if(checkButtonType.indexOf(positive) === 0){
+                answerButtonsSpan += `<button style='height: auto; color: white; min-height: 52px' class ="btn md type11" href="${replacedHref}"> <a style='color: white' href="${replacedHref}">`;
+            }else if(checkButtonType.indexOf(negative) === 0){
+                answerButtonsSpan += `<button style='height: auto; color: white; min-height: 52px' class ="btn md type09" href="${replacedHref}"> <a style='color: white' href="${replacedHref}">`;
+            }else if(checkButtonType.indexOf("X")=== 0){
+                answerButtonsSpan += `<button style='height: auto; color: white; min-height: 52px' class ="btn md type09" href="${replacedHref}"> <a style='color: white' href="${replacedHref}">`;
+            }
+            else{
+                answerButtonsSpan += `<button  style='color: white; min-height: 52px; height: auto' class ="btn md type10" href="${replacedHref}"> <a style='color: white' href="${replacedHref}">`;
             }
         } else {
 
@@ -279,49 +302,50 @@ function renderButtons(chatBalloon) {
              */
             let urlToRequestNext;
 
-            document.addEventListener("DOMContentLoaded", function () {
+            document.addEventListener("DOMContentLoaded", function()
+            {
                 onDomLoad();
             }, false);
 
 
-            function onDomLoad() {
+            function onDomLoad()
+            {
                 console.log("onDomLoad()");
                 balloonsAreaElement = document.querySelector("div#body");
                 urlToHistory = document.querySelector("#history-url").value;
-                userType = document.querySelector("#userType").value;
+                userType=document.querySelector("#userType").value;
                 urlToRequestNext = document.querySelector("#request-next-url").value;
 
                 removeChildren(balloonsAreaElement);
                 loadHistory();
             }
-
 //이미지 클릭시 원본 크기로 팝업 보기
-            function popupImage(url) {
+            function popupImage(url){
                 var img = new Image();
                 var scWidth = screen.availWidth; //현재 사용중인 스크린 크기를 구함
                 var scHeight = screen.availHeight;
-                var left = (parseInt(scWidth) - 650) / 2; //팝업창 위치 조절
-                var top = (parseInt(scHeight) - 900) / 2;
+                var left = (parseInt(scWidth)-650)/2; //팝업창 위치 조절
+                var top = (parseInt(scHeight)-900)/2;
                 img.src = url;
-                var img_width = img.width - 500; //팝업창 크기 조절
-                var win_width = img.width - 500;
+                var img_width = img.width-500; //팝업창 크기 조절
+                var win_width = img.width-500;
                 var height = scHeight;
-                var openImage = window.open('', '_blank', 'width=' + img_width + ',height=' + height + ',top=' + top + ',left=' + left + ',menubars=no,scrollbars=auto');
-                openImage.document.write("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=2, minimum-scale=1, user-scalable=yes,target-densitydpi=medium-dpi\"/><style>body{margin:0px;background-color: black}</style><div style='height:100vh;  display: table-cell; vertical-align: middle'><img style='width: 100%'  src = '" + url + "'width='" + win_width + "' ></div>");
+                var openImage = window.open('','_blank','width='+img_width+',height='+height+',top='+top+',left='+left+',menubars=no,scrollbars=auto');
+                openImage.document.write("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=2, minimum-scale=1, user-scalable=yes,target-densitydpi=medium-dpi\"/><style>body{margin:0px;background-color: black}</style><div style='height:100vh;  display: table-cell; vertical-align: middle'><img style='width: 100%'  src = '"+url+"'width='"+win_width+"' ></div>");
             }
 
             /**
              * @param {Element} parent
              */
 
-            function removeChildren(parent) {
+            function removeChildren(parent)
+            {
                 console.log("removeChildren()");
-                parent.childNodes.forEach(childNode => {
-                    parent.removeChild(childNode);
-                });
+                parent.childNodes.forEach(childNode => { parent.removeChild(childNode); });
             }
 
-            function loadHistory() {
+            function loadHistory()
+            {
                 console.log("loadHistory()");
 
                 fetch(urlToHistory, GET_FETCH_OPTIONS)
@@ -329,18 +353,23 @@ function renderButtons(chatBalloon) {
                     .then(object => {
                         console.log(object);
 
-                        if (object) {
+                        if (object)
+                        {
                             const data = object["data"];
-                            if (data && data.length > 0) {
+                            if (data && data.length > 0)
+                            {
                                 renderBalloons(data);
-                            } else {
+                            }
+                            else
+                            {
                                 requestNext(null);
                             }
                         }
                     });
             }
 
-            function deleteHistory() {
+            function deleteHistory()
+            {
                 const options = {
                     method: "DELETE",
                     headers: {
@@ -360,8 +389,10 @@ function renderButtons(chatBalloon) {
              *
              * @param {Object[]} objects
              */
-            function renderBalloons(objects) {
-                objects.forEach(object => {
+            function renderBalloons(objects)
+            {
+                objects.forEach(object =>
+                {
                     const chatBalloon = ChatBalloon.fromObject(object);
                     renderBalloon(chatBalloon);
                 });
@@ -370,26 +401,25 @@ function renderButtons(chatBalloon) {
             /**
              * @param {ChatBalloon} chatBalloon
              */
-            function audio_play_pulse() {
+            function audio_play_pulse(){
                 const myAudio = document.getElementById("myAudio");
                 console.log(myAudio);
-                if (document.getElementById('p-con').className === "ico-play") {
+                if(document.getElementById('p-con').className === "ico-play"){
                     myAudio.play();
                     document.getElementById('p-con').className = "ico-pause";
-                } else if (myAudio.play()) {
+                }else if(myAudio.play()){
                     myAudio.pause();
                     document.getElementById('p-con').className = "ico-play";
                 }
             }
-
-            function getCurrentTime() {
+            function getCurrentTime(){
                 const myAudio = document.getElementById("myAudio");
                 console.log("계산하고있니?");
                 console.log(myAudio.duration);
                 return myAudio.duration;
             }
-
-            function renderBalloon(chatBalloon) {
+            function renderBalloon(chatBalloon)
+            {
                 const div = document.createElement("div");
                 div.id = chatBalloon.sequence.toString();
                 div.className = "chat-wrap manager";
@@ -397,7 +427,8 @@ function renderButtons(chatBalloon) {
                 const input = `<input type="hidden" value="${chatBalloon.sequence}">`;
                 /*th:onclick="'doImgPop(' + ${${chatBalloon.urlToImageFile}} + ')'"*/
                 let img = "";
-                if (chatBalloon.urlToImageFile) {
+                if (chatBalloon.urlToImageFile)
+                {
                     <!--href="#"-->
                     img = `<div class ="img-wrap>" style="width: 100%"><a class="img-thumb" style="width: 100%"> <span class="img-name"></span> <img style="width: 100%" src="${chatBalloon.urlToImageFile}" 
 onclick="popupImage('${chatBalloon.urlToImageFile}')"
@@ -415,7 +446,8 @@ alt="이미지가 표시되지 않고 있습니다."></a></div>`
 
                 }
                 let answerButtonsSpan = "";
-                if (chatBalloon.answerButtons && chatBalloon.answerButtons.length > 0) {
+                if (chatBalloon.answerButtons && chatBalloon.answerButtons.length > 0)
+                {
                     var positive = "예";
                     answerButtonsSpan = renderButtons(chatBalloon);
                     console.log(answerButtonsSpan)
@@ -425,17 +457,19 @@ alt="이미지가 표시되지 않고 있습니다."></a></div>`
                 const contentSpan = `<div class ="name-wrap"><span class="ico-withus"></span>
 		<span class="  name">  위더스</span></div>
 		<div class ="msg-wrap">`
-                    + audio +
-                    `<div class="text-wrap">${chatBalloon.content}</div>
+                    +audio+
+                    `<div  style =" font-size: 1.25rem;  line-height: 1.5; word-break: normal" class="text-wrap">${chatBalloon.content}</div>
 		<div class = "btn-wrap grid-col">`
-                    + answerButtonsSpan + `</div>` +
-                    img + `
+                    +answerButtonsSpan+ `</div>` +
+                    img+`
 		</div>`;
                 //TODO: 나중에 날짜가 필요하다 하면 이걸 쓰면
                 const dateTimeSpan = `<span class="date-time">${chatBalloon.dateString}</span>`;
 
-                if (chatBalloon.direction === "RIGHT") {
+                if (chatBalloon.direction === "RIGHT")
+                {
                     div.classList.add("right");
+                    ScrollDown();
                 }
 
                 div.innerHTML = (input /*+ audio*/ + contentSpan /*+ img*/ /*+ answerButtonsSpan*/ /*+ dateTimeSpan*/);
@@ -443,7 +477,8 @@ alt="이미지가 표시되지 않고 있습니다."></a></div>`
                 balloonsAreaElement.appendChild(div);
                 window.scrollTo(0, document.body.scrollHeight);
                 console.log(userType);
-                if (chatBalloon.toScheduleForNextChatBalloon && userType === 'PATIENT') {
+                if (chatBalloon.toScheduleForNextChatBalloon && userType === 'PATIENT' )
+                {
                     setTimeout(requestNext, MESSAGE_INTERVAL_MILLIS, chatBalloon);
                 }
             }
@@ -451,22 +486,25 @@ alt="이미지가 표시되지 않고 있습니다."></a></div>`
             /**
              * @param {string} answerButtonContent
              */
-            function renderAnswer(answerButtonContent) {
+            function renderAnswer(answerButtonContent)
+            {
                 const div = document.createElement("div");
                 div.className = "answer balloons right";
                 div.innerHTML = `<div class="chat-wrap client"><div class="msg-wrap"><div class="txt-wrap">${answerButtonContent}</div></div></div>`;
 
                 balloonsAreaElement.appendChild(div);
+                ScrollDown();
             }
 
             /**
              * @param {ChatBalloon} chatBalloon
              * @returns {string}
              */
-            function renderButtons(chatBalloon) {
-                var positive = '';
+            function renderButtons(chatBalloon)
+            {
+                var positive ='';
                 let answerButtonsSpan = `<span class="answer-buttons">`;
-                let checkButtonType = '';
+                let checkButtonType ='';
                 chatBalloon.answerButtons.forEach(answerButton => {
                     if (chatBalloon.isMostRecent) {
                         let href = "javascript:";
@@ -474,13 +512,13 @@ alt="이미지가 표시되지 않고 있습니다."></a></div>`
                          * 나도 왜 이딴 짓을 해야 하는지 모르겠다.
                          * 아마도 answerButton을 AnswerButton 타입으로 인지하지 못해서?
                          * isToTerminate/isToRewind만으로 충분해야 하지만
-                         * 보험 필드 toTerminate/toRewind도 같이 확인 (2020.09.11)
+                         * 보험 필드 toTerminate/toRewind도 같이 확인 (2020.09.666)
                          */
                         if (answerButton.isToRewind || answerButton.toRewind) {
                             href += " deleteHistory(); sleep(666).then(() => location.reload());";
                         } else {
                             if (answerButton.isHelpRequest || answerButton.helpRequest) {
-                                href += `sendHelpRequest('${answerButton.code}');`;
+                                href +=  `sendHelpRequest('${answerButton.code}');`;
                             }
 
                             if (answerButton.isToTerminate || answerButton.toTerminate) {
@@ -495,16 +533,17 @@ alt="이미지가 표시되지 않고 있습니다."></a></div>`
                         let help = "[위더스 도우미]";
                         let negative = "아니요";
                         let replacedHref = href.replaceAll(/ {2,}/g, ' ');
-                        if (checkButtonType.indexOf(" ") === 0) {
+                        if(checkButtonType.indexOf(" ") === 0){
                             answerButtonsSpan += ` `;
-                        } else if (checkButtonType.indexOf(positive) === 0) {
-                            answerButtonsSpan += `<a><button  style='color: white' class ="btn md type11" href="${replacedHref}"> <a style='color: white' href="${replacedHref}">`;
-                        } else if (checkButtonType.indexOf(negative) === 0) {
-                            answerButtonsSpan += `<a><button  style='color: white' class ="btn md type09" href="${replacedHref}"> <a style='color: white' href="${replacedHref}">`;
-                        } else if (checkButtonType.indexOf("X") === 0) {
-                            answerButtonsSpan += `<a><button  style='color: white' class ="btn md type09" href="${replacedHref}"> <a style='color: white' href="${replacedHref}">`;
-                        } else {
-                            answerButtonsSpan += `<a><button  style='color: white' class ="btn md type10" href="${replacedHref}"> <a style='color: white' href="${replacedHref}">`;
+                        }else if(checkButtonType.indexOf(positive) === 0){
+                            answerButtonsSpan += `<a><button style="height: auto; color: white; min-height: 52px;" class ="btn md type11" href="${replacedHref}"> <a style='line-height: 1.5; color: white' href="${replacedHref}">`;
+                        }else if(checkButtonType.indexOf(negative) === 0){
+                            answerButtonsSpan += `<a><button  style="height: auto; color: white; min-height: 52px;" class ="btn md type09" href="${replacedHref}"> <a style='line-height: 1.5; color: white' href="${replacedHref}">`;
+                        }else if(checkButtonType.indexOf("X")=== 0){
+                            answerButtonsSpan += `<a><button  style="height: auto; color: white; min-height: 52px;" class ="btn md type09" href="${replacedHref}"> <a style='line-height: 1.5; color: white' href="${replacedHref}">`;
+                        }
+                        else{
+                            answerButtonsSpan += `<a><button  style="height: auto; color: white; min-height: 52px;" class ="btn md type10" href="${replacedHref}"> <a style='color: white' href="${replacedHref}">`;
                         }
                     } else {
                         answerButtonsSpan += "<a><button  id = 'checkType2' class = 'btn md type09'>";
@@ -527,10 +566,11 @@ alt="이미지가 표시되지 않고 있습니다."></a></div>`
              * @param {ChatBalloon | null} chatBalloon
              */
             function requestNext(chatBalloon) {
-                const currentCode = (chatBalloon ? chatBalloon.code : null);
-                const nextCode = (chatBalloon ? chatBalloon.nextCode : null);
+                const currentCode = (chatBalloon? chatBalloon.code: null);
+                const nextCode = (chatBalloon? chatBalloon.nextCode: null);
 
                 requestNextByCode(false, currentCode, nextCode);
+                ScrollDown();
             }
 
             /**
@@ -592,15 +632,12 @@ alt="이미지가 표시되지 않고 있습니다."></a></div>`
              */
             function removeAllAnchorLinks() {
                 let anchors = balloonsAreaElement.querySelectorAll("a[href]");
-                anchors.forEach(anchor => {
-                    anchor.removeAttribute("href");
-                });
+                anchors.forEach(anchor => { anchor.removeAttribute("href"); });
             }
-
-            if (answerButton.urlToImageFile) {
+            if (answerButton.urlToImageFile){
                 answerButtonsSpan += ` `;
-            } else {
-                answerButtonsSpan += `<a><button  id = 'checkType2' class = 'btn md type10'>`;
+            }else{
+                answerButtonsSpan += `<a style='line-height: 1.5; color: white'><button style="height: auto;color: white;min-height: 52px;" id = 'checkType2' class = 'btn md type10'>`;
             }
         }
         answerButtonsSpan += `${answerButton.content}</a></button><br>`;
@@ -621,10 +658,11 @@ alt="이미지가 표시되지 않고 있습니다."></a></div>`
  * @param {ChatBalloon | null} chatBalloon
  */
 function requestNext(chatBalloon) {
-    const currentCode = (chatBalloon ? chatBalloon.code : null);
-    const nextCode = (chatBalloon ? chatBalloon.nextCode : null);
+    const currentCode = (chatBalloon? chatBalloon.code: null);
+    const nextCode = (chatBalloon? chatBalloon.nextCode: null);
 
     requestNextByCode(false, currentCode, nextCode);
+    ScrollDown();
 }
 
 /**
@@ -661,9 +699,12 @@ function requestNextByCode(toSkipRendering, currentCode, nextCode, ...codesToSav
                 if (!toSkipRendering) {
                     const chatBalloon = ChatBalloon.fromObject(data);
                     renderBalloon(chatBalloon);
+                    ScrollDown();
+
                 }
             }
-        });
+    });
+    ScrollDown();
 }
 
 /**
@@ -679,6 +720,7 @@ function answer(answerButtonCode, answerButtonNextCode, answerButtonContent, cha
     if (!toSkipRendering) {
         renderAnswer(answerButtonContent);
     }
+    ScrollDown();
 }
 
 /**
@@ -686,7 +728,5 @@ function answer(answerButtonCode, answerButtonNextCode, answerButtonContent, cha
  */
 function removeAllAnchorLinks() {
     let anchors = balloonsAreaElement.querySelectorAll("a[href]");
-    anchors.forEach(anchor => {
-        anchor.removeAttribute("href");
-    });
+    anchors.forEach(anchor => { anchor.removeAttribute("href"); });
 }

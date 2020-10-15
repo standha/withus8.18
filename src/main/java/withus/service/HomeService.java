@@ -17,10 +17,11 @@ public class HomeService {
         this.withusHelpRequestRepository = withusHelpRequestRepository;
     }
 
-    public WithusHelpRequest createHelpRequest(User user, LocalDateTime dateTime) {
+    public WithusHelpRequest createHelpRequest(User user, LocalDateTime dateTime, String helpCode) {
         WithusHelpRequest withusHelpRequest = WithusHelpRequest.builder()
                 .user(user)
                 .dateTime(dateTime)
+                .helpCode(helpCode)
                 .build();
 
         return withusHelpRequestRepository.save(withusHelpRequest);

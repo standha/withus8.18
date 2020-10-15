@@ -7,6 +7,7 @@ function onFormSubmission(form) {
     const level = form.querySelector("input[name=level]").value;
     const week = form.querySelector("input[name=week]").value;
     const token = form.querySelector("input[name=appToken]").value;
+    const registrationDateTime = form.querySelector("input[name = registrationDateTime]").value;
     const appToken = isEmpty(token) ? null : token;
     if(form.querySelector("input[name=birthdate]") == null){
         birthdateValue =  null;
@@ -51,7 +52,8 @@ function onFormSubmission(form) {
         caregiver: caregiver,
         appToken:appToken,
         level:level,
-        week:week
+        week:week,
+        registrationDateTime:registrationDateTime
     };
     const url = form.action;
     const options = {

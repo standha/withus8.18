@@ -14,6 +14,8 @@ import withus.dto.wwithus.HeaderInfoDTO;
 import withus.entity.*;
 import withus.repository.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -51,7 +53,10 @@ public class UserService implements UserDetailsService {
 
     @Nullable
     public User getUserById(String id) {
-        return userRepository.findByUserId(id).orElse(null);
+        User user =userRepository.findByUserId(id).orElse(null);
+        user.setUserRecordDate(LocalDate.now());
+        userRepository.saveAndFlush(user);
+        return user;
     }
 
     @Nullable

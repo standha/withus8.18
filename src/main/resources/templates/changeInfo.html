@@ -54,6 +54,7 @@
         <input type="hidden" name="appToken" th:value="${user.appToken}">
         <input type="hidden" name="level" th:value="${user.level}">
         <input type="hidden" name="week" th:value="${user.week}">
+        <input type="hidden" name ="registrationDateTime" th:value="${user.registrationDateTime}">
         <!-- header -->
         <header>
             <div class="header-wrap type01" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">

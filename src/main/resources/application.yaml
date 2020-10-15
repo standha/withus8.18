@@ -3,9 +3,6 @@ server:
   shutdown: graceful
 
 spring:
-  profiles:
-    active: cb
-
   application.name: withus
 
   datasource:

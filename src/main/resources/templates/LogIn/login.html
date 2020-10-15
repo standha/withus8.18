@@ -26,6 +26,9 @@ function remember_ckeckbox()
 		document.getElementById("chk2").removeAttribute("checked");
 	}
 }
+function loginFail(){
+	alert("아이디 또는 비밀번호를 확인해주세요!");
+}
 </script>
 
 </head>
@@ -43,6 +46,9 @@ function remember_ckeckbox()
 			<!-- // header -->
 
 			<!-- content -->
+			<div style="text-align: center; color: #db4848;  font-family: 'Noto Sans KR', 'Roboto', sans-serif; font-size: 18px" th:if="${param.error}" onloadstart="loginFail()" >
+				<strong style="font-weight: 900">아이디 또는 비밀번호를 다시 확인해주세요!</strong>
+			</div>
 			<div class="container" id="content">
 				<div class="login-wrap">
 					<div class="field-wrap type01">

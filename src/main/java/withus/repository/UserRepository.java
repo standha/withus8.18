@@ -16,7 +16,7 @@ import javax.persistence.SqlResultSetMapping;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     Optional<User> findByUserId(String userId);
 
     @Transactional(readOnly = true)
@@ -44,7 +44,7 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Nullable
     @Query(value = "select u.name as patientName ,u.id as patientId, u.password as patientPassword, u.birthdate as patientBirthdate," +
             " u.gender as patientGender, u.contact as patientContact, c.name as caregiverName," +
-            "c.id as caregiverId, c.password as caregiverPassword, c.contact as caregiverContact, code as currentCode" +
+            "c.id as caregiverId, c.password as caregiverPassword, c.contact as caregiverContact, u.user_record_date as userRecordDate , code as currentCode" +
             " from user as u left join user as c on c.contact = u.caregiver_contact " +
             "left join(select any_value(t.entry_code) as 'code' , any_value(t.date_time), t.user_id from" +
             "(select wwh.user_id, wwh.date_time, wwh.entry_code" +
