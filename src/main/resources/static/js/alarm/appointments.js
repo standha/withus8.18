@@ -2,23 +2,35 @@ function onFormSubmission(form) {
     const enabled = form.querySelector("input[name=visitAlarm]").checked;
     let hour = form.querySelector("input[name=hour]").value;
     let min = form.querySelector("input[name=minute]").value;
+    let time;
     const date = $("#dateReserve").datepicker().val();
+
     if (form.querySelector("input[name=time]:checked").value == 1) {
-        hour = parseInt(hour) + 12;
-    } else if (form.querySelector("input[name=time]:checked").value == 0) {
-        if (hour == 12) {
-            hour = "00";
-        } else if (parseInt(hour) < 10) {
-            if (parseInt(hour) == 0) {
-                hour = "0" + hour;
-            } else if (hour.startsWith("0")) {
-            } else {
-                hour = "0" + hour;
+        if(hour == 0 ){
+            hour = null;
+        }
+        else{
+            if( hour != 12){
+                hour = parseInt(hour) + 12;
             }
         }
+    } else if (form.querySelector("input[name=time]:checked").value == 0) {
+        hour = transHour(hour);
     }
-    min = transMinute(min);
-    const time = hour + ":" + min;
+
+    if(hour == null && transMinute(min) == null ){
+        time = null;
+    }
+    else if(hour != null && transMinute(min) == null){
+        time = hour + ":00";
+    }
+    else if(hour == null && transMinute(min) != null){
+        time = null;
+    }
+    else{
+        time = hour + ":" + transMinute(min);
+    }
+
     const body = {
         visitAlarm: enabled,
         outPatientVisitDate: date,
@@ -51,16 +63,33 @@ function onFormSubmission(form) {
     return false;
 }
 
-function transMinute(min) {
-    if (min < 10) {
-        if (min.startsWith("00")) {
+function transHour(hour) {
+    if(hour == 12){
+        return "00";
+    }
+    else if(hour >= 10)
+        return hour;
+    else {
+        if (hour == 0) {
+            return null;
+        } else if (hour.startsWith("0")) {
+            return hour;
+        } else {
+            return "0" + hour;
+        }
+    }
+}
+
+function transMinute(min){
+    if(min < 10){
+        if(min.startsWith("00")){
             return min;
         } else if (min == 0) {
             min = "0" + min;
             if (min.startsWith("00"))
                 return min;
             else
-                return "0" + min;
+                return null;
         } else if (min.startsWith("0")) {
             return min;
         } else {
