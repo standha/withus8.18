@@ -2,11 +2,11 @@ function onFormSubmission(form) {
     const hourValue = form.querySelector("input[name=hour]").value
     const minuteValue = form.querySelector("input[name=minute]").value;
     if(isEmpty(hourValue)==true && isEmpty(minuteValue)==true ) {
-        alert("©Н╣© ╫ц╟ёю╩ ют╥бгь аж╪╪©Д.");
+        alert("Л ╢К▐≥ Л▀°Й╟└Л²└ Л·┘К═╔М∙╢ Лё╪Л└╦Л ■.");
     }
-    else if(hourValue == 0 && minuteValue == 0) //╣я╢ы 0юо╤╖ ют╥б ╦╥ю╫
+    else if(hourValue == 0 && minuteValue == 0) //К▒≤К▀╓ 0Л²╪К∙▄ Л·┘К═╔ К╖┴Л²▄
     {
-        alert("0╫ц 0╨пю╨ ют╥б ╨р╟║╢игу╢о╢ы.");
+        alert("0Л▀° 0К╤└Л²─ Л·┘К═╔ К╤┬Й╟─К┼╔М∙╘К▀┬К▀╓.");
     }
     else{
         hour = isEmpty(hourValue) ? 0 : hourValue;
@@ -32,9 +32,9 @@ function onFormSubmission(form) {
             .then(data => {
                 console.log(data);
                 if (data.code === 'OK') {
-                    alert("ют╥б ©о╥А╣г╬З╫ю╢о╢ы.");
+                    alert("Л·┘К═╔ Л≥└Кё▄К░≤Л≈┬Л┼╣К▀┬К▀╓.");
                 }  else {
-                    alert("ют╥б ╫гфпго©╢╫ю╢о╢ы. ╟Э╦╝юз©║╟т ╧╝юггьаж╪╪©Д.");
+                    alert("Л·┘К═╔ Л▀╓М▄╗М∙≤Л≤─Л┼╣К▀┬К▀╓. Й╢─К╕╛Л·░Л≈░Й╡▄ К╛╦Л²≤М∙╢Лё╪Л└╦Л ■.");
                 }
             });
     }

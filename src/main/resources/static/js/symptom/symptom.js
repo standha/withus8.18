@@ -49,16 +49,16 @@ function onFormSubmission(form) {
             .then(data => {
                 console.log(data);
                 if (data.code === 'OK') {
-                    alert("ÀÔ·Â ¿Ï·áµÇ¾ú½À´Ï´Ù.");
+                    alert("ì…ë ¥ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");
                 }  else {
-                    alert("ÀÔ·Â ½ÇÆĞÇÏ¿´½À´Ï´Ù. °ü¸®ÀÚ¿¡°Ô ¹®ÀÇÇØÁÖ¼¼¿ä.");
+                    alert("ì…ë ¥ ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤. ê´€ë¦¬ìì—ê²Œ ë¬¸ì˜í•´ì£¼ì„¸ìš”.");
                 }
             });
 
         // fetch(url, options)
         //     .then(response => response.json())
         //     .then(data => console.log(data))
-        //     .then(data => alert("ÀÔ·ÂÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù."));
+        //     .then(data => alert("ì…ë ¥ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤."));
     }
 
     return false;
