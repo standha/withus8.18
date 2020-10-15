@@ -61,7 +61,7 @@ function radioClick(){
             Item = "<span class=\"bold\">'" + checked  + "'</span>";
             Item += "<span>으로 목표를 설정하셨군요.</span>";
             $('#popUp1').append(Item);
-            Item2 = "<span>하루동안 증상이 있었는지 생각하며<br></span>";
+            Item2 = "<span>하루동안 증상이 있었는지 생각하며<br>매일</span>";
             Item2 += "<span class=\"route\">" + "위더스" + "<span>" + " > " + "</span>" + "증상일지" + "</span>" + "</span>" + "에 입력해주세요.";
             $('#popUp2').append(Item2);
             break;

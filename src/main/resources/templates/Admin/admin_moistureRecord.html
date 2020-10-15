@@ -16,11 +16,11 @@
     <script th:src="@{/js/common.js}"></script>
     <title>Admin center</title>
 </head>
-<script>
-    jQuery(function($){
-        $("#foo-table").DataTable();
-    });
-</script>
+<!--<script>-->
+<!--    jQuery(function($){-->
+<!--        $("#foo-table").DataTable();-->
+<!--    });-->
+<!--</script>-->
 <body>
 <div id="wrap" class="main-page">
     <header>
@@ -47,11 +47,15 @@
         </nav>
     </header>
 
-    <table id="foo-table" class="table table-bordered">
+    <table id="foo-table" class="table table-bordered" style="table-layout: fixed">
         <thead>
-        <tr><th>주차</th><th>요일</th><th>수분 섭취량(ml)</th></tr>
+        <tr>
+            <th style="text-align: center">주차</th>
+            <th style="text-align: center">요일</th>
+            <th style="text-align: center">수분 섭취량(ml)</th>
+        </tr>
         </thead>
-        <tbody id="history-table-data">
+        <tbody id="history-table-data" style="text-align: center" >
         </tbody>
     </table>
 </div>
@@ -114,11 +118,11 @@
             var weekText = ['월', '화', '수', '목', '금', '토', '일'];     //월요일부터 표시해주는 배열
             if(j == 0)
             {
-                Item += "<td rowspan='8'>" + i + "주차" +"</td>";
+                Item += "<td rowspan='8' style='vertical-align: middle'>" + i + "주차" +"</td>";
             }
             Item += "<td>" + weekText[j] +"</td>";
             var day = new Date(weekAsc[weekAscCount].pk.date.substr(0, 4), weekAsc[weekAscCount].pk.date.substr(5, 2)-1, weekAsc[weekAscCount].pk.date.substr(8, 2)).getDay();
-            var week = ['일', '월', '화', '수', '목', '금', '토'];
+            var week = ['일', '월', '화', '수', '목', '금', '토'];     //날짜와 요일을 매핑하는 배열
             var dayLabel = week[day];
             if(weekAsc[weekAscCount].week == i && weekText[j] == dayLabel.toString())
             {

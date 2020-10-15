@@ -33,10 +33,18 @@ function onFormSubmission(form) {
         },
         body: JSON.stringify(body)
     };
-    const response = fetch(url, options);
-    if (response && response.ok) {
-        console.log(response);
-    }
+
+    fetch(url, options)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            if (data.code === 'OK') {
+                alert("입력 완료되었습니다.");
+            }  else {
+                alert("입력 실패하였습니다. 관리자에게 문의해주세요.");
+            }
+        });
+
     setTimeout(function () {
         location.reload(true);
     }, 300);

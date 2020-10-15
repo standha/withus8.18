@@ -31,6 +31,10 @@ public class BaseController {
         return userService.getUserById(getUsername());
     }
 
+    protected User getUserAndDate(){
+        return userService.getUserByIdAndDate(getUsername());
+    }
+
     protected String getPatientContact() {
         return getUser().getContact();
     }

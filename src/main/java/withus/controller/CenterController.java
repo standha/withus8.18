@@ -50,20 +50,25 @@ public class CenterController extends BaseController {
 
     @GetMapping({"/center"})
     public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response, @RequestParam(required = false) String token) {
-        User user = getUser();
+        User user = getUserAndDate();
         ModelAndView modelAndView = new ModelAndView();
+
         logger.info("id:{}, url:{}, type:{}, level:{}, week:{}", user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek());
-        if((user.getType() == Type.CAREGIVER) && (getCaretaker() == null)) {
-            modelAndView.addObject("error",true);
+
+        if ((user.getType() == Type.CAREGIVER) && (getCaretaker() == null)) {
+            modelAndView.addObject("error", true);
             modelAndView.setViewName("LogIn/login");
-        }
-        else {
+
+            logger.info("id:{}, url:{}, type:{}", user.getUserId(), request.getRequestURL(), user.getType());
+        } else {
             if (user.getAppToken() != null) {
                 if (token != null) {
                     if (user.getAppToken().equals(token) == false) {
                         Result.Code code;
                         user.setAppToken(token);
+
                         logger.info("id:{}, type:{}, appToken change, appToken:{}", user.getUserId(), user.getType(), user.getAppToken());
+
                         try {
                             user = userService.upsertUser(user);
                             code = Result.Code.OK;
@@ -82,7 +87,9 @@ public class CenterController extends BaseController {
                 if (token != null) {
                     Result.Code code;
                     user.setAppToken(token);
+
                     logger.info("id:{}, type:{}, appToken change, appToken:{}", user.getUserId(), user.getType(), user.getAppToken());
+
                     try {
                         user = userService.upsertUser(user);
                         code = Result.Code.OK;
@@ -102,11 +109,10 @@ public class CenterController extends BaseController {
                 List<AllUserDTO> resultList = new ArrayList<>();
                 ArrayList<String> userFin = userService.getAllUserPlz();
 
+                // userFin.forEach((s)-> resultList.add(AllUserDTO.fromString(s)));
                 for (String aUserFin : userFin) {
                     resultList.add(AllUserDTO.fromString(aUserFin));
                 }
-
-                logger.debug("user:{}", userFin);
 
                 modelAndView.addObject("user", resultList);
                 modelAndView.setViewName("Admin/admin_home");
@@ -134,13 +140,6 @@ public class CenterController extends BaseController {
                 modelAndView.addObject("goalNow", getGoalNow(getConnectId()));
                 modelAndView.addObject("level", ViewLevel(user));
                 modelAndView.addObject("user", user);
-            }
-
-            List<AllUserDTO> resultList = new ArrayList<>();
-            ArrayList<String> userFin = userService.getAllUserPlz();
-
-            for (String aUserFin : userFin) {
-                resultList.add(AllUserDTO.fromString(aUserFin));
             }
         }
         return modelAndView;

@@ -85,13 +85,14 @@
                             <input type="hidden" id="weight-put-action" th:attr="value=@{/weight-history}">
                             <!-- 환자가 로그인 중 -->
                             <div class="insert" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
-                                    <input id="input1" class="num3" placeholder="--.-" min="0"
-                                           type="number" name="weight" th:value="${weight}" step="0.1">
+                                    <input id="input1" class="num4" placeholder="--.-" min="30" max="110"
+                                           type="number" name="weight" th:value="${weight}" step="0.1"
+                                           maxlength="5" onkeypress="return isNumberKey(event)" oninput="maxLengthCheck(this)">
                                 <span>Kg</span>
                             </div>
                             <!-- 보호자가 로그인 중 -->
                             <div class="insert" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
-                                <input id="input1" class="num3" placeholder="--.-"
+                                <input id="input1" class="num4" placeholder="--.-"
                                         type="number" name="weight" th:value="${weight}" step="0.1" disabled>
                                 <span>Kg</span>
                             </div>
@@ -122,5 +123,15 @@
     </footer>
     <!-- // footer -->
 </div>
+<script type="text/javascript">
+
+    function maxLengthCheck(object){
+        if (object.value.length > object.maxLength){
+            //object.maxLength : 매게변수 오브젝트의 maxlength 속성 값입니다.
+            object.value = object.value.slice(0, object.maxLength);
+        }
+    }
+
+</script>
 </body>
 </html>

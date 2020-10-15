@@ -52,33 +52,52 @@ public class LoginController {
 
         if (!isMissingMandatories(user)) {
             try {
+                logger.info("try saveUser id:{}", user.getUserId());
+
                 User existId = userService.getUserById(user.getUserId());
+
+                logger.info("existId:{}", existId);
+
                 User existContact = userService.getUserByContact(user.getContact());
+
+                logger.info("existContact:{}", existContact);
 
                 if (existId == null && existContact == null) {
                     User.Type userType = user.getType();
+
+                    logger.info("save info type:{}", userType);
 
                     switch (userType) {
                         case CAREGIVER:
                             savedUser = userService.upsertUserEncodingPassword(user);
                             code = Result.Code.OK;
+
                             break;
+
                         case PATIENT:
                             User caregiver = user.getCaregiver();
                             if (caregiver == null) {
                                 savedUser = userService.upsertUserEncodingPassword(user);
                                 code = Result.Code.OK;
+
+                                logger.error("code:{}", code);
                             } else {
                                 User existCareGiver = userService.getUserByContact(user.getCaregiver().getContact());
                                 if (existCareGiver == null) {
                                     code = Result.Code.ERROR_NO_EXIST_CAREGIVER;
+
+                                    logger.info("code:{}", code);
                                 } else {
                                     user.setCaregiver(existCareGiver);
                                     savedUser = userService.upsertUserEncodingPassword(user);
                                     code = Result.Code.OK;
+
+                                    logger.info("code:{}", code);
                                 }
                             }
+
                             break;
+
                         default:
                             throw new UnexpectedEnumValueException(userType, User.Type.class);
                     }
@@ -87,14 +106,21 @@ public class LoginController {
                 if (existContact != null) {
                     savedUser = existContact;
                     code = Result.Code.ERROR_DUPLICATE_CONTACT;
+
+                    logger.info("code:{}", code);
                 }
+
                 if (existId != null) {
                     savedUser = existId;
                     code = Result.Code.ERROR_DUPLICATE_ID;
+
+                    logger.info("code:{}", code);
                 }
             } catch (Exception exception) {
                 logger.error(exception.getLocalizedMessage(), exception);
                 code = Result.Code.ERROR_DATABASE;
+
+                logger.error("code:{}", code);
             }
         }
 
