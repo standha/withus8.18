@@ -59,7 +59,6 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-
     @Nullable
     public User getUserById(String id) {
         User user =userRepository.findByUserId(id).orElse(null);

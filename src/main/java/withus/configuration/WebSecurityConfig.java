@@ -43,18 +43,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
                 .permitAll()
-                .antMatchers("/registerUser", "/saveUser", "/admin_login", "/login", "/download/withus.apk")
+                .antMatchers("/registerUser", "/saveUser", "/login", "/download/withus.apk")
                 .permitAll()
                 .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/admin_login")
-                .loginProcessingUrl("/login-process")
-                .defaultSuccessUrl("/center", true)
-                .failureUrl("/admin_login.html?error=true")
-                .failureHandler(failureHandler())
-                .permitAll();
+                .authenticated();
+
 
         httpSecurity.formLogin()
                 .loginPage("/login")
@@ -72,9 +65,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/admin_login")
+                .logoutSuccessUrl("/login?logout=true")
                 .invalidateHttpSession(true);
-
     }
 
     @Bean
@@ -85,11 +77,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationProvider.setUserDetailsService(userService);
 
         return authenticationProvider;
-    }
-
-    @Bean
-    public AuthenticationFailureHandler failureHandler() {
-        return new CustomAuthenticationFailureHandler();
     }
 }
 

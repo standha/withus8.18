@@ -66,6 +66,22 @@
                         </a>
                     </div>
                     <h2>정보설정</h2>
+                    <div >
+                        <a class="btn xsm type07" th:href="@{/logout}">
+                            <span style="
+                            display: inline-block;
+                            width: 15px;
+                            height: 15px;
+                            background-position: -202px -3px;">
+                                <img style="
+                            display: inline-block;
+                            width: 15px;
+                            height: 15px;
+                            background-position: -202px -3px;"
+                            src="images/ico-logout.png" ></span>
+                            <span class="txt-rt">로그아웃</span>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="header-wrap type01" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
@@ -77,6 +93,22 @@
                         </a>
                     </div>
                     <h2>정보설정</h2>
+                    <div th:href="@{/logout}" >
+                        <a class="btn xsm type07">
+                            <span style="
+                            display: inline-block;
+                            width: 15px;
+                            height: 15px;
+                            background-position: -202px -3px;">
+                                <img style="
+                            display: inline-block;
+                            width: 15px;
+                            height: 15px;
+                            background-position: -202px -3px;"
+                                     src="images/ico-logout.png" ></span>
+                            <span class="txt-rt">로그아웃</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </header>

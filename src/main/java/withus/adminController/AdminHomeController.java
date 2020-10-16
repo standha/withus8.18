@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -48,8 +49,7 @@ public class AdminHomeController extends AdminBaseController {
 
     @GetMapping({"/adminHome"})
     public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView modelAndView = new ModelAndView("Admin/admin_home");
-
+        ModelAndView modelAndView = new ModelAndView("/Admin/admin_home");
         return modelAndView;
     }
 
@@ -105,12 +105,25 @@ public class AdminHomeController extends AdminBaseController {
     }
 
     @PostMapping(value = "/logout")
-    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView logoutPage(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-
-        return "redirect:/Login/admin_login?logout";
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("/Login/loginhtml?logout=true");
+        return mav;
     }
+
+    /**
+     * @param  String  (Model and view 방식 말고 다른 방식 예제)
+     */
+/*    @PostMapping(value = "/logout2")
+    public String logoutPage2(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "redirect:/Login/login.html?lougout=true";
+    }*/
 }

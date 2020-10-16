@@ -52,6 +52,9 @@ function loginFail(){
 			<div style="text-align: center; color: #db4848;  font-family: 'Noto Sans KR', 'Roboto', sans-serif; font-size: 18px" th:if="${error}" >
 				<strong style="font-weight: 900">환자를 등록해주세요!</strong>
 			</div>
+			<div style="text-align: center; color: #db4848;  font-family: 'Noto Sans KR', 'Roboto', sans-serif; font-size: 18px" th:if="${param.logout}" >
+				<strong style="font-weight: 900">로그아웃 완료되었습니다. 다음에 봬요!</strong>
+			</div>
 
 			<div class="container" id="content">
 				<div class="login-wrap">
