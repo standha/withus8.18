@@ -62,6 +62,7 @@ public class UserInfoController extends BaseController {
                     , user.getUserId(), request.getRequestURL(), user.getType(), user.getName(), user.getContact());
         }
         modelAndView.addObject("user", user);
+        modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("previousUrl", "/center");
 
         return modelAndView;

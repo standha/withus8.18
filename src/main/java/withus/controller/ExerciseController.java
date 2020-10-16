@@ -71,7 +71,7 @@ public class ExerciseController extends BaseController {
 
                 break;
         }
-
+        modelAndView.addObject("week",user.getWeek());
         modelAndView.addObject("type", typeCheck);
         modelAndView.addObject("previousUrl", "/center");
 
@@ -85,9 +85,7 @@ public class ExerciseController extends BaseController {
         String username = getUsername();
         List<Tbl_Exercise_record> exerciseHistory;
 
-//        logger.info("id:{}, type:{}, push:{}, exerciseHistory_count:{}", user.getUserId(), user.getType(), exerciseHistory.stream().count());
-
-        switch (getUser().getType()) {
+        switch (user.getType()) {
             case PATIENT:
                 Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
                 modelAndView.addObject("count", count);
@@ -107,7 +105,8 @@ public class ExerciseController extends BaseController {
                 break;
         }
 
-        modelAndView.addObject("type", getUser().getType());
+        modelAndView.addObject("type", user.getType());
+        modelAndView.addObject("week",user.getWeek());
         modelAndView.addObject("previousUrl", "exercise");
         return modelAndView;
     }

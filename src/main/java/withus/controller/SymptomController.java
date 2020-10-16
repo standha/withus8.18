@@ -56,6 +56,7 @@ public class SymptomController extends BaseController {
             Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
+        modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("type", typeCheck);
         modelAndView.addObject("previousUrl", "/center");
 
@@ -77,7 +78,7 @@ public class SymptomController extends BaseController {
             modelAndView.addObject("count", count);
         }
         modelAndView.addObject("type", user.getType());
-
+        modelAndView.addObject("week", user.getWeek());
         return modelAndView;
     }
 

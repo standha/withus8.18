@@ -114,16 +114,4 @@ public class AdminHomeController extends AdminBaseController {
         mav.setViewName("/Login/loginhtml?logout=true");
         return mav;
     }
-
-    /**
-     * @param  String  (Model and view 방식 말고 다른 방식 예제)
-     */
-/*    @PostMapping(value = "/logout2")
-    public String logoutPage2(HttpServletRequest request, HttpServletResponse response) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
-            new SecurityContextLogoutHandler().logout(request, response, auth);
-        }
-        return "redirect:/Login/login.html?lougout=true";
-    }*/
 }

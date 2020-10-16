@@ -27,7 +27,7 @@
 
     <!-- header -->
     <header>
-        <div class="header-wrap type02" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+        <div class="header-wrap type02" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
             <div class="head">
                 <div onclick="helperRequest()" >
                     <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
@@ -40,7 +40,7 @@
                 </h2>
             </div>
         </div>
-        <div class="header-wrap type02" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
+        <div class="header-wrap type02" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
             <div class="head">
                 <div onclick="helperRequest()" >
                     <a class="btn xsm type07" href="tel:010-8454-9186">
@@ -54,7 +54,7 @@
             </div>
         </div>
     </header>
-    <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+    <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
         <input type = 'hidden' name = "symptom"           th:value = "${count.symptom}" style = "display:none">
         <input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
         <input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">

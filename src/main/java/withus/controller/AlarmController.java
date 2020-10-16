@@ -94,6 +94,7 @@ public class AlarmController extends BaseController {
 
         modelAndView.addObject("medicationAlarmOnoff", alarm.isMedicationAlarmOnoff());
         modelAndView.addObject("type", user.getType());
+        modelAndView.addObject("week",user.getWeek());
         modelAndView.addObject("previousUrl", "/alarm");
 
         logger.info("id:{}, url:{} , alarmOnOff:{}, morning:{}, lunch:{}, dinner:{}", user.getUserId(), request.getRequestURL(), alarm.isMedicationAlarmOnoff(), alarm.getMedicationTimeMorning(), alarm.getMedicationTimeLunch(), alarm.getMedicationTimeDinner());
@@ -206,6 +207,7 @@ public class AlarmController extends BaseController {
 
         modelAndView.addObject("appointment", appointment);
         modelAndView.addObject("type", user.getType());
+        modelAndView.addObject("week",user.getWeek());
         modelAndView.addObject("previousUrl", "/alarm");
 
         logger.info("id:{}, url:{}, appointDate:{}, appointTime:{}", user.getUserId(), request.getRequestURL(), appointment.getOutPatientVisitDate(), appointment.getOutPatientVisitTime());

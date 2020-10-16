@@ -51,6 +51,7 @@ public class WeightController extends BaseController {
             modelAndView.addObject("count", count);
         }
         modelAndView.addObject("type", typeCheck);
+        modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("previousUrl", "/center");
 
         return modelAndView;
@@ -69,7 +70,7 @@ public class WeightController extends BaseController {
         List<Tbl_weight> weightRecord;
         weightRecord = weightService.getWeightRecord(getConnectId(), 0);
         modelAndView.addObject("weightRecord", weightRecord);
-
+        modelAndView.addObject("week", user.getWeek());
         return modelAndView;
     }
 

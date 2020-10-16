@@ -56,6 +56,7 @@ public class BloodPressureController extends BaseController {
         }
 
         modelAndView.addObject("type", user.getType());
+        modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("previousUrl", "/center");
 
         return modelAndView;

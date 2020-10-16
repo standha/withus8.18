@@ -22,7 +22,7 @@
 <div class="skip-navi">
     <a href="#content">본문 바로가기</a>
 </div>
-<div th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+<div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
     <input type = 'hidden' name = "symptom"           th:value = "${count.symptom}" style = "display:none">
     <input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
     <input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">
@@ -39,7 +39,7 @@
     <!-- header -->
     <header>
         <div class="header-wrap type01">
-            <div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
                     <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
@@ -51,7 +51,7 @@
                     <span>혈압/맥박</span>
                 </h2>
             </div>
-            <div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
                     <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
@@ -77,13 +77,13 @@
                         <div class="field">
                             <label for="input1">혈압:수축기/이완기</label>
                             <input type="hidden" id="bloodPressure-history-get-action" th:attr="value=@{/bloodPressure-all-history}">
-                            <div class="insert" id="date"  th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+                            <div class="insert" id="date"  th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
                                 <input type="number" class="num3" id="input1" th:value="${contraction}" min="40" max="200" placeholder="--" name="contraction" maxlength="3" oninput="maxLengthCheck(this)" >
                                 <span class="bar">/</span>
                                 <input type="number" class="num3" id="input2" th:value="${relaxation}" min="40" max="200" placeholder="--" name="relaxation" maxlength="3" oninput="maxLengthCheck(this)">
                                 <span>mmHg</span>
                             </div>
-                            <div class="insert" id="date"  th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
+                            <div class="insert" id="date"  th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                                 <input type="number" class="num3" id="input1" th:value="${contraction}" placeholder="--" name="contraction" disabled>
                                 <span class="bar">/</span>
                                 <input type="number" class="num3" id="input2" th:value="${relaxation}" placeholder="--" name="relaxation" disabled>
@@ -92,21 +92,21 @@
                         </div>
                         <div class="field">
                             <label for="input2">맥박수</label>
-                            <div class="insert" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+                            <div class="insert" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
                                 <input type="number" id="input2" class="num3" th:value="${pressure}" min="40" max="200" placeholder="--" name="pressure" maxlength="3" oninput="maxLengthCheck(this)">
                                 <span>(회/분)</span>
                             </div>
-                            <div class="insert" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
+                            <div class="insert" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                                 <input type="number" id="input2" class="num3" th:value="${pressure}" placeholder="--" name="pressure" disabled>
                                 <span>(회/분)</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT}" class="btn-wrap type01">
+                <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25" class="btn-wrap type01">
                     <button class="btn xlg type01" type="submit">입력</button>
                 </div>
-                <div th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}" class="btn-wrap type01">
+                <div th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25" class="btn-wrap type01">
                     <button class="btn xlg type02" type="submit" disabled>입력</button>
                 </div>
             </div>

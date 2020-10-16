@@ -30,15 +30,17 @@ public class ProgressScheduler {
 
     //cron = "0 0 0 * * MON"
     @Scheduled(cron = "0 0 0 * * MON")
-    public void progressAutoIncrement() {
+    public void weekAutoIncrement() {
         List<User> allPatients = userService.getPatient(User.Type.PATIENT);
         for (User user : allPatients) {
-            logger.info("ASIS id:{}, type:{}, week:{}", user.getUserId(), user.getType(), user.getWeek());
+            if(user.getWeek() <= 24) {
+                logger.info("ASIS id:{}, type:{}, week:{}", user.getUserId(), user.getType(), user.getWeek());
 
-            user.setWeek(user.getWeek() + 1);
-            userService.upsertUser(user);
+                user.setWeek(user.getWeek() + 1);
+                userService.upsertUser(user);
 
-            logger.info("TOBE id:{}, type:{}, week:{}", user.getUserId(), user.getType(), user.getWeek());
+                logger.info("TOBE id:{}, type:{}, week:{}", user.getUserId(), user.getType(), user.getWeek());
+            }
         }
     }
 

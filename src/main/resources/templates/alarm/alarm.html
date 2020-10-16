@@ -20,7 +20,7 @@
 <div class="skip-navi">
 	<a href="#content">본문 바로가기</a>
 </div>
-<div th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+<div th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${user.week} != 25">
 	<input type = 'hidden' name = "symptom"           th:value = "${count.symptom}" style = "display:none">
 	<input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
 	<input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">
@@ -39,7 +39,7 @@
 	<!-- header -->
 	<header>
 		<div class="header-wrap type02">
-			<div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+			<div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${user.week} != 25">
 				<div onclick="helperRequest()" >
 					<a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
 						<span class="ico-call" ></span>
@@ -48,7 +48,7 @@
 				</div>
 				<h2>알람</h2>
 			</div>
-			<div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+			<div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${user.week} == 25">
 				<div onclick="helperRequest()" >
 					<a class="btn xsm type07" href="tel:010-8454-9186">
 						<span class="ico-call" ></span>

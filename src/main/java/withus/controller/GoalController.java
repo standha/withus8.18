@@ -31,14 +31,15 @@ public class GoalController extends BaseController {
     @GetMapping("/goal")
     public ModelAndView getGoal() {
         ModelAndView modelAndView = new ModelAndView("goal/goal");
-        User.Type typeCheck = getUser().getType();
-        Tbl_goal goal = goalService.getGoalId(getConnectId());
         User user = getUser();
+        User.Type typeCheck = user.getType();
+        Tbl_goal goal = goalService.getGoalId(getConnectId());
         Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
 
         modelAndView.addObject("count", count);
         modelAndView.addObject("goal", goal.getGoal());
         modelAndView.addObject("type", typeCheck);
+        modelAndView.addObject("week",user.getWeek());
         modelAndView.addObject("previousUrl", "/center");
 
         logger.info("id:{}, goal:{}", getUser().getUserId(), goal.getGoal());

@@ -69,6 +69,7 @@ public class MoistureNatriumController extends BaseController {
         }
 
         modelAndView.addObject("type", user.getType());
+        modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("previousUrl", "moistureNatrium");
 
         return modelAndView;
@@ -92,7 +93,7 @@ public class MoistureNatriumController extends BaseController {
         modelAndView.addObject("moisture", moistureAllHistory);
         modelAndView.addObject("moistureWeek", moistureWeek);
         modelAndView.addObject("previousUrl", "moistureNatrium");
-
+        modelAndView.addObject("week", user.getWeek());
         return modelAndView;
     }
 
@@ -116,6 +117,7 @@ public class MoistureNatriumController extends BaseController {
             Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
+        modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("type", user.getType());
 
         return modelAndView;
@@ -190,7 +192,7 @@ public class MoistureNatriumController extends BaseController {
         modelAndView.addObject("high", highCount);
         modelAndView.addObject("natrium", allnatriums);
         modelAndView.addObject("previousUrl", "/natrium");
-
+        modelAndView.addObject("week", user.getWeek());
         return modelAndView;
     }
 

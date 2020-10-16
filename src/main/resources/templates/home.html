@@ -24,7 +24,7 @@
 </div>
 
 <!-- wrap -->
-<div id="wrap" class="main-page" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 0 ">
+<div id="wrap" class="main-page" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
 	
 	<!-- header -->
 	<header>
@@ -129,7 +129,7 @@
 </div>
 <!--// wrap -->
 
-<div id="wrap" class="main-page" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 0">
+<div id="wrap" class="main-page" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
 
 	<header>
 		<div class="header-wrap">
@@ -194,7 +194,7 @@
 
 	<!-- footer -->
 	<footer>
-		<div class="footer-wrap">
+		<div class="footer-wrap" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25">
             <div class="chat-txt">
                 <span class="green">챗 봇 </span>
                 <span>도우미 </span>
@@ -205,6 +205,19 @@
                 <span class="txt-lt">채팅시작</span>
                 <span class="ico-arrow1"></span>
             </a>
+		</div>
+
+		<div class="footer-wrap" th:if="${week} == 25">
+			<div class="chat-txt">
+				<span class="green">챗 봇 </span>
+				<span>도우미 </span>
+				<span class="black">위더스랑 </span>
+				<span class="ico-logo2"></span>
+			</div>
+			<a class="btn sm type08" href="javascript: alert('아직 서비스 기간이 아닙니다.');">
+				<span class="txt-lt">채팅시작</span>
+				<span class="ico-arrow1"></span>
+			</a>
 		</div>
 	</footer>
 	<!-- // footer -->
