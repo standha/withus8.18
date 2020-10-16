@@ -26,7 +26,7 @@
 	꽃피우기 6단계 => level01 / level02 / level03 / level04 / level05 / level06
 	class 조합으로 총 24단계 화면구성
  -->
-<div th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+<div th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
     <input type = 'hidden' name = "symptom"           th:value = "${count.symptom}" style = "display:none">
     <input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
     <input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">
@@ -44,17 +44,17 @@
     <!-- header -->
     <header>
         <div class="header-wrap">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -91,17 +91,17 @@
     <!-- header -->
     <header>
         <div class="header-wrap">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -138,17 +138,17 @@
     <!-- header -->
     <header>
         <div class="header-wrap">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -185,17 +185,17 @@
     <!-- header -->
     <header>
         <div class="header-wrap">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -233,17 +233,17 @@
     <!-- header -->
     <header>
         <div class="header-wrap">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -280,17 +280,17 @@
     <!-- header -->
     <header>
         <div class="header-wrap">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -327,17 +327,17 @@
     <!-- header -->
     <header>
         <div class="header-wrap">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -374,17 +374,17 @@
     <!-- header -->
     <header>
         <div class="header-wrap">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -422,17 +422,17 @@
     <!-- header -->
     <header>
         <div class="header-wrap">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -469,17 +469,17 @@
     <!-- header -->
     <header>
         <div class="header-wrap">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -516,17 +516,17 @@
     <!-- header -->
     <header>
         <div class="header-wrap">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -563,17 +563,17 @@
     <!-- header -->
     <header>
         <div class="header-wrap">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -611,17 +611,17 @@
     <!-- header -->
     <header>
         <div class="header-wrap">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -658,17 +658,17 @@
     <!-- header -->
     <header>
         <div class="header-wrap">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -705,17 +705,17 @@
     <!-- header -->
     <header>
         <div class="header-wrap">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -752,17 +752,17 @@
     <!-- header -->
     <header>
         <div class="header-wrap">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -800,17 +800,17 @@
     <!-- header -->
     <header>
         <div class="header-wrap">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -847,17 +847,17 @@
     <!-- header -->
     <header>
         <div class="header-wrap">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -894,17 +894,17 @@
     <!-- header -->
     <header>
         <div class="header-wrap">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -941,17 +941,17 @@
     <!-- header -->
     <header>
         <div class="header-wrap">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -989,17 +989,17 @@
     <!-- header -->
     <header>
         <div class="header-wrap">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -1036,17 +1036,17 @@
     <!-- header -->
     <header>
         <div class="header-wrap">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -1083,17 +1083,17 @@
     <!-- header -->
     <header>
         <div class="header-wrap">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -1130,17 +1130,17 @@
     <!-- header -->
     <header>
         <div class="header-wrap">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>

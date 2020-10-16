@@ -21,6 +21,7 @@ public class AllUserDTO {
     private String guserPassword;
     private String guserContact;
     private String currentCode;
+    private LocalDate userRecordDate;
 
     public static AllUserDTO fromString(String queryResult) {
         String[] array = queryResult.split(",");
@@ -36,7 +37,8 @@ public class AllUserDTO {
                 .guserId(array[7])
                 .guserPassword(array[8])
                 .guserContact(array[9])
-                .currentCode(array[10])
+                .userRecordDate(Utility.parseDate(array[10]))
+                .currentCode(array[11])
                 .build();
     }
 }

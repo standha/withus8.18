@@ -100,6 +100,7 @@ public class WwithusService {
 
     public List<WwithusEntry> getAnswerWwithusEntries(String currentCode) {
         List<WwithusEntry> answerNode = wwithusEntryRepository.findAllAnswersByCodeStartsWithButNotExactlyOrderByCode(currentCode + "_A");
+
         return answerNode;
     }
 
@@ -270,7 +271,6 @@ public class WwithusService {
         return NoPatientChatBalloons;
     }
 
-
     private List<AnswerButton> getAnswerButtons(WwithusEntry wwithusEntry) {
 
         List<AnswerButton> answerButtons = new ArrayList<>();
@@ -303,6 +303,7 @@ public class WwithusService {
         if (user.getType() == User.Type.CAREGIVER) {
             user = userService.getUserByCaregiverId(user.getUserId());
         }
+
         String username = user.getName();
         if (content.startsWith("님 ")) {
             return username + content;

@@ -19,14 +19,13 @@ import withus.util.Utility;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 @Controller
-public class userInfoController extends BaseController {
+public class UserInfoController extends BaseController {
     private final CountService countService;
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    public userInfoController(AuthenticationFacade authenticationFacade, UserService userService, CountService countService) {
+    public UserInfoController(AuthenticationFacade authenticationFacade, UserService userService, CountService countService) {
         super(userService, authenticationFacade);
         this.countService = countService;
     }
@@ -40,26 +39,30 @@ public class userInfoController extends BaseController {
 
     @GetMapping("/changeInfo")
     public ModelAndView getUserInfo(HttpServletRequest request) {
-        ModelAndView modelAndView = new ModelAndView("/changeInfo");
+        ModelAndView modelAndView = new ModelAndView("changeInfo");
         User user = getUser();
         if (user.getType() == User.Type.PATIENT && user.getCaregiver() != null) {
             Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
             modelAndView.addObject("caregiver_contact", user.getCaregiver().getContact());
-            logger.trace("id:{}, url:{}, type:{}, level:{}, week:{}, gender:{}, name:{}, contact:{}, caregiver_contact:{}, birthdate:{}"
+
+            logger.info("id:{}, url:{}, type:{}, level:{}, week:{}, gender:{}, name:{}, contact:{}, caregiver_contact:{}, birthdate:{}"
                     , user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek(), user.getGender(), user.getName(), user.getContact(), user.getCaregiver().getContact(), user.getBirthdate());
         } else if (user.getType() == User.Type.PATIENT && user.getCaregiver() == null) {
             Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
             modelAndView.addObject("caregiver_contact", null);
-            logger.trace("id:{}, url:{}, type:{}, level:{}, week:{}, gender:{}, name:{}, contact:{}, caregiver_contact:{}, birthdate:{}"
+
+            logger.info("id:{}, url:{}, type:{}, level:{}, week:{}, gender:{}, name:{}, contact:{}, caregiver_contact:{}, birthdate:{}"
                     , user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek(), user.getGender(), user.getName(), user.getContact(), null, user.getBirthdate());
         } else {
             modelAndView.addObject("caregiver_contact", null);
-            logger.trace("id:{}, url:{}, type:{}, name:{}, contact:{}"
+
+            logger.info("id:{}, url:{}, type:{}, name:{}, contact:{}"
                     , user.getUserId(), request.getRequestURL(), user.getType(), user.getName(), user.getContact());
         }
         modelAndView.addObject("user", user);
+        modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("previousUrl", "/center");
 
         return modelAndView;
@@ -69,17 +72,19 @@ public class userInfoController extends BaseController {
     @ResponseBody
     public Result<User> putMember(@RequestBody User user, HttpServletRequest request) {
         if (user.getType() == User.Type.PATIENT && user.getCaregiver() != null) {
-            logger.trace("id:{}, url:{}, type:{}, level:{}, week:{}, gender:{}, name:{}, contact:{}, caregiver_contact:{}, birthdate:{}"
+            logger.info("id:{}, url:{}, type:{}, level:{}, week:{}, gender:{}, name:{}, contact:{}, caregiver_contact:{}, birthdate:{}"
                     , user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek(), user.getGender(), user.getName(), user.getContact(), user.getCaregiver().getContact(), user.getBirthdate());
         } else if (user.getType() == User.Type.PATIENT && user.getCaregiver() == null) {
-            logger.trace("id:{}, url:{}, type:{}, level:{}, week:{}, gender:{}, name:{}, contact:{}, caregiver_contact:{}, birthdate:{}"
+            logger.info("id:{}, url:{}, type:{}, level:{}, week:{}, gender:{}, name:{}, contact:{}, caregiver_contact:{}, birthdate:{}"
                     , user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek(), user.getGender(), user.getName(), user.getContact(), null, user.getBirthdate());
         } else {
-            logger.trace("id:{}, url:{}, type:{}, name:{}, contact:{}"
+            logger.info("id:{}, url:{}, type:{}, name:{}, contact:{}"
                     , user.getUserId(), request.getRequestURL(), user.getType(), user.getName(), user.getContact());
         }
+
         User savedUser = null;
         Result.Code code = Result.Code.ERROR;
+
         if (!isMissingMandatories(user)) {
             try {
                 User.Type userType = user.getType();
@@ -109,6 +114,7 @@ public class userInfoController extends BaseController {
                 }
             } catch (Exception exception) {
                 logger.error(exception.getLocalizedMessage(), exception);
+
                 code = Result.Code.ERROR_DATABASE;
             }
         }
@@ -125,8 +131,10 @@ public class userInfoController extends BaseController {
                 Utility.nullOrEmptyOrSpace(user.getPassword()) ||
                 Utility.nullOrEmptyOrSpace(user.getName()) ||
                 Utility.nullOrEmptyOrSpace(user.getContact())) {
+
             return true;
         }
+
         return false;
     }
 }

@@ -45,10 +45,23 @@ public class NoticeScheduler {
     }
 
     public @ResponseBody
-    ResponseEntity<String> notice(String title, List<String> tokenList, String message) throws InterruptedException {
+    ResponseEntity<String> notice(String subject, List<String> tokenList, String message) throws InterruptedException {
         if (tokenList.isEmpty()) {
             return new ResponseEntity<>("No Target!", HttpStatus.BAD_REQUEST);
         }
+
+        String title;
+
+        if (subject.startsWith("pill")) {
+            title = "pill";
+        } else if (subject.startsWith("withus")) {
+            title = "withus";
+        } else if (subject.equals("2 hours before visit") || subject.equals("1 day before visit")) {
+            title = "visit";
+        } else {
+            title = "center";
+        }
+
         String notifications = AndroidPushPeriodicNotifications.PeriodicNotificationJson(title, message, tokenList);
         HttpEntity<String> request = new HttpEntity<>(notifications);
 
@@ -57,13 +70,17 @@ public class NoticeScheduler {
 
         try {
             String firebaseResponse = pushNotification.get();
+            logger.info("push:{}, result:{}", subject, firebaseResponse);
+
             return new ResponseEntity<>(firebaseResponse, HttpStatus.OK);
         } catch (InterruptedException e) {
-            logger.debug("got interrupted!");
+            logger.info("got interrupted!");
+
             throw new InterruptedException();
         } catch (ExecutionException e) {
-            logger.debug("execution error!");
+            logger.info("execution error!");
         }
+
         return new ResponseEntity<>("Push Notification ERROR!", HttpStatus.BAD_REQUEST);
     }
 
@@ -74,37 +91,45 @@ public class NoticeScheduler {
         List<String> lunchToken = new ArrayList<>();
         List<String> dinnerToken = new ArrayList<>();
         List<Tbl_medication_alarm> alarms = alarmService.getPillAlarmOn();
+
         for (Tbl_medication_alarm alarm : alarms) {
             LocalTime localTime = LocalTime.now();
 
             if (alarm.getMedicationTimeMorning() != null) {
                 if (localTime.getHour() == alarm.getMedicationTimeMorning().getHour() && localTime.getMinute() == alarm.getMedicationTimeMorning().getMinute()) {
                     User idToken = userService.getUserById(alarm.getId());
-                    morningToken.add(idToken.getAppToken());
-                    logger.trace("id:{}, push:{}", idToken.getUserId(), "Taking morning pills");
+                    if (idToken.getAppToken() != null) {
+                        morningToken.add(idToken.getAppToken());
+                        logger.info("Taking morning pills, id:{}", idToken.getUserId());
+                    }
                 }
             }
 
             if (alarm.getMedicationTimeLunch() != null) {
                 if (localTime.getHour() == alarm.getMedicationTimeLunch().getHour() && localTime.getMinute() == alarm.getMedicationTimeLunch().getMinute()) {
                     User idToken = userService.getUserById(alarm.getId());
-                    lunchToken.add(idToken.getAppToken());
-                    logger.trace("id:{}, push:{}", idToken.getUserId(), "Taking lunch pills");
+                    if (idToken.getAppToken() != null) {
+                        lunchToken.add(idToken.getAppToken());
+                        logger.info("Taking lunch pills, id:{}", idToken.getUserId());
+                    }
                 }
             }
 
             if (alarm.getMedicationTimeDinner() != null) {
                 if (localTime.getHour() == alarm.getMedicationTimeDinner().getHour() && localTime.getMinute() == alarm.getMedicationTimeDinner().getMinute()) {
                     User idToken = userService.getUserById(alarm.getId());
-                    dinnerToken.add(idToken.getAppToken());
-                    logger.trace("id:{}, push:{}", idToken.getUserId(), "Taking dinner pills");
+                    if (idToken.getAppToken() != null) {
+                        dinnerToken.add(idToken.getAppToken());
+                        logger.info("Taking dinner pills, id:{}", idToken.getUserId());
+                    }
                 }
             }
         }
+
         try {
-            notice("pill", morningToken, "아침 약을 복용하실 시간이에요.\n 지금 약을 복용해주세요!");
-            notice("pill", lunchToken, "점심 약을 복용하실 시간이에요.\n 지금 약을 복용해주세요!");
-            notice("pill", dinnerToken, "저녁 약을 복용하실 시간이에요.\n 약 복용 후 복약 기록에 기록해주세요.");
+            notice("pill_morning", morningToken, "아침 약을 복용하실 시간이에요.\n지금 약을 복용해주세요!");
+            notice("pill_lunch", lunchToken, "점심 약을 복용하실 시간이에요.\n지금 약을 복용해주세요!");
+            notice("pill_dinner", dinnerToken, "저녁 약을 복용하실 시간이에요.\n약 복용 후 복약 기록에 기록해주세요.");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -122,19 +147,21 @@ public class NoticeScheduler {
         for (Tbl_outpatient_visit_alarm visit : visits) {
             if (tomorrow.equals(visit.getOutPatientVisitDate())) {
                 User user = userService.getUserById(visit.getId());
-                visitToken.add(user.getAppToken());
-                logger.info("id:{}, type:{}, push:{}", user.getUserId(), user.getType(), "One day before the outpatient treatment");
+                if (user.getAppToken() != null) {
+                    visitToken.add(user.getAppToken());
+                    logger.info("One day before the outpatient treatment, id:{}, type:{}", user.getUserId(), user.getType());
+                }
                 User guser = user.getCaregiver();
-                if (guser == null) {
-                    break;
-                } else {
-                    visitToken.add(guser.getAppToken());
-                    logger.info("id:{}, type:{}, patientId:{}, push:{}", guser.getUserId(), guser.getType(), user.getUserId(), "One day before the outpatient treatment");
+                if (guser != null) {
+                    if (guser.getAppToken() != null) {
+                        visitToken.add(guser.getAppToken());
+                        logger.info("One day before the outpatient treatment, id:{}, type:{}, patientId:{}", guser.getUserId(), guser.getType(), user.getUserId());
+                    }
                 }
             }
         }
         try {
-            notice("visit", visitToken, "내일 병원 진료 전 준비사항 (예: 금식)이 있는 지 확인해보세요!");
+            notice("1 day before visit", visitToken, "내일 병원 진료 전 준비사항 (예: 금식)이 있는 지 확인해보세요!");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -149,26 +176,39 @@ public class NoticeScheduler {
         LocalTime time = now.toLocalTime().plusHours(2);
         List<Tbl_outpatient_visit_alarm> visits = alarmService.getVisitAlarmOn();
 
-        logger.info("visitNotice2 time:{}", time);
-        logger.info("visitNotice2 visits:{}", visits);
+        logger.info("2 hours before outpatient time check, time:{}, alarm_on_count:{}", time, visits.stream().count());
 
         for (Tbl_outpatient_visit_alarm visit : visits) {
-            if (date.isEqual(visit.getOutPatientVisitDate()) && time.getHour() == visit.getOutPatientVisitTime().getHour() && time.getMinute() == visit.getOutPatientVisitTime().getMinute()) {
+            if (visit.getOutPatientVisitTime() == null) {
+                logger.info("outPatientVisitTime is null id:{}", visit.getId());
+
+                continue;
+            }
+
+            if (date.isEqual(visit.getOutPatientVisitDate()) &&
+                    time.getHour() == visit.getOutPatientVisitTime().getHour() &&
+                    time.getMinute() == visit.getOutPatientVisitTime().getMinute()) {
 
                 User user = userService.getUserById(visit.getId());
-                visitToken.add(user.getAppToken());
-                logger.info("id:{}, type:{}, push:{}, token:{}", user.getUserId(), user.getType(), "2 hours before the outpatient treatment", user.getAppToken());
+                if (user.getAppToken() != null) {
+                    visitToken.add(user.getAppToken());
+
+                    logger.info("2 hours before the outpatient treatment, id:{}, type:{}, token:{}", user.getUserId(), user.getType(), user.getAppToken());
+                }
+
                 User guser = user.getCaregiver();
-                if (guser == null) {
-                    break;
-                } else {
-                    visitToken.add(guser.getAppToken());
-                    logger.trace("id:{}, type:{}, patientId:{}, push:{}", guser.getUserId(), guser.getType(), user.getUserId(), "2 hours before the outpatient treatment");
+                if (guser != null) {
+                    if (guser.getAppToken() != null) {
+                        visitToken.add(guser.getAppToken());
+
+                        logger.info("2 hours before the outpatient treatment, id:{}, type:{}, patientId:{}", guser.getUserId(), guser.getType(), user.getUserId());
+                    }
                 }
             }
         }
+
         try {
-            notice("visit", visitToken, "병원 진료 전 준비사항 (예: 금식)이 있는 지 확인해보세요!");
+            notice("2 hours before visit", visitToken, "병원 진료 전 준비사항 (예: 금식)이 있는 지 확인해보세요!");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -179,14 +219,18 @@ public class NoticeScheduler {
     public void withusNotice1() {
         List<String> tokenList = new ArrayList<String>();
         List<User> patients = userService.getPatientToken(User.Type.PATIENT);
+
         for (User patient : patients) {
             if (patient.getWeek() > 0 && patient.getWeek() < 9) {
-                tokenList.add(patient.getAppToken());
-                logger.trace("id:{}, push:{}", patient.getUserId(), "1~8 Week WithusRang");
+                if (patient.getAppToken() != null) {
+                    tokenList.add(patient.getAppToken());
+                    logger.info("1~8 Week WithusRang, id:{}", patient.getUserId());
+                }
             }
         }
+
         try {
-            notice("withus", tokenList, " 방금 [ 위더스랑 ]에 메시지가 도착했어요. ");
+            notice("withus 1~8", tokenList, " 방금 [ 위더스랑 ]에 메시지가 도착했어요. ");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -197,14 +241,18 @@ public class NoticeScheduler {
     public void withusNotice2() {
         List<String> tokenList = new ArrayList<String>();
         List<User> patients = userService.getPatientToken(User.Type.PATIENT);
+
         for (User patient : patients) {
             if (patient.getWeek() >= 9 && patient.getWeek() <= 24) {
-                tokenList.add(patient.getAppToken());
-                logger.trace("id:{}, push:{}", patient.getUserId(), "9~24 Week WithusRang");
+                if (patient.getAppToken() != null) {
+                    tokenList.add(patient.getAppToken());
+                    logger.info("9~24 Week WithusRang, id:{}", patient.getUserId());
+                }
             }
         }
+
         try {
-            notice("withus", tokenList, " 방금 [ 위더스랑 ]에 메시지가 도착했어요. ");
+            notice("withus 9~24", tokenList, " 방금 [ 위더스랑 ]에 메시지가 도착했어요. ");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -217,12 +265,16 @@ public class NoticeScheduler {
         List<User> patients = userService.getAllToken();
         for (User patient : patients) {
             if (patient.getType().equals(User.Type.PATIENT)) {
-                logger.trace("id:{}, name:{}, push:{}", patient.getUserId(), patient.getName(), "Daily 20:00 record");
-                try {
-                    send("center", patient.getAppToken(),
-                            patient.getName() + "님, 오늘 심장 건강을 위해 실천하신 내용을 [위더스]에 기록하셨나요?\n 기록하지 않았다면 지금 기록해주세요!");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                if (patient.getWeek() <= 24) {
+                    logger.info("Daily 20:00 record, id:{}, name:{}", patient.getUserId(), patient.getName());
+                    try {
+                        if (patient.getAppToken() != null) {
+                            send("center", patient.getAppToken(),
+                                    patient.getName() + "님, 오늘 심장 건강을 위해 실천하신 내용을 [위더스]에 기록하셨나요?\n기록하지 않았다면 지금 기록해주세요!");
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
@@ -244,6 +296,7 @@ public class NoticeScheduler {
 
         try {
             String firebaseResponse = pushNotification.get();
+            logger.info("push:{}, result:{}", "daily check", firebaseResponse);
             return new ResponseEntity<>(firebaseResponse, HttpStatus.OK);
         } catch (InterruptedException e) {
             logger.debug("got interrupted!");

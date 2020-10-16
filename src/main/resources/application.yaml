@@ -1,14 +1,14 @@
 server:
-  port: 8080
+  port: 80
   shutdown: graceful
 
 spring:
-  application.name: withus1
+  application.name: withus
 
   datasource:
     url: jdbc:mysql://127.0.0.1/withus?serverTimezone=Asia/Seoul
     username: withus
-    password: withus
+    password: Withus@12
     driver-class-name: com.mysql.cj.jdbc.Driver
     initialization-mode: never
     sql-script-encoding: UTF-8
@@ -20,6 +20,6 @@ spring:
     # you should always set that property to false
     # because it gives you no benefit at all.
     # https://stackoverflow.com/a/22977693/1986241
-    show-sql: false
+    show-sql: true
     hibernate:
       ddl-auto: update

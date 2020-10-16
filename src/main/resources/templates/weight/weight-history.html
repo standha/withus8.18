@@ -25,7 +25,7 @@
 <div class="skip-navi">
 	<a href="#content">본문 바로가기</a>
 </div>
-<div th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+<div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
 	<input type = 'hidden' name = "symptom"           th:value = "${count.symptom}" style = "display:none">
 	<input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
 	<input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">
@@ -44,9 +44,9 @@
 	<!-- header -->
 	<header>
 		<div class="header-wrap type01">
-			<div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+			<div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
 				<div onclick="helperRequest()" >
-					<a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+					<a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
 						<span class="ico-call" ></span>
 						<span class="txt-rt">도우미</span>
 					</a>
@@ -56,9 +56,9 @@
 					<span>체중 변화</span>
 				</h2>
 			</div>
-			<div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
+			<div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
 				<div onclick="helperRequest()" >
-					<a class="btn xsm type07" href="tel:02-820-5198">
+					<a class="btn xsm type07" href="tel:010-8454-9186">
 						<span class="ico-call" ></span>
 						<span class="txt-rt">도우미</span>
 					</a>
@@ -181,12 +181,12 @@
 								yAxes:[{
 									ticks: {
 										beginAtZero: true,
-										min: 0,
-										max: 100,
+										min: 30,
+										max: 110,
 										stepSize: 10,
 										maxTicksLimit: 20,
 										callback: function(value, index, values) {
-											return value == 0 || value == 20 || value == 40 || value == 60 ||  value == 80 || value == 100?value:'';
+											return value == 30 || value == 50 || value == 70 || value == 90 ||  value == 110?value:'';
 										}
 									}
 								}]

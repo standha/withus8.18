@@ -16,6 +16,7 @@
 	<script th:src="@{/js/common.js}"></script>
 	<script th:src="@{/js/alarm/appointments.js}"></script>
 	<script th:src="@{/js/help.js}"></script>
+	<script th:src="@{/js/input_limit.js}"></script>
 </head>
 <body th:onload="'thCheck(' + ${time} + ')'">
 <script th:inline="javascript">
@@ -93,7 +94,7 @@
 	<a href="#content">본문 바로가기</a>
 </div>
 
-<div th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+<div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 " >
 	<input type = 'hidden' name = "symptom"           th:value = "${count.symptom}" style = "display:none">
 	<input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
 	<input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">
@@ -113,9 +114,9 @@
 	<!-- header -->
 	<header>
 		<div class="header-wrap type01">
-			<div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+			<div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
 				<div onclick="helperRequest()" >
-					<a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+					<a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
 						<span class="ico-call" ></span>
 						<span class="txt-rt">도우미</span>
 					</a>
@@ -125,9 +126,9 @@
 					<span>외래방문시간</span>
 				</h2>
 			</div>
-			<div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
+			<div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
 				<div onclick="helperRequest()" >
-					<a class="btn xsm type07" href="tel:02-820-5198">
+					<a class="btn xsm type07" href="tel:010-8454-9186">
 						<span class="ico-call" ></span>
 						<span class="txt-rt">도우미</span>
 					</a>
@@ -170,9 +171,9 @@
 						<div class="field-wrap type04">
 							<div class="field">
 								<div class="insert">
-									<input type="number" class="num2" id="hour" name="hour" placeholder="- -" th:value="${hour}" min="1" max="12" maxlength="2">
+									<input type="number" class="num2" id="hour" name="hour" placeholder="- -" th:value="${hour}" min="1" max="12" maxlength="2" oninput="maxLengthCheck(this)">
 									<span>시</span>
-									<input type="number" class="num2" id="minute" name="minute" placeholder="- -" th:value="${minute}" max="59" maxlength="2">
+									<input type="number" class="num2" id="minute" name="minute" placeholder="- -" th:value="${minute}" max="59" maxlength="2" oninput="maxLengthCheck(this)">
 									<span>분</span>
 								</div>
 							</div>
@@ -229,14 +230,14 @@
                         <span class="chk-mark">
                         <input type="checkbox" name="visitAlarm" disabled>
                     </span>
-						<label id="label" for="on">켜짐</label>
+						<label id="label">켜짐</label>
 					</div>
 
 					<div class="chk-box" id="alarm" th:if = "${appointment.visitAlarm == false}">
                         <span class="chk-mark" onclick="check_box()">
                         <input type="checkbox" name="visitAlarm"disabled>
                         </span>
-						<label id="label" for="off">꺼짐</label>
+						<label id="label">꺼짐</label>
 					</div>
 
 

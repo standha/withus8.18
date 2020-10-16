@@ -30,24 +30,29 @@ public class ProgressScheduler {
 
     //cron = "0 0 0 * * MON"
     @Scheduled(cron = "0 0 0 * * MON")
-    public void progressAutoIncrement() {
+    public void weekAutoIncrement() {
         List<User> allPatients = userService.getPatient(User.Type.PATIENT);
         for (User user : allPatients) {
-            logger.trace("id:{}, type:{}, week:{}", user.getUserId(), user.getType(), user.getWeek());
-            user.setWeek(user.getWeek() + 1);
-            userService.upsertUser(user);
-            logger.trace("id:{}, type:{}, week:{}", user.getUserId(), user.getType(), user.getWeek());
+            if(user.getWeek() <= 24) {
+                logger.info("ASIS id:{}, type:{}, week:{}", user.getUserId(), user.getType(), user.getWeek());
+
+                user.setWeek(user.getWeek() + 1);
+                userService.upsertUser(user);
+
+                logger.info("TOBE id:{}, type:{}, week:{}", user.getUserId(), user.getType(), user.getWeek());
+            }
         }
     }
 
     @Scheduled(cron = "0 0 0 * * MON")
     public void resetLevel() {
         List<Tbl_goal> goals = goalService.getAllGoal();
+
         for (Tbl_goal goal : goals) {
-            logger.trace("id:{}, goal:{}", goal.getGoalId(), goal.getGoal());
+            logger.info("ASIS id:{}, goal:{}", goal.getGoalId(), goal.getGoal());
             goal.setGoal(0);
             goalService.upsertGoal(goal);
-            logger.trace("id:{}, goal:{}", goal.getGoalId(), goal.getGoal());
+            logger.info("TOBE id:{}, goal:{}", goal.getGoalId(), goal.getGoal());
         }
     }
 }

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.controller.BaseController;
 import withus.dto.Result;
@@ -32,6 +31,7 @@ public class AdminLoginController extends AdminBaseController {
     @GetMapping({"/admin_login"})
     public ModelAndView getLogin(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView modelAndView = new ModelAndView("Login/admin_login");
+
         return modelAndView;
     }
 }

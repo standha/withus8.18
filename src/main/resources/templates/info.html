@@ -24,10 +24,10 @@
 
     <!-- header -->
     <header>
-        <div class="header-wrap type01" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+        <div class="header-wrap type01" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
             <div class="head">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -37,10 +37,10 @@
                 </h2>
             </div>
         </div>
-        <div class="header-wrap type01" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+        <div class="header-wrap type01" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
             <div class="head">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -87,7 +87,7 @@
                         <span class="txt">교육동영상</span>
                     </a>
                 </div>
-                <div th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+                <div th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                     <input type = 'hidden' name = "symptom"           th:value = "${count.symptom}" style = "display:none">
                     <input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
                     <input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">

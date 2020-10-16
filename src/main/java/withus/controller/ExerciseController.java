@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
 import withus.entity.*;
@@ -32,7 +31,6 @@ public class ExerciseController extends BaseController {
     }
 
     @GetMapping("/exercise")
-    @Statistical
     public ModelAndView getExercise() {
         ModelAndView modelAndView = new ModelAndView("exercise/exercise");
         User user = getUser();
@@ -45,40 +43,49 @@ public class ExerciseController extends BaseController {
                 if (exerciseService.getExercise(new RecordKey(getUsername(), LocalDate.now())) == null) {
                     modelAndView.addObject("hour", "");
                     modelAndView.addObject("minute", "");
+
                     logger.info("id:{}, today exercise:null", user.getUserId());
                 } else {
                     Tbl_Exercise_record exercise = exerciseService.getExercise(new RecordKey(getUsername(), LocalDate.now()));
                     modelAndView.addObject("hour", exercise.getHour());
                     modelAndView.addObject("minute", exercise.getMinute());
+
                     logger.info("id:{}, exerciseHour:{}, exerciseMinute:{}", user.getUserId(), exercise.getHour(), exercise.getMinute());
                 }
+
                 break;
+
             case CAREGIVER:
                 if (exerciseService.getExercise(new RecordKey(getCaretaker().getUserId(), LocalDate.now())) == null) {
                     modelAndView.addObject("hour", "");
                     modelAndView.addObject("minute", "");
+
+                    logger.info("id:{}, today exercise:null", user.getUserId());
                 } else {
                     Tbl_Exercise_record exercise = exerciseService.getExercise(new RecordKey(getCaretaker().getUserId(), LocalDate.now()));
                     modelAndView.addObject("hour", exercise.getHour());
                     modelAndView.addObject("minute", exercise.getMinute());
+
+                    logger.info("id:{}", user.getUserId());
                 }
+
                 break;
         }
-
+        modelAndView.addObject("week",user.getWeek());
         modelAndView.addObject("type", typeCheck);
         modelAndView.addObject("previousUrl", "/center");
+
         return modelAndView;
     }
 
     @GetMapping("/exercise-all-history")
-    @Statistical
     public ModelAndView getExerciseAll() {
         ModelAndView modelAndView = new ModelAndView("exercise/exercise-all-history");
         User user = getUser();
         String username = getUsername();
         List<Tbl_Exercise_record> exerciseHistory;
 
-        switch (getUser().getType()) {
+        switch (user.getType()) {
             case PATIENT:
                 Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
                 modelAndView.addObject("count", count);
@@ -86,17 +93,20 @@ public class ExerciseController extends BaseController {
                 modelAndView.addObject("exerciseWeekHour", avgWeek() / 60);
                 modelAndView.addObject("exerciseWeekMin", avgWeek() % 60);
                 modelAndView.addObject("exercise", exerciseHistory);
+
                 break;
+
             case CAREGIVER:
                 exerciseHistory = exerciseService.getExerciseAllRecord(getCaretaker().getUserId(), -1, -1);
                 modelAndView.addObject("exerciseWeekHour", avgWeek() / 60);
                 modelAndView.addObject("exerciseWeekMin", avgWeek() % 60);
                 modelAndView.addObject("exercise", exerciseHistory);
-                break;
 
+                break;
         }
 
-        modelAndView.addObject("type", getUser().getType());
+        modelAndView.addObject("type", user.getType());
+        modelAndView.addObject("week",user.getWeek());
         modelAndView.addObject("previousUrl", "exercise");
         return modelAndView;
     }

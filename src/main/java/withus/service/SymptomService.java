@@ -20,7 +20,6 @@ public class SymptomService {
         this.symptomRepository = symptomRepository;
     }
 
-
     @Nullable
     public List<Tbl_symptom_log> getSymptomRecord(String id, Integer todaySymptom) {
         return symptomRepository.findByPk_IdAndTodaysymptomGreaterThan(id, todaySymptom);
@@ -29,6 +28,7 @@ public class SymptomService {
     @NonNull
     public Tbl_symptom_log upsertSymptomRecord(Tbl_symptom_log Tbl_symptom_log) {
         Tbl_symptom_log saved = symptomRepository.save(Tbl_symptom_log);
+
         return saved;
     }
 

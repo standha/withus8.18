@@ -6,7 +6,7 @@ function setMinus(testNum) {
 		testNum = testNum - 1;
 		setTimeout(function (){
 			window.location.reload();
-		}, 300);
+		}, 100);
 
 	}
 	const mbody = {
@@ -26,7 +26,14 @@ function setMinus(testNum) {
 
 	fetch(url, options)
 		.then(response => response.json())
-		.then(data => console.log(data));
+		.then(data => {
+			console.log(data);
+			if (data.code === 'OK') {
+				alert("수정이 완료되었습니다.");
+			}  else {
+				alert("입력 실패하였습니다. 관리자에게 문의해주세요.");
+			}
+		});
 
 	return false;
 }
@@ -49,9 +56,10 @@ function setAdd(testNum) {
 	}
 	else{
 		testNum = testNum + 1;
+		alert("입력이 완료되었습니다.");
 		setTimeout(function (){
 			window.location.reload();
-		}, 300);
+		}, 100);
 
 	}
 	const body = {
@@ -72,7 +80,21 @@ function setAdd(testNum) {
 
 	fetch(url, options)
 		.then(response => response.json())
-		.then(data => console.log(data));
+		.then(data => {
+			console.log(data);
+			if (data.code === 'OK') {
+			}  else {
+				alert("입력 실패하였습니다. 관리자에게 문의해주세요.");
+			}
+		});
+
+/*
+	fetch(url, options)
+		.then(response => response.json())
+		.then(data =>
+			console.log(data);
+	if
+	);*/
 
 	return false;
 }

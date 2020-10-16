@@ -38,7 +38,7 @@ public class ButtonCountController extends BaseController {
         Result.Code code;
         Tbl_button_count saved = null;
 
-        logger.trace("id:{}, week:{}, alarm:{}, blood_pressure:{}, disease_info:{}, exercise:{}, goal:{}, helper:{}, level:{}, natrium-moisture:{}, symptom:{}, weight:{}, chat:{}"
+        logger.info("id:{}, week:{}, alarm:{}, blood_pressure:{}, disease_info:{}, exercise:{}, goal:{}, helper:{}, level:{}, natrium-moisture:{}, symptom:{}, weight:{}, chat:{}"
                 , count.getKey().getId(), count.getKey().getWeek(), count.getAlarm(), count.getBloodPressure(), count.getDiseaseInfo(), count.getExercise(), count.getGoal(), count.getHelper(),
                 count.getLevel(), count.getNatriumMoisture(), count.getSymptom(), count.getWeight(), count.getWithusRang());
 
@@ -49,6 +49,7 @@ public class ButtonCountController extends BaseController {
             logger.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
         }
+
         return Result.<Tbl_button_count>builder()
                 .code(code)
                 .data(saved)

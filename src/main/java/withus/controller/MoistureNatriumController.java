@@ -5,7 +5,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
 import withus.entity.*;
@@ -31,24 +30,27 @@ public class MoistureNatriumController extends BaseController {
     }
 
     @GetMapping("/moistureNatrium")
-    @Statistical
     public ModelAndView getMoistureNatrium() {
         ModelAndView modelAndView = new ModelAndView("moistureNatrium/moistureNatrium");
         modelAndView.addObject("previousUrl", "/center");
+
         User user = getUser();
         modelAndView.addObject("user", user);
+
         if (user.getType() == User.Type.PATIENT) {
             Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
+
         modelAndView.addObject("type", user.getType());
+
         return modelAndView;
     }
 
     @GetMapping("/moisture")
-    @Statistical
     public ModelAndView getMoisture() {
         ModelAndView modelAndView = new ModelAndView("moistureNatrium/moisture");
+
         if (moistureNatriumService.getMoisture(new RecordKey(getConnectId(), LocalDate.now())) == null) {
             modelAndView.addObject("intake", 0);
             modelAndView.addObject("intakeMinus", 0);
@@ -59,25 +61,30 @@ public class MoistureNatriumController extends BaseController {
             modelAndView.addObject("intakeMinus", moisture.getIntake());
             modelAndView.addObject("intakePlus", moisture.getIntake());
         }
+
         User user = getUser();
         if (user.getType() == User.Type.PATIENT) {
             Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
+
         modelAndView.addObject("type", user.getType());
+        modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("previousUrl", "moistureNatrium");
+
         return modelAndView;
     }
 
     @GetMapping("/moisture-all-history")
-    @Statistical
     public ModelAndView getMoistureAll() {
         ModelAndView modelAndView = new ModelAndView("moistureNatrium/moisture-all-history");
         User user = getUser();
+
         if (user.getType() == User.Type.PATIENT) {
             Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
+
         modelAndView.addObject("type", user.getType());
         Integer moistureWeek = 0;
         List<Tbl_mositrue_record> moistureAllHistory;
@@ -86,11 +93,11 @@ public class MoistureNatriumController extends BaseController {
         modelAndView.addObject("moisture", moistureAllHistory);
         modelAndView.addObject("moistureWeek", moistureWeek);
         modelAndView.addObject("previousUrl", "moistureNatrium");
+        modelAndView.addObject("week", user.getWeek());
         return modelAndView;
     }
 
     @GetMapping("/natrium")
-    @Statistical
     public ModelAndView getNatrium() {
         ModelAndView modelAndView = new ModelAndView("moistureNatrium/natrium");
         if (moistureNatriumService.getNatriumTodayRecord(new RecordKey(getConnectId(), LocalDate.now())) == null) {
@@ -110,12 +117,13 @@ public class MoistureNatriumController extends BaseController {
             Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
+        modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("type", user.getType());
+
         return modelAndView;
     }
 
     @GetMapping("/natrium-all-history")
-    @Statistical
     public ModelAndView getSymptomAll() {
         ModelAndView modelAndView = new ModelAndView("moistureNatrium/natrium-history");
         User user = getUser();
@@ -183,8 +191,8 @@ public class MoistureNatriumController extends BaseController {
         modelAndView.addObject("normal", norCount);
         modelAndView.addObject("high", highCount);
         modelAndView.addObject("natrium", allnatriums);
-        modelAndView.addObject("previousUrl", "/natrium")
-        ;
+        modelAndView.addObject("previousUrl", "/natrium");
+        modelAndView.addObject("week", user.getWeek());
         return modelAndView;
     }
 
@@ -196,6 +204,7 @@ public class MoistureNatriumController extends BaseController {
         tbl_natrium_record.setWeek(getUser().getWeek());
         Result.Code code;
         Tbl_natrium_record seved = null;
+
         try {
             seved = moistureNatriumService.upsertNatriumRecord(tbl_natrium_record);
             code = Result.Code.OK;
@@ -203,6 +212,7 @@ public class MoistureNatriumController extends BaseController {
             logger.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
         }
+
         return Result.<Tbl_natrium_record>builder()
                 .code(code)
                 .data(seved)
@@ -224,6 +234,7 @@ public class MoistureNatriumController extends BaseController {
             logger.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
         }
+
         return Result.<Tbl_mositrue_record>builder()
                 .code(code)
                 .data(saved)
@@ -232,10 +243,18 @@ public class MoistureNatriumController extends BaseController {
 
     public Integer avgWeek() {
         Integer avg = 0;
+        int count = 0 ;
         LocalDate now = LocalDate.now();
         for (int i = 1; i < 8; i++) {
-            avg = avg + moistureNatriumService.getMoistureDayRecord(new RecordKey(getConnectId(), now.with(DayOfWeek.of(i))));
+            int intake = moistureNatriumService.getMoistureDayRecord(new RecordKey(getConnectId(), now.with(DayOfWeek.of(i))));
+            if(intake != 0){
+                avg = avg + intake;
+                count++;
+            }
         }
-        return avg * 200 / 7;
+        if(count == 0)
+            return 0;
+        else
+            return avg * 200 / count;
     }
 }

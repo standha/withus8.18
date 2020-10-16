@@ -1,27 +1,44 @@
 function onFormSubmission(form) {
-	if(form.querySelector("input[name=weight]").value == 0){}
-	else
+	if(form.querySelector("input[name=weight]").value == 0){
+		alert("체중을 입력해 주세요.\n0kg은 입력 불가능 합니다.");
+		window.location.reload();
+	}
+	else{
 		weight = form.querySelector("input[name=weight]").value;
 
-	const body = {
-		weight: weight
-	};
+		const body = {
+			weight: weight
+		};
 
-	const url = form.action;
-	const options = {
-		method: "POST",
-		headers: {
-			"Accept": "application/json",
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify(body)
-	};
+		const url = form.action;
+		const options = {
+			method: "POST",
+			headers: {
+				"Accept": "application/json",
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(body)
+		};
 
-	fetch(url, options)
-		.then(response => response.json())
-		.then(data =>console.log(data));
+		fetch(url, options)
+			.then(response => response.json())
+			.then(data => {
+				console.log(data);
+				if (data.code === 'OK') {
+					alert("입력 완료되었습니다.");
+				}  else {
+					alert("입력 실패하였습니다. 관리자에게 문의해주세요.");
+				}
+			});
 
-	return false;
+		// fetch(url, options)
+		// 	.then(response => response.json())
+		// 	.then(data =>console.log(data))
+		// 	.then(data => alert("입력이 완료되었습니다."));
+
+		return false;
+	}
+
 }
 
 /* 이 방법은 틀렸다고 말하기는 애매하지만, 좋은 방법은 아님, 일단 html 에서 form 형식으로 묶어서 form input 텍스트에 있는 값을 강제로 버튼 setfinished로 들고와서

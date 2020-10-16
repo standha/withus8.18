@@ -92,7 +92,7 @@
         }
     }
 </script>
-<div th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+<div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
     <input type = 'hidden' name = "symptom"           th:value = "${count.symptom}" style = "display:none">
     <input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
     <input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">
@@ -107,9 +107,9 @@
 </div>
 <header>
     <div class="header-wrap type01">
-        <div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+        <div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
             <div onclick="helperRequest()" >
-                <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                     <span class="ico-call" ></span>
                     <span class="txt-rt">도우미</span>
                 </a>
@@ -119,9 +119,9 @@
                 <span>증상일지</span>
             </h2>
         </div>
-        <div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
+        <div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
             <div onclick="helperRequest()" >
-                <a class="btn xsm type07" href="tel:02-820-5198">
+                <a class="btn xsm type07" href="tel:010-8454-9186">
                     <span class="ico-call" ></span>
                     <span class="txt-rt">도우미</span>
                 </a>
@@ -136,7 +136,7 @@
 <!-- TODO: 보호자일 경우 immutable 하도록 -->
 <form id="symptom-form" th:action="@{/symptom}" onsubmit="return onFormSubmission(this);">
 
-    <div class="container" id="content" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+    <div class="container" id="content" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
         <div class="cont-wrap type01">
             <div class="insert-wrap">
                 <div class="daily-box">
@@ -295,7 +295,7 @@
 
 
 
-    <div class="container" id="content2" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
+    <div class="container" id="content2" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
         <div class="cont-wrap type01">
             <div class="insert-wrap">
                 <div class="daily-box">
@@ -437,10 +437,10 @@
     <!-- footer -->
     <footer>
         <div class="footer-wrap">
-            <div class="btn-wrap type01" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="btn-wrap type01" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
                 <input type="submit" class="btn xlg type01">
             </div>
-            <div class="btn-wrap type01" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="btn-wrap type01" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <input type="submit" class="btn xlg type02" disabled>
             </div>
             <div class="btn-wrap type02" onclick="showHistory();">

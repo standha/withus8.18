@@ -19,19 +19,43 @@
 <div id="wrap" class="main-page">
     <header>
         <div class="header-wrap" style="height: 410px">
-            <lable style="cursor:pointer">
-                <div class="cont" >
-                <span class="title-txt">
-                    <span style="font-size: xx-large">간호사는 영어로 Nurse 일본어로 看護師 중국어로 護士</span>
-                </span>
-                    <div style="text-align: left" class="todo-txt" spanChange() > <p th:text="'환자 이름 : '+' '+ ${patient.name}"></div>
-                    <div style="text-align: left" class="todo-txt" spanChange() > <p th:text="'환자 아이디-'+' '+ ${patient.userId}"></div>
-                    <div class="todo-txt" spanChange() >
-                        <p style="text-align: left"  th:text="'환자 생년월일-'+' '+ ${patient.birthdate}">
-                        <p style="text-align: center" th:text="'환자 이주의 목표-'+' '+ ${patient.goal}">
-                        <p style="text-align: right" th:text="'환자 레벨-'+' '+ ${patient.level}"> </div>
+            <div class="cont" >
+<!--            <span class="title-txt">-->
+<!--                <span style="font-size: xx-large">간호사는 영어로 Nurse 일본어로 看護師 중국어로 護士</span>-->
+<!--            </span>-->
+<!--                <div style="float:left; width:33%;">-->
+<!--                    <div class="todo-txt" spanChange() >-->
+<!--                        <p th:text="'환자 이름 : '+' '+ ${patient.name}">-->
+<!--                    </div>-->
+<!--                    <div class="todo-txt" spanChange() >-->
+<!--                        <p th:text="'환자 아이디-'+' '+ ${patient.userId}">-->
+<!--                    </div>-->
+<!--                    <div class="todo-txt" spanChange() >-->
+<!--                        <p style="text-align: left"  th:text="'환자 생년월일-'+' '+ ${patient.birthdate}">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div style = "float: left; width:33%;">-->
+<!--                    <div class="todo-txt" spanChange()>-->
+<!--                        <p style="text-align: center" th:text="'환자 이주의 목표-'+' '+ ${patient.goal}">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div style="float: left; width:33%;">-->
+<!--                    <div class="todo-txt" spanChange()>-->
+<!--                        <p style="text-align: right" th:text="'환자 레벨-'+' '+ ${patient.level}">-->
+<!--                    </div>-->
+<!--                </div>-->
+                <div class="todo-txt" style="float:left; padding: 10px;">
+                    <p style="float:left;" th:text="'환자 이름 : '+' '+ ${patient.name}">
+                    <p style="float:left;" th:text="'환자 아이디-'+' '+ ${patient.userId}">
+                    <p style="float:left;" th:text="'환자 생년월일-'+' '+ ${patient.birthdate}">
                 </div>
-            </lable>
+                <div class="todo-txt" style="padding: 10px;">
+                    <p th:text="'환자 이주의 목표 : '+' '+ ${patient.goal}">
+                </div>
+                <div class="todo-txt" style="padding: 10px;">
+                    <p th:text="'환자 레벨-'+' '+ ${patient.level}">
+                </div>
+            </div>
         </div>
         <nav>
             <ul>
@@ -49,7 +73,7 @@
             </a>
             <a th:href="@{/bloodPressure}">
                 <span class="ico-blood"></span>
-                <span>혈액/맥박 기록</span>
+                <span>혈압/맥박 기록</span>
             </a>
             <a th:href="@{/exercise}">
                 <span class="ico-exercise"></span>

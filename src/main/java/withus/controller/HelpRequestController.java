@@ -40,15 +40,17 @@ public class HelpRequestController extends BaseController {
         Result.Code code;
         Tbl_helper_request saved = null;
 
-        logger.trace("id:{}, type:{}, date:{}, time:{}", user.getUserId(), user.getType(), tbl_helper_request.getPk().getDate(), tbl_helper_request.getPk().getTime());
+        logger.info("id:{}, type:{}, date:{}, time:{}", user.getUserId(), user.getType(), tbl_helper_request.getPk().getDate(), tbl_helper_request.getPk().getTime());
 
         try {
             saved = helperRequestService.upsertHelperRequest(tbl_helper_request);
             code = Result.Code.OK;
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
+
             code = Result.Code.ERROR_DATABASE;
         }
+
         return Result.<Tbl_helper_request>builder()
                 .code(code)
                 .data(saved)

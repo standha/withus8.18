@@ -25,7 +25,7 @@
 <input type="hidden" id="button-count" th:attr="value=@{/button-count}">
 <input type="hidden" id="helper-request" th:attr="value=@{/helper-request}">
 
-<div th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+<div th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${user.week} != 25" >
 	<input type = 'hidden' name = "symptom"           th:value = "${count.symptom}" style = "display:none">
 	<input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
 	<input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">
@@ -44,9 +44,9 @@
 	<!-- header -->
 	<header>
 		<div class="header-wrap type01">
-			<div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+			<div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${user.week} != 25">
 				<div onclick="helperRequest()" >
-					<a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+					<a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
 						<span class="ico-call" ></span>
 						<span class="txt-rt">도우미</span>
 					</a>
@@ -56,9 +56,9 @@
 					<span>복약</span>
 				</h2>
 			</div>
-			<div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+			<div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${user.week} == 25">
 				<div onclick="helperRequest()" >
-					<a class="btn xsm type07" href="tel:02-820-5198">
+					<a class="btn xsm type07" href="tel:010-8454-9186">
 						<span class="ico-call" ></span>
 						<span class="txt-rt">도우미</span>
 					</a>

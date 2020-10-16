@@ -20,7 +20,6 @@ public class PillHistoryDto {
         return finished;
     }
 
-
     public static Builder builder() {
         return new Builder();
     }
@@ -31,11 +30,13 @@ public class PillHistoryDto {
 
         public Builder setPillId(String id) {
             this.id = id;
+
             return this;
         }
 
         public Builder setFinished(Boolean finished) {
             this.finished = finished;
+
             return this;
         }
 

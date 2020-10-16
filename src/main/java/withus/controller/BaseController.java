@@ -1,8 +1,6 @@
 package withus.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.Nullable;
@@ -33,6 +31,10 @@ public class BaseController {
         return userService.getUserById(getUsername());
     }
 
+    protected User getUserAndDate(){
+        return userService.getUserByIdAndDate(getUsername());
+    }
+
     protected String getPatientContact() {
         return getUser().getContact();
     }
@@ -48,6 +50,7 @@ public class BaseController {
 
     protected String getConnectId() {
         String username = null;
+
         switch (getUser().getType()) {
             case PATIENT:
                 username = getUsername();
@@ -56,7 +59,7 @@ public class BaseController {
                 username = getCaretaker().getUserId();
                 break;
         }
+
         return username;
     }
-
 }

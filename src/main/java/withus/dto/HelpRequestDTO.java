@@ -11,7 +11,6 @@ public class HelpRequestDTO {
     private String caregiverContact;
     private String helpCode;
 
-
     public HelpRequestDTO(LocalDateTime requestDateTime, String name, String userID, String contact, String caregiverContact, String helpCode) {
         this.requestDateTime = requestDateTime;
         this.name = name;

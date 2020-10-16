@@ -10,43 +10,60 @@ function onFormSubmission(form) {
 	let lunch;
 	let dinner;
 
-	if(form.querySelector("input[name=morning]:checked").value == 1 ){
-		breakfastHour = parseInt(breakfastHour) + 12;
+	if(form.querySelector("input[name=morning]:checked").value == 1){
+		if(breakfastHour == 0 ){
+			breakfastHour = null;
+		}
+		else{
+			if(breakfastHour != 12){
+				breakfastHour = parseInt(breakfastHour) + 12;
+			}
+		}
 	} else if(form.querySelector("input[name=morning]:checked").value == 0){
 		breakfastHour = transHour(breakfastHour);
 	}
 	if(form.querySelector("input[name=lunch]:checked").value == 1 ){
-		lunchHour = parseInt(lunchHour) + 12;
+		if(lunchHour == 0 ){
+			lunchHour = null;
+		}
+		else{
+			if(lunchHour != 12){
+				lunchHour = parseInt(lunchHour) + 12;
+			}
+		}
 	}else if(form.querySelector("input[name=lunch]:checked").value == 0){
 		lunchHour = transHour(lunchHour);
 	}
 	if(form.querySelector("input[name=dinner]:checked").value == 1 ){
-		dinnerHour = parseInt(dinnerHour) + 12;
+		if(dinnerHour == 0 ){
+			dinnerHour = null;
+		}
+		else{
+			if(dinnerHour != 12){
+				dinnerHour = parseInt(dinnerHour) + 12;
+			}
+		}
 	}else if(form.querySelector("input[name=dinner]:checked").value == 0){
 		dinnerHour = transHour(dinnerHour);
 	}
 
-	breakfastMinute = transMinute(breakfastMinute);
-	lunchMinute = transMinute(lunchMinute);
-	dinnerMinute = transMinute(dinnerMinute);
-
-	if(breakfastHour == null || breakfastMinute ==null ){
+	if(breakfastHour == null || transMinute(breakfastMinute) == null ){
 		morning = null;
 	}
 	else{
-		morning = breakfastHour+":"+breakfastMinute;
+		morning = breakfastHour+":"+transMinute(breakfastMinute);
 	}
-	if(lunchHour == null || lunchMinute ==null ){
+	if(lunchHour == null || transMinute(lunchMinute)  == null){
 		lunch = null;
 	}
 	else{
-		lunch = lunchHour+":"+lunchMinute;
+		lunch = lunchHour+":"+transMinute(lunchMinute);
 	}
-	if(dinnerHour == null || dinnerMinute ==null ){
+	if(dinnerHour == null || transMinute(dinnerMinute) == null ){
 		dinner = null;
 	}
 	else{
-		dinner = dinnerHour+":"+dinnerMinute;
+		dinner = dinnerHour+":"+transMinute(dinnerMinute);
 	}
 	const body = {
 		medicationAlarmOnoff: enabled,
@@ -67,7 +84,14 @@ function onFormSubmission(form) {
 
 	fetch(url, options)
 		.then(response => response.json())
-		.then(data => console.log(data));
+		.then(data => {
+			console.log(data);
+			if (data.code === 'OK') {
+				alert("입력 완료되었습니다.");
+			}  else {
+				alert("입력 실패하였습니다. 관리자에게 문의해주세요.");
+			}
+		});
 
 	setTimeout(function (){
 		location.reload(true);
@@ -228,7 +252,6 @@ function check_dinner(div) {
 
 function transHour(hour) {
 	if(hour == 12){
-		hour = parseInt(hour) -12;
 		return "00";
 	}
 	else if(hour >= 10)
@@ -254,7 +277,7 @@ function transMinute(min){
 			if(min.startsWith("00") )
 				return min;
 			else
-				return "0"+min;
+				return null;
 		}
 		else if(min.startsWith("0")){
 			return min;

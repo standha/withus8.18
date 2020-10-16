@@ -25,7 +25,7 @@
 <div class="skip-navi">
     <a href="#content">본문 바로가기</a>
 </div>
-<div th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+<div th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${user.week} != 25">
     <input type = 'hidden' name = "symptom"           th:value = "${count.symptom}" style = "display:none">
     <input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
     <input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">
@@ -44,9 +44,9 @@
     <!-- header -->
     <header>
         <div class="header-wrap type01">
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${user.week} != 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -56,9 +56,9 @@
                     <span>혈압/맥박</span>
                 </h2>
             </div>
-            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER}">
+            <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${user.week} == 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:02-820-5198">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -153,7 +153,7 @@
     for(i=0; i<bloodRecord.length; i++)
     {
         //x축 라벨 바꾸기
-        date[i] = bloodRecord[i].pk.date.substr(5,5);
+        date[i] = bloodRecord[i].pk.date.substr(5,2) + " / " + bloodRecord[i].pk.date.substr(8,2);
         //date[i] = bloodRecord[i].pk.date;
         contraction[i] = bloodRecord[i].contraction;
         relaxation[i] = bloodRecord[i].relaxation;
@@ -299,12 +299,12 @@
                 yAxes:[{
                     ticks: {
                         beginAtZero: true,
-                        min: 0,
+                        min: 40,
                         max: 200,
-                        stepSize: 25,
+                        stepSize: 20,
                         maxTicksLimit: 9,
                         callback: function(value, index, values) {
-                            return value == 0 || value == 50 || value == 100 || value == 150 || value == 200?value:'';
+                            return value == 40 || value == 80 || value == 120 || value == 160 || value == 200?value:'';
                         }
                     }
                 }]

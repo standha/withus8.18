@@ -15,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import withus.aspect.Statistical;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
 import withus.dto.wwithus.AllUserDTO;
@@ -51,19 +50,45 @@ public class CenterController extends BaseController {
 
     @GetMapping({"/center"})
     public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response, @RequestParam(required = false) String token) {
-        User user = getUser();
+        User user = getUserAndDate();
+        ModelAndView modelAndView = new ModelAndView();
+
         logger.info("id:{}, url:{}, type:{}, level:{}, week:{}", user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek());
 
-        if (user.getType() == User. && user.getCaregiver() == null)
-        {
+        if ((user.getType() == Type.CAREGIVER) && (getCaretaker() == null)) {
+            modelAndView.addObject("error", true);
+            modelAndView.setViewName("LogIn/login");
 
-        }
-        
-        if (user.getAppToken() != null) {
-            if (token != null) {
-                if (user.getAppToken().equals(token) == false) {
+            logger.info("id:{}, url:{}, type:{}", user.getUserId(), request.getRequestURL(), user.getType());
+        } else {
+            if (user.getAppToken() != null) {
+                if (token != null) {
+                    if (user.getAppToken().equals(token) == false) {
+                        Result.Code code;
+                        user.setAppToken(token);
+
+                        logger.info("id:{}, type:{}, appToken change, appToken:{}", user.getUserId(), user.getType(), user.getAppToken());
+
+                        try {
+                            user = userService.upsertUser(user);
+                            code = Result.Code.OK;
+                        } catch (Exception exception) {
+                            logger.error(exception.getLocalizedMessage(), exception);
+                            code = Result.Code.ERROR_DATABASE;
+                        }
+
+                        Result.<User>builder()
+                                .code(code)
+                                .data(user)
+                                .build();
+                    }
+                }
+            } else {
+                if (token != null) {
                     Result.Code code;
                     user.setAppToken(token);
+
+                    logger.info("id:{}, type:{}, appToken change, appToken:{}", user.getUserId(), user.getType(), user.getAppToken());
 
                     try {
                         user = userService.upsertUser(user);
@@ -79,73 +104,44 @@ public class CenterController extends BaseController {
                             .build();
                 }
             }
-        } else {
-            if (token != null) {
-                Result.Code code;
-                user.setAppToken(token);
 
-                try {
-                    user = userService.upsertUser(user);
-                    code = Result.Code.OK;
-                } catch (Exception exception) {
-                    logger.error(exception.getLocalizedMessage(), exception);
-                    code = Result.Code.ERROR_DATABASE;
+            if (user.getType().equals(Type.ADMINISTRATOR)) {
+                List<AllUserDTO> resultList = new ArrayList<>();
+                ArrayList<String> userFin = userService.getAllUserPlz();
+
+                // userFin.forEach((s)-> resultList.add(AllUserDTO.fromString(s)));
+                for (String aUserFin : userFin) {
+                    resultList.add(AllUserDTO.fromString(aUserFin));
                 }
 
-                Result.<User>builder()
-                        .code(code)
-                        .data(user)
-                        .build();
+                modelAndView.addObject("user", resultList);
+                modelAndView.setViewName("Admin/admin_home");
+            } else if (user.getType().equals(Type.PATIENT)) { //환자 로그인 중
+                if (user.getWeek() == 0) {
+                    modelAndView.setViewName("home_0week");
+                } else {
+                    Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+                    modelAndView.setViewName("home");
+                    modelAndView.addObject("count", count);
+                    modelAndView.addObject("type", user.getType());
+                    modelAndView.addObject("week", user.getWeek());
+                }
+            } else {    //보호자 로그인 중
+                if (getCaretaker().getWeek() == 0) {
+                    modelAndView.setViewName("home_0week");
+                } else {
+                    modelAndView.setViewName("home");
+                    modelAndView.addObject("type", user.getType());
+                    modelAndView.addObject("week", getCaretaker().getWeek());
+                }
+            }
+
+            if (user.getType() == Type.CAREGIVER || user.getType() == Type.PATIENT) {
+                modelAndView.addObject("goalNow", getGoalNow(getConnectId()));
+                modelAndView.addObject("level", ViewLevel(user));
+                modelAndView.addObject("user", user);
             }
         }
-
-        ModelAndView modelAndView = new ModelAndView();
-
-        if (user.getType().equals(Type.ADMINISTRATOR)) {
-            List<AllUserDTO> resultList = new ArrayList<>();
-            ArrayList<String> userFin = userService.getAllUserPlz();
-
-            for (String aUserFin : userFin) {
-                resultList.add(AllUserDTO.fromString(aUserFin));
-            }
-
-            logger.debug("user:{}", userFin);
-
-            modelAndView.addObject("user", resultList);
-            modelAndView.setViewName("/Admin/admin_Home");
-        } else if (user.getType().equals(Type.PATIENT)) { //환자 로그인 중
-            if (user.getWeek() == 0) {
-                modelAndView.setViewName("home_0week");
-            } else {
-                Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
-                modelAndView.setViewName("home");
-                modelAndView.addObject("count", count);
-                modelAndView.addObject("type", user.getType());
-                modelAndView.addObject("week", user.getWeek());
-            }
-        } else {    //보호자 로그인 중
-            if (getCaretaker().getWeek() == 0) {
-                modelAndView.setViewName("home_0week");
-            } else {
-                modelAndView.setViewName("home");
-                modelAndView.addObject("type", user.getType());
-                modelAndView.addObject("week", getCaretaker().getWeek());
-            }
-        }
-
-        if (user.getType() == Type.CAREGIVER || user.getType() == Type.PATIENT) {
-            modelAndView.addObject("goalNow", getGoalNow(getConnectId()));
-            modelAndView.addObject("level", ViewLevel(user));
-            modelAndView.addObject("user", user);
-        }
-
-        List<AllUserDTO> resultList = new ArrayList<>();
-        ArrayList<String> userFin = userService.getAllUserPlz();
-
-        for (String aUserFin : userFin) {
-            resultList.add(AllUserDTO.fromString(aUserFin));
-        }
-
         return modelAndView;
     }
 
@@ -163,9 +159,9 @@ public class CenterController extends BaseController {
                 level = level % 4;
                 break;
         }
+
         return level;
     }
-
 
     public String getGoalNow(String username) {
         Integer goalCheck = goalService.getGoalId(username).getGoal();

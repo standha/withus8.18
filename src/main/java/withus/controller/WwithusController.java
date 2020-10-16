@@ -41,7 +41,9 @@ public class WwithusController extends BaseController {
     @GetMapping("/wwithus")
     public ModelAndView getWwithus(HttpServletRequest request) {
         User user = getUser();
+
         logger.info("wwithus id:{}, type:{}, week:{}, url:{}", user.getUserId(), user.getType(), user.getWeek(), request.getRequestURL());
+
         ModelAndView modelAndView = new ModelAndView("wwithus/wwithus.html");
         modelAndView.addObject("previousUrl", "/home");
         modelAndView.addObject("userType", user.getType());
@@ -53,7 +55,6 @@ public class WwithusController extends BaseController {
 
         return modelAndView;
     }
-
 
     @GetMapping("/wwithus/histories")
     @ResponseBody
@@ -70,7 +71,9 @@ public class WwithusController extends BaseController {
 
         try {
             data = wwithusService.getWwithusEntryHistories(user, today);
+
             logger.info("histories id:{}, type:{}, week:{}, url:{}, withusHistory:{}", user.getUserId(), user.getType(), user.getWeek(), request.getRequestURL(), data.size());
+
             /*
              * TODO: 재진입 시에 취할 행동.
              *  의도한 것은
