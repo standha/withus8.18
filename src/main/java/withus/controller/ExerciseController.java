@@ -114,18 +114,15 @@ public class ExerciseController extends BaseController {
     @PostMapping("/exercise")
     @ResponseBody
     public Result<Tbl_Exercise_record> PostPatientVisit(@RequestBody Tbl_Exercise_record tbl_exercise_record) {
-        User user = getUser();
-        tbl_exercise_record.setPk(new RecordKey(user.getUserId(), LocalDate.now()));
-        tbl_exercise_record.setWeek(user.getWeek());
+        String userId = getUsername();
+        tbl_exercise_record.setPk(new RecordKey(userId, LocalDate.now()));
+        tbl_exercise_record.setWeek(getUser().getWeek());
         Result.Code code;
         Tbl_Exercise_record seved = null;
 
         try {
-            if(user.getType() == User.Type.PATIENT){
-                seved = exerciseService.upsertExerciseRecord(tbl_exercise_record);
-                code = Result.Code.OK;
-            }else
-                throw new IllegalArgumentException("Caregiver try input data , [warn]");
+            seved = exerciseService.upsertExerciseRecord(tbl_exercise_record);
+            code = Result.Code.OK;
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;

@@ -77,17 +77,14 @@ public class WeightController extends BaseController {
     @PostMapping(value = "/weight", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<Tbl_weight> getWeight(@RequestBody Tbl_weight tbl_weight) {
-        User user = getUser();
-        tbl_weight.setPk(new RecordKey(user.getUserId(), LocalDate.now()));
-        tbl_weight.setWeek(user.getWeek());
+        String userId = getUsername();
+        tbl_weight.setPk(new RecordKey(userId, LocalDate.now()));
+        tbl_weight.setWeek(getUser().getWeek());
         Result.Code code;
         Tbl_weight saved = null;
         try {
-            if(user.getType() == User.Type.PATIENT){
             saved = weightService.upsertWeightRecord(tbl_weight);
             code = Result.Code.OK;
-            }else
-                throw new IllegalArgumentException("Caregiver try input data [warn]");
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
 

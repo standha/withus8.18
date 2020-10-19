@@ -199,18 +199,15 @@ public class MoistureNatriumController extends BaseController {
     @PostMapping("/natrium")
     @ResponseBody
     public Result<Tbl_natrium_record> postNatrium(@RequestBody Tbl_natrium_record tbl_natrium_record) {
-        User user = getUser();
-        tbl_natrium_record.setPk(new RecordKey(user.getUsername(), LocalDate.now()));
-        tbl_natrium_record.setWeek(user.getWeek());
+        String username = getUsername();
+        tbl_natrium_record.setPk(new RecordKey(username, LocalDate.now()));
+        tbl_natrium_record.setWeek(getUser().getWeek());
         Result.Code code;
         Tbl_natrium_record seved = null;
 
         try {
-            if(user.getType() == User.Type.PATIENT){
-                seved = moistureNatriumService.upsertNatriumRecord(tbl_natrium_record);
-                code = Result.Code.OK;
-            }else
-                throw new IllegalArgumentException("Caregiver try input data , [warn]");
+            seved = moistureNatriumService.upsertNatriumRecord(tbl_natrium_record);
+            code = Result.Code.OK;
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
@@ -225,17 +222,14 @@ public class MoistureNatriumController extends BaseController {
     @PutMapping(value = "/moisture-history", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<Tbl_mositrue_record> getMoisture(@RequestBody Tbl_mositrue_record tbl_mositrue_record) {
-        User user = getUser();
-        tbl_mositrue_record.setPk(new RecordKey(user.getUsername(), LocalDate.now()));
-        tbl_mositrue_record.setWeek(user.getWeek());
+        String userId = getUsername();
+        tbl_mositrue_record.setPk(new RecordKey(userId, LocalDate.now()));
+        tbl_mositrue_record.setWeek(getUser().getWeek());
         Result.Code code;
         Tbl_mositrue_record saved = null;
         try {
-            if(user.getType() == User.Type.PATIENT){
-                saved = moistureNatriumService.upsertMoistureRecord(tbl_mositrue_record);
-                code = Result.Code.OK;
-            }else
-                throw new IllegalArgumentException("Caregiver try input data , [warn]");
+            saved = moistureNatriumService.upsertMoistureRecord(tbl_mositrue_record);
+            code = Result.Code.OK;
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
