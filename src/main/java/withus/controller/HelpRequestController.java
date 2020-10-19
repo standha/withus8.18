@@ -34,17 +34,19 @@ public class HelpRequestController extends BaseController {
     @PostMapping(value = "/helper-request", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<Tbl_helper_request> temp(@RequestBody Tbl_helper_request tbl_helper_request) {
-        String userId = getUsername();
-        User user = userService.getUserById(userId);
-        tbl_helper_request.setPk(new TimeKey(userId, LocalDate.now(), LocalTime.now()));
+        User user = getUser();
+        tbl_helper_request.setPk(new TimeKey(user.getUserId(), LocalDate.now(), LocalTime.now()));
         Result.Code code;
         Tbl_helper_request saved = null;
 
         logger.info("id:{}, type:{}, date:{}, time:{}", user.getUserId(), user.getType(), tbl_helper_request.getPk().getDate(), tbl_helper_request.getPk().getTime());
 
         try {
-            saved = helperRequestService.upsertHelperRequest(tbl_helper_request);
-            code = Result.Code.OK;
+            if(user.getType() == User.Type.PATIENT){
+                saved = helperRequestService.upsertHelperRequest(tbl_helper_request);
+                code = Result.Code.OK;
+            }else
+                throw new IllegalArgumentException("Caregiver try input data, [warn]");
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
 

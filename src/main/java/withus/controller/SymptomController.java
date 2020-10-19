@@ -85,16 +85,21 @@ public class SymptomController extends BaseController {
     @PostMapping("/symptom")
     @ResponseBody
     public Result<Tbl_symptom_log> PostSymptom(@RequestBody Tbl_symptom_log tbl_symptom_log) {
-        String userId = getUsername();
-        tbl_symptom_log.setPk(new RecordKey(userId, LocalDate.now()));
-        tbl_symptom_log.setWeek(getUser().getWeek());
+        User user = getUser();
+
+        tbl_symptom_log.setPk(new RecordKey(user.getUserId(), LocalDate.now()));
+        tbl_symptom_log.setWeek(user.getWeek());
         logger.info("id:{}, date:{}, week:{}, tired:{}, ankle:{}, breath:{}, cough:{}"
                 , tbl_symptom_log.getPk().getId(), tbl_symptom_log.getPk().getDate(), tbl_symptom_log.getWeek(), tbl_symptom_log.getTired(), tbl_symptom_log.getAnkle(), tbl_symptom_log.getOutofbreath(), tbl_symptom_log.getCough());
         Result.Code code;
         Tbl_symptom_log saved = null;
         try {
-            saved = symptomService.upsertSymptomRecord(tbl_symptom_log);
-            code = Result.Code.OK;
+            if(user.getType() == User.Type.PATIENT){
+                saved = symptomService.upsertSymptomRecord(tbl_symptom_log);
+                code = Result.Code.OK;
+            }else
+                throw new IllegalArgumentException("Caregiver try input data [warn]");
+
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
