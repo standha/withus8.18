@@ -28,8 +28,9 @@ public class Utility {
     ).sorted().collect(Collectors.toList());
 
     public static LocalDate parseDate(String dateString) {
-        if(dateString.equals("null")){
-            return null;
+
+        if(dateString.equals("null") || dateString == null){
+           return null;
         }
         return LocalDate.parse(dateString, DATE_FORMATTER);
     }
