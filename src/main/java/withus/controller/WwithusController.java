@@ -1,6 +1,7 @@
 package withus.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.google.gson.internal.$Gson$Types;
@@ -19,7 +20,9 @@ import withus.dto.wwithus.WwithusEntryRequest;
 import withus.entity.ProgressKey;
 import withus.entity.Tbl_button_count;
 import withus.entity.User;
+import withus.entity.WithusHelpRequest;
 import withus.service.CountService;
+import withus.service.HomeService;
 import withus.service.UserService;
 import withus.service.WwithusService;
 import withus.util.Utility;
@@ -31,11 +34,14 @@ public class WwithusController extends BaseController {
     private final WwithusService wwithusService;
     private final CountService countService;
 
+    private final HomeService homeService;
+
     @Autowired
-    public WwithusController(UserService userService, AuthenticationFacade authenticationFacade, WwithusService wwithusService, CountService countService) {
+    public WwithusController(UserService userService, HomeService homeService, AuthenticationFacade authenticationFacade, WwithusService wwithusService, CountService countService) {
         super(userService, authenticationFacade);
         this.countService = countService;
         this.wwithusService = wwithusService;
+        this.homeService = homeService;
     }
 
     @GetMapping("/wwithus")
@@ -56,6 +62,26 @@ public class WwithusController extends BaseController {
         return modelAndView;
     }
 
+    @PostMapping("/home/help-request")
+    @ResponseBody
+    public Result<WithusHelpRequest> postHelpRequest(@RequestBody String helpCode) {
+        User user = getUser();
+        LocalDateTime now = LocalDateTime.now();
+
+        Result.Code code = Result.Code.ERROR;
+        WithusHelpRequest withusHelpRequest = null;
+        try {
+            withusHelpRequest = homeService.createHelpRequest(user, now, helpCode);
+            code = Result.Code.OK;
+        } catch (Exception exception) {
+//			log.error(exception.getLocalizedMessage(), exception);
+        }
+
+        return Result.<WithusHelpRequest>builder()
+                .code(code)
+                .data(withusHelpRequest)
+                .build();
+    }
     @GetMapping("/wwithus/histories")
     @ResponseBody
     public Result<List<ChatBalloon>> getHistories(HttpServletRequest request) {

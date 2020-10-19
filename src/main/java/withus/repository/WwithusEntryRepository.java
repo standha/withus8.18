@@ -51,6 +51,8 @@ public interface WwithusEntryRepository extends JpaRepository<WwithusEntry, Stri
      * 호출하되, 주차, 일차에 해당되는 prefix를 직접 입력하지 않도록 하기 위한 default method
      */
     default Optional<WwithusEntry> findFirstByWeekAndDay(int week, int day) {
+        System.out.println("week = " + week);
+        System.out.println("day = " + day);
         return findTopByCodeStartsWithAndFirstIsTrueOrderByCode(String.format("W%dD%d", week, day));
     }
 }
