@@ -50,13 +50,17 @@ public class GoalController extends BaseController {
     @PutMapping(value = "/goal", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<Tbl_goal> getGoal(@RequestBody Tbl_goal tbl_goal) {
-        tbl_goal.setGoalId(getConnectId());
+        User user = getUser();
+        tbl_goal.setGoalId(user.getUserId());
         Result.Code code;
         Tbl_goal saved = null;
 
         try {
-            saved = goalService.upsertGoal(tbl_goal);
-            code = Result.Code.OK;
+            if(user.getType() == User.Type.PATIENT){
+                saved = goalService.upsertGoal(tbl_goal);
+                 code = Result.Code.OK;
+            }else
+                throw new IllegalArgumentException("Caregiver try input data , [warn]");
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
