@@ -70,8 +70,9 @@ public class WwithusController extends BaseController {
 
         Result.Code code = Result.Code.ERROR;
         WithusHelpRequest withusHelpRequest = null;
+
         try {
-            withusHelpRequest = homeService.createHelpRequest(user, now, helpCode);
+            withusHelpRequest = homeService.createHelpRequest(user, now, helpCode.replaceAll("\"", ""));
             code = Result.Code.OK;
         } catch (Exception exception) {
 //			log.error(exception.getLocalizedMessage(), exception);
