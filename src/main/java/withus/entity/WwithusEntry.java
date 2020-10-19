@@ -10,6 +10,8 @@ import javax.persistence.OneToOne;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
@@ -71,6 +73,7 @@ public class WwithusEntry implements Comparable<WwithusEntry> {
 
     @OneToOne
     @JoinColumn(columnDefinition = "VARCHAR(32) COMMENT '다음 statement의 CODE'")
+    @NotFound(action = NotFoundAction.IGNORE)
     @Nullable
     private WwithusEntry next;
 
