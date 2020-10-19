@@ -135,11 +135,9 @@ public class AlarmController extends BaseController {
         logger.info("id:{}", user.getUserId());
 
         try {
-            if(user.getType() == User.Type.PATIENT){
             seved = alarmService.upsertMedication(tbl_medication_alarm);
             code = Result.Code.OK;
-            }else
-                throw new IllegalArgumentException("Caregiver try input data , [warn]");
+
             logger.info("id:{}, dinner:{}, lunch:{}, morning:{}, code:{}", user.getUserId(), seved.getMedicationTimeDinner(), seved.getMedicationTimeLunch(), seved.getMedicationTimeMorning(), code);
 
         } catch (Exception exception) {
@@ -147,8 +145,6 @@ public class AlarmController extends BaseController {
 
             code = Result.Code.ERROR_DATABASE;
         }
-
-
 
         return Result.<Tbl_medication_alarm>builder()
                 .code(code)
@@ -169,14 +165,11 @@ public class AlarmController extends BaseController {
         Tbl_medication_record saved = null;
 
         try {
-            if(user.getType() == User.Type.PATIENT){
-                saved = alarmService.upsertTrueRecord(tbl_medication_record);
-                code = Result.Code.OK;
-            }else
-                throw new IllegalArgumentException("Caregiver try input data , [warn]");
+            saved = alarmService.upsertTrueRecord(tbl_medication_record);
 
             logger.info("id:{}, finished:{}", user.getUserId(), saved.isFinished());
 
+            code = Result.Code.OK;
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
 
@@ -226,20 +219,16 @@ public class AlarmController extends BaseController {
     @ResponseBody
     public Result<Tbl_outpatient_visit_alarm> PostPatientVisit(@RequestBody Tbl_outpatient_visit_alarm tbl_outpatient_visit_alarm) {
         String userId = getUsername();
-        User user = getUser();
-        tbl_outpatient_visit_alarm.setId(user.getUserId());
+        tbl_outpatient_visit_alarm.setId(userId);
         Result.Code code;
         Tbl_outpatient_visit_alarm saved = null;
 
         try {
-            if(user.getType() == User.Type.PATIENT){
-                saved = alarmService.upsertOutPatientVisit(tbl_outpatient_visit_alarm);
-                code = Result.Code.OK;
-            }else
-                throw new IllegalArgumentException("Caregiver try input data , [warn]");
+            saved = alarmService.upsertOutPatientVisit(tbl_outpatient_visit_alarm);
 
             logger.info("id:{}, date:{}, time:{}", userId, saved.getOutPatientVisitTime(), saved.getOutPatientVisitDate());
 
+            code = Result.Code.OK;
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
