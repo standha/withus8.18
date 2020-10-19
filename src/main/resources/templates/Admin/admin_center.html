@@ -14,59 +14,18 @@
     <script th:src="@{/js/common.js}"></script>
     <title>Admin center</title>
 </head>
-
+<style>
+    .main-icon2 {display: flex; flex-wrap: wrap; justify-content: space-between; margin: 60px 8% 20px;}
+    .main-icon2 a {display: flex; flex-direction: column; justify-content: space-between; align-items: center; width: 23%; padding: 8% 0; margin-bottom: 15px; border-radius: 15px; box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.04); border: solid 1px #eff0f0; background-color: #ffffff;}
+    .main-icon2 a span {text-align: center; font-size: 1.1rem; font-weight: 700;}
+    .main-icon2 a span[class*="ico-"] {margin-bottom: 10px;}
+</style>
 <body>
 <div id="wrap" class="main-page">
-    <header>
-        <div class="header-wrap" style="height: 410px">
-            <div class="cont" >
-<!--            <span class="title-txt">-->
-<!--                <span style="font-size: xx-large">간호사는 영어로 Nurse 일본어로 看護師 중국어로 護士</span>-->
-<!--            </span>-->
-<!--                <div style="float:left; width:33%;">-->
-<!--                    <div class="todo-txt" spanChange() >-->
-<!--                        <p th:text="'환자 이름 : '+' '+ ${patient.name}">-->
-<!--                    </div>-->
-<!--                    <div class="todo-txt" spanChange() >-->
-<!--                        <p th:text="'환자 아이디-'+' '+ ${patient.userId}">-->
-<!--                    </div>-->
-<!--                    <div class="todo-txt" spanChange() >-->
-<!--                        <p style="text-align: left"  th:text="'환자 생년월일-'+' '+ ${patient.birthdate}">-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div style = "float: left; width:33%;">-->
-<!--                    <div class="todo-txt" spanChange()>-->
-<!--                        <p style="text-align: center" th:text="'환자 이주의 목표-'+' '+ ${patient.goal}">-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div style="float: left; width:33%;">-->
-<!--                    <div class="todo-txt" spanChange()>-->
-<!--                        <p style="text-align: right" th:text="'환자 레벨-'+' '+ ${patient.level}">-->
-<!--                    </div>-->
-<!--                </div>-->
-                <div class="todo-txt" style="float:left; padding: 10px;">
-                    <p style="float:left;" th:text="'환자 이름 : '+' '+ ${patient.name}">
-                    <p style="float:left;" th:text="'환자 아이디-'+' '+ ${patient.userId}">
-                    <p style="float:left;" th:text="'환자 생년월일-'+' '+ ${patient.birthdate}">
-                </div>
-                <div class="todo-txt" style="padding: 10px;">
-                    <p th:text="'환자 이주의 목표 : '+' '+ ${patient.goal}">
-                </div>
-                <div class="todo-txt" style="padding: 10px;">
-                    <p th:text="'환자 레벨-'+' '+ ${patient.level}">
-                </div>
-            </div>
-        </div>
-        <nav>
-            <ul>
-                <li class="m"><a href="#" class="menu-01"><span>환자용 계정 기록</span></a>
-                </li> <li class="m"><a href="#" class="menu-02"><span>보호자용 계정 기록</span></a></li>
-                <li class="m"><a th:href="@{/adimn_withusHelpRequest}"><span>위더스랑 요청 기록</span></a></li>
-            </ul>
-        </nav>
-    </header>
+
+    <header th:replace="Admin/admin_infoHeader :: headerFragment"></header>
     <div class="container" id="content">
-        <ul class="main-icon">
+        <ul class="main-icon2">
             <a th:href="@{/admin_pillRecord/{userId}(userId=${patient.userId})}">
                 <span class="ico-drug"></span>
                 <span>복약 기록(완)</span>
@@ -79,13 +38,13 @@
                 <span class="ico-exercise"></span>
                 <span>운동 기록</span>
             </a>
-            <a th:href="@{/admin_moistureRecord/{userId}(userId=${patient.userId})}">
-                <span class="ico-water2"></span>
-                <span>수분 기록(완)</span>
-            </a>
             <a th:href="@{/moistureNatrium}">
                 <span class="ico-salt"></span>
                 <span>저염식 기록</span>
+            </a>
+            <a th:href="@{/admin_moistureRecord/{userId}(userId=${patient.userId})}">
+                <span class="ico-water2"></span>
+                <span>수분 기록(완)</span>
             </a>
             <a th:href="@{/weight}">
                 <span class="ico-weight"></span>
@@ -102,6 +61,5 @@
         </ul>
     </div>
 </div>
-
 </body>
 </html>

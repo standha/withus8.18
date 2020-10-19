@@ -16,36 +16,10 @@
     <script th:src="@{/js/common.js}"></script>
     <title>Admin center</title>
 </head>
-<!--<script>-->
-<!--    jQuery(function($){-->
-<!--        $("#foo-table").DataTable();-->
-<!--    });-->
-<!--</script>-->
+
 <body>
 <div id="wrap" class="main-page">
-    <header>
-        <div class="header-wrap" style="height: 410px">
-            <lable style="cursor:pointer">
-                <div class="cont" >
-                <span class="title-txt">
-                </span>
-                    <div style="text-align: left" class="todo-txt" spanChange() > <p th:text="'환자 이름 : '+' '+ ${patient.name}"></div>
-                    <div style="text-align: left" class="todo-txt" spanChange() > <p th:text="'환자 아이디-'+' '+ ${patient.userId}"></div>
-                    <div class="todo-txt" spanChange() >
-                        <p style="text-align: left"  th:text="'환자 생년월일-'+' '+ ${patient.birthdate}">
-                        <p style="text-align: center" th:text="'환자 이주의 목표-'+' '+ ${patient.goal}">
-                        <p style="text-align: right" th:text="'환자 레벨-'+' '+ ${patient.level}"> </div>
-                 </div>
-            </lable>
-        </div>
-        <nav>
-            <ul>
-                <li class="m"><a href="#" class="menu-01"><span>환자용 계정 기록</span></a>
-                </li> <li class="m"><a href="#" class="menu-02"><span>보호자용 계정 기록</span></a></li>
-                <li class="m"><a href="#" class="menu-03"><span>위더스랑 요청 기록</span></a></li>
-            </ul>
-        </nav>
-    </header>
+    <header th:replace="Admin/admin_infoHeader :: headerFragment"></header>
 
     <table id="foo-table" class="table table-bordered" style="table-layout: fixed">
         <thead>
@@ -64,6 +38,7 @@
     /*<![CDATA[*/
     var weekAsc = /*[[ ${weekAsc} ]]*/;
     var weekAvg = /*[[ ${weekAvg} ]]*/;
+    var goalCheck = /*[[ ${patient.goal} ]]*/;
     /*]]*/
 
     //있는 데이터만 표시 ex) 월 화 목 토
@@ -171,6 +146,7 @@
     Item += "<td>" + avg + "</td>";
     Item += "</tr>";
     $('#history-table-data').append(Item);
+
 
 </script>
 </body>
