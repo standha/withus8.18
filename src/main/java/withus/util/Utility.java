@@ -5,10 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -31,6 +28,10 @@ public class Utility {
     ).sorted().collect(Collectors.toList());
 
     public static LocalDate parseDate(String dateString) {
+
+        if(dateString.equals("null") || dateString == null){
+           return null;
+        }
         return LocalDate.parse(dateString, DATE_FORMATTER);
     }
 
