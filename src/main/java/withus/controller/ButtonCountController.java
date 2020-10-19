@@ -42,11 +42,8 @@ public class ButtonCountController extends BaseController {
                 count.getLevel(), count.getNatriumMoisture(), count.getSymptom(), count.getWeight(), count.getWithusRang());
 
         try {
-            if(user.getType() == User.Type.PATIENT){
                 saved = countService.upsertCount(count);
                 code = Result.Code.OK;
-            }else
-                throw new IllegalArgumentException("Caregiver try input data , [warn]");
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
