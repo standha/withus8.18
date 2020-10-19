@@ -20,11 +20,9 @@ import withus.dto.Result;
 import withus.dto.wwithus.AllUserDTO;
 import withus.entity.*;
 import withus.entity.User.Type;
-import withus.service.CountService;
-import withus.service.GoalService;
-import withus.service.HelperRequestService;
-import withus.service.UserService;
+import withus.service.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -40,12 +38,14 @@ public class CenterController extends BaseController {
     private final CountService countService;
     private final HelperRequestService helperRequestService;
 
+    private final HomeService homeService;
     @Autowired
-    public CenterController(AuthenticationFacade authenticationFacade, UserService userService, GoalService goalService, CountService countService, HelperRequestService helperRequestService) {
+    public CenterController(AuthenticationFacade authenticationFacade, HomeService homeService, UserService userService, GoalService goalService, CountService countService, HelperRequestService helperRequestService) {
         super(userService, authenticationFacade);
         this.goalService = goalService;
         this.countService = countService;
         this.helperRequestService = helperRequestService;
+        this.homeService = homeService;
     }
 
     @GetMapping({"/center"})
