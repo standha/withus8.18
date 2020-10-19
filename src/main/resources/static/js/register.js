@@ -34,6 +34,7 @@ function onFormSubmission(form) {
 		userId: null,
 		password: null,
 		name: null,
+		birthdate : null,
 		contact: caregiverValue
 	}
 	const caregiver = isEmpty(caregiverValue) ? null : user;
