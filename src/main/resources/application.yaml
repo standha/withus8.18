@@ -20,6 +20,6 @@ spring:
     # you should always set that property to false
     # because it gives you no benefit at all.
     # https://stackoverflow.com/a/22977693/1986241
-    show-sql: true
+    show-sql: false
     hibernate:
       ddl-auto: update
