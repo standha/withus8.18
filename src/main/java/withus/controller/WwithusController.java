@@ -50,7 +50,7 @@ public class WwithusController extends BaseController {
 
         logger.info("wwithus id:{}, type:{}, week:{}, url:{}", user.getUserId(), user.getType(), user.getWeek(), request.getRequestURL());
 
-        ModelAndView modelAndView = new ModelAndView("wwithus/wwithus.html");
+        ModelAndView modelAndView = new ModelAndView("wwithus/wwithus");
         modelAndView.addObject("previousUrl", "/home");
         modelAndView.addObject("userType", user.getType());
 
