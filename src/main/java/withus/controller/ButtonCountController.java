@@ -32,9 +32,8 @@ public class ButtonCountController extends BaseController {
     @PutMapping(value = "/button-count", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<Tbl_button_count> getSymptomCount(@RequestBody Tbl_button_count count, HttpServletRequest request) {
-        String userId = getUsername();
-        User user = userService.getUserById(userId);
-        count.setKey(new ProgressKey(userId, user.getWeek()));
+        User user = getUser();
+        count.setKey(new ProgressKey(user.getUserId(), user.getWeek()));
         Result.Code code;
         Tbl_button_count saved = null;
 

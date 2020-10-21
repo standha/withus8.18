@@ -5,6 +5,8 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 import withus.dto.HeaderInfoDTO;
+import withus.dto.HelpRequest.CaregiverHelpRequestDTO;
+import withus.dto.HelpRequest.PatientHelpRequestDTO;
 import withus.dto.HelpRequestDTO;
 import withus.dto.MoistureAvgDTO;
 import withus.dto.PillSumDTO;
@@ -91,6 +93,52 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .orderBy(wr.dateTime.asc())
                 .fetch();
         return requestAsc;
+    }
+
+    public List<PatientHelpRequestDTO>findPatientHelpRequest(){
+        QTbl_helper_request hp = QTbl_helper_request.tbl_helper_request;
+        QUser u = QUser.user;
+        QUser c = QUser.user.caregiver;
+        List<PatientHelpRequestDTO>requestPatient = queryFactory.select(Projections.constructor(PatientHelpRequestDTO.class,
+                u.name, u.userId, u.contact, c.contact, hp.pk.date, hp.pk.time))
+                .from(hp)
+                .where(u.type.eq(User.Type.PATIENT))
+                .leftJoin(u).on(hp.pk.id.eq(u.userId))
+                .leftJoin(c).on(u.caregiver.contact.eq(c.contact))
+                .orderBy(hp.pk.date.desc())
+                .orderBy(hp.pk.time.desc())
+                .fetch();
+        return requestPatient;
+    }
+
+    /*public List<CaregiverHelpRequestDTO>findCaregiverHelpRequest(){
+        QTbl_helper_request hp = QTbl_helper_request.tbl_helper_request;
+        QUser user = QUser.user;
+        QUser care = QUser.user;
+
+        List<CaregiverHelpRequestDTO> requestCaregiver = queryFactory.select(Projections.constructor(CaregiverHelpRequestDTO.class,
+                care.name , care.userId , care.contact, user.name, user.userId, user.contact, care.type, hp.pk.date, hp.pk.time))
+                .from(hp)
+                .leftJoin(care).on(hp.pk.id.eq(care.userId))
+                .where(care.type.eq(User.Type.CAREGIVER))
+                .leftJoin(user).on(care.contact.eq(user.caregiver.contact))
+                .fetch();
+        return requestCaregiver;
+    }*/
+
+    public List<CaregiverHelpRequestDTO>findCaregiverHelpRequest(){
+        QTbl_helper_request hp = QTbl_helper_request.tbl_helper_request;
+        QUser user = QUser.user;
+
+        List<CaregiverHelpRequestDTO> requestCaregiver = queryFactory.select(Projections.constructor(CaregiverHelpRequestDTO.class,
+                user.caregiver.name , user.caregiver.userId , user.caregiver.contact, user.name, user.userId, user.contact, hp.pk.date, hp.pk.time))
+                .from(user)
+                .where(user.caregiver.type.eq(User.Type.CAREGIVER))
+                .leftJoin(hp).on(hp.pk.id.eq(user.caregiver.userId))
+                .orderBy(hp.pk.date.desc())
+                .orderBy(hp.pk.time.desc())
+                .fetch();
+        return requestCaregiver;
     }
 
 }
