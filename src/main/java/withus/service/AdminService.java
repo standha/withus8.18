@@ -8,12 +8,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import withus.auth.NoOpPasswordEncoder;
-import withus.dto.HeaderInfoDTO;
+import withus.dto.*;
 import withus.dto.HelpRequest.CaregiverHelpRequestDTO;
 import withus.dto.HelpRequest.PatientHelpRequestDTO;
-import withus.dto.HelpRequestDTO;
-import withus.dto.MoistureAvgDTO;
-import withus.dto.PillSumDTO;
 import withus.entity.*;
 import withus.repository.*;
 
@@ -85,4 +82,10 @@ public class AdminService {
 
     @Nullable
     public List<CaregiverHelpRequestDTO> getCaregiverRequest() {return userRepositorySupport.findCaregiverHelpRequest(); }
+
+    @Nullable
+    public List<Tbl_symptom_log> getSymptom(String userId)   { return userRepositorySupport.findSymptom(userId);}
+
+    @Nullable
+    public List<SymptomAvgDTO> getSymptomAvg(String userId) { return userRepositorySupport.findSymptomAvg(userId);}
 }

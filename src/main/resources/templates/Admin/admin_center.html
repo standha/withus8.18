@@ -91,7 +91,7 @@
                 <span class="ico-weight"></span>
                 <span>체중 기록</span>
             </a>
-            <a th:href="@{/weight}">
+            <a th:href="@{/admin_symptomRecord/{userId}(userId=${patient.userId})}">
                 <span class="ico-symptom"></span>
                 <span>증상일지 기록</span>
             </a>

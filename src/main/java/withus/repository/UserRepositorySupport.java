@@ -4,12 +4,9 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
-import withus.dto.HeaderInfoDTO;
+import withus.dto.*;
 import withus.dto.HelpRequest.CaregiverHelpRequestDTO;
 import withus.dto.HelpRequest.PatientHelpRequestDTO;
-import withus.dto.HelpRequestDTO;
-import withus.dto.MoistureAvgDTO;
-import withus.dto.PillSumDTO;
 import withus.entity.*;
 
 import java.util.List;
@@ -44,6 +41,28 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .orderBy(mr.pk.date.asc())
                 .fetch();
         return moistureAsc;
+    }
+
+    public List<Tbl_symptom_log> findSymptom(String userId) {
+        QTbl_symptom_log log = QTbl_symptom_log.tbl_symptom_log;
+        List<Tbl_symptom_log> symptom = queryFactory.selectFrom(log)
+                .where(log.pk.id.eq(userId))
+                .orderBy(log.week.asc())
+                .orderBy(log.pk.date.asc())
+                .fetch();
+        return symptom;
+    }
+
+    public List<SymptomAvgDTO> findSymptomAvg(String userId){
+        QTbl_symptom_log log = QTbl_symptom_log.tbl_symptom_log;
+        List<SymptomAvgDTO> symptomAvg = queryFactory.select(Projections.constructor(SymptomAvgDTO.class,
+                log.week, log.outofbreath.sum(), log.tired.sum(), log.ankle.sum(), log.cough.sum()))
+                .from(log)
+                .groupBy(log.week)
+                .orderBy(log.week.asc())
+                .where(log.pk.id.eq(userId))
+                .fetch();
+        return symptomAvg;
     }
 
     public HeaderInfoDTO findHeaderInfo(String userID) {
