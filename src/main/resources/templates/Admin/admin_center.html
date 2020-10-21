@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <meta charset="UTF-8">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,6 +14,7 @@
     <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <title>Admin center</title>
+
 </head>
 <style>
     .main-icon2 {display: flex; flex-wrap: wrap; justify-content: space-between; margin: 60px 8% 20px;}
@@ -21,8 +23,9 @@
     .main-icon2 a span[class*="ico-"] {margin-bottom: 10px;}
 </style>
 <body>
-<div id="wrap" class="main-page">
+<div th:replace="Admin/admin_nav :: navFragment"></div>
 
+<div id="wrap" class="main-page">
     <header th:replace="Admin/admin_infoHeader :: headerFragment"></header>
     <div class="container" id="content">
         <ul class="main-icon2">
@@ -61,5 +64,6 @@
         </ul>
     </div>
 </div>
+<script type="text/javascript" src="js/bootstrap.js"></script>
 </body>
 </html>

@@ -9,11 +9,12 @@
     <title>위더스</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
     <meta name="format-detection" content="telephone=no">
-    <link th:href="@{/css/reset.css}" rel="stylesheet">
-    <link th:href="@{/css/common.css}" rel="stylesheet">
-    <link th:href="@{/css/layout.css}" rel="stylesheet">
-    <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
-    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/datepicker-ko.js}"></script>
+<!--    <link th:href="@{/css/reset.css}" rel="stylesheet">-->
+<!--    <link th:href="@{/css/common.css}" rel="stylesheet">-->
+<!--    <link th:href="@{/css/layout.css}" rel="stylesheet">-->
+<!--    <script th:src="@{/js/jquery-1.12.4.min.js}"></script>-->
+<!--    <script th:src="@{/js/common.js}"></script>-->
     <title>Admin center</title>
 </head>
 <script>
@@ -22,17 +23,8 @@
     });
 </script>
 <body>
+<div th:replace="Admin/admin_nav :: navFragment"></div>
 <div id="wrap" class="main-page">
-    <header>
-        <nav>
-            <ul>
-                <li class="m"><a href="#" class="menu-01"><span>환자용 계정 기록</span></a>
-                </li> <li class="m"><a href="#" class="menu-02"><span>보호자용 계정 기록</span></a></li>
-                <li class="m"><a href="#" class="menu-03"><span>위더스랑 요청 기록</span></a></li>
-            </ul>
-        </nav>
-    </header>
-
     <table id="foo-table" class="table table-bordered">
         <thead>
         <tr><th>날짜</th><th>도우미 요청 연결 시간</th><th>이름</th> <th>아이디</th>  <th>연락처</th> <th>보호자 연락처</th> <th>위더스랑 도우미 요청 코드</th></tr>
@@ -52,4 +44,54 @@
 </div>
 
 </body>
+<script th:inline="javascript">
+
+    var datepicker_default = {
+        closeText : "닫기",
+        prevText : "이전달",
+        nextText : "다음달",
+        currentText : "오늘",
+        changeMonth: true,
+        changeYear: true,
+        monthNames : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
+        monthNamesShort : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
+        dayNames : [ "일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일" ],
+        dayNamesShort : [ "일", "월", "화", "수", "목", "금", "토" ],
+        dayNamesMin : [ "일", "월", "화", "수", "목", "금", "토" ],
+        weekHeader : "주",
+        firstDay : 0,
+        isRTL : false,
+        showMonthAfterYear : true,
+        yearSuffix : '',
+
+        showOn: 'both',
+        buttonImage:'/resources/image/calendar.png',
+        buttonImageOnly: true,
+
+        showButtonPanel: true
+    }
+
+    datepicker_default.closeText = "선택";
+    datepicker_default.dateFormat = "yy-mm";
+    datepicker_default.onClose = function (dateText, inst) {
+        var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+        var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+        $(this).datepicker( "option", "defaultDate", new Date(year, month, 1) );
+        $(this).datepicker('setDate', new Date(year, month, 1));
+    }
+
+    datepicker_default.beforeShow = function () {
+        var selectDate = $("#sdate").val().split("-");
+        var year = Number(selectDate[0]);
+        var month = Number(selectDate[1]) - 1;
+        $(this).datepicker( "option", "defaultDate", new Date(year, month, 1) );
+    }
+
+    $("#sdate").datepicker(datepicker_default);
+</script>
+
+<style>
+    table.ui-datepicker-calendar { display:none; }
+</style>
+
 </html>
