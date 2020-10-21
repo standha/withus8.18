@@ -50,7 +50,7 @@ public class WwithusController extends BaseController {
 
         logger.info("wwithus id:{}, type:{}, week:{}, url:{}", user.getUserId(), user.getType(), user.getWeek(), request.getRequestURL());
 
-        ModelAndView modelAndView = new ModelAndView("wwithus/wwithus.html");
+        ModelAndView modelAndView = new ModelAndView("wwithus/wwithus");
         modelAndView.addObject("previousUrl", "/home");
         modelAndView.addObject("userType", user.getType());
 
@@ -70,8 +70,9 @@ public class WwithusController extends BaseController {
 
         Result.Code code = Result.Code.ERROR;
         WithusHelpRequest withusHelpRequest = null;
+
         try {
-            withusHelpRequest = homeService.createHelpRequest(user, now, helpCode);
+            withusHelpRequest = homeService.createHelpRequest(user, now, helpCode.replaceAll("\"", ""));
             code = Result.Code.OK;
         } catch (Exception exception) {
 //			log.error(exception.getLocalizedMessage(), exception);
