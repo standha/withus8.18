@@ -1,6 +1,6 @@
 
 
-const MESSAGE_INTERVAL_MILLIS = 2000;
+const MESSAGE_INTERVAL_MILLIS = 3000;
 const GET_FETCH_OPTIONS = {
     method: "GET",
     headers: {
