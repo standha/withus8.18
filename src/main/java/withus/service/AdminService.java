@@ -88,4 +88,10 @@ public class AdminService {
 
     @Nullable
     public List<SymptomAvgDTO> getSymptomAvg(String userId) { return userRepositorySupport.findSymptomAvg(userId);}
+
+    @Nullable
+    public List<Tbl_Exercise_record> getExercise(String userId) { return userRepositorySupport.findExercise(userId);}
+
+    @Nullable
+    public List<ExerciseDTO> getExerciseAvg(String userId)  {return userRepositorySupport.findExerciseAvg(userId);}
 }

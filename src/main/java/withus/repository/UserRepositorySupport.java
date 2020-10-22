@@ -78,6 +78,14 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
         return headerInfo;
     }
 
+    /*public List<NatriumSumDTO> findNatriumSum(String userId){
+        QTbl_natrium_record mr = QTbl_natrium_record.tbl_natrium_record;
+        List<NatriumSumDTO> natriumSum = queryFactory.select(Projections.constructor(NatriumSumDTO.class, mr.week,
+                ,mr.morning, mr.lunch, mr.dinner))
+                .fetch();
+        return natriumSum;
+    }*/
+
     public List<PillSumDTO> findPillSum(String userId) {
         QTbl_medication_record mr = QTbl_medication_record.tbl_medication_record;
         List<PillSumDTO> pillSum = queryFactory.select(Projections.constructor(PillSumDTO.class, mr.week, mr.finished.count()))
@@ -98,6 +106,28 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .orderBy(mr.pk.date.asc())
                 .fetch();
         return pillAsc;
+    }
+
+    public List<ExerciseDTO> findExerciseAvg(String userId){
+        QTbl_Exercise_record er = QTbl_Exercise_record.tbl_Exercise_record;
+        List<ExerciseDTO> exerciseAvg = queryFactory.select(Projections.constructor(ExerciseDTO.class, er.week, er.hour.sum(), er.minute.sum(), er.week.count()))
+                .from(er)
+                .groupBy(er.week)
+                .orderBy(er.week.asc())
+                .where(er.week.eq(er.week))
+                .where(er.pk.id.eq(userId))
+                .fetch();
+        return exerciseAvg;
+    }
+
+    public List<Tbl_Exercise_record> findExercise(String userId){
+        QTbl_Exercise_record er = QTbl_Exercise_record.tbl_Exercise_record;
+        List<Tbl_Exercise_record> exerciseRecords = queryFactory.selectFrom(er)
+                .where(er.pk.id.eq(userId))
+                .orderBy(er.week.asc())
+                .orderBy(er.pk.date.asc())
+                .fetch();
+        return exerciseRecords;
     }
 
     public List<HelpRequestDTO> findHelpRequestAsc() {
@@ -129,21 +159,6 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .fetch();
         return requestPatient;
     }
-
-    /*public List<CaregiverHelpRequestDTO>findCaregiverHelpRequest(){
-        QTbl_helper_request hp = QTbl_helper_request.tbl_helper_request;
-        QUser user = QUser.user;
-        QUser care = QUser.user;
-
-        List<CaregiverHelpRequestDTO> requestCaregiver = queryFactory.select(Projections.constructor(CaregiverHelpRequestDTO.class,
-                care.name , care.userId , care.contact, user.name, user.userId, user.contact, care.type, hp.pk.date, hp.pk.time))
-                .from(hp)
-                .leftJoin(care).on(hp.pk.id.eq(care.userId))
-                .where(care.type.eq(User.Type.CAREGIVER))
-                .leftJoin(user).on(care.contact.eq(user.caregiver.contact))
-                .fetch();
-        return requestCaregiver;
-    }*/
 
     public List<CaregiverHelpRequestDTO>findCaregiverHelpRequest(){
         QTbl_helper_request hp = QTbl_helper_request.tbl_helper_request;

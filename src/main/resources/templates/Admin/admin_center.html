@@ -75,7 +75,7 @@
                 <span class="ico-blood"></span>
                 <span>혈압/맥박 기록</span>
             </a>
-            <a th:href="@{/exercise}">
+            <a th:href="@{/admin_exerciseRecord/{userId}(userId=${patient.userId})}">
                 <span class="ico-exercise"></span>
                 <span>운동 기록</span>
             </a>

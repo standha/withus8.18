@@ -93,6 +93,20 @@ public class AdminHomeController extends AdminBaseController {
         return modelAndView;
     }
 
+    @GetMapping("/admin_exerciseRecord/{userId}")
+    public ModelAndView adminExerciseRecord(@PathVariable("userId") String userId){
+        ModelAndView modelAndView = new ModelAndView();
+        HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
+        List<Tbl_Exercise_record> exercise = adminService.getExercise(userId);
+        List<ExerciseDTO> exerciseAvg = adminService.getExerciseAvg(userId);
+        modelAndView.addObject("patient", headerInfo);
+        modelAndView.addObject("exercise", exercise);
+        modelAndView.addObject("exerciseAvg", exerciseAvg);
+        modelAndView.setViewName("/Admin/admin_exerciseRecord");
+
+        return modelAndView;
+    }
+
     @GetMapping("/admin_pillRecord/{userId}")
     public ModelAndView adminPillRecord(@PathVariable("userId") String userId) {
         ModelAndView mav = new ModelAndView();
