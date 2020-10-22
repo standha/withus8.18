@@ -71,7 +71,7 @@
                 <span class="ico-drug"></span>
                 <span>복약 기록(완)</span>
             </a>
-            <a th:href="@{/bloodPressure}">
+            <a th:href="@{/admin_blood_pressure/{userId}(userId=${patient.userId})}">
                 <span class="ico-blood"></span>
                 <span>혈압/맥박 기록</span>
             </a>

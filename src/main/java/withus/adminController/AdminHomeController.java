@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.header.Header;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -149,6 +150,16 @@ public class AdminHomeController extends AdminBaseController {
         mav.setViewName("/Admin/admin_caregiverHelpRequest");
 
         return mav;
+    }
+
+    @GetMapping("/admin_blood_pressure/{userId}")
+    public ModelAndView getBloogPressure(@PathVariable("userId") String userId){
+        ModelAndView modelAndView = new ModelAndView();
+        List<Tbl_blood_pressure_pulse> blood_pressure_pulseList = adminService.getBloodPressure(userId);
+        modelAndView.addObject("blood_pressure_pulseList", blood_pressure_pulseList);
+
+        modelAndView.setViewName("/Admin/admin_bloodPressure");
+        return modelAndView;
     }
 
     @GetMapping("/admin_button_count/{userId}")

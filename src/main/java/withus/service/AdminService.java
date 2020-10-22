@@ -94,4 +94,7 @@ public class AdminService {
 
     @Nullable
     public List<ExerciseDTO> getExerciseAvg(String userId)  {return userRepositorySupport.findExerciseAvg(userId);}
+
+    @Nullable
+    public List<Tbl_blood_pressure_pulse> getBloodPressure(String userId) { return userRepositorySupport.findBloodPressure(userId);}
 }

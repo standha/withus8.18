@@ -130,6 +130,16 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
         return exerciseRecords;
     }
 
+    public List<Tbl_blood_pressure_pulse> findBloodPressure(String userId){
+        QTbl_blood_pressure_pulse br = QTbl_blood_pressure_pulse.tbl_blood_pressure_pulse;
+        List<Tbl_blood_pressure_pulse> blood_pressure_pulses = queryFactory.selectFrom(br)
+                .where(br.pk.id.eq(userId))
+                .orderBy(br.week.asc())
+                .orderBy(br.pk.date.asc())
+                .fetch();
+        return blood_pressure_pulses;
+    }
+
     public List<HelpRequestDTO> findHelpRequestAsc() {
         QWithusHelpRequest wr = QWithusHelpRequest.withusHelpRequest;
         QUser u = QUser.user;
