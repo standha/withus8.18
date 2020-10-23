@@ -49,17 +49,25 @@
 
     <table id="foo-table" class="table table-bordered">
         <thead>
-        <tr><th>날짜</th><th>도우미 요청 연결 시간</th><th>이름</th> <th>아이디</th>  <th>본인 연락처</th> <th>보호자 연락처</th></tr>
+        <tr><th>주차</th><th>날짜</th><th>체중</th></tr>
         </thead>
         <tbody>
-        <tr th:each="patientHelpRequestDTO : ${patientHelpRequestDTOList}">
-            <td th:text="${patientHelpRequestDTO.requestDate}">날짜</td>
-            <td th:text="${patientHelpRequestDTO.requestTime}">시간</td>
-            <td th:text="${patientHelpRequestDTO.name}">이름</td>
-            <td th:text="${patientHelpRequestDTO.id}">아이디</td>
-            <td th:text="${patientHelpRequestDTO.contact}">본인 연락처</td>
-            <td th:text="${patientHelpRequestDTO.caregiverContact}">보호자 연락처</td>
+        <tr th:each="weight: ${weightAsc}">
+            <td th:text="${weight.week}"></td>
+            <td th:text="${weight.pk.date}"></td>
+            <td th:text="${weight.weight}"></td>
+        </tr>
+        </tbody>
+    </table>
 
+    <table id="foo-table" class="table table-bordered">
+        <thead>
+        <tr><th>주차</th><th>체중</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="weightAvg: ${weightAvg}">
+            <td th:text="${weightAvg.week}"></td>
+            <td th:text="${weightAvg.weight}"></td>
         </tr>
         </tbody>
     </table>

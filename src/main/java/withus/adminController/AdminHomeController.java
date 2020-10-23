@@ -184,10 +184,10 @@ public class AdminHomeController extends AdminBaseController {
         weightAsc.forEach(s -> s.getWeight());
         weightAvg.forEach(s -> s.getWeight());
 
-        mav.addObject("weekAsc", weightAsc);
-        mav.addObject("weekAvg", weightAvg);
+        mav.addObject("weightAsc", weightAsc);
+        mav.addObject("weightAvg", weightAvg);
         mav.addObject("patient", headerInfo);
-        mav.setViewName("/Admin/admin_moistureRecord");
+        mav.setViewName("/Admin/admin_weightRecord");
 
         return mav;
     }
