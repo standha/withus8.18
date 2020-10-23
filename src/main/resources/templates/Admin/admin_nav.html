@@ -98,16 +98,16 @@
         clear:left;
     }
 </style>
-<body>
+<body style="overflow:hidden;">
 <div class="menubar">
     <ul>
         <li><a th:href="@{/center}">위더스 - 관리자 모드</a></li>
         <li><a th:href="@{/center}">환자 관리</a></li>
         <li><a href="#" id="current">도우미 연결 요청 기록</a>
             <ul>
-                <li><a href="#">환자용 계정 기록</a></li>
-                <li><a href="#">보호자용 계정 기록</a></li>
-                <li><a th:href="@{/adimn_withusHelpRequest}">위더스랑 요청 기록</a></li>
+                <li><a th:href="@{/admin_caregiverHelpRequest}">환자용 계정 기록</a></li>
+                <li><a th:href="@{/admin_patientHelpRequest}">보호자용 계정 기록</a></li>
+                <li><a th:href="@{/admin_withusHelpRequest}">위더스랑 요청 기록</a></li>
             </ul>
         </li>
         <li class="nav-item active">

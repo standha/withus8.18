@@ -22,9 +22,8 @@
     .main-icon2 a span {text-align: center; font-size: 1.1rem; font-weight: 700;}
     .main-icon2 a span[class*="ico-"] {margin-bottom: 10px;}
 </style>
-<body>
 <div th:replace="Admin/admin_nav :: navFragment"></div>
-
+<body>
 <div id="wrap" class="main-page">
     <header th:replace="Admin/admin_infoHeader :: headerFragment"></header>
     <div class="container" id="content">
@@ -33,15 +32,15 @@
                 <span class="ico-drug"></span>
                 <span>복약 기록(완)</span>
             </a>
-            <a th:href="@{/bloodPressure}">
+            <a th:href="@{/admin_blood_pressure/{userId}(userId=${patient.userId})}">
                 <span class="ico-blood"></span>
                 <span>혈압/맥박 기록</span>
             </a>
-            <a th:href="@{/exercise}">
+            <a th:href="@{/admin_exerciseRecord/{userId}(userId=${patient.userId})}">
                 <span class="ico-exercise"></span>
                 <span>운동 기록</span>
             </a>
-            <a th:href="@{/moistureNatrium}">
+             <a th:href="@{/admin_natriumRecord/{userId}(userId=${patient.userId})}">
                 <span class="ico-salt"></span>
                 <span>저염식 기록</span>
             </a>
@@ -49,21 +48,20 @@
                 <span class="ico-water2"></span>
                 <span>수분 기록(완)</span>
             </a>
-            <a th:href="@{/weight}">
+            <a th:href="@{/admin_weightRecord/{userId}(userId=${patient.userId})}">
                 <span class="ico-weight"></span>
                 <span>체중 기록</span>
             </a>
-            <a th:href="@{/weight}">
+            <a th:href="@{/admin_symptomRecord/{userId}(userId=${patient.userId})}">
                 <span class="ico-symptom"></span>
                 <span>증상일지 기록</span>
             </a>
-            <a th:href="@{/weight}">
+            <a th:href="@{/admin_button_count/{userId}(userId=${patient.userId})}">
                 <span class="ui-button-icon-only"></span>
                 <span>버튼클릭 기록</span>
             </a>
         </ul>
     </div>
 </div>
-<script type="text/javascript" src="js/bootstrap.js"></script>
 </body>
 </html>

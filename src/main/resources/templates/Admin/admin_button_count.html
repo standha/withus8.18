@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css"/>
+<script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>위더스</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no">
+    <link th:href="@{/css/reset.css}" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <link th:href="@{/css/layout.css}" rel="stylesheet">
+    <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <title>Admin center</title>
+</head>
+<style>
+    th {
+        text-align: center;
+    }
+</style>
+<body>
+<div id="wrap" class="main-page">
+    <div th:replace="Admin/admin_nav :: navFragment"></div>
+    <header th:replace="Admin/admin_infoHeader :: headerFragment"></header>
+
+    <table id="foo-table" class="table table-bordered" style="table-layout: fixed">
+        <thead style="text-align: center">
+        <tr style="text-align: center">
+            <th colspan="12">버튼 클릭 수 </th>
+        </tr>
+        <tr style="text-align: center">
+            <th>주차</th><th>이 주의 목표</th><th>달성률</th><th>알람</th><th>혈압/맥박</th><th>운동</th><th>염분/수분</th><th>체중</th><th>증상일지</th><th>질환정보</th><th>위더스랑 버튼</th><th>앱 도우미 버튼</th>
+        </tr>
+        </thead>
+        <tbody style="text-align: center">
+        <tr th:each="count : ${counts}">
+            <td th:text="${count.key.week}+주">주차</td>
+            <td th:text="${count.goal}">이 주의 목표</td>
+            <td th:text="${count.level}">달성률</td>
+            <td th:text="${count.alarm}">알람</td>
+            <td th:text="${count.bloodPressure}">혈압/맥박</td>
+            <td th:text="${count.exercise}">운동</td>
+            <td th:text="${count.natriumMoisture}">염분/수분</td>
+            <td th:text="${count.weight}">체중</td>
+            <td th:text="${count.symptom}">증상일지</td>
+            <td th:text="${count.diseaseInfo}">질환정보</td>
+            <td th:text="${count.withusRang}">위더스랑 버튼</td>
+            <td th:text="${count.helper}">앱 도우미 버튼</td>
+        </tr>
+        <td th:text="종합">주차</td>
+        <td th:text="${goal}">이 주의 목표</td>
+        <td th:text="${level}">달성률</td>
+        <td th:text="${alarm}">알람</td>
+        <td th:text="${blood}">혈압/맥박</td>
+        <td th:text="${exercise}">운동</td>
+        <td th:text="${natrium}">염분/수분</td>
+        <td th:text="${weight}">체중</td>
+        <td th:text="${symptom}">증상일지</td>
+        <td th:text="${disease_info}">질환정보</td>
+        <td th:text="${chat}">위더스랑 버튼</td>
+        <td th:text="${helper}">앱 도우미 버튼</td>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
