@@ -162,6 +162,36 @@ public class AdminHomeController extends AdminBaseController {
         return modelAndView;
     }
 
+    @GetMapping("/admin_natriumRecord/{userId}")
+    public ModelAndView adminNatriumRecord(@PathVariable("userId") String userId) {
+        ModelAndView mav = new ModelAndView();
+        HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
+        List<NatriumCountDTO> natriumCountListSum = adminService.getNatriumCountWeek(userId);
+        List<Tbl_natrium_record> natriumAsc = adminService.getNatriumAsc(userId);
+        mav.addObject("patient", headerInfo);
+        mav.addObject("natriumCountListSumLists", natriumCountListSum);
+        mav.addObject("natriumAsc",natriumAsc);
+        mav.setViewName("/Admin/admin_natriumRecord");
+        return mav;
+    }
+
+    @GetMapping("/admin_weightRecord/{userId}")
+    public ModelAndView adminWeightRecord(@PathVariable("userId") String userId) {
+        ModelAndView mav = new ModelAndView();
+        HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
+        List<WeightAvgDTO> weightAvg = adminService.getWeightAvg(userId);
+        List<Tbl_weight> weightAsc = adminService.getWeightAsc(userId);
+        weightAsc.forEach(s -> s.getWeight());
+        weightAvg.forEach(s -> s.getWeight());
+
+        mav.addObject("weekAsc", weightAsc);
+        mav.addObject("weekAvg", weightAvg);
+        mav.addObject("patient", headerInfo);
+        mav.setViewName("/Admin/admin_moistureRecord");
+
+        return mav;
+    }
+
     @GetMapping("/admin_button_count/{userId}")
     public ModelAndView getSymptomAll(@PathVariable("userId") String userId) {
         int alarm = 0;

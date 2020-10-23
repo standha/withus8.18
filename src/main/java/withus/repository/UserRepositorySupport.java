@@ -78,14 +78,6 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
         return headerInfo;
     }
 
-    /*public List<NatriumSumDTO> findNatriumSum(String userId){
-        QTbl_natrium_record mr = QTbl_natrium_record.tbl_natrium_record;
-        List<NatriumSumDTO> natriumSum = queryFactory.select(Projections.constructor(NatriumSumDTO.class, mr.week,
-                ,mr.morning, mr.lunch, mr.dinner))
-                .fetch();
-        return natriumSum;
-    }*/
-
     public List<PillSumDTO> findPillSum(String userId) {
         QTbl_medication_record mr = QTbl_medication_record.tbl_medication_record;
         List<PillSumDTO> pillSum = queryFactory.select(Projections.constructor(PillSumDTO.class, mr.week, mr.finished.count()))
@@ -185,5 +177,39 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
         return requestCaregiver;
     }
 
+    public List<WeightAvgDTO>findWeightAvg(String userId){
+        QTbl_weight tw = QTbl_weight.tbl_weight;
+
+        List<WeightAvgDTO> weightAvgList = queryFactory.select(Projections.constructor(WeightAvgDTO.class,
+                tw.week, tw.weight.avg()))
+                .from(tw)
+                .where()
+                .groupBy(tw.week)
+                .orderBy(tw.week.asc())
+                .fetch();
+        return weightAvgList;
+    }
+
+    public List<Tbl_weight>findWeightAsc(String userId){
+        QTbl_weight tw = QTbl_weight.tbl_weight;
+
+        List<Tbl_weight> weightsAscList = queryFactory.selectFrom(tw)
+                .where(tw.pk.id.eq(userId))
+                .orderBy(tw.week.asc())
+                .orderBy(tw.pk.date.asc())
+                .fetch();
+        return weightsAscList;
+    }
+
+    public List<Tbl_natrium_record> findNatriumAsc (String userId){
+        QTbl_natrium_record nr = QTbl_natrium_record.tbl_natrium_record;
+
+        List<Tbl_natrium_record> natriumAscList = queryFactory.selectFrom(nr)
+                .where(nr.pk.id.eq(userId))
+                .orderBy(nr.week.asc())
+                .orderBy(nr.pk.date.asc())
+                .fetch();
+        return natriumAscList;
+    }
 }
 

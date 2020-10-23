@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import withus.auth.NoOpPasswordEncoder;
 import withus.dto.*;
 import withus.dto.HelpRequest.CaregiverHelpRequestDTO;
@@ -25,14 +26,17 @@ public class AdminService {
     private final GoalRepository goalRepositroy;
     private final CountRepository countRepository;
 
+    private final NatriumRecordRepository natriumRecordRepository;
+
     @Autowired
     public AdminService(UserRepository userRepository, MedicationAlarmRepository medicationAlarmRepository, OutPatientVisitAlarmRepository outPatientVisitAlarmRepository,
-                        GoalRepository goalRepositroy, CountRepository countRepository) {
+                        GoalRepository goalRepositroy, CountRepository countRepository, NatriumRecordRepository natriumRecordRepository) {
         this.userRepository = userRepository;
         this.goalRepositroy = goalRepositroy;
         this.medicationAlarmRepository = medicationAlarmRepository;
         this.outPatientVisitAlarmRepository = outPatientVisitAlarmRepository;
         this.countRepository = countRepository;
+        this.natriumRecordRepository = natriumRecordRepository;
     }
 
     @Autowired
@@ -97,4 +101,50 @@ public class AdminService {
 
     @Nullable
     public List<Tbl_blood_pressure_pulse> getBloodPressure(String userId) { return userRepositorySupport.findBloodPressure(userId);}
+
+    @Nullable
+    public List<WeightAvgDTO> getWeightAvg(String userId){return userRepositorySupport.findWeightAvg(userId);}
+
+    @Nullable
+    public List<Tbl_weight> getWeightAsc(String userId){return userRepositorySupport.findWeightAsc(userId);}
+
+    @Nullable
+    public List<Tbl_natrium_record> getNatriumAsc(String userId) { return userRepositorySupport.findNatriumAsc(userId);}
+
+    public List<NatriumCountDTO> getNatriumCountWeek(String userId){
+        Integer week = 1;
+        List<Tbl_natrium_record> natrium_records = natriumRecordRepository.findByPk_Id(userId);
+        List<NatriumCountDTO> natriumCountList = new ArrayList<>();
+        //TriFunction< T , U, S,  R> t(유저의 타트륨 섭취 리스트), u(주차), s(염분섭취), r(결과)
+        TriFunction<List<Tbl_natrium_record>,Integer,String, Integer> countFoo =  (foo , wk, meal) -> foo.stream().filter(tl -> tl.getWeek().equals(wk)).
+                map(tbl -> tbl.getDinner().toString() + tbl.getLunch().toString() + tbl.getMorning().toString())
+                .map(s -> StringUtils.countOccurrencesOf(s, meal)).mapToInt(Integer::intValue).sum();
+
+        while(week <= 24){
+            Integer finalWeek = week;
+            NatriumCountDTO natriumCountDTO = NatriumCountDTO.builder()
+                    .week(week)
+                    .noneCount(countFoo.apply(natrium_records,finalWeek,"0"))
+                    .lowCount(countFoo.apply(natrium_records,finalWeek,"1"))
+                    .mediumCount(countFoo.apply(natrium_records,finalWeek,"2"))
+                    .highCount(countFoo.apply(natrium_records,finalWeek,"3"))
+                    .build();
+            natriumCountList.add(natriumCountDTO);
+            week++;
+        }
+        return natriumCountList;
+    }
+}
+
+@FunctionalInterface
+interface TriFunction<T,U,S, R> {
+
+    /**
+     * 기존 Function의 인자가 2개 -> 3개로 변경
+     * @param  t 1번째 인자 함수 argument
+     * @param u 2번째 인자 함수 argument
+     * @param s 3번째 인자 함수 argument
+     * @return the function result
+     */
+    R apply(T t, U u, S s);
 }
