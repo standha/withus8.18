@@ -148,6 +148,11 @@ public class UserService implements UserDetailsService {
     }
 
     @Nullable
+    public List<User> getPatientLimit(User.Type type, int limit_week, int limit_level) {
+        return userRepository.findByTypeAndWeekLessThanAndLevelLessThan(type, limit_week, limit_level);
+    }
+
+    @Nullable
     public List<MoistureAvgDTO> getMoisture(String userId) {
         return userRepositorySupport.findMoistureWeek(userId);
     }
