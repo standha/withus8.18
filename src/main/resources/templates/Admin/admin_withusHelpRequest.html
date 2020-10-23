@@ -16,21 +16,25 @@
     <title>Admin center</title>
 </head>
 
+
 <script>
 
-    jQuery(function($){
-        $("#foo-table").DataTable({
-        });
-    });
+    // jQuery(function($){
+    //     $("#foo-table").DataTable({
+    //     });
+    // });
+
 </script>
 <body>
 <div th:replace="Admin/admin_nav :: navFragment"></div>
 <div id="wrap" class="main-page">
-    <label for="month">Month: </label>
+<!--    <label for="month">Month: </label>-->
 <!--    <input type="text" id="month" name="month" class="monthPicker" />-->
+
     <button id="previousMonth" onclick="preMonth()"><</button>
     <input type="text" id="month" name="month" style="text-align: center;" readonly>
     <button id="nextMonth" onclick="nextMonth()">></button>
+
     <table id="foo-table" class="table table-bordered">
         <thead>
         <tr><th>날짜</th><th>도우미 요청 연결 시간</th><th>이름</th> <th>아이디</th>  <th>연락처</th> <th>보호자 연락처</th> <th>위더스랑 도우미 요청 코드</th></tr>
@@ -62,7 +66,7 @@
     //         onClose: function(dateText, inst) {
     //             var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
     //             var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-    //             $(this).val($.datepicker.formatDate('MM월', new Date(year, month, 1)));
+    //             $(this).val($.datepicker.formatDate('yy년 MM월', new Date(year, month, 1)));
     //         }
     //     });
     //
@@ -84,6 +88,8 @@
         month = "0" + month.toString();
     }
     document.getElementById("month").value = year + "년 " + month + "월";
+
+
 
     function preMonth(){
         var yearNum = document.getElementById("month").value.substr(0, 4);
@@ -119,6 +125,49 @@
         document.getElementById("month").value = yearNum + "년 " + monthNum + "월";
     }
 
-    document.getElementsByClassName("form-control input-sm").value = document.getElementById("month").value;
+    // $(document).ready(function(){
+    //
+    //     var table = $('#foo-table').dataTable( {
+    //         "oSearch": {"sSearch": document.getElementById("month").value }
+    //     } );
+    //
+    //     $('#previousMonth, #nextMonth').click(function (){
+    //         table.draw();
+    //         console.log(document.getElementById("month").value);
+    //     });
+    // });
+
+    // $('#previousMonth, #nextMonth').click(function (){
+    // });
+
+    $.fn.dataTable.ext.search.push(
+        function( settings, data, dataIndex ) {
+            var str = document.getElementById("month").value;
+
+            $('#previousMonth, #nextMonth').click(function (){
+                str = document.getElementById("month").value;
+            });
+
+            if(data[0].toString().substr(0, 9) == str)
+                return true;
+            else return false;
+        }
+    );
+
+    $(document).ready(function() {
+        var table = $('#foo-table').DataTable({
+            dom: "tp",
+        });
+
+        table
+            .order([0, "desc"], [1, "desc"])
+            .draw();
+        // Event listener to the two range filtering inputs to redraw on input
+        $('#previousMonth, #nextMonth').click( function() {
+            table.draw();
+        } );
+    } );
+
+
 </script>
 </html>
