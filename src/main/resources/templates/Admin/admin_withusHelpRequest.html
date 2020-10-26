@@ -16,21 +16,9 @@
     <title>Admin center</title>
 </head>
 
-
-<script>
-
-    // jQuery(function($){
-    //     $("#foo-table").DataTable({
-    //     });
-    // });
-
-</script>
 <body>
 <div th:replace="Admin/admin_nav :: navFragment"></div>
 <div id="wrap" class="main-page">
-<!--    <label for="month">Month: </label>-->
-<!--    <input type="text" id="month" name="month" class="monthPicker" />-->
-
     <button id="previousMonth" onclick="preMonth()"><</button>
     <input type="text" id="month" name="month" style="text-align: center;" readonly>
     <button id="nextMonth" onclick="nextMonth()">></button>
