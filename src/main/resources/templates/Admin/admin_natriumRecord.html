@@ -21,38 +21,22 @@
     <div th:replace="Admin/admin_nav :: navFragment"></div>
     <header th:replace="Admin/admin_infoHeader :: headerFragment"></header>
 
-    <table id="foo-table" class="table table-bordered">
+    <table id="foo-table" class="table table-bordered" style="table-layout: fixed;">
         <thead>
         <tr>
-            <th rowspan="2">주차</th>
-            <th rowspan="2">요일</th>
-            <th rowspan="2">식사시간</th>
-            <th colspan="4">염도</th>
+            <th rowspan="2" style="text-align: center">주차</th>
+            <th rowspan="2" style="text-align: center">요일</th>
+            <th rowspan="2" style="text-align: center">식사시간</th>
+            <th colspan="4" style="text-align: center">염도</th>
         </tr>
         <tr>
-            <th>식사 안함</th>
-            <th>저염식</th>
-            <th>보통 식사</th>
-            <th>고염식</th>
+            <th style="text-align: center">식사 안함</th>
+            <th style="text-align: center">저염식</th>
+            <th style="text-align: center">보통 식사</th>
+            <th style="text-align: center">고염식</th>
         </tr>
         </thead>
         <tbody id="history-table-data" style="text-align: center" >
-        </tbody>
-    </table>
-
-    <table id="foo-table" class="table table-bordered">
-        <thead>
-        <tr><th>주</th><th>안먹은거</th><th>저염식</th> <th>중염식</th>  <th>고염식</th></tr>
-        </thead>
-        <tbody>
-        <tr th:each="natriumCountListSumLists : ${natriumCountListSumLists}">
-            <td th:text="${natriumCountListSumLists.week}">날짜</td>
-            <td th:text="${natriumCountListSumLists.noneCount}">시간</td>
-            <td th:text="${natriumCountListSumLists.lowCount}">이름</td>
-            <td th:text="${natriumCountListSumLists.mediumCount}">아이디</td>
-            <td th:text="${natriumCountListSumLists.highCount}">본인 연락처</td>
-
-        </tr>
         </tbody>
     </table>
 </div>
@@ -66,57 +50,174 @@
     var weekAvgCount = 0;
     for(i=1; i<=24; i++)
     {
-        for(j=0; j<7; j++) {
+        for(j=0; j<7; j++)
+        {
             var Item = "<tr>";
-            var weekText = ['월', '화', '수', '목', '금', '토', '일'];     //월요일부터 표시해주는 배열
-            if (j == 0) {
-                Item += "<td rowspan='22' style='vertical-align: middle'>" + i + "주차" + "</td>";
+            if(j == 0)
+            {
+                Item += "<td rowspan='22' style='vertical-align: middle'>" + i + "주차" +"</td>";
             }
-            Item += "<td rowspan='3'>" + weekText[j] + "</td>";
-            var day = new Date(weekAsc[weekAscCount].pk.date.substr(0, 4), weekAsc[weekAscCount].pk.date.substr(5, 2) - 1, weekAsc[weekAscCount].pk.date.substr(8, 2)).getDay();
+
+            var weekText = ['월', '화', '수', '목', '금', '토', '일'];     //월요일부터 표시해주는 배열
+            Item += "<td rowspan='3' style='vertical-align: middle;'>" + weekText[j] +"</td>";
+
+            var day = new Date(weekAsc[weekAscCount].pk.date.substr(0, 4), weekAsc[weekAscCount].pk.date.substr(5, 2)-1, weekAsc[weekAscCount].pk.date.substr(8, 2)).getDay();
             var week = ['일', '월', '화', '수', '목', '금', '토'];     //날짜와 요일을 매핑하는 배열
             var dayLabel = week[day];
-            // if(weekAsc[weekAscCount].week == i && weekText[j] == dayLabel.toString())
-            // {
-            //     Item += "<td>" + (weekAsc[weekAscCount].intake*200) +"</td>";
-            //     weekAscCount++;
-            //     if(weekAscCount >= weekAsc.length)
-            //         weekAscCount--;
-            // }
-            // else
-            //     Item += "<td>" + "" +"</td>";
-            // Item += "<tr>";
-            // Item += "<tr><td></td></tr>";
-            // Item += "<tr><td></td></tr>";
-            // Item += "<tr><td></td></tr>";
-            // Item += "<tr><td></td></tr>";
 
-            // Item += "</tr>";
-            //
-            Item += "</tr>";
+            if(weekAsc[weekAscCount].week == i && weekText[j] == dayLabel.toString())
+            {
+                Item += "<td>" + "아침" + "</td>";
+                switch(weekAsc[weekAscCount].morning)
+                {
+                    case 0:
+                        Item += "<td>" + "1" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        break;
+                    case 1:
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "1" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        break;
+                    case 2:
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "1" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        break;
+                    case 3:
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "1" + "</td>";
+                        break;
+                }
+                Item += "</tr>";
+
+                Item += "<tr><td>" + "점심" + "</td>";
+                switch(weekAsc[weekAscCount].lunch)
+                {
+                    case 0:
+                        Item += "<td>" + "1" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        break;
+                    case 1:
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "1" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        break;
+                    case 2:
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "1" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        break;
+                    case 3:
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "1" + "</td>";
+                        break;
+                }
+                Item += "</tr>";
+
+                Item += "<tr><td>" + "저녁" + "</td>";
+                switch(weekAsc[weekAscCount].dinner)
+                {
+                    case 0:
+                        Item += "<td>" + "1" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        break;
+                    case 1:
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "1" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        break;
+                    case 2:
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "1" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        break;
+                    case 3:
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "1" + "</td>";
+                        break;
+                }
+                Item += "</tr>";
+
+                weekAscCount++;
+                if(weekAscCount >= weekAsc.length)
+                    weekAscCount--;
+            }
+            else
+            {
+                Item += "<td>" + "아침" + "</td>";
+                for(k=0; k<4; k++) Item += "<td>" + "" + "</td>";
+                Item += "</tr>";
+
+                Item += "<tr>"
+                Item += "<td>" + "점심" + "</td>";
+                for(k=0; k<4; k++) Item += "<td>" + "" + "</td>";
+                Item += "</tr>";
+
+                Item += "<tr>"
+                Item += "<td>" + "저녁" + "</td>";
+                for(k=0; k<4; k++) Item += "<td>" + "" + "</td>";
+                Item += "</tr>";
+            }
+
+            if(j==6)
+            {
+                Item += "<tr>"
+                Item += "<td colspan='2'>" + i + "주차 총합" + "</td>";
+
+                Item +="<td>" + weekAvg[i-1].noneCount + "</td>";
+                Item +="<td>" + weekAvg[i-1].lowCount + "</td>";
+                Item +="<td>" + weekAvg[i-1].mediumCount + "</td>";
+                Item +="<td>" + weekAvg[i-1].highCount + "</td>";
+
+                Item += "</tr>";
+            }
+
             $('#history-table-data').append(Item);
-
-
-            // if(j == 6)
-            // {
-            //     Item = "<tr>";
-            //     Item += "<td>" + i + "주차 평균 하루 수분 섭취량" + "</td>";
-            //
-            //     if(weekAvg[weekAvgCount].week == i)
-            //     {
-            //         Item += "<td>" + (weekAvg[weekAvgCount].intake*200) + "</td>";
-            //         weekAvgCount++;
-            //         if(weekAvgCount >= weekAvg.length)
-            //             weekAvgCount--;
-            //     }
-            //     else
-            //         Item += "<td>" + "" + "</td>";
-            //     Item += "</tr>";
-            //     $('#history-table-data').append(Item);
-            // }
         }
-
     }
+
+    var Item = "<tr>";
+    Item += "<td colspan='3'>모든 주차 총합</td>";
+
+    var sum1 = 0;
+    var sum2 = 0;
+    var sum3 = 0;
+    var sum4 = 0;
+
+    for(i=0; i<weekAvg.length;i++)
+    {
+        sum1 += weekAvg[i].noneCount;
+        sum2 += weekAvg[i].lowCount;
+        sum3 += weekAvg[i].mediumCount;
+        sum4 += weekAvg[i].highCount;
+    }
+    Item += "<td>" + sum1 + "</td>";
+    Item += "<td>" + sum2 + "</td>";
+    Item += "<td>" + sum3 + "</td>";
+    Item += "<td>" + sum4 + "</td>";
+
+    Item += "</tr>";
+    $('#history-table-data').append(Item);
+
 </script>
 </body>
 </html>
