@@ -9,6 +9,7 @@ import withus.dto.HelpRequest.CaregiverHelpRequestDTO;
 import withus.dto.HelpRequest.PatientHelpRequestDTO;
 import withus.entity.*;
 
+import java.awt.*;
 import java.util.List;
 
 @Repository
@@ -210,6 +211,28 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .orderBy(nr.pk.date.asc())
                 .fetch();
         return natriumAscList;
+    }
+
+    public List<ButtonCountSumDTO> findButtonCountSum(String userId){
+        QTbl_button_count bc = QTbl_button_count.tbl_button_count;
+
+        List<ButtonCountSumDTO> buttonCountSum = queryFactory.select(Projections.constructor(ButtonCountSumDTO.class,
+                bc.alarm.sum(),bc.bloodPressure.sum(),bc.diseaseInfo.sum(),bc.exercise.sum(),bc.goal.sum(),bc.helper.sum(),bc.level.sum(),bc.natriumMoisture.sum(),bc.symptom.sum(),
+                bc.weight.sum(),bc.withusRang.sum()))
+                .from(bc)
+                .where(bc.key.id.eq(userId))
+                .fetch();
+        return buttonCountSum;
+    }
+
+    public List<Tbl_button_count> findButtonCount(String userId) {
+        QTbl_button_count bc = QTbl_button_count.tbl_button_count;
+
+        List<Tbl_button_count> buttonCount = queryFactory.selectFrom(bc)
+                .where(bc.key.id.eq(userId))
+                .orderBy(bc.key.week.asc())
+                .fetch();
+        return buttonCount;
     }
 }
 

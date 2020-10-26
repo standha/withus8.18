@@ -194,49 +194,13 @@ public class AdminHomeController extends AdminBaseController {
 
     @GetMapping("/admin_button_count/{userId}")
     public ModelAndView getSymptomAll(@PathVariable("userId") String userId) {
-        int alarm = 0;
-        int blood =0;
-        int disease_info = 0 ;
-        int exercise = 0 ;
-        int goal = 0 ;
-        int helper =0;
-        int level =0;
-        int natrium =0;
-        int symptom =0;
-        int weight =0;
-        int chat =0;
         HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
         ModelAndView modelAndView = new ModelAndView("Admin/admin_button_count");
-        List<Tbl_button_count> counts = new ArrayList<>();
-        for(int i = 1 ; i <=  24 ; i++){
-            Tbl_button_count count = countService.getCount(new ProgressKey(userId,i));
-            counts.add(count);
-
-            alarm = alarm + count.getAlarm();
-            blood = blood + count.getBloodPressure();
-            disease_info = disease_info + count.getDiseaseInfo();
-            exercise = exercise + count.getExercise();
-            goal = goal + count.getGoal();
-            helper = helper + count.getHelper();
-            level = level + count.getLevel();
-            natrium = natrium + count.getNatriumMoisture();
-            symptom = symptom + count.getSymptom();
-            weight = weight + count.getWeight();
-            chat = chat + count.getWithusRang();
-        }
-        modelAndView.addObject("goal",goal);
-        modelAndView.addObject("level",level);
-        modelAndView.addObject("alarm",alarm);
-        modelAndView.addObject("blood",blood);
-        modelAndView.addObject("exercise",exercise);
-        modelAndView.addObject("natrium",natrium);
-        modelAndView.addObject("weight",weight);
-        modelAndView.addObject("symptom",symptom);
-        modelAndView.addObject("disease_info",disease_info);
-        modelAndView.addObject("chat",chat);
-        modelAndView.addObject("helper",helper);
+        List<Tbl_button_count> counts = adminService.getButtonCountAsc(userId);
         modelAndView.addObject("counts",counts);
         modelAndView.addObject("patient", headerInfo);
+        List<ButtonCountSumDTO> countSum = adminService.getButtonCount(userId);
+        modelAndView.addObject("countSum",countSum);
         return modelAndView;
     }
 
