@@ -110,12 +110,14 @@
                 <li><a th:href="@{/admin_withusHelpRequest}">위더스랑 요청 기록</a></li>
             </ul>
         </li>
+        <div style="float: right;">
         <li class="nav-item active">
             <a class="nav-link" href="#" th:href="@{/logout}">로그아웃</a>
             <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
                 <input hidden type="submit" value="Sign Out"/>
             </form>
         </li>
+        </div>
     </ul>
 </div>
 </body>

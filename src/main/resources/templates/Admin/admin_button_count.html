@@ -37,7 +37,7 @@
         </thead>
         <tbody style="text-align: center">
         <tr th:each="count : ${counts}">
-            <td th:text="${count.key.week}+주">주차</td>
+            <td th:text="${count.key.week}+주차">주차</td>
             <td th:text="${count.goal}">이 주의 목표</td>
             <td th:text="${count.level}">달성률</td>
             <td th:text="${count.alarm}">알람</td>
@@ -50,19 +50,20 @@
             <td th:text="${count.withusRang}">위더스랑 버튼</td>
             <td th:text="${count.helper}">앱 도우미 버튼</td>
         </tr>
-        <tr>
-            <td th:text="종합">주차</td>
-            <td th:text="${goal}">이 주의 목표</td>
-            <td th:text="${level}">달성률</td>
-            <td th:text="${alarm}">알람</td>
-            <td th:text="${blood}">혈압/맥박</td>
-            <td th:text="${exercise}">운동</td>
-            <td th:text="${natrium}">염분/수분</td>
-            <td th:text="${weight}">체중</td>
-            <td th:text="${symptom}">증상일지</td>
-            <td th:text="${disease_info}">질환정보</td>
-            <td th:text="${chat}">위더스랑 버튼</td>
-            <td th:text="${helper}">앱 도우미 버튼</td>
+
+        <tr th:each="countSum : ${countSum}">
+            <td>총합</td>
+            <td th:text="${countSum.goal}">이 주의 목표</td>
+            <td th:text="${countSum.level}">달성률</td>
+            <td th:text="${countSum.alarm}">알람</td>
+            <td th:text="${countSum.blood}">혈압/맥박</td>
+            <td th:text="${countSum.exercise}">운동</td>
+            <td th:text="${countSum.natrium_moisture}">염분/수분</td>
+            <td th:text="${countSum.weight}">체중</td>
+            <td th:text="${countSum.symptom}">증상일지</td>
+            <td th:text="${countSum.info}">질환정보</td>
+            <td th:text="${countSum.chat}">위더스랑 버튼</td>
+            <td th:text="${countSum.helper}">앱 도우미 버튼</td>
         </tr>
         </tbody>
     </table>
