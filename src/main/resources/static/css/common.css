@@ -155,7 +155,7 @@ span[class*="ico-"], a[class*="ico-"], div[class*="ico-"], button[class*="ico-"]
 .field-wrap.type04 .insert input {display: inline-block; width: 78px; height: 45px; line-height: 43px; padding: 0; text-align: center; font-size: 2.6rem; font-family: 'Roboto', sans-serif; font-weight: 500; color: #222; border: none; }
 .field-wrap.type04 .insert input.num2 {width: 60px;}
 .field-wrap.type04 .insert input.num3 {width: 78px;}
-.field-wrap.type04 .insert input.num4 {width: 120px;}
+.field-wrap.type04 .insert input.num4 {width: 140px;}
 .field-wrap.type04 .insert span {display: inline-block; font-size: 1rem; color: #222; font-weight: 500; line-height: 30px; vertical-align: bottom;}
 .field-wrap.type04 .insert span.bar {line-height: 46px; font-size: 2.6rem; font-family: 'Roboto', sans-serif; }
 
