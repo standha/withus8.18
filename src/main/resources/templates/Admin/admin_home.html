@@ -20,7 +20,7 @@
 <body>
 <div th:replace="Admin/admin_nav :: navFragment"></div>
 <!--<div th:replace="Admin/admin_header :: #admin_header"></div>-->
-<div style="align-items: center; display: flex;">
+<div style="align-items: center; display: flex; margin: auto;">
 <!--	<p>등록 환자 목록</p>-->
 	<table id="foo-table" class="table table-striped table-bordered" style="width:100%">
 		<thead>
@@ -47,15 +47,15 @@
 			<td th:text="${user.name}">환자 이름</td>
 			<td th:text="${user.userId}">환자 ID</td>
 			<td th:text="${user.password}">환자 PW</td>
-			<td th:text="${user.birthdate}">환자 생년월일</td>
-			<td th:text="${user.gender}">환자 전화번호</td>
-			<td th:text="${user.contact}">환자 성별</td>
-			<td th:text="${user.guserName}">보호자 이름</td>
-			<td th:text="${user.guserId}">보호자 ID</td>
-			<td th:text="${user.guserPassword}">보호자 PW</td>
-			<td th:text="${user.guserContact}">보호자 전화번호</td>
-			<td th:text="${user.userRecordDate}">최근 접속 날짜</td>
-			<td th:text="${user.currentCode}">위더스랑 최근 코드</td>
+			<td th:text="${user.birthdate} == 'null' ? '' : ${user.birthdate}">환자 생년월일</td>
+			<td th:text="${user.gender} == 'null' ? '' : ${user.gender}">환자 성별</td>
+			<td th:text="${user.contact}">환자 전화번호</td>
+			<td th:text="${user.guserName} == 'null' ? '' : ${user.guserName}">보호자 이름</td>
+			<td th:text="${user.guserId} == 'null' ? '' : ${user.guserId}">보호자 ID</td>
+			<td th:text="${user.guserPassword} == 'null' ? '' : ${user.guserPassword}">보호자 PW</td>
+			<td th:text="${user.guserContact} == 'null' ? '' : ${user.guserContact}">보호자 전화번호</td>
+			<td th:text="${user.userRecordDate} == 'null' ? '' : ${user.userRecordDate}">최근 접속 날짜</td>
+			<td th:text="${user.currentCode} == 'null' ? '' : ${user.currentCode}">위더스랑 최근 코드</td>
 			<!--<td><input type="button" id="test" class="test" value="상세보기" th:onclick="'location.href=/user/'+'@{user.userId}'"></td>-->
 			<td><input type="button" id="test" class="test" value="바로가기" th:onclick="'window.location.href = \'' + @{/user/{userId}(userId=${user.userId})} + '\''"></td>
 		</tr>
