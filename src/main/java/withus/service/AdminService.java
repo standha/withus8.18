@@ -131,7 +131,13 @@ public class AdminService {
         return userRepositorySupport.findNatriumAsc(userId);
     }
 
-    public List<NatriumCountDTO> getNatriumCountWeek(String userId) {
+    @Nullable
+    public List<ButtonCountSumDTO> getButtonCount(String userId) { return userRepositorySupport.findButtonCountSum(userId); }
+
+    @Nullable
+    public List<Tbl_button_count> getButtonCountAsc(String userId) {return userRepositorySupport.findButtonCount(userId);}
+
+    public List<NatriumCountDTO> getNatriumCountWeek(String userId){
         Integer week = 1;
         List<Tbl_natrium_record> natrium_records = natriumRecordRepository.findByPk_Id(userId);
         List<NatriumCountDTO> natriumCountList = new ArrayList<>();
