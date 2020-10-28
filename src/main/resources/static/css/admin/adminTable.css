@@ -1,0 +1,21 @@
+/*도우미 연결 요청 기록*/
+.help-table{ padding-right: 15px; padding-left: 15px;}
+/*월 선택기*/
+.select-month{ background: #535353; border: 0px; color: #ffffff; font-weight: bold}
+/*환자 관리*/
+.home-table{ padding-right: 15px; padding-left: 15px; }
+
+/* 필터링 (검색) */
+div.dataTables_filter {
+    text-align : left !important;
+}
+
+/*페이징*/
+div.dataTables_paginate{
+    text-align : right !important;
+}
+
+h4{ font-weight: bold; padding-left: 15px; }
+
+/*상세 보기*/
+.center-table{}
