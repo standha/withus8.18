@@ -61,7 +61,7 @@ public class AdminHomeController extends AdminBaseController {
         mav.addObject("patient", headerInfo);
         List<HelpRequestDTO> helpRequestAsc = adminService.getHelpRequestAsc();
 
-        mav.setViewName("/Admin/admin_center");
+        mav.setViewName("Admin/admin_center");
 
         return mav;
     }
@@ -75,7 +75,7 @@ public class AdminHomeController extends AdminBaseController {
         mav.addObject("weekAsc", moistureAsc);
         mav.addObject("weekAvg", moistureAvg);
         mav.addObject("patient", headerInfo);
-        mav.setViewName("/Admin/admin_moistureRecord");
+        mav.setViewName("Admin/admin_moistureRecord");
 
         return mav;
     }
@@ -89,7 +89,7 @@ public class AdminHomeController extends AdminBaseController {
         modelAndView.addObject("patient", headerInfo);
         modelAndView.addObject("symptom", symptom);
         modelAndView.addObject("symptomAvg",symptomAvg);
-        modelAndView.setViewName("/Admin/admin_symptomRecord");
+        modelAndView.setViewName("Admin/admin_symptomRecord");
 
         return modelAndView;
     }
@@ -103,7 +103,7 @@ public class AdminHomeController extends AdminBaseController {
         modelAndView.addObject("patient", headerInfo);
         modelAndView.addObject("exercise", exercise);
         modelAndView.addObject("exerciseAvg", exerciseAvg);
-        modelAndView.setViewName("/Admin/admin_exerciseRecord");
+        modelAndView.setViewName("Admin/admin_exerciseRecord");
 
         return modelAndView;
     }
@@ -117,7 +117,7 @@ public class AdminHomeController extends AdminBaseController {
         mav.addObject("pillSum", pillSum);
         mav.addObject("patient", headerInfo);
         mav.addObject("pillAsc", pillAsc);
-        mav.setViewName("/Admin/admin_pillRecord");
+        mav.setViewName("Admin/admin_pillRecord");
 
         return mav;
     }
@@ -127,7 +127,7 @@ public class AdminHomeController extends AdminBaseController {
         ModelAndView mav = new ModelAndView();
         List<HelpRequestDTO> helpRequestAsc = adminService.getHelpRequestAsc();
         mav.addObject("helpRequestAsc", helpRequestAsc);
-        mav.setViewName("/Admin/admin_withusHelpRequest");
+        mav.setViewName("Admin/admin_withusHelpRequest");
 
         return mav;
     }
@@ -137,7 +137,7 @@ public class AdminHomeController extends AdminBaseController {
         ModelAndView mav = new ModelAndView();
         List<PatientHelpRequestDTO> patientHelpRequestDTOList = adminService.getPatientRequest();
         mav.addObject("patientHelpRequestDTOList", patientHelpRequestDTOList);
-        mav.setViewName("/Admin/admin_patientHelpRequest");
+        mav.setViewName("Admin/admin_patientHelpRequest");
 
         return mav;
     }
@@ -147,7 +147,7 @@ public class AdminHomeController extends AdminBaseController {
         ModelAndView mav = new ModelAndView();
         List<CaregiverHelpRequestDTO> caregiverHelpRequestDTOList = adminService.getCaregiverRequest();
         mav.addObject("caregiverHelpRequestDTOList", caregiverHelpRequestDTOList);
-        mav.setViewName("/Admin/admin_caregiverHelpRequest");
+        mav.setViewName("Admin/admin_caregiverHelpRequest");
 
         return mav;
     }
@@ -159,7 +159,7 @@ public class AdminHomeController extends AdminBaseController {
         HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
         modelAndView.addObject("blood_pressure_pulseList", blood_pressure_pulseList);
         modelAndView.addObject("patient", headerInfo);
-        modelAndView.setViewName("/Admin/admin_bloodPressure");
+        modelAndView.setViewName("Admin/admin_bloodPressure");
         return modelAndView;
     }
 
@@ -172,7 +172,7 @@ public class AdminHomeController extends AdminBaseController {
         mav.addObject("patient", headerInfo);
         mav.addObject("natriumCountListSumLists", natriumCountListSum);
         mav.addObject("natriumAsc",natriumAsc);
-        mav.setViewName("/Admin/admin_natriumRecord");
+        mav.setViewName("Admin/admin_natriumRecord");
         return mav;
     }
 
@@ -188,7 +188,7 @@ public class AdminHomeController extends AdminBaseController {
         mav.addObject("weekAsc", weightAsc);
         mav.addObject("weekAvg", weightAvg);
         mav.addObject("patient", headerInfo);
-        mav.setViewName("/Admin/admin_weightRecord");
+        mav.setViewName("Admin/admin_weightRecord");
 
         return mav;
     }
@@ -212,7 +212,7 @@ public class AdminHomeController extends AdminBaseController {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("/Login/loginhtml?logout=true");
+        mav.setViewName("Login/loginhtml?logout=true");
         return mav;
     }
 }

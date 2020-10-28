@@ -21,5 +21,6 @@ spring:
     # because it gives you no benefit at all.
     # https://stackoverflow.com/a/22977693/1986241
     show-sql: true
+
     hibernate:
       ddl-auto: update
