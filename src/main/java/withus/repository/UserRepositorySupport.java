@@ -184,7 +184,7 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
         List<WeightAvgDTO> weightAvgList = queryFactory.select(Projections.constructor(WeightAvgDTO.class,
                 tw.week, tw.weight.avg()))
                 .from(tw)
-                .where()
+                .where(tw.pk.id.eq(userId))
                 .groupBy(tw.week)
                 .orderBy(tw.week.asc())
                 .fetch();

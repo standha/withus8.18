@@ -122,7 +122,7 @@ public class AdminHomeController extends AdminBaseController {
         return mav;
     }
 
-    @GetMapping("/adimn_withusHelpRequest")
+    @GetMapping("/admin_withusHelpRequest")
     public ModelAndView adminWithusHelpRequest() {
         ModelAndView mav = new ModelAndView();
         List<HelpRequestDTO> helpRequestAsc = adminService.getHelpRequestAsc();
@@ -156,8 +156,9 @@ public class AdminHomeController extends AdminBaseController {
     public ModelAndView getBloogPressure(@PathVariable("userId") String userId){
         ModelAndView modelAndView = new ModelAndView();
         List<Tbl_blood_pressure_pulse> blood_pressure_pulseList = adminService.getBloodPressure(userId);
+        HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
         modelAndView.addObject("blood_pressure_pulseList", blood_pressure_pulseList);
-
+        modelAndView.addObject("patient", headerInfo);
         modelAndView.setViewName("/Admin/admin_bloodPressure");
         return modelAndView;
     }
@@ -184,8 +185,8 @@ public class AdminHomeController extends AdminBaseController {
         weightAsc.forEach(s -> s.getWeight());
         weightAvg.forEach(s -> s.getWeight());
 
-        mav.addObject("weightAsc", weightAsc);
-        mav.addObject("weightAvg", weightAvg);
+        mav.addObject("weekAsc", weightAsc);
+        mav.addObject("weekAvg", weightAvg);
         mav.addObject("patient", headerInfo);
         mav.setViewName("/Admin/admin_weightRecord");
 
