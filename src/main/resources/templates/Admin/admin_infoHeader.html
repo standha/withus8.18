@@ -30,20 +30,18 @@
 </style>
 <body>
     <header>
-        <div class="header-wrap" style="height: 380px">
-            <div class="cont">
-                <div class="parent todo-txt">
-                    <div class="div1">
-                        <p style="text-align: left;" th:text="'환자 이름 - ' + ${patient.name}"></p>
-                        <p style="text-align: left;" th:text="'환자 아이디 - ' + ${patient.userId}"></p>
-                        <p style="text-align: left;" th:text="'환자 생년월일 - ' + ${patient.birthdate}"></p>
-                    </div>
-                    <div id="patient_goal" class="div2" style="justify-content: center;">
-                        <p th:text="'환자 이주의 목표'"></p>
-                    </div>
-                    <div id="patient_level" class="div3">
-                        <p style="text-align: right;" th:text="'환자 레벨 - ' + ${patient.level}">
-                    </div>
+        <div class style="height: 50px; border: 1px solid">
+            <div class="parent todo-txt">
+                <div class="div1">
+                    <p style="text-align: left;" th:text="'환자 이름 - ' + ${patient.name}"></p>
+                    <p style="text-align: left;" th:text="'환자 아이디 - ' + ${patient.userId}"></p>
+                    <p style="text-align: left;" th:text="'환자 생년월일 - ' + ${patient.birthdate}"></p>
+                </div>
+                <div id="patient_goal" class="div2" style="justify-content: center;">
+                    <p style="text-align: center;" th:text="'환자 이주의 목표'"></p>
+                </div>
+                <div id="patient_level" class="div3">
+                    <p style="text-align: right;" th:text="'환자 레벨 - ' + ${patient.level}">
                 </div>
             </div>
         </div>
@@ -142,7 +140,7 @@
             break;
     }
 
-    var Item = "<p>" + goalNow + "</p>";
+    var Item = "<p style=\"text-align: center;\">" + goalNow + "</p>";
     $('#patient_goal').append(Item);
 
 </script>
