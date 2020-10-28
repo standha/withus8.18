@@ -14,40 +14,54 @@
     <link th:href="@{/css/layout.css}" rel="stylesheet">
     <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
     <script th:src="@{/js/common.js}"></script>
+    <link href="/css/admin/adminTable.css" rel="stylesheet">
+
     <title>Admin center</title>
 </head>
 <body>
 <div id="wrap" class="main-page">
-    <div th:replace="Admin/admin_nav :: navFragment"></div>
-    <header th:replace="Admin/admin_infoHeader :: headerFragment"></header>
+    <div th:if="${natriumAsc} != null">
+        <div th:replace="Admin/admin_nav :: navFragment"></div>
+        <header th:replace="Admin/admin_infoHeader :: headerFragment"></header>
 
-    <table id="foo-table" class="table table-bordered" style="table-layout: fixed;">
-        <thead>
-        <tr>
-            <th colspan="7" style="vertical-align: middle; text-align: center">저염식이</th>
-        </tr>
-        <tr>
-            <th rowspan="2" style="vertical-align: middle; text-align: center">주차</th>
-            <th rowspan="2" style="vertical-align: middle; text-align: center">요일</th>
-            <th rowspan="2" style="vertical-align: middle; text-align: center">식사시간</th>
-            <th colspan="4" style="vertical-align: middle; text-align: center">염도</th>
-        </tr>
-        <tr>
-            <th style="text-align: center">식사 안함</th>
-            <th style="text-align: center">저염식</th>
-            <th style="text-align: center">보통 식사</th>
-            <th style="text-align: center">고염식</th>
-        </tr>
-        </thead>
-        <tbody id="history-table-data" style="text-align: center" >
-        </tbody>
-    </table>
+        <div class="center-table">
+            <table id="foo-table" class="table table-bordered" style="table-layout: fixed;">
+                <thead>
+                <tr>
+                    <th colspan="7" style="vertical-align: middle; text-align: center; font-weight: bold;">저염식이</th>
+                </tr>
+                <tr>
+                    <th rowspan="2" style="vertical-align: middle; text-align: center">주차</th>
+                    <th rowspan="2" style="vertical-align: middle; text-align: center">요일</th>
+                    <th rowspan="2" style="vertical-align: middle; text-align: center">식사시간</th>
+                    <th colspan="4" style="vertical-align: middle; text-align: center">염도</th>
+                </tr>
+                <tr>
+                    <th style="text-align: center">식사 안함</th>
+                    <th style="text-align: center">저염식</th>
+                    <th style="text-align: center">보통 식사</th>
+                    <th style="text-align: center">고염식</th>
+                </tr>
+                </thead>
+                <tbody id="history-table-data" style="text-align: center" >
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 <script th:inline="javascript">
     /*<![CDATA[*/
     var weekAsc = /*[[ ${natriumAsc} ]]*/;
     var weekAvg = /*[[ ${natriumCountListSumLists} ]]*/;
     /*]]*/
+
+    if(weekAsc.length == 0)
+    {
+        var Item = "<tr>";
+        Item += "<td colspan='7' style='background: #FFFFFF'>" + "데이터 없음" + "</td>";
+        Item += "</tr>";
+        $('#history-table-data').append(Item);
+    }
 
     var weekAscCount = 0;
     var weekAvgCount = 0;

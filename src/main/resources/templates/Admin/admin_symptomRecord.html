@@ -14,30 +14,36 @@
     <link th:href="@{/css/layout.css}" rel="stylesheet">
     <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
     <script th:src="@{/js/common.js}"></script>
+    <link href="/css/admin/adminTable.css" rel="stylesheet">
     <title>Admin center</title>
 </head>
 <body>
 <div id="wrap" class="main-page">
-    <div th:replace="Admin/admin_nav :: navFragment"></div>
-    <header th:replace="Admin/admin_infoHeader :: headerFragment"></header>
 
-    <table id="foo-table" class="table table-bordered" style="table-layout: fixed">
-        <thead>
-        <tr>
-            <th colspan="6" style="text-align: center">증상일지</th>
-        </tr>
-        <tr>
-            <th style="text-align: center">주차</th>
-            <th style="text-align: center">요일</th>
-            <th style="text-align: center">증상 1(숨)</th>
-            <th style="text-align: center">증상 2(지침)</th>
-            <th style="text-align: center">증상 3(발목)</th>
-            <th style="text-align: center">증상 4(기침)</th>
-        </tr>
-        </thead>
-        <tbody id="history-table-data" style="text-align: center" >
-        </tbody>
-    </table>
+    <div th:if="${symptom} != null">
+        <div th:replace="Admin/admin_nav :: navFragment"></div>
+        <header th:replace="Admin/admin_infoHeader :: headerFragment"></header>
+
+        <div class="center-table">
+            <table id="foo-table" class="table table-bordered" style="table-layout: fixed">
+                <thead>
+                <tr>
+                    <th colspan="6" style="text-align: center; font-weight: bold;">증상일지</th>
+                </tr>
+                <tr>
+                    <th style="text-align: center">주차</th>
+                    <th style="text-align: center">요일</th>
+                    <th style="text-align: center">증상 1(숨)</th>
+                    <th style="text-align: center">증상 2(지침)</th>
+                    <th style="text-align: center">증상 3(발목)</th>
+                    <th style="text-align: center">증상 4(기침)</th>
+                </tr>
+                </thead>
+                <tbody id="history-table-data" style="text-align: center" >
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 <script th:inline="javascript">
 
@@ -45,6 +51,14 @@
     var weekAsc = /*[[ ${symptom} ]]*/;
     var weekAvg = /*[[ ${symptomAvg} ]]*/;
     /*]]*/
+
+    if(weekAsc.length == 0)
+    {
+        var Item = "<tr>";
+        Item += "<td colspan='6' style='background: #FFFFFF'>" + "데이터 없음" + "</td>";
+        Item += "</tr>";
+        $('#history-table-data').append(Item);
+    }
 
     var weekAscCount = 0;
     var weekAvgCount = 0;

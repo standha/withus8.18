@@ -18,4 +18,4 @@ div.dataTables_paginate{
 h4{ font-weight: bold; padding-left: 15px; }
 
 /*상세 보기*/
-.center-table{}
+.center-table{  padding: 15px; background: #ffffff; }
