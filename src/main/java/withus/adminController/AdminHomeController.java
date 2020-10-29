@@ -54,14 +54,18 @@ public class AdminHomeController extends withus.controller.BaseController {
         if (user.getType() != User.Type.ADMINISTRATOR) {
             throw new IllegalStateException(user.getUserId() + " is not Admin");
         }
+
         ModelAndView mav = new ModelAndView();
         HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
         mav.addObject("patient", headerInfo);
+
         List<HelpRequestDTO> helpRequestAsc = adminService.getHelpRequestAsc();
 
         mav.setViewName("Admin/admin_center");
+
         logger.info("user try to access admin_center id:{}, PatientId:{})", user.getUserId(),
                 userId);
+
         return mav;
     }
 
@@ -71,10 +75,13 @@ public class AdminHomeController extends withus.controller.BaseController {
         if (user.getType() != User.Type.ADMINISTRATOR) {
             throw new IllegalStateException(user.getUserId() + " is not Admin");
         }
+
         ModelAndView mav = new ModelAndView();
         HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
+
         List<MoistureAvgDTO> moistureAvg = adminService.getMoistureAvg(userId) == null ? null : adminService.getMoistureAvg(userId);
         List<Tbl_mositrue_record> moistureAsc = adminService.getMoistureAsc(userId) == null ? null : adminService.getMoistureAsc(userId);
+
         mav.addObject("weekAsc", moistureAsc);
         mav.addObject("weekAvg", moistureAvg);
         mav.addObject("patient", headerInfo);
@@ -92,10 +99,13 @@ public class AdminHomeController extends withus.controller.BaseController {
         if (user.getType() != User.Type.ADMINISTRATOR) {
             throw new IllegalStateException(user.getUserId() + " is not Admin");
         }
+
         ModelAndView modelAndView = new ModelAndView();
         HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
+
         List<Tbl_symptom_log> symptom = adminService.getSymptom(userId) == null ? null : adminService.getSymptom(userId);
         List<SymptomAvgDTO> symptomAvg = adminService.getSymptomAvg(userId) == null ? null : adminService.getSymptomAvg(userId);
+
         modelAndView.addObject("patient", headerInfo);
         modelAndView.addObject("symptom", symptom);
         modelAndView.addObject("symptomAvg", symptomAvg);
@@ -113,10 +123,13 @@ public class AdminHomeController extends withus.controller.BaseController {
         if (user.getType() != User.Type.ADMINISTRATOR) {
             throw new IllegalStateException(user.getUserId() + " is not Admin");
         }
+
         ModelAndView modelAndView = new ModelAndView();
+
         HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
         List<Tbl_Exercise_record> exercise = adminService.getExercise(userId);
         List<ExerciseDTO> exerciseAvg = adminService.getExerciseAvg(userId);
+
         modelAndView.addObject("patient", headerInfo);
         modelAndView.addObject("exercise", exercise);
         modelAndView.addObject("exerciseAvg", exerciseAvg);
@@ -134,10 +147,12 @@ public class AdminHomeController extends withus.controller.BaseController {
         if (user.getType() != User.Type.ADMINISTRATOR) {
             throw new IllegalStateException(user.getUserId() + " is not Admin");
         }
+
         ModelAndView mav = new ModelAndView();
         HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
         List<PillSumDTO> pillSum = adminService.getPillSum(userId);
         List<Tbl_medication_record> pillAsc = adminService.getPillAsc(userId);
+
         mav.addObject("pillSum", pillSum);
         mav.addObject("patient", headerInfo);
         mav.addObject("pillAsc", pillAsc);
@@ -155,8 +170,10 @@ public class AdminHomeController extends withus.controller.BaseController {
         if (user.getType() != User.Type.ADMINISTRATOR) {
             throw new IllegalStateException(user.getUserId() + " is not Admin");
         }
+
         ModelAndView mav = new ModelAndView();
         List<HelpRequestDTO> helpRequestAsc = adminService.getHelpRequestAsc();
+
         mav.addObject("helpRequestAsc", helpRequestAsc);
         mav.setViewName("Admin/admin_withusHelpRequest");
 
@@ -174,6 +191,7 @@ public class AdminHomeController extends withus.controller.BaseController {
 
         ModelAndView mav = new ModelAndView();
         List<PatientHelpRequestDTO> patientHelpRequestDTOList = adminService.getPatientRequest();
+
         mav.addObject("patientHelpRequestDTOList", patientHelpRequestDTOList);
         mav.setViewName("Admin/admin_patientHelpRequest");
 
@@ -190,6 +208,7 @@ public class AdminHomeController extends withus.controller.BaseController {
         }
         ModelAndView mav = new ModelAndView();
         List<CaregiverHelpRequestDTO> caregiverHelpRequestDTOList = adminService.getCaregiverRequest();
+
         mav.addObject("caregiverHelpRequestDTOList", caregiverHelpRequestDTOList);
         mav.setViewName("Admin/admin_caregiverHelpRequest");
 
@@ -208,6 +227,7 @@ public class AdminHomeController extends withus.controller.BaseController {
         ModelAndView modelAndView = new ModelAndView();
         List<Tbl_blood_pressure_pulse> blood_pressure_pulseList = adminService.getBloodPressure(userId);
         HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
+
         modelAndView.addObject("blood_pressure_pulseList", blood_pressure_pulseList);
         modelAndView.addObject("patient", headerInfo);
         modelAndView.setViewName("Admin/admin_bloodPressure");
@@ -227,6 +247,7 @@ public class AdminHomeController extends withus.controller.BaseController {
         HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
         List<NatriumCountDTO> natriumCountListSum = adminService.getNatriumCountWeek(userId);
         List<Tbl_natrium_record> natriumAsc = adminService.getNatriumAsc(userId);
+
         mav.addObject("patient", headerInfo);
         mav.addObject("natriumCountListSumLists", natriumCountListSum);
         mav.addObject("natriumAsc", natriumAsc);
@@ -266,13 +287,16 @@ public class AdminHomeController extends withus.controller.BaseController {
         if (user.getType() != User.Type.ADMINISTRATOR) {
             throw new IllegalStateException(user.getUserId() + " is not Admin");
         }
+
         HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
         ModelAndView modelAndView = new ModelAndView("Admin/admin_button_count");
         List<Tbl_button_count> counts = adminService.getButtonCountAsc(userId);
+
         modelAndView.addObject("counts", counts);
         modelAndView.addObject("patient", headerInfo);
         List<ButtonCountSumDTO> countSum = adminService.getButtonCount(userId);
         modelAndView.addObject("countSum", countSum);
+
         logger.info("user try to access admin_button_count  id:{}, PatientId:{})", user.getUserId(),
                 userId);
 
@@ -287,8 +311,11 @@ public class AdminHomeController extends withus.controller.BaseController {
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
+
         logger.info("user try to logout id:{}", user.getUserId());
+
         mav.setViewName("Login/loginhtml?logout=true");
+
         return mav;
     }
 }
