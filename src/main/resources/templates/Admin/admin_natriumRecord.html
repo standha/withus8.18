@@ -69,7 +69,10 @@
     {
         for(j=0; j<7; j++)
         {
-            var Item = "<tr>";
+            if(i%2 == 0)
+                var Item = "<tr class='odd-tr'>";
+            else
+                var Item = "<tr class='even-tr'>";
             if(j == 0)
             {
                 Item += "<td rowspan='22' style='vertical-align: middle'>" + i + "주차" +"</td>";
@@ -114,7 +117,10 @@
                 }
                 Item += "</tr>";
 
-                Item += "<tr><td>" + "점심" + "</td>";
+                if(i%2 == 0)
+                    Item += "<tr class='odd-tr'><td>" + "점심" + "</td>";
+                else
+                    Item += "<tr class='even-tr'><td>" + "점심" + "</td>";
                 switch(weekAsc[weekAscCount].lunch)
                 {
                     case 0:
@@ -144,7 +150,10 @@
                 }
                 Item += "</tr>";
 
-                Item += "<tr><td>" + "저녁" + "</td>";
+                if(i%2 == 0)
+                    Item += "<tr class='odd-tr'><td>" + "저녁" + "</td>";
+                else
+                    Item += "<tr class='even-tr'><td>" + "저녁" + "</td>";
                 switch(weekAsc[weekAscCount].dinner)
                 {
                     case 0:
@@ -184,12 +193,18 @@
                 for(k=0; k<4; k++) Item += "<td>" + "" + "</td>";
                 Item += "</tr>";
 
-                Item += "<tr>"
+                if(i%2 == 0)
+                    Item += "<tr class='odd-tr'>";
+                else
+                    Item += "<tr class='even-tr'>";
                 Item += "<td>" + "점심" + "</td>";
                 for(k=0; k<4; k++) Item += "<td>" + "" + "</td>";
                 Item += "</tr>";
 
-                Item += "<tr>"
+                if(i%2 == 0)
+                    Item += "<tr class='odd-tr'>";
+                else
+                    Item += "<tr class='even-tr'>";
                 Item += "<td>" + "저녁" + "</td>";
                 for(k=0; k<4; k++) Item += "<td>" + "" + "</td>";
                 Item += "</tr>";
@@ -197,7 +212,10 @@
 
             if(j==6)
             {
-                Item += "<tr>"
+                if(i%2 == 0)
+                    Item += "<tr class='odd-tr'>";
+                else
+                    Item += "<tr class='even-tr'>";
                 Item += "<td colspan='2'>" + i + "주차 총합" + "</td>";
 
                 Item +="<td>" + weekAvg[i-1].noneCount + "</td>";
@@ -212,7 +230,7 @@
         }
     }
 
-    var Item = "<tr>";
+    var Item = "<tr class='allRecord'>";
     Item += "<td colspan='3'>모든 주차 총합</td>";
 
     var sum1 = 0;

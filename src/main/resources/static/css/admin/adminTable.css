@@ -17,5 +17,12 @@ div.dataTables_paginate{
 
 h4{ font-weight: bold; padding-left: 15px; }
 
-/*상세 보기*/
-.center-table{  padding: 15px; background: #ffffff; }
+/*상세 보기 테이블*/
+.center-table{  padding: 15px;}
+.center-table table thead { border: 1px solid #222222; background: #b4b4b4; color: #000000; font-weight: bold;}
+.center-table table tr td { border: 1px solid #222222;}
+.center-table table tr th{ border: 1px solid #222222;}
+
+.allRecord { background: #b4b4b4; color: #000000; font-weight: bold; }
+.odd-tr { background: #ffffff; }
+.even-tr { background: #dedede; }

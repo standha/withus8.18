@@ -64,7 +64,11 @@
     {
         for(j=0; j<7; j++)
         {
-            var Item = "<tr>";
+            if(i%2 == 0)
+                var Item = "<tr class='odd-tr'>";
+            else
+                var Item = "<tr class='even-tr'>";
+
             var weekText = ['월', '화', '수', '목', '금', '토', '일'];     //월요일부터 표시해주는 배열
             if(j == 0)
             {

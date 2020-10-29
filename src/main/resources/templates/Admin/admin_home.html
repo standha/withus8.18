@@ -31,12 +31,12 @@
 			dom: "t<\"col-sm-6\"f><\"col-sm-6\"p>",
 			ordering: false,
 			"pageLength": 10,
-			// "scrollY":        "200px",
-			// "scrollCollapse": true,
+			// scrollY:        '50vh',
+			// scrollCollapse: true,
 		});
 	});
 </script>
-<body>
+<body style="overflow: auto">
 <div th:replace="Admin/admin_nav :: navFragment"></div>
 <!--<div th:replace="Admin/admin_header :: #admin_header"></div>-->
 <div id="content">

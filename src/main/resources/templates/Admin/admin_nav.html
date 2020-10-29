@@ -25,6 +25,7 @@
 
     .menubar li{
         float:left;
+        border-right: 1px solid;
         padding:0px;
     }
 
@@ -33,6 +34,18 @@
         color:#cccccc;
         display:block;
         font-weight:normal;
+        line-height:50px;
+        margin:0px;
+        padding:0px 25px;
+        text-align:center;
+        text-decoration:none;
+    }
+
+    .menubar li p{
+        background: rgb(109,109,109);
+        color:#ffffff;
+        display:block;
+        font-weight:bolder;
         line-height:50px;
         margin:0px;
         padding:0px 25px;
@@ -71,6 +84,7 @@
         margin:0px;
         padding:0px;
         width:200px;
+        border-bottom: 1px solid;
     }
 
     .menubar li:hover li a{
@@ -101,9 +115,9 @@
 <body style="overflow:hidden;">
 <div class="menubar">
     <ul>
-        <li><a th:href="@{/center}">위더스 - 관리자 모드</a></li>
+        <li><p>위더스 - 관리자 모드</p></li>
         <li><a th:href="@{/center}">환자 관리</a></li>
-        <li><a href="#" id="current">도우미 연결 요청 기록</a>
+        <li style="width: 200px;"><a href="#" id="current">도우미 연결 요청 기록</a>
             <ul>
                 <li><a th:href="@{/admin_patientHelpRequest}">환자용 계정 기록</a></li>
                 <li><a th:href="@{/admin_caregiverHelpRequest}">보호자용 계정 기록</a></li>
@@ -111,7 +125,7 @@
             </ul>
         </li>
         <div style="float: right;">
-        <li class="nav-item active">
+        <li class="nav-item active" style="border-left: 1px solid;">
             <a class="nav-link" href="#" th:href="@{/logout}">로그아웃</a>
             <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
                 <input hidden type="submit" value="Sign Out"/>
