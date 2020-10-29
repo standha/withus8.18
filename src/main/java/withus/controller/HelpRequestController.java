@@ -42,11 +42,8 @@ public class HelpRequestController extends BaseController {
         logger.info("id:{}, type:{}, date:{}, time:{}", user.getUserId(), user.getType(), tbl_helper_request.getPk().getDate(), tbl_helper_request.getPk().getTime());
 
         try {
-            if(user.getType() == User.Type.PATIENT){
-                saved = helperRequestService.upsertHelperRequest(tbl_helper_request);
-                code = Result.Code.OK;
-            }else
-                throw new IllegalArgumentException("Caregiver try input data, [warn]");
+            saved = helperRequestService.upsertHelperRequest(tbl_helper_request);
+            code = Result.Code.OK;
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
 

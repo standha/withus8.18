@@ -42,8 +42,16 @@ public class ButtonCountController extends BaseController {
                 count.getLevel(), count.getNatriumMoisture(), count.getSymptom(), count.getWeight(), count.getWithusRang());
 
         try {
+            if(user.getType() == User.Type.PATIENT && user.getWeek() != 25 ) {
                 saved = countService.upsertCount(count);
                 code = Result.Code.OK;
+            }
+            else if(user.getWeek() == 25) {
+                throw new IllegalStateException("25 Weeks User try input data [warn]");
+            }
+            else {
+                throw new IllegalStateException("Caregiver try input data [warn]");
+            }
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;

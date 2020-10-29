@@ -30,14 +30,14 @@ public class AchievementController extends BaseController {
 
         modelAndView.addObject("user", user);
         modelAndView.addObject("week",user.getWeek());
-        switch (getUser().getType()) {
+        switch (user.getType()) {
             case PATIENT:
                 Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
                 modelAndView.addObject("count", count);
                 modelAndView.addObject("level", user.getLevel());
                 modelAndView.addObject("previousUrl", "/center");
 
-                logger.info("id:{}, level:{}, type:{}", user.getUserId(), user.getLevel(), getUser().getType());
+                logger.info("id:{}, level:{}, type:{}", user.getUserId(), user.getLevel(), user.getType());
 
                 break;
 
@@ -45,7 +45,7 @@ public class AchievementController extends BaseController {
                 modelAndView.addObject("level", getCaretaker().getLevel());
                 modelAndView.addObject("previousUrl", "/center");
 
-                logger.info("id:{}, type:{}", user.getUserId(), getUser().getType());
+                logger.info("id:{}, type:{}", user.getUserId(), user.getType());
 
                 break;
 

@@ -203,14 +203,19 @@ public class MoistureNatriumController extends BaseController {
         tbl_natrium_record.setPk(new RecordKey(user.getUsername(), LocalDate.now()));
         tbl_natrium_record.setWeek(user.getWeek());
         Result.Code code;
-        Tbl_natrium_record seved = null;
+        Tbl_natrium_record saved = null;
 
         try {
-            if(user.getType() == User.Type.PATIENT){
-                seved = moistureNatriumService.upsertNatriumRecord(tbl_natrium_record);
+            if(user.getType() == User.Type.PATIENT && user.getWeek() != 25 ) {
+                saved = moistureNatriumService.upsertNatriumRecord(tbl_natrium_record);
                 code = Result.Code.OK;
-            }else
-                throw new IllegalArgumentException("Caregiver try input data , [warn]");
+            }
+            else if(user.getWeek() == 25) {
+                throw new IllegalStateException("25 Weeks User try input data [warn]");
+            }
+            else {
+                throw new IllegalStateException("Caregiver try input data [warn]");
+            }
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
@@ -218,7 +223,7 @@ public class MoistureNatriumController extends BaseController {
 
         return Result.<Tbl_natrium_record>builder()
                 .code(code)
-                .data(seved)
+                .data(saved)
                 .build();
     }
 
@@ -231,11 +236,16 @@ public class MoistureNatriumController extends BaseController {
         Result.Code code;
         Tbl_mositrue_record saved = null;
         try {
-            if(user.getType() == User.Type.PATIENT){
+            if(user.getType() == User.Type.PATIENT && user.getWeek() != 25 ) {
                 saved = moistureNatriumService.upsertMoistureRecord(tbl_mositrue_record);
                 code = Result.Code.OK;
-            }else
-                throw new IllegalArgumentException("Caregiver try input data , [warn]");
+            }
+            else if(user.getWeek() == 25) {
+                throw new IllegalStateException("25 Weeks User try input data [warn]");
+            }
+            else {
+                throw new IllegalStateException("Caregiver try input data [warn]");
+            }
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;

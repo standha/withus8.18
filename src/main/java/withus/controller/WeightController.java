@@ -83,11 +83,16 @@ public class WeightController extends BaseController {
         Result.Code code;
         Tbl_weight saved = null;
         try {
-            if(user.getType() == User.Type.PATIENT){
-            saved = weightService.upsertWeightRecord(tbl_weight);
-            code = Result.Code.OK;
-            }else
-                throw new IllegalArgumentException("Caregiver try input data [warn]");
+            if(user.getType() == User.Type.PATIENT && user.getWeek() != 25 ) {
+                saved = weightService.upsertWeightRecord(tbl_weight);
+                code = Result.Code.OK;
+            }
+            else if(user.getWeek() == 25)
+                throw new IllegalStateException("25 Weeks User try input data [warn]");
+
+            else
+                throw new IllegalStateException("Caregiver try input data [warn]");
+
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
 

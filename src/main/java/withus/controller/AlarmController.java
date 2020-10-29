@@ -130,17 +130,19 @@ public class AlarmController extends BaseController {
         User user = getUser();
         tbl_medication_alarm.setId(user.getUserId());
         Result.Code code;
-        Tbl_medication_alarm seved = null;
+        Tbl_medication_alarm saved = null;
 
         logger.info("id:{}", user.getUserId());
 
         try {
-            if(user.getType() == User.Type.PATIENT){
-            seved = alarmService.upsertMedication(tbl_medication_alarm);
-            code = Result.Code.OK;
-            }else
-                throw new IllegalArgumentException("Caregiver try input data , [warn]");
-            logger.info("id:{}, dinner:{}, lunch:{}, morning:{}, code:{}", user.getUserId(), seved.getMedicationTimeDinner(), seved.getMedicationTimeLunch(), seved.getMedicationTimeMorning(), code);
+            if(user.getType() == User.Type.PATIENT ) {
+                saved = alarmService.upsertMedication(tbl_medication_alarm);
+                code = Result.Code.OK;
+            }
+            else {
+                throw new IllegalStateException("Caregiver try input data [warn]");
+            }
+            logger.info("id:{}, dinner:{}, lunch:{}, morning:{}, code:{}", user.getUserId(), saved.getMedicationTimeDinner(), saved.getMedicationTimeLunch(), saved.getMedicationTimeMorning(), code);
 
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
@@ -150,7 +152,7 @@ public class AlarmController extends BaseController {
 
         return Result.<Tbl_medication_alarm>builder()
                 .code(code)
-                .data(seved)
+                .data(saved)
                 .build();
     }
 
@@ -167,14 +169,17 @@ public class AlarmController extends BaseController {
         Tbl_medication_record saved = null;
 
         try {
-            if(user.getType() == User.Type.PATIENT){
+            if(user.getType() == User.Type.PATIENT && user.getWeek() != 25 ) {
                 saved = alarmService.upsertTrueRecord(tbl_medication_record);
+                logger.info("id:{}, finished:{}", user.getUserId(), saved.isFinished());
                 code = Result.Code.OK;
-            }else
-                throw new IllegalArgumentException("Caregiver try input data , [warn]");
-
-            logger.info("id:{}, finished:{}", user.getUserId(), saved.isFinished());
-
+            }
+            else if(user.getWeek() == 25) {
+                throw new IllegalStateException("25 Weeks User try input data [warn]");
+            }
+            else {
+                throw new IllegalStateException("Caregiver try input data [warn]");
+            }
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
 
@@ -223,21 +228,20 @@ public class AlarmController extends BaseController {
     @PostMapping("/appointments")
     @ResponseBody
     public Result<Tbl_outpatient_visit_alarm> PostPatientVisit(@RequestBody Tbl_outpatient_visit_alarm tbl_outpatient_visit_alarm) {
-        String userId = getUsername();
         User user = getUser();
         tbl_outpatient_visit_alarm.setId(user.getUserId());
         Result.Code code;
         Tbl_outpatient_visit_alarm saved = null;
 
         try {
-            if(user.getType() == User.Type.PATIENT){
+            if( user.getType() == User.Type.PATIENT ) {
                 saved = alarmService.upsertOutPatientVisit(tbl_outpatient_visit_alarm);
+                logger.info("id:{}, date:{}, time:{}", user.getUserId(), saved.getOutPatientVisitTime(), saved.getOutPatientVisitDate());
                 code = Result.Code.OK;
-            }else
-                throw new IllegalArgumentException("Caregiver try input data , [warn]");
-
-            logger.info("id:{}, date:{}, time:{}", userId, saved.getOutPatientVisitTime(), saved.getOutPatientVisitDate());
-
+            }
+            else {
+                throw new IllegalStateException("Caregiver try input data [warn]");
+            }
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
