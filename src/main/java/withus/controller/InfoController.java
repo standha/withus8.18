@@ -41,7 +41,7 @@ public class InfoController extends BaseController {
         }
 
         modelAndView.addObject("previousUrl", "/center");
-        modelAndView.addObject("week",user.getWeek());
+        modelAndView.addObject("week", user.getWeek());
         return modelAndView;
     }
 }

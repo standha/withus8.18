@@ -206,14 +206,12 @@ public class MoistureNatriumController extends BaseController {
         Tbl_natrium_record saved = null;
 
         try {
-            if(user.getType() == User.Type.PATIENT && user.getWeek() != 25 ) {
+            if (user.getType() == User.Type.PATIENT && user.getWeek() != 25) {
                 saved = moistureNatriumService.upsertNatriumRecord(tbl_natrium_record);
                 code = Result.Code.OK;
-            }
-            else if(user.getWeek() == 25) {
+            } else if (user.getWeek() == 25) {
                 throw new IllegalStateException("25 Weeks User try input data [warn]");
-            }
-            else {
+            } else {
                 throw new IllegalStateException("Caregiver try input data [warn]");
             }
         } catch (Exception exception) {
@@ -236,14 +234,12 @@ public class MoistureNatriumController extends BaseController {
         Result.Code code;
         Tbl_mositrue_record saved = null;
         try {
-            if(user.getType() == User.Type.PATIENT && user.getWeek() != 25 ) {
+            if (user.getType() == User.Type.PATIENT && user.getWeek() != 25) {
                 saved = moistureNatriumService.upsertMoistureRecord(tbl_mositrue_record);
                 code = Result.Code.OK;
-            }
-            else if(user.getWeek() == 25) {
+            } else if (user.getWeek() == 25) {
                 throw new IllegalStateException("25 Weeks User try input data [warn]");
-            }
-            else {
+            } else {
                 throw new IllegalStateException("Caregiver try input data [warn]");
             }
         } catch (Exception exception) {
@@ -259,16 +255,16 @@ public class MoistureNatriumController extends BaseController {
 
     public Integer avgWeek() {
         Integer avg = 0;
-        int count = 0 ;
+        int count = 0;
         LocalDate now = LocalDate.now();
         for (int i = 1; i < 8; i++) {
             int intake = moistureNatriumService.getMoistureDayRecord(new RecordKey(getConnectId(), now.with(DayOfWeek.of(i))));
-            if(intake != 0){
+            if (intake != 0) {
                 avg = avg + intake;
                 count++;
             }
         }
-        if(count == 0)
+        if (count == 0)
             return 0;
         else
             return avg * 200 / count;

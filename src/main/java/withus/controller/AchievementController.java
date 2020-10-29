@@ -29,7 +29,7 @@ public class AchievementController extends BaseController {
         User user = getUser();
 
         modelAndView.addObject("user", user);
-        modelAndView.addObject("week",user.getWeek());
+        modelAndView.addObject("week", user.getWeek());
         switch (user.getType()) {
             case PATIENT:
                 Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));

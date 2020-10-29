@@ -94,7 +94,7 @@ public class AlarmController extends BaseController {
 
         modelAndView.addObject("medicationAlarmOnoff", alarm.isMedicationAlarmOnoff());
         modelAndView.addObject("type", user.getType());
-        modelAndView.addObject("week",user.getWeek());
+        modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("previousUrl", "/alarm");
 
         logger.info("id:{}, url:{} , alarmOnOff:{}, morning:{}, lunch:{}, dinner:{}", user.getUserId(), request.getRequestURL(), alarm.isMedicationAlarmOnoff(), alarm.getMedicationTimeMorning(), alarm.getMedicationTimeLunch(), alarm.getMedicationTimeDinner());
@@ -135,11 +135,10 @@ public class AlarmController extends BaseController {
         logger.info("id:{}", user.getUserId());
 
         try {
-            if(user.getType() == User.Type.PATIENT ) {
+            if (user.getType() == User.Type.PATIENT) {
                 saved = alarmService.upsertMedication(tbl_medication_alarm);
                 code = Result.Code.OK;
-            }
-            else {
+            } else {
                 throw new IllegalStateException("Caregiver try input data [warn]");
             }
             logger.info("id:{}, dinner:{}, lunch:{}, morning:{}, code:{}", user.getUserId(), saved.getMedicationTimeDinner(), saved.getMedicationTimeLunch(), saved.getMedicationTimeMorning(), code);
@@ -169,15 +168,13 @@ public class AlarmController extends BaseController {
         Tbl_medication_record saved = null;
 
         try {
-            if(user.getType() == User.Type.PATIENT && user.getWeek() != 25 ) {
+            if (user.getType() == User.Type.PATIENT && user.getWeek() != 25) {
                 saved = alarmService.upsertTrueRecord(tbl_medication_record);
                 logger.info("id:{}, finished:{}", user.getUserId(), saved.isFinished());
                 code = Result.Code.OK;
-            }
-            else if(user.getWeek() == 25) {
+            } else if (user.getWeek() == 25) {
                 throw new IllegalStateException("25 Weeks User try input data [warn]");
-            }
-            else {
+            } else {
                 throw new IllegalStateException("Caregiver try input data [warn]");
             }
         } catch (Exception exception) {
@@ -217,7 +214,7 @@ public class AlarmController extends BaseController {
 
         modelAndView.addObject("appointment", appointment);
         modelAndView.addObject("type", user.getType());
-        modelAndView.addObject("week",user.getWeek());
+        modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("previousUrl", "/alarm");
 
         logger.info("id:{}, url:{}, appointDate:{}, appointTime:{}", user.getUserId(), request.getRequestURL(), appointment.getOutPatientVisitDate(), appointment.getOutPatientVisitTime());
@@ -234,12 +231,11 @@ public class AlarmController extends BaseController {
         Tbl_outpatient_visit_alarm saved = null;
 
         try {
-            if( user.getType() == User.Type.PATIENT ) {
+            if (user.getType() == User.Type.PATIENT) {
                 saved = alarmService.upsertOutPatientVisit(tbl_outpatient_visit_alarm);
                 logger.info("id:{}, date:{}, time:{}", user.getUserId(), saved.getOutPatientVisitTime(), saved.getOutPatientVisitDate());
                 code = Result.Code.OK;
-            }
-            else {
+            } else {
                 throw new IllegalStateException("Caregiver try input data [warn]");
             }
         } catch (Exception exception) {

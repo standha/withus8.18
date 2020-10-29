@@ -71,7 +71,7 @@ public class ExerciseController extends BaseController {
 
                 break;
         }
-        modelAndView.addObject("week",user.getWeek());
+        modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("type", typeCheck);
         modelAndView.addObject("previousUrl", "/center");
 
@@ -106,7 +106,7 @@ public class ExerciseController extends BaseController {
         }
 
         modelAndView.addObject("type", user.getType());
-        modelAndView.addObject("week",user.getWeek());
+        modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("previousUrl", "exercise");
         return modelAndView;
     }
@@ -121,14 +121,12 @@ public class ExerciseController extends BaseController {
         Tbl_Exercise_record saved = null;
 
         try {
-            if(user.getType() == User.Type.PATIENT && user.getWeek() != 25 ) {
+            if (user.getType() == User.Type.PATIENT && user.getWeek() != 25) {
                 saved = exerciseService.upsertExerciseRecord(tbl_exercise_record);
                 code = Result.Code.OK;
-            }
-            else if(user.getWeek() == 25) {
+            } else if (user.getWeek() == 25) {
                 throw new IllegalStateException("25 Weeks User try input data [warn]");
-            }
-            else {
+            } else {
                 throw new IllegalStateException("Caregiver try input data [warn]");
             }
         } catch (Exception exception) {

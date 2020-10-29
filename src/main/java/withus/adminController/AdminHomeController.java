@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class AdminHomeController extends withus.controller.BaseController{
+public class AdminHomeController extends withus.controller.BaseController {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
     private final GoalService goalService;
     private final MoistureNatriumService moistureNatriumService;
@@ -51,7 +51,7 @@ public class AdminHomeController extends withus.controller.BaseController{
     public ModelAndView viewPatient(@PathVariable("userId") String userId) {
         // @pathVariable, @ParameterValue, @Header
         User user = getUser();
-        if(user.getType() != User.Type.ADMINISTRATOR){
+        if (user.getType() != User.Type.ADMINISTRATOR) {
             throw new IllegalStateException(user.getUserId() + " is not Admin");
         }
         ModelAndView mav = new ModelAndView();
@@ -68,7 +68,7 @@ public class AdminHomeController extends withus.controller.BaseController{
     @GetMapping("/admin_moistureRecord/{userId}")
     public ModelAndView adminMoistureRecord(@PathVariable("userId") String userId) {
         User user = getUser();
-        if(user.getType() != User.Type.ADMINISTRATOR){
+        if (user.getType() != User.Type.ADMINISTRATOR) {
             throw new IllegalStateException(user.getUserId() + " is not Admin");
         }
         ModelAndView mav = new ModelAndView();
@@ -87,9 +87,9 @@ public class AdminHomeController extends withus.controller.BaseController{
     }
 
     @GetMapping("/admin_symptomRecord/{userId}")
-    public ModelAndView adminSymptomRecord(@PathVariable("userId") String userId){
+    public ModelAndView adminSymptomRecord(@PathVariable("userId") String userId) {
         User user = getUser();
-        if(user.getType() != User.Type.ADMINISTRATOR){
+        if (user.getType() != User.Type.ADMINISTRATOR) {
             throw new IllegalStateException(user.getUserId() + " is not Admin");
         }
         ModelAndView modelAndView = new ModelAndView();
@@ -98,7 +98,7 @@ public class AdminHomeController extends withus.controller.BaseController{
         List<SymptomAvgDTO> symptomAvg = adminService.getSymptomAvg(userId) == null ? null : adminService.getSymptomAvg(userId);
         modelAndView.addObject("patient", headerInfo);
         modelAndView.addObject("symptom", symptom);
-        modelAndView.addObject("symptomAvg",symptomAvg);
+        modelAndView.addObject("symptomAvg", symptomAvg);
         modelAndView.setViewName("Admin/admin_symptomRecord");
 
         logger.info("user try to access admin_symptomRecord id:{}, PatientId:{})", user.getUserId(),
@@ -108,9 +108,9 @@ public class AdminHomeController extends withus.controller.BaseController{
     }
 
     @GetMapping("/admin_exerciseRecord/{userId}")
-    public ModelAndView adminExerciseRecord(@PathVariable("userId") String userId){
+    public ModelAndView adminExerciseRecord(@PathVariable("userId") String userId) {
         User user = getUser();
-        if(user.getType() != User.Type.ADMINISTRATOR){
+        if (user.getType() != User.Type.ADMINISTRATOR) {
             throw new IllegalStateException(user.getUserId() + " is not Admin");
         }
         ModelAndView modelAndView = new ModelAndView();
@@ -131,7 +131,7 @@ public class AdminHomeController extends withus.controller.BaseController{
     @GetMapping("/admin_pillRecord/{userId}")
     public ModelAndView adminPillRecord(@PathVariable("userId") String userId) {
         User user = getUser();
-        if(user.getType() != User.Type.ADMINISTRATOR){
+        if (user.getType() != User.Type.ADMINISTRATOR) {
             throw new IllegalStateException(user.getUserId() + " is not Admin");
         }
         ModelAndView mav = new ModelAndView();
@@ -152,7 +152,7 @@ public class AdminHomeController extends withus.controller.BaseController{
     @GetMapping("/admin_withusHelpRequest")
     public ModelAndView adminWithusHelpRequest() {
         User user = getUser();
-        if(user.getType() != User.Type.ADMINISTRATOR){
+        if (user.getType() != User.Type.ADMINISTRATOR) {
             throw new IllegalStateException(user.getUserId() + " is not Admin");
         }
         ModelAndView mav = new ModelAndView();
@@ -168,7 +168,7 @@ public class AdminHomeController extends withus.controller.BaseController{
     @GetMapping("/admin_patientHelpRequest")
     public ModelAndView adminPatientHelpRequest() {
         User user = getUser();
-        if(user.getType() != User.Type.ADMINISTRATOR){
+        if (user.getType() != User.Type.ADMINISTRATOR) {
             throw new IllegalStateException(user.getUserId() + " is not Admin");
         }
 
@@ -185,7 +185,7 @@ public class AdminHomeController extends withus.controller.BaseController{
     @GetMapping("/admin_caregiverHelpRequest")
     public ModelAndView adminCaregiverHelpRequest() {
         User user = getUser();
-        if(user.getType() != User.Type.ADMINISTRATOR){
+        if (user.getType() != User.Type.ADMINISTRATOR) {
             throw new IllegalStateException(user.getUserId() + " is not Admin");
         }
         ModelAndView mav = new ModelAndView();
@@ -199,9 +199,9 @@ public class AdminHomeController extends withus.controller.BaseController{
     }
 
     @GetMapping("/admin_blood_pressure/{userId}")
-    public ModelAndView getBloogPressure(@PathVariable("userId") String userId){
+    public ModelAndView getBloogPressure(@PathVariable("userId") String userId) {
         User user = getUser();
-        if(user.getType() != User.Type.ADMINISTRATOR){
+        if (user.getType() != User.Type.ADMINISTRATOR) {
             throw new IllegalStateException(user.getUserId() + " is not Admin");
         }
 
@@ -220,7 +220,7 @@ public class AdminHomeController extends withus.controller.BaseController{
     @GetMapping("/admin_natriumRecord/{userId}")
     public ModelAndView adminNatriumRecord(@PathVariable("userId") String userId) {
         User user = getUser();
-        if(user.getType() != User.Type.ADMINISTRATOR){
+        if (user.getType() != User.Type.ADMINISTRATOR) {
             throw new IllegalStateException(user.getUserId() + " is not Admin");
         }
         ModelAndView mav = new ModelAndView();
@@ -229,7 +229,7 @@ public class AdminHomeController extends withus.controller.BaseController{
         List<Tbl_natrium_record> natriumAsc = adminService.getNatriumAsc(userId);
         mav.addObject("patient", headerInfo);
         mav.addObject("natriumCountListSumLists", natriumCountListSum);
-        mav.addObject("natriumAsc",natriumAsc);
+        mav.addObject("natriumAsc", natriumAsc);
         mav.setViewName("Admin/admin_natriumRecord");
 
         logger.info("user try to access admin_natriumRecord  id:{}, PatientId:{})", user.getUserId(), userId);
@@ -240,7 +240,7 @@ public class AdminHomeController extends withus.controller.BaseController{
     @GetMapping("/admin_weightRecord/{userId}")
     public ModelAndView adminWeightRecord(@PathVariable("userId") String userId) {
         User user = getUser();
-        if(user.getType() != User.Type.ADMINISTRATOR){
+        if (user.getType() != User.Type.ADMINISTRATOR) {
             throw new IllegalStateException(user.getUserId() + " is not Admin");
         }
 
@@ -263,16 +263,16 @@ public class AdminHomeController extends withus.controller.BaseController{
     @GetMapping("/admin_button_count/{userId}")
     public ModelAndView getSymptomAll(@PathVariable("userId") String userId) {
         User user = getUser();
-        if(user.getType() != User.Type.ADMINISTRATOR){
+        if (user.getType() != User.Type.ADMINISTRATOR) {
             throw new IllegalStateException(user.getUserId() + " is not Admin");
         }
         HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
         ModelAndView modelAndView = new ModelAndView("Admin/admin_button_count");
         List<Tbl_button_count> counts = adminService.getButtonCountAsc(userId);
-        modelAndView.addObject("counts",counts);
+        modelAndView.addObject("counts", counts);
         modelAndView.addObject("patient", headerInfo);
         List<ButtonCountSumDTO> countSum = adminService.getButtonCount(userId);
-        modelAndView.addObject("countSum",countSum);
+        modelAndView.addObject("countSum", countSum);
         logger.info("user try to access admin_button_count  id:{}, PatientId:{})", user.getUserId(),
                 userId);
 

@@ -94,14 +94,12 @@ public class SymptomController extends BaseController {
         Result.Code code;
         Tbl_symptom_log saved = null;
         try {
-            if(user.getType() == User.Type.PATIENT && user.getWeek() != 25 ) {
+            if (user.getType() == User.Type.PATIENT && user.getWeek() != 25) {
                 saved = symptomService.upsertSymptomRecord(tbl_symptom_log);
                 code = Result.Code.OK;
-            }
-            else if(user.getWeek() == 25) {
+            } else if (user.getWeek() == 25) {
                 throw new IllegalStateException("25 Weeks User try input data [warn]");
-            }
-            else {
+            } else {
                 throw new IllegalStateException("Caregiver try input data [warn]");
             }
         } catch (Exception exception) {

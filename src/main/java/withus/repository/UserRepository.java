@@ -38,7 +38,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     @Transactional(readOnly = true)
     @Nullable
-    List<User> findByTypeAndWeekLessThanAndLevelLessThan(User.Type type, int limit_week , int limit_level);
+    List<User> findByTypeAndWeekLessThanAndLevelLessThan(User.Type type, int limit_week, int limit_level);
 
     @Transactional(readOnly = true)
     @Nullable

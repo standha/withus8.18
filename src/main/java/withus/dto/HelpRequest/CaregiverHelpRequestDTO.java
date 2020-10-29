@@ -17,7 +17,7 @@ public class CaregiverHelpRequestDTO {
     private LocalTime requestTime;
 
     public CaregiverHelpRequestDTO(String name, String id, String contact, String patientName, String patientId, String patientContact,
-                                  LocalDate requestDate, LocalTime requestTime){
+                                   LocalDate requestDate, LocalTime requestTime) {
         this.name = name;
         this.id = id;
         this.contact = contact;
@@ -29,12 +29,35 @@ public class CaregiverHelpRequestDTO {
         this.requestTime = requestTime;
     }
 
-    public String getName() {return name;}
-    public String getId() {return id;}
-    public String getContact() {return contact;}
-    public String getPatientName() {return patientName;}
-    public String getPatientId() {return patientId;}
-    public String getPatientContact() {return patientContact;}
-    public LocalDate getRequestDate() {return requestDate;}
-    public LocalTime getRequestTime() {return requestTime;}
+    public String getName() {
+        return name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public String getPatientId() {
+        return patientId;
+    }
+
+    public String getPatientContact() {
+        return patientContact;
+    }
+
+    public LocalDate getRequestDate() {
+        return requestDate;
+    }
+
+    public LocalTime getRequestTime() {
+        return requestTime;
+    }
 }

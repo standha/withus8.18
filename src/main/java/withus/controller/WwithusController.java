@@ -83,6 +83,7 @@ public class WwithusController extends BaseController {
                 .data(withusHelpRequest)
                 .build();
     }
+
     @GetMapping("/wwithus/histories")
     @ResponseBody
     public Result<List<ChatBalloon>> getHistories(HttpServletRequest request) {

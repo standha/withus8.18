@@ -53,7 +53,7 @@ public class UserService implements UserDetailsService {
 
     @Nullable
     public User getUserByIdAndDate(String id) {
-        User user =userRepository.findByUserId(id).orElse(null);
+        User user = userRepository.findByUserId(id).orElse(null);
         user.setUserRecordDate(LocalDate.now());
         userRepository.saveAndFlush(user);
         return user;
@@ -61,7 +61,7 @@ public class UserService implements UserDetailsService {
 
     @Nullable
     public User getUserById(String id) {
-        User user =userRepository.findByUserId(id).orElse(null);
+        User user = userRepository.findByUserId(id).orElse(null);
         return user;
     }
 

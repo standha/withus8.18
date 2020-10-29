@@ -39,7 +39,7 @@ public class GoalController extends BaseController {
         modelAndView.addObject("count", count);
         modelAndView.addObject("goal", goal.getGoal());
         modelAndView.addObject("type", typeCheck);
-        modelAndView.addObject("week",user.getWeek());
+        modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("previousUrl", "/center");
 
         logger.info("id:{}, goal:{}", user.getUserId(), goal.getGoal());
@@ -56,11 +56,10 @@ public class GoalController extends BaseController {
         Tbl_goal saved = null;
 
         try {
-            if(user.getType() == User.Type.PATIENT) {
+            if (user.getType() == User.Type.PATIENT) {
                 saved = goalService.upsertGoal(tbl_goal);
                 code = Result.Code.OK;
-            }
-            else {
+            } else {
                 throw new IllegalStateException("Caregiver try input data [warn]");
             }
         } catch (Exception exception) {

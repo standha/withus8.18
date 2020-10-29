@@ -39,6 +39,7 @@ public class CenterController extends BaseController {
     private final HelperRequestService helperRequestService;
 
     private final HomeService homeService;
+
     @Autowired
     public CenterController(AuthenticationFacade authenticationFacade, HomeService homeService, UserService userService, GoalService goalService, CountService countService, HelperRequestService helperRequestService) {
         super(userService, authenticationFacade);

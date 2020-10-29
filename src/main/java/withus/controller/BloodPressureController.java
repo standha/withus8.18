@@ -102,14 +102,12 @@ public class BloodPressureController extends BaseController {
         Tbl_blood_pressure_pulse saved = null;
 
         try {
-            if(user.getType() == User.Type.PATIENT && user.getWeek() != 25 ) {
+            if (user.getType() == User.Type.PATIENT && user.getWeek() != 25) {
                 saved = bloodPressureService.upsertBloodPressureRecord(tbl_blood_pressure_pulse);
                 code = Result.Code.OK;
-            }
-            else if(user.getWeek() == 25) {
+            } else if (user.getWeek() == 25) {
                 throw new IllegalStateException("25 Weeks User try input data [warn]");
-            }
-            else {
+            } else {
                 throw new IllegalStateException("Caregiver try input data [warn]");
             }
         } catch (Exception exception) {

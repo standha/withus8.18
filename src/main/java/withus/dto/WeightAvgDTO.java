@@ -12,7 +12,7 @@ public class WeightAvgDTO {
         return weight;
     }
 
-    public WeightAvgDTO(Integer week, Double weight){
+    public WeightAvgDTO(Integer week, Double weight) {
         this.week = week;
         this.weight = weight;
     }
