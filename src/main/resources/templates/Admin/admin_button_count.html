@@ -39,40 +39,73 @@
                     <th>주차</th><th>이 주의 목표</th><th>달성률</th><th>알람</th><th>혈압/맥박</th><th>운동</th><th>염분/수분</th><th>체중</th><th>증상일지</th><th>질환정보</th><th>위더스랑 버튼</th><th>앱 도우미 버튼</th>
                 </tr>
                 </thead>
-                <tbody style="text-align: center">
-                <tr th:each="count : ${counts}">
-                    <td th:text="${count.key.week}+주차">주차</td>
-                    <td th:text="${count.goal}">이 주의 목표</td>
-                    <td th:text="${count.level}">달성률</td>
-                    <td th:text="${count.alarm}">알람</td>
-                    <td th:text="${count.bloodPressure}">혈압/맥박</td>
-                    <td th:text="${count.exercise}">운동</td>
-                    <td th:text="${count.natriumMoisture}">염분/수분</td>
-                    <td th:text="${count.weight}">체중</td>
-                    <td th:text="${count.symptom}">증상일지</td>
-                    <td th:text="${count.diseaseInfo}">질환정보</td>
-                    <td th:text="${count.withusRang}">위더스랑 버튼</td>
-                    <td th:text="${count.helper}">앱 도우미 버튼</td>
-                </tr>
-
-                <tr th:each="countSum : ${countSum}">
-                    <td>총합</td>
-                    <td th:text="${countSum.goal}">이 주의 목표</td>
-                    <td th:text="${countSum.level}">달성률</td>
-                    <td th:text="${countSum.alarm}">알람</td>
-                    <td th:text="${countSum.blood}">혈압/맥박</td>
-                    <td th:text="${countSum.exercise}">운동</td>
-                    <td th:text="${countSum.natrium_moisture}">염분/수분</td>
-                    <td th:text="${countSum.weight}">체중</td>
-                    <td th:text="${countSum.symptom}">증상일지</td>
-                    <td th:text="${countSum.info}">질환정보</td>
-                    <td th:text="${countSum.chat}">위더스랑 버튼</td>
-                    <td th:text="${countSum.helper}">앱 도우미 버튼</td>
-                </tr>
+                <tbody id="history-table-data" style="text-align: center">
+<!--                <tr th:each="count : ${counts}">-->
+<!--                    <td th:text="${count.key.week}+주차">주차</td>-->
+<!--                    <td th:text="${count.goal}">이 주의 목표</td>-->
+<!--                    <td th:text="${count.level}">달성률</td>-->
+<!--                    <td th:text="${count.alarm}">알람</td>-->
+<!--                    <td th:text="${count.bloodPressure}">혈압/맥박</td>-->
+<!--                    <td th:text="${count.exercise}">운동</td>-->
+<!--                    <td th:text="${count.natriumMoisture}">염분/수분</td>-->
+<!--                    <td th:text="${count.weight}">체중</td>-->
+<!--                    <td th:text="${count.symptom}">증상일지</td>-->
+<!--                    <td th:text="${count.diseaseInfo}">질환정보</td>-->
+<!--                    <td th:text="${count.withusRang}">위더스랑 버튼</td>-->
+<!--                    <td th:text="${count.helper}">앱 도우미 버튼</td>-->
+<!--                </tr>-->
+                </tbody>
+                <tbody style="text-align: center; border-top: 1px solid #222222">
+                        <tr th:each="countSum : ${countSum}" class="allRecord">
+                            <td>총합</td>
+                            <td th:text="${countSum.goal}">이 주의 목표</td>
+                            <td th:text="${countSum.level}">달성률</td>
+                            <td th:text="${countSum.alarm}">알람</td>
+                            <td th:text="${countSum.blood}">혈압/맥박</td>
+                            <td th:text="${countSum.exercise}">운동</td>
+                            <td th:text="${countSum.natrium_moisture}">염분/수분</td>
+                            <td th:text="${countSum.weight}">체중</td>
+                            <td th:text="${countSum.symptom}">증상일지</td>
+                            <td th:text="${countSum.info}">질환정보</td>
+                            <td th:text="${countSum.chat}">위더스랑 버튼</td>
+                            <td th:text="${countSum.helper}">앱 도우미 버튼</td>
+                        </tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 </body>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var count = /*[[ ${counts} ]]*/;
+    var countSum = /*[[ ${countSum} ]]*/;
+    /*]]*/
+
+    for(i=0; i<=24; i++)
+    {
+        if(i%2 == 0)
+            var Item = "<tr class='odd-tr'>";
+        else
+            var Item = "<tr class='even-tr'>";
+
+        Item += "<td>" + count[i].key.week + "주차" + "</td>";
+        Item += "<td>" + count[i].goal + "</td>";
+        Item += "<td>" + count[i].level + "</td>";
+        Item += "<td>" + count[i].alarm + "</td>";
+        Item += "<td>" + count[i].bloodPressure + "</td>";
+        Item += "<td>" + count[i].exercise + "</td>";
+        Item += "<td>" + count[i].natriumMoisture + "</td>";
+        Item += "<td>" + count[i].weight + "</td>";
+        Item += "<td>" + count[i].symptom + "</td>";
+        Item += "<td>" + count[i].diseaseInfo + "</td>";
+        Item += "<td>" + count[i].withusRang + "</td>";
+        Item += "<td>" + count[i].helper + "</td>";
+
+        Item += "</tr>";
+        $('#history-table-data').append(Item);
+    }
+
+
+</script>
 </html>

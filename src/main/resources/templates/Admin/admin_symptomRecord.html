@@ -66,7 +66,10 @@
     {
         for(j=0; j<7; j++)
         {
-            var Item = "<tr>";
+            if(i%2 == 0)
+                var Item = "<tr class='odd-tr'>";
+            else
+                var Item = "<tr class='even-tr'>";
             var weekText = ['월', '화', '수', '목', '금', '토', '일'];     //월요일부터 표시해주는 배열
             if(j == 0)
             {
@@ -101,7 +104,10 @@
 
             if(j == 6)
             {
-                Item = "<tr>";
+                if(i%2 == 0)
+                    var Item = "<tr class='odd-tr'>";
+                else
+                    var Item = "<tr class='even-tr'>";
                 Item += "<td>" + i + "주차 총합" + "</td>";
 
                 if(weekAvg[weekAvgCount].week == i)
@@ -128,7 +134,7 @@
         }
     }
 
-    var Item = "<tr>";
+    var Item = "<tr class='allRecord'>";
     Item += "<td colspan='2'>모든 주차 총합</td>";
 
     var sum1 = 0;
