@@ -6,6 +6,7 @@ import withus.entity.User;
 import withus.util.Utility;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Builder
 @Getter
@@ -21,7 +22,7 @@ public class AllUserDTO {
     private String guserPassword;
     private String guserContact;
     private String currentCode;
-    private LocalDate userRecordDate;
+    private LocalDateTime userRecordDate;
 
     public static AllUserDTO fromString(String queryResult) {
         String[] array = queryResult.split(",");
@@ -37,7 +38,7 @@ public class AllUserDTO {
                 .guserId(array[7])
                 .guserPassword(array[8])
                 .guserContact(array[9])
-                .userRecordDate(Utility.parseDate(array[10]))
+                .userRecordDate(Utility.parseDateTime(array[10]))
                 .currentCode(array[11])
                 .build();
     }
