@@ -104,7 +104,7 @@ function onFormSubmission(form) {
                     alert("환자를 보호자번호로 설정할 수 없습니다.");
                 } else if (data.code === 'ERROR_SELF_REFERENCE'){
                     alert("환자와 보호자는 번호가 같을 수 없습니다.");
-                } else if (data.code === 'ERROR_NO_EXIST_CAR₩EGIVER'){
+                } else if (data.code === 'ERROR_NO_EXIST_CAREGIVER'){
                     alert("존재하지 않는 보호자 번호 입니다. (공백 입력 또는 보호자 등록 해주세요)");
                 } else {
                     alert("정보 수정 실패");
