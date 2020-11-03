@@ -4,12 +4,12 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
-import withus.dto.HeaderInfoDTO;
-import withus.dto.HelpRequestDTO;
-import withus.dto.MoistureAvgDTO;
-import withus.dto.PillSumDTO;
+import withus.dto.*;
+import withus.dto.HelpRequest.CaregiverHelpRequestDTO;
+import withus.dto.HelpRequest.PatientHelpRequestDTO;
 import withus.entity.*;
 
+import java.awt.*;
 import java.util.List;
 
 @Repository
@@ -42,6 +42,28 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .orderBy(mr.pk.date.asc())
                 .fetch();
         return moistureAsc;
+    }
+
+    public List<Tbl_symptom_log> findSymptom(String userId) {
+        QTbl_symptom_log log = QTbl_symptom_log.tbl_symptom_log;
+        List<Tbl_symptom_log> symptom = queryFactory.selectFrom(log)
+                .where(log.pk.id.eq(userId))
+                .orderBy(log.week.asc())
+                .orderBy(log.pk.date.asc())
+                .fetch();
+        return symptom;
+    }
+
+    public List<SymptomAvgDTO> findSymptomAvg(String userId) {
+        QTbl_symptom_log log = QTbl_symptom_log.tbl_symptom_log;
+        List<SymptomAvgDTO> symptomAvg = queryFactory.select(Projections.constructor(SymptomAvgDTO.class,
+                log.week, log.outofbreath.sum(), log.tired.sum(), log.ankle.sum(), log.cough.sum()))
+                .from(log)
+                .groupBy(log.week)
+                .orderBy(log.week.asc())
+                .where(log.pk.id.eq(userId))
+                .fetch();
+        return symptomAvg;
     }
 
     public HeaderInfoDTO findHeaderInfo(String userID) {
@@ -79,6 +101,38 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
         return pillAsc;
     }
 
+    public List<ExerciseDTO> findExerciseAvg(String userId) {
+        QTbl_Exercise_record er = QTbl_Exercise_record.tbl_Exercise_record;
+        List<ExerciseDTO> exerciseAvg = queryFactory.select(Projections.constructor(ExerciseDTO.class, er.week, er.hour.sum(), er.minute.sum(), er.week.count()))
+                .from(er)
+                .groupBy(er.week)
+                .orderBy(er.week.asc())
+                .where(er.week.eq(er.week))
+                .where(er.pk.id.eq(userId))
+                .fetch();
+        return exerciseAvg;
+    }
+
+    public List<Tbl_Exercise_record> findExercise(String userId) {
+        QTbl_Exercise_record er = QTbl_Exercise_record.tbl_Exercise_record;
+        List<Tbl_Exercise_record> exerciseRecords = queryFactory.selectFrom(er)
+                .where(er.pk.id.eq(userId))
+                .orderBy(er.week.asc())
+                .orderBy(er.pk.date.asc())
+                .fetch();
+        return exerciseRecords;
+    }
+
+    public List<Tbl_blood_pressure_pulse> findBloodPressure(String userId) {
+        QTbl_blood_pressure_pulse br = QTbl_blood_pressure_pulse.tbl_blood_pressure_pulse;
+        List<Tbl_blood_pressure_pulse> blood_pressure_pulses = queryFactory.selectFrom(br)
+                .where(br.pk.id.eq(userId))
+                .orderBy(br.week.asc())
+                .orderBy(br.pk.date.asc())
+                .fetch();
+        return blood_pressure_pulses;
+    }
+
     public List<HelpRequestDTO> findHelpRequestAsc() {
         QWithusHelpRequest wr = QWithusHelpRequest.withusHelpRequest;
         QUser u = QUser.user;
@@ -93,5 +147,92 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
         return requestAsc;
     }
 
+    public List<PatientHelpRequestDTO> findPatientHelpRequest() {
+        QTbl_helper_request hp = QTbl_helper_request.tbl_helper_request;
+        QUser u = QUser.user;
+        QUser c = QUser.user.caregiver;
+        List<PatientHelpRequestDTO> requestPatient = queryFactory.select(Projections.constructor(PatientHelpRequestDTO.class,
+                u.name, u.userId, u.contact, c.contact, hp.pk.date, hp.pk.time))
+                .from(hp)
+                .where(u.type.eq(User.Type.PATIENT))
+                .leftJoin(u).on(hp.pk.id.eq(u.userId))
+                .leftJoin(c).on(u.caregiver.contact.eq(c.contact))
+                .orderBy(hp.pk.date.desc())
+                .orderBy(hp.pk.time.desc())
+                .fetch();
+        return requestPatient;
+    }
+
+    public List<CaregiverHelpRequestDTO> findCaregiverHelpRequest() {
+        QTbl_helper_request hp = QTbl_helper_request.tbl_helper_request;
+        QUser user = QUser.user;
+
+        List<CaregiverHelpRequestDTO> requestCaregiver = queryFactory.select(Projections.constructor(CaregiverHelpRequestDTO.class,
+                user.caregiver.name, user.caregiver.userId, user.caregiver.contact, user.name, user.userId, user.contact, hp.pk.date, hp.pk.time))
+                .from(user)
+                .where(user.caregiver.type.eq(User.Type.CAREGIVER))
+                .leftJoin(hp).on(hp.pk.id.eq(user.caregiver.userId))
+                .orderBy(hp.pk.date.desc())
+                .orderBy(hp.pk.time.desc())
+                .fetch();
+        return requestCaregiver;
+    }
+
+    public List<WeightAvgDTO> findWeightAvg(String userId) {
+        QTbl_weight tw = QTbl_weight.tbl_weight;
+
+        List<WeightAvgDTO> weightAvgList = queryFactory.select(Projections.constructor(WeightAvgDTO.class,
+                tw.week, tw.weight.avg()))
+                .from(tw)
+                .where(tw.pk.id.eq(userId))
+                .groupBy(tw.week)
+                .orderBy(tw.week.asc())
+                .fetch();
+        return weightAvgList;
+    }
+
+    public List<Tbl_weight> findWeightAsc(String userId) {
+        QTbl_weight tw = QTbl_weight.tbl_weight;
+
+        List<Tbl_weight> weightsAscList = queryFactory.selectFrom(tw)
+                .where(tw.pk.id.eq(userId))
+                .orderBy(tw.week.asc())
+                .orderBy(tw.pk.date.asc())
+                .fetch();
+        return weightsAscList;
+    }
+
+    public List<Tbl_natrium_record> findNatriumAsc(String userId) {
+        QTbl_natrium_record nr = QTbl_natrium_record.tbl_natrium_record;
+
+        List<Tbl_natrium_record> natriumAscList = queryFactory.selectFrom(nr)
+                .where(nr.pk.id.eq(userId))
+                .orderBy(nr.week.asc())
+                .orderBy(nr.pk.date.asc())
+                .fetch();
+        return natriumAscList;
+    }
+
+    public List<ButtonCountSumDTO> findButtonCountSum(String userId) {
+        QTbl_button_count bc = QTbl_button_count.tbl_button_count;
+
+        List<ButtonCountSumDTO> buttonCountSum = queryFactory.select(Projections.constructor(ButtonCountSumDTO.class,
+                bc.alarm.sum(), bc.bloodPressure.sum(), bc.diseaseInfo.sum(), bc.exercise.sum(), bc.goal.sum(), bc.helper.sum(), bc.level.sum(), bc.natriumMoisture.sum(), bc.symptom.sum(),
+                bc.weight.sum(), bc.withusRang.sum()))
+                .from(bc)
+                .where(bc.key.id.eq(userId))
+                .fetch();
+        return buttonCountSum;
+    }
+
+    public List<Tbl_button_count> findButtonCount(String userId) {
+        QTbl_button_count bc = QTbl_button_count.tbl_button_count;
+
+        List<Tbl_button_count> buttonCount = queryFactory.selectFrom(bc)
+                .where(bc.key.id.eq(userId))
+                .orderBy(bc.key.week.asc())
+                .fetch();
+        return buttonCount;
+    }
 }
 

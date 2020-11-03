@@ -86,14 +86,17 @@ public class MoistureNatriumController extends BaseController {
         }
 
         modelAndView.addObject("type", user.getType());
+
         Integer moistureWeek = 0;
         List<Tbl_mositrue_record> moistureAllHistory;
         moistureAllHistory = moistureNatriumService.getMoistureRecord(getConnectId(), 0);
+
         moistureWeek = avgWeek();
         modelAndView.addObject("moisture", moistureAllHistory);
         modelAndView.addObject("moistureWeek", moistureWeek);
         modelAndView.addObject("previousUrl", "moistureNatrium");
         modelAndView.addObject("week", user.getWeek());
+
         return modelAndView;
     }
 
@@ -112,11 +115,13 @@ public class MoistureNatriumController extends BaseController {
             modelAndView.addObject("dinner", natrium.getDinner());
             modelAndView.addObject("previousUrl", "moistureNatrium");
         }
+
         User user = getUser();
         if (user.getType() == User.Type.PATIENT) {
             Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
+
         modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("type", user.getType());
 
@@ -131,20 +136,25 @@ public class MoistureNatriumController extends BaseController {
             Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
+
         modelAndView.addObject("type", user.getType());
+
         LocalDate today = LocalDate.now();
         int lowCount = 0;
         int norCount = 0;
         int highCount = 0;
         List<Tbl_natrium_record> natriums = new ArrayList<>();
         List<Tbl_natrium_record> allnatriums = new ArrayList<>();
+
         allnatriums = moistureNatriumService.getNatriumAllRecord(getConnectId());
+
         for (int i = 1; i <= 7; i++) {
             if (moistureNatriumService.getNatriumTodayRecord(new RecordKey(getConnectId(), today.with(DayOfWeek.of(i)))) != null) {
                 Tbl_natrium_record sun = moistureNatriumService.getNatriumTodayRecord(new RecordKey(getConnectId(), today.with(DayOfWeek.of(i))));
                 natriums.add(sun);
             }
         }
+
         for (Tbl_natrium_record natrium : natriums) {
             switch (natrium.getMorning()) {
                 case 1:
@@ -159,6 +169,7 @@ public class MoistureNatriumController extends BaseController {
                 case 0:
                     break;
             }
+
             switch (natrium.getLunch()) {
                 case 1:
                     lowCount++;
@@ -172,6 +183,7 @@ public class MoistureNatriumController extends BaseController {
                 case 0:
                     break;
             }
+
             switch (natrium.getDinner()) {
                 case 1:
                     lowCount++;
@@ -187,6 +199,7 @@ public class MoistureNatriumController extends BaseController {
             }
 
         }
+
         modelAndView.addObject("low", lowCount);
         modelAndView.addObject("normal", norCount);
         modelAndView.addObject("high", highCount);
@@ -203,14 +216,17 @@ public class MoistureNatriumController extends BaseController {
         tbl_natrium_record.setPk(new RecordKey(user.getUsername(), LocalDate.now()));
         tbl_natrium_record.setWeek(user.getWeek());
         Result.Code code;
-        Tbl_natrium_record seved = null;
+        Tbl_natrium_record saved = null;
 
         try {
-            if(user.getType() == User.Type.PATIENT){
-                seved = moistureNatriumService.upsertNatriumRecord(tbl_natrium_record);
+            if (user.getType() == User.Type.PATIENT && user.getWeek() != 25) {
+                saved = moistureNatriumService.upsertNatriumRecord(tbl_natrium_record);
                 code = Result.Code.OK;
-            }else
-                throw new IllegalArgumentException("Caregiver try input data , [warn]");
+            } else if (user.getWeek() == 25) {
+                throw new IllegalStateException("25 Weeks User try input data [warn]");
+            } else {
+                throw new IllegalStateException("Caregiver try input data [warn]");
+            }
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
@@ -218,7 +234,7 @@ public class MoistureNatriumController extends BaseController {
 
         return Result.<Tbl_natrium_record>builder()
                 .code(code)
-                .data(seved)
+                .data(saved)
                 .build();
     }
 
@@ -230,12 +246,16 @@ public class MoistureNatriumController extends BaseController {
         tbl_mositrue_record.setWeek(user.getWeek());
         Result.Code code;
         Tbl_mositrue_record saved = null;
+
         try {
-            if(user.getType() == User.Type.PATIENT){
+            if (user.getType() == User.Type.PATIENT && user.getWeek() != 25) {
                 saved = moistureNatriumService.upsertMoistureRecord(tbl_mositrue_record);
                 code = Result.Code.OK;
-            }else
-                throw new IllegalArgumentException("Caregiver try input data , [warn]");
+            } else if (user.getWeek() == 25) {
+                throw new IllegalStateException("25 Weeks User try input data [warn]");
+            } else {
+                throw new IllegalStateException("Caregiver try input data [warn]");
+            }
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
@@ -249,18 +269,21 @@ public class MoistureNatriumController extends BaseController {
 
     public Integer avgWeek() {
         Integer avg = 0;
-        int count = 0 ;
+        int count = 0;
         LocalDate now = LocalDate.now();
+
         for (int i = 1; i < 8; i++) {
             int intake = moistureNatriumService.getMoistureDayRecord(new RecordKey(getConnectId(), now.with(DayOfWeek.of(i))));
-            if(intake != 0){
+            if (intake != 0) {
                 avg = avg + intake;
                 count++;
             }
         }
-        if(count == 0)
+
+        if (count == 0) {
             return 0;
-        else
+        } else {
             return avg * 200 / count;
+        }
     }
 }

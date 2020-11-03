@@ -112,13 +112,11 @@
 	<footer>
 		<div class="footer-wrap">
             <div class="chat-txt">
-                <span class="green">챗 봇 </span>
-                <span>도우미 </span>
                 <span class="black">위더스랑 </span>
                 <span class="ico-logo2"></span>
             </div>
             <a class="btn sm type08" th:href="@{/wwithus}" th:onclick="'addChat(parseInt(' + ${count.withusRang} + '))'">
-                <span class="txt-lt">채팅시작</span>
+                <span class="txt-lt">대화시작</span>
                 <span class="ico-arrow1"></span>
             </a>
 		</div>
@@ -196,26 +194,22 @@
 	<footer>
 		<div class="footer-wrap" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25">
             <div class="chat-txt">
-                <span class="green">챗 봇 </span>
-                <span>도우미 </span>
                 <span class="black">위더스랑 </span>
                 <span class="ico-logo2"></span>
             </div>
             <a class="btn sm type08" th:href="@{/wwithus}">
-                <span class="txt-lt">채팅시작</span>
+                <span class="txt-lt">대화시작</span>
                 <span class="ico-arrow1"></span>
             </a>
 		</div>
 
 		<div class="footer-wrap" th:if="${week} == 25">
 			<div class="chat-txt">
-				<span class="green">챗 봇 </span>
-				<span>도우미 </span>
 				<span class="black">위더스랑 </span>
 				<span class="ico-logo2"></span>
 			</div>
 			<a class="btn sm type08" href="javascript: alert('계속 사용을 원하는 경우 [위더스 도우미]에게 연락해주세요.');">
-				<span class="txt-lt">채팅시작</span>
+				<span class="txt-lt">대화시작</span>
 				<span class="ico-arrow1"></span>
 			</a>
 		</div>

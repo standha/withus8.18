@@ -16,7 +16,7 @@ public class Utility {
     public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_FORMAT);
     public static final String TIME_FORMAT = "HH:mm:ss";
     public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_FORMAT);
-    public static final String DATE_TIME_FORMAT = DATE_FORMAT + TIME_FORMAT;
+    public static final String DATE_TIME_FORMAT = DATE_FORMAT+ " " + TIME_FORMAT;
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
 
     private static final List<DayOfWeek> WWITHUS_DAYS_OF_WEEK_ON_FIRST_TO_EIGHTH_WEEK = Stream.of(
@@ -29,8 +29,8 @@ public class Utility {
 
     public static LocalDate parseDate(String dateString) {
 
-        if(dateString.equals("null") || dateString == null){
-           return null;
+        if (dateString.equals("null") || dateString == null) {
+            return null;
         }
         return LocalDate.parse(dateString, DATE_FORMATTER);
     }
@@ -39,8 +39,11 @@ public class Utility {
         return LocalTime.parse(timeString, TIME_FORMATTER);
     }
 
-    public static LocalDateTime parseDateTuime(String dateTimeString) {
-        return LocalDateTime.parse(dateTimeString, DATE_TIME_FORMATTER);
+    public static LocalDateTime parseDateTime(String dateTimeString) {
+        if(dateTimeString.equals("null") || dateTimeString == null){
+            return null;
+        }
+        return LocalDateTime.parse(dateTimeString.substring(0, dateTimeString.length()-2), DATE_TIME_FORMATTER);
     }
 
     public static String format(LocalDate date) {

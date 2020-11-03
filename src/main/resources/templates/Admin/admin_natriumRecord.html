@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css"/>
+<script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>위더스</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no">
+    <link th:href="@{/css/reset.css}" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <link th:href="@{/css/layout.css}" rel="stylesheet">
+    <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <link href="/css/admin/adminTable.css" rel="stylesheet">
+
+    <title>Admin center</title>
+</head>
+<body>
+<div id="wrap" class="main-page">
+    <div th:if="${natriumAsc} != null">
+        <div th:replace="Admin/admin_nav :: navFragment"></div>
+        <header th:replace="Admin/admin_infoHeader :: headerFragment"></header>
+
+        <div class="center-table">
+            <table id="foo-table" class="table table-bordered" style="table-layout: fixed;">
+                <thead>
+                <tr>
+                    <th colspan="7" style="vertical-align: middle; text-align: center; font-weight: bold;">저염식이 (1 = 입력)</th>
+                </tr>
+                <tr>
+                    <th rowspan="2" style="vertical-align: middle; text-align: center">주차</th>
+                    <th rowspan="2" style="vertical-align: middle; text-align: center">요일</th>
+                    <th rowspan="2" style="vertical-align: middle; text-align: center">식사시간</th>
+                    <th colspan="4" style="vertical-align: middle; text-align: center">염도</th>
+                </tr>
+                <tr>
+                    <th style="text-align: center">식사 안함</th>
+                    <th style="text-align: center">저염식</th>
+                    <th style="text-align: center">보통</th>
+                    <th style="text-align: center">고염식</th>
+                </tr>
+                </thead>
+                <tbody id="history-table-data" style="text-align: center" >
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var weekAsc = /*[[ ${natriumAsc} ]]*/;
+    var weekAvg = /*[[ ${natriumCountListSumLists} ]]*/;
+    /*]]*/
+
+    if(weekAsc.length == 0)
+    {
+        var Item = "<tr>";
+        Item += "<td colspan='7' style='background: #FFFFFF'>" + "데이터 없음" + "</td>";
+        Item += "</tr>";
+        $('#history-table-data').append(Item);
+    }
+
+    var weekAscCount = 0;
+    var weekAvgCount = 0;
+    for(i=1; i<=24; i++)
+    {
+        for(j=0; j<7; j++)
+        {
+            if(i%2 == 0)
+                var Item = "<tr class='odd-tr'>";
+            else
+                var Item = "<tr class='even-tr'>";
+            if(j == 0)
+            {
+                Item += "<td rowspan='22' style='vertical-align: middle'>" + i + "주차" +"</td>";
+            }
+
+            var weekText = ['월', '화', '수', '목', '금', '토', '일'];     //월요일부터 표시해주는 배열
+            Item += "<td rowspan='3' style='vertical-align: middle;'>" + weekText[j] +"</td>";
+
+            var day = new Date(weekAsc[weekAscCount].pk.date.substr(0, 4), weekAsc[weekAscCount].pk.date.substr(5, 2)-1, weekAsc[weekAscCount].pk.date.substr(8, 2)).getDay();
+            var week = ['일', '월', '화', '수', '목', '금', '토'];     //날짜와 요일을 매핑하는 배열
+            var dayLabel = week[day];
+
+            if(weekAsc[weekAscCount].week == i && weekText[j] == dayLabel.toString())
+            {
+                Item += "<td>" + "아침" + "</td>";
+                switch(weekAsc[weekAscCount].morning)
+                {
+                    case 0:
+                        Item += "<td>" + "1" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        break;
+                    case 1:
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "1" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        break;
+                    case 2:
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "1" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        break;
+                    case 3:
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "1" + "</td>";
+                        break;
+                }
+                Item += "</tr>";
+
+                if(i%2 == 0)
+                    Item += "<tr class='odd-tr'><td>" + "점심" + "</td>";
+                else
+                    Item += "<tr class='even-tr'><td>" + "점심" + "</td>";
+                switch(weekAsc[weekAscCount].lunch)
+                {
+                    case 0:
+                        Item += "<td>" + "1" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        break;
+                    case 1:
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "1" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        break;
+                    case 2:
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "1" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        break;
+                    case 3:
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "1" + "</td>";
+                        break;
+                }
+                Item += "</tr>";
+
+                if(i%2 == 0)
+                    Item += "<tr class='odd-tr'><td>" + "저녁" + "</td>";
+                else
+                    Item += "<tr class='even-tr'><td>" + "저녁" + "</td>";
+                switch(weekAsc[weekAscCount].dinner)
+                {
+                    case 0:
+                        Item += "<td>" + "1" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        break;
+                    case 1:
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "1" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        break;
+                    case 2:
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "1" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        break;
+                    case 3:
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "1" + "</td>";
+                        break;
+                }
+                Item += "</tr>";
+
+                weekAscCount++;
+                if(weekAscCount >= weekAsc.length)
+                    weekAscCount--;
+            }
+            else
+            {
+                Item += "<td>" + "아침" + "</td>";
+                for(k=0; k<4; k++) Item += "<td>" + "" + "</td>";
+                Item += "</tr>";
+
+                if(i%2 == 0)
+                    Item += "<tr class='odd-tr'>";
+                else
+                    Item += "<tr class='even-tr'>";
+                Item += "<td>" + "점심" + "</td>";
+                for(k=0; k<4; k++) Item += "<td>" + "" + "</td>";
+                Item += "</tr>";
+
+                if(i%2 == 0)
+                    Item += "<tr class='odd-tr'>";
+                else
+                    Item += "<tr class='even-tr'>";
+                Item += "<td>" + "저녁" + "</td>";
+                for(k=0; k<4; k++) Item += "<td>" + "" + "</td>";
+                Item += "</tr>";
+            }
+
+            if(j==6)
+            {
+                if(i%2 == 0)
+                    Item += "<tr class='odd-tr'>";
+                else
+                    Item += "<tr class='even-tr'>";
+                Item += "<td colspan='2'>" + i + "주차 총합" + "</td>";
+
+                Item +="<td>" + weekAvg[i-1].noneCount + "</td>";
+                Item +="<td>" + weekAvg[i-1].lowCount + "</td>";
+                Item +="<td>" + weekAvg[i-1].mediumCount + "</td>";
+                Item +="<td>" + weekAvg[i-1].highCount + "</td>";
+
+                Item += "</tr>";
+            }
+
+            $('#history-table-data').append(Item);
+        }
+    }
+
+    var Item = "<tr class='allRecord'>";
+    Item += "<td colspan='3'>모든 주차 총합</td>";
+
+    var sum1 = 0;
+    var sum2 = 0;
+    var sum3 = 0;
+    var sum4 = 0;
+
+    for(i=0; i<weekAvg.length;i++)
+    {
+        sum1 += weekAvg[i].noneCount;
+        sum2 += weekAvg[i].lowCount;
+        sum3 += weekAvg[i].mediumCount;
+        sum4 += weekAvg[i].highCount;
+    }
+    Item += "<td>" + sum1 + "</td>";
+    Item += "<td>" + sum2 + "</td>";
+    Item += "<td>" + sum3 + "</td>";
+    Item += "<td>" + sum4 + "</td>";
+
+    Item += "</tr>";
+    $('#history-table-data').append(Item);
+
+</script>
+</body>
+</html>

@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
 import withus.configuration.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;

@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css"/>
+<!--    <link rel="stylesheet" htre="https://cdn.datatables.net/rowgroup/1.1.2/css/rowGroup.dataTables.min.css"/>-->
     <script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css">
@@ -17,14 +18,14 @@
     <title>Admin center</title>
 </head>
 <style>
-    th{text-align: center}
-
+    th {
+        text-align: center
+    }
 </style>
 <body style="overflow: auto">
 <div th:replace="Admin/admin_nav :: navFragment"></div>
 <div id="wrap" class="main-page">
-
-    <h4>도우미 연결 요청 기록 (위더스랑)</h4>
+    <h4>도우미 연결 요청 기록 (환자용 계정)</h4>
 
     <div class="help-table">
         <div style="text-align: center">
@@ -33,25 +34,24 @@
             <button class="select-month" id="nextMonth" onclick="nextMonth()">></button>
         </div>
 
-        <table id="foo-table" class="table table-striped table-bordered" style="width:100%; text-align: center">
+        <table id="foo-table"   class="table table-striped table-bordered" style="width:100%; text-align: center">
             <thead>
-            <tr><th>날짜</th><th>도우미 요청 연결 시간</th><th>이름</th> <th>아이디</th>  <th>연락처</th> <th>보호자 연락처</th> <th>위더스랑 도우미 요청 코드</th></tr>
+            <tr><th>날짜</th><th>도우미 요청 연결 시간</th><th>이름</th> <th>아이디</th>  <th>본인 연락처</th> <th>보호자 연락처</th></tr>
             </thead>
             <tbody>
-            <tr th:each="helpRequestAsc : ${helpRequestAsc}">
-                <td th:text="${#temporals.format(helpRequestAsc.requestDateTime,'YYYY년 MM월 dd일')}">날짜</td>
-                <td th:text="${#temporals.format(helpRequestAsc.requestDateTime,'HH시 mm분 ss초')}">시간</td>
-                <td th:text="${helpRequestAsc.name}">이름</td>
-                <td th:text="${helpRequestAsc.userId}">아이디</td>
-                <td th:text="${helpRequestAsc.contact}">전화번</td>
-                <td th:text="${helpRequestAsc.caregiverContact} == null ? '' : ${helpRequestAsc.caregiverContact}">보호자 연락처</td>
-                <td th:text="${helpRequestAsc.helpCode}">위더스랑 도우미 요청 코드</td>
+            <tr th:each="patientHelpRequestDTO : ${patientHelpRequestDTOList}">
+                <td th:text="${#temporals.format(patientHelpRequestDTO.requestDate, 'YYYY년 MM월 dd일')}">날짜</td>
+                <td th:text="${#temporals.format(patientHelpRequestDTO.requestTime, 'HH시 mm분 ss초')}">시간</td>
+                <td th:text="${patientHelpRequestDTO.name}">이름</td>
+                <td th:text="${patientHelpRequestDTO.id}">아이디</td>
+                <td th:text="${patientHelpRequestDTO.contact}">본인 연락처</td>
+                <td th:text="${patientHelpRequestDTO.caregiverContact}">보호자 연락처</td>
+
             </tr>
             </tbody>
         </table>
     </div>
 </div>
-
 </body>
 <script th:inline="javascript">
 
@@ -118,8 +118,6 @@
         var table = $('#foo-table').DataTable({
             dom: "t<\"col-sm-6\"f><\"col-sm-6\"p>",
             "pageLength": 15,
-            // scrollY:        '50vh',
-            // scrollCollapse: true,
         });
 
         table

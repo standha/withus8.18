@@ -39,6 +39,7 @@ public class CenterController extends BaseController {
     private final HelperRequestService helperRequestService;
 
     private final HomeService homeService;
+
     @Autowired
     public CenterController(AuthenticationFacade authenticationFacade, HomeService homeService, UserService userService, GoalService goalService, CountService countService, HelperRequestService helperRequestService) {
         super(userService, authenticationFacade);
@@ -53,7 +54,7 @@ public class CenterController extends BaseController {
         User user = getUserAndDate();
         ModelAndView modelAndView = new ModelAndView();
 
-        logger.info("id:{}, url:{}, type:{}, level:{}, week:{}", user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek());
+        logger.info("id:{}, url:{}, type:{}, level:{}, week:{}, userRecordDate:{}", user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek(), user.getUserRecordDate());
 
         if ((user.getType() == Type.CAREGIVER) && (getCaretaker() == null)) {
             modelAndView.addObject("error", true);
@@ -142,6 +143,7 @@ public class CenterController extends BaseController {
                 modelAndView.addObject("user", user);
             }
         }
+
         return modelAndView;
     }
 

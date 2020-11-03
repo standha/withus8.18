@@ -16,6 +16,7 @@ import withus.repository.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -54,14 +55,15 @@ public class UserService implements UserDetailsService {
     @Nullable
     public User getUserByIdAndDate(String id) {
         User user =userRepository.findByUserId(id).orElse(null);
-        user.setUserRecordDate(LocalDate.now());
+        user.setUserRecordDate(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES));
         userRepository.saveAndFlush(user);
+
         return user;
     }
 
     @Nullable
     public User getUserById(String id) {
-        User user =userRepository.findByUserId(id).orElse(null);
+        User user = userRepository.findByUserId(id).orElse(null);
         return user;
     }
 
@@ -145,6 +147,11 @@ public class UserService implements UserDetailsService {
     @Nullable
     public List<User> getPatient(User.Type type) {
         return userRepository.findByType(type);
+    }
+
+    @Nullable
+    public List<User> getPatientLimit(User.Type type, int limit_week, int limit_level) {
+        return userRepository.findByTypeAndWeekLessThanAndLevelLessThan(type, limit_week, limit_level);
     }
 
     @Nullable

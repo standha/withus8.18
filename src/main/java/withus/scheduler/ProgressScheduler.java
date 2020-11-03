@@ -33,7 +33,7 @@ public class ProgressScheduler {
     public void weekAutoIncrement() {
         List<User> allPatients = userService.getPatient(User.Type.PATIENT);
         for (User user : allPatients) {
-            if(user.getWeek() <= 24) {
+            if (user.getWeek() <= 24) {
                 logger.info("ASIS id:{}, type:{}, week:{}", user.getUserId(), user.getType(), user.getWeek());
 
                 user.setWeek(user.getWeek() + 1);

@@ -7,7 +7,7 @@
 			<pattern>${LOG_PATTERN}</pattern>
 		</encoder>
 		<filter class="withus.configuration.LevelEqualOrAboveFilter">
-			<level>DEBUG</level>
+			<level>INFO</level>
 			<onMatch>ACCEPT</onMatch>
 			<onMismatch>DENY</onMismatch>
 		</filter>
@@ -19,7 +19,7 @@
 			<pattern>${LOG_PATTERN}</pattern>
 		</encoder>
 		<filter class="withus.configuration.LevelEqualOrAboveFilter">
-			<level>DEBUG</level>
+			<level>INFO</level>
 			<onMatch>ACCEPT</onMatch>
 			<onMismatch>DENY</onMismatch>
 		</filter>

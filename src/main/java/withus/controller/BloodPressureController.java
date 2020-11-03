@@ -99,14 +99,17 @@ public class BloodPressureController extends BaseController {
         tbl_blood_pressure_pulse.setPk(new RecordKey(user.getUserId(), LocalDate.now()));
         tbl_blood_pressure_pulse.setWeek(user.getWeek());
         Result.Code code;
-        Tbl_blood_pressure_pulse seved = null;
+        Tbl_blood_pressure_pulse saved = null;
 
         try {
-            if(user.getType() == User.Type.PATIENT){
-            seved = bloodPressureService.upsertBloodPressureRecord(tbl_blood_pressure_pulse);
-            code = Result.Code.OK;
-            }else
-                throw new IllegalArgumentException("Caregiver try input data , [warn]");
+            if (user.getType() == User.Type.PATIENT && user.getWeek() != 25) {
+                saved = bloodPressureService.upsertBloodPressureRecord(tbl_blood_pressure_pulse);
+                code = Result.Code.OK;
+            } else if (user.getWeek() == 25) {
+                throw new IllegalStateException("25 Weeks User try input data [warn]");
+            } else {
+                throw new IllegalStateException("Caregiver try input data [warn]");
+            }
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
@@ -114,7 +117,7 @@ public class BloodPressureController extends BaseController {
 
         return Result.<Tbl_blood_pressure_pulse>builder()
                 .code(code)
-                .data(seved)
+                .data(saved)
                 .build();
     }
 }

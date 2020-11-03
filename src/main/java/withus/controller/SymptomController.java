@@ -70,15 +70,20 @@ public class SymptomController extends BaseController {
         User user = getUser();
         List<Tbl_symptom_log> symtomHistory;
         symtomHistory = symptomService.getSymptomRecord(getConnectId(), -1);
+
         logger.info("id:{}, type:{}, level:{}, week:{} ,symptom_record_count:{}", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), symtomHistory.size());
+
         modelAndView.addObject("symptom", symtomHistory);
         modelAndView.addObject("previousUrl", "/symptom");
+
         if (user.getType() == User.Type.PATIENT) {
             Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
+
         modelAndView.addObject("type", user.getType());
         modelAndView.addObject("week", user.getWeek());
+
         return modelAndView;
     }
 
@@ -89,17 +94,22 @@ public class SymptomController extends BaseController {
 
         tbl_symptom_log.setPk(new RecordKey(user.getUserId(), LocalDate.now()));
         tbl_symptom_log.setWeek(user.getWeek());
+
         logger.info("id:{}, date:{}, week:{}, tired:{}, ankle:{}, breath:{}, cough:{}"
                 , tbl_symptom_log.getPk().getId(), tbl_symptom_log.getPk().getDate(), tbl_symptom_log.getWeek(), tbl_symptom_log.getTired(), tbl_symptom_log.getAnkle(), tbl_symptom_log.getOutofbreath(), tbl_symptom_log.getCough());
+
         Result.Code code;
         Tbl_symptom_log saved = null;
+
         try {
-            if(user.getType() == User.Type.PATIENT){
+            if (user.getType() == User.Type.PATIENT && user.getWeek() != 25) {
                 saved = symptomService.upsertSymptomRecord(tbl_symptom_log);
                 code = Result.Code.OK;
-            }else
-                throw new IllegalArgumentException("Caregiver try input data [warn]");
-
+            } else if (user.getWeek() == 25) {
+                throw new IllegalStateException("25 Weeks User try input data [warn]");
+            } else {
+                throw new IllegalStateException("Caregiver try input data [warn]");
+            }
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
             code = Result.Code.ERROR_DATABASE;
