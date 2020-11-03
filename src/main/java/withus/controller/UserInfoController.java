@@ -102,10 +102,20 @@ public class UserInfoController extends BaseController {
                             User existCareGiver = userService.getUserByContact(user.getCaregiver().getContact());
                             if (existCareGiver == null) {
                                 code = Result.Code.ERROR_NO_EXIST_CAREGIVER;
+
+                                logger.info("code:{}", code);
+                            } else if (user.getContact().equals(user.getCaregiver().getContact())){
+                                code = Result.Code.ERROR_SELF_REFERENCE;
+                                logger.info("code:{}", code);
+                            } else if(existCareGiver.getType().equals(User.Type.PATIENT)){
+                                code = Result.Code.ERROR_PATIENT_REFERENCE;
+                                logger.info("code:{}", code);
                             } else {
                                 user.setCaregiver(existCareGiver);
                                 savedUser = userService.upsertUser(user);
                                 code = Result.Code.OK;
+
+                                logger.info("code:{}", code);
                             }
                         }
                         break;

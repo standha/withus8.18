@@ -1,14 +1,14 @@
 server:
-  port: 80
+  port: 8080
   shutdown: graceful
 
 spring:
   application.name: withus
 
   datasource:
-    url: jdbc:mysql://127.0.0.1/withus?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://192.168.0.223/withus?serverTimezone=Asia/Seoul
     username: withus
-    password: Withus@12
+    password: withus
     driver-class-name: com.mysql.cj.jdbc.Driver
     initialization-mode: never
     sql-script-encoding: UTF-8
@@ -21,7 +21,11 @@ spring:
     # because it gives you no benefit at all.
     # https://stackoverflow.com/a/22977693/1986241
     show-sql: true
-
     hibernate:
       # ex) ddl-auto: none, create-drop, create, update, validate
-      ddl-auto: validate
+      ddl-auto: update
+    properties:
+      hibernate:
+        format-sql: true
+        use_sql_comments: true
+        ddl-auto: update
