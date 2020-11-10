@@ -708,9 +708,9 @@ function requestNextByCode(toSkipRendering, currentCode, nextCode, ...codesToSav
 }
 
 /**
+ * @param {string} answerButtonContent
  * @param {string} answerButtonCode
  * @param {string} answerButtonNextCode
- * @param {string} answerButtonContent
  * @param {string} chatBalloonCode
  * @param {boolean} toSkipRendering 실제 UI 업데이트를 무시할지 여부
  */

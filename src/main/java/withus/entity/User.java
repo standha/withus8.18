@@ -74,6 +74,7 @@ public class User implements Serializable, UserDetails {
     @Getter
     private String appToken;
 
+    @EqualsAndHashCode.Include
     @Column(columnDefinition = "VARCHAR(16) NOT NULL", length = 16)
     @Enumerated(EnumType.STRING)
     @Getter
