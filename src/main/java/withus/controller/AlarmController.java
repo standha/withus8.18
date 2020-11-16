@@ -162,7 +162,7 @@ public class AlarmController extends BaseController {
         tbl_medication_record.setPk(new RecordKey(user.getUserId(), LocalDate.now()));
         tbl_medication_record.setWeek(user.getWeek());
 
-        logger.info("id:{},week:{}", user.getUserId(), user.getWeek());
+        logger.info("id:{}, week:{}", user.getUserId(), user.getWeek());
 
         Result.Code code;
         Tbl_medication_record saved = null;
