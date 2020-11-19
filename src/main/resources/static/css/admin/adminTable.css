@@ -26,3 +26,59 @@ h4{ font-weight: bold; padding-left: 15px; }
 .allRecord { background: #b4b4b4; color: #000000; font-weight: bold; }
 .odd-tr { background: #ffffff; }
 .even-tr { background: #dedede; }
+
+/*엑셀 다운 버튼*/
+.btn__excel {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    float: right;
+    padding: 10px;
+    margin: 10px 15px;
+    border: 1px dotted black;
+    background: white;
+}
+
+/*홈화면 헤더*/
+.home-header{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 5px 3px;
+}
+
+.home-table__div{
+    width:50%;
+}
+
+.home-table__div:last-child{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 10px;
+}
+
+/*도우미 연결 요청 기록 헤더*/
+.helper-header{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 5px 3px;
+}
+
+.helper-header__div{
+    width:33%;
+}
+
+.helper-header__div:nth-child(2){
+    padding-top: 5px;
+}
+
+.helper-header__div:last-child{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 15px;
+}
