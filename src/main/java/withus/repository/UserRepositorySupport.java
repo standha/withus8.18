@@ -193,6 +193,7 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .leftJoin(hp).on(hp.pk.id.eq(user.caregiver.userId))
                 .orderBy(hp.pk.date.desc())
                 .orderBy(hp.pk.time.desc())
+                .where(hp.pk.id.isNotNull())
                 .fetch();
 
         return requestCaregiver;
