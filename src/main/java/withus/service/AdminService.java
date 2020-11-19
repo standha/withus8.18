@@ -1,14 +1,9 @@
 package withus.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import withus.auth.NoOpPasswordEncoder;
 import withus.dto.*;
 import withus.dto.HelpRequest.CaregiverHelpRequestDTO;
 import withus.dto.HelpRequest.PatientHelpRequestDTO;
@@ -21,21 +16,12 @@ import java.util.List;
 @Service
 public class AdminService {
     private final UserRepository userRepository;
-    private final MedicationAlarmRepository medicationAlarmRepository;
-    private final OutPatientVisitAlarmRepository outPatientVisitAlarmRepository;
-    private final GoalRepository goalRepositroy;
-    private final CountRepository countRepository;
 
     private final NatriumRecordRepository natriumRecordRepository;
 
     @Autowired
-    public AdminService(UserRepository userRepository, MedicationAlarmRepository medicationAlarmRepository, OutPatientVisitAlarmRepository outPatientVisitAlarmRepository,
-                        GoalRepository goalRepositroy, CountRepository countRepository, NatriumRecordRepository natriumRecordRepository) {
+    public AdminService(UserRepository userRepository, NatriumRecordRepository natriumRecordRepository) {
         this.userRepository = userRepository;
-        this.goalRepositroy = goalRepositroy;
-        this.medicationAlarmRepository = medicationAlarmRepository;
-        this.outPatientVisitAlarmRepository = outPatientVisitAlarmRepository;
-        this.countRepository = countRepository;
         this.natriumRecordRepository = natriumRecordRepository;
     }
 
@@ -160,8 +146,10 @@ public class AdminService {
                     .highCount(countFoo.apply(natrium_records, finalWeek, "3"))
                     .build();
             natriumCountList.add(natriumCountDTO);
+
             week++;
         }
+
         return natriumCountList;
     }
 }

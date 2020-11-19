@@ -2,6 +2,8 @@ package withus.repository;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 import withus.dto.*;
@@ -14,6 +16,7 @@ import java.util.List;
 
 @Repository
 public class UserRepositorySupport extends QuerydslRepositorySupport {
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
     private final JPAQueryFactory queryFactory;
 
     public UserRepositorySupport(JPAQueryFactory queryFactory) {
@@ -31,6 +34,7 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .orderBy(mr.week.asc())
                 .where(mr.pk.id.eq(userId))
                 .fetch();
+
         return moistureAvg;
     }
 
@@ -41,6 +45,7 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .orderBy(mr.week.asc())
                 .orderBy(mr.pk.date.asc())
                 .fetch();
+
         return moistureAsc;
     }
 
@@ -51,6 +56,7 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .orderBy(log.week.asc())
                 .orderBy(log.pk.date.asc())
                 .fetch();
+
         return symptom;
     }
 
@@ -63,17 +69,18 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .orderBy(log.week.asc())
                 .where(log.pk.id.eq(userId))
                 .fetch();
+
         return symptomAvg;
     }
 
-    public HeaderInfoDTO findHeaderInfo(String userID) {
+    public HeaderInfoDTO findHeaderInfo(String userId) {
         QUser user = QUser.user;
         QTbl_goal goal = QTbl_goal.tbl_goal;
 
         HeaderInfoDTO headerInfo = queryFactory.select(Projections.constructor(HeaderInfoDTO.class, user.name, user.userId, user.birthdate, goal.goal, user.level))
                 .from(user)
                 .leftJoin(goal).on(user.userId.eq(goal.goalId))
-                .where(user.userId.eq(userID))
+                .where(user.userId.eq(userId))
                 .fetchFirst();
 
         return headerInfo;
@@ -88,6 +95,7 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .where(mr.finished.eq(true))
                 .where(mr.pk.id.eq(userId))
                 .fetch();
+
         return pillSum;
     }
 
@@ -98,6 +106,7 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .orderBy(mr.week.asc())
                 .orderBy(mr.pk.date.asc())
                 .fetch();
+
         return pillAsc;
     }
 
@@ -110,6 +119,7 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .where(er.week.eq(er.week))
                 .where(er.pk.id.eq(userId))
                 .fetch();
+
         return exerciseAvg;
     }
 
@@ -120,6 +130,11 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .orderBy(er.week.asc())
                 .orderBy(er.pk.date.asc())
                 .fetch();
+
+        for (Tbl_Exercise_record data : exerciseRecords) {
+            logger.info("[{}] userId:{}, exerciseRecords:{}, week:{}", Thread.currentThread().getStackTrace()[1].getMethodName(), userId, data.getHour() + "-" + data.getMinute(), data.getWeek());
+        }
+
         return exerciseRecords;
     }
 
@@ -130,6 +145,7 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .orderBy(br.week.asc())
                 .orderBy(br.pk.date.asc())
                 .fetch();
+
         return blood_pressure_pulses;
     }
 
@@ -137,6 +153,7 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
         QWithusHelpRequest wr = QWithusHelpRequest.withusHelpRequest;
         QUser u = QUser.user;
         QUser c = QUser.user.caregiver;
+
         List<HelpRequestDTO> requestAsc = queryFactory.select(Projections.constructor(HelpRequestDTO.class, wr.dateTime, u.name,
                 u.userId, u.contact, c.contact, wr.helpCode))
                 .from(wr)
@@ -144,6 +161,7 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .leftJoin(c).on(u.caregiver.contact.eq(c.contact))
                 .orderBy(wr.dateTime.asc())
                 .fetch();
+
         return requestAsc;
     }
 
@@ -160,6 +178,7 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .orderBy(hp.pk.date.desc())
                 .orderBy(hp.pk.time.desc())
                 .fetch();
+
         return requestPatient;
     }
 
@@ -175,6 +194,7 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .orderBy(hp.pk.date.desc())
                 .orderBy(hp.pk.time.desc())
                 .fetch();
+
         return requestCaregiver;
     }
 
@@ -188,6 +208,7 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .groupBy(tw.week)
                 .orderBy(tw.week.asc())
                 .fetch();
+
         return weightAvgList;
     }
 
@@ -199,6 +220,7 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .orderBy(tw.week.asc())
                 .orderBy(tw.pk.date.asc())
                 .fetch();
+
         return weightsAscList;
     }
 
@@ -210,6 +232,7 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .orderBy(nr.week.asc())
                 .orderBy(nr.pk.date.asc())
                 .fetch();
+
         return natriumAscList;
     }
 
@@ -222,6 +245,7 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .from(bc)
                 .where(bc.key.id.eq(userId))
                 .fetch();
+
         return buttonCountSum;
     }
 
@@ -232,6 +256,7 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .where(bc.key.id.eq(userId))
                 .orderBy(bc.key.week.asc())
                 .fetch();
+
         return buttonCount;
     }
 }
