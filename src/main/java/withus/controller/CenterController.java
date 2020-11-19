@@ -1,17 +1,10 @@
 package withus.controller;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import com.querydsl.core.Tuple;
-import com.google.gson.Gson;
-import org.apache.tomcat.jni.Local;
-import org.apache.tomcat.jni.Time;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,35 +15,24 @@ import withus.entity.*;
 import withus.entity.User.Type;
 import withus.service.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Controller
 public class CenterController extends BaseController {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
     private final GoalService goalService;
     private final CountService countService;
-    private final HelperRequestService helperRequestService;
-
-    private final HomeService homeService;
 
     @Autowired
-    public CenterController(AuthenticationFacade authenticationFacade, HomeService homeService, UserService userService, GoalService goalService, CountService countService, HelperRequestService helperRequestService) {
+    public CenterController(AuthenticationFacade authenticationFacade, UserService userService, GoalService goalService, CountService countService) {
         super(userService, authenticationFacade);
         this.goalService = goalService;
         this.countService = countService;
-        this.helperRequestService = helperRequestService;
-        this.homeService = homeService;
     }
 
     @GetMapping({"/center"})
-    public ModelAndView getMain(HttpServletRequest request, HttpServletResponse response, @RequestParam(required = false) String token) {
+    public ModelAndView getMain(HttpServletRequest request, @RequestParam(required = false) String token) {
         User user = getUserAndDate();
         ModelAndView modelAndView = new ModelAndView();
 
@@ -110,9 +92,11 @@ public class CenterController extends BaseController {
                 List<AllUserDTO> resultList = new ArrayList<>();
                 ArrayList<String> userFin = userService.getAllUserPlz();
 
-                // userFin.forEach((s)-> resultList.add(AllUserDTO.fromString(s)));
-                for (String aUserFin : userFin) {
-                    resultList.add(AllUserDTO.fromString(aUserFin));
+                if (userFin != null) {
+                    // userFin.forEach((s)-> resultList.add(AllUserDTO.fromString(s)));
+                    for (String aUserFin : userFin) {
+                        resultList.add(AllUserDTO.fromString(aUserFin));
+                    }
                 }
 
                 modelAndView.addObject("user", resultList);

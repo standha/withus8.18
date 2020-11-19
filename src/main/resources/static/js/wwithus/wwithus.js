@@ -1,6 +1,6 @@
 
 
-const MESSAGE_INTERVAL_MILLIS = 3000;
+const MESSAGE_INTERVAL_SECONDS = 4 * 1000;
 const GET_FETCH_OPTIONS = {
     method: "GET",
     headers: {
@@ -208,7 +208,7 @@ alt="이미지가 표시되지 않고 있습니다."></a></div>`
     console.log(userType);
     if (chatBalloon.toScheduleForNextChatBalloon && userType === 'PATIENT' )
     {
-        setTimeout(requestNext, MESSAGE_INTERVAL_MILLIS, chatBalloon);
+        setTimeout(requestNext, MESSAGE_INTERVAL_SECONDS, chatBalloon);
     }
 }
 
@@ -276,7 +276,7 @@ function renderButtons(chatBalloon)
             }
         } else {
 
-            const MESSAGE_INTERVAL_MILLIS = 3000;
+            const MESSAGE_INTERVAL_SECONDS = 4 * 1000;
             const GET_FETCH_OPTIONS = {
                 method: "GET",
                 headers: {
@@ -479,7 +479,7 @@ alt="이미지가 표시되지 않고 있습니다."></a></div>`
                 console.log(userType);
                 if (chatBalloon.toScheduleForNextChatBalloon && userType === 'PATIENT' )
                 {
-                    setTimeout(requestNext, MESSAGE_INTERVAL_MILLIS, chatBalloon);
+                    setTimeout(requestNext, MESSAGE_INTERVAL_SECONDS, chatBalloon);
                 }
             }
 

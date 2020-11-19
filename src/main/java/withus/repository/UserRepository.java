@@ -1,7 +1,6 @@
 package withus.repository;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,8 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import withus.entity.User;
-
-import javax.persistence.SqlResultSetMapping;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {

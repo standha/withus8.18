@@ -57,7 +57,7 @@
         <input type="hidden" name ="registrationDateTime" th:value="${user.registrationDateTime}">
         <!-- header -->
         <header>
-            <div class="header-wrap type01" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
+            <div class="header-wrap type01" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and (${week} != 25) and (${week} != 0)">
                 <div class="head">
                     <div onclick="helperRequest()" >
                         <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
@@ -84,7 +84,7 @@
                     </div>
                 </div>
             </div>
-            <div class="header-wrap type01" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
+            <div class="header-wrap type01" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or (${week} == 25) or (${week} == 0)">
                 <div class="head">
                     <div onclick="helperRequest()" >
                         <a class="btn xsm type07" href="tel:010-8454-9186">
@@ -194,7 +194,7 @@
                             <input type="text" id="input6" th:value="${caregiver_contact}" name="caregiver">
                         </div>
                     </div>
-                    <div th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
+                    <div th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and (${week} != 25) and (${week} != 0)">
                         <input type = 'hidden' name = "symptom"           th:value = "${count.symptom}" style = "display:none">
                         <input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
                         <input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">
