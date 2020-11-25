@@ -3,6 +3,7 @@ package withus.scheduler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -29,8 +30,10 @@ public class ProgressScheduler {
     }
 
     //cron = "0 0 0 * * MON"
+    @Async
     @Scheduled(cron = "0 0 0 * * MON")
     public void weekAutoIncrement() {
+        logger.info("Scheduler:{}, ThreadName:{}","WeekIncrement",Thread.currentThread().getName());
         List<User> allPatients = userService.getPatient(User.Type.PATIENT);
         for (User user : allPatients) {
             if (user.getWeek() <= 24) {
@@ -43,9 +46,10 @@ public class ProgressScheduler {
             }
         }
     }
-
+    @Async
     @Scheduled(cron = "0 0 0 * * MON")
     public void resetLevel() {
+        logger.info("Scheduler:{}, ThreadName:{}","ResetLevel",Thread.currentThread().getName());
         List<Tbl_goal> goals = goalService.getAllGoal();
 
         for (Tbl_goal goal : goals) {

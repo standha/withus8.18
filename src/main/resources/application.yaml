@@ -4,7 +4,12 @@ server:
 
 spring:
   application.name: withus
-
+  task:
+    execution:
+      pool:
+        max-size: 20
+        core-size: 10
+      thread-name-prefix: TNP-
   datasource:
     url: jdbc:mysql://127.0.0.1/withus?serverTimezone=Asia/Seoul
     username: withus

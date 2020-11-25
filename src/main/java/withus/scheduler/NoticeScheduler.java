@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -85,8 +86,10 @@ public class NoticeScheduler {
     }
 
     //복약 PUSH 알림
+    @Async
     @Scheduled(cron = "0 * * * * *")
     public void pillNotice() {
+        logger.info("Scheduler:{}, ThreadName:{}","Pill",Thread.currentThread().getName());
         List<String> morningToken = new ArrayList<>();
         List<String> lunchToken = new ArrayList<>();
         List<String> dinnerToken = new ArrayList<>();
@@ -136,8 +139,10 @@ public class NoticeScheduler {
     }
 
     //외래 진료 전날 PUSH 알림cron = "0 0 18 * * *"
+    @Async
     @Scheduled(cron = "0 0 18 * * *")
     public void visitNotice() {
+        logger.info("Scheduler:{}, ThreadName:{}","OutPatient1D",Thread.currentThread().getName());
         List<String> visitToken = new ArrayList<String>();
         LocalDate tomorrow = LocalDate.now().plusDays(1);
         List<Tbl_outpatient_visit_alarm> visits = alarmService.getVisitAlarmOn();
@@ -168,8 +173,10 @@ public class NoticeScheduler {
     }
 
     //외래 진료 2시간전 PUSH알림
+    @Async
     @Scheduled(cron = "0 * * * * *")
     public void visitNotice2() {
+        logger.info("Scheduler:{}, ThreadName:{}","OutPatient2H",Thread.currentThread().getName());
         List<String> visitToken = new ArrayList<String>();
         LocalDateTime now = LocalDateTime.now();
         LocalDate date = now.toLocalDate();
@@ -215,8 +222,10 @@ public class NoticeScheduler {
     }
 
     //위더스랑 1~8주차 PUSH알림 cron = "0 0 8 * * MON,TUE,THU,SAT"
+    @Async
     @Scheduled(cron = "0 0 8 * * MON,TUE,THU,SAT")
     public void withusNotice1() {
+        logger.info("Scheduler:{}, ThreadName:{}","Chat1-8",Thread.currentThread().getName());
         List<String> tokenList = new ArrayList<String>();
         List<User> patients = userService.getPatientToken(User.Type.PATIENT);
 
@@ -237,8 +246,10 @@ public class NoticeScheduler {
     }
 
     //위더스랑 9~24주차 PUSH 알림
+    @Async
     @Scheduled(cron = "0 0 8 * * MON,WED,SAT")
     public void withusNotice2() {
+        logger.info("Scheduler:{}, ThreadName:{}","Chat9-24",Thread.currentThread().getName());
         List<String> tokenList = new ArrayList<String>();
         List<User> patients = userService.getPatientToken(User.Type.PATIENT);
 
@@ -260,8 +271,10 @@ public class NoticeScheduler {
 
     //단일 PUSH cron = "0 0 20 * * *"
     //매일 20시 위더스랑 진도체크 알림
+    @Async
     @Scheduled(cron = "0 0 20 * * *")
     public void noticeRecordAt20() {
+        logger.info("Scheduler:{}, ThreadName:{}","DailyCheck",Thread.currentThread().getName());
         List<User> patients = userService.getAllToken();
         for (User patient : patients) {
             if (patient.getType().equals(User.Type.PATIENT)) {

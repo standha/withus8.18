@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -125,8 +126,10 @@ public class GoalScheduler {
     }
 
     //cron = "0 0 21 * * SUN"
+    @Async
     @Scheduled(cron = "0 0 21 * * SUN")
     public void GoalList() {
+        logger.info("Scheduler:{}, ThreadName:{}","CheckAchievement",Thread.currentThread().getName());
         List<User> users = userService.getPatientLimit(User.Type.PATIENT, 25, 24);
         List<String> noneToken = new ArrayList<>();
         List<String> loseToken = new ArrayList<>();
