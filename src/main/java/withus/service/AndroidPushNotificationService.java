@@ -17,7 +17,7 @@ public class AndroidPushNotificationService {
             "AAAAUpB6NP4:APA91bG6ZzMkBYL3GNlpbh6TQpwGr1sEYMO_UIs2zlz1LbyhoFayyVjEPiYg_DJbO6AdXCEComstld37e66I5IHFR13heumg7zV_B5IOIsqzzgejbBPZGc64AX5Rd3mBOqSb-wV5rfuM";
     private static final String firebase_api_url = "https://fcm.googleapis.com/fcm/send";
 
-    @Async
+
     public CompletableFuture<String> send(HttpEntity<String> entity) {
 
         RestTemplate restTemplate = new RestTemplate();
