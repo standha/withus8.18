@@ -14,7 +14,6 @@ import withus.service.CountService;
 import withus.service.SymptomService;
 import withus.service.UserService;
 
-import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.List;
