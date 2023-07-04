@@ -49,7 +49,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated();
 
 
-        httpSecurity.formLogin()
+        httpSecurity
+                .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login-process")
                 .defaultSuccessUrl("/center", true)

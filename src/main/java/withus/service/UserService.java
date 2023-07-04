@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import withus.auth.NoOpPasswordEncoder;
+import withus.board.DataNotFoundException;
 import withus.dto.MoistureAvgDTO;
 import withus.dto.wwithus.HeaderInfoDTO;
 import withus.entity.*;
@@ -20,6 +21,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -167,5 +169,14 @@ public class UserService implements UserDetailsService {
     @Nullable
     public List<User> getPatientToken(User.Type type) {
         return userRepository.findByAppTokenIsNotNullAndType(type);
+    }
+
+    public User getUserForBoard(String userId) {
+        Optional<User> user = this.userRepository.findByUserId(userId);
+        if (user.isPresent()) {
+            return user.get();
+        } else {
+            throw new DataNotFoundException("userId not found");
+        }
     }
 }
