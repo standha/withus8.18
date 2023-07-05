@@ -1,0 +1,23 @@
+package withus.dto;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
+@Builder
+@Getter
+@Setter
+public class Result<T> {
+    private final Code code;
+    private final T data;
+
+    private Result(Code code, T data) {
+        this.code = code;
+        this.data = data;
+    }
+
+    public enum Code {
+        OK, OK_NULL, ERROR, ERROR_DUPLICATE_ID, ERROR_DUPLICATE_CONTACT, ERROR_NO_EXIST_CAREGIVER, ERROR_DATABASE,
+        ERROR_MODIFYING_NULL, ERROR_NOTHING_TO_DELETE, ERROR_PATIENT_REFERENCE, ERROR_SELF_REFERENCE
+    }
+}

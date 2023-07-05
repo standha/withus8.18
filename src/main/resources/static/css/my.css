@@ -1,0 +1,10 @@
+a {
+    display: block;
+    overflow: hidden;
+    word-break: break-word;
+    line-height: 1.5;
+}
+#imgcontent{line-height: 500px}
+#imgcontent img{vertical-align: middle}
+
+img{vertical-align: middle}

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>위더스</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no">
+    <link th:href="@{/css/reset.css}" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <link th:href="@{/css/layout.css}" rel="stylesheet">
+    <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/symptom/symptom.js}"></script>
+    <script th:src="@{/js/help.js}"></script>
+</head>
+<body>
+<input type="hidden" id="button-count" th:attr="value=@{/button-count}">
+<input type="hidden" id="helper-request" th:attr="value=@{/helper-request}">
+<input type="hidden" id="symptom-history-get-action" th:attr="value=@{/symptom-all-history}">
+<script>
+    function check_radio(div)
+    {
+        switch(div.id){
+            case "breathYes":
+                if(document.getElementById('breathYes').className === "rdo-box"){
+                    document.getElementById('breathYes').className = "rdo-box checked";
+                    document.getElementById('breathNo').className = "rdo-box";
+                    document.getElementById("rdo1").setAttribute("checked", "");
+                    document.getElementById("rdo2").removeAttribute("checked");
+                }
+                break;
+            case "breathNo":
+                if(document.getElementById('breathNo').className === "rdo-box"){
+                    document.getElementById('breathNo').className = "rdo-box checked";
+                    document.getElementById('breathYes').className = "rdo-box";
+                    document.getElementById("rdo2").setAttribute("checked", "");
+                    document.getElementById("rdo1").removeAttribute("checked");
+                }
+                break;
+
+            case "tiredYes":
+                if(document.getElementById('tiredYes').className === "rdo-box"){
+                    document.getElementById('tiredYes').className = "rdo-box checked";
+                    document.getElementById('tiredNo').className = "rdo-box";
+                    document.getElementById("rdo3").setAttribute("checked", "");
+                    document.getElementById("rdo4").removeAttribute("checked");
+                }
+                break;
+            case "tiredNo":
+                if(document.getElementById('tiredNo').className === "rdo-box"){
+                    document.getElementById('tiredNo').className = "rdo-box checked";
+                    document.getElementById('tiredYes').className = "rdo-box";
+                    document.getElementById("rdo4").setAttribute("checked", "");
+                    document.getElementById("rdo3").removeAttribute("checked");
+                }
+                break;
+
+            case "ankleYes":
+                if(document.getElementById('ankleYes').className === "rdo-box"){
+                    document.getElementById('ankleYes').className = "rdo-box checked";
+                    document.getElementById('ankleNo').className = "rdo-box";
+                    document.getElementById("rdo5").setAttribute("checked", "");
+                    document.getElementById("rdo6").removeAttribute("checked");
+                }
+                break;
+            case "ankleNo":
+                if(document.getElementById('ankleNo').className === "rdo-box"){
+                    document.getElementById('ankleNo').className = "rdo-box checked";
+                    document.getElementById('ankleYes').className = "rdo-box";
+                    document.getElementById("rdo6").setAttribute("checked", "");
+                    document.getElementById("rdo5").removeAttribute("checked");
+                }
+                break;
+
+            case "coughYes":
+                if(document.getElementById('coughYes').className === "rdo-box"){
+                    document.getElementById('coughYes').className = "rdo-box checked";
+                    document.getElementById('coughNo').className = "rdo-box";
+                    document.getElementById("rdo7").setAttribute("checked", "");
+                    document.getElementById("rdo8").removeAttribute("checked");
+                }
+                break;
+            case "coughNo":
+                if(document.getElementById('coughNo').className === "rdo-box"){
+                    document.getElementById('coughNo').className = "rdo-box checked";
+                    document.getElementById('coughYes').className = "rdo-box";
+                    document.getElementById("rdo8").setAttribute("checked", "");
+                    document.getElementById("rdo7").removeAttribute("checked");
+                }
+                break;
+        }
+    }
+</script>
+<div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
+    <input type = 'hidden' name = "symptom"           th:value = "${count.symptom}" style = "display:none">
+    <input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
+    <input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">
+    <input type = 'hidden' name = "disease"           th:value = "${count.diseaseInfo}" style = "display:none">
+    <input type = 'hidden' name = "exercise"          th:value = "${count.exercise}" style = "display:none">
+    <input type = 'hidden' name = "goal"              th:value = "${count.goal}" style = "display:none">
+    <input type = 'hidden' name = "helper"            th:value = "${count.helper}" style = "display:none">
+    <input type = 'hidden' name = "level"             th:value = "${count.level}" style = "display:none">
+    <input type = 'hidden' name = "natriumMoisture"   th:value = "${count.natriumMoisture}" style = "display:none">
+    <input type = 'hidden' name = "weight"            th:value = "${count.weight}" style = "display:none">
+    <input type = 'hidden' name = "withusRang"        th:value = "${count.withusRang}" style = "display:none">
+</div>
+<header>
+    <div class="header-wrap type01">
+        <div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
+            <div onclick="helperRequest()" >
+                <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <span class="ico-call" ></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <h2>
+                <span class="ico-symptom-s"></span>
+                <span>증상일지</span>
+            </h2>
+        </div>
+        <div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
+            <div onclick="helperRequest()" >
+                <a class="btn xsm type07" href="tel:010-8454-9186">
+                    <span class="ico-call" ></span>
+                    <span class="txt-rt">도우미</span>
+                </a>
+            </div>
+            <h2>
+                <span class="ico-symptom-s"></span>
+                <span>증상일지</span>
+            </h2>
+        </div>
+    </div>
+</header>
+<!-- TODO: 보호자일 경우 immutable 하도록 -->
+<form id="symptom-form" th:action="@{/symptom}" onsubmit="return onFormSubmission(this);">
+
+    <div class="container" id="content" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
+        <div class="cont-wrap type01">
+            <div class="insert-wrap">
+                <div class="daily-box">
+                    <div class="daily-tit">
+                        <span class="ico-daily1"></span>
+                        <span class="tit">쉬운 활동이나 휴식중에도 숨이차다</span>
+                    </div>
+                    <div class="rdo-wrap grid2 type04">
+                        <div th:if="${breath == 1}" class="rdo-box checked" id="breathYes" onclick="check_radio(this)">
+                            <span class="rdo-mark">
+                                <input type="radio" value = 1 name="breath" id="rdo1" checked>
+                            </span>
+                            <label for="rdo1">예</label>
+                        </div>
+                        <div th:unless="${breath == 1}" class="rdo-box" id="breathYes" onclick="check_radio(this)">
+                            <span class="rdo-mark">
+                                <input type="radio" value = 1 name="breath" id="rdo1">
+                            </span>
+                            <label for="rdo1">예</label>
+                        </div>
+                        <div th:if="${breath == 0}" class="rdo-box checked"  id="breathNo"  onclick="check_radio(this)">
+                            <span class="rdo-mark">
+                                <input type="radio" value = 0 name="breath" id="rdo2" checked>
+                            </span>
+                            <label for="rdo2">아니오</label>
+                        </div>
+                        <div th:unless="${breath == 0}" class="rdo-box"  id="breathNo"  onclick="check_radio(this)">
+                            <span class="rdo-mark">
+                                <input type="radio" value = 0 name="breath" id="rdo2">
+                            </span>
+                            <label for="rdo2">아니오</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="daily-box">
+                    <div class="daily-tit">
+                        <span class="ico-daily2"></span>
+                        <span class="tit">피곤하고 쉽게 지친다</span>
+                    </div>
+                    <div class="rdo-wrap grid2 type04">
+                        <div th:if="${tired == 1}" class="rdo-box checked" id="tiredYes" onclick="check_radio(this)">
+                            <span class="rdo-mark">
+                                <input type="radio" name="tired" value = 1 id="rdo3" checked>
+                            </span>
+                            <label for="rdo3">예</label>
+                        </div>
+                        <div th:unless="${tired == 1}" class="rdo-box" id="tiredYes" onclick="check_radio(this)">
+                            <span class="rdo-mark">
+                                <input type="radio" name="tired" value = 1 id="rdo3">
+                            </span>
+                            <label for="rdo3">예</label>
+                        </div>
+                        <div th:if="${tired == 0}" class="rdo-box checked" id="tiredNo" onclick="check_radio(this)">
+                            <span class="rdo-mark">
+                                <input type="radio" name="tired" value = 0 id="rdo4" checked>
+                            </span>
+                            <label for="rdo4">아니오</label>
+                        </div>
+                        <div th:unless="${tired == 0}" class="rdo-box" id="tiredNo" onclick="check_radio(this)">
+                            <span class="rdo-mark">
+                                <input type="radio" name="tired" value = 0 id="rdo4">
+                            </span>
+                            <label for="rdo4">아니오</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="daily-box">
+                    <div class="daily-tit">
+                        <span class="ico-daily3"></span>
+                        <span class="tit">발목이 붓고 손으로 누르면<br> 자국이 남는다</span>
+                    </div>
+                    <div class="rdo-wrap grid2 type04">
+                        <div  th:if="${ankle == 1}" class="rdo-box checked" id="ankleYes" onclick="check_radio(this)">
+                            <span class="rdo-mark">
+                                <input type="radio" name="ankle" value = 1 id="rdo5" checked>
+                            </span>
+                            <label for="rdo5">예</label>
+                        </div>
+                        <div  th:unless="${ankle == 1}" class="rdo-box" id="ankleYes" onclick="check_radio(this)">
+                            <span class="rdo-mark">
+                                <input type="radio" name="ankle" value = 1 id="rdo5">
+                            </span>
+                            <label for="rdo5">예</label>
+                        </div>
+                        <div  th:if="${ankle == 0}" class="rdo-box checked" id="ankleNo" onclick="check_radio(this)">
+                            <span class="rdo-mark">
+                                <input type="radio" name="ankle" value = 0 id="rdo6" checked>
+                            </span>
+                            <label for="rdo6">아니오</label>
+                        </div>
+                        <div  th:unless="${ankle == 0}" class="rdo-box" id="ankleNo" onclick="check_radio(this)">
+                            <span class="rdo-mark">
+                                <input type="radio" name="ankle" value = 0 id="rdo6">
+                            </span>
+                            <label for="rdo6">아니오</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="daily-box last">
+                    <div class="daily-tit">
+                        <span class="ico-daily4"></span>
+                        <span class="tit">밤에 계속 기침이 나거나<br> 숨쉬기 불편해서 잠에서 깬다</span>
+                    </div>
+                    <div class="rdo-wrap grid2 type04">
+                        <div  th:if="${cough == 1}" class="rdo-box checked" id="coughYes" onclick="check_radio(this)">
+                            <span class="rdo-mark">
+                                <input type="radio" name="cough" value = 1 id="rdo7" checked>
+                            </span>
+                            <label for="rdo7">예</label>
+                        </div>
+                        <div  th:unless="${cough == 1}" class="rdo-box" id="coughYes" onclick="check_radio(this)">
+                            <span class="rdo-mark">
+                                <input type="radio" name="cough" value = 1 id="rdo7">
+                            </span>
+                            <label for="rdo7">예</label>
+                        </div>
+                        <div th:if="${cough == 0}" class="rdo-box checked" id="coughNo" onclick="check_radio(this)">
+                            <span class="rdo-mark" >
+                                <input type="radio" name="cough" value = 0 id="rdo8" checked>
+                            </span>
+                            <label for="rdo8">아니오</label>
+                        </div>
+                        <div th:unless="${cough == 0}" class="rdo-box" id="coughNo" onclick="check_radio(this)">
+                            <span class="rdo-mark" >
+                                <input type="radio" name="cough" value = 0 id="rdo8">
+                            </span>
+                            <label for="rdo8">아니오</label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="popup pop-type02" id="popup" style="display:none">
+        <div class="pop-wrap">
+            <!-- <a href="javascript:void(0);" class="pop-close"></a> -->
+            <div class="popup-body">
+                <div class="pop-img">
+                    <span class="ico-list"></span>
+                </div>
+                <div class="pop-cont">
+                    <span class="bold">항목 입력을 빠트리셨어요!</span>
+                    <span>입력해주세요!</span>
+                </div>
+            </div>
+            <button class="btn xlg type02" id="okButton">확인</button>
+        </div>
+    </div>
+    <div class="dim-layer" id="dim" style="display:none"></div>
+
+
+
+    <div class="container" id="content2" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
+        <div class="cont-wrap type01">
+            <div class="insert-wrap">
+                <div class="daily-box">
+                    <div class="daily-tit">
+                        <span class="ico-daily1"></span>
+                        <span class="tit">쉬운 활동이나 휴식중에도 숨이차다</span>
+                    </div>
+                    <div class="rdo-wrap grid2 type04">
+                        <div th:if="${breath == 1}" class="rdo-box checked" id="breathYes">
+                            <span class="rdo-mark">
+                                <input type="radio" value = 1 name="breath" id="rdo1" disabled>
+                            </span>
+                            <label for="rdo1">예</label>
+                        </div>
+                        <div th:unless="${breath == 1}" class="rdo-box" id="breathYes">
+                            <span class="rdo-mark">
+                                <input type="radio" value = 1 name="breath" id="rdo1" disabled>
+                            </span>
+                            <label for="rdo1">예</label>
+                        </div>
+                        <div th:if="${breath == 0}" class="rdo-box checked"  id="breathNo">
+                            <span class="rdo-mark">
+                                <input type="radio" value = 0 name="breath" id="rdo2" disabled>
+                            </span>
+                            <label for="rdo2">아니오</label>
+                        </div>
+                        <div th:unless="${breath == 0}" class="rdo-box"  id="breathNo">
+                            <span class="rdo-mark">
+                                <input type="radio" value = 0 name="breath" id="rdo2">
+                            </span>
+                            <label for="rdo2">아니오</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="daily-box">
+                    <div class="daily-tit">
+                        <span class="ico-daily2"></span>
+                        <span class="tit">피곤하고 쉽게 지친다</span>
+                    </div>
+                    <div class="rdo-wrap grid2 type04">
+                        <div th:if="${tired == 1}" class="rdo-box checked" id="tiredYes">
+                            <span class="rdo-mark">
+                                <input type="radio" name="tired" value = 1 id="rdo3" disabled>
+                            </span>
+                            <label for="rdo3">예</label>
+                        </div>
+                        <div th:unless="${tired == 1}" class="rdo-box" id="tiredYes">
+                            <span class="rdo-mark">
+                                <input type="radio" name="tired" value = 1 id="rdo3" disabled>
+                            </span>
+                            <label for="rdo3">예</label>
+                        </div>
+                        <div th:if="${tired == 0}" class="rdo-box checked" id="tiredNo">
+                            <span class="rdo-mark">
+                                <input type="radio" name="tired" value = 0 id="rdo4" disabled>
+                            </span>
+                            <label for="rdo4">아니오</label>
+                        </div>
+                        <div th:unless="${tired == 0}" class="rdo-box" id="tiredNo">
+                            <span class="rdo-mark">
+                                <input type="radio" name="tired" value = 0 id="rdo4" disabled>
+                            </span>
+                            <label for="rdo4">아니오</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="daily-box">
+                    <div class="daily-tit">
+                        <span class="ico-daily3"></span>
+                        <span class="tit">발목이 붓고 손으로 누르면<br> 자국이 남는다</span>
+                    </div>
+                    <div class="rdo-wrap grid2 type04">
+                        <div  th:if="${ankle == 1}" class="rdo-box checked" id="ankleYes">
+                            <span class="rdo-mark">
+                                <input type="radio" name="ankle" value = 1 id="rdo5" disabled>
+                            </span>
+                            <label for="rdo5">예</label>
+                        </div>
+                        <div  th:unless="${ankle == 1}" class="rdo-box" id="ankleYes">
+                            <span class="rdo-mark">
+                                <input type="radio" name="ankle" value = 1 id="rdo5" disabled>
+                            </span>
+                            <label for="rdo5">예</label>
+                        </div>
+                        <div  th:if="${ankle == 0}" class="rdo-box checked" id="ankleNo">
+                            <span class="rdo-mark">
+                                <input type="radio" name="ankle" value = 0 id="rdo6" disabled>
+                            </span>
+                            <label for="rdo6">아니오</label>
+                        </div>
+                        <div  th:unless="${ankle == 0}" class="rdo-box" id="ankleNo">
+                            <span class="rdo-mark">
+                                <input type="radio" name="ankle" value = 0 id="rdo6" disabled>
+                            </span>
+                            <label for="rdo6">아니오</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="daily-box last">
+                    <div class="daily-tit">
+                        <span class="ico-daily4"></span>
+                        <span class="tit">밤에 계속 기침이 나거나<br> 숨쉬기 불편해서 잠에서 깬다</span>
+                    </div>
+                    <div class="rdo-wrap grid2 type04">
+                        <div  th:if="${cough == 1}" class="rdo-box checked" id="coughYes">
+                            <span class="rdo-mark">
+                                <input type="radio" name="cough" value = 1 id="rdo7" disabled>
+                            </span>
+                            <label for="rdo7">예</label>
+                        </div>
+                        <div  th:unless="${cough == 1}" class="rdo-box" id="coughYes">
+                            <span class="rdo-mark">
+                                <input type="radio" name="cough" value = 1 id="rdo7" disabled>
+                            </span>
+                            <label for="rdo7">예</label>
+                        </div>
+                        <div th:if="${cough == 0}" class="rdo-box checked" id="coughNo">
+                            <span class="rdo-mark" >
+                                <input type="radio" name="cough" value = 0 id="rdo8" disabled>
+                            </span>
+                            <label for="rdo8">아니오</label>
+                        </div>
+                        <div th:unless="${cough == 0}" class="rdo-box" id="coughNo">
+                            <span class="rdo-mark" >
+                                <input type="radio" name="cough" value = 0 id="rdo8" disabled>
+                            </span>
+                            <label for="rdo8">아니오</label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-wrap">
+            <div class="btn-wrap type01" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
+                <input type="submit" class="btn xlg type01">
+            </div>
+            <div class="btn-wrap type01" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
+                <input type="submit" class="btn xlg type02" disabled>
+            </div>
+            <div class="btn-wrap type02" onclick="showHistory();">
+                <span class="btn xlg arrow-type02">
+                    <span>증상 변화 기록</span>
+                    <span class="ico-arrow2"></span>
+                </span>
+            </div>
+        </div>
+    </footer>
+    <!-- // footer -->
+</form>
+
+
+<!--// wrap -->
+
+</body>
+</html>

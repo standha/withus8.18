@@ -1,0 +1,15 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<div id="header">
+	<input type="hidden" id="help-request-url" th:attr="value=@{/home/help-request}">
+	<a th:if="${previousUrl != null}" th:href="${previousUrl}">뒤로가기</a>
+	<button id="helper" onclick="sendHelpRequest();">
+		<img th:src="@{/images/helper.png}"/>
+		<span>도우미</span>
+	</button>
+	<button id="disease-information" onclick="alert('질환정보');">질환정보</button>
+	<button id="user">
+		<a th:href="@{/changeInfo}">
+		<img th:src="@{/images/user.png}"/>
+		</a>
+	</button>
+</div>

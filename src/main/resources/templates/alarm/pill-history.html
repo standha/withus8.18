@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="kr">
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>위더스</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+	<meta name="format-detection" content="telephone=no">
+	<link  th:href="@{/css/jquery-ui.css}" rel="stylesheet">
+	<link th:href="@{/css/reset.css}" rel="stylesheet">
+	<link th:href="@{/css/common.css}" rel="stylesheet">
+	<link th:href="@{/css/layout.css}" rel="stylesheet">
+	<script th:src="@{/js/jquery-1.12.4.min.js}"></script>
+	<script th:src="@{/js/jquery-ui.js}"></script>
+	<script th:src="@{/js/datepicker-ko.js}"></script>
+	<script th:src="@{/js/common.js}"></script>
+	<script th:src="@{/js/help.js}"></script>
+</head>
+<body>
+<div class="skip-navi">
+	<a href="#content">본문 바로가기</a>
+</div>
+<!-- wrap -->
+<input type="hidden" id="button-count" th:attr="value=@{/button-count}">
+<input type="hidden" id="helper-request" th:attr="value=@{/helper-request}">
+
+<div th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${user.week} != 25" >
+	<input type = 'hidden' name = "symptom"           th:value = "${count.symptom}" style = "display:none">
+	<input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
+	<input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">
+	<input type = 'hidden' name = "disease"           th:value = "${count.diseaseInfo}" style = "display:none">
+	<input type = 'hidden' name = "exercise"          th:value = "${count.exercise}" style = "display:none">
+	<input type = 'hidden' name = "goal"              th:value = "${count.goal}" style = "display:none">
+	<input type = 'hidden' name = "helper"            th:value = "${count.helper}" style = "display:none">
+	<input type = 'hidden' name = "level"             th:value = "${count.level}" style = "display:none">
+	<input type = 'hidden' name = "natriumMoisture"   th:value = "${count.natriumMoisture}" style = "display:none">
+	<input type = 'hidden' name = "weight"            th:value = "${count.weight}" style = "display:none">
+	<input type = 'hidden' name = "withusRang"        th:value = "${count.withusRang}" style = "display:none">
+</div>
+
+<div id="wrap" class="insert-page">
+
+	<!-- header -->
+	<header>
+		<div class="header-wrap type01">
+			<div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${user.week} != 25">
+				<div onclick="helperRequest()" >
+					<a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+						<span class="ico-call" ></span>
+						<span class="txt-rt">도우미</span>
+					</a>
+				</div>
+				<h2>
+					<span class="ico-alarm-s"></span>
+					<span>복약</span>
+				</h2>
+			</div>
+			<div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${user.week} == 25">
+				<div onclick="helperRequest()" >
+					<a class="btn xsm type07" href="tel:010-8454-9186">
+						<span class="ico-call" ></span>
+						<span class="txt-rt">도우미</span>
+					</a>
+				</div>
+				<h2>
+					<span class="ico-alarm-s"></span>
+					<span>복약</span>
+				</h2>
+			</div>
+		</div>
+	</header>
+	<!-- // header -->
+
+	<div class="container" id="content">
+		<div class="cont-wrap type01">
+			<!-- 기록이 있는 해당 날짜의 td에 .record-alarm 클래스가 추가되면 디자인추가됨 -->
+			<div id="dateRecord" class="alarm"></div>
+		</div>
+	</div>
+	<!-- // content -->
+
+</div>
+<!--// wrap -->
+
+</body>
+<script th:inline="javascript">
+
+	/*<![CDATA[*/
+	var pillHistory = /*[[ ${pillHistories} ]]*/;
+	/*]]*/
+
+	$.datepicker._generateHTML = (function () {
+		var realGenerateHtml = $.datepicker._generateHTML;
+		return function (instance) {
+			var html = realGenerateHtml.apply(this, arguments), $temp;
+
+			if ( instance.input.is(".alarm") ) {
+				$temp = $("<table></table>").append(html);
+				$temp.find(".ui-datepicker-calendar td a").each(function () {
+					var yy = $(this).parent().data("year"),
+							mm = $(this).parent().data("month"),
+							dd = +$(this).text();
+
+					var monthStr, dayStr;
+					monthStr = (mm+1).toString();
+					if(monthStr.length == 1){
+						monthStr = "0" + monthStr;
+					}
+					dayStr = dd.toString();
+					if(dayStr.length == 1){
+						dayStr = "0" + dayStr;
+					}
+
+					var str = yy.toString() + "-" + monthStr + "-" + dayStr;
+
+					for(i=0; i<pillHistory.length; i++)
+					{
+						if(str == pillHistory[i].pk.date)
+						{
+							$(this).addClass('record-alarm');
+						}
+					}
+				});
+				html = $temp[0].innerHTML;
+			}
+			return html;
+		};
+	})();
+
+	$( function() {
+		$( "#dateRecord" ).datepicker();
+	} );
+</script>
+</html>

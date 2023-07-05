@@ -1,0 +1,191 @@
+package withus.controller;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import withus.auth.AuthenticationFacade;
+import withus.dto.Result;
+import withus.dto.wwithus.AllUserDTO;
+import withus.entity.*;
+import withus.entity.User.Type;
+import withus.service.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Controller
+public class CenterController extends BaseController {
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
+    private final GoalService goalService;
+    private final CountService countService;
+
+    @Autowired
+    public CenterController(AuthenticationFacade authenticationFacade, UserService userService, GoalService goalService, CountService countService) {
+        super(userService, authenticationFacade);
+        this.goalService = goalService;
+        this.countService = countService;
+    }
+
+    @GetMapping({"/center"})
+    public ModelAndView getMain(HttpServletRequest request, @RequestParam(required = false) String token) {
+        User user = getUserAndDate();
+        ModelAndView modelAndView = new ModelAndView();
+
+        logger.info("id:{}, url:{}, type:{}, level:{}, week:{}, userRecordDate:{}", user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek(), user.getUserRecordDate());
+
+        if ((user.getType() == Type.CAREGIVER) && (getCaretaker() == null)) {
+            modelAndView.addObject("error", true);
+            modelAndView.setViewName("LogIn/login");
+
+            logger.info("id:{}, url:{}, type:{}", user.getUserId(), request.getRequestURL(), user.getType());
+        } else {
+            if (user.getAppToken() != null) {
+                if (token != null) {
+                    if (user.getAppToken().equals(token) == false) {
+                        Result.Code code;
+                        user.setAppToken(token);
+
+                        logger.info("id:{}, type:{}, appToken change, appToken:{}", user.getUserId(), user.getType(), user.getAppToken());
+
+                        try {
+                            user = userService.upsertUser(user);
+                            code = Result.Code.OK;
+                        } catch (Exception exception) {
+                            logger.error(exception.getLocalizedMessage(), exception);
+                            code = Result.Code.ERROR_DATABASE;
+                        }
+
+                        Result.<User>builder()
+                                .code(code)
+                                .data(user)
+                                .build();
+                    }
+                }
+            } else {
+                if (token != null) {
+                    Result.Code code;
+                    user.setAppToken(token);
+
+                    logger.info("id:{}, type:{}, appToken change, appToken:{}", user.getUserId(), user.getType(), user.getAppToken());
+
+                    try {
+                        user = userService.upsertUser(user);
+                        code = Result.Code.OK;
+                    } catch (Exception exception) {
+                        logger.error(exception.getLocalizedMessage(), exception);
+                        code = Result.Code.ERROR_DATABASE;
+                    }
+
+                    Result.<User>builder()
+                            .code(code)
+                            .data(user)
+                            .build();
+                }
+            }
+
+            if (user.getType().equals(Type.ADMINISTRATOR)) {
+                List<AllUserDTO> resultList = new ArrayList<>();
+                ArrayList<String> userFin = userService.getAllUserPlz();
+
+                if (userFin != null) {
+                    // userFin.forEach((s)-> resultList.add(AllUserDTO.fromString(s)));
+                    for (String aUserFin : userFin) {
+                        resultList.add(AllUserDTO.fromString(aUserFin));
+                    }
+                }
+
+                modelAndView.addObject("user", resultList);
+                modelAndView.setViewName("Admin/admin_home");
+            } else if (user.getType().equals(Type.PATIENT)) { //환자 로그인 중
+                if (user.getWeek() == 0) {
+                    modelAndView.setViewName("home_0week");
+                } else {
+                    Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+                    modelAndView.setViewName("home");
+                    modelAndView.addObject("count", count);
+                    modelAndView.addObject("type", user.getType());
+                    modelAndView.addObject("week", user.getWeek());
+                }
+            } else {    //보호자 로그인 중
+                if (getCaretaker().getWeek() == 0) {
+                    modelAndView.setViewName("home_0week");
+                } else {
+                    modelAndView.setViewName("home");
+                    modelAndView.addObject("type", user.getType());
+                    modelAndView.addObject("week", getCaretaker().getWeek());
+                }
+            }
+
+            if (user.getType() == Type.CAREGIVER || user.getType() == Type.PATIENT) {
+                modelAndView.addObject("goalNow", getGoalNow(getConnectId()));
+                modelAndView.addObject("level", ViewLevel(user));
+                modelAndView.addObject("user", user);
+            }
+        }
+
+        return modelAndView;
+    }
+
+
+    public Integer ViewLevel(User user) {
+        Integer level = 1;
+
+        switch (user.getType()) {
+            case PATIENT:
+                level = user.getLevel();
+                level = level % 4;
+                break;
+            case CAREGIVER:
+                level = getCaretaker().getLevel();
+                level = level % 4;
+                break;
+        }
+
+        return level;
+    }
+
+    public String getGoalNow(String username) {
+        Integer goalCheck = goalService.getGoalId(username).getGoal();
+        String goalNow = "";
+
+        switch (goalCheck) {
+            case 0:
+                goalNow = "이번주 목표를 설정해봐요!";
+                break;
+            case 1:
+                goalNow = "매일 정해진 시간 약 복용";
+                break;
+            case 2:
+                goalNow = "매일 혈압과 맥박 측정";
+                break;
+            case 3:
+                goalNow = "매일 체중 측정";
+                break;
+            case 4:
+                goalNow = "주 3회 이상 증상일지 기록";
+                break;
+            case 5:
+                goalNow = "매일 증상일지 기록";
+                break;
+            case 6:
+                goalNow = "주 3회 이상 식사 시 염분 측정";
+                break;
+            case 7:
+                goalNow = "매일 식사 시 염분 측정";
+                break;
+            case 8:
+                goalNow = "주 1회, 최소 30분 이상 운동";
+                break;
+            case 9:
+                goalNow = "주 3회, 최소 30분 이상 운동";
+                break;
+        }
+
+        return goalNow;
+    }
+}

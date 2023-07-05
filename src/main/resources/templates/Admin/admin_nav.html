@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr"  th:fragment="navFragment">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .menubar{
+        border:none;
+        border:0px;
+        margin:0px;
+        padding:0px;
+        font: 67.5% "Lucida Sans Unicode", "Bitstream Vera Sans", "Trebuchet Unicode MS", "Lucida Grande", Verdana, Helvetica, sans-serif;
+        font-size:14px;
+        font-weight:bold;
+    }
+
+    .menubar ul{
+        background: rgb(109,109,109);
+        height:50px;
+        list-style:none;
+        margin:0;
+        padding:0;
+    }
+
+    .menubar li{
+        float:left;
+        border-right: 1px solid;
+        padding:0px;
+    }
+
+    .menubar li a{
+        background: rgb(109,109,109);
+        color:#cccccc;
+        display:block;
+        font-weight:normal;
+        line-height:50px;
+        margin:0px;
+        padding:0px 25px;
+        text-align:center;
+        text-decoration:none;
+    }
+
+    .menubar li p{
+        background: rgb(109,109,109);
+        color:#ffffff;
+        display:block;
+        font-weight:bolder;
+        line-height:50px;
+        margin:0px;
+        padding:0px 25px;
+        text-align:center;
+        text-decoration:none;
+    }
+
+    .menubar li a:hover, .menubar ul li:hover a{
+        background: rgb(71,71,71);
+        color:#FFFFFF;
+        text-decoration:none;
+    }
+
+    .menubar li ul{
+        background: rgb(109,109,109);
+        display:none; /* 평상시에는 드랍메뉴가 안보이게 하기 */
+        height:auto;
+        padding:0px;
+        margin:0px;
+        border:0px;
+        position:absolute;
+        width:200px;
+        z-index:200;
+        /*top:1em;
+        /*left:0;*/
+    }
+
+    .menubar li:hover ul{
+        display:block; /* 마우스 커서 올리면 드랍메뉴 보이게 하기 */
+    }
+
+    .menubar li li {
+        background: rgb(109,109,109);
+        display:block;
+        float:none;
+        margin:0px;
+        padding:0px;
+        width:200px;
+        border-bottom: 1px solid;
+    }
+
+    .menubar li:hover li a{
+        background:none;
+    }
+
+    .menubar li ul a{
+        display:block;
+        height:50px;
+        font-size:12px;
+        font-style:normal;
+        margin:0px;
+        padding:0px 10px 0px 15px;
+        text-align:left;
+    }
+
+    .menubar li ul a:hover, .menubar li ul li:hover a{
+        background: rgb(71,71,71);
+        border:0px;
+        color:#ffffff;
+        text-decoration:none;
+    }
+
+    .menubar p{
+        clear:left;
+    }
+</style>
+<body style="overflow:hidden;">
+<div class="menubar">
+    <ul>
+        <li><p>위더스 - 관리자 모드</p></li>
+        <li><a th:href="@{/center}">환자 관리</a></li>
+        <li style="width: 200px;"><a href="#" id="current">도우미 연결 요청 기록</a>
+            <ul>
+                <li><a th:href="@{/admin_patientHelpRequest}">환자용 계정 기록</a></li>
+                <li><a th:href="@{/admin_caregiverHelpRequest}">보호자용 계정 기록</a></li>
+                <li><a th:href="@{/admin_withusHelpRequest}">위더스랑 요청 기록</a></li>
+            </ul>
+        </li>
+        <li><a th:href="@{/admin_dashboard}">대쉬보드</a></li>
+        <div style="float: right;">
+        <li class="nav-item active" style="border-left: 1px solid;">
+            <a class="nav-link" href="#" th:href="@{/logout}">로그아웃</a>
+            <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+                <input hidden type="submit" value="Sign Out"/>
+            </form>
+        </li>
+        </div>
+    </ul>
+</div>
+</body>
+
+</html>
