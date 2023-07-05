@@ -1,6 +1,7 @@
 package withus.board.controller;
 
 import org.springframework.web.servlet.ModelAndView;
+import withus.board.entity.Comment;
 import withus.board.entity.Post;
 import withus.board.form.PostForm;
 import withus.board.service.PostService;
@@ -28,6 +29,8 @@ import withus.service.UserService;
 import org.springframework.data.domain.Page;
 
 import java.security.Principal;
+import java.util.List;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 
 // 수정 기능 구현에 필요한 라이브러리
@@ -61,7 +64,6 @@ public class PostController {
     @GetMapping("/list")
     public String list(Model model, @RequestParam(value="page", defaultValue = "0") int page, @RequestParam(value = "kw", defaultValue = "") String kw){
         Page<Post> paging = this.postService.getList(page, kw);
-
         model.addAttribute("paging", paging);
         model.addAttribute("kw", kw);
         return "board/post_list";
@@ -74,18 +76,18 @@ public class PostController {
         return "board/post_detail";
     }
 
-//    @PreAuthorize("isAuthenticated()")
-//    @GetMapping("/create")
-//    public String postCreate(PostForm postForm) {
-//        return "board/post_form";
-//    }
-
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
-    public String postCreate(Model model) {
-        model.addAttribute("action", "create");
+    public String postCreate() {
         return "board/post_form";
     }
+
+//    @PreAuthorize("isAuthenticated()")
+//    @GetMapping("/create")
+//    public String postCreate(Model model) {
+//        model.addAttribute("action", "create");
+//        return "board/post_form";
+//    }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")

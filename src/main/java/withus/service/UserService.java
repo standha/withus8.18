@@ -4,6 +4,8 @@ import com.querydsl.core.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -52,6 +54,16 @@ public class UserService implements UserDetailsService {
                     return new UsernameNotFoundException(message);
                 }
         );
+    }
+
+    public UserDetails loadUserByUserId(String userId) throws UsernameNotFoundException {
+        Optional<User> _user = this.userRepository.findByUserId(userId);
+        if (_user.isEmpty()) {
+            throw new UsernameNotFoundException("사용자를 찾을 수 없습니다.");
+        }
+        User user = _user.get();
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        return new org.springframework.security.core.userdetails.User(user.getUserId(), user.getPassword(), authorities);
     }
 
     @Nullable

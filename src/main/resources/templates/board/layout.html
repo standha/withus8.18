@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko-kr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -11,7 +11,7 @@
   <title>Withus Board</title>
 </head>
 <body>
-<nav th:replace="~{navbar :: navbarFragment}"></nav>
+<nav th:replace="~{board/navbar :: navbarFragment}"></nav>
 <!-- 기본 템플릿 안에 삽입될 내용 Start -->
 <th:block layout:fragment="content"></th:block>
 <!-- 기본 템플릿 안에 삽입될 내용 End -->

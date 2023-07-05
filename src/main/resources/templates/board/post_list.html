@@ -1,5 +1,5 @@
 <!-- 타임리프의 layout:decorate 속성은 템플릿의 레이아웃(부모 템플릿)으로 사용할 템플릿을 설정한다. 속성의 값인 ~{layout}은 layout.html 파일을 의미한다. -->
-<html layout:decorate="~{layout}">
+<html layout:decorate="~{board/layout}">
 <div layout:fragment="content" class="container my-3">
   <div class="row my-3">
     <div class="col-6">
@@ -42,12 +42,11 @@
         <!--post/detail/과 같은 문자열과 ${post.id}와 같은 자바 객체의 값을 더할 때는 반드시 다음처럼 |과 | 기호로 좌우를 감싸 주어야 한다.-->
         <a th:href="@{|/board/post/detail/${post.id}|}" th:text="${post.subject}"></a>
         <!-- 답변 개수 표시
-             #list.size(이터러블객체)는 이터러블 객체의 사이즈를 반환하는 타임리프의 유틸리티
-        -->
-        <span class="text-danger small ms-2"
-              th:if="${#lists.size(post.commentList) > 0}"
-              th:text="${#lists.size(post.commentList)}">
-        </span>
+        #list.size(이터러블객체)는 이터러블 객체의 사이즈를 반환하는 타임리프의 유틸리티 -->
+<!--        <span class="text-danger small ms-2"-->
+<!--        th:if="${#lists.size(post.commentList) > 0}"-->
+<!--        th:text="${#lists.size(post.commentList)}">-->
+<!--        </span>-->
       </td>
       <td>
         <span th:if="${post.author != null}" th:text="${post.author.userId}"></span>
