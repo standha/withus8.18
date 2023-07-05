@@ -33,4 +33,4 @@ spring:
 
     hibernate:
       # ex) ddl-auto: none, create-drop, create, update, validate
-      ddl-auto: validate
+      ddl-auto: update
