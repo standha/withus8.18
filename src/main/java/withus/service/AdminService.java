@@ -5,6 +5,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import withus.dto.*;
+<<<<<<< HEAD
 import withus.dto.HelpRequest.CaregiverHelpRequestDTO;
 import withus.dto.HelpRequest.PatientHelpRequestDTO;
 import withus.entity.*;
@@ -12,6 +13,19 @@ import withus.repository.*;
 
 import java.util.ArrayList;
 import java.util.List;
+=======
+import withus.dto.HeaderInfoDTO;
+import withus.dto.HelpRequest.CaregiverHelpRequestDTO;
+import withus.dto.HelpRequest.PatientHelpRequestDTO;
+import withus.dto.wwithus.*;
+import withus.entity.*;
+import withus.repository.*;
+
+import java.time.DayOfWeek;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+>>>>>>> 2023-summer-dashboard
 
 @Service
 public class AdminService {
@@ -152,6 +166,41 @@ public class AdminService {
 
         return natriumCountList;
     }
+<<<<<<< HEAD
+=======
+
+    @Nullable
+    public List<UserCountInfoDTO> getUserCountInfo() {
+        List<UserCountInfoDTO> user_count = userRepositorySupport.findUserCountInfo();
+        for (UserCountInfoDTO e : user_count) {
+            DayOfWeek dayOfWeek = e.getUserCount().getDayOfWeek();
+            int dayOfWeekNumber = dayOfWeek.getValue();
+
+        }
+        return user_count;
+    }
+
+    @Nullable
+    public List<UserGenderCountDTO> getUserGenderCountInfo(){
+        List<UserGenderCountDTO> user_gender_count = userRepository.findUserGenderCount();
+        return user_gender_count;
+    }
+
+    public List<UserAgeCountDTO> getUserAgeCountInfo(){
+        List<UserAgeCountDTO> user_age_count = userRepository.findUserAgeCount();
+        return user_age_count;
+    }
+
+    public List<UserRegisterCountDTO> getUserRegisterCountInfo(){
+        List<UserRegisterCountDTO> user_register_count = userRepository.findUserRegisterCount();
+        return user_register_count;
+    }
+
+    public List<UserWeekCountDTO> getUserWeekCountInfo(){
+        List<UserWeekCountDTO> user_week_count = userRepository.findUserWeekCount();
+        return user_week_count;
+    }
+>>>>>>> 2023-summer-dashboard
 }
 
 @FunctionalInterface

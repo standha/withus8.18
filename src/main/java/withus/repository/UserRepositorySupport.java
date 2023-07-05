@@ -9,9 +9,15 @@ import org.springframework.stereotype.Repository;
 import withus.dto.*;
 import withus.dto.HelpRequest.CaregiverHelpRequestDTO;
 import withus.dto.HelpRequest.PatientHelpRequestDTO;
+<<<<<<< HEAD
 import withus.entity.*;
 
 import java.awt.*;
+=======
+import withus.dto.wwithus.UserCountInfoDTO;
+import withus.entity.*;
+
+>>>>>>> 2023-summer-dashboard
 import java.util.List;
 
 @Repository
@@ -86,6 +92,19 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
         return headerInfo;
     }
 
+<<<<<<< HEAD
+=======
+    public List<UserCountInfoDTO> findUserCountInfo() {
+        QUser user = QUser.user;
+
+        List<UserCountInfoDTO> userCountInfo = queryFactory.select(Projections.constructor(UserCountInfoDTO.class, user.registrationDateTime))
+                .from(user)
+                .orderBy(user.registrationDateTime.asc())
+                .fetch();
+        return userCountInfo;
+    }
+
+>>>>>>> 2023-summer-dashboard
     public List<PillSumDTO> findPillSum(String userId) {
         QTbl_medication_record mr = QTbl_medication_record.tbl_medication_record;
         List<PillSumDTO> pillSum = queryFactory.select(Projections.constructor(PillSumDTO.class, mr.week, mr.finished.count()))
@@ -260,5 +279,10 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
 
         return buttonCount;
     }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 2023-summer-dashboard
 }
 

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
@@ -14,12 +15,19 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.security.web.header.Header;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+=======
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.stereotype.Controller;
+>>>>>>> 2023-summer-dashboard
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
 import withus.dto.*;
+<<<<<<< HEAD
 import withus.dto.HelpRequest.CaregiverHelpRequestDTO;
 import withus.dto.HelpRequest.PatientHelpRequestDTO;
 import withus.entity.*;
@@ -27,6 +35,15 @@ import withus.service.*;
 
 import java.time.Month;
 import java.util.ArrayList;
+=======
+import withus.dto.HeaderInfoDTO;
+import withus.dto.HelpRequest.CaregiverHelpRequestDTO;
+import withus.dto.HelpRequest.PatientHelpRequestDTO;
+import withus.dto.wwithus.*;
+import withus.entity.*;
+import withus.service.*;
+
+>>>>>>> 2023-summer-dashboard
 import java.util.List;
 
 @Controller
@@ -68,7 +85,35 @@ public class AdminHomeController extends withus.controller.BaseController {
 
         return mav;
     }
+<<<<<<< HEAD
 
+=======
+    @GetMapping("/admin_dashboard")
+    public ModelAndView viewDashboard() {
+        User user = getUser();
+        if (user.getType() != User.Type.ADMINISTRATOR) {
+            throw new IllegalStateException(user.getUserId() + " is not Admin");
+        }
+
+        List<UserCountInfoDTO> userCountInfo = adminService.getUserCountInfo();
+        ModelAndView mav = new ModelAndView();
+        List<UserGenderCountDTO> userGenderCountInfo = adminService.getUserGenderCountInfo();
+        List<UserAgeCountDTO> userAgeCountInfo = adminService.getUserAgeCountInfo();
+        List<UserRegisterCountDTO> userRegisterCountInfo = adminService.getUserRegisterCountInfo();
+        List<UserWeekCountDTO> userWeekCountInfo = adminService.getUserWeekCountInfo();
+        mav.addObject("admin", user.getUserId());
+        mav.addObject("userCountList", userCountInfo);
+        mav.addObject("userGenderCountList",userGenderCountInfo);
+        mav.addObject("userAgeCountList",userAgeCountInfo);
+        mav.addObject("userRegisterCountList",userRegisterCountInfo);
+        mav.addObject("userWeekCountList",userWeekCountInfo);
+        mav.setViewName("Admin/admin_dashboard");
+
+
+        logger.info("{}", userCountInfo);
+        return mav;
+    }
+>>>>>>> 2023-summer-dashboard
     @GetMapping("/admin_moistureRecord/{userId}")
     public ModelAndView adminMoistureRecord(@PathVariable("userId") String userId) {
         User user = getUser();
