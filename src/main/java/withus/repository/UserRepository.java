@@ -9,10 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-<<<<<<< HEAD
-import withus.entity.User;
-
-=======
 import withus.dto.wwithus.UserAgeCountDTO;
 import withus.dto.wwithus.UserGenderCountDTO;
 import withus.dto.wwithus.UserRegisterCountDTO;
@@ -21,7 +17,6 @@ import withus.entity.User;
 
 import javax.annotation.Nonnull;
 
->>>>>>> 2023-summer-dashboard
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
     @Transactional(readOnly = false)
@@ -71,8 +66,6 @@ public interface UserRepository extends JpaRepository<User, String> {
             " order by u.registration_date_time asc;", nativeQuery = true)
     ArrayList<String> findByAll();
 
-<<<<<<< HEAD
-=======
 
     @Transactional(readOnly = true)
     @Nonnull
@@ -141,5 +134,4 @@ public interface UserRepository extends JpaRepository<User, String> {
             "where week <25 " +
             "GROUP BY week;", nativeQuery = true)
     List<UserWeekCountDTO> findUserWeekCount();
->>>>>>> 2023-summer-dashboard
 }

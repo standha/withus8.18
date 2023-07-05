@@ -11,17 +11,11 @@ spring:
         max-size: 20
         allow-core-thread-timeout: false
       thread-name-prefix: TNP-
-<<<<<<< HEAD
-
-  datasource:
-    url: jdbc:mysql://127.0.0.1/withus?serverTimezone=Asia/Seoul
-=======
   thymeleaf:
     cache: false
 
   datasource:
     url: jdbc:mysql://192.168.4.26/withus?serverTimezone=Asia/Seoul
->>>>>>> 2023-summer-dashboard
     username: withus
     password: Withus@12
     driver-class-name: com.mysql.cj.jdbc.Driver

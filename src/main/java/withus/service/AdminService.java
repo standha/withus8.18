@@ -5,15 +5,6 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import withus.dto.*;
-<<<<<<< HEAD
-import withus.dto.HelpRequest.CaregiverHelpRequestDTO;
-import withus.dto.HelpRequest.PatientHelpRequestDTO;
-import withus.entity.*;
-import withus.repository.*;
-
-import java.util.ArrayList;
-import java.util.List;
-=======
 import withus.dto.HeaderInfoDTO;
 import withus.dto.HelpRequest.CaregiverHelpRequestDTO;
 import withus.dto.HelpRequest.PatientHelpRequestDTO;
@@ -25,7 +16,6 @@ import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
->>>>>>> 2023-summer-dashboard
 
 @Service
 public class AdminService {
@@ -166,8 +156,6 @@ public class AdminService {
 
         return natriumCountList;
     }
-<<<<<<< HEAD
-=======
 
     @Nullable
     public List<UserCountInfoDTO> getUserCountInfo() {
@@ -200,7 +188,6 @@ public class AdminService {
         List<UserWeekCountDTO> user_week_count = userRepository.findUserWeekCount();
         return user_week_count;
     }
->>>>>>> 2023-summer-dashboard
 }
 
 @FunctionalInterface
