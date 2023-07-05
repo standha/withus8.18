@@ -26,6 +26,8 @@ import withus.entity.User;
 
 // 검색 기능 라이브러리
 import withus.board.entity.Comment;
+
+import javax.management.QueryEval;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -37,6 +39,7 @@ import org.springframework.data.jpa.domain.Specification;
 @RequiredArgsConstructor
 @Service
 public class PostService {
+
     private final PostRepository postRepository;
 
     private Specification<Post> search(String kw) {
@@ -75,8 +78,8 @@ public class PostService {
 
         // 게시물을 역순으로 조회하기 위해서는 위와 같이 PageRequest.of 메서드의 세번째 파라미터로 Sort 객체를 전달
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
-
-        return this.postRepository.findAllByKeyword(kw, pageable);
+        Specification<Post> spec = search(kw);
+        return this.postRepository.findAll(spec, pageable);
     }
 
     public Post getPost(Integer id) {

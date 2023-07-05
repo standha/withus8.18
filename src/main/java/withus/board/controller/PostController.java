@@ -1,5 +1,6 @@
 package withus.board.controller;
 
+import org.springframework.web.servlet.ModelAndView;
 import withus.board.entity.Post;
 import withus.board.form.PostForm;
 import withus.board.service.PostService;
@@ -73,10 +74,17 @@ public class PostController {
         return "board/post_detail";
     }
 
+//    @PreAuthorize("isAuthenticated()")
+//    @GetMapping("/create")
+//    public String postCreate(PostForm postForm) {
+//        return "board/post_form";
+//    }
+
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
-    public String postCreate(PostForm postForm) {
-        return "/board/post_form";
+    public String postCreate(Model model) {
+        model.addAttribute("action", "create");
+        return "board/post_form";
     }
 
     @PreAuthorize("isAuthenticated()")

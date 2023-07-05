@@ -25,7 +25,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     // Pageable 객체를 입력으로 받아 Page<Post> 타입 객체를 리턴하는 findAll 메서드를 생성
     // -> Service 수정
     Page<Post> findAll(Pageable pageable);
-
     Page<Post> findAll(Specification<Post> spec, Pageable pageable);
 
     @Query("select "

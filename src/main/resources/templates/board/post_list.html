@@ -3,7 +3,7 @@
 <div layout:fragment="content" class="container my-3">
   <div class="row my-3">
     <div class="col-6">
-      <a th:href="@{/board/post/create}" class="btn btn-primary">질문 등록하기</a>
+      <a th:href="@{/board/post/create}" class="btn btn-primary">글쓰기</a>
     </div>
     <div class="col-6">
       <div class="input-group">
@@ -35,7 +35,7 @@
     -->
     <tr class="text-center" th:each="post, loop : ${paging}">
       <!-- 게시물 일련번호 추가 -->
-      <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
+      <td th:text="${paging.getTotalElements() - (paging.number * paging.size) - loop.index}"></td>
       <!--카테고리값 텍스트로출력-->
       <td><span th:text="${post.category}"></span></td>
       <td class="text-start">
@@ -47,10 +47,10 @@
         <span class="text-danger small ms-2"
               th:if="${#lists.size(post.commentList) > 0}"
               th:text="${#lists.size(post.commentList)}">
-                        </span>
+        </span>
       </td>
       <td>
-        <span th:if="${post.author != null}" th:text="${post.author.username}"></span>
+        <span th:if="${post.author != null}" th:text="${post.author.userId}"></span>
       </td>
       <!-- #temporals.format(날짜객체, 날짜포맷) - 날짜객체를 날짜포맷에 맞게 변환한다. -->
       <td th:text="${#temporals.format(post.createDate, 'yyyy-MM-dd HH:mm')}"></td>
