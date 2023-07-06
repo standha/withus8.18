@@ -78,7 +78,7 @@ public class PostController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
-    public String postCreate() {
+    public String postCreate(PostForm postForm) {
         return "board/post_form";
     }
 
@@ -89,14 +89,14 @@ public class PostController {
 //        return "board/post_form";
 //    }
 
-    @PreAuthorize("isAuthenticated()")
-    @PostMapping("/create")
     // postCreate 메서드의 매개변수를 subject, content 대신 PostForm 객체로 변경
     // @Valid 애너테이션을 적용하면 postForm의 @NotEmpty, @Size 등으로 설정한 검증 기능이 동작
     // BindingResult 매개변수는 @Valid 애너테이션으로 인해 검증이 수행된 결과를 의미하는 객체
     // BindingResult 매개변수는 항상 @Valid 매개변수 바로 뒤에 위치해야 한다.
     // 만약 2개의 매개변수의 위치가 정확하지 않다면 @Valid만 적용이 되어 입력값 검증 실패 시 400 오류가 발생한다.
     // 입력값도 입력하지 않았기 때문에 postForm의 @NotEmpty에 의해 Validation이 실패하여 다시 질문 등록 화면에 머물러 있을 것이다.
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/create")
     public String postCreate(@Valid PostForm postForm, BindingResult bindingResult, Principal principal) {
         if (bindingResult.hasErrors()) {
             return "board/post_form";
@@ -119,6 +119,7 @@ public class PostController {
         postForm.setSubject(post.getSubject());
         postForm.setContent(post.getContent());
         postForm.setCategory(post.getCategory());
+//        model.addAttribute("action", "modify");
         return "board/post_form";
     }
 

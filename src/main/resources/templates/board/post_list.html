@@ -43,10 +43,10 @@
         <a th:href="@{|/board/post/detail/${post.id}|}" th:text="${post.subject}"></a>
         <!-- 답변 개수 표시
         #list.size(이터러블객체)는 이터러블 객체의 사이즈를 반환하는 타임리프의 유틸리티 -->
-<!--        <span class="text-danger small ms-2"-->
-<!--        th:if="${#lists.size(post.commentList) > 0}"-->
-<!--        th:text="${#lists.size(post.commentList)}">-->
-<!--        </span>-->
+        <span class="text-danger small ms-2"
+        th:if="${#lists.size(post.commentList) > 0}"
+        th:text="${#lists.size(post.commentList)}">
+        </span>
       </td>
       <td>
         <span th:if="${post.author != null}" th:text="${post.author.userId}"></span>

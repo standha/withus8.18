@@ -46,25 +46,34 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepositorySupport userRepositorySupport;
 
-    @Override
-    @NonNull
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUserId(username).orElseThrow(() -> {
-                    String message = String.format("Username \"%s\" does not exist!", username);
-                    return new UsernameNotFoundException(message);
-                }
-        );
-    }
+//    @Override
+//    @NonNull
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        return userRepository.findByUserId(username).orElseThrow(() -> {
+//                    String message = String.format("Username \"%s\" does not exist!", username);
+//                    return new UsernameNotFoundException(message);
+//                }
+//        );
+//    }
 
-    public UserDetails loadUserByUserId(String userId) throws UsernameNotFoundException {
-        Optional<User> _user = this.userRepository.findByUserId(userId);
-        if (_user.isEmpty()) {
+    @Override
+    // loadUserByUsername 메서드는 사용자명으로 비밀번호를 조회하여 리턴하는 메서드
+    // -> SecurityConfig
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> _user = this.userRepository.findById(username);
+        if (!_user.isPresent()) {
             throw new UsernameNotFoundException("사용자를 찾을 수 없습니다.");
         }
         User user = _user.get();
         List<GrantedAuthority> authorities = new ArrayList<>();
-        return new org.springframework.security.core.userdetails.User(user.getUserId(), user.getPassword(), authorities);
+//        if ("admin".equals(username)) {
+//            authorities.add(new SimpleGrantedAuthority(UserRole.ADMIN.getValue()));
+//        } else {
+//            authorities.add(new SimpleGrantedAuthority(UserRole.USER.getValue()));
+//        }
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
     }
+
 
     @Nullable
     public User getUserByIdAndDate(String id) {

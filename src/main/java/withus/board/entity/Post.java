@@ -4,19 +4,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 // sprintboot 2.X 버전은 jakarta -> javax
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 // 추천 기능에 필요한 라이브러리
 import java.util.Set;
-import javax.persistence.ManyToMany;
 
 import withus.entity.User;
 import lombok.Getter;
@@ -38,7 +29,7 @@ public class Post {
 
     private LocalDateTime createDate;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Comment> commentList;
 
 
@@ -48,7 +39,7 @@ public class Post {
 
     private LocalDateTime modifyDate;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     Set<User> voter;
 
     private String Category;
