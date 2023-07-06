@@ -70,14 +70,14 @@ public class PostService {
     // Pageable 객체를 생성할때 사용한 PageRequest.of(page, 10)에서 page는 조회할 페이지의 번호이고
     // 10은 한 페이지에 보여줄 게시물의 갯수를 의미
     // -> Post 서비스의 getList 메서드의 입출력 구조가 변경되었으므로 Post 컨트롤러도 수정
-    public Page<Post> getList(int page, String kw) {
+    public Page<Post> getList(int page, int pageSize, String kw) {
         // 내림차순 조회
         // Sort.Order 객체로 구성된 리스트에 Sort.Order 객체를 추가하고 Sort.by(소트리스트)로 소트 객체를 생성
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
 
         // 게시물을 역순으로 조회하기 위해서는 위와 같이 PageRequest.of 메서드의 세번째 파라미터로 Sort 객체를 전달
-        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by(sorts));
         Specification<Post> spec = search(kw);
         return this.postRepository.findAll(spec, pageable);
     }

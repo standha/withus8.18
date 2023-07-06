@@ -1,0 +1,50 @@
+<!-- 타임리프의 layout:decorate 속성은 템플릿의 레이아웃(부모 템플릿)으로 사용할 템플릿을 설정한다. 속성의 값인 ~{layout}은 layout.html 파일을 의미한다. -->
+<html layout:decorate="~{board/layout}">
+<div layout:fragment="content" class="container my-3">
+    <div class="card" style="cursor:pointer" th:onclick="|location.href='@{/board/post/list}'|">
+            <div th:if="${post.category == '공지사항'}" th:each="post, loop : ${noticePaging}">
+                <div class="text-center">공지사항</div>
+                <div class="card-body text-center border border-2 border-dark p-0 m-5">
+                    <a th:text="${post.subject}"></a>
+                </div>
+                <div class="card-text text-end p-1" th:text="${#temporals.format(post.createDate, 'yy-MM-dd HH:mm')}">
+                </div>
+            </div>
+    </div>
+    <div class="card" style="cursor:pointer" th:onclick="|location.href='@{/board/post/list}'|">
+        <div th:if="${post.category == '질문게시판'}" th:each="post, loop : ${questionPaging}">
+            <div class="text-center">질문게시판</div>
+            <div class="card-body text-center border border-2 border-dark p-0 m-5">
+                <a th:text="${post.subject}"></a>
+            </div>
+            <div class="card-text text-end p-1" th:text="${#temporals.format(post.createDate, 'yy-MM-dd HH:mm')}">
+            </div>
+        </div>
+    </div>
+    <div class="card" style="cursor:pointer" th:onclick="|location.href='@{/board/post/list}'|">
+        <div th:if="${post.category == '나눔게시판'}" th:each="post, loop : ${sharePaging}">
+            <div class="text-center">나눔게시판</div>
+            <div class="card-body text-center border border-2 border-dark p-0 m-5">
+                <a th:text="${post.subject}"></a>
+            </div>
+            <div class="card-text text-end p-1" th:text="${#temporals.format(post.createDate, 'yy-MM-dd HH:mm')}">
+            </div>
+        </div>
+    </div>
+</div>
+<!--<script layout:fragment="script" type='text/javascript'>-->
+<!--  const page_elements = document.getElementsByClassName("page-link");-->
+<!--  Array.from(page_elements).forEach(function(element) {-->
+<!--    element.addEventListener('click', function() {-->
+<!--      document.getElementById('page').value = this.dataset.page;-->
+<!--      document.getElementById('searchForm').submit();-->
+<!--    });-->
+<!--  });-->
+<!--  const btn_search = document.getElementById("btn_search");-->
+<!--  btn_search.addEventListener('click', function() {-->
+<!--    document.getElementById('kw').value = document.getElementById('search_kw').value;-->
+<!--    document.getElementById('page').value = 0;  // 검색버튼을 클릭할 경우 0페이지부터 조회한다.-->
+<!--    document.getElementById('searchForm').submit();-->
+<!--  });-->
+<!--</script>-->
+</html>
