@@ -42,5 +42,5 @@ public class Post {
     @ManyToMany(fetch = FetchType.EAGER)
     Set<User> voter;
 
-    private String Category;
+    private String category;
 }

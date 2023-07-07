@@ -14,19 +14,20 @@ import withus.service.UserService;
 import withus.board.service.PostService;
 import withus.service.UserService;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class BoardController {
     private final PostService postService;
     @GetMapping("/board")
-    public String root(Model model, @RequestParam(value="page", defaultValue = "0") int page, @RequestParam(value = "kw", defaultValue = "") String kw) {
-        Page<Post> noticePaging = this.postService.getList(page, 1, kw);
-        Page<Post> questionPaging = this.postService.getList(page, 1, kw);
-        Page<Post> sharePaging = this.postService.getList(page, 1, kw);
-        model.addAttribute("noticePaging", noticePaging);
-        model.addAttribute("questionPaging", questionPaging);
-        model.addAttribute("sharePaging", sharePaging);
-        model.addAttribute("kw", kw);
+    public String root(Model model) {
+        List<Post> currentNotice = this.postService.getListByCategory("공지사항");
+        List<Post> currentQuestion = this.postService.getListByCategory("질문게시판");
+        List<Post> currentShare = this.postService.getListByCategory("나눔게시판");
+        model.addAttribute("currentNotice", currentNotice);
+        model.addAttribute("currentQuestion", currentQuestion);
+        model.addAttribute("currentShare", currentShare);
         return "board/board";
     }
 }

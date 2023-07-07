@@ -70,6 +70,30 @@ public class PostController {
         return "board/post_list";
     }
 
+    @GetMapping("/list/notice")
+    public String listNotice(Model model, @RequestParam(value="page", defaultValue = "0") int page, @RequestParam(value = "kw", defaultValue = "") String kw){
+        Page<Post> paging = this.postService.getList(page, 10, kw);
+        model.addAttribute("paging", paging);
+        model.addAttribute("kw", kw);
+        return "board/post_list_notice";
+    }
+
+    @GetMapping("/list/question")
+    public String listQuestion(Model model, @RequestParam(value="page", defaultValue = "0") int page, @RequestParam(value = "kw", defaultValue = "") String kw){
+        Page<Post> paging = this.postService.getList(page, 10, kw);
+        model.addAttribute("paging", paging);
+        model.addAttribute("kw", kw);
+        return "board/post_list_question";
+    }
+
+    @GetMapping("/list/share")
+    public String listShare(Model model, @RequestParam(value="page", defaultValue = "0") int page, @RequestParam(value = "kw", defaultValue = "") String kw){
+        Page<Post> paging = this.postService.getList(page, 10, kw);
+        model.addAttribute("paging", paging);
+        model.addAttribute("kw", kw);
+        return "board/post_list_share";
+    }
+
     @GetMapping(value = "/detail/{id}")
     public String detail(Model model, @PathVariable("id") Integer id, CommentForm commentForm) {
         Post post = this.postService.getPost(id);

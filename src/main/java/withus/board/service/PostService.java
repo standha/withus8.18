@@ -82,6 +82,20 @@ public class PostService {
         return this.postRepository.findAll(spec, pageable);
     }
 
+    public List<Post> getListByCategory(String category) {
+        return postRepository.findByCategoryOrderByCreateDateDesc(category);
+    }
+
+    // [에러]수정 필요
+    public Page<Post> getPageByCategory(int page, String category, String kw) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+        Specification<Post> spec = search(kw);
+        return this.postRepository.findByCategory(category, spec, pageable);
+    }
+
     public Post getPost(Integer id) {
         Optional<Post> post = this.postRepository.findById(id);
         // Post 객체는 Optional 객체이기 때문에 위와 같이 isPresent 메서드로 해당 데이터가 존재하는지 검사하는 로직이 필요

@@ -1,5 +1,6 @@
 package withus.board.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // 리포지토리로 만들기 위해 JpaReprository 인터페이스 상속
@@ -22,11 +23,14 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     Post findBySubject(String subject);
     Post findBySubjectAndContent(String subject, String content);
     List<Post> findBySubjectLike(String subject);
+    @Transactional
+    List<Post> findByCategoryOrderByCreateDateDesc(String category);
 
     // Pageable 객체를 입력으로 받아 Page<Post> 타입 객체를 리턴하는 findAll 메서드를 생성
     // -> Service 수정
     Page<Post> findAll(Pageable pageable);
     Page<Post> findAll(Specification<Post> spec, Pageable pageable);
+    Page<Post> findByCategory(String category, Specification<Post> spec, Pageable pageable);
 
     @Query("select "
             + "distinct q "
