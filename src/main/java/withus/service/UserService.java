@@ -66,11 +66,11 @@ public class UserService implements UserDetailsService {
         }
         User user = _user.get();
         List<GrantedAuthority> authorities = new ArrayList<>();
-//        if ("admin".equals(username)) {
-//            authorities.add(new SimpleGrantedAuthority(UserRole.ADMIN.getValue()));
-//        } else {
-//            authorities.add(new SimpleGrantedAuthority(UserRole.USER.getValue()));
-//        }
+        if ("admin".equals(username)) {
+            authorities.add(new SimpleGrantedAuthority(UserRole.ADMIN.getValue()));
+        } else {
+            authorities.add(new SimpleGrantedAuthority(UserRole.USER.getValue()));
+        }
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
     }
 

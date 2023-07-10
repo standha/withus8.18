@@ -6,7 +6,7 @@
                 <div class="card-body text-center border border-2 border-dark p-0 m-5">
                     <a th:text="${currentNotice[0].subject}"></a>
                 </div>
-                <div class="card-text text-end p-1" th:text="${#temporals.format(currentNotice[0].createDate, 'yy-MM-dd HH:mm')}">
+                <div class="card-text text-end p-1" th:text="${#temporals.format(currentNotice[0].createDate, 'MM/dd HH:mm')}">
                 </div>
     </div>
     <div class="card" style="cursor:pointer" th:onclick="|location.href='@{/board/post/list/question}'|">
@@ -14,7 +14,7 @@
             <div class="card-body text-center border border-2 border-dark p-0 m-5">
                 <a th:text="${currentQuestion[0].subject}"></a>
             </div>
-            <div class="card-text text-end p-1" th:text="${#temporals.format(currentQuestion[0].createDate, 'yy-MM-dd HH:mm')}">
+            <div class="card-text text-end p-1" th:text="${#temporals.format(currentQuestion[0].createDate, 'MM/dd HH:mm')}">
             </div>
         </div>
     <div class="card" style="cursor:pointer" th:onclick="|location.href='@{/board/post/list/share}'|">
@@ -22,7 +22,7 @@
             <div class="card-body text-center border border-2 border-dark p-0 m-5">
                 <a th:text="${currentShare[0].subject}"></a>
             </div>
-            <div class="card-text text-end p-1" th:text="${#temporals.format(currentShare[0].createDate, 'yy-MM-dd HH:mm')}">
+            <div class="card-text text-end p-1" th:text="${#temporals.format(currentShare[0].createDate, 'MM/dd HH:mm')}">
             </div>
     </div>
 </div>

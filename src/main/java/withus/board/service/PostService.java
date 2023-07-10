@@ -86,6 +86,10 @@ public class PostService {
         return postRepository.findByCategoryOrderByCreateDateDesc(category);
     }
 
+    public Post getPostRecent(){
+        return postRepository.findTopByOrderByCreateDateDesc();
+    }
+
     // [에러]수정 필요
     public Page<Post> getPageByCategory(int page, String category, String kw) {
         List<Sort.Order> sorts = new ArrayList<>();

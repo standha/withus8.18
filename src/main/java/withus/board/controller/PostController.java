@@ -130,22 +130,22 @@ public class PostController {
         User user = this.userService.getUserForBoard(principal.getName());
 
         this.postService.create(postForm.getSubject(), postForm.getContent(), user, postForm.getCategory());
-        return "redirect:/board/post/list";
+        return "redirect:/board";
     }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
     public String postModify(PostForm postForm, @PathVariable("id") Integer id, Principal principal) {
         Post post = this.postService.getPost(id);
-        if(!post.getAuthor().getUserId().equals(principal.getName())) {
+        if(post.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("admin")) {
+            postForm.setSubject(post.getSubject());
+            postForm.setContent(post.getContent());
+            postForm.setCategory(post.getCategory());
+//        model.addAttribute("action", "modify");
+            return "board/post_form";
+        } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
-        // 수정할 질문의 제목과 내용을 화면에 보여주기 위해 postForm 객체에 값을 담아서 템플릿으로 전달 -> board/board/post_form.html
-        postForm.setSubject(post.getSubject());
-        postForm.setContent(post.getContent());
-        postForm.setCategory(post.getCategory());
-//        model.addAttribute("action", "modify");
-        return "board/post_form";
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -158,24 +158,25 @@ public class PostController {
 
         Post post = this.postService.getPost(id);
 
-        if (!post.getAuthor().getUserId().equals(principal.getName())) {
+        if (post.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("admin")) {
+            this.postService.modify(post, postForm.getSubject(), postForm.getContent(), postForm.getCategory());
+
+            return String.format("redirect:/board/post/detail/%s", id);
+        } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
-
-        this.postService.modify(post, postForm.getSubject(), postForm.getContent(), postForm.getCategory());
-
-        return String.format("redirect:/board/post/detail/%s", id);
     }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/delete/{id}")
     public String postDelete(Principal principal, @PathVariable("id") Integer id) {
         Post post = this.postService.getPost(id);
-        if (!post.getAuthor().getUserId().equals(principal.getName())) {
+        if (post.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("admin")) {
+            this.postService.delete(post);
+            return "redirect:/board";
+        } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
         }
-        this.postService.delete(post);
-        return "redirect:/board";
     }
 
     @PreAuthorize("isAuthenticated()")

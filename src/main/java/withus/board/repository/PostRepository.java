@@ -25,6 +25,9 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     List<Post> findBySubjectLike(String subject);
     @Transactional
     List<Post> findByCategoryOrderByCreateDateDesc(String category);
+    @Transactional
+    Post findTopByOrderByCreateDateDesc();
+
 
     // Pageable 객체를 입력으로 받아 Page<Post> 타입 객체를 리턴하는 findAll 메서드를 생성
     // -> Service 수정
