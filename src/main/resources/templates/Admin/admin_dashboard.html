@@ -5,14 +5,15 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css"/>
     <script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="js/admin/admin_excel.js"></script>
+    <script src="/js/admin/admin_dashboard_excel.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="css/admin/adminTable.css">
     <meta charset="UTF-8">
     <title>Admin dashboard</title>
-
 </head>
 <style>
     th {
@@ -28,19 +29,19 @@
                 <h4>1. 대상자 등록 현황</h4>
             </div>
             <div class="dashboard-table__div">
-                <button id="excel-button" onclick="fnExcelReport('hidden-table','환자 목록', '')">엑셀 다운</button>
+                <button id="excel-button" onclick="fnExcelReport()">엑셀 다운</button>
             </div>
         </div>
 
     </div>
-    <div class="chart" style="height:260px; width:100%; display: flex;  justify-content : center;">
+    <div class="chart" style="height:28vh; width:100%; display: flex;  justify-content : center;">
         <canvas id="signChart"></canvas>
     </div>
     <div class="dashboard-table">
             <h4>2. 등록 대상자 현황</h4>
             <h5>1) 주차별 대상자 수</h5>
     </div>
-    <div class="chart" style="height:230px; width:100%; display: flex; justify-content : center;">
+    <div class="chart" style="height:22vh; width:100%; display: flex; justify-content : center;">
         <canvas id="dyadsChart"></canvas>
     </div>
     <div style="display: flex; justify-content : center; padding-top: 20px;">
@@ -58,7 +59,7 @@
         <div style=" width:50%; display: flex; justify-content : flex-start;">
             <div style="width:100%">
                 <h5>3) 연령</h5>
-                <div style="width:98%; height: 26vh; padding-left: 23px;">
+                <div style="width:98%; height: 25vh; padding-left: 23px;">
                         <canvas id="ageChart"></canvas>
                 </div>
             </div>
@@ -68,14 +69,14 @@
         <div style="width:15%">
             <h5>4) 환자와의 관계</h5>
         </div>
-        <div style="width:70%; height:20vh;">
+        <div style="width:70%; height:22vh;">
                 <canvas id="relationshipChart"></canvas>
         </div>
     </div>
     <div class="dashboard-table">
         <h4>3. 누적 버튼 클릭 수</h4>
     </div>
-    <div class="chart" style="width:100%; height: 680px; display: flex; justify-content : center; padding-bottom: 20px;">
+    <div class="chart" style="width:100%; height: 73vh; display: flex; justify-content : center; padding-bottom: 20px;">
         <canvas id="buttonClickChart"></canvas>
     </div>
 </div>
@@ -433,9 +434,17 @@
             }
         }
     });
+    function relativeData() {
+        var relativeCount = [];
+        [# th:each="relativeCount : ${userRelativeCountList}"]
+        var temp_relative_data = [[${relativeCount.relativeCount}]];
+        relativeCount.push(temp_relative_data);
+        [/]
+        return relativeCount.slice(3,4) + relativeCount.slice(0,1) + relativeCount.slice(2,3) + relativeCount.slice(1,2) ;
+    }
     //환자 관계 막대 차트
     var relationshipXList = ['배우자','자녀','친척','기타'];
-    var relationshipYList = [20,17,5,2];
+    var relationshipYList = relativeData();
     var maxRelationship = Math.max(...relationshipYList);
     const relationshipCtx = document.getElementById('relationshipChart').getContext('2d');
     const relationshipChart = new Chart(relationshipCtx, {
@@ -466,13 +475,21 @@
                     },
                     formatter: function(value) {
                         return (value.toString())
+                    },
+                    display: function(context) {
+                        if ( context.dataset.data[context.dataIndex] === 0 ) {
+                            return false;
+                        }
+                        else {
+                            return true;
+                        }
                     }
                 },
             },
             scales:{
                 x: {
                     min: 0,
-                    max: maxRelationship + 10,
+                    max: (Math.floor(maxRelationship / 10) +1) * 10,
                     display: true,
                     title: {
                         display: true,
@@ -482,10 +499,57 @@
             },
         }
     });
+    function caregiverSumData() {
+        var caregiverButtonSum = [];
+        [# th:each="sum : ${caregiverButtonSumList}"]
+        caregiverButtonSum.push([[${sum.goal}]]);
+        caregiverButtonSum.push([[${sum.level}]]);
+        caregiverButtonSum.push([[${sum.medicine}]]);
+        caregiverButtonSum.push([[${sum.bloodPressure}]]);
+        caregiverButtonSum.push([[${sum.exercise}]]);
+        caregiverButtonSum.push([[${sum.weight}]]);
+        caregiverButtonSum.push([[${sum.mindHealth}]]);
+        caregiverButtonSum.push([[${sum.board}]]);
+        caregiverButtonSum.push([[${sum.alarm}]]);
+        caregiverButtonSum.push(0);
+        caregiverButtonSum.push(0);
+        caregiverButtonSum.push([[${sum.familyObservation}]]);
+        caregiverButtonSum.push([[${sum.dietManagement}]]);
+        caregiverButtonSum.push([[${sum.withusRang}]]);
+        caregiverButtonSum.push([[${sum.diseaseInfo}]]);
+        caregiverButtonSum.push([[${sum.helper}]]);
+        caregiverButtonSum.push([[${sum.infoEdit}]]);
+        [/]
+        return caregiverButtonSum;
+    }
+
+    function patientSumData() {
+        var patientButtonSum = [];
+        [# th:each="sum : ${patientButtonSumList}"]
+        patientButtonSum.push([[${sum.goal}]]);
+        patientButtonSum.push([[${sum.level}]]);
+        patientButtonSum.push([[${sum.medicine}]]);
+        patientButtonSum.push([[${sum.bloodPressure}]]);
+        patientButtonSum.push([[${sum.exercise}]]);
+        patientButtonSum.push([[${sum.weight}]]);
+        patientButtonSum.push([[${sum.mindHealth}]]);
+        patientButtonSum.push([[${sum.board}]]);
+        patientButtonSum.push([[${sum.alarm}]]);
+        patientButtonSum.push([[${sum.symptom}]]);
+        patientButtonSum.push([[${sum.natriumMoisture}]]);
+        patientButtonSum.push(0);
+        patientButtonSum.push(0);
+        patientButtonSum.push([[${sum.withusRang}]]);
+        patientButtonSum.push([[${sum.diseaseInfo}]]);
+        patientButtonSum.push([[${sum.helper}]]);
+        patientButtonSum.push([[${sum.infoEdit}]]);
+        [/]
+        return patientButtonSum;
+    }
     //버튼 클릭 막대 차트
     var buttonClickXList = ['목표설정','달성률','복용약','혈압/맥박','운동','체중','마음관리','게시판','알람','증상일지','염분/수분','가족관찰','식단관리','위더스랑','질환정보','위더스 도우미','정보수정'];
-    var patientButtonClickList = [6,1,1,10,3,5,1,5,6,5,6,0,0,5,2,10,5]; // 가족관찰, 식단관리 x
-    var caregiverButtonClickList = [7,2,2,30,4,3,4,10,8,0,0,5,10,6,3,20,3]; // 증상일지, 염분수분 x
+    var patientButtonClickList = patientSumData(); // 가족관찰, 식단관리 x
+    var caregiverButtonClickList = caregiverSumData(); // 증상일지, 염분수분 x
     var temp = patientButtonClickList.concat(caregiverButtonClickList);
     var maxClick = Math.max(...temp);
     const buttonClickCtx = document.getElementById('buttonClickChart').getContext('2d');
@@ -510,7 +574,7 @@
             scales:{
                 x: {
                     min: 0,
-                    max: maxClick + 5,
+                    max: (Math.floor(maxClick / 10) +1) * 10,
                     display: true,
                     title: {
                         display: true,

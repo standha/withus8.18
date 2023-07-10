@@ -51,7 +51,7 @@ public class BloodPressureController extends BaseController {
         }
 
         if (user.getType() == User.Type.PATIENT) {
-            Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            Tbl_patient_main_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
 
@@ -81,7 +81,7 @@ public class BloodPressureController extends BaseController {
         modelAndView.addObject("user", user);
 
         if (user.getType() == User.Type.PATIENT) {
-            Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            Tbl_patient_main_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
 

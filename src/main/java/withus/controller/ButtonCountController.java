@@ -37,10 +37,10 @@ public class ButtonCountController extends BaseController {
         Tbl_caregiver_main_button_count saved = null;
 
         logger.info("id:{}, week:{}, goal:{}, level:{}, withusRang:{}, disease_info:{}, helper:{}, medicine:{}, blood_pressure:{}, exercise:{}, family_observation:{}, diet_management:{}," +
-                        " weight:{}, mind_health:{}, alarm:{}, board:{}"
+                        " weight:{}, mind_health:{}, alarm:{}, board:{}, info_edit:{}"
                 , count.getKey().getId(), count.getKey().getWeek(), count.getGoal(), count.getLevel(),count.getWithusRang(), count.getDiseaseInfo(), count.getHelper(),
                 count.getMedicine(), count.getBloodPressure(), count.getExercise(), count.getFamilyObservation(), count.getDietManagement(), count.getWeight(), count.getMindHealth(),
-                count.getAlarm(), count.getBoard());
+                count.getAlarm(), count.getBoard(), count.getInfoEdit());
 
         try {
             if (user.getType() == User.Type.PATIENT && user.getWeek() != 25) {

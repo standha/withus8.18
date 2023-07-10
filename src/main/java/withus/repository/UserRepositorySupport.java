@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import withus.dto.*;
 import withus.dto.HelpRequest.CaregiverHelpRequestDTO;
 import withus.dto.HelpRequest.PatientHelpRequestDTO;
+import withus.dto.wwithus.CaregiverButtonSumDTO;
+import withus.dto.wwithus.PatientButtonSumDTO;
 import withus.dto.wwithus.UserCountInfoDTO;
 import withus.entity.*;
 
@@ -248,7 +250,7 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
     }
 
     public List<ButtonCountSumDTO> findButtonCountSum(String userId) {
-        QTbl_button_count bc = QTbl_button_count.tbl_button_count;
+        QTbl_patient_main_button_count bc = QTbl_patient_main_button_count.tbl_patient_main_button_count;
 
         List<ButtonCountSumDTO> buttonCountSum = queryFactory.select(Projections.constructor(ButtonCountSumDTO.class,
                 bc.alarm.sum(), bc.bloodPressure.sum(), bc.diseaseInfo.sum(), bc.exercise.sum(), bc.goal.sum(), bc.helper.sum(), bc.level.sum(), bc.natriumMoisture.sum(), bc.symptom.sum(),
@@ -260,14 +262,36 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
         return buttonCountSum;
     }
 
-    public List<Tbl_button_count> findButtonCount(String userId) {
-        QTbl_button_count bc = QTbl_button_count.tbl_button_count;
+    public List<Tbl_patient_main_button_count> findButtonCount(String userId) {
+        QTbl_patient_main_button_count bc = QTbl_patient_main_button_count.tbl_patient_main_button_count;
 
-        List<Tbl_button_count> buttonCount = queryFactory.selectFrom(bc)
+        List<Tbl_patient_main_button_count> buttonCount = queryFactory.selectFrom(bc)
                 .where(bc.key.id.eq(userId))
                 .orderBy(bc.key.week.asc())
                 .fetch();
 
+        return buttonCount;
+    }
+
+    public List<PatientButtonSumDTO> findPatientButtonSum(){
+        QTbl_patient_main_button_count bc = QTbl_patient_main_button_count.tbl_patient_main_button_count;
+        List<PatientButtonSumDTO> buttonCount = queryFactory.select(Projections.constructor(PatientButtonSumDTO.class,
+                bc.goal.sum(), bc.level.sum(), bc.medicine.sum(), bc.bloodPressure.sum(), bc.exercise.sum(), bc.weight.sum(), bc.mindHealth.sum(),
+                bc.board.sum(), bc.alarm.sum(), bc.symptom.sum(), bc.natriumMoisture.sum(), bc.withusRang.sum(), bc.diseaseInfo.sum(),
+                bc.helper.sum(), bc.infoEdit.sum()))
+                .from(bc)
+                .fetch();
+        return buttonCount;
+    }
+    public List<CaregiverButtonSumDTO> findCaregiverButtonSum(){
+        QTbl_caregiver_main_button_count bc = QTbl_caregiver_main_button_count.tbl_caregiver_main_button_count;
+
+        List<CaregiverButtonSumDTO> buttonCount = queryFactory.select(Projections.constructor(CaregiverButtonSumDTO.class,
+                bc.goal.sum(), bc.level.sum(), bc.medicine.sum(), bc.bloodPressure.sum(), bc.exercise.sum(), bc.weight.sum(), bc.mindHealth.sum(),
+                bc.board.sum(), bc.alarm.sum(), bc.familyObservation.sum(), bc.dietManagement.sum(), bc.withusRang.sum(), bc.diseaseInfo.sum(),
+                bc.helper.sum(), bc.infoEdit.sum()))
+                .from(bc)
+                .fetch();
         return buttonCount;
     }
 

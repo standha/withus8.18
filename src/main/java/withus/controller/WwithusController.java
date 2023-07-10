@@ -18,7 +18,7 @@ import withus.dto.Result;
 import withus.dto.wwithus.ChatBalloon;
 import withus.dto.wwithus.WwithusEntryRequest;
 import withus.entity.ProgressKey;
-import withus.entity.Tbl_button_count;
+import withus.entity.Tbl_patient_main_button_count;
 import withus.entity.User;
 import withus.entity.WithusHelpRequest;
 import withus.service.CountService;
@@ -55,7 +55,7 @@ public class WwithusController extends BaseController {
         modelAndView.addObject("userType", user.getType());
 
         if (user.getType() == User.Type.PATIENT) {
-            Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            Tbl_patient_main_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
 

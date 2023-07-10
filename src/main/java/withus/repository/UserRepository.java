@@ -9,10 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import withus.dto.wwithus.UserAgeCountDTO;
-import withus.dto.wwithus.UserGenderCountDTO;
-import withus.dto.wwithus.UserRegisterCountDTO;
-import withus.dto.wwithus.UserWeekCountDTO;
+import withus.dto.wwithus.*;
 import withus.entity.User;
 
 import javax.annotation.Nonnull;
@@ -51,7 +48,8 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Nullable
     @Query(value = "select u.name as patientName ,u.id as patientId, u.password as patientPassword, u.birthdate as patientBirthdate," +
             " u.gender as patientGender, u.contact as patientContact, c.name as caregiverName," +
-            "c.id as caregiverId, c.password as caregiverPassword, c.contact as caregiverContact, u.user_record_date as userRecordDate , code as currentCode" +
+            "c.id as caregiverId, c.password as caregiverPassword, c.contact as caregiverContact, u.user_record_date as userRecordDate , code as currentCode, " +
+            "u.height as height, u.relative as relative" +
             " from user as u left join user as c on c.contact = u.caregiver_contact " +
             "left join(select any_value(t.entry_code) as 'code' , any_value(t.date_time), t.user_id from" +
             "(select wwh.user_id, wwh.date_time, wwh.entry_code" +
@@ -88,6 +86,22 @@ public interface UserRepository extends JpaRepository<User, String> {
             "group by ageGroup, type " +
             "order by ageGroup asc;", nativeQuery = true)
     List<UserAgeCountDTO> findUserAgeCount();
+
+    @Transactional(readOnly = true)
+    @Nonnull
+    @Query(value="SELECT relative, COUNT(*) - 1 as relativeCount " +
+            "FROM ( " +
+            "SELECT relative FROM user " +
+            "UNION ALL " +
+            "SELECT 'SPOUSE' as relative UNION ALL " +
+            "SELECT 'CHILD' as relative UNION ALL " +
+            "SELECT 'RELATIVE' as relative UNION ALL " +
+            "SELECT 'ETC' as relative " +
+            ") AS subquery " +
+            "WHERE relative <> 'null' " +
+            "GROUP BY relative " +
+            "order by relative;",nativeQuery = true)
+    List<UserRelativeCountDTO> findUserRelativeCount();
 
     @Transactional(readOnly = true)
     @Nonnull

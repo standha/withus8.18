@@ -1,24 +1,17 @@
 package withus.entity;
 
+import lombok.*;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import javax.persistence.*;
-
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(indexes = @Index(columnList = "id,password"))
@@ -58,6 +51,12 @@ public class User implements Serializable, UserDetails {
     @Getter
     private String contact;
 
+    @Column( columnDefinition = "VARCHAR(32) NOT NULL",length = 32)
+    @Nullable
+    @Getter
+    private String height;
+
+
     @Column(columnDefinition = "DATE")
     @Nullable
     @Getter
@@ -68,6 +67,11 @@ public class User implements Serializable, UserDetails {
     @Nullable
     @Getter
     private Gender gender;
+
+    @Column(columnDefinition = "VARCHAR(32)", length = 32)
+    @Enumerated(EnumType.STRING)
+    @Getter
+    private Relative relative;
 
     @Column(columnDefinition = "VARCHAR(256)", length = 256)
     @Nullable
@@ -136,6 +140,21 @@ public class User implements Serializable, UserDetails {
             for (Gender gender : values()) {
                 if (gender.name().equals(name)) {
                     return gender;
+                }
+            }
+
+            return null;
+        }
+    }
+
+    public enum Relative {
+        NONE, SPOUSE, CHILD, RELATIVE, ETC;
+
+
+        public static Relative RbyName(String name) {
+            for (Relative relative : values()) {
+                if (relative.name().equalsIgnoreCase(name)) {
+                    return relative;
                 }
             }
 

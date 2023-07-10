@@ -28,15 +28,18 @@ public class UserService implements UserDetailsService {
     private final OutPatientVisitAlarmRepository outPatientVisitAlarmRepository;
     private final GoalRepository goalRepositroy;
     private final CountRepository countRepository;
-
+    private final PatientSubCountRepository patientSubCountRepository;
+    private final PatientDetailCountRepository patientDetailCountRepository;
     @Autowired
     public UserService(UserRepository userRepository, MedicationAlarmRepository medicationAlarmRepository, OutPatientVisitAlarmRepository outPatientVisitAlarmRepository,
-                       GoalRepository goalRepositroy, CountRepository countRepository) {
+                       GoalRepository goalRepositroy, CountRepository countRepository, PatientSubCountRepository patientSubCountRepository, PatientDetailCountRepository patientDetailCountRepository) {
         this.userRepository = userRepository;
         this.goalRepositroy = goalRepositroy;
         this.medicationAlarmRepository = medicationAlarmRepository;
         this.outPatientVisitAlarmRepository = outPatientVisitAlarmRepository;
         this.countRepository = countRepository;
+        this.patientSubCountRepository = patientSubCountRepository;
+        this.patientDetailCountRepository = patientDetailCountRepository;
     }
 
     @Autowired
@@ -110,26 +113,76 @@ public class UserService implements UserDetailsService {
                     .build();
 
             goalRepositroy.save(tbl_goal);
+            for (int i = 1; i <= 24; i++) {
+                ProgressKey key = new ProgressKey(saved.getUserId(), i);
+                Tbl_patient_main_button_count tbl_button_count = Tbl_patient_main_button_count.builder()
+                        .key(key)
+                        .goal(0)
+                        .level(0)
+                        .withusRang(0)
+                        .diseaseInfo(0)
+                        .helper(0)
+                        .medicine(0)
+                        .bloodPressure(0)
+                        .exercise(0)
+                        .symptom(0)
+                        .natriumMoisture(0)
+                        .weight(0)
+                        .mindHealth(0)
+                        .board(0)
+                        .alarm(0)
+                        .infoEdit(0)
+                        .build();
+                countRepository.save(tbl_button_count);
+            }
+            for (int i = 1; i <= 24; i++) {
+                ProgressKey key = new ProgressKey(saved.getUserId(), i);
+                Tbl_patient_sub_button_count tbl_sub_button_count = Tbl_patient_sub_button_count.builder()
+                        .key(key)
+                        .lowLevel(0)
+                        .middleLevel(0)
+                        .highLevel(0)
+                        .makeMyGoal(0)
+                        .natriumMoisture(0)
+                        .waterIntake(0)
+                        .mindManagement(0)
+                        .waterIntake(0)
+                        .mindDiary(0)
+                        .mindScore(0)
+                        .mindManagement(0)
+                        .hof(0)
+                        .notice(0)
+                        .question(0)
+                        .share(0)
+                        .medicineTime(0)
+                        .outPatientVisitTime(0)
+                        .build();
+                patientSubCountRepository.save(tbl_sub_button_count);
+            }
 
             for (int i = 1; i <= 24; i++) {
                 ProgressKey key = new ProgressKey(saved.getUserId(), i);
-                Tbl_button_count tbl_button_count = Tbl_button_count.builder()
+                Tbl_patient_detail_button_count tbl_detail_button_count = Tbl_patient_detail_button_count.builder()
                         .key(key)
-                        .alarm(0)
-                        .bloodPressure(0)
-                        .diseaseInfo(0)
-                        .exercise(0)
-                        .goal(0)
-                        .helper(0)
-                        .level(0)
-                        .natriumMoisture(0)
-                        .symptom(0)
-                        .weight(0)
-                        .withusRang(0)
+                        .recommendDiet(0)
+                        .meditation(0)
+                        .bodyActivity(0)
+                        .deepBreath(0)
+                        .consulting(0)
+                        .medicineAlarm(0)
+                        .bloodPressureAlarm(0)
+                        .exerciseAlarm(0)
+                        .symptomAlarm(0)
+                        .natriumMoistureAlarm(0)
+                        .waterIntakeAlarm(0)
+                        .weightAlarm(0)
+                        .mindScoreAlarm(0)
                         .build();
 
-                countRepository.save(tbl_button_count);
+                patientDetailCountRepository.save(tbl_detail_button_count);
             }
+
+
         }
 
         return saved;

@@ -127,7 +127,7 @@ public class AdminService {
     }
 
     @Nullable
-    public List<Tbl_button_count> getButtonCountAsc(String userId) {
+    public List<Tbl_patient_main_button_count> getButtonCountAsc(String userId) {
         return userRepositorySupport.findButtonCount(userId);
     }
 
@@ -188,6 +188,21 @@ public class AdminService {
         List<UserWeekCountDTO> user_week_count = userRepository.findUserWeekCount();
         return user_week_count;
     }
+
+    public List<UserRelativeCountDTO> getUserRelativeCountInfo(){
+        List<UserRelativeCountDTO> user_relative_count = userRepository.findUserRelativeCount();
+        return user_relative_count;
+    }
+
+    public List<CaregiverButtonSumDTO> getCaregiverButtonSumInfo(){
+        List<CaregiverButtonSumDTO> caregiver_button_sum = userRepositorySupport.findCaregiverButtonSum();
+        return caregiver_button_sum;
+    }
+    public List<PatientButtonSumDTO> getPatientButtonSumInfo() {
+        List<PatientButtonSumDTO> patient_button_sum = userRepositorySupport.findPatientButtonSum();
+        return patient_button_sum;
+    }
+
 }
 
 @FunctionalInterface

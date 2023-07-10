@@ -40,6 +40,8 @@ public class QTbl_caregiver_main_button_count extends EntityPathBase<Tbl_caregiv
 
     public final NumberPath<Integer> helper = createNumber("helper", Integer.class);
 
+    public final NumberPath<Integer> infoEdit = createNumber("infoEdit", Integer.class);
+
     public final QCaregiverProgressKey key;
 
     public final NumberPath<Integer> level = createNumber("level", Integer.class);

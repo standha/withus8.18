@@ -60,4 +60,7 @@ public class Tbl_caregiver_main_button_count {
     @Column(name = "board")
     private Integer board;
 
+    @Column(name ="infoEdit")
+    private Integer infoEdit;
+
 }

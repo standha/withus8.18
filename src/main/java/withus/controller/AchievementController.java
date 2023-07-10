@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
 import withus.entity.ProgressKey;
-import withus.entity.Tbl_button_count;
+import withus.entity.Tbl_patient_main_button_count;
 import withus.entity.User;
 import withus.service.CountService;
 import withus.entity.User;
@@ -32,7 +32,7 @@ public class AchievementController extends BaseController {
         modelAndView.addObject("week", user.getWeek());
         switch (user.getType()) {
             case PATIENT:
-                Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+                Tbl_patient_main_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
                 modelAndView.addObject("count", count);
                 modelAndView.addObject("level", user.getLevel());
                 modelAndView.addObject("previousUrl", "/center");

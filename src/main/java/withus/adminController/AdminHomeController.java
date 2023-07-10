@@ -23,6 +23,7 @@ import withus.dto.wwithus.*;
 import withus.entity.*;
 import withus.service.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -43,6 +44,28 @@ public class AdminHomeController extends withus.controller.BaseController {
         this.countService = countService;
     }
 
+    @GetMapping("/admin_home")
+    public ModelAndView viewHome(){
+        User user = getUser();
+        if (user.getType() != User.Type.ADMINISTRATOR) {
+            throw new IllegalStateException(user.getUserId() + " is not Admin");
+        }
+
+        List<AllUserDTO> resultList = new ArrayList<>();
+        ArrayList<String> userFin = userService.getAllUserPlz();
+
+        ModelAndView mav = new ModelAndView();
+        if (userFin != null) {
+            // userFin.forEach((s)-> resultList.add(AllUserDTO.fromString(s)));
+            for (String aUserFin : userFin) {
+                resultList.add(AllUserDTO.fromString(aUserFin));
+            }
+        }
+
+        mav.addObject("user", resultList);
+        mav.setViewName("Admin/admin_home");
+        return mav;
+    }
     @GetMapping("/user/{userId}")
     public ModelAndView viewPatient(@PathVariable("userId") String userId) {
         // @pathVariable, @ParameterValue, @Header
@@ -71,22 +94,27 @@ public class AdminHomeController extends withus.controller.BaseController {
             throw new IllegalStateException(user.getUserId() + " is not Admin");
         }
 
-        List<UserCountInfoDTO> userCountInfo = adminService.getUserCountInfo();
+
         ModelAndView mav = new ModelAndView();
         List<UserGenderCountDTO> userGenderCountInfo = adminService.getUserGenderCountInfo();
         List<UserAgeCountDTO> userAgeCountInfo = adminService.getUserAgeCountInfo();
         List<UserRegisterCountDTO> userRegisterCountInfo = adminService.getUserRegisterCountInfo();
         List<UserWeekCountDTO> userWeekCountInfo = adminService.getUserWeekCountInfo();
+        List<UserRelativeCountDTO> userRelativeCountInfo = adminService.getUserRelativeCountInfo();
+        List<CaregiverButtonSumDTO> caregiverButtonSumInfo = adminService.getCaregiverButtonSumInfo();
+        List<PatientButtonSumDTO> patientButtonSumInfo = adminService.getPatientButtonSumInfo();
+
         mav.addObject("admin", user.getUserId());
-        mav.addObject("userCountList", userCountInfo);
         mav.addObject("userGenderCountList",userGenderCountInfo);
         mav.addObject("userAgeCountList",userAgeCountInfo);
         mav.addObject("userRegisterCountList",userRegisterCountInfo);
         mav.addObject("userWeekCountList",userWeekCountInfo);
+        mav.addObject("userRelativeCountList",userRelativeCountInfo);
+        mav.addObject("caregiverButtonSumList",caregiverButtonSumInfo);
+        mav.addObject("patientButtonSumList",patientButtonSumInfo);
+
         mav.setViewName("Admin/admin_dashboard");
 
-
-        logger.info("{}", userCountInfo);
         return mav;
     }
     @GetMapping("/admin_moistureRecord/{userId}")
@@ -310,7 +338,7 @@ public class AdminHomeController extends withus.controller.BaseController {
 
         HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
         ModelAndView modelAndView = new ModelAndView("Admin/admin_button_count");
-        List<Tbl_button_count> counts = adminService.getButtonCountAsc(userId);
+        List<Tbl_patient_main_button_count> counts = adminService.getButtonCountAsc(userId);
 
         modelAndView.addObject("counts", counts);
         modelAndView.addObject("patient", headerInfo);
