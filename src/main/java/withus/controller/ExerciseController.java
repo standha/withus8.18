@@ -38,7 +38,7 @@ public class ExerciseController extends BaseController {
 
         switch (typeCheck) {
             case PATIENT:
-                Tbl_patient_main_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+                Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
                 modelAndView.addObject("count", count);
                 if (exerciseService.getExercise(new RecordKey(user.getUserId(), LocalDate.now())) == null) {
                     modelAndView.addObject("hour", "");
@@ -87,7 +87,7 @@ public class ExerciseController extends BaseController {
 
         switch (user.getType()) {
             case PATIENT:
-                Tbl_patient_main_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+                Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
                 modelAndView.addObject("count", count);
                 exerciseHistory = exerciseService.getExerciseAllRecord(user.getUserId(), -1, -1);
                 modelAndView.addObject("exerciseWeekHour", avgWeek() / 60);

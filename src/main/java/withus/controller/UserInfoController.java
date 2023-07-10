@@ -42,14 +42,14 @@ public class UserInfoController extends BaseController {
         ModelAndView modelAndView = new ModelAndView("changeInfo");
         User user = getUser();
         if (user.getType() == User.Type.PATIENT && user.getCaregiver() != null) {
-            Tbl_patient_main_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
             modelAndView.addObject("caregiver_contact", user.getCaregiver().getContact());
 
             logger.info("id:{}, url:{}, type:{}, level:{}, week:{}, gender:{}, name:{}, contact:{}, caregiver_contact:{}, birthdate:{}"
                     , user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek(), user.getGender(), user.getName(), user.getContact(), user.getCaregiver().getContact(), user.getBirthdate());
         } else if (user.getType() == User.Type.PATIENT && user.getCaregiver() == null) {
-            Tbl_patient_main_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
             modelAndView.addObject("caregiver_contact", null);
 

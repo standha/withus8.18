@@ -27,7 +27,106 @@ public class ButtonCountController extends BaseController {
         this.countService = countService;
     }
 
+    @PutMapping(value="/patient-main-button-count",consumes = MediaType.APPLICATION_JSON_VALUE )
+    @ResponseBody
+    public Result<Tbl_patient_main_button_count> getPatientMainCount(@RequestBody Tbl_patient_main_button_count count, HttpServletRequest request){
+        User user = getUser();
+        count.setKey(new ProgressKey(user.getUserId(), user.getWeek()));
+        Result.Code code;
+        Tbl_patient_main_button_count saved = null;
 
+        logger.info("id:{}, week:{}, goal:{}, level:{}, withusRang:{}, disease_info:{}, helper:{}, medicine:{}, blood_pressure:{}, exercise:{}, symptom:{}, natrium_moisture:{}," +
+                        " weight:{}, mind_health:{}, alarm:{}, board:{}, info_edit:{}"
+                , count.getKey().getId(), count.getKey().getWeek(), count.getGoal(), count.getLevel(),count.getWithusRang(), count.getDiseaseInfo(), count.getHelper(),
+                count.getMedicine(), count.getBloodPressure(), count.getExercise(), count.getSymptom(), count.getNatriumMoisture(), count.getWeight(), count.getMindHealth(),
+                count.getAlarm(), count.getBoard(), count.getInfoEdit());
+
+        try {
+            if (user.getType() == User.Type.PATIENT && user.getWeek() != 25) {
+                saved = countService.patientMainUpsertCount(count);
+                code = Result.Code.OK;
+            } else if (user.getWeek() == 25) {
+                throw new IllegalStateException("25 Weeks User try input data [warn]");
+            } else {
+                throw new IllegalStateException("Caregiver try input data [warn]");
+            }
+        } catch (Exception exception) {
+            logger.error(exception.getLocalizedMessage(), exception);
+            code = Result.Code.ERROR_DATABASE;
+        }
+        return Result.<Tbl_patient_main_button_count>builder()
+                .code(code)
+                .data(saved)
+                .build();
+    }
+
+    @PutMapping(value="/patient-sub-button-count",consumes = MediaType.APPLICATION_JSON_VALUE )
+    @ResponseBody
+    public Result<Tbl_patient_sub_button_count> getPatientMainCount(@RequestBody Tbl_patient_sub_button_count count, HttpServletRequest request){
+        User user = getUser();
+        count.setKey(new ProgressKey(user.getUserId(), user.getWeek()));
+        Result.Code code;
+        Tbl_patient_sub_button_count saved = null;
+
+        logger.info("id:{}, week:{}, low_level:{}, middle_level:{}, high_level:{}, make_my_goal:{}, natrium_moisture:{}, water_intake:{}, mind_diary:{}, mind_score: {}, mind_management:{}," +
+                        " hof:{}, notice:{}, question:{}, share:{}, medicine_time:{}, out_patient_visit_time:{}"
+                , count.getKey().getId(), count.getKey().getWeek(), count.getLowLevel(), count.getMiddleLevel(),count.getHighLevel(), count.getMakeMyGoal(), count.getNatriumMoisture(),
+                count.getWaterIntake(), count.getMindDiary(), count.getMindScore(), count.getMindManagement(), count.getHof(), count.getNotice(), count.getQuestion(), count.getShare(), count.getMedicineTime(), count.getOutPatientVisitTime()
+        );
+
+        try {
+            if (user.getType() == User.Type.PATIENT && user.getWeek() != 25) {
+                saved = countService.patientSubUpsertCount(count);
+                code = Result.Code.OK;
+            } else if (user.getWeek() == 25) {
+                throw new IllegalStateException("25 Weeks User try input data [warn]");
+            } else {
+                throw new IllegalStateException("Caregiver try input data [warn]");
+            }
+        } catch (Exception exception) {
+            logger.error(exception.getLocalizedMessage(), exception);
+            code = Result.Code.ERROR_DATABASE;
+        }
+        return Result.<Tbl_patient_sub_button_count>builder()
+                .code(code)
+                .data(saved)
+                .build();
+    }
+
+    @PutMapping(value = "/patient-detail-button-count", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Result<Tbl_patient_detail_button_count> getSymptomCount(@RequestBody Tbl_patient_detail_button_count count, HttpServletRequest request) {
+        User user = getUser();
+        count.setKey(new ProgressKey(user.getUserId(), user.getWeek()));
+        Result.Code code;
+        Tbl_patient_detail_button_count saved = null;
+
+        logger.info("id:{}, week:{}, recommend_diet:{}, meditation:{}, body_activity{}, deep_breath:{}, consulting:{}, medicine_alarm:{}, blood_pressure_alarm:{}, symptom_alarm:{}, " +
+                        "exercise_alarm:{}, natrium_moisture_alarm:{}, water_intake_alarm:{}, weightAlarm:{}, mind_score_alarm:{}"
+                , count.getKey().getId(), count.getKey().getWeek(), count.getRecommendDiet(), count.getMeditation(), count.getBodyActivity(), count.getDeepBreath(), count.getConsulting(),
+                count.getMedicineAlarm(), count.getBloodPressureAlarm(), count.getSymptomAlarm(), count.getExerciseAlarm(), count.getNatriumMoistureAlarm(), count.getWaterIntakeAlarm(),
+                count.getWeightAlarm(), count.getMindScoreAlarm());
+
+        try {
+            if (user.getType() == User.Type.PATIENT && user.getWeek() != 25) {
+                saved = countService.patientDetailUpsertCount(count);
+                code = Result.Code.OK;
+            } else if (user.getWeek() == 25) {
+                throw new IllegalStateException("25 Weeks User try input data [warn]");
+            } else {
+                throw new IllegalStateException("Caregiver try input data [warn]");
+            }
+        } catch (Exception exception) {
+            logger.error(exception.getLocalizedMessage(), exception);
+            code = Result.Code.ERROR_DATABASE;
+        }
+
+        return Result.<Tbl_patient_detail_button_count>builder()
+                .code(code)
+                .data(saved)
+                .build();
+    }
+    // 보호자 버튼 컨트롤러
     @PutMapping(value = "/caregiver-main-button-count", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<Tbl_caregiver_main_button_count> getSymptomCount(@RequestBody Tbl_caregiver_main_button_count count, HttpServletRequest request) {
@@ -43,7 +142,7 @@ public class ButtonCountController extends BaseController {
                 count.getAlarm(), count.getBoard(), count.getInfoEdit());
 
         try {
-            if (user.getType() == User.Type.PATIENT && user.getWeek() != 25) {
+            if (user.getType() == User.Type.CAREGIVER && user.getWeek() != 25) {
                 saved = countService.caregiverMainUpsertCount(count);
                 code = Result.Code.OK;
             } else if (user.getWeek() == 25) {
@@ -60,6 +159,8 @@ public class ButtonCountController extends BaseController {
                 .data(saved)
                 .build();
     }
+
+
     @PutMapping(value = "/caregiver-sub-button-count", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<Tbl_caregiver_sub_button_count> getSymptomCount(@RequestBody Tbl_caregiver_sub_button_count count, HttpServletRequest request) {
@@ -105,7 +206,7 @@ public class ButtonCountController extends BaseController {
         logger.info("id:{}, week:{}, recommend_diet:{}, meditation:{}, body_activity{}, deep_breath:{}, consulting:{}, medicine_alarm:{}, blood_pressure_alarm:{}, symptom_alarm:{}, " +
                         "exercise_alarm:{}, natrium_moisture_alarm:{}, water_intake_alarm:{}, weightAlarm:{}, mind_diary_alarm:{}, mind_score_alarm:{}"
                 , count.getKey().getId(), count.getKey().getWeek(), count.getRecommendDiet(), count.getMeditation(), count.getBodyActivity(), count.getDeepBreath(), count.getConsulting(),
-                count.getMedicineAlarm(), count.getBloodPressureAlarm(), count.getSymptomAlarm(), count.getExerciseAlarm(), count.getNatriumMoistureAlarm(), count.getWeightAlarm(),
+                count.getMedicineAlarm(), count.getBloodPressureAlarm(), count.getSymptomAlarm(), count.getExerciseAlarm(), count.getNatriumMoistureAlarm(), count.getWaterIntakeAlarm(),
                 count.getWeightAlarm(), count.getMindDiaryAlarm(), count.getMindScoreAlarm());
 
         try {

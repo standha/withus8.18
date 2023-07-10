@@ -12,6 +12,10 @@ function addSymptom(count) {
     const namo = document.querySelector("input[name=natriumMoisture]").value;
     const weight   = document .querySelector("input[name=weight]").value;
     const chat = document.querySelector("input[name=withusRang]").value;
+    const board = document.querySelector("input[name=board]").value;
+    const medicine = document.querySelector("input[name=medicine]").value;
+    const infoEdit = document.querySelector("input[name=infoEdit]").value;
+
     const body = {
         symptom: count,
         alarm: alarm,
@@ -23,7 +27,10 @@ function addSymptom(count) {
         level: level,
         natriumMoisture: namo,
         weight: weight,
-        withusRang: chat
+        withusRang: chat,
+        board : board,
+        medicine: medicine,
+        infoEdit: infoEdit
     };
     const url = document.querySelector("#button-count").value;
     const options = {
@@ -57,6 +64,10 @@ function addAlarm(count) {
     const namo = document.querySelector("input[name=natriumMoisture]").value;
     const weight   = document .querySelector("input[name=weight]").value;
     const chat = document.querySelector("input[name=withusRang]").value;
+    const board = document.querySelector("input[name=board]").value;
+    const medicine = document.querySelector("input[name=medicine]").value;
+    const infoEdit = document.querySelector("input[name=infoEdit]").value;
+
     const body = {
         alarm: count,
         symptom: symptom,
@@ -68,7 +79,10 @@ function addAlarm(count) {
         level: level,
         natriumMoisture: namo,
         weight: weight,
-        withusRang: chat
+        withusRang: chat,
+        board: board,
+        medicine: medicine,
+        infoEdit : infoEdit
     };
     const url = document.querySelector("#button-count").value;
     const options = {
@@ -102,6 +116,10 @@ function addPressure(count) {
     const namo = document.querySelector("input[name=natriumMoisture]").value;
     const weight   = document .querySelector("input[name=weight]").value;
     const chat = document.querySelector("input[name=withusRang]").value;
+    const board = document.querySelector("input[name=board]").value;
+    const medicine = document.querySelector("input[name=medicine]").value;
+    const infoEdit = document.querySelector("input[name=infoEdit]").value;
+
     const body = {
         bloodPressure: count,
         symptom: symptom,
@@ -113,7 +131,10 @@ function addPressure(count) {
         level: level,
         natriumMoisture: namo,
         weight: weight,
-        withusRang: chat
+        withusRang: chat,
+        board : board,
+        medicine : medicine,
+        infoEdit: infoEdit
     };
     const url = document.querySelector("#button-count").value;
     const options = {
@@ -146,6 +167,10 @@ function addExercise(count) {
     const namo = document.querySelector("input[name=natriumMoisture]").value;
     const weight   = document .querySelector("input[name=weight]").value;
     const chat = document.querySelector("input[name=withusRang]").value;
+    const board = document.querySelector("input[name=board]").value;
+    const medicine = document.querySelector("input[name=medicine]").value;
+    const infoEdit = document.querySelector("input[name=infoEdit]").value;
+
     const body = {
         exercise: count,
         symptom: symptom,
@@ -157,7 +182,10 @@ function addExercise(count) {
         level: level,
         natriumMoisture: namo,
         weight: weight,
-        withusRang: chat
+        withusRang: chat,
+        board: board,
+        medicine : medicine,
+        infoEdit: infoEdit
     };
     const url = document.querySelector("#button-count").value;
     const options = {
@@ -191,6 +219,10 @@ function addMoistureNatrium(count) {
     const exercise = document.querySelector("input[name=exercise]").value;
     const weight   = document .querySelector("input[name=weight]").value;
     const chat = document.querySelector("input[name=withusRang]").value;
+    const board = document.querySelector("input[name=board]").value;
+    const medicine = document.querySelector("input[name=medicine]").value;
+    const infoEdit = document.querySelector("input[name=infoEdit]").value;
+
     const body = {
         natriumMoisture: count,
         symptom: symptom,
@@ -202,7 +234,10 @@ function addMoistureNatrium(count) {
         level: level,
         exercise: exercise,
         weight: weight,
-        withusRang: chat
+        withusRang: chat,
+        board: board,
+        medicine: medicine,
+        infoEdit: infoEdit
     };
     const url = document.querySelector("#button-count").value;
     const options = {
@@ -236,6 +271,10 @@ function addWeight(count) {
     const exercise = document.querySelector("input[name=exercise]").value;
     const natriumMoisture   = document .querySelector("input[name=natriumMoisture]").value;
     const chat = document.querySelector("input[name=withusRang]").value;
+    const board = document.querySelector("input[name=board]").value;
+    const medicine = document.querySelector("input[name=medicine]").value;
+    const infoEdit = document.querySelector("input[name=infoEdit]").value;
+
     const body = {
         weight: count,
         symptom: symptom,
@@ -247,7 +286,10 @@ function addWeight(count) {
         level: level,
         exercise: exercise,
         natriumMoisture: natriumMoisture,
-        withusRang: chat
+        withusRang: chat,
+        board: board,
+        medicine : medicine,
+        infoEdit: infoEdit
     };
     const url = document.querySelector("#button-count").value;
     const options = {
@@ -281,6 +323,10 @@ function addDiseaseInfo(count) {
     const exercise = document.querySelector("input[name=exercise]").value;
     const natriumMoisture   = document .querySelector("input[name=natriumMoisture]").value;
     const chat = document.querySelector("input[name=withusRang]").value;
+    const board = document.querySelector("input[name=board]").value;
+    const medicine = document.querySelector("input[name=medicine]").value;
+    const infoEdit = document.querySelector("input[name=infoEdit]").value;
+
     const body = {
         diseaseInfo: count,
         symptom: symptom,
@@ -292,7 +338,10 @@ function addDiseaseInfo(count) {
         level: level,
         exercise: exercise,
         natriumMoisture: natriumMoisture,
-        withusRang: chat
+        withusRang: chat,
+        board: board,
+        medicine: medicine,
+        infoEdit: infoEdit
     };
     const url = document.querySelector("#button-count").value;
     const options = {
@@ -324,6 +373,10 @@ function addGoal(count) {
     const exercise = document.querySelector("input[name=exercise]").value;
     const natriumMoisture   = document .querySelector("input[name=natriumMoisture]").value;
     const chat = document.querySelector("input[name=withusRang]").value;
+    const board = document.querySelector("input[name=board]").value;
+    const medicine = document.querySelector("input[name=medicine]").value;
+    const infoEdit = document.querySelector("input[name=infoEdit]").value;
+
     const body = {
         goal: count,
         symptom: symptom,
@@ -335,7 +388,10 @@ function addGoal(count) {
         level: level,
         exercise: exercise,
         natriumMoisture: natriumMoisture,
-        withusRang: chat
+        withusRang: chat,
+        board: board,
+        medicine: medicine,
+        infoEdit: infoEdit
     };
     const url = document.querySelector("#button-count").value;
     const options = {
@@ -368,6 +424,10 @@ function addChat(count) {
     const exercise = document.querySelector("input[name=exercise]").value;
     const natriumMoisture   = document .querySelector("input[name=natriumMoisture]").value;
     const goal = document.querySelector("input[name=goal]").value;
+    const board = document.querySelector("input[name=board]").value;
+    const medicine = document.querySelector("input[name=medicine]").value;
+    const infoEdit = document.querySelector("input[name=infoEdit]").value;
+
     const body = {
         withusRang: count,
         symptom: symptom,
@@ -379,7 +439,10 @@ function addChat(count) {
         level: level,
         exercise: exercise,
         natriumMoisture: natriumMoisture,
-        goal: goal
+        goal: goal,
+        board: board,
+        medicine: medicine,
+        infoEdit: infoEdit
     };
     const url = document.querySelector("#button-count").value;
     const options = {
@@ -412,6 +475,10 @@ function addLevel(count) {
     const exercise = document.querySelector("input[name=exercise]").value;
     const natriumMoisture   = document .querySelector("input[name=natriumMoisture]").value;
     const chat = document.querySelector("input[name=withusRang]").value;
+    const board = document.querySelector("input[name=board]").value;
+    const medicine = document.querySelector("input[name=medicine]").value;
+    const infoEdit = document.querySelector("input[name=infoEdit]").value;
+
     const body = {
         level: count,
         symptom: symptom,
@@ -423,7 +490,10 @@ function addLevel(count) {
         goal: goal,
         exercise: exercise,
         natriumMoisture: natriumMoisture,
-        withusRang: chat
+        withusRang: chat,
+        board: board,
+        medicine: medicine,
+        infoEdit: infoEdit
     };
     const url = document.querySelector("#button-count").value;
     const options = {

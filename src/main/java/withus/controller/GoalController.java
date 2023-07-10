@@ -34,7 +34,7 @@ public class GoalController extends BaseController {
         User user = getUser();
         User.Type typeCheck = user.getType();
         Tbl_goal goal = goalService.getGoalId(getConnectId());
-        Tbl_patient_main_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+        Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
 
         modelAndView.addObject("count", count);
         modelAndView.addObject("goal", goal.getGoal());

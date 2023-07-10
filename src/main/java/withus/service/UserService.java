@@ -1,6 +1,5 @@
 package withus.service;
 
-import com.querydsl.core.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -10,15 +9,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import withus.auth.NoOpPasswordEncoder;
 import withus.dto.MoistureAvgDTO;
-import withus.dto.wwithus.HeaderInfoDTO;
 import withus.entity.*;
 import withus.repository.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -27,17 +23,17 @@ public class UserService implements UserDetailsService {
     private final MedicationAlarmRepository medicationAlarmRepository;
     private final OutPatientVisitAlarmRepository outPatientVisitAlarmRepository;
     private final GoalRepository goalRepositroy;
-    private final CountRepository countRepository;
+    private final PatientMainCountRepository patientMainCountRepository;
     private final PatientSubCountRepository patientSubCountRepository;
     private final PatientDetailCountRepository patientDetailCountRepository;
     @Autowired
     public UserService(UserRepository userRepository, MedicationAlarmRepository medicationAlarmRepository, OutPatientVisitAlarmRepository outPatientVisitAlarmRepository,
-                       GoalRepository goalRepositroy, CountRepository countRepository, PatientSubCountRepository patientSubCountRepository, PatientDetailCountRepository patientDetailCountRepository) {
+                       GoalRepository goalRepositroy, PatientMainCountRepository patientMainCountRepository, PatientSubCountRepository patientSubCountRepository, PatientDetailCountRepository patientDetailCountRepository) {
         this.userRepository = userRepository;
         this.goalRepositroy = goalRepositroy;
         this.medicationAlarmRepository = medicationAlarmRepository;
         this.outPatientVisitAlarmRepository = outPatientVisitAlarmRepository;
-        this.countRepository = countRepository;
+        this.patientMainCountRepository = patientMainCountRepository;
         this.patientSubCountRepository = patientSubCountRepository;
         this.patientDetailCountRepository = patientDetailCountRepository;
     }
@@ -133,7 +129,7 @@ public class UserService implements UserDetailsService {
                         .alarm(0)
                         .infoEdit(0)
                         .build();
-                countRepository.save(tbl_button_count);
+                patientMainCountRepository.save(tbl_button_count);
             }
             for (int i = 1; i <= 24; i++) {
                 ProgressKey key = new ProgressKey(saved.getUserId(), i);

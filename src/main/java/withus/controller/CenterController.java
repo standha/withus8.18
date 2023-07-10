@@ -115,7 +115,7 @@ public class CenterController extends BaseController {
                 if (user.getWeek() == 0) {
                     modelAndView.setViewName("home_0week");
                 } else {
-                    Tbl_patient_main_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+                    Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
                     modelAndView.setViewName("home");
                     modelAndView.addObject("count", count);
                     modelAndView.addObject("type", user.getType());
