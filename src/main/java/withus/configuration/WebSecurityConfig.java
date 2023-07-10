@@ -43,9 +43,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf()
-                .and()
+                .disable()
                 //.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                //.and()
                 .authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
                 .permitAll()
@@ -53,7 +52,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .anyRequest()
                 .authenticated();
-
 
         httpSecurity
                 .formLogin()

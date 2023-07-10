@@ -135,14 +135,17 @@ public class PostController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
-    public String postModify(PostForm postForm, @PathVariable("id") Integer id, Principal principal) {
+    public String postModify(Model model, PostForm postForm, @PathVariable("id") Integer id, Principal principal) {
+
         Post post = this.postService.getPost(id);
+        model.addAttribute("post", post);
+
         if(post.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("admin")) {
             postForm.setSubject(post.getSubject());
             postForm.setContent(post.getContent());
             postForm.setCategory(post.getCategory());
 //        model.addAttribute("action", "modify");
-            return "board/post_form";
+            return "board/post_form_modify";
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
@@ -150,13 +153,14 @@ public class PostController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/modify/{id}")
-    public String postModify(@Valid PostForm postForm, BindingResult bindingResult, Principal principal, @PathVariable("id") Integer id) {
+    public String postModify(Model model, @Valid PostForm postForm, BindingResult bindingResult, Principal principal, @PathVariable("id") Integer id) {
 
         if (bindingResult.hasErrors()) {
-            return "board/post_form";
+            return "board/post_form_modify";
         }
 
         Post post = this.postService.getPost(id);
+        model.addAttribute("post", post);
 
         if (post.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("admin")) {
             this.postService.modify(post, postForm.getSubject(), postForm.getContent(), postForm.getCategory());
