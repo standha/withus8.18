@@ -214,6 +214,8 @@ public class UserService implements UserDetailsService {
     }
 
     @Nullable
+    public ArrayList<String> getAllUserCaregiver(){return userRepository.findByAllCaregiver();}
+    @Nullable
     public List<User> getPatientToken(User.Type type) {
         return userRepository.findByAppTokenIsNotNullAndType(type);
     }

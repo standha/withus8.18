@@ -88,6 +88,17 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
         return headerInfo;
     }
 
+    public User.Type findTypeInfo(String userId) {
+        QUser user = QUser.user;
+
+        User.Type typeString = queryFactory.select(user.type)
+                .from(user)
+                .where(user.userId.eq(userId))
+                .fetchFirst();
+
+        return typeString;
+    }
+
     public List<UserCountInfoDTO> findUserCountInfo() {
         QUser user = QUser.user;
 
@@ -249,12 +260,12 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
         return natriumAscList;
     }
 
-    public List<ButtonCountSumDTO> findButtonCountSum(String userId) {
+    public List<PatientMainButtonCountSumDTO> findPatientMainButtonCountSum(String userId) {
         QTbl_patient_main_button_count bc = QTbl_patient_main_button_count.tbl_patient_main_button_count;
 
-        List<ButtonCountSumDTO> buttonCountSum = queryFactory.select(Projections.constructor(ButtonCountSumDTO.class,
+        List<PatientMainButtonCountSumDTO> buttonCountSum = queryFactory.select(Projections.constructor(PatientMainButtonCountSumDTO.class,
                 bc.alarm.sum(), bc.bloodPressure.sum(), bc.diseaseInfo.sum(), bc.exercise.sum(), bc.goal.sum(), bc.helper.sum(), bc.level.sum(), bc.natriumMoisture.sum(), bc.symptom.sum(),
-                bc.weight.sum(), bc.withusRang.sum()))
+                bc.weight.sum(), bc.withusRang.sum(), bc.medicine.sum(), bc.mindHealth.sum(),  bc.board.sum()))
                 .from(bc)
                 .where(bc.key.id.eq(userId))
                 .fetch();
@@ -262,7 +273,22 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
         return buttonCountSum;
     }
 
-    public List<Tbl_patient_main_button_count> findButtonCount(String userId) {
+    public List<CaregiverMainButtonCountSumDTO> findCaregiverMainButtonCountSum(String userId) {
+        QTbl_caregiver_main_button_count bc = QTbl_caregiver_main_button_count.tbl_caregiver_main_button_count;
+
+        List<CaregiverMainButtonCountSumDTO> buttonCountSum = queryFactory.select(Projections.constructor(CaregiverMainButtonCountSumDTO.class,
+                        bc.goal.sum(), bc.level.sum(), bc.withusRang.sum(), bc.diseaseInfo.sum(), bc.helper.sum(), bc.medicine.sum(), bc.bloodPressure.sum(), bc.exercise.sum(),
+                        bc.familyObservation.sum(), bc.dietManagement.sum(), bc.weight.sum(), bc.mindHealth.sum(), bc.alarm.sum(), bc.board.sum()))
+                .from(bc)
+                .where(bc.key.id.eq(userId))
+                .fetch();
+
+        return buttonCountSum;
+    }
+
+
+    //admin button_count
+    public List<Tbl_patient_main_button_count> findPatientMainButtonCount(String userId) {
         QTbl_patient_main_button_count bc = QTbl_patient_main_button_count.tbl_patient_main_button_count;
 
         List<Tbl_patient_main_button_count> buttonCount = queryFactory.selectFrom(bc)
@@ -272,7 +298,53 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
 
         return buttonCount;
     }
+    public List<Tbl_patient_sub_button_count> findPatientSubButtonCount(String userId) {
+        QTbl_patient_sub_button_count bc = QTbl_patient_sub_button_count.tbl_patient_sub_button_count;
 
+        List<Tbl_patient_sub_button_count> buttonCount = queryFactory.selectFrom(bc)
+                .where(bc.key.id.eq(userId))
+                .orderBy(bc.key.week.asc())
+                .fetch();
+
+        return buttonCount;
+    }
+    public List<Tbl_patient_detail_button_count> findPatientDetailButtonCount(String userId) {
+        QTbl_patient_detail_button_count bc = QTbl_patient_detail_button_count.tbl_patient_detail_button_count;
+
+        List<Tbl_patient_detail_button_count> buttonCount = queryFactory.selectFrom(bc)
+                .where(bc.key.id.eq(userId))
+                .orderBy(bc.key.week.asc())
+                .fetch();
+
+        return buttonCount;
+    }
+    public List<Tbl_caregiver_main_button_count> findCaregiverMainButtonCount(String userId) {
+        QTbl_caregiver_main_button_count bc = QTbl_caregiver_main_button_count.tbl_caregiver_main_button_count;
+
+        List<Tbl_caregiver_main_button_count> buttonCount = queryFactory.selectFrom(bc)
+                .where(bc.key.id.eq(userId))
+                .orderBy(bc.key.week.asc())
+                .fetch();
+        return buttonCount;
+    }
+    public List<Tbl_caregiver_sub_button_count> findCaregiverSubButtonCount(String userId) {
+        QTbl_caregiver_sub_button_count bc = QTbl_caregiver_sub_button_count.tbl_caregiver_sub_button_count;
+
+        List<Tbl_caregiver_sub_button_count> buttonCount = queryFactory.selectFrom(bc)
+                .where(bc.key.id.eq(userId))
+                .orderBy(bc.key.week.asc())
+                .fetch();
+        return buttonCount;
+    }
+    public List<Tbl_caregiver_detail_button_count> findCaregiverDetailButtonCount(String userId) {
+        QTbl_caregiver_detail_button_count bc = QTbl_caregiver_detail_button_count.tbl_caregiver_detail_button_count;
+
+        List<Tbl_caregiver_detail_button_count> buttonCount = queryFactory.selectFrom(bc)
+                .where(bc.key.id.eq(userId))
+                .orderBy(bc.key.week.asc())
+                .fetch();
+        return buttonCount;
+    }
     public List<PatientButtonSumDTO> findPatientButtonSum(){
         QTbl_patient_main_button_count bc = QTbl_patient_main_button_count.tbl_patient_main_button_count;
         List<PatientButtonSumDTO> buttonCount = queryFactory.select(Projections.constructor(PatientButtonSumDTO.class,

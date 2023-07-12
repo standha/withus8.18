@@ -1,9 +1,9 @@
 package withus.dto;
 
-public class ButtonCountSumDTO {
+public class PatientMainButtonCountSumDTO {
     private int alarm;
     private int blood;
-    private int info;
+    private int disease_info;
     private int exercise;
     private int goal;
     private int helper;
@@ -12,11 +12,15 @@ public class ButtonCountSumDTO {
     private int symptom;
     private int weight;
     private int chat;
+    private int medicine;
+    private int mind_health;
+    private int board;
 
-    public ButtonCountSumDTO(int alarm, int blood, int info, int exercise, int goal, int helper, int level, int natrium_moisture, int symptom, int weight, int chat) {
+    public PatientMainButtonCountSumDTO(int alarm, int blood, int disease_info, int exercise, int goal, int helper, int level, int natrium_moisture, int symptom,
+                                        int weight, int chat, int medicine, int mind_health, int board) {
         this.alarm = alarm;
         this.blood = blood;
-        this.info = info;
+        this.disease_info = disease_info;
         this.exercise = exercise;
         this.goal = goal;
         this.helper = helper;
@@ -25,8 +29,16 @@ public class ButtonCountSumDTO {
         this.symptom = symptom;
         this.weight = weight;
         this.chat = chat;
+        this.medicine = medicine;
+        this.mind_health = mind_health;
+        this.board = board;
     }
 
+    public int getMedicine(){return medicine;}
+
+    public int getMind_health(){return mind_health;}
+
+    public int getBoard(){return board;}
     public int getAlarm() {
         return alarm;
     }
@@ -35,8 +47,8 @@ public class ButtonCountSumDTO {
         return blood;
     }
 
-    public int getInfo() {
-        return info;
+    public int getDisease_info() {
+        return disease_info;
     }
 
     public int getExercise() {

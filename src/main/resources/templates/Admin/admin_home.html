@@ -45,16 +45,33 @@
 			<thead>
 			<tr>
 				<th>등록 순서</th>
-				<th>환자 이름</th>
-				<th>환자 ID</th>
-				<th>환자 PW</th>
-				<th>환자 생년월일</th>
-				<th>환자 성별</th>
-				<th>환자 전화번호</th>
-				<th>보호자 이름</th>
-				<th>보호자 ID</th>
-				<th>보호자 PW</th>
-				<th>보호자 전화번호</th>
+				<th th:if="${type} =='PATIENT'">환자 이름</th>
+				<th th:if="${type} =='PATIENT'">환자 ID</th>
+				<th th:if="${type} =='PATIENT'">환자 PW</th>
+				<th th:if="${type} =='PATIENT'">환자 생년월일</th>
+				<th th:if="${type} =='PATIENT'">환자 성별</th>
+				<th th:if="${type} =='PATIENT'">환자 키</th>
+				<th th:if="${type} =='PATIENT'">환자 전화번호</th>
+				<th th:if="${type} =='PATIENT'">가족 이름</th>
+				<th th:if="${type} =='PATIENT'">가족 성별</th>
+				<th th:if="${type} =='PATIENT'">환자와의 관계</th>
+				<th th:if="${type} =='PATIENT'">가족 ID</th>
+				<th th:if="${type} =='PATIENT'">가족 PW</th>
+				<th th:if="${type} =='PATIENT'">가족 전화번호</th>
+
+				<th th:if="${type} =='CAREGIVER'">가족 이름</th>
+				<th th:if="${type} =='CAREGIVER'">환자와의 관계</th>
+				<th th:if="${type} =='CAREGIVER'">가족 ID</th>
+				<th th:if="${type} =='CAREGIVER'">가족 PW</th>
+				<th th:if="${type} =='CAREGIVER'">가족 성별</th>
+				<th th:if="${type} =='CAREGIVER'">가족 키</th>
+				<th th:if="${type} =='CAREGIVER'">가족 전화번호</th>
+				<th th:if="${type} =='CAREGIVER'">환자 이름</th>
+				<th th:if="${type} =='CAREGIVER'">환자 성별</th>
+				<th th:if="${type} =='CAREGIVER'">환자 ID</th>
+				<th th:if="${type} =='CAREGIVER'">환자 PW</th>
+				<th th:if="${type} =='CAREGIVER'">환자 전화번호</th>
+
 				<th>최근 접속시간</th>
 				<th>위더스랑 달성률</th>
 			</tr>
@@ -67,11 +84,14 @@
 				<td th:text="${user.password}">환자 PW</td>
 				<td th:text="${user.birthdate} == 'null' ? '' : ${user.birthdate}">환자 생년월일</td>
 				<td th:text="${user.gender} == 'null' ? '' : ${user.gender}">환자 성별</td>
+				<td th:text="${user.height} == 'null' ? '' : ${user.height}">환자 키</td>
 				<td th:text="${user.contact}">환자 전화번호</td>
-				<td th:text="${user.guserName} == 'null' ? '' : ${user.guserName}">보호자 이름</td>
-				<td th:text="${user.guserId} == 'null' ? '' : ${user.guserId}">보호자 ID</td>
-				<td th:text="${user.guserPassword} == 'null' ? '' : ${user.guserPassword}">보호자 PW</td>
-				<td th:text="${user.guserContact} == 'null' ? '' : ${user.guserContact}">보호자 전화번호</td>
+				<td th:text="${user.guserName} == 'null' ? '' : ${user.guserName}">가족 이름</td>
+				<td th:text="${user.guserGender} == 'null' ? '' : ${user.guserGender}">가족 성별</td>
+				<td th:text="${user.relative} == 'null' ? '' : ${user.relative}">환자와의 관계</td>
+				<td th:text="${user.guserId} == 'null' ? '' : ${user.guserId}">가족 ID</td>
+				<td th:text="${user.guserPassword} == 'null' ? '' : ${user.guserPassword}">가족 PW</td>
+				<td th:text="${user.guserContact} == 'null' ? '' : ${user.guserContact}">가족 전화번호</td>
 				<td th:text="${user.userRecordDate} == 'null' ? '' : ${#temporals.format(user.userRecordDate, 'yyyy-MM-dd HH:mm')}">최근 접속 날짜</td>
 				<td th:text="${user.currentCode} == 'null' ? '' : ${user.currentCode}">위더스랑 최근 코드</td>
 			</tr>
@@ -82,17 +102,20 @@
 		<thead>
 		<tr>
 			<th>등록 순서</th>
-			<th>환자 이름</th>
-			<th>환자 ID</th>
-			<th>환자 PW</th>
-			<th>환자 생년월일</th>
-			<th>환자 성별</th>
-			<th>환자 전화번호</th>
-			<th>보호자 이름</th>
-			<th>보호자 ID</th>
-			<th>보호자 PW</th>
-			<th>보호자 전화번호</th>
-			<th>최근 접속시간</th>
+			<th th:if="${type} =='PATIENT'">환자 이름</th>
+			<th th:if="${type} =='PATIENT'">환자 ID</th>
+			<th th:if="${type} =='PATIENT'">환자 PW</th>
+			<th th:if="${type} =='PATIENT'">환자 생년월일</th>
+			<th th:if="${type} =='PATIENT'">환자 성별</th>
+			<th th:if="${type} =='PATIENT'">환자 키</th>
+			<th th:if="${type} =='PATIENT'">환자 전화번호</th>
+			<th th:if="${type} =='PATIENT'">가족 이름</th>
+			<th th:if="${type} =='PATIENT'">가족 성별</th>
+			<th th:if="${type} =='PATIENT'">환자와의 관계</th>
+			<th th:if="${type} =='PATIENT'">가족 ID</th>
+			<th th:if="${type} =='PATIENT'">가족 PW</th>
+			<th th:if="${type} =='PATIENT'">가족 전화번호</th>
+			<th >최근 접속시간</th>
 			<th>위더스랑 달성률</th>
 			<th>상세정보</th>
 		</tr>
@@ -105,11 +128,14 @@
 			<td th:text="${user.password}">환자 PW</td>
 			<td th:text="${user.birthdate} == 'null' ? '' : ${user.birthdate}">환자 생년월일</td>
 			<td th:text="${user.gender} == 'null' ? '' : ${user.gender}">환자 성별</td>
+			<td th:text="${user.height} == 'null' ? '' : ${user.height}">환자 키</td>
 			<td th:text="${user.contact}">환자 전화번호</td>
-			<td th:text="${user.guserName} == 'null' ? '' : ${user.guserName}">보호자 이름</td>
-			<td th:text="${user.guserId} == 'null' ? '' : ${user.guserId}">보호자 ID</td>
-			<td th:text="${user.guserPassword} == 'null' ? '' : ${user.guserPassword}">보호자 PW</td>
-			<td th:text="${user.guserContact} == 'null' ? '' : ${user.guserContact}">보호자 전화번호</td>
+			<td th:text="${user.guserName} == 'null' ? '' : ${user.guserName}">가족 이름</td>
+			<td th:text="${user.guserGender} == 'null' ? '' : ${user.guserGender}">가족 성별</td>
+			<td th:text="${user.relative} == 'null' ? '' : ${user.relative}">환자와의 관계</td>
+			<td th:text="${user.guserId} == 'null' ? '' : ${user.guserId}">가족 ID</td>
+			<td th:text="${user.guserPassword} == 'null' ? '' : ${user.guserPassword}">가족 PW</td>
+			<td th:text="${user.guserContact} == 'null' ? '' : ${user.guserContact}">가족 전화번호</td>
 			<td th:text="${user.userRecordDate} == 'null' ? '' : ${#temporals.format(user.userRecordDate, 'yyyy-MM-dd HH:mm')}">최근 접속 날짜</td>
 			<td th:text="${user.currentCode} == 'null' ? '' : ${user.currentCode}">위더스랑 최근 코드</td>
 			<!--<td><input type="button" id="test" class="test" value="상세보기" th:onclick="'location.href=/user/'+'@{user.userId}'"></td>-->

@@ -47,9 +47,9 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Transactional(readOnly = true)
     @Nullable
     @Query(value = "select u.name as patientName ,u.id as patientId, u.password as patientPassword, u.birthdate as patientBirthdate," +
-            " u.gender as patientGender, u.contact as patientContact, c.name as caregiverName," +
+            " u.gender as patientGender, u.contact as patientContact, c.name as caregiverName, c.gender as caregiverGender, " +
             "c.id as caregiverId, c.password as caregiverPassword, c.contact as caregiverContact, u.user_record_date as userRecordDate , code as currentCode, " +
-            "u.height as height, u.relative as relative" +
+            "u.height as patientHeight, c.relative as caregiverRelative" +
             " from user as u left join user as c on c.contact = u.caregiver_contact " +
             "left join(select any_value(t.entry_code) as 'code' , any_value(t.date_time), t.user_id from" +
             "(select wwh.user_id, wwh.date_time, wwh.entry_code" +
@@ -64,6 +64,26 @@ public interface UserRepository extends JpaRepository<User, String> {
             " order by u.registration_date_time asc;", nativeQuery = true)
     ArrayList<String> findByAll();
 
+
+    @Transactional(readOnly = true)
+    @Nullable
+    @Query(value = "select u.name as caregiverName ,u.relative as patientRelative,u.id as caregiverId, u.password as caregiverPassword, u.birthdate as caregiverBirthdate," +
+            " u.gender as caregiverGender, u.height as caregiverHeight, u.contact as caregiverContact, c.name as patientName, c.gender as patientGender, " +
+            "c.id as patientId, c.password as patientPassword, c.contact as patientContact, u.user_record_date as userRecordDate , code as currentCode, " +
+            "u.height as height, u.relative as relative" +
+            " from user as u left join user as c on u.contact = c.caregiver_contact " +
+            "left join(select any_value(t.entry_code) as 'code' , any_value(t.date_time), t.user_id from " +
+            "(select wwh.user_id, wwh.date_time, wwh.entry_code" +
+            " from wwithus_entry_history as wwh" +
+            " where(wwh.user_id, wwh.date_time)in(" +
+            "select wh.user_id,max(wh.date_time)as dt" +
+            " from wwithus_entry_history as wh group by wh.user_id)" +
+            "order by wwh.date_time desc" +
+            ")t " +
+            "group by t.user_id)t on(u.id = t.user_id)" +
+            "where u.type = 'CAREGIVER'" +
+            " order by u.registration_date_time asc;", nativeQuery = true)
+    ArrayList<String> findByAllCaregiver();
 
     @Transactional(readOnly = true)
     @Nonnull

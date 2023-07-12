@@ -15,7 +15,6 @@ import withus.repository.*;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 public class AdminService {
@@ -122,14 +121,42 @@ public class AdminService {
     }
 
     @Nullable
-    public List<ButtonCountSumDTO> getButtonCount(String userId) {
-        return userRepositorySupport.findButtonCountSum(userId);
+    public List<PatientMainButtonCountSumDTO> getPatientMainButtonCount(String userId) {
+        return userRepositorySupport.findPatientMainButtonCountSum(userId);
     }
 
     @Nullable
-    public List<Tbl_patient_main_button_count> getButtonCountAsc(String userId) {
-        return userRepositorySupport.findButtonCount(userId);
+    public List<CaregiverMainButtonCountSumDTO> getCaregiverMainButtonCount(String userId){
+        return userRepositorySupport.findCaregiverMainButtonCountSum(userId);
     }
+
+    // admin화면 버튼 클릭수
+    @Nullable
+    public List<Tbl_patient_main_button_count> getPatientMainButtonCountAsc(String userId) {
+        return userRepositorySupport.findPatientMainButtonCount(userId);
+    }
+    @Nullable
+    public List<Tbl_patient_sub_button_count> getPatientSubButtonCountAsc(String userId) {
+        return userRepositorySupport.findPatientSubButtonCount(userId);
+    }
+    @Nullable
+    public List<Tbl_patient_detail_button_count> getPatientDetailButtonCountAsc(String userId) {
+        return userRepositorySupport.findPatientDetailButtonCount(userId);
+    }
+    @Nullable
+    public List<Tbl_caregiver_main_button_count> getCaregiverMainButtonCountAsc(String userId){
+        return userRepositorySupport.findCaregiverMainButtonCount(userId);
+    }
+    @Nullable
+    public List<Tbl_caregiver_sub_button_count> getCaregiverSubButtonCountAsc(String userId){
+        return userRepositorySupport.findCaregiverSubButtonCount(userId);
+    }
+    @Nullable
+    public List<Tbl_caregiver_detail_button_count> getCaregiverDetailButtonCountAsc(String userId){
+        return userRepositorySupport.findCaregiverDetailButtonCount(userId);
+    }
+
+
 
     public List<NatriumCountDTO> getNatriumCountWeek(String userId) {
         Integer week = 1;
@@ -203,6 +230,10 @@ public class AdminService {
         return patient_button_sum;
     }
 
+    public User.Type getTypeInfo(String userId){
+        User.Type type_info = userRepositorySupport.findTypeInfo(userId);
+        return type_info;
+    }
 }
 
 @FunctionalInterface

@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org" lang="kr" style="overflow-y:hidden !important">
 <meta charset="UTF-8">
 <link rel="stylesheet" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css"/>
 <script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
@@ -15,6 +15,7 @@
     <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <script src="/js/admin/admin_excel.js"></script>
+    <script src="/js/admin/admin_button_count.js"></script>
     <link href="/css/admin/adminTable.css" rel="stylesheet">
     <title>Admin center</title>
 </head>
@@ -29,16 +30,24 @@
     <div th:if="${counts} != null">
         <div th:replace="Admin/admin_nav :: navFragment"></div>
         <header th:replace="Admin/admin_infoHeader :: headerFragment"></header>
-
-        <button class="btn__excel" onclick="fnExcelReport('foo-table','button', userId)">엑셀 다운</button>
+        <div style="display: flex">
+            <div style="width:88%; align-self: center;">
+                <button class="button_count_click" onclick="mainButton(userId)" style="margin-left: 16.3%; margin-right: 16.3%;">메인 항목 버튼 클릭수</button>
+                <button class="button_count_click" onclick="subButton(userId)" style="margin-right: 16.3%;">하부 항목 버튼 클릭수</button>
+                <button class="button_count_click" onclick="detailButton(userId)">세부 항목 버튼 클릭수</button>
+            </div>
+            <div style="width:12%">
+                <button class="btn__excel" onclick="fnExcelReport('foo-table','button', userId)">엑셀 다운</button>
+            </div>
+        </div>
         <div class="center-table">
             <table id="foo-table" class="table table-bordered" style="table-layout: fixed">
                 <thead style="text-align: center">
                 <tr style="text-align: center; font-weight: bold">
-                    <th colspan="12">버튼 클릭 수 </th>
+                    <th class="tableName" colspan="15">메인 항목 버튼 클릭수</th>
                 </tr>
-                <tr style="text-align: center">
-                    <th>주차</th><th>이 주의 목표</th><th>달성률</th><th>알람</th><th>혈압/맥박</th><th>운동</th><th>염분/수분</th><th>체중</th><th>증상일지</th><th>질환정보</th><th>위더스랑 버튼</th><th>앱 도우미 버튼</th>
+                <tr class="tableItem" style="text-align: center">
+                    <th>주차</th><th>이 주의 목표</th><th>달성률</th><th>위더스랑</th><th>질환정보</th><th>도우미</th><th>복용약</th><th>혈압/맥박</th><th>운동</th><th>증상일지</th><th>염분/수분</th><th>체중</th><th>마음건강</th><th>게시판</th><th>알람</th>
                 </tr>
                 </thead>
                 <tbody id="history-table-data" style="text-align: center">
@@ -46,17 +55,20 @@
                 <tbody style="text-align: center; border-top: 1px solid #222222">
                         <tr th:each="countSum : ${countSum}" class="allRecord">
                             <td>총합</td>
-                            <td th:text="${countSum.goal}">이 주의 목표</td>
-                            <td th:text="${countSum.level}">달성률</td>
-                            <td th:text="${countSum.alarm}">알람</td>
-                            <td th:text="${countSum.blood}">혈압/맥박</td>
-                            <td th:text="${countSum.exercise}">운동</td>
-                            <td th:text="${countSum.natrium_moisture}">염분/수분</td>
-                            <td th:text="${countSum.weight}">체중</td>
-                            <td th:text="${countSum.symptom}">증상일지</td>
-                            <td th:text="${countSum.info}">질환정보</td>
-                            <td th:text="${countSum.chat}">위더스랑 버튼</td>
-                            <td th:text="${countSum.helper}">앱 도우미 버튼</td>
+                            <td th:text="${countSum.goal}" class="goal">이 주의 목표</td>
+                            <td th:text="${countSum.level}" class="level">달성률</td>
+                            <td th:text="${countSum.chat}" class="withusRang">위더스랑</td>
+                            <td th:text="${countSum.disease_info}" class="diseaseInfo">질환정보</td>
+                            <td th:text="${countSum.helper}" class="helper">도우미</td>
+                            <td th:text="${countSum.medicine}" class="medicine">복용약</td>
+                            <td th:text="${countSum.blood}" class="bloodPressure">혈압/맥박</td>
+                            <td th:text="${countSum.exercise}" class="exercise">운동</td>
+                            <td th:text="${countSum.symptom}" class="symptom">증상일지</td>
+                            <td th:text="${countSum.natrium_moisture}" class="natriumMoisture">염분/수분</td>
+                            <td th:text="${countSum.weight}" class="weight">체중</td>
+                            <td th:text="${countSum.mind_health}" class="mindHealth">마음건강</td>
+                            <td th:text="${countSum.board}" class="board">게시판</td>
+                            <td th:text="${countSum.alarm}" class="alarm">알람</td>
                         </tr>
                 </tbody>
             </table>
@@ -80,18 +92,20 @@
             var Item = "<tr class='even-tr'>";
 
         Item += "<td>" + count[i].key.week + "주차" + "</td>";
-        Item += "<td>" + count[i].goal + "</td>";
-        Item += "<td>" + count[i].level + "</td>";
-        Item += "<td>" + count[i].alarm + "</td>";
-        Item += "<td>" + count[i].bloodPressure + "</td>";
-        Item += "<td>" + count[i].exercise + "</td>";
-        Item += "<td>" + count[i].natriumMoisture + "</td>";
-        Item += "<td>" + count[i].weight + "</td>";
-        Item += "<td>" + count[i].symptom + "</td>";
-        Item += "<td>" + count[i].diseaseInfo + "</td>";
-        Item += "<td>" + count[i].withusRang + "</td>";
-        Item += "<td>" + count[i].helper + "</td>";
-
+        Item += "<td class='goal'>" + count[i].goal + "</td>";
+        Item += "<td class='level'>" + count[i].level + "</td>";
+        Item += "<td class='withusRang'>" + count[i].withusRang + "</td>";
+        Item += "<td class='diseaseInfo'>" + count[i].diseaseInfo + "</td>";
+        Item += "<td class='helper'>" + count[i].helper + "</td>";
+        Item += "<td class='medicine'>" + count[i].medicine + "</td>";
+        Item += "<td class='bloodPressure'>" + count[i].bloodPressure + "</td>";
+        Item += "<td class='exercise'>" + count[i].exercise + "</td>";
+        Item += "<td class='symptom'>" + count[i].symptom + "</td>";
+        Item += "<td class='natriumMoisture'>" + count[i].natriumMoisture + "</td>";
+        Item += "<td class='weight'>" + count[i].weight + "</td>";
+        Item += "<td class='mindHealth'>" + count[i].mindHealth + "</td>";
+        Item += "<td class='board'>" + count[i].board + "</td>";
+        Item += "<td class='alarm'>" + count[i].alarm + "</td>";
         Item += "</tr>";
         $('#history-table-data').append(Item);
     }

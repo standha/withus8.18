@@ -18,10 +18,10 @@ div.dataTables_paginate{
 h4{ font-weight: bold; padding-left: 15px; }
 h5{ padding-left: 15px; }
 /*상세 보기 테이블*/
-.center-table{  padding: 15px;}
+.center-table{  padding: 15px; padding-top: 5px;}
 .center-table table thead { border: 1px solid #222222; background: #b4b4b4; color: #000000; font-weight: bold;}
-.center-table table tr td { border: 1px solid #222222;}
-.center-table table tr th{ border: 1px solid #222222;}
+.center-table table tr td { border: 1px solid #222222; vertical-align : middle;}
+.center-table table tr th{ border: 1px solid #222222; vertical-align : middle;}
 
 .allRecord { background: #b4b4b4; color: #000000; font-weight: bold; }
 .odd-tr { background: #ffffff; }
@@ -57,6 +57,13 @@ h5{ padding-left: 15px; }
     justify-content: flex-end;
     align-items: center;
     padding-right: 10px;
+}
+/* 버튼 클릭 수 항목 */
+.button_count_click{
+    width:16%;
+    background: dodgerblue;
+    color: white;
+    height: 40px;
 }
 
 /* 대쉬보드 헤더 */

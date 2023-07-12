@@ -15,7 +15,7 @@ function addSymptom(count) {
     const board = document.querySelector("input[name=board]").value;
     const medicine = document.querySelector("input[name=medicine]").value;
     const infoEdit = document.querySelector("input[name=infoEdit]").value;
-
+    const mindHealth = document.querySelector("input[name=mindHealth]").value;
     const body = {
         symptom: count,
         alarm: alarm,
@@ -30,7 +30,8 @@ function addSymptom(count) {
         withusRang: chat,
         board : board,
         medicine: medicine,
-        infoEdit: infoEdit
+        infoEdit: infoEdit,
+        mindHealth: mindHealth
     };
     const url = document.querySelector("#button-count").value;
     const options = {
@@ -67,7 +68,7 @@ function addAlarm(count) {
     const board = document.querySelector("input[name=board]").value;
     const medicine = document.querySelector("input[name=medicine]").value;
     const infoEdit = document.querySelector("input[name=infoEdit]").value;
-
+    const mindHealth = document.querySelector("input[name=mindHealth]").value;
     const body = {
         alarm: count,
         symptom: symptom,
@@ -82,7 +83,8 @@ function addAlarm(count) {
         withusRang: chat,
         board: board,
         medicine: medicine,
-        infoEdit : infoEdit
+        infoEdit : infoEdit,
+        mindHealth: mindHealth
     };
     const url = document.querySelector("#button-count").value;
     const options = {
@@ -119,7 +121,7 @@ function addPressure(count) {
     const board = document.querySelector("input[name=board]").value;
     const medicine = document.querySelector("input[name=medicine]").value;
     const infoEdit = document.querySelector("input[name=infoEdit]").value;
-
+    const mindHealth = document.querySelector("input[name=mindHealth]").value;
     const body = {
         bloodPressure: count,
         symptom: symptom,
@@ -134,7 +136,8 @@ function addPressure(count) {
         withusRang: chat,
         board : board,
         medicine : medicine,
-        infoEdit: infoEdit
+        infoEdit: infoEdit,
+        mindHealth: mindHealth
     };
     const url = document.querySelector("#button-count").value;
     const options = {
@@ -170,7 +173,7 @@ function addExercise(count) {
     const board = document.querySelector("input[name=board]").value;
     const medicine = document.querySelector("input[name=medicine]").value;
     const infoEdit = document.querySelector("input[name=infoEdit]").value;
-
+    const mindHealth = document.querySelector("input[name=mindHealth]").value;
     const body = {
         exercise: count,
         symptom: symptom,
@@ -185,7 +188,8 @@ function addExercise(count) {
         withusRang: chat,
         board: board,
         medicine : medicine,
-        infoEdit: infoEdit
+        infoEdit: infoEdit,
+        mindHealth: mindHealth
     };
     const url = document.querySelector("#button-count").value;
     const options = {
@@ -222,7 +226,7 @@ function addMoistureNatrium(count) {
     const board = document.querySelector("input[name=board]").value;
     const medicine = document.querySelector("input[name=medicine]").value;
     const infoEdit = document.querySelector("input[name=infoEdit]").value;
-
+    const mindHealth = document.querySelector("input[name=mindHealth]").value;
     const body = {
         natriumMoisture: count,
         symptom: symptom,
@@ -237,7 +241,8 @@ function addMoistureNatrium(count) {
         withusRang: chat,
         board: board,
         medicine: medicine,
-        infoEdit: infoEdit
+        infoEdit: infoEdit,
+        mindHealth: mindHealth
     };
     const url = document.querySelector("#button-count").value;
     const options = {
@@ -274,7 +279,7 @@ function addWeight(count) {
     const board = document.querySelector("input[name=board]").value;
     const medicine = document.querySelector("input[name=medicine]").value;
     const infoEdit = document.querySelector("input[name=infoEdit]").value;
-
+    const mindHealth = document.querySelector("input[name=mindHealth]").value;
     const body = {
         weight: count,
         symptom: symptom,
@@ -289,7 +294,8 @@ function addWeight(count) {
         withusRang: chat,
         board: board,
         medicine : medicine,
-        infoEdit: infoEdit
+        infoEdit: infoEdit,
+        mindHealth: mindHealth
     };
     const url = document.querySelector("#button-count").value;
     const options = {
@@ -326,7 +332,7 @@ function addDiseaseInfo(count) {
     const board = document.querySelector("input[name=board]").value;
     const medicine = document.querySelector("input[name=medicine]").value;
     const infoEdit = document.querySelector("input[name=infoEdit]").value;
-
+    const mindHealth = document.querySelector("input[name=mindHealth]").value;
     const body = {
         diseaseInfo: count,
         symptom: symptom,
@@ -341,7 +347,8 @@ function addDiseaseInfo(count) {
         withusRang: chat,
         board: board,
         medicine: medicine,
-        infoEdit: infoEdit
+        infoEdit: infoEdit,
+        mindHealth: mindHealth
     };
     const url = document.querySelector("#button-count").value;
     const options = {
@@ -376,7 +383,7 @@ function addGoal(count) {
     const board = document.querySelector("input[name=board]").value;
     const medicine = document.querySelector("input[name=medicine]").value;
     const infoEdit = document.querySelector("input[name=infoEdit]").value;
-
+    const mindHealth = document.querySelector("input[name=mindHealth]").value;
     const body = {
         goal: count,
         symptom: symptom,
@@ -391,7 +398,8 @@ function addGoal(count) {
         withusRang: chat,
         board: board,
         medicine: medicine,
-        infoEdit: infoEdit
+        infoEdit: infoEdit,
+        mindHealth : mindHealth
     };
     const url = document.querySelector("#button-count").value;
     const options = {
@@ -427,7 +435,7 @@ function addChat(count) {
     const board = document.querySelector("input[name=board]").value;
     const medicine = document.querySelector("input[name=medicine]").value;
     const infoEdit = document.querySelector("input[name=infoEdit]").value;
-
+    const mindHealth = document.querySelector("input[name=mindHealth]").value;
     const body = {
         withusRang: count,
         symptom: symptom,
@@ -442,7 +450,8 @@ function addChat(count) {
         goal: goal,
         board: board,
         medicine: medicine,
-        infoEdit: infoEdit
+        infoEdit: infoEdit,
+        mindHealth: mindHealth
     };
     const url = document.querySelector("#button-count").value;
     const options = {
@@ -478,7 +487,7 @@ function addLevel(count) {
     const board = document.querySelector("input[name=board]").value;
     const medicine = document.querySelector("input[name=medicine]").value;
     const infoEdit = document.querySelector("input[name=infoEdit]").value;
-
+    const mindHealth = document.querySelector("input[name=mindHealth]").value;
     const body = {
         level: count,
         symptom: symptom,
@@ -493,7 +502,8 @@ function addLevel(count) {
         withusRang: chat,
         board: board,
         medicine: medicine,
-        infoEdit: infoEdit
+        infoEdit: infoEdit,
+        mindHealth: mindHealth
     };
     const url = document.querySelector("#button-count").value;
     const options = {
