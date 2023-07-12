@@ -1,0 +1,94 @@
+<!-- 타임리프의 layout:decorate 속성은 템플릿의 레이아웃(부모 템플릿)으로 사용할 템플릿을 설정한다. 속성의 값인 ~{layout}은 layout.html 파일을 의미한다. -->
+<html layout:decorate="~{board/layout}">
+<div layout:fragment="content" class="container p-0">
+<!--  검색  -->
+<!--  <div class="row my-3">-->
+<!--    <div class="col-6">-->
+<!--      <div class="input-group">-->
+<!--        <input type="text" id="search_kw" class="form-control" th:value="${kw}">-->
+<!--        <button class="btn btn-outline-secondary" type="button" id="btn_search">찾기</button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--    loop.index - 반복 순서, 0부터 1씩 증가-->
+<!--    loop.count - 반복 순서, 1부터 1씩 증가-->
+<!--    loop.size - 반복 객체의 요소 갯수 (예: postList의 요소 갯수)-->
+<!--    loop.first - 루프의 첫번째 순서인 경우 true-->
+<!--    loop.last - 루프의 마지막 순서인 경우 true-->
+<!--    loop.odd - 루프의 홀수번째 순서인 경우 true-->
+<!--    loop.even - 루프의 짝수번째 순서인 경우 true-->
+<!--    loop.current - 현재 대입된 객체 (예: 위의 경우 post과 동일)-->
+    <div th:each="post, loop : ${paging}">
+        <a th:href="@{|/board/post/detail/${post.id}|}" style="text-decoration: none;">
+            <div class="border-bottom border-dark p-2">
+                <div class="row">
+                    <div class="col" th:if="${post.author != null}">
+                        <span th:if="${post.author.type.toString().equals('ADMINISTRATOR')}" class="text-dark fw-bold">관리자</span>
+                        <span th:unless="${post.author.type.toString().equals('ADMINISTRATOR')}" class="text-dark fw-bold">익명</span>
+                        <span th:if="${post.author.type.toString().equals('PATIENT')}" class="border rounded-pill bg-success text-white text-center" style="font-size: 12px; display: inline-block; width: 60px">환자</span>
+                        <span th:if="${post.author.type.toString().equals('CAREGIVER')}" class="border rounded-pill bg-warning text-white text-center" style="font-size: 12px; display: inline-block; width: 60px">보호자</span>
+                    </div>
+                    <!-- #temporals.format(날짜객체, 날짜포맷) - 날짜객체를 날짜포맷에 맞게 변환 -->
+                    <div class="col text-end text-secondary"
+                         th:text="${#temporals.format(post.createDate, 'MM/dd HH:mm')}">
+                    </div>
+                </div>
+                <div class="text-start">
+                    <a th:text="${post.subject}"></a>
+<!--                    댓글수-->
+<!--                    <span class="text-danger small ms-2"-->
+<!--                          th:if="${#lists.size(post.commentList) > 0}"-->
+<!--                          th:text="${#lists.size(post.commentList)}">-->
+<!--                    </span>-->
+                </div>
+            </div>
+        </a>
+    </div>
+  <!-- 페이징 처리 -->
+  <div th:if="${!paging.isEmpty()}">
+    <ul class="pagination justify-content-center">
+<!--      <li class="page-item" th:classappend="${!paging.hasPrevious()} ? 'disabled'">-->
+<!--        <a class="page-link" href="javascript:void(0)" th:data-page="${paging.number-1}">-->
+<!--          <span>이전</span>-->
+<!--        </a>-->
+<!--      </li>-->
+      <!-- 페이징 번호 부분
+      <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+          th:if="${page >= paging.number-3 and page <= paging.number+3}"
+          th:classappend="${page == paging.number} ? 'active'" class="page-item">
+          <a th:text="${page}" class="page-link" href="javascript:void(0)" th:data-page="${page}"></a>
+      </li>
+      -->
+      <li class="page-item" th:classappend="${!paging.hasNext()} ? 'disabled'">
+        <a class="page-link" href="javascript:void(0)" th:data-page="${paging.number+1}">
+          <span>더보기</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+    <form th:action="@{/board/post/list/question}" method="get" id="searchForm">
+        <input type="hidden" id="kw" name="kw" th:value="${kw}">
+        <input type="hidden" id="page" name="page" th:value="${paging.number}">
+    </form>
+    <div class="row my-3">
+        <div class="col-6">
+            <a th:href="@{/board/post/create}" class="btn btn-success">글쓰기</a>
+        </div>
+    </div>
+</div>
+<script layout:fragment="script" type='text/javascript'>
+  const page_elements = document.getElementsByClassName("page-link");
+  Array.from(page_elements).forEach(function(element) {
+    element.addEventListener('click', function() {
+      document.getElementById('page').value = this.dataset.page;
+      document.getElementById('searchForm').submit();
+    });
+  });
+  const btn_search = document.getElementById("btn_search");
+  btn_search.addEventListener('click', function() {
+    document.getElementById('kw').value = document.getElementById('search_kw').value;
+    document.getElementById('page').value = 0;  // 검색버튼을 클릭할 경우 0페이지부터 조회한다.
+    document.getElementById('searchForm').submit();
+  });
+</script>
+</html>

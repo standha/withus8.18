@@ -82,22 +82,14 @@ public class PostService {
         return this.postRepository.findAll(spec, pageable);
     }
 
+    public Page<Post> getPageByCategory(String category, int page, int pageSize) {
+
+        Pageable pageable = PageRequest.of(page, pageSize);
+        return this.postRepository.findByCategoryOrderByCreateDateDesc(category, pageable);
+    }
+
     public List<Post> getListByCategory(String category) {
         return postRepository.findByCategoryOrderByCreateDateDesc(category);
-    }
-
-    public Post getPostRecent(){
-        return postRepository.findTopByOrderByCreateDateDesc();
-    }
-
-    // [에러]수정 필요
-    public Page<Post> getPageByCategory(int page, String category, String kw) {
-        List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("createDate"));
-
-        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
-        Specification<Post> spec = search(kw);
-        return this.postRepository.findByCategory(category, spec, pageable);
     }
 
     public Post getPost(Integer id) {

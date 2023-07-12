@@ -1,7 +1,5 @@
 package withus.board.controller;
 
-import org.springframework.web.servlet.ModelAndView;
-import withus.board.entity.Comment;
 import withus.board.entity.Post;
 import withus.board.form.PostForm;
 import withus.board.service.PostService;
@@ -29,7 +27,6 @@ import withus.service.UserService;
 import org.springframework.data.domain.Page;
 
 import java.security.Principal;
-import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 
@@ -71,27 +68,24 @@ public class PostController {
     }
 
     @GetMapping("/list/notice")
-    public String listNotice(Model model, @RequestParam(value="page", defaultValue = "0") int page, @RequestParam(value = "kw", defaultValue = "") String kw){
-        Page<Post> paging = this.postService.getList(page, 10, kw);
+    public String listNotice(Model model, @RequestParam(value="page", defaultValue = "0") int page){
+        Page<Post> paging = this.postService.getPageByCategory("공지사항", page, 10);
         model.addAttribute("paging", paging);
-        model.addAttribute("kw", kw);
-        return "board/post_list_notice";
+        return "board/post_list_by_category";
     }
 
     @GetMapping("/list/question")
-    public String listQuestion(Model model, @RequestParam(value="page", defaultValue = "0") int page, @RequestParam(value = "kw", defaultValue = "") String kw){
-        Page<Post> paging = this.postService.getList(page, 10, kw);
+    public String listQuestion(Model model, @RequestParam(value="page", defaultValue = "0") int page){
+        Page<Post> paging = this.postService.getPageByCategory("질문게시판", page, 10);
         model.addAttribute("paging", paging);
-        model.addAttribute("kw", kw);
-        return "board/post_list_question";
+        return "board/post_list_by_category";
     }
 
     @GetMapping("/list/share")
-    public String listShare(Model model, @RequestParam(value="page", defaultValue = "0") int page, @RequestParam(value = "kw", defaultValue = "") String kw){
-        Page<Post> paging = this.postService.getList(page, 10, kw);
+    public String listShare(Model model, @RequestParam(value="page", defaultValue = "0") int page){
+        Page<Post> paging = this.postService.getPageByCategory("나눔게시판", page, 10);
         model.addAttribute("paging", paging);
-        model.addAttribute("kw", kw);
-        return "board/post_list_share";
+        return "board/post_list_by_category";
     }
 
     @GetMapping(value = "/detail/{id}")
@@ -123,9 +117,7 @@ public class PostController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
     public String postCreate(@Valid PostForm postForm, BindingResult bindingResult, Principal principal) {
-        if (bindingResult.hasErrors()) {
-            return "board/post_form";
-        }
+        if (bindingResult.hasErrors()) { return "board/post_form"; }
 
         User user = this.userService.getUserForBoard(principal.getName());
 
