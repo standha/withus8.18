@@ -47,7 +47,7 @@
                     <th class="tableName" colspan="15">메인 항목 버튼 클릭수</th>
                 </tr>
                 <tr class="tableItem" style="text-align: center">
-                    <th>주차</th><th>이 주의 목표</th><th>달성률</th><th>위더스랑</th><th>질환정보</th><th>도우미</th><th>복용약</th><th>혈압/맥박</th><th>운동</th><th>증상일지</th><th>염분/수분</th><th>체중</th><th>마음건강</th><th>게시판</th><th>알람</th>
+                    <th>주차</th><th>이 주의 목표</th><th>달성률</th><th>위더스랑</th><th>질환정보</th><th>도우미</th><th>복용약</th><th>혈압/맥박</th><th>운동</th><th th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">증상일지</th><th th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">염분/수분</th><th th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">가족관찰</th><th th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">식단관리</th><th>체중</th><th>마음건강</th><th>게시판</th><th>알람</th>
                 </tr>
                 </thead>
                 <tbody id="history-table-data" style="text-align: center">
@@ -57,16 +57,22 @@
                             <td>총합</td>
                             <td th:text="${countSum.goal}" class="goal">이 주의 목표</td>
                             <td th:text="${countSum.level}" class="level">달성률</td>
-                            <td th:text="${countSum.chat}" class="withusRang">위더스랑</td>
-                            <td th:text="${countSum.disease_info}" class="diseaseInfo">질환정보</td>
+                            <td th:if="${type} == ${T(withus.entity.User.Type).PATIENT}" th:text="${countSum.chat}"  class="withusRang">위더스랑</td>
+                            <td th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}" th:text="${countSum.withusRang}"  class="withusRang">위더스랑</td>
+                            <td th:if="${type} == ${T(withus.entity.User.Type).PATIENT}" th:text="${countSum.disease_info}" class="diseaseInfo">질환정보</td>
+                            <td th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}" th:text="${countSum.diseaseInfo}" class="diseaseInfo">질환정보</td>
                             <td th:text="${countSum.helper}" class="helper">도우미</td>
                             <td th:text="${countSum.medicine}" class="medicine">복용약</td>
-                            <td th:text="${countSum.blood}" class="bloodPressure">혈압/맥박</td>
+                            <td th:if="${type} == ${T(withus.entity.User.Type).PATIENT}" th:text="${countSum.blood}" class="bloodPressure">혈압/맥박</td>
+                            <td th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}" th:text="${countSum.bloodPressure}" class="bloodPressure">혈압/맥박</td>
                             <td th:text="${countSum.exercise}" class="exercise">운동</td>
-                            <td th:text="${countSum.symptom}" class="symptom">증상일지</td>
-                            <td th:text="${countSum.natrium_moisture}" class="natriumMoisture">염분/수분</td>
+                            <td th:if="${type} == ${T(withus.entity.User.Type).PATIENT}" th:text="${countSum.symptom}" class="symptom">증상일지</td>
+                            <td th:if="${type} == ${T(withus.entity.User.Type).PATIENT}" th:text="${countSum.natrium_moisture}" class="natriumMoisture">염분/수분</td>
+                            <td th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}" th:text="${countSum.familyObservation}" class="symptom">가족 관찰</td>
+                            <td th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}" th:text="${countSum.dietManagement}" class="symptom">식단관리</td>
                             <td th:text="${countSum.weight}" class="weight">체중</td>
-                            <td th:text="${countSum.mind_health}" class="mindHealth">마음건강</td>
+                            <td th:if="${type} == ${T(withus.entity.User.Type).PATIENT}" th:text="${countSum.mind_health}" class="mindHealth">마음건강</td>
+                            <td th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}" th:text="${countSum.mindHealth}" class="mindHealth">마음건강</td>
                             <td th:text="${countSum.board}" class="board">게시판</td>
                             <td th:text="${countSum.alarm}" class="alarm">알람</td>
                         </tr>
@@ -78,36 +84,73 @@
 </body>
 <script th:inline="javascript">
     /*<![CDATA[*/
+
     var count = /*[[ ${counts} ]]*/;
+
     var countSum = /*[[ ${countSum} ]]*/;
+
+    var type = /*[[ ${type} ]]*/;
+
     /*]]*/
-
     var userId = count[0].key.id;
+    function createPatientForm(){
+        for (i = 0; i <= 24; i++) {
+            if (i % 2 == 0)
+                var Item = "<tr class='odd-tr'>";
+            else
+                var Item = "<tr class='even-tr'>";
 
-    for(i=0; i<=24; i++)
-    {
-        if(i%2 == 0)
-            var Item = "<tr class='odd-tr'>";
-        else
-            var Item = "<tr class='even-tr'>";
+            Item += "<td>" + count[i].key.week + "주차" + "</td>";
+            Item += "<td class='goal'>" + count[i].goal + "</td>";
+            Item += "<td class='level'>" + count[i].level + "</td>";
+            Item += "<td class='withusRang'>" + count[i].withusRang + "</td>";
+            Item += "<td class='diseaseInfo'>" + count[i].diseaseInfo + "</td>";
+            Item += "<td class='helper'>" + count[i].helper + "</td>";
+            Item += "<td class='medicine'>" + count[i].medicine + "</td>";
+            Item += "<td class='bloodPressure'>" + count[i].bloodPressure + "</td>";
+            Item += "<td class='exercise'>" + count[i].exercise + "</td>";
+            Item += "<td class='symptom'>" + count[i].symptom + "</td>";
+            Item += "<td class='natriumMoisture'>" + count[i].natriumMoisture + "</td>";
+            Item += "<td class='weight'>" + count[i].weight + "</td>";
+            Item += "<td class='mindHealth'>" + count[i].mindHealth + "</td>";
+            Item += "<td class='board'>" + count[i].board + "</td>";
+            Item += "<td class='alarm'>" + count[i].alarm + "</td>";
+            Item += "</tr>";
+            $('#history-table-data').append(Item);
+        }
+    }
 
-        Item += "<td>" + count[i].key.week + "주차" + "</td>";
-        Item += "<td class='goal'>" + count[i].goal + "</td>";
-        Item += "<td class='level'>" + count[i].level + "</td>";
-        Item += "<td class='withusRang'>" + count[i].withusRang + "</td>";
-        Item += "<td class='diseaseInfo'>" + count[i].diseaseInfo + "</td>";
-        Item += "<td class='helper'>" + count[i].helper + "</td>";
-        Item += "<td class='medicine'>" + count[i].medicine + "</td>";
-        Item += "<td class='bloodPressure'>" + count[i].bloodPressure + "</td>";
-        Item += "<td class='exercise'>" + count[i].exercise + "</td>";
-        Item += "<td class='symptom'>" + count[i].symptom + "</td>";
-        Item += "<td class='natriumMoisture'>" + count[i].natriumMoisture + "</td>";
-        Item += "<td class='weight'>" + count[i].weight + "</td>";
-        Item += "<td class='mindHealth'>" + count[i].mindHealth + "</td>";
-        Item += "<td class='board'>" + count[i].board + "</td>";
-        Item += "<td class='alarm'>" + count[i].alarm + "</td>";
-        Item += "</tr>";
-        $('#history-table-data').append(Item);
+    function createCaregiverForm(){
+        for (i = 0; i <= 24; i++) {
+            if (i % 2 == 0)
+                var Item = "<tr class='odd-tr'>";
+            else
+                var Item = "<tr class='even-tr'>";
+
+            Item += "<td>" + count[i].key.week + "주차" + "</td>";
+            Item += "<td class='goal'>" + count[i].goal + "</td>";
+            Item += "<td class='level'>" + count[i].level + "</td>";
+            Item += "<td class='withusRang'>" + count[i].withusRang + "</td>";
+            Item += "<td class='diseaseInfo'>" + count[i].diseaseInfo + "</td>";
+            Item += "<td class='helper'>" + count[i].helper + "</td>";
+            Item += "<td class='medicine'>" + count[i].medicine + "</td>";
+            Item += "<td class='bloodPressure'>" + count[i].bloodPressure + "</td>";
+            Item += "<td class='exercise'>" + count[i].exercise + "</td>";
+            Item += "<td class='familyObservation'>" + count[i].familyObservation + "</td>";
+            Item += "<td class='dietManagement'>" + count[i].dietManagement + "</td>";
+            Item += "<td class='weight'>" + count[i].weight + "</td>";
+            Item += "<td class='mindHealth'>" + count[i].mindHealth + "</td>";
+            Item += "<td class='board'>" + count[i].board + "</td>";
+            Item += "<td class='alarm'>" + count[i].alarm + "</td>";
+            Item += "</tr>";
+            $('#history-table-data').append(Item);
+
+        }
+    }
+    if (type == "PATIENT") {
+        createPatientForm();
+    } else {
+        createCaregiverForm();
     }
 
 </script>

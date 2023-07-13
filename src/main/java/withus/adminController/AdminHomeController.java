@@ -44,17 +44,17 @@ public class AdminHomeController extends withus.controller.BaseController {
         this.countService = countService;
     }
 
-    @GetMapping("/admin_home")
+    @GetMapping("/admin_home/patient")
     public ModelAndView viewHome(){
         User user = getUser();
         if (user.getType() != User.Type.ADMINISTRATOR) {
             throw new IllegalStateException(user.getUserId() + " is not Admin");
         }
-        List<AllUserDTO> resultList = new ArrayList<>();
 
         ArrayList<String> userFin = userService.getAllUserPlz();
-
+        List<AllUserDTO> resultList = new ArrayList<>();
         ModelAndView mav = new ModelAndView();
+
         if (userFin != null) {
             // userFin.forEach((s)-> resultList.add(AllUserDTO.fromString(s)));
             for (String aUserFin : userFin) {
@@ -66,7 +66,7 @@ public class AdminHomeController extends withus.controller.BaseController {
         mav.setViewName("Admin/admin_home");
         return mav;
     }
-    @GetMapping("/admin_home_caregiver")
+    @GetMapping("/admin_home/caregiver")
     public ModelAndView viewCaregiverHome(){
         User user = getUser();
         if (user.getType() != User.Type.ADMINISTRATOR) {
