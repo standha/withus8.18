@@ -1,5 +1,5 @@
 <html layout:decorate="~{board/layout}">
-<div layout:fragment="content" class="conatainer">
+<div layout:fragment="content" class="container">
   <h5 class="my-3 border-bottom pb-2">글쓰기</h5>
   <!-- th:object 속성이 반드시 필요하다.
   th:object를 사용하여 폼의 속성들이 PostForm의 속성들로 구성된다는 점을 타임리프 엔진에 알려줘야 하기 때문
@@ -13,9 +13,9 @@
     <div>
       <select th:field="*{category}" class="form-select">
         <option value="">카테고리를선택해주세요</option> <!--선택안한 비어있는값-->
-        <option sec:authorize="hasRole('ROLE_ADMIN')" value="공지사항">공지사항</option>
-        <option value="질문게시판">질문게시판</option>
-        <option value="나눔게시판">나눔게시판</option>
+          <option sec:authorize="hasRole('ROLE_ADMIN')" value="공지사항">공지사항</option>
+          <option value="질문게시판">질문게시판</option>
+          <option value="나눔게시판">나눔게시판</option>
       </select>
     </div>
     <div class="mb-3">

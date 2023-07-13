@@ -63,42 +63,47 @@ public class CommentContorller {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
-    public String commentModify(CommentForm commentForm, @PathVariable("id") Integer id, Principal principal) {
+    public String commentModify(Model model, CommentForm commentForm, @PathVariable("id") Integer id, Principal principal) {
         Comment comment = this.commentService.getComment(id);
-        if (!comment.getAuthor().getUserId().equals(principal.getName())) {
+        model.addAttribute("comment", comment);
+
+        if (comment.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("admin")) {
+            commentForm.setContent(comment.getContent());
+            return "board/comment_form_modify";
+        } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
-        commentForm.setContent(comment.getContent());
-        return "board/comment_form";
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/modify/{id}")
-    public String commentModify(@Valid CommentForm commentForm, BindingResult bindingResult, @PathVariable("id") Integer id, Principal principal) {
+    public String commentModify(Model model, @Valid CommentForm commentForm, BindingResult bindingResult, @PathVariable("id") Integer id, Principal principal) {
         if (bindingResult.hasErrors()) {
-            return "board/comment_form";
+            return "board/comment_form_modify";
         }
 
         Comment comment = this.commentService.getComment(id);
+        model.addAttribute("comment", comment);
 
-        if (!comment.getAuthor().getUserId().equals(principal.getName())) {
+        if (comment.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("admin")) {
+            this.commentService.modify(comment, commentForm.getContent());
+
+            return String.format("redirect:/board/post/detail/%s#comment_%s", comment.getPost().getId(), comment.getId());
+        } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
-
-        this.commentService.modify(comment, commentForm.getContent());
-
-        return String.format("redirect:/board/post/detail/%s#comment_%s", comment.getPost().getId(), comment.getId());
     }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/delete/{id}")
     public String commentDelete(Principal principal, @PathVariable("id") Integer id) {
         Comment comment = this.commentService.getComment(id);
-        if (!comment.getAuthor().getUserId().equals(principal.getName())) {
+        if (!comment.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("admin")) {
+            this.commentService.delete(comment);
+            return String.format("redirect:/board/post/detail/%s", comment.getPost().getId());
+        } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
         }
-        this.commentService.delete(comment);
-        return String.format("redirect:/board/post/detail/%s", comment.getPost().getId());
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -109,4 +114,5 @@ public class CommentContorller {
         this.commentService.vote(comment, user);
         return String.format("redirect:/board/post/detail/%s#comment_%s", comment.getPost().getId(), comment.getId());
     }
+
 }
