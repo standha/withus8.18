@@ -98,7 +98,7 @@ public class CommentContorller {
     @GetMapping("/delete/{id}")
     public String commentDelete(Principal principal, @PathVariable("id") Integer id) {
         Comment comment = this.commentService.getComment(id);
-        if (!comment.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("admin")) {
+        if (comment.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("admin")) {
             this.commentService.delete(comment);
             return String.format("redirect:/board/post/detail/%s", comment.getPost().getId());
         } else {

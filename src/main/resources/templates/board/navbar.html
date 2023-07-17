@@ -1,19 +1,21 @@
-<nav th:fragment="navbarFragment" class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/board">Withus Board</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-<!--    <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
-<!--      <ul class="navbar-nav me-auto mb-2 mb-lg-0">-->
-<!--        <li class="nav-item">-->
-<!--          <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>-->
-<!--          <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>-->
-<!--        </li>-->
-<!--        <li class="nav-item">-->
-<!--          <a class="nav-link" th:href="@{/user/signup}">회원가입</a>-->
-<!--        </li>-->
-<!--      </ul>-->
-<!--    </div>-->
-  </div>
+<nav th:fragment="navbarFragment" class="bg-light border-bottom py-2"
+    style="background-image: linear-gradient(98deg, #14bed2 4%, #0ddf6a 100%);">
+    <div class="container">
+<!--        <input type="hidden" id="help-request-url" th:attr="value=@{/home/help-request}">-->
+<!--        <a th:if="${previousUrl != null}" th:href="${previousUrl}">뒤로가기</a>-->
+        <div class="row">
+            <div class="col">
+                <button id="helper" class="bg-white rounded-pill border-0 align-middle text-center" style="display: inline-block; height: 36px; width: 80px" onclick="sendHelpRequest();">
+                      <img th:src="@{/images/helper.png}" style="height: 15px; width: 15px;"/>
+                      <span class="fw-bold">도우미</span>
+                </button>
+            </div>
+            <div class="col text-center mb-0">
+                <span class="fs-4 fw-bold text-white align-middle">게시판</span></div>
+            <div class="col text-end">
+<!--                <button id="disease-information" onclick="alert('질환정보');">홈</button>-->
+                <a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl" style="color: #ffffff;"></i></a>
+            </div>
+        </div>
+    </div>
 </nav>

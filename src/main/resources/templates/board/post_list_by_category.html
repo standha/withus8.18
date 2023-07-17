@@ -59,8 +59,8 @@
           <a th:text="${page}" class="page-link" href="javascript:void(0)" th:data-page="${page}"></a>
       </li>
       -->
-      <li class="page-item" th:classappend="${!paging.hasNext()} ? 'disabled'">
-        <a class="page-link btn btn-success btn-sm rounded-3" href="javascript:void(0)" th:data-page="${paging.number+1}" style="width: 200px;">
+      <li class="page-item text-center" th:classappend="${!paging.hasNext()} ? 'disabled'">
+        <a class="page-link rounded-3" href="javascript:void(0)" th:data-page="${paging.number+1}" style="width: 200px;">
           <span>더보기</span>
         </a>
       </li>
@@ -73,6 +73,9 @@
     <div class="d-flex justify-content-center">
         <a th:href="@{/board/post/create}" class="btn btn-outline-dark btn-lg rounded-pill">글쓰기</a>
     </div>
+    <a th:href="@{/board}" class="position-fixed bottom-0 end-0 p-2">
+        <img th:src="@{/images/board/123.다이애딕_환자용_게시판_명예의전당_아이콘11.png}" class="img-fluid float-end" style="max-height: 38px;">
+    </a>
 </div>
 <script layout:fragment="script" type='text/javascript'>
   const page_elements = document.getElementsByClassName("page-link");

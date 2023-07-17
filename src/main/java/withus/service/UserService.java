@@ -66,7 +66,7 @@ public class UserService implements UserDetailsService {
         }
         User user = _user.get();
         List<GrantedAuthority> authorities = new ArrayList<>();
-        if ("admin".equals(username)) {
+        if ("위더스".equals(username)) {
             authorities.add(new SimpleGrantedAuthority(UserRole.ADMIN.getValue()));
         } else {
             authorities.add(new SimpleGrantedAuthority(UserRole.USER.getValue()));
@@ -199,5 +199,13 @@ public class UserService implements UserDetailsService {
         } else {
             throw new DataNotFoundException("userId not found");
         }
+    }
+
+    public List<User> getUserForRank() {
+        return this.userRepository.findAllByOrderByLevelDesc();
+    }
+
+    public List<User> getListByType(User.Type type) {
+        return this.userRepository.findByTypeOrderByLevelDesc(type);
     }
 }

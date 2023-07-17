@@ -1,15 +1,18 @@
 <!-- 타임리프의 layout:decorate 속성은 템플릿의 레이아웃(부모 템플릿)으로 사용할 템플릿을 설정한다. 속성의 값인 ~{layout}은 layout.html 파일을 의미한다. -->
 <html layout:decorate="~{board/layout}">
 <div layout:fragment="content" class="container my-3">
-    <div class="card" style="cursor:pointer" th:onclick="|location.href='@{/board/post/list/notice}'|">
-                <div class="text-center">공지사항</div>
-                <div class="card-body text-center border border-2 border-dark p-0 m-5">
-                    <a th:text="${currentNotice[0].subject}"></a>
-                </div>
-                <div class="card-text text-end p-1" th:text="${#temporals.format(currentNotice[0].createDate, 'MM/dd HH:mm')}">
-                </div>
+    <div class="card mb-3" style="cursor:pointer;" th:onclick="|location.href='@{/board/rank}'|">
+        <div class="text-center">명예의 전당</div>
     </div>
-    <div class="card" style="cursor:pointer" th:onclick="|location.href='@{/board/post/list/question}'|">
+    <div class="card mb-3" style="cursor:pointer" th:onclick="|location.href='@{/board/post/list/notice}'|">
+        <div class="text-center">공지사항</div>
+        <div class="card-body text-center border border-2 border-dark p-0 m-5">
+            <a th:text="${currentNotice[0].subject}"></a>
+        </div>
+        <div class="card-text text-end p-1" th:text="${#temporals.format(currentNotice[0].createDate, 'MM/dd HH:mm')}">
+        </div>
+    </div>
+    <div class="card mb-3" style="cursor:pointer" th:onclick="|location.href='@{/board/post/list/question}'|">
             <div class="text-center">질문게시판</div>
             <div class="card-body text-center border border-2 border-dark p-0 m-5">
                 <a th:text="${currentQuestion[0].subject}"></a>
@@ -17,7 +20,7 @@
             <div class="card-text text-end p-1" th:text="${#temporals.format(currentQuestion[0].createDate, 'MM/dd HH:mm')}">
             </div>
         </div>
-    <div class="card" style="cursor:pointer" th:onclick="|location.href='@{/board/post/list/share}'|">
+    <div class="card mb-3" style="cursor:pointer" th:onclick="|location.href='@{/board/post/list/share}'|">
             <div class="text-center">나눔게시판</div>
             <div class="card-body text-center border border-2 border-dark p-0 m-5">
                 <a th:text="${currentShare[0].subject}"></a>
