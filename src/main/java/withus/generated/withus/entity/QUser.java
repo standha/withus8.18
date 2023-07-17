@@ -44,6 +44,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final EnumPath<User.Relative> relative = createEnum("relative", User.Relative.class);
 
+    public final StringPath tempContact = createString("tempContact");
+
     public final EnumPath<User.Type> type = createEnum("type", User.Type.class);
 
     public final StringPath userId = createString("userId");

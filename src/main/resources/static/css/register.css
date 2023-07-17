@@ -40,9 +40,11 @@
 	background: #c5e0b4;
 }
 
+
 label img {
 	width: 130px;
 }
+
 
 [type=text], [type=password], [type=number], [type=date] {
 	width: 400px;

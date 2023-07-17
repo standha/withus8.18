@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import withus.dto.*;
 import withus.dto.HelpRequest.CaregiverHelpRequestDTO;
 import withus.dto.HelpRequest.PatientHelpRequestDTO;
@@ -367,6 +368,30 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
         return buttonCount;
     }
 
+
+
+    @Transactional
+    public void updateCaregiver(User caregiver){
+        QUser user = QUser.user;
+
+        queryFactory
+                .update(user)
+                .set(user.caregiver.contact, caregiver.getCaregiver().getContact())
+                .where(user.contact.eq(caregiver.getContact()))
+                .execute();
+
+    }
+    @Transactional
+    public void updateTempContact(User user){
+        QUser u = QUser.user;
+
+        queryFactory
+                .update(u)
+                .set(u.tempContact, user.getTempContact())
+                .where(u.contact.eq(user.getContact()))
+                .execute();
+
+    }
 
 }
 

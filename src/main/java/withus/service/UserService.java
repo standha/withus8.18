@@ -26,9 +26,15 @@ public class UserService implements UserDetailsService {
     private final PatientMainCountRepository patientMainCountRepository;
     private final PatientSubCountRepository patientSubCountRepository;
     private final PatientDetailCountRepository patientDetailCountRepository;
+
+    private final CaregiverMainCountRepository caregiverMainCountRepository;
+    private final CaregiverSubCountRepository caregiverSubCountRepository;
+    private final CaregiverDetailCountRepository caregiverDetailCountRepository;
+
     @Autowired
     public UserService(UserRepository userRepository, MedicationAlarmRepository medicationAlarmRepository, OutPatientVisitAlarmRepository outPatientVisitAlarmRepository,
-                       GoalRepository goalRepositroy, PatientMainCountRepository patientMainCountRepository, PatientSubCountRepository patientSubCountRepository, PatientDetailCountRepository patientDetailCountRepository) {
+                       GoalRepository goalRepositroy, PatientMainCountRepository patientMainCountRepository, PatientSubCountRepository patientSubCountRepository, PatientDetailCountRepository patientDetailCountRepository,
+                        CaregiverMainCountRepository caregiverMainCountRepository, CaregiverSubCountRepository caregiverSubCountRepository, CaregiverDetailCountRepository caregiverDetailCountRepository ) {
         this.userRepository = userRepository;
         this.goalRepositroy = goalRepositroy;
         this.medicationAlarmRepository = medicationAlarmRepository;
@@ -36,6 +42,9 @@ public class UserService implements UserDetailsService {
         this.patientMainCountRepository = patientMainCountRepository;
         this.patientSubCountRepository = patientSubCountRepository;
         this.patientDetailCountRepository = patientDetailCountRepository;
+        this.caregiverMainCountRepository = caregiverMainCountRepository;
+        this.caregiverSubCountRepository = caregiverSubCountRepository;
+        this.caregiverDetailCountRepository = caregiverDetailCountRepository;
     }
 
     @Autowired
@@ -66,9 +75,14 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+
     @Nullable
     public User getUserByCaregiverId(String caregiverId) {
         return userRepository.findByCaregiverUserId(caregiverId).orElse(null);
+    }
+    @Nullable
+    public User getUserTopTempContact(String tempContact){
+        return userRepository.findTopByTempContact(tempContact).orElse(null);
     }
 
     @Nullable
@@ -76,6 +90,8 @@ public class UserService implements UserDetailsService {
         return userRepository.findByContact(contact).orElse(null);
     }
 
+    @Nullable
+    public User getUserTopByCaregiverContact(String caregiverContact) {return userRepository.findTopByCaregiverContact(caregiverContact).orElse(null);}
     @NonNull
     public User upsertUser(User user) {
         return userRepository.save(user);
@@ -88,6 +104,14 @@ public class UserService implements UserDetailsService {
         String encodedPassword = noOpPasswordEncoder.encode(plaintextPassword);
         User saved = userRepository.save(user);
         String checkType = user.getType().name();
+
+
+        Tbl_goal tbl_goal = Tbl_goal.builder()
+                .goalId(saved.getUserId())
+                .goal(0)
+                .build();
+
+        goalRepositroy.save(tbl_goal);
 
         if (checkType == "PATIENT") {
             Tbl_medication_alarm tbl_medication_alarm = Tbl_medication_alarm.builder()
@@ -103,12 +127,7 @@ public class UserService implements UserDetailsService {
 
             outPatientVisitAlarmRepository.save(tbl_outpatient_visit_alarm);
 
-            Tbl_goal tbl_goal = Tbl_goal.builder()
-                    .goalId(saved.getUserId())
-                    .goal(0)
-                    .build();
 
-            goalRepositroy.save(tbl_goal);
             for (int i = 1; i <= 24; i++) {
                 ProgressKey key = new ProgressKey(saved.getUserId(), i);
                 Tbl_patient_main_button_count tbl_button_count = Tbl_patient_main_button_count.builder()
@@ -179,10 +198,90 @@ public class UserService implements UserDetailsService {
             }
 
 
+        } else if(checkType == "CAREGIVER"){
+
+            for (int i = 1; i <= 24; i++) {
+                CaregiverProgressKey key = new CaregiverProgressKey(saved.getUserId(), i);
+                Tbl_caregiver_main_button_count tbl_button_count = Tbl_caregiver_main_button_count.builder()
+                        .key(key)
+                        .goal(0)
+                        .level(0)
+                        .withusRang(0)
+                        .diseaseInfo(0)
+                        .helper(0)
+                        .medicine(0)
+                        .bloodPressure(0)
+                        .exercise(0)
+                        .familyObservation(0)
+                        .dietManagement(0)
+                        .weight(0)
+                        .mindHealth(0)
+                        .board(0)
+                        .alarm(0)
+                        .infoEdit(0)
+                        .build();
+                caregiverMainCountRepository.save(tbl_button_count);
+            }
+            for (int i = 1; i <= 24; i++) {
+                CaregiverProgressKey key = new CaregiverProgressKey(saved.getUserId(), i);
+                Tbl_caregiver_sub_button_count tbl_sub_button_count = Tbl_caregiver_sub_button_count.builder()
+                        .key(key)
+                        .lowLevel(0)
+                        .middleLevel(0)
+                        .highLevel(0)
+                        .makeMyGoal(0)
+                        .medicine(0)
+                        .bloodPressure(0)
+                        .symptom(0)
+                        .exercise(0)
+                        .natriumMoisture(0)
+                        .weight(0)
+                        .mindHealth(0)
+                        .mindDiary(0)
+                        .mindScore(0)
+                        .mindManagement(0)
+                        .hof(0)
+                        .notice(0)
+                        .question(0)
+                        .share(0)
+                        .medicineTime(0)
+                        .outPatientVisitTime(0)
+                        .build();
+                caregiverSubCountRepository.save(tbl_sub_button_count);
+            }
+
+            for (int i = 1; i <= 24; i++) {
+                CaregiverProgressKey key = new CaregiverProgressKey(saved.getUserId(), i);
+                Tbl_caregiver_detail_button_count tbl_detail_button_count = Tbl_caregiver_detail_button_count.builder()
+                        .key(key)
+                        .recommendDiet(0)
+                        .meditation(0)
+                        .bodyActivity(0)
+                        .deepBreath(0)
+                        .consulting(0)
+                        .medicineAlarm(0)
+                        .bloodPressureAlarm(0)
+                        .exerciseAlarm(0)
+                        .symptomAlarm(0)
+                        .natriumMoistureAlarm(0)
+                        .waterIntakeAlarm(0)
+                        .weightAlarm(0)
+                        .mindScoreAlarm(0)
+                        .build();
+                caregiverDetailCountRepository.save(tbl_detail_button_count);
+            }
         }
 
         return saved;
     }
+
+    public void updateCaregiverInfo(User user){
+        userRepositorySupport.updateCaregiver(user);
+    }
+    public void updateTempContactInfo(User user){
+        userRepositorySupport.updateTempContact(user);
+    }
+
 
     public List<User> getAllPatient() {
         return userRepository.findAll();
@@ -202,6 +301,7 @@ public class UserService implements UserDetailsService {
     public List<User> getPatientLimit(User.Type type, int limit_week, int limit_level) {
         return userRepository.findByTypeAndWeekLessThanAndLevelLessThan(type, limit_week, limit_level);
     }
+
 
     @Nullable
     public List<MoistureAvgDTO> getMoisture(String userId) {

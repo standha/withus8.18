@@ -98,6 +98,11 @@ public class User implements Serializable, UserDetails {
     @Getter
     private Integer level;
 
+    @Column(name="temp_contact", columnDefinition = "VARCHAR(32)")
+    @Nullable
+    @Getter
+    private String tempContact;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new ArrayList<>();

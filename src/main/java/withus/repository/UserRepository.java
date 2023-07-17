@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.sun.istack.Nullable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +27,16 @@ public interface UserRepository extends JpaRepository<User, String> {
     Optional<User> findByUserIdAndPassword(String id, String password);
 
     @Transactional(readOnly = true)
+    Optional<User> findTopByTempContact(String tempContact);
+
+    @Transactional(readOnly = true)
     Optional<User> findByContact(String contact);
+
+    @Transactional(readOnly = true)
+    Optional<User> findTopByContact(String contact);
+
+    @Transactional(readOnly = true)
+    Optional<User> findTopByCaregiverContact(String caregiverContact);
 
     @Transactional(readOnly = true)
     @Nullable
@@ -169,4 +179,8 @@ public interface UserRepository extends JpaRepository<User, String> {
             "where week <25 " +
             "GROUP BY week;", nativeQuery = true)
     List<UserWeekCountDTO> findUserWeekCount();
+
+
+
+
 }
