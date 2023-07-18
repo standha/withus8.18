@@ -38,3 +38,22 @@
 	text-align: center;
 	text-align: -webkit-center;
 }
+
+
+/*.toggle{*/
+/*	position: relative;*/
+/*	border: 6px #c0c0c0;*/
+/*	border-radius: 55px;*/
+/*	!*transition: transform cubic-bezier(0, 0, 0.30, 2) .4s;*!*/
+/*	!*transform-style: preserve-3d;*!*/
+/*	!*perspective: 800px;*!*/
+/*}*/
+/*.toggle>label {*/
+/*	display: inline-block;*/
+/*	min-width: 170px;*/
+/*	padding: 30px;*/
+/*	font-size: 30px;*/
+/*	text-align: center;*/
+/*	color: #000000;*/
+/*	!*cursor: pointer;*!*/
+/*}*/

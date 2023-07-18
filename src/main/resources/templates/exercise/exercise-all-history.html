@@ -16,6 +16,8 @@
     <script th:src="@{/js/datepicker-ko.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/help.js}"></script>
+    <script th:src="@{/js/exercise/exercise-history.js}"></script>
+
 </head>
 <body>
 <input type="hidden" id="button-count" th:attr="value=@{/button-count}">
@@ -95,7 +97,7 @@
 <script th:inline="javascript">
 
     /*<![CDATA[*/
-    var exerciseHistory = /*[[ ${exercise} ]]*/;
+    var exerciseHistory =/*[[ ${exercise} ]]*/;
     /*]]*/
 
     $.datepicker._generateHTML = (function () {
@@ -126,7 +128,23 @@
                     {
                         if(str == exerciseHistory[i].pk.date)
                         {
-                            $(this).addClass('record-exercise');
+                            var activityDropdownValue = $("#activityDropdown").val();
+                            var className = "";
+                            switch (activityDropdownValue){
+                                case "walking":
+                                    className="walk-icon";
+                                    break;
+                                case "cycling":
+                                    className="cycle-icon";
+                                    break;
+                                case "swimming":
+                                    className="swim-icon";
+                                    break;
+                                case "strengthTraining":
+                                    className="strength-icon";
+                                    break;
+                            }
+                            $(this).addClass(className);
                         }
                     }
                 });
@@ -135,9 +153,14 @@
             return html;
         };
     })();
-
-    $( function() {
-        $( "#dateRecord" ).datepicker();
+    //
+    // $( function() {
+    //     $( "#dateRecord" ).datepicker();
+    $(function() {
+        $("#dateRecord").datepicker();
+        $("#activityDropdown").change(function () {
+            $(".ui-datepicker-calendar td a").removeClass().addClass("record-exercise");
+        });
     } );
 </script>
 </html>

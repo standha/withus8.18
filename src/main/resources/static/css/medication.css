@@ -1,0 +1,19 @@
+
+.d1 {
+    display: flex;
+    line-height: 1.4;
+    padding: 15px;
+    font-size: 0.93rem;
+    color: #222;
+    /*border-radius: 18px; */
+    border: 1px solid #ecedf0;
+    background-color: #f7f8fa;
+    text-align: center;
+}
+.d2 {
+    text-align: center;
+
+}
+
+.time-tit1{padding:15px; color: #666; font-weight: 500;}
+.time-label{font-size:1.07rem}

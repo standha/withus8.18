@@ -24,4 +24,7 @@ public class Tbl_Exercise_record {
     @Column(name = "week")
     private Integer week;
 
+    @Column(name = "sport")
+    private Integer sport;
+
 }

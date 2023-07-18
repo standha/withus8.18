@@ -14,6 +14,7 @@ public class AllUserDTO {
     private String name;
     private String userId;
     private String password;
+    private String height;
     private LocalDate birthdate;
     private User.Gender gender;
     private String contact;
@@ -24,7 +25,6 @@ public class AllUserDTO {
     private String guserContact;
     private String currentCode;
     private LocalDateTime userRecordDate;
-    private String height;
     private User.Relative relative;
 
     public static AllUserDTO fromString(String queryResult) {
