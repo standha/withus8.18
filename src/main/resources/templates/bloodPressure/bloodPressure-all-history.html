@@ -341,6 +341,35 @@
         }
     });
 
+    var bloodList = [];
+
+    const getAjax = function(url) {
+        return new Promise((resolve, reject) => { // 1.
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json"
+                ,
+                success: (res) => {
+                    resolve(res);  // 2.
+                },
+                error: (e) => {
+                    reject(e);  // 3.
+                }
+            });
+        });
+    }
+    async function getBloodData(){
+        const url ="/blood-get-data";
+        try {
+            bloodList = await getAjax("/blood-get-data");
+        } catch(e) {
+            console.log(e);
+        }
+
+    }
+    getBloodData();
+
 </script>
 
 </body>
