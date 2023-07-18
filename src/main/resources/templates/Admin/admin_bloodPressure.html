@@ -31,13 +31,14 @@
             <table id="foo-table" class="table table-bordered" style="table-layout: fixed;">
                 <thead style="text-align: center">
                 <tr>
-                    <th colspan="4" style="text-align: center; font-weight: bold;">혈압/맥박</th>
+                    <th colspan="5" style="text-align: center; font-weight: bold;">혈압/맥박</th>
                 </tr>
                 <tr>
                     <th style="text-align: center">주차</th>
                     <th style="text-align: center">요일</th>
-                    <th style="text-align: center">혈압(수축기 / 이완기)<p>(mmHg)</p></th>
-                    <th style="text-align: center">맥박<p>(회 / 분)</p></th>
+                    <th style="text-align: center">수축기혈압</th>
+                    <th style="text-align: center">이완기혈압</th>
+                    <th style="text-align: center">맥박</th>
                 </tr>
                 </thead>
                 <tbody id="history-table-data" style="text-align: center;">
@@ -57,7 +58,7 @@
     if(weekAsc.length == 0)
     {
         var Item = "<tr>";
-        Item += "<td colspan='4' style='background: #FFFFFF'>" + "데이터 없음" + "</td>";
+        Item += "<td colspan='5' style='background: #FFFFFF'>" + "데이터 없음" + "</td>";
         Item += "</tr>";
         $('.btn__excel').hide();
         $('#history-table-data').append(Item);
@@ -88,7 +89,8 @@
                 var dayLabel = week[day];
                 if(weekAsc[weekAscCount].week == i && weekText[j] == dayLabel.toString())
                 {
-                    Item += "<td>" + (weekAsc[weekAscCount].contraction) + " / " +  (weekAsc[weekAscCount].relaxation) + "</td>";
+                    Item += "<td>" + (weekAsc[weekAscCount].contraction) + "</td>";
+                    Item += "<td>"+ (weekAsc[weekAscCount].relaxation) + "</td>";
                     Item += "<td>" + (weekAsc[weekAscCount].pressure) + "</td>";
                     weekAscCount++;
                     if(weekAscCount >= weekAsc.length)
@@ -96,6 +98,7 @@
                 }
                 else
                 {
+                    Item += "<td>" + "" +"</td>";
                     Item += "<td>" + "" +"</td>";
                     Item += "<td>" + "" +"</td>";
                 }
