@@ -266,6 +266,7 @@ public class UserService implements UserDetailsService {
                         .natriumMoistureAlarm(0)
                         .waterIntakeAlarm(0)
                         .weightAlarm(0)
+                        .mindDiaryAlarm(0)
                         .mindScoreAlarm(0)
                         .build();
                 caregiverDetailCountRepository.save(tbl_detail_button_count);

@@ -2,7 +2,7 @@ function deleteForm(){
     var table = document.getElementById("foo-table");
     table.parentNode.removeChild(table);
 }
- function subButtonFormCreate(count){
+ function subButtonFormCreate(count, type){
     deleteForm();
      let sumCount ={};
      for(const key in count["0"]){
@@ -25,7 +25,12 @@ function deleteForm(){
     var tr1 = document.createElement("tr");
     var th1 = document.createElement("th");
 
-    th1.setAttribute("colspan", "16");
+    if(type==="PATIENT"){
+        th1.setAttribute("colspan", "16");
+    } else {
+        th1.setAttribute("colspan", "21");
+    }
+
     th1.textContent = "하부 항목 버튼 클릭수";
     tr1.appendChild(th1);
 
@@ -45,10 +50,18 @@ function deleteForm(){
     th3.textContent = "이주의 목표";
     tr2.appendChild(th3);
 
-    var th4 = document.createElement("th");
-    th4.setAttribute("colspan", "2");
-    th4.textContent = "염분/수분";
-    tr2.appendChild(th4);
+    if(type=="PATIENT"){
+        var th4 = document.createElement("th");
+        th4.setAttribute("colspan", "2");
+        th4.textContent = "염분/수분";
+        tr2.appendChild(th4);
+    } else{
+        var th4 = document.createElement("th");
+        th4.setAttribute("colspan", "7");
+        th4.textContent = "가족관찰";
+        tr2.appendChild(th4);
+    }
+
 
     var th5 = document.createElement("th");
     th5.setAttribute("colspan", "3");
@@ -71,7 +84,13 @@ function deleteForm(){
     var tr3 = document.createElement("tr");
 
 // 두 번째 <tr>에 <th> 요소 추가
-    var headers = ["난이도 하", "난이도 중", "난이도 상","나만의 목표 만들기", "저염식이", "수분섭취", "마음일기", "마음점수", "마음관리", "명예의 전당", "공지사항", "질문 게시판", "나눔 게시판", "복약 시간", "외래 방문 시간"];
+    var headers =[];
+    if(type =='PATIENT'){
+        headers = ["난이도 하", "난이도 중", "난이도 상","나만의 목표 만들기", "저염식이", "수분섭취", "마음일기", "마음점수", "마음관리", "명예의 전당", "공지사항", "질문 게시판", "나눔 게시판", "복약 시간", "외래 방문 시간"];
+    } else {
+        headers = ["난이도 하", "난이도 중", "난이도 상","나만의 목표 만들기", "복용약", "혈압/맥박","증상일지","운동","염분/수분","체중","마음건강", "마음일기", "마음점수", "마음관리", "명예의 전당", "공지사항", "질문 게시판", "나눔 게시판", "복약 시간", "외래 방문 시간"];
+    }
+
     for (var i = 0; i < headers.length; i++) {
         var th = document.createElement("th");
         th.textContent = headers[i];
@@ -106,7 +125,12 @@ function deleteForm(){
     td1.textContent = "총합";
     sumItem.appendChild(td1);
 
-    var sumKeys = ["lowLevel", "middleLevel", "highLevel", "makeMyGoal", "natriumMoisture", "waterIntake", "mindDiary", "mindScore", "mindManagement", "hof", "notice", "question", "share", "medicineTime", "outPatientVisitTime"];
+    var sumKeys =[];
+    if(type==="PATIENT"){
+        sumKeys = ["lowLevel", "middleLevel", "highLevel", "makeMyGoal", "natriumMoisture", "waterIntake", "mindDiary", "mindScore", "mindManagement", "hof", "notice", "question", "share", "medicineTime", "outPatientVisitTime"];
+    } else {
+        sumKeys = ["lowLevel", "middleLevel", "highLevel", "makeMyGoal", "medicine", "bloodPressure", "symptom", "exercise", "natriumMoisture", "weight", "mindHealth", "mindDiary", "mindScore", "mindManagement", "hof", "notice", "question", "share", "medicineTime", "outPatientVisitTime"];
+    }
 
     for (var i = 0; i < sumKeys.length; i++) {
         var sumKey = sumKeys[i];
@@ -123,39 +147,75 @@ function deleteForm(){
     container.appendChild(table);
 // <tbody>를 테이블에 추가
 
-    for(i=0; i<24; i++)
-    {
-        let tempButtonCount = count[i];
-        if(i%2 == 0)
-            var Item = "<tr class='odd-tr'>";
-        else
-            var Item = "<tr class='even-tr'>";
+     if(type==="PATIENT"){
+         for(i=0; i<24; i++)
+         {
+             let tempButtonCount = count[i];
+             if(i%2 == 0)
+                 var Item = "<tr class='odd-tr'>";
+             else
+                 var Item = "<tr class='even-tr'>";
 
-        Item += "<td>" + String(i+1) + "주차" + "</td>";
-        Item += "<td class='lowLevel'>" + tempButtonCount["lowLevel"] + "</td>";
-        Item += "<td class='middleLevel'>" + tempButtonCount["middleLevel"] + "</td>";
-        Item += "<td class='highLevel'>" + tempButtonCount["highLevel"] + "</td>";
-        Item += "<td class='makeMyGoal'>" + tempButtonCount["makeMyGoal"] + "</td>";
-        Item += "<td class='natriumMoisture'>" + tempButtonCount["natriumMoisture"] + "</td>";
-        Item += "<td class='waterIntake'>" + tempButtonCount["waterIntake"] + "</td>";
-        Item += "<td class='mindDiary'>" + tempButtonCount["mindDiary"]+ "</td>";
-        Item += "<td class='mindScore'>" + tempButtonCount["mindScore"] + "</td>";
-        Item += "<td class='mindManagement'>" + tempButtonCount["mindManagement"] + "</td>";
-        Item += "<td class='hof'>" + tempButtonCount["hof"] + "</td>";
-        Item += "<td class='notice'>" + tempButtonCount["notice"] + "</td>";
-        Item += "<td class='question'>" + tempButtonCount["question"] + "</td>";
-        Item += "<td class='share'>" + tempButtonCount["share"] + "</td>";
-        Item += "<td class='medicineTime'>" + tempButtonCount["medicineTime"] + "</td>";
-        Item += "<td class='outPatientVisitTime'>" + tempButtonCount["outPatientVisitTime"] + "</td>";
-        Item += "</tr>";
-        $('#history-table-data').append(Item);
-    }
+             Item += "<td>" + String(i+1) + "주차" + "</td>";
+             Item += "<td class='lowLevel'>" + tempButtonCount["lowLevel"] + "</td>";
+             Item += "<td class='middleLevel'>" + tempButtonCount["middleLevel"] + "</td>";
+             Item += "<td class='highLevel'>" + tempButtonCount["highLevel"] + "</td>";
+             Item += "<td class='makeMyGoal'>" + tempButtonCount["makeMyGoal"] + "</td>";
+             Item += "<td class='natriumMoisture'>" + tempButtonCount["natriumMoisture"] + "</td>";
+             Item += "<td class='waterIntake'>" + tempButtonCount["waterIntake"] + "</td>";
+             Item += "<td class='mindDiary'>" + tempButtonCount["mindDiary"]+ "</td>";
+             Item += "<td class='mindScore'>" + tempButtonCount["mindScore"] + "</td>";
+             Item += "<td class='mindManagement'>" + tempButtonCount["mindManagement"] + "</td>";
+             Item += "<td class='hof'>" + tempButtonCount["hof"] + "</td>";
+             Item += "<td class='notice'>" + tempButtonCount["notice"] + "</td>";
+             Item += "<td class='question'>" + tempButtonCount["question"] + "</td>";
+             Item += "<td class='share'>" + tempButtonCount["share"] + "</td>";
+             Item += "<td class='medicineTime'>" + tempButtonCount["medicineTime"] + "</td>";
+             Item += "<td class='outPatientVisitTime'>" + tempButtonCount["outPatientVisitTime"] + "</td>";
+             Item += "</tr>";
+             $('#history-table-data').append(Item);
+         }
+     } else {
+         for(i=0; i<24; i++)
+         {
+             let tempButtonCount = count[i];
+             if(i%2 == 0)
+                 var Item = "<tr class='odd-tr'>";
+             else
+                 var Item = "<tr class='even-tr'>";
+
+             Item += "<td>" + String(i+1) + "주차" + "</td>";
+             Item += "<td class='lowLevel'>" + tempButtonCount["lowLevel"] + "</td>";
+             Item += "<td class='middleLevel'>" + tempButtonCount["middleLevel"] + "</td>";
+             Item += "<td class='highLevel'>" + tempButtonCount["highLevel"] + "</td>";
+             Item += "<td class='makeMyGoal'>" + tempButtonCount["makeMyGoal"] + "</td>";
+             Item += "<td class='medicine'>" + tempButtonCount["medicine"] + "</td>";
+             Item += "<td class='bloodPressure'>" + tempButtonCount["bloodPressure"] + "</td>";
+             Item += "<td class='symptom'>" + tempButtonCount["symptom"] + "</td>";
+             Item += "<td class='exercise'>" + tempButtonCount["exercise"] + "</td>";
+             Item += "<td class='natriumMoisture'>" + tempButtonCount["natriumMoisture"] + "</td>";
+             Item += "<td class='weight'>" + tempButtonCount["weight"] + "</td>";
+             Item += "<td class='mindHealth'>" + tempButtonCount["mindHealth"] + "</td>";
+             Item += "<td class='mindDiary'>" + tempButtonCount["mindDiary"]+ "</td>";
+             Item += "<td class='mindScore'>" + tempButtonCount["mindScore"] + "</td>";
+             Item += "<td class='mindManagement'>" + tempButtonCount["mindManagement"] + "</td>";
+             Item += "<td class='hof'>" + tempButtonCount["hof"] + "</td>";
+             Item += "<td class='notice'>" + tempButtonCount["notice"] + "</td>";
+             Item += "<td class='question'>" + tempButtonCount["question"] + "</td>";
+             Item += "<td class='share'>" + tempButtonCount["share"] + "</td>";
+             Item += "<td class='medicineTime'>" + tempButtonCount["medicineTime"] + "</td>";
+             Item += "<td class='outPatientVisitTime'>" + tempButtonCount["outPatientVisitTime"] + "</td>";
+             Item += "</tr>";
+             $('#history-table-data').append(Item);
+         }
+     }
+
 
 
 
 }
 
-function detailButtonFormCreate(count){
+function detailButtonFormCreate(count,type){
     deleteForm();
     let sumCount ={};
     for(const key in count["0"]){
@@ -178,7 +238,12 @@ function detailButtonFormCreate(count){
     var tr1 = document.createElement("tr");
     var th1 = document.createElement("th");
 
-    th1.setAttribute("colspan", "14");
+    if(type==="PATIENT"){
+        th1.setAttribute("colspan", "14");
+    } else {
+        th1.setAttribute("colspan", "15");
+    }
+
     th1.textContent = "세부 항목 버튼 클릭수";
     tr1.appendChild(th1);
 
@@ -193,8 +258,13 @@ function detailButtonFormCreate(count){
     th2.textContent = "주차";
     tr2.appendChild(th2);
 
+
     var th3 = document.createElement("th");
-    th3.textContent = "저염식이";
+    if(type ==="PATIENT"){
+        th3.textContent = "저염식이";
+    } else {
+        th3.textContent = "식단관리";
+    }
     tr2.appendChild(th3);
 
     var th4 = document.createElement("th");
@@ -203,8 +273,13 @@ function detailButtonFormCreate(count){
     tr2.appendChild(th4);
 
     var th5 = document.createElement("th");
-    th5.setAttribute("colspan", "8");
-    th5.textContent = "보호자에게 알림";
+    if(type === "PATIENT"){
+        th5.setAttribute("colspan", "8");
+        th5.textContent = "보호자에게 알림";
+    } else {
+        th5.setAttribute("colspan", "9");
+        th5.textContent = "환자에게 알림";
+    }
     tr2.appendChild(th5);
 
     thead.appendChild(tr2);
@@ -213,7 +288,13 @@ function detailButtonFormCreate(count){
     var tr3 = document.createElement("tr");
 
 // 두 번째 <tr>에 <th> 요소 추가
-    var headers = ["저염식이 식단추천","명상","신체활동","심호흡","상담","복용약 알림","혈압/맥박 알림","운동 알림","증상일지 알림","저염식이 알림","수분섭취 알림","체중 알림","마음 접수 알림"];
+    var headers = [];
+    if(type ==="PATIENT"){
+        headers = ["저염식이 식단추천","명상","신체활동","심호흡","상담","복용약 알림","혈압/맥박 알림","운동 알림","증상일지 알림","저염식이 알림","수분섭취 알림","체중 알림","마음 점수 알림"];
+    } else {
+        headers = ["건강식단 추천","명상","신체활동","심호흡","상담","복용약 알림","혈압/맥박 알림","증상일지 알림","운동 알림","저염식이 알림","수분섭취 알림","체중 알림","마음 일기 알림","마음 점수 알림"];
+    }
+
     for (var i = 0; i < headers.length; i++) {
         var th = document.createElement("th");
         th.textContent = headers[i];
@@ -247,8 +328,12 @@ function detailButtonFormCreate(count){
     var td1 = document.createElement("td");
     td1.textContent = "총합";
     sumItem.appendChild(td1);
-
-    var sumKeys = ["recommendDiet", "meditation", "bodyActivity", "deepBreath", "consulting", "medicineAlarm", "bloodPressureAlarm", "symptomAlarm", "exerciseAlarm", "natriumMoistureAlarm", "waterIntakeAlarm", "weightAlarm", "mindScoreAlarm"];
+    var sumKeys =[];
+    if(type === "PATIENT"){
+        sumKeys = ["recommendDiet", "meditation", "bodyActivity", "deepBreath", "consulting", "medicineAlarm", "bloodPressureAlarm", "symptomAlarm", "exerciseAlarm", "natriumMoistureAlarm", "waterIntakeAlarm", "weightAlarm", "mindScoreAlarm"];
+    } else {
+        sumKeys = ["recommendDiet", "meditation", "bodyActivity", "deepBreath", "consulting", "medicineAlarm", "bloodPressureAlarm", "symptomAlarm", "exerciseAlarm", "natriumMoistureAlarm", "waterIntakeAlarm", "weightAlarm", "mindDiaryAlarm","mindScoreAlarm"];
+    }
 
     for (var i = 0; i < sumKeys.length; i++) {
         var sumKey = sumKeys[i];
@@ -265,38 +350,68 @@ function detailButtonFormCreate(count){
     container.appendChild(table);
 // <tbody>를 테이블에 추가
 
-    for(i=0; i<24; i++)
-    {
-        let tempButtonCount = count[i];
-        if(i%2 == 0)
-            var Item = "<tr class='odd-tr'>";
-        else
-            var Item = "<tr class='even-tr'>";
+    if(type==="PATIENT"){
+        for(i=0; i<24; i++)
+        {
+            let tempButtonCount = count[i];
+            if(i%2 == 0)
+                var Item = "<tr class='odd-tr'>";
+            else
+                var Item = "<tr class='even-tr'>";
 
-        Item += "<td>" + String(i+1) + "주차" + "</td>";
-        Item += "<td class='recommendDiet'>" + tempButtonCount["recommendDiet"] + "</td>";
-        Item += "<td class='meditation'>" + tempButtonCount["meditation"] + "</td>";
-        Item += "<td class='bodyActivity'>" + tempButtonCount["bodyActivity"] + "</td>";
-        Item += "<td class='deepBreath'>" + tempButtonCount["deepBreath"] + "</td>";
-        Item += "<td class='consulting'>" + tempButtonCount["consulting"] + "</td>";
-        Item += "<td class='medicineAlarm'>" + tempButtonCount["medicineAlarm"] + "</td>";
-        Item += "<td class='bloodPressureAlarm'>" + tempButtonCount["bloodPressureAlarm"]+ "</td>";
-        Item += "<td class='exerciseAlarm'>" + tempButtonCount["exerciseAlarm"] + "</td>";
-        Item += "<td class='symptomAlarm'>" + tempButtonCount["symptomAlarm"] + "</td>";
-        Item += "<td class='natriumMoistureAlarm'>" + tempButtonCount["natriumMoistureAlarm"] + "</td>";
-        Item += "<td class='waterIntakeAlarm'>" + tempButtonCount["waterIntakeAlarm"] + "</td>";
-        Item += "<td class='weightAlarm'>" + tempButtonCount["weightAlarm"] + "</td>";
-        Item += "<td class='mindScoreAlarm'>" + tempButtonCount["mindScoreAlarm"] + "</td>";
-        Item += "</tr>";
-        $('#history-table-data').append(Item);
+            Item += "<td>" + String(i+1) + "주차" + "</td>";
+            Item += "<td class='recommendDiet'>" + tempButtonCount["recommendDiet"] + "</td>";
+            Item += "<td class='meditation'>" + tempButtonCount["meditation"] + "</td>";
+            Item += "<td class='bodyActivity'>" + tempButtonCount["bodyActivity"] + "</td>";
+            Item += "<td class='deepBreath'>" + tempButtonCount["deepBreath"] + "</td>";
+            Item += "<td class='consulting'>" + tempButtonCount["consulting"] + "</td>";
+            Item += "<td class='medicineAlarm'>" + tempButtonCount["medicineAlarm"] + "</td>";
+            Item += "<td class='bloodPressureAlarm'>" + tempButtonCount["bloodPressureAlarm"]+ "</td>";
+            Item += "<td class='exerciseAlarm'>" + tempButtonCount["exerciseAlarm"] + "</td>";
+            Item += "<td class='symptomAlarm'>" + tempButtonCount["symptomAlarm"] + "</td>";
+            Item += "<td class='natriumMoistureAlarm'>" + tempButtonCount["natriumMoistureAlarm"] + "</td>";
+            Item += "<td class='waterIntakeAlarm'>" + tempButtonCount["waterIntakeAlarm"] + "</td>";
+            Item += "<td class='weightAlarm'>" + tempButtonCount["weightAlarm"] + "</td>";
+            Item += "<td class='mindScoreAlarm'>" + tempButtonCount["mindScoreAlarm"] + "</td>";
+            Item += "</tr>";
+            $('#history-table-data').append(Item);
+        }
+    } else {
+        for(i=0; i<24; i++)
+        {
+            let tempButtonCount = count[i];
+            if(i%2 == 0)
+                var Item = "<tr class='odd-tr'>";
+            else
+                var Item = "<tr class='even-tr'>";
+
+            Item += "<td>" + String(i+1) + "주차" + "</td>";
+            Item += "<td class='recommendDiet'>" + tempButtonCount["recommendDiet"] + "</td>";
+            Item += "<td class='meditation'>" + tempButtonCount["meditation"] + "</td>";
+            Item += "<td class='bodyActivity'>" + tempButtonCount["bodyActivity"] + "</td>";
+            Item += "<td class='deepBreath'>" + tempButtonCount["deepBreath"] + "</td>";
+            Item += "<td class='consulting'>" + tempButtonCount["consulting"] + "</td>";
+            Item += "<td class='medicineAlarm'>" + tempButtonCount["medicineAlarm"] + "</td>";
+            Item += "<td class='bloodPressureAlarm'>" + tempButtonCount["bloodPressureAlarm"]+ "</td>";
+            Item += "<td class='exerciseAlarm'>" + tempButtonCount["exerciseAlarm"] + "</td>";
+            Item += "<td class='symptomAlarm'>" + tempButtonCount["symptomAlarm"] + "</td>";
+            Item += "<td class='natriumMoistureAlarm'>" + tempButtonCount["natriumMoistureAlarm"] + "</td>";
+            Item += "<td class='waterIntakeAlarm'>" + tempButtonCount["waterIntakeAlarm"] + "</td>";
+            Item += "<td class='weightAlarm'>" + tempButtonCount["weightAlarm"] + "</td>";
+            Item += "<td class='mindDiaryAlarm'>" + tempButtonCount["mindDiaryAlarm"] + "</td>";
+            Item += "<td class='mindScoreAlarm'>" + tempButtonCount["mindScoreAlarm"] + "</td>";
+            Item += "</tr>";
+            $('#history-table-data').append(Item);
+        }
     }
+
 
 
 
 }
 
 
-function mainButtonFormCreate(count){
+function mainButtonFormCreate(count,type){
     deleteForm();
     let sumCount ={};
     for(const key in count["0"]){
@@ -327,9 +442,15 @@ function mainButtonFormCreate(count){
 
 // 첫 번째 <tr> 요소 생성
     var tr2 = document.createElement("tr");
+    var headers = []
 
 // 두 번째 <tr>에 <th> 요소 추가
-    var headers = ["주차","이주의 목표", "달성률", "위더스랑","질환정보", "도우미", "복용약", "혈압/맥박", "운동", "증상일지", "염분/수분", "체중", "마음건강", "게시판", "알람"];
+    if(type =='PATIENT'){
+        headers = ["주차","이주의 목표", "달성률", "위더스랑","질환정보", "도우미", "복용약", "혈압/맥박", "운동", "증상일지", "염분/수분", "체중", "마음건강", "게시판", "알람"];
+    } else {
+        headers = ["주차","이주의 목표", "달성률", "위더스랑","질환정보", "도우미", "복용약", "혈압/맥박", "운동", "가족관찰", "식단관리  ", "체중", "마음건강", "알람", "게시판"];
+    }
+
     for (var i = 0; i < headers.length; i++) {
         var th = document.createElement("th");
         th.textContent = headers[i];
@@ -364,7 +485,13 @@ function mainButtonFormCreate(count){
     td1.textContent = "총합";
     sumItem.appendChild(td1);
 
-    var sumKeys = ["goal", "level", "withusRang","diseaseInfo", "helper", "medicine", "bloodPressure", "exercise", "symptom", "natriumMoisture", "weight", "mindHealth", "board", "alarm"];
+    var sumKeys = []
+    if(type =='PATIENT'){
+        sumKeys = ["goal", "level", "withusRang","diseaseInfo", "helper", "medicine", "bloodPressure", "exercise", "symptom", "natriumMoisture", "weight", "mindHealth", "board", "alarm"];
+    } else {
+        sumKeys =["goal", "level", "withusRang","diseaseInfo", "helper", "medicine", "bloodPressure", "exercise", "familyObservation", "dietManagement", "weight", "mindHealth", "alarm", "board"];
+    }
+
 
     for (var i = 0; i < sumKeys.length; i++) {
         var sumKey = sumKeys[i];
@@ -380,34 +507,59 @@ function mainButtonFormCreate(count){
     var container = document.querySelector(".center-table"); // 테이블을 추가할 컨테이너 요소를 선택
     container.appendChild(table);
 // <tbody>를 테이블에 추가
+    if(type ==='PATIENT') {
+        for (i = 0; i < 24; i++) {
+            let tempButtonCount = count[i];
+            if (i % 2 == 0)
+                var Item = "<tr class='odd-tr'>";
+            else
+                var Item = "<tr class='even-tr'>";
 
-    for(i=0; i<24; i++)
-    {
-        let tempButtonCount = count[i];
-        if(i%2 == 0)
-            var Item = "<tr class='odd-tr'>";
-        else
-            var Item = "<tr class='even-tr'>";
+            Item += "<td>" + String(i + 1) + "주차" + "</td>";
+            Item += "<td class='goal'>" + tempButtonCount["goal"] + "</td>";
+            Item += "<td class='level'>" + tempButtonCount["level"] + "</td>";
+            Item += "<td class='withusRang'>" + tempButtonCount["withusRang"] + "</td>";
+            Item += "<td class='diseaseInfo'>" + tempButtonCount["diseaseInfo"] + "</td>";
+            Item += "<td class='helper'>" + tempButtonCount["helper"] + "</td>";
+            Item += "<td class='medicine'>" + tempButtonCount["medicine"] + "</td>";
+            Item += "<td class='bloodPressure'>" + tempButtonCount["bloodPressure"] + "</td>";
+            Item += "<td class='exercise'>" + tempButtonCount["exercise"] + "</td>";
+            Item += "<td class='symptom'>" + tempButtonCount["symptom"] + "</td>";
+            Item += "<td class='natriumMoisture'>" + tempButtonCount["natriumMoisture"] + "</td>";
+            Item += "<td class='weight'>" + tempButtonCount["weight"] + "</td>";
+            Item += "<td class='mindHealth'>" + tempButtonCount["mindHealth"] + "</td>";
+            Item += "<td class='board'>" + tempButtonCount["board"] + "</td>";
+            Item += "<td class='alarm'>" + tempButtonCount["alarm"] + "</td>";
+            Item += "</tr>";
+            $('#history-table-data').append(Item);
+        }
+    } else {
+        for (i = 0; i < 24; i++) {
+            let tempButtonCount = count[i];
+            if (i % 2 == 0)
+                var Item = "<tr class='odd-tr'>";
+            else
+                var Item = "<tr class='even-tr'>";
 
-        Item += "<td>" + String(i+1) + "주차" + "</td>";
-        Item += "<td class='goal'>" + tempButtonCount["goal"] + "</td>";
-        Item += "<td class='level'>" + tempButtonCount["level"] + "</td>";
-        Item += "<td class='withusRang'>" + tempButtonCount["withusRang"] + "</td>";
-        Item += "<td class='diseaseInfo'>" + tempButtonCount["diseaseInfo"] + "</td>";
-        Item += "<td class='helper'>" + tempButtonCount["helper"] + "</td>";
-        Item += "<td class='medicine'>" + tempButtonCount["medicine"] + "</td>";
-        Item += "<td class='bloodPressure'>" + tempButtonCount["bloodPressure"]+ "</td>";
-        Item += "<td class='exercise'>" + tempButtonCount["exercise"] + "</td>";
-        Item += "<td class='symptom'>" + tempButtonCount["symptom"] + "</td>";
-        Item += "<td class='natriumMoisture'>" + tempButtonCount["natriumMoisture"] + "</td>";
-        Item += "<td class='weight'>" + tempButtonCount["weight"] + "</td>";
-        Item += "<td class='mindHealth'>" + tempButtonCount["mindHealth"] + "</td>";
-        Item += "<td class='board'>" + tempButtonCount["board"] + "</td>";
-        Item += "<td class='alarm'>" + tempButtonCount["alarm"] + "</td>";
-        Item += "</tr>";
-        $('#history-table-data').append(Item);
+            Item += "<td>" + String(i + 1) + "주차" + "</td>";
+            Item += "<td class='goal'>" + tempButtonCount["goal"] + "</td>";
+            Item += "<td class='level'>" + tempButtonCount["level"] + "</td>";
+            Item += "<td class='withusRang'>" + tempButtonCount["withusRang"] + "</td>";
+            Item += "<td class='diseaseInfo'>" + tempButtonCount["diseaseInfo"] + "</td>";
+            Item += "<td class='helper'>" + tempButtonCount["helper"] + "</td>";
+            Item += "<td class='medicine'>" + tempButtonCount["medicine"] + "</td>";
+            Item += "<td class='bloodPressure'>" + tempButtonCount["bloodPressure"] + "</td>";
+            Item += "<td class='exercise'>" + tempButtonCount["exercise"] + "</td>";
+            Item += "<td class='familyObservation'>" + tempButtonCount["familyObservation"] + "</td>";
+            Item += "<td class='dietManagement'>" + tempButtonCount["dietManagement"] + "</td>";
+            Item += "<td class='weight'>" + tempButtonCount["weight"] + "</td>";
+            Item += "<td class='mindHealth'>" + tempButtonCount["mindHealth"] + "</td>";
+            Item += "<td class='alarm'>" + tempButtonCount["alarm"] + "</td>";
+            Item += "<td class='board'>" + tempButtonCount["board"] + "</td>";
+            Item += "</tr>";
+            $('#history-table-data').append(Item);
+        }
     }
-
 
 
 }
@@ -430,34 +582,61 @@ const getAjax = function(url) {
         });
     });
 }
-async function subButton(id){
+async function subPatientButton(id){
     const url ="/patient-sub-button/"+id;
     try {
         const { counts } = await getAjax(url);
-        subButtonFormCreate(counts);
+        subButtonFormCreate(counts,"PATIENT");
     } catch(e) {
         console.log(e);
     }
 
 }
 
-async function mainButton(id){
+async function mainPatientButton(id){
     const url ="/patient-main-button/"+id;
     try {
         const { counts } = await getAjax(url);
-        mainButtonFormCreate(counts);
+        mainButtonFormCreate(counts,"PATIENT");
     } catch(e) {
         console.log(e);
     }
 }
-async function detailButton(id){
+async function detailPatientButton(id){
     const url ="/patient-detail-button/"+id;
     try {
         const { counts } = await getAjax(url);
-        detailButtonFormCreate(counts);
+        detailButtonFormCreate(counts,"PATIENT");
     } catch(e) {
         console.log(e);
     }
 }
 
+async function mainCaregiverButton(id){
+    const url ="/caregiver-main-button/"+id;
+    try {
+        const { counts } = await getAjax(url);
+        mainButtonFormCreate(counts,"CAREGIVER");
+    } catch(e) {
+        console.log(e);
+    }
+}
 
+async function subCaregiverButton(id) {
+    const url = "/caregiver-sub-button/" + id;
+    try {
+        const {counts} = await getAjax(url);
+        subButtonFormCreate(counts, "CAREGIVER");
+    } catch (e) {
+        console.log(e);
+    }
+}
+async function detailCaregiverButton(id){
+    const url ="/caregiver-detail-button/"+id;
+    try {
+        const { counts } = await getAjax(url);
+        detailButtonFormCreate(counts,"CAREGIVER");
+    } catch(e) {
+        console.log(e);
+    }
+}
