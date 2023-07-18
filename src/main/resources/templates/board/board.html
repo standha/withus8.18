@@ -1,0 +1,57 @@
+<!-- 타임리프의 layout:decorate 속성은 템플릿의 레이아웃(부모 템플릿)으로 사용할 템플릿을 설정한다. 속성의 값인 ~{layout}은 layout.html 파일을 의미한다. -->
+<html layout:decorate="~{board/layout}">
+<div layout:fragment="content" class="container my-3 bg-light" style="height: 100%;">
+    <div class="card mb-3 border-0" style="cursor:pointer;" th:onclick="|location.href='@{/board/rank}'|">
+        <div class="row mx-0 mb-3">
+            <div class="col border border-2 border-dark rounded-3 me-2" style="background-color: #e2f0d9;">
+                <h3>현재 1위</h3>
+                <h2 th:text="${rankListPatient[0].name}" class="text-end"></h2>
+            </div>
+            <div class="col border border-2 border-dark rounded-3 ms-2" style="background-color: #fff2cc;">
+                <h3>현재 1위</h3>
+                <h2 th:text="${rankListCaregiver[0].name}" class="text-end"></h2>
+            </div>
+        </div>
+        <h4 class="text-center">명예의 전당</h4>
+    </div>
+    <div class="card mb-3 border-0" style="cursor:pointer" th:onclick="|location.href='@{/board/post/list/notice}'|">
+        <div class="card-body border border-3 border-primary rounded py-0 px-3 mt-5 mx-2">
+            <h3 class="mb-0" th:text="${currentNotice[0].subject}"></h3>
+        </div>
+        <div class="card-text text-end p-3 mb-3" th:text="${#temporals.format(currentNotice[0].createDate, 'MM/dd HH:mm')}">
+        </div>
+        <h4 class="text-center">공지사항</h4>
+    </div>
+    <div class="card mb-3 border-0" style="cursor:pointer" th:onclick="|location.href='@{/board/post/list/question}'|">
+        <div class="card-body border border-3 border-primary rounded py-0 px-3 mt-5 mx-2">
+            <h3 class="mb-0" th:text="${currentQuestion[0].subject}"></h3>
+        </div>
+        <div class="card-text text-end p-3 mb-3" th:text="${#temporals.format(currentQuestion[0].createDate, 'MM/dd HH:mm')}">
+        </div>
+        <h4 class="text-center">질문게시판</h4>
+    </div>
+    <div class="card mb-3 border-0" style="cursor:pointer" th:onclick="|location.href='@{/board/post/list/share}'|">
+        <div class="card-body border border-3 border-primary rounded py-0 px-3 mt-5 mx-2">
+            <h3 class="mb-0" th:text="${currentShare[0].subject}"></h3>
+        </div>
+        <div class="card-text text-end p-3 mb-3" th:text="${#temporals.format(currentShare[0].createDate, 'MM/dd HH:mm')}">
+        </div>
+        <h4 class="text-center">나눔게시판</h4>
+    </div>
+</div>
+<!--<script layout:fragment="script" type='text/javascript'>-->
+<!--  const page_elements = document.getElementsByClassName("page-link");-->
+<!--  Array.from(page_elements).forEach(function(element) {-->
+<!--    element.addEventListener('click', function() {-->
+<!--      document.getElementById('page').value = this.dataset.page;-->
+<!--      document.getElementById('searchForm').submit();-->
+<!--    });-->
+<!--  });-->
+<!--  const btn_search = document.getElementById("btn_search");-->
+<!--  btn_search.addEventListener('click', function() {-->
+<!--    document.getElementById('kw').value = document.getElementById('search_kw').value;-->
+<!--    document.getElementById('page').value = 0;  // 검색버튼을 클릭할 경우 0페이지부터 조회한다.-->
+<!--    document.getElementById('searchForm').submit();-->
+<!--  });-->
+<!--</script>-->
+</html>

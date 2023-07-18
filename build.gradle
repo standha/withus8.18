@@ -36,10 +36,14 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 	implementation 'com.querydsl:querydsl-jpa'
 	implementation 'com.google.code.gson:gson'
 	implementation 'com.google.code.findbugs:jsr305:3.0.2'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	annotationProcessor('org.projectlombok:lombok')
 	testAnnotationProcessor('org.projectlombok:lombok')
 	runtimeOnly 'mysql:mysql-connector-java'
@@ -48,9 +52,9 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	annotationProcessor 'org.projectlombok:lombok'
-	compile('org.projectlombok:lombok') //lombok
-	compile("com.querydsl:querydsl-jpa") // querydsl
-	compile("com.querydsl:querydsl-apt") // querydsl
+	compileOnly('org.projectlombok:lombok') //lombok
+	compileOnly("com.querydsl:querydsl-jpa") // querydsl
+	compileOnly("com.querydsl:querydsl-apt") // querydsl
 }
 
 def querydslSrcDir = 'src/main/java/withus/generated' // QClass 생성 위치

@@ -55,6 +55,12 @@ public interface UserRepository extends JpaRepository<User, String> {
     List<User> findByAppTokenIsNotNullAndType(User.Type type);
 
     @Transactional(readOnly = true)
+    List<User> findAllByOrderByLevelDesc();
+
+    @Transactional(readOnly = true)
+    List<User> findByTypeOrderByLevelDesc(User.Type type);
+
+    @Transactional(readOnly = true)
     @Nullable
     @Query(value = "select u.name as patientName ,u.id as patientId, u.password as patientPassword, u.birthdate as patientBirthdate," +
             " u.gender as patientGender, u.contact as patientContact, c.name as caregiverName, c.gender as caregiverGender, " +

@@ -33,3 +33,5 @@ out/
 ### VS Code ###
 .vscode/
 /withus.zip
+
+/src/main/java/withus/generated/

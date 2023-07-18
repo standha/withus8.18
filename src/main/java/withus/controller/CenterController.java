@@ -90,7 +90,7 @@ public class CenterController extends BaseController {
                             .build();
                 }
             }
-
+            // todo: 관리자 로그인 페이지 분리
             if (user.getType().equals(Type.ADMINISTRATOR)) {
                 List<UserGenderCountDTO> userGenderCountInfo = adminService.getUserGenderCountInfo();
                 List<UserAgeCountDTO> userAgeCountInfo = adminService.getUserAgeCountInfo();

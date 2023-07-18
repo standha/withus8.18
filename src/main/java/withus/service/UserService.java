@@ -3,11 +3,14 @@ package withus.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import withus.auth.NoOpPasswordEncoder;
+import withus.board.DataNotFoundException;
 import withus.dto.MoistureAvgDTO;
 import withus.entity.*;
 import withus.repository.*;
@@ -16,6 +19,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -50,15 +54,34 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepositorySupport userRepositorySupport;
 
+//    @Override
+//    @NonNull
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        return userRepository.findByUserId(username).orElseThrow(() -> {
+//                    String message = String.format("Username \"%s\" does not exist!", username);
+//                    return new UsernameNotFoundException(message);
+//                }
+//        );
+//    }
+
     @Override
-    @NonNull
+    // loadUserByUsername 메서드는 사용자명으로 비밀번호를 조회하여 리턴하는 메서드
+    // -> SecurityConfig
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUserId(username).orElseThrow(() -> {
-                    String message = String.format("Username \"%s\" does not exist!", username);
-                    return new UsernameNotFoundException(message);
-                }
-        );
+        Optional<User> _user = this.userRepository.findById(username);
+        if (!_user.isPresent()) {
+            throw new UsernameNotFoundException("사용자를 찾을 수 없습니다.");
+        }
+        User user = _user.get();
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        if ("위더스".equals(username)) {
+            authorities.add(new SimpleGrantedAuthority(UserRole.ADMIN.getValue()));
+        } else {
+            authorities.add(new SimpleGrantedAuthority(UserRole.USER.getValue()));
+        }
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
     }
+
 
     @Nullable
     public User getUserByIdAndDate(String id) {
@@ -319,5 +342,22 @@ public class UserService implements UserDetailsService {
     @Nullable
     public List<User> getPatientToken(User.Type type) {
         return userRepository.findByAppTokenIsNotNullAndType(type);
+    }
+
+    public User getUserForBoard(String userId) {
+        Optional<User> user = this.userRepository.findByUserId(userId);
+        if (user.isPresent()) {
+            return user.get();
+        } else {
+            throw new DataNotFoundException("userId not found");
+        }
+    }
+
+    public List<User> getUserForRank() {
+        return this.userRepository.findAllByOrderByLevelDesc();
+    }
+
+    public List<User> getListByType(User.Type type) {
+        return this.userRepository.findByTypeOrderByLevelDesc(type);
     }
 }

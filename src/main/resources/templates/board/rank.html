@@ -1,0 +1,80 @@
+<!-- 타임리프의 layout:decorate 속성은 템플릿의 레이아웃(부모 템플릿)으로 사용할 템플릿을 설정한다. 속성의 값인 ~{layout}은 layout.html 파일을 의미한다. -->
+<html layout:decorate="~{board/layout}">
+<div layout:fragment="content" class="container my-0 px-0">
+    <div class="row mx-0 text-center border border-bottom-2">
+        <div class="col pt-2" style="background-color: #e2f0d9;" th:onclick="|location.href='@{/board/rank/patient}'|">
+            <h1>환자</h1>
+        </div>
+        <div class="col pt-2" style="background-color: #fff2cc;" th:onclick="|location.href='@{/board/rank/caregiver}'|">
+            <h1>보호자</h1>
+
+    </div>
+    <div class="text-end border border-bottom" th:text="${#calendars.format(#calendars.createNow(), 'MM월 dd일 기준')}">
+    </div>
+    <div class="row border-bottom py-1" th:if="${index != 0}">
+        <div class="col text-end">내 순위</div>
+        <div class="col">
+            <span class="border border-2 border-dark rounded bg-light text-center" style="display: inline-block; min-width: 32px; min-height: 32px" th:text="${index}"></span>
+        </div>
+        <div class="col" th:text="${nowUser.name}"></div>
+        <div class="col text-success text-center" th:text="|${index}위|"></div>
+        <div class="col text-center" th:text="|${nowUser.level}개|"></div>
+    </div>
+    <table class="table">
+        <thead class="table-light">
+        <tr class="text-center">
+            <th>전체순위</th>
+            <th></th>
+            <th>주간</th>
+            <th>누적</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- th:each="post, loop : ${postList}"
+        loop.index - 반복 순서, 0부터 1씩 증가
+        loop.count - 반복 순서, 1부터 1씩 증가
+        loop.size - 반복 객체의 요소 갯수 (예: postList의 요소 갯수)
+        loop.first - 루프의 첫번째 순서인 경우 true
+        loop.last - 루프의 마지막 순서인 경우 true
+        loop.odd - 루프의 홀수번째 순서인 경우 true
+        loop.even - 루프의 짝수번째 순서인 경우 true
+        loop.current - 현재 대입된 객체 (예: 위의 경우 post과 동일)
+        -->
+        <tr class="text-center" th:each="user, loop : ${rankList}">
+            <!-- 게시물 일련번호 추가 -->
+            <td th:if="${loop.index == 0}">
+                <span class="border border-2 border-dark rounded bg-light text-center" style="display: inline-block; min-width: 32px; min-height: 32px">
+                    <i class="fa-solid fa-crown fa-lg" style="color: #ffd700;"></i>
+                </span>
+            </td>
+            <td th:if="${loop.index == 1}">
+                <span class="border border-2 border-dark rounded bg-light text-center" style="display: inline-block; min-width: 32px; min-height: 32px">
+                    <i class="fa-solid fa-crown fa-lg" style="color: #c0c0c0;"></i>
+                </span>
+            </td>
+            <td th:if="${loop.index == 2}">
+                <span class="border border-2 border-dark rounded bg-light text-center" style="display: inline-block; min-width: 32px; min-height: 32px">
+                    <i class="fa-solid fa-crown fa-lg" style="color: #964b00;"></i>
+                </span>
+            </td>
+            <td th:if="${loop.index > 2}">
+                <span class="border border-2 border-dark rounded bg-light text-center" style="display: inline-block; min-width: 32px; min-height: 32px" th:text="${loop.index+1}"></span>
+            </td>
+            <td th:text="${user.name}" class="text-start">
+            </td>
+            <td>
+                <span th:if="${user.level == null}" th:text="0개"></span>
+                <span th:if="${user.level != null}" th:text="|${user.level}개|"></span>
+            </td>
+            <td>
+                <span th:if="${user.level == null}" th:text="0개"></span>
+                <span th:if="${user.level != null}" th:text="|${user.level}개|"></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/board}" class="position-fixed bottom-0 end-0 p-2">
+        <img th:src="@{/images/board/123.다이애딕_환자용_게시판_명예의전당_아이콘11.png}" class="img-fluid float-end border rounded" style="max-height: 38px;">
+    </a>
+</div>
+</html>
