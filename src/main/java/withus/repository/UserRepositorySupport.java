@@ -6,12 +6,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import withus.dto.*;
 import withus.dto.HelpRequest.CaregiverHelpRequestDTO;
 import withus.dto.HelpRequest.PatientHelpRequestDTO;
+import withus.dto.wwithus.CaregiverButtonSumDTO;
+import withus.dto.wwithus.PatientButtonSumDTO;
+import withus.dto.wwithus.UserCountInfoDTO;
 import withus.entity.*;
 
-import java.awt.*;
 import java.util.List;
 
 @Repository
@@ -84,6 +87,27 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .fetchFirst();
 
         return headerInfo;
+    }
+
+    public User.Type findTypeInfo(String userId) {
+        QUser user = QUser.user;
+
+        User.Type typeString = queryFactory.select(user.type)
+                .from(user)
+                .where(user.userId.eq(userId))
+                .fetchFirst();
+
+        return typeString;
+    }
+
+    public List<UserCountInfoDTO> findUserCountInfo() {
+        QUser user = QUser.user;
+
+        List<UserCountInfoDTO> userCountInfo = queryFactory.select(Projections.constructor(UserCountInfoDTO.class, user.registrationDateTime))
+                .from(user)
+                .orderBy(user.registrationDateTime.asc())
+                .fetch();
+        return userCountInfo;
     }
 
     public List<PillSumDTO> findPillSum(String userId) {
@@ -237,12 +261,12 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
         return natriumAscList;
     }
 
-    public List<ButtonCountSumDTO> findButtonCountSum(String userId) {
-        QTbl_button_count bc = QTbl_button_count.tbl_button_count;
+    public List<PatientMainButtonCountSumDTO> findPatientMainButtonCountSum(String userId) {
+        QTbl_patient_main_button_count bc = QTbl_patient_main_button_count.tbl_patient_main_button_count;
 
-        List<ButtonCountSumDTO> buttonCountSum = queryFactory.select(Projections.constructor(ButtonCountSumDTO.class,
+        List<PatientMainButtonCountSumDTO> buttonCountSum = queryFactory.select(Projections.constructor(PatientMainButtonCountSumDTO.class,
                 bc.alarm.sum(), bc.bloodPressure.sum(), bc.diseaseInfo.sum(), bc.exercise.sum(), bc.goal.sum(), bc.helper.sum(), bc.level.sum(), bc.natriumMoisture.sum(), bc.symptom.sum(),
-                bc.weight.sum(), bc.withusRang.sum()))
+                bc.weight.sum(), bc.withusRang.sum(), bc.medicine.sum(), bc.mindHealth.sum(),  bc.board.sum()))
                 .from(bc)
                 .where(bc.key.id.eq(userId))
                 .fetch();
@@ -250,15 +274,124 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
         return buttonCountSum;
     }
 
-    public List<Tbl_button_count> findButtonCount(String userId) {
-        QTbl_button_count bc = QTbl_button_count.tbl_button_count;
+    public List<CaregiverMainButtonCountSumDTO> findCaregiverMainButtonCountSum(String userId) {
+        QTbl_caregiver_main_button_count bc = QTbl_caregiver_main_button_count.tbl_caregiver_main_button_count;
 
-        List<Tbl_button_count> buttonCount = queryFactory.selectFrom(bc)
+        List<CaregiverMainButtonCountSumDTO> buttonCountSum = queryFactory.select(Projections.constructor(CaregiverMainButtonCountSumDTO.class,
+                        bc.goal.sum(), bc.level.sum(), bc.withusRang.sum(), bc.diseaseInfo.sum(), bc.helper.sum(), bc.medicine.sum(), bc.bloodPressure.sum(), bc.exercise.sum(),
+                        bc.familyObservation.sum(), bc.dietManagement.sum(), bc.weight.sum(), bc.mindHealth.sum(), bc.alarm.sum(), bc.board.sum()))
+                .from(bc)
+                .where(bc.key.id.eq(userId))
+                .fetch();
+
+        return buttonCountSum;
+    }
+
+
+    //admin button_count
+    public List<Tbl_patient_main_button_count> findPatientMainButtonCount(String userId) {
+        QTbl_patient_main_button_count bc = QTbl_patient_main_button_count.tbl_patient_main_button_count;
+
+        List<Tbl_patient_main_button_count> buttonCount = queryFactory.selectFrom(bc)
                 .where(bc.key.id.eq(userId))
                 .orderBy(bc.key.week.asc())
                 .fetch();
 
         return buttonCount;
     }
+    public List<Tbl_patient_sub_button_count> findPatientSubButtonCount(String userId) {
+        QTbl_patient_sub_button_count bc = QTbl_patient_sub_button_count.tbl_patient_sub_button_count;
+
+        List<Tbl_patient_sub_button_count> buttonCount = queryFactory.selectFrom(bc)
+                .where(bc.key.id.eq(userId))
+                .orderBy(bc.key.week.asc())
+                .fetch();
+
+        return buttonCount;
+    }
+    public List<Tbl_patient_detail_button_count> findPatientDetailButtonCount(String userId) {
+        QTbl_patient_detail_button_count bc = QTbl_patient_detail_button_count.tbl_patient_detail_button_count;
+
+        List<Tbl_patient_detail_button_count> buttonCount = queryFactory.selectFrom(bc)
+                .where(bc.key.id.eq(userId))
+                .orderBy(bc.key.week.asc())
+                .fetch();
+
+        return buttonCount;
+    }
+    public List<Tbl_caregiver_main_button_count> findCaregiverMainButtonCount(String userId) {
+        QTbl_caregiver_main_button_count bc = QTbl_caregiver_main_button_count.tbl_caregiver_main_button_count;
+
+        List<Tbl_caregiver_main_button_count> buttonCount = queryFactory.selectFrom(bc)
+                .where(bc.key.id.eq(userId))
+                .orderBy(bc.key.week.asc())
+                .fetch();
+        return buttonCount;
+    }
+    public List<Tbl_caregiver_sub_button_count> findCaregiverSubButtonCount(String userId) {
+        QTbl_caregiver_sub_button_count bc = QTbl_caregiver_sub_button_count.tbl_caregiver_sub_button_count;
+
+        List<Tbl_caregiver_sub_button_count> buttonCount = queryFactory.selectFrom(bc)
+                .where(bc.key.id.eq(userId))
+                .orderBy(bc.key.week.asc())
+                .fetch();
+        return buttonCount;
+    }
+    public List<Tbl_caregiver_detail_button_count> findCaregiverDetailButtonCount(String userId) {
+        QTbl_caregiver_detail_button_count bc = QTbl_caregiver_detail_button_count.tbl_caregiver_detail_button_count;
+
+        List<Tbl_caregiver_detail_button_count> buttonCount = queryFactory.selectFrom(bc)
+                .where(bc.key.id.eq(userId))
+                .orderBy(bc.key.week.asc())
+                .fetch();
+        return buttonCount;
+    }
+    public List<PatientButtonSumDTO> findPatientButtonSum(){
+        QTbl_patient_main_button_count bc = QTbl_patient_main_button_count.tbl_patient_main_button_count;
+        List<PatientButtonSumDTO> buttonCount = queryFactory.select(Projections.constructor(PatientButtonSumDTO.class,
+                bc.goal.sum(), bc.level.sum(), bc.medicine.sum(), bc.bloodPressure.sum(), bc.exercise.sum(), bc.weight.sum(), bc.mindHealth.sum(),
+                bc.board.sum(), bc.alarm.sum(), bc.symptom.sum(), bc.natriumMoisture.sum(), bc.withusRang.sum(), bc.diseaseInfo.sum(),
+                bc.helper.sum(), bc.infoEdit.sum()))
+                .from(bc)
+                .fetch();
+        return buttonCount;
+    }
+    public List<CaregiverButtonSumDTO> findCaregiverButtonSum(){
+        QTbl_caregiver_main_button_count bc = QTbl_caregiver_main_button_count.tbl_caregiver_main_button_count;
+
+        List<CaregiverButtonSumDTO> buttonCount = queryFactory.select(Projections.constructor(CaregiverButtonSumDTO.class,
+                bc.goal.sum(), bc.level.sum(), bc.medicine.sum(), bc.bloodPressure.sum(), bc.exercise.sum(), bc.weight.sum(), bc.mindHealth.sum(),
+                bc.board.sum(), bc.alarm.sum(), bc.familyObservation.sum(), bc.dietManagement.sum(), bc.withusRang.sum(), bc.diseaseInfo.sum(),
+                bc.helper.sum(), bc.infoEdit.sum()))
+                .from(bc)
+                .fetch();
+        return buttonCount;
+    }
+
+
+
+    @Transactional
+    public void updateCaregiver(User caregiver){
+        QUser user = QUser.user;
+
+        queryFactory
+                .update(user)
+                .set(user.caregiver.contact, caregiver.getCaregiver().getContact())
+                .where(user.contact.eq(caregiver.getContact()))
+                .execute();
+
+    }
+    @Transactional
+    public void updateTempContact(User user){
+        QUser u = QUser.user;
+
+        queryFactory
+                .update(u)
+                .set(u.tempContact, user.getTempContact())
+                .where(u.contact.eq(user.getContact()))
+                .execute();
+
+    }
+
 }
 

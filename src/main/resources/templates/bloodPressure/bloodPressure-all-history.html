@@ -126,24 +126,35 @@
     $('#history-table-day').append(rowItem);
 
     //수축기 이완기 데이터 테이블
-    var bloodItem = "<tr>";
-    bloodItem += "<th><span class=\"bold\">혈압</span><span>mmHg</span></th>";
+    var contractionItem = "<tr>";
+    contractionItem += "<th><span class=\"bold\">수축 기압</span>";
     for(i=0; i<bloodRecord.length; i++)
     {
-        bloodItem += "<td>";
-        bloodItem += "<span class=\"red\">" + bloodRecord[i].contraction + "</span>";
-        bloodItem += "<span class=\"blue\">" + bloodRecord[i].relaxation + "</span>";
-        bloodItem += "</td>";
+        contractionItem += "<td style='text-align: center'>";
+        contractionItem += "<span class=\"red\">" + bloodRecord[i].contraction + "</span>";
+        contractionItem += "</td>";
     }
-    bloodItem += "</tr>"
-    $('#history-table-data').append(bloodItem);
+    contractionItem += "</tr>"
+    $('#history-table-data').append(contractionItem);
+
+
+    var relaxationItem = "<tr>";
+    relaxationItem += "<th><span class=\"bold\">이완 기압</span>";
+    for(i=0; i<bloodRecord.length; i++)
+    {
+        relaxationItem += "<td style='text-align: center'>";
+        relaxationItem += "<span class=\"blue\">" + bloodRecord[i].relaxation + "</span>";
+        relaxationItem += "</td>";
+    }
+    relaxationItem += "</tr>"
+    $('#history-table-data').append(relaxationItem);
 
     //혈압 데이터 테이블
     var pulse = "<tr>";
-    pulse += "<th><span class=\"bold\">맥박</span><span>회/분</span></th>";
+    pulse += "<th><span class=\"bold\">맥박";
     for(i=0; i<bloodRecord.length; i++)
     {
-        pulse += "<td>";
+        pulse += "<td style='text-align: center'>";
         pulse += "<span class=\"black\">" + bloodRecord[i].pressure + "</span>";
         pulse += "</td>";
     }

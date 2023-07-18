@@ -116,7 +116,9 @@
 <div class="menubar">
     <ul>
         <li><p>위더스 - 관리자 모드</p></li>
-        <li><a th:href="@{/center}">환자 관리</a></li>
+        <li><a th:href="@{/admin_dashboard}">대쉬보드</a></li>
+        <li><a th:href="@{/admin_home/patient}">환자 관리</a></li>
+        <li><a th:href="@{/admin_home/caregiver}">가족 관리</a></li>
         <li style="width: 200px;"><a href="#" id="current">도우미 연결 요청 기록</a>
             <ul>
                 <li><a th:href="@{/admin_patientHelpRequest}">환자용 계정 기록</a></li>

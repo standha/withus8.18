@@ -11,6 +11,8 @@ spring:
         max-size: 20
         allow-core-thread-timeout: false
       thread-name-prefix: TNP-
+  thymeleaf:
+    cache: false
 
   datasource:
     url: jdbc:mysql://192.168.4.26/withus?serverTimezone=Asia/Seoul

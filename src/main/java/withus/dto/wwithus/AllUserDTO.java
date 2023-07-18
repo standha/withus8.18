@@ -18,11 +18,14 @@ public class AllUserDTO {
     private User.Gender gender;
     private String contact;
     private String guserName;
+    private User.Gender guserGender;
     private String guserId;
     private String guserPassword;
     private String guserContact;
     private String currentCode;
     private LocalDateTime userRecordDate;
+    private String height;
+    private User.Relative relative;
 
     public static AllUserDTO fromString(String queryResult) {
         String[] array = queryResult.split(",");
@@ -35,11 +38,14 @@ public class AllUserDTO {
                 .gender(User.Gender.byName(array[4]))
                 .contact(array[5])
                 .guserName(array[6])
-                .guserId(array[7])
-                .guserPassword(array[8])
-                .guserContact(array[9])
-                .userRecordDate(Utility.parseDateTime(array[10]))
-                .currentCode(array[11])
+                .guserGender(User.Gender.byName(array[7]))
+                .guserId(array[8])
+                .guserPassword(array[9])
+                .guserContact(array[10])
+                .userRecordDate(Utility.parseDateTime(array[11]))
+                .currentCode(array[12])
+                .height(array[13])
+                .relative(User.Relative.RbyName(array[14]))
                 .build();
     }
 }

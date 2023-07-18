@@ -31,29 +31,45 @@
 
 </style>
 <body>
-    <header style="padding-right: 15px; padding-left: 15px; padding-top: 15px;">
-        <div style="border: 1px dotted; background: #ffffff; text-align: center; font-weight: bold;">
-            <div class="parent todo-txt">
-                <div class="div1">
-                    <p style="text-align: left;" th:text="'환자 이름 - ' + ${patient.name}"></p>
-                    <p style="text-align: left;" th:text="'환자 아이디 - ' + ${patient.userId}"></p>
-                    <p style="text-align: left;" th:text="'환자 생년월일 - ' + ${patient.birthdate}"></p>
-                </div>
-                <div id="patient_goal" class="div2" style="justify-content: center;">
-                    <p style="text-align: center;" th:text="'환자 이주의 목표'"></p>
-                </div>
-                <div id="patient_level" class="div3">
-                    <p style="text-align: right;" th:text="'환자 레벨 - ' + ${patient.level}">
-                </div>
+<header style="padding-right: 15px; padding-left: 15px; padding-top: 15px;">
+    <div style="border: 1px dotted; background: #ffffff; text-align: center; font-weight: bold;">
+        <div class="parent todo-txt">
+            <div class="div1">
+                <p style="text-align: left;" th:if="${type} eq ${T(withus.entity.User.Type).PATIENT}"
+                   th:text="'환자 이름 - ' + ${info.name}"></p>
+                <p style="text-align: left;" th:if="${type} eq ${T(withus.entity.User.Type).CAREGIVER}"
+                   th:text="'가족 이름 - ' + ${info.name}"></p>
+                <p style="text-align: left;" th:if="${type} eq ${T(withus.entity.User.Type).PATIENT}"
+                   th:text="'환자 아이디 - ' + ${info.userId}"></p>
+                <p style="text-align: left;" th:if="${type} eq ${T(withus.entity.User.Type).CAREGIVER}"
+                   th:text="'가족 아이디 - ' + ${info.userId}"></p>
+                <p style="text-align: left;" th:if="${type} eq ${T(withus.entity.User.Type).PATIENT}"
+                   th:text="'환자 생년월일 - ' + ${info.birthdate}"></p>
+                <p style="text-align: left;" th:if="${type} eq ${T(withus.entity.User.Type).CAREGIVER}"
+                   th:text="'가족 생년월일 - ' + ${info.birthdate}"></p>
+            </div>
+            <div id="patient_goal" class="div2" style="justify-content: center;">
+                <p style="text-align: center;" th:if="${type} eq ${T(withus.entity.User.Type).PATIENT}"
+                   th:text="'환자 이주의 목표'"></p>
+                <p style="text-align: center;" th:if="${type} eq ${T(withus.entity.User.Type).CAREGIVER}"
+                   th:text="'가족 이주의 목표'"></p>
+            </div>
+            <div id="patient_level" class="div3">
+                <p style="text-align: right;" th:if="${type} eq ${T(withus.entity.User.Type).PATIENT}"
+                   th:text="'환자 레벨 - ' + ${info.level}"></p>
+                <p style="text-align: right;" th:if="${type} eq ${T(withus.entity.User.Type).CAREGIVER}"
+                   th:text="'가족 레벨 - ' + ${info.level}"></p>
             </div>
         </div>
-    </header>
+    </div>
+</header>
 </body>
+
 <script th:inline="javascript">
 
     /*<![CDATA[*/
-    var goalCheck = /*[[ ${patient.goal} ]]*/;
-    var level = /*[[ ${patient.level} ]]*/;
+    var goalCheck = /*[[ ${info.goal} ]]*/;
+    var level = /*[[ ${info.level} ]]*/;
     /*]]*/
 
     var levelItem = "<p style='text-align: right;'>";
