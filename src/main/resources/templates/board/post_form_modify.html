@@ -1,6 +1,6 @@
 <html layout:decorate="~{board/layout}">
-<div layout:fragment="content" class="container">
-  <h5 class="my-3 border-bottom pb-2">글쓰기</h5>
+<div layout:fragment="content" class="container px-0">
+  <h5 class="my-3 border-bottom pb-2 text-center">글 수정</h5>
   <!-- th:object 속성이 반드시 필요하다.
   th:object를 사용하여 폼의 속성들이 PostForm의 속성들로 구성된다는 점을 타임리프 엔진에 알려줘야 하기 때문
   -->
@@ -11,7 +11,7 @@
     <!-- name="subject", name="content"와 같이 사용하던 부분을 위와 같이 th:field 속성을 사용하도록 변경하였다. 이렇게 하면 해당 태그의 id, name, value 속성이 모두 자동으로 생성되고 타임리프가 value 속성에 기존 값을 채워 넣어 오류가 발생하더라도 기존에 입력한 값이 유지된다.
     -->
     <div>
-      <select th:field="*{category}" class="form-select">
+      <select th:field="*{category}" class="form-select rounded-0 border-start-0 border-end-0">
         <option value="">카테고리를선택해주세요</option> <!--선택안한 비어있는값-->
           <option sec:authorize="hasRole('ROLE_ADMIN')" value="공지사항">공지사항</option>
           <option value="질문게시판">질문게시판</option>
@@ -20,13 +20,15 @@
     </div>
     <div class="mb-3">
       <label for="subject" class="form-lable">제목</label>
-      <input type="text" th:field="*{subject}" class="form-control">
+      <input type="text" th:field="*{subject}" class="form-control rounded-0 border-start-0 border-end-0">
     </div>
     <div class="mb-3">
-      <label for="content" class="form-label">내용</label>
-      <textarea th:field="*{content}" class="form-control" rows="10"></textarea>
+      <label for="content" class="form-label"></label>
+      <textarea th:field="*{content}" class="form-control rounded-0 border-start-0 border-end-0" rows="16"></textarea>
     </div>
-    <input type="submit" value="저장하기" class="btn btn-primary my-2">
+      <div class="text-center">
+          <input type="submit" value="저장" class="btn btn-warning rounded-pill">
+      </div>
   </form>
 </div>
 </html>
