@@ -19,6 +19,7 @@ function onFormSubmission(form) {
 	const password = form.querySelector("input[name=password]").value;
 	const name = form.querySelector("input[name=name]").value;
 	const contact = form.querySelector("input[name=contact]").value;
+	const height = form.querySelector("input[name=height]").value;
 	//const userType = form.querySelector("input[name=user]:checked").value;
 	/*const userType = document.querySelector(".PATIENT").dataset.value;*/
 
@@ -35,6 +36,7 @@ function onFormSubmission(form) {
 		password: null,
 		name: null,
 		birthdate : null,
+		height : null,
 		contact: caregiverValue
 	}
 	const caregiver = isEmpty(caregiverValue) ? null : user;
@@ -45,6 +47,7 @@ function onFormSubmission(form) {
 		userId: id,
 		password: password,
 		name: name,
+		height : height,
 		contact: contact,
 		birthdate: birthdate,
 		gender: sex,
@@ -67,8 +70,18 @@ function onFormSubmission(form) {
 	text = /^[A-Za-z0-9+]*$/;
 	phonenum = /^[0-9]+$/;
 	comma = /,/g;
+	passwd = /^[A-Za-z0-9`\-=\\\[\];',\./~!@#\$%\^&\*\(\)_\+|\{\}:"<>\?]{8,16}$/;
+	search=/\s/g;
+
+
 	if(isEmpty(removeSpace(id))){
 		alert("아이디가 공백입니다.");
+	}
+	else if(search.test(id) >= 1) {
+		alert("아이디는 공백 없이 입력해주세요.");
+	}
+	else if(id.length < 5 || id.length > 20) {
+		alert("아이디는 5자리 ~ 20자리 이내로 입력해주세요.");
 	}
 	else if(!text.test(id)){
 		alert("아이디는 영어와 숫자만 입력 가능합니다.");
@@ -76,8 +89,14 @@ function onFormSubmission(form) {
 	else if (isEmpty(removeSpace(password))){
 		alert("비밀번호가 공백입니다.");
 	}
-	else if(!text.test(password)){
-		alert("비밀번호는 영어와 숫자만 입력 가능합니다.");
+	else if(password.length < 8 || password.length > 16) {
+		alert("비밀번호는 8자리 ~ 16자리 이내로 입력해주세요.");
+	}
+	else if(search.test(password) >= 1) {
+		alert("비밀번호는 공백 없이 입력해주세요.");
+	}
+	else if(!passwd.test(password)){
+		alert("비밀번호는 영문, 숫자, 특수문자를 혼합하여 입력해주세요.");
 	}
 	else if (isEmpty(removeSpace(name))){
 		alert("이름이 공백입니다.");

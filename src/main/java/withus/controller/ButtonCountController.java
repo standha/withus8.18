@@ -38,7 +38,7 @@ public class ButtonCountController extends BaseController {
         Tbl_button_count saved = null;
 
         logger.info("id:{}, week:{}, alarm:{}, blood_pressure:{}, disease_info:{}, exercise:{}, goal:{}, helper:{}, level:{}, natrium-moisture:{}, symptom:{}, weight:{}, chat:{}"
-                , count.getKey().getId(), count.getKey().getWeek(), count.getAlarm(), count.getBloodPressure(), count.getDiseaseInfo(), count.getExercise(), count.getGoal(), count.getHelper(),
+                , count.getKey().getId(), count.getKey().getWeek(), count.getMedication(), count.getAlarm(), count.getBloodPressure(), count.getDiseaseInfo(), count.getExercise(), count.getGoal(), count.getHelper(),
                 count.getLevel(), count.getNatriumMoisture(), count.getSymptom(), count.getWeight(), count.getWithusRang());
 
         try {

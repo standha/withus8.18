@@ -24,6 +24,10 @@ public class Tbl_button_count {
     @Column(name = "level")
     private Integer level;
 
+
+    @Column(name = "medication")
+    private Integer medication;
+
     @Column(name = "alarm")
     private Integer alarm;
 
@@ -38,6 +42,12 @@ public class Tbl_button_count {
 
     @Column(name = "weight")
     private Integer weight;
+
+    @Column(name = "mentalHealth")
+    private Integer mentalHealth;
+
+    @Column(name = "noticeBoard")
+    private Integer noticeBoard;
 
     @Column(name = "symptom")
     private Integer symptom;

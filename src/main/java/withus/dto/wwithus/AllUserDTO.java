@@ -14,6 +14,7 @@ public class AllUserDTO {
     private String name;
     private String userId;
     private String password;
+    private String height;
     private LocalDate birthdate;
     private User.Gender gender;
     private String contact;
@@ -40,6 +41,7 @@ public class AllUserDTO {
                 .guserContact(array[9])
                 .userRecordDate(Utility.parseDateTime(array[10]))
                 .currentCode(array[11])
+                .height(array[12])
                 .build();
     }
 }

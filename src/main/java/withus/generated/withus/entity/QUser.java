@@ -32,6 +32,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final EnumPath<User.Gender> gender = createEnum("gender", User.Gender.class);
 
+    public final StringPath height = createString("height");
+
     public final NumberPath<Integer> level = createNumber("level", Integer.class);
 
     public final StringPath name = createString("name");

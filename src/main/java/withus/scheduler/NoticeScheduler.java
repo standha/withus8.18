@@ -14,6 +14,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import withus.controller.MedicationController;
 import withus.entity.Tbl_medication_alarm;
 import withus.entity.Tbl_outpatient_visit_alarm;
 import withus.entity.User;
@@ -84,7 +85,7 @@ public class NoticeScheduler {
 
         return new ResponseEntity<>("Push Notification ERROR!", HttpStatus.BAD_REQUEST);
     }
-
+/*
     //복약 PUSH 알림
     @Async
     @Scheduled(cron = "0 * * * * *")
@@ -93,8 +94,10 @@ public class NoticeScheduler {
         List<String> morningToken = new ArrayList<>();
         List<String> lunchToken = new ArrayList<>();
         List<String> dinnerToken = new ArrayList<>();
-        List<Tbl_medication_alarm> alarms = alarmService.getPillAlarmOn();
 
+        User user = new User();
+        Tbl_medication_alarm alarms = MedicationController.(user.getUserId());
+//        Tbl_medication_alarm alarms = alarmService.getTodayAlarm(userService.getUserById());
         for (Tbl_medication_alarm alarm : alarms) {
             LocalTime localTime = LocalTime.now();
 
@@ -137,6 +140,8 @@ public class NoticeScheduler {
             e.printStackTrace();
         }
     }
+    */
+
 
     //외래 진료 전날 PUSH 알림cron = "0 0 18 * * *"
     @Async

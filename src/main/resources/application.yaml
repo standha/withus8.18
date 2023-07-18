@@ -13,9 +13,9 @@ spring:
       thread-name-prefix: TNP-
 
   datasource:
-    url: jdbc:mysql://127.0.0.1/withus?serverTimezone=Asia/Seoul
-    username: withus
-    password: withus@12
+    url: jdbc:mysql://localhost:3306/withus?serverTimezone=Asia/Seoul
+    username: root
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
     initialization-mode: never
     sql-script-encoding: UTF-8

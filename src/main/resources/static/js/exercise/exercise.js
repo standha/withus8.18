@@ -46,7 +46,34 @@ function showHistory() {
     const element = document.querySelector("#exercise-history-get-action");
     location.href = element.value;
 }
+function submit_Click() {
 
+    var Item2;
+    $("#layerSelectType").show();
+    $("#dim").show();
+    Item2 = "<span> 기록이 완료되었습니다.</span>"
+    $('#popUp2').append(Item2);
+
+
+
+
+}
+function alarm_caregiver() {
+    var Item;
+    $("#layerSelectType").show();
+    $("#dim").show();
+    Item = "<span> 보호자에게 운동한 것을 알릴까요?</span>"
+    $('#popUp2').append(Item);
+
+
+    $("#buttonNo").click(function () {
+        $("#layerSelectType").hide();
+        $("#dim").hide();
+        window.location.reload();
+        return false;
+    });
+
+}
 function isEmpty(value){
     if (value.length === 0) {
         return true;
