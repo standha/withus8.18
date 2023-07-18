@@ -3,7 +3,7 @@
 <div layout:fragment="content" class="container my-3">
   <div class="row my-3">
     <div class="col-6">
-      <a th:href="@{/board/post/create}" class="btn btn-primary">글쓰기</a>
+      <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/board/post/create}" class="btn btn-primary">글쓰기</a>
     </div>
 <!--    <div class="col-6">-->
 <!--      <div class="input-group">-->
@@ -33,7 +33,7 @@
     loop.even - 루프의 짝수번째 순서인 경우 true
     loop.current - 현재 대입된 객체 (예: 위의 경우 post과 동일)
     -->
-    <tr class="text-center" th:if="${post.category == '나눔게시판'}" th:each="post, loop : ${paging}">
+    <tr class="text-center" th:if="${post.category == '공지사항'}" th:each="post, loop : ${paging}">
       <!-- 게시물 일련번호 추가 -->
 <!--      <td th:text="${paging.getTotalElements() - (paging.number * paging.size) - loop.index}"></td>-->
       <!--카테고리값 텍스트로출력-->
@@ -41,7 +41,7 @@
       <td class="text-start">
         <!--post/detail/과 같은 문자열과 ${post.id}와 같은 자바 객체의 값을 더할 때는 반드시 다음처럼 |과 | 기호로 좌우를 감싸 주어야 한다.-->
         <a th:href="@{|/board/post/detail/${post.id}|}" th:text="${post.subject}"></a>
-        <!-- 답변 개수 표시
+        <!-- 댓글 개수 표시
         #list.size(이터러블객체)는 이터러블 객체의 사이즈를 반환하는 타임리프의 유틸리티 -->
         <span class="text-danger small ms-2"
         th:if="${#lists.size(post.commentList) > 0}"
@@ -78,7 +78,7 @@
       </li>
     </ul>
   </div>
-  <form th:action="@{/board/post/list/share}" method="get" id="searchForm">
+  <form th:action="@{/board/post/list/notice}" method="get" id="searchForm">
     <input type="hidden" id="kw" name="kw" th:value="${kw}">
     <input type="hidden" id="page" name="page" th:value="${paging.number}">
   </form>
@@ -94,7 +94,7 @@
   const btn_search = document.getElementById("btn_search");
   btn_search.addEventListener('click', function() {
     document.getElementById('kw').value = document.getElementById('search_kw').value;
-    document.getElementById('page').value = 0;  // 검색버튼을 클릭할 경우 0페이지부터 조회한다.
+    document.getElementById('page').value = 0;  // 검색버튼을 클릭할 경우 0페이지부터 조회
     document.getElementById('searchForm').submit();
   });
 </script>

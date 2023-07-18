@@ -2,7 +2,7 @@
 <html layout:decorate="~{board/layout}">
 <div layout:fragment="content" class="container px-0">
 <!--  질문-->
-<!--  카테고리추가-->
+<!--  카테고리-->
 <!--  <div class="p-1 bg-dark text-white" th:text="${post.category}"></div>-->
     <h2 class="border-bottom p-2" th:text="${post.subject}"></h2>
     <div class="border-bottom px-2 pb-2">
@@ -26,7 +26,6 @@
                 <a class="btn btn-sm btn-outline-secondary rounded-pill float-end p-0" style="width: 48px;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">···</a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item modify" href="javascript:void(0);" th:data-uri="@{|/board/post/modify/${post.id}|}">수정</a></li>
-                    <!--href에 삭제 URL을 직접 사용하지 않고 이러한 방식을 사용하는 이유는 삭제 버튼을 클릭했을때"정말로 삭제하시겠습니까?" 와 같은 확인 절차가 필요하기 때문-->
                     <li><a class="dropdown-item delete" href="javascript:void(0);" th:data-uri="@{|/board/post/delete/${post.id}|}">삭제</a></li>
                 </ul>
             </div>
@@ -67,7 +66,6 @@
                     <button class="btn btn-sm btn-secondary dropdown-toggle float-end" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" th:href="@{|/board/comment/modify/${comment.id}|}">수정</a></li>
-                        <!--href에 삭제 URL을 직접 사용하지 않고 이러한 방식을 사용하는 이유는 삭제 버튼을 클릭했을때"정말로 삭제하시겠습니까?" 와 같은 확인 절차가 필요하기 때문-->
                         <li><a class="dropdown-item delete" href="javascript:void(0);" th:data-uri="@{|/board/comment/delete/${comment.id}|}">삭제</a></li>
                     </ul>
                 </div>
