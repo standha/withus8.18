@@ -37,4 +37,9 @@ public class BloodPressureService {
     public Tbl_blood_pressure_pulse getTodayBloodRecord(RecordKey pk) {
         return bloodPressureRepository.findByPk(pk).orElse(null);
     }
+
+    @Nullable
+    public List<Tbl_blood_pressure_pulse> getALlBloodRecord(String id){
+        return bloodPressureRepository.findByAllBloodPressure(id);
+    }
 }
