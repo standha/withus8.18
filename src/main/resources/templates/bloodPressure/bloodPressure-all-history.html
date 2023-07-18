@@ -81,10 +81,12 @@
                     <ul class="list">
                         <li class="red">수축기 혈압</li>
                         <li class="blue">이완기 혈압</li>
-                        <li class="black">맥박</li>
+                        <li class="black">맥박</li>s
                     </ul>
                 </div>
-                <canvas id="myChart" class="chart-blood" style="height:70vw; width:100vw"></canvas>
+                <div class="slide">
+                    <canvas id="myChart" class="chart-blood slide-item" style="height:70vw; width:100vw"></canvas>
+                </div>
                 <div class="tbl-chart">
                     <div class="tbl-wrap type01">
                         <table>
@@ -161,15 +163,29 @@
     pulse += "</tr>"
     $('#history-table-data').append(pulse);
 
-    for(i=0; i<bloodRecord.length; i++)
-    {
-        //x축 라벨 바꾸기
-        date[i] = bloodRecord[i].pk.date.substr(5,2) + " / " + bloodRecord[i].pk.date.substr(8,2);
-        //date[i] = bloodRecord[i].pk.date;
-        contraction[i] = bloodRecord[i].contraction;
-        relaxation[i] = bloodRecord[i].relaxation;
-        pressure[i] = bloodRecord[i].pressure;
+    if(bloodRecord.length <=3){
+        for(i=0; i<bloodRecord.length; i++)
+        {
+            //x축 라벨 바꾸기
+            date[i] = bloodRecord[i].pk.date.substr(5,2) + " / " + bloodRecord[i].pk.date.substr(8,2);
+            //date[i] = bloodRecord[i].pk.date;
+            contraction[i] = bloodRecord[i].contraction;
+            relaxation[i] = bloodRecord[i].relaxation;
+            pressure[i] = bloodRecord[i].pressure;
+        }
+    } else {
+        var threeBloodRecord = bloodRecord.slice(bloodRecord.length-3,bloodRecord.length);
+        for(i=0; i<threeBloodRecord.length; i++)
+        {
+            //x축 라벨 바꾸기
+            date[i] = threeBloodRecord[i].pk.date.substr(5,2) + " / " + threeBloodRecord[i].pk.date.substr(8,2);
+            //date[i] = threeBloodRecord[i].pk.date;
+            contraction[i] = threeBloodRecord[i].contraction;
+            relaxation[i] = threeBloodRecord[i].relaxation;
+            pressure[i] = threeBloodRecord[i].pressure;
+        }
     }
+
 
     let draw = Chart.controllers.line.prototype.draw;
     var ctx = document.getElementById('myChart').getContext('2d');
@@ -341,7 +357,7 @@
         }
     });
 
-    var bloodList = [];
+
 
     const getAjax = function(url) {
         return new Promise((resolve, reject) => { // 1.
@@ -363,13 +379,116 @@
         const url ="/blood-get-data";
         try {
             bloodList = await getAjax("/blood-get-data");
+            return bloodList;
         } catch(e) {
             console.log(e);
         }
 
     }
-    getBloodData();
 
+    async function initializeSlide() {
+        bloodList = await getBloodData(); // 데이터 받아오기
+        currSlide = bloodList['bloodList'].length - 1;
+        maxSlide = bloodList['bloodList'].length - 1;
+    }
+    let bloodList = {};
+    let currSlide = 0;
+    let maxSlide = 0;
+    initializeSlide();
+    const slide = document.querySelector(".slide");
+    let cycle = "THREE";
+
+    let startPoint = 0;
+    let endPoint = 0;
+
+    // PC 클릭 이벤트 (드래그)
+    slide.addEventListener("mousedown", (e) => {
+        console.log("mousedown", e.pageX);
+        startPoint = e.pageX; // 마우스 드래그 시작 위치 저장
+    });
+
+    slide.addEventListener("mouseup", (e) => {
+        console.log("mouseup", e.pageX);
+        endPoint = e.pageX; // 마우스 드래그 끝 위치 저장
+        if (startPoint < endPoint) {
+            // 마우스가 오른쪽으로 드래그 된 경우
+            console.log("prev move");
+            prevMove();
+        } else if (startPoint > endPoint) {
+            // 마우스가 왼쪽으로 드래그 된 경우
+            console.log("next move");
+            nextMove();
+        }
+    });
+
+    // 모바일 터치 이벤트 (스와이프)
+    slide.addEventListener("touchstart", (e) => {
+        console.log("touchstart", e.touches[0].pageX);
+        startPoint = e.touches[0].pageX; // 터치가 시작되는 위치 저장
+    });
+    slide.addEventListener("touchend", (e) => {
+        console.log("touchend", e.changedTouches[0].pageX);
+        endPoint = e.changedTouches[0].pageX; // 터치가 끝나는 위치 저장
+        if (startPoint < endPoint) {
+            // 오른쪽으로 스와이프 된 경우
+            console.log("prev move");
+            prevMove();
+        } else if (startPoint > endPoint) {
+            // 왼쪽으로 스와이프 된 경우
+            console.log("next move");
+            nextMove();
+        }
+    });
+
+
+
+
+    function nextMove() {
+        let newContractions = [];
+        let newRelaxation = [];
+        let newPressure = [];
+        currSlide++;
+        // 마지막 슬라이드 이상으로 넘어가지 않게 하기 위해서
+        if (currSlide <= maxSlide) {
+
+            console.log('오른');
+            if(cycle ==="THREE"){
+
+            } else {
+
+            }
+        } else {
+            currSlide--;
+        }
+    }
+    function prevMove() {
+        let newContractions = [];
+        let newRelaxation = [];
+        let newPressure = [];
+        currSlide--;
+        let threeBloodData = bloodList['bloodList'].slice(currSlide-1,currSlide+2);
+
+        // 1번째 슬라이드 이하로 넘어가지 않게 하기 위해서
+        if (currSlide >= 0) {
+            if(cycle ==="THREE"){
+                for(var i = 0; i<3; i++){
+                    let bloodData = threeBloodData[i];
+                    newContractions.push(bloodData['contraction']);
+                    newRelaxation.push(bloodData['relaxation']);
+                    newPressure.push(bloodData['pressure']);
+                }
+                myChart.data.datasets[0].data = newContractions;
+                myChart.data.datasets[1].data = newRelaxation;
+                myChart.data.datasets[2].data = newPressure;
+                myChart.update();
+            }
+
+
+
+        } else {
+            currSlide++;
+        }
+    }
 </script>
 
 </body>
