@@ -33,13 +33,16 @@
                          th:text="${#temporals.format(post.createDate, 'MM/dd HH:mm')}">
                     </div>
                 </div>
-                <div class="text-start">
-                    <a th:text="${post.subject}"></a>
-<!--                    댓글수-->
-<!--                    <span class="text-danger small ms-2"-->
-<!--                          th:if="${#lists.size(post.commentList) > 0}"-->
-<!--                          th:text="${#lists.size(post.commentList)}">-->
-<!--                    </span>-->
+                <div class="row mx-0">
+                    <div class="col px-0">
+                        <a th:text="${post.subject}"></a>
+<!--                        댓글수-->
+<!--                        <span class="text-danger small ms-2"-->
+<!--                              th:if="${#lists.size(post.commentList) > 0}"-->
+<!--                              th:text="${#lists.size(post.commentList)}">-->
+<!--                        </span>-->
+                    </div>
+                    <a class="col-2 p-0 modify btn btn-sm btn-outline-secondary rounded-pill float-end" style="width: 48px;" href="javascript:void(0);" sec:authorize="isAuthenticated()" th:if="${post.author != null and #authentication.getPrincipal().getUsername() == post.author.userId or #authentication.getPrincipal().getUsername() == '위더스'}" th:data-uri="@{|/board/post/modify/${post.id}|}">···</a>
                 </div>
             </div>
         </a>
@@ -71,25 +74,33 @@
         <input type="hidden" id="page" name="page" th:value="${paging.number}">
     </form>
     <div class="d-flex justify-content-center">
-        <a th:href="@{/board/post/create}" class="btn btn-outline-dark btn-lg rounded-pill">글쓰기</a>
+        <a th:href="@{/board/post/create}" class="btn btn-outline-dark btn-lg bg-light rounded-pill">글쓰기</a>
     </div>
     <a th:href="@{/board}" class="position-fixed bottom-0 end-0 p-2">
         <img th:src="@{/images/board/123.다이애딕_환자용_게시판_명예의전당_아이콘11.png}" class="img-fluid float-end" style="max-height: 38px;">
     </a>
 </div>
 <script layout:fragment="script" type='text/javascript'>
-  const page_elements = document.getElementsByClassName("page-link");
-  Array.from(page_elements).forEach(function(element) {
-    element.addEventListener('click', function() {
-      document.getElementById('page').value = this.dataset.page;
-      document.getElementById('searchForm').submit();
+    const modify_elements = document.getElementsByClassName("modify");
+    Array.from(modify_elements).forEach(function(element) {
+        element.addEventListener('click', function() {
+            if(confirm("게시물을 수정하시겠습니까??")) {
+                location.href = this.dataset.uri;
+            }
+        });
     });
-  });
-  const btn_search = document.getElementById("btn_search");
-  btn_search.addEventListener('click', function() {
-    document.getElementById('kw').value = document.getElementById('search_kw').value;
-    document.getElementById('page').value = 0;  // 검색버튼을 클릭할 경우 0페이지부터 조회한다.
-    document.getElementById('searchForm').submit();
-  });
+    const page_elements = document.getElementsByClassName("page-link");
+    Array.from(page_elements).forEach(function(element) {
+        element.addEventListener('click', function() {
+            document.getElementById('page').value = this.dataset.page;
+            document.getElementById('searchForm').submit();
+        });
+    });
+    const btn_search = document.getElementById("btn_search");
+    btn_search.addEventListener('click', function() {
+        document.getElementById('kw').value = document.getElementById('search_kw').value;
+        document.getElementById('page').value = 0;  // 검색버튼을 클릭할 경우 0페이지부터 조회한다.
+        document.getElementById('searchForm').submit();
+    });
 </script>
 </html>

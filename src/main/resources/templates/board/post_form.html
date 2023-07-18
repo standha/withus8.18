@@ -1,6 +1,6 @@
 <html layout:decorate="~{board/layout}">
 <div layout:fragment="content" class="conatainer">
-    <h5 class="my-3 border-bottom pb-2">글쓰기</h5>
+    <h5 class="my-3 border-bottom pb-2 text-center">글쓰기</h5>
   <!-- th:object 속성이 반드시 필요하다.
   th:object를 사용하여 폼의 속성들이 PostForm의 속성들로 구성된다는 점을 타임리프 엔진에 알려줘야 하기 때문
   -->
@@ -23,8 +23,8 @@
             <input type="text" th:field="*{subject}" class="form-control">
         </div>
         <div class="mb-3">
-          <label for="content" class="form-label">내용</label>
-            <textarea th:field="*{content}" class="form-control rounded=0" rows="10"></textarea>
+            <label for="content" class="form-label"></label>
+            <textarea th:field="*{content}" placeholder="내용을 입력하세요" class="form-control rounded=0" rows="16"></textarea>
         </div>
         <div class="text-center">
             <input type="submit" value="게시" class="btn btn-warning rounded-pill">
