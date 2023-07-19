@@ -140,7 +140,7 @@ public class PostController {
         Post post = this.postService.getPost(id);
         model.addAttribute("post", post);
 
-        if(post.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("admin")) {
+        if(post.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("위더스")) {
             postForm.setSubject(post.getSubject());
             postForm.setContent(post.getContent());
             postForm.setCategory(post.getCategory());
@@ -162,7 +162,7 @@ public class PostController {
         Post post = this.postService.getPost(id);
         model.addAttribute("post", post);
 
-        if (post.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("admin")) {
+        if (post.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("위더스")) {
             this.postService.modify(post, postForm.getSubject(), postForm.getContent(), postForm.getCategory());
 
             return String.format("redirect:/board/post/detail/%s", id);
@@ -175,7 +175,7 @@ public class PostController {
     @GetMapping("/delete/{id}")
     public String postDelete(Principal principal, @PathVariable("id") Integer id) {
         Post post = this.postService.getPost(id);
-        if (post.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("admin")) {
+        if (post.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("위더스")) {
             this.postService.delete(post);
             return "redirect:/board";
         } else {

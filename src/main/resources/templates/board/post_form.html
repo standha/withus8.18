@@ -29,8 +29,18 @@
             <input type="submit" value="게시" class="btn btn-warning rounded-pill">
         </div>
     </form>
-    <a th:href="@{/board}" class="position-fixed bottom-0 end-0 p-2">
+    <a class="exit position-fixed bottom-0 end-0 p-2" href="javascript:void(0);" th:data-uri="@{/board}">
         <img th:src="@{/images/board/123.다이애딕_환자용_게시판_명예의전당_아이콘11.png}" class="img-fluid float-end" style="max-height: 38px;">
     </a>
 </div>
+<script layout:fragment="script" type='text/javascript'>
+    const exit = document.getElementsByClassName("exit");
+    Array.from(exit).forEach(function(element) {
+        element.addEventListener('click', function() {
+            if(confirm("글쓰기를 종료하시겠습니까?")) {
+                location.href = this.dataset.uri;
+            }
+        });
+    });
+</script>
 </html>
