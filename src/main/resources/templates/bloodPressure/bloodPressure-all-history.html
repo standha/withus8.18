@@ -14,6 +14,7 @@
     <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
     <script th:src="@{/js/chart.js}"></script>
     <script th:src="@{js/chartjs-plugin-style.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.5/chartjs-plugin-annotation.min.js"></script>
     <script th:src="@{/js/jquery-ui.js}"></script>
     <script th:src="@{/js/datepicker-ko.js}"></script>
     <script th:src="@{/js/common.js}"></script>
@@ -81,7 +82,7 @@
                     <ul class="list">
                         <li class="red">수축기 혈압</li>
                         <li class="blue">이완기 혈압</li>
-                        <li class="black">맥박</li>s
+                        <li class="black">맥박</li>
                     </ul>
                 </div>
                 <div class="slide">
@@ -118,11 +119,21 @@
     //요일 데이터 테이블
     var rowItem = "<tr><th></th>";
     var week = ['일', '월', '화', '수', '목', '금', '토'];
-    for(i=0; i<bloodRecord.length; i++)
-    {
-        var day = new Date(bloodRecord[i].pk.date.substr(0, 4), bloodRecord[i].pk.date.substr(5, 2)-1, bloodRecord[i].pk.date.substr(8, 2)).getDay();
-        var dayLabel = week[day];
-        rowItem += "<th>" + dayLabel + "</th>";
+
+    if(bloodRecord.length > 3){
+        for(i=bloodRecord.length-3; i<bloodRecord.length; i++)
+        {
+            var day = new Date(bloodRecord[i].pk.date.substr(0, 4), bloodRecord[i].pk.date.substr(5, 2)-1, bloodRecord[i].pk.date.substr(8, 2)).getDay();
+            var dayLabel = week[day];
+            rowItem += "<th>" + bloodRecord[i].pk.date.substr(8,10)+ "일 " + dayLabel + "</th>";
+        }
+    } else {
+        for(i=0; i<bloodRecord.length; i++)
+        {
+            var day = new Date(bloodRecord[i].pk.date.substr(0, 4), bloodRecord[i].pk.date.substr(5, 2)-1, bloodRecord[i].pk.date.substr(8, 2)).getDay();
+            var dayLabel = week[day];
+            rowItem += "<th>" + bloodRecord[i].pk.date.substr(8,10)+ "일 " + dayLabel + "</th>";
+        }
     }
     rowItem += "</tr>"
     $('#history-table-day').append(rowItem);
@@ -130,36 +141,66 @@
     //수축기 이완기 데이터 테이블
     var contractionItem = "<tr>";
     contractionItem += "<th><span class=\"bold\">수축 기압</span>";
-    for(i=0; i<bloodRecord.length; i++)
-    {
-        contractionItem += "<td style='text-align: center'>";
-        contractionItem += "<span class=\"red\">" + bloodRecord[i].contraction + "</span>";
-        contractionItem += "</td>";
+    if(bloodRecord.length > 3){
+        for(i=bloodRecord.length-3; i<bloodRecord.length; i++)
+        {
+            contractionItem += "<td style='text-align: center'>";
+            contractionItem += "<span class=\"red\">" + bloodRecord[i].contraction + "</span>";
+            contractionItem += "</td>";
+        }
+    } else {
+        for(i=0; i<bloodRecord.length; i++)
+        {
+            contractionItem += "<td style='text-align: center'>";
+            contractionItem += "<span class=\"red\">" + bloodRecord[i].contraction + "</span>";
+            contractionItem += "</td>";
+        }
     }
+
     contractionItem += "</tr>"
     $('#history-table-data').append(contractionItem);
 
 
     var relaxationItem = "<tr>";
     relaxationItem += "<th><span class=\"bold\">이완 기압</span>";
-    for(i=0; i<bloodRecord.length; i++)
-    {
-        relaxationItem += "<td style='text-align: center'>";
-        relaxationItem += "<span class=\"blue\">" + bloodRecord[i].relaxation + "</span>";
-        relaxationItem += "</td>";
+    if(bloodRecord.length > 3){
+        for(i=bloodRecord.length-3; i<bloodRecord.length; i++)
+        {
+            relaxationItem += "<td style='text-align: center'>";
+            relaxationItem += "<span class=\"blue\">" + bloodRecord[i].relaxation + "</span>";
+            relaxationItem += "</td>";
+        }
+    } else{
+        for(i=0; i<bloodRecord.length; i++)
+        {
+            relaxationItem += "<td style='text-align: center'>";
+            relaxationItem += "<span class=\"blue\">" + bloodRecord[i].relaxation + "</span>";
+            relaxationItem += "</td>";
+        }
     }
+
     relaxationItem += "</tr>"
     $('#history-table-data').append(relaxationItem);
 
     //혈압 데이터 테이블
     var pulse = "<tr>";
     pulse += "<th><span class=\"bold\">맥박";
-    for(i=0; i<bloodRecord.length; i++)
-    {
-        pulse += "<td style='text-align: center'>";
-        pulse += "<span class=\"black\">" + bloodRecord[i].pressure + "</span>";
-        pulse += "</td>";
+    if(bloodRecord.length > 3){
+        for(i=bloodRecord.length-3; i<bloodRecord.length; i++)
+        {
+            pulse += "<td style='text-align: center'>";
+            pulse += "<span class=\"black\">" + bloodRecord[i].pressure + "</span>";
+            pulse += "</td>";
+        }
+    } else {
+        for(i=0; i<bloodRecord.length; i++)
+        {
+            pulse += "<td style='text-align: center'>";
+            pulse += "<span class=\"black\">" + bloodRecord[i].pressure + "</span>";
+            pulse += "</td>";
+        }
     }
+
     pulse += "</tr>"
     $('#history-table-data').append(pulse);
 
@@ -221,7 +262,8 @@
             pointBackgroundColor: '#515558',
             pointBorderColor: '#515558',
             pointRadius: 1.5
-        }
+        },
+
         ]
     };
     var myPlugin = {
@@ -342,6 +384,18 @@
                 //     }
                 // }]
             },
+            plugins: {
+                annotation: {
+                    annotations: {
+                        box1: {
+                            type: 'box',
+                            yMin: 60,
+                            yMax: 90,
+                            backgroundColor: 'rgba(255, 99, 132, 0.25)'
+                        }
+                    }
+                }
+            },
             legend: {
                 display: false,
                 position: 'top',
@@ -354,7 +408,7 @@
                     padding: 30
                 }
             }
-        }
+        },
     });
 
 
@@ -403,40 +457,40 @@
 
     // PC 클릭 이벤트 (드래그)
     slide.addEventListener("mousedown", (e) => {
-        console.log("mousedown", e.pageX);
         startPoint = e.pageX; // 마우스 드래그 시작 위치 저장
     });
 
     slide.addEventListener("mouseup", (e) => {
-        console.log("mouseup", e.pageX);
         endPoint = e.pageX; // 마우스 드래그 끝 위치 저장
         if (startPoint < endPoint) {
             // 마우스가 오른쪽으로 드래그 된 경우
-            console.log("prev move");
-            prevMove();
+            if(bloodList['bloodList'].length > 3){
+                prevMove();
+            }
         } else if (startPoint > endPoint) {
             // 마우스가 왼쪽으로 드래그 된 경우
-            console.log("next move");
-            nextMove();
+            if(bloodList['bloodList'].length > 3){
+                nextMove();
+            }
         }
     });
 
     // 모바일 터치 이벤트 (스와이프)
     slide.addEventListener("touchstart", (e) => {
-        console.log("touchstart", e.touches[0].pageX);
         startPoint = e.touches[0].pageX; // 터치가 시작되는 위치 저장
     });
     slide.addEventListener("touchend", (e) => {
-        console.log("touchend", e.changedTouches[0].pageX);
         endPoint = e.changedTouches[0].pageX; // 터치가 끝나는 위치 저장
         if (startPoint < endPoint) {
             // 오른쪽으로 스와이프 된 경우
-            console.log("prev move");
-            prevMove();
+            if(bloodList['bloodList'].length > 3){
+                prevMove();
+            }
         } else if (startPoint > endPoint) {
             // 왼쪽으로 스와이프 된 경우
-            console.log("next move");
-            nextMove();
+            if(bloodList['bloodList'].length > 3){
+                nextMove();
+            }
         }
     });
 
@@ -447,43 +501,88 @@
         let newContractions = [];
         let newRelaxation = [];
         let newPressure = [];
+        let newLabels = [];
         currSlide++;
         // 마지막 슬라이드 이상으로 넘어가지 않게 하기 위해서
         if (currSlide <= maxSlide) {
-
-            console.log('오른');
             if(cycle ==="THREE"){
-
+                let threeBloodData = bloodList['bloodList'].slice(currSlide-2,currSlide+1);
+                for(var i = 0; i<3; i++){
+                    let bloodData = threeBloodData[i];
+                    newContractions.push(bloodData['contraction']);
+                    newRelaxation.push(bloodData['relaxation']);
+                    newPressure.push(bloodData['pressure']);
+                    newLabels.push(((bloodData['pk'])['date'])[1].toString().padStart(2,'0') + '/' + ((bloodData['pk'])['date'])[2].toString().padStart(2,'0'));
+                }
+                myChart.data.datasets[0].data = newContractions;
+                myChart.data.datasets[1].data = newRelaxation;
+                myChart.data.datasets[2].data = newPressure;
+                myChart.data.labels = newLabels;
+                myChart.update();
             } else {
-
+                let sevenBloodData = bloodList['bloodList'].slice(currSlide-6,currSlide+1);
+                for(var i = 0; i<7; i++){
+                    let bloodData = sevenBloodData[i];
+                    newContractions.push(bloodData['contraction']);
+                    newRelaxation.push(bloodData['relaxation']);
+                    newPressure.push(bloodData['pressure']);
+                    newLabels.push(((bloodData['pk'])['date'])[1].toString().padStart(2,'0') + '/' + ((bloodData['pk'])['date'])[2].toString().padStart(2,'0'));
+                }
+                myChart.data.datasets[0].data = newContractions;
+                myChart.data.datasets[1].data = newRelaxation;
+                myChart.data.datasets[2].data = newPressure;
+                myChart.data.labels = newLabels;
+                myChart.update();
             }
         } else {
             currSlide--;
+        }
+    }
+    function limitSlide(cycle, max){
+        if(cycle ==="THREE"){
+            return max-3;
+        } else {
+            return max-7
         }
     }
     function prevMove() {
         let newContractions = [];
         let newRelaxation = [];
         let newPressure = [];
+        let newLabels = [];
         currSlide--;
-        let threeBloodData = bloodList['bloodList'].slice(currSlide-1,currSlide+2);
 
         // 1번째 슬라이드 이하로 넘어가지 않게 하기 위해서
-        if (currSlide >= 0) {
+        if (currSlide >= limitSlide(cycle,maxSlide)) {
             if(cycle ==="THREE"){
+                let threeBloodData = bloodList['bloodList'].slice(currSlide-2,currSlide+1);
                 for(var i = 0; i<3; i++){
                     let bloodData = threeBloodData[i];
                     newContractions.push(bloodData['contraction']);
                     newRelaxation.push(bloodData['relaxation']);
                     newPressure.push(bloodData['pressure']);
+                    newLabels.push(((bloodData['pk'])['date'])[1].toString().padStart(2,'0') + '/' + ((bloodData['pk'])['date'])[2].toString().padStart(2,'0'));
                 }
                 myChart.data.datasets[0].data = newContractions;
                 myChart.data.datasets[1].data = newRelaxation;
                 myChart.data.datasets[2].data = newPressure;
+                myChart.data.labels = newLabels;
+                myChart.update();
+            } else {
+                let sevenBloodData = bloodList['bloodList'].slice(currSlide-6,currSlide+1);
+                for(var i = 0; i<7; i++){
+                    let bloodData = sevenBloodData[i];
+                    newContractions.push(bloodData['contraction']);
+                    newRelaxation.push(bloodData['relaxation']);
+                    newPressure.push(bloodData['pressure']);
+                    newLabels.push(((bloodData['pk'])['date'])[1].toString().padStart(2,'0') + '/' + ((bloodData['pk'])['date'])[2].toString().padStart(2,'0'));
+                }
+                myChart.data.datasets[0].data = newContractions;
+                myChart.data.datasets[1].data = newRelaxation;
+                myChart.data.datasets[2].data = newPressure;
+                myChart.data.labels = newLabels;
                 myChart.update();
             }
-
-
 
         } else {
             currSlide++;
