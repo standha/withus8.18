@@ -9,8 +9,6 @@ function popup(){
     $("#layerSelectType").show();
     $("#dim").show();
     //Item[i] = "<span class=\"bold\">'" + checked[i]  + "'</span>";
-    Item = "<span> 목표를 설정하셨군요.</span>";
-    $('#popUp1').append(Item);
 
     Item2 =  "<span> 증상 일지 기록</span>";
     $('#popUp2').append(Item2);
@@ -83,13 +81,14 @@ function loadPreviousWork() {
 
 //보호자에게 알람 클릭 시
 function symptom_caregiver(form) {
-    console.log("111");
+    console.log(form);
     if (form.querySelector('input[name=breath]:checked') == null ||
         form.querySelector('input[name=tired]:checked') == null ||
         form.querySelector('input[name=ankle]:checked') == null ||
-        form.querySelector('input[name=cough]:checked') == null) {
-
+        form.querySelector('input[name=cough]:checked') == null)
+    {
         popupOpen();
+        console.log("222");
         $("#okButton").click(function () {
             $("#popup").hide();
             $("#dim").hide();
@@ -98,7 +97,7 @@ function symptom_caregiver(form) {
     } else {
 
         popup();
-
+        console.log("222");
         $("#buttonOk").click(function () {
             breath = form.querySelector('input[name=breath]:checked').value;
             tired = form.querySelector('input[name=tired]:checked').value;
