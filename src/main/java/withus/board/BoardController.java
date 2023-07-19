@@ -1,6 +1,5 @@
 package withus.board;
 
-import javafx.fxml.LoadException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;

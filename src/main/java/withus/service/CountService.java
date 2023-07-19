@@ -1,5 +1,6 @@
 package withus.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import withus.repository.*;
 
 import javax.annotation.Nullable;
 
+@RequiredArgsConstructor
 @Service
 public class CountService {
 

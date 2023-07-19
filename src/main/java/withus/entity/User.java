@@ -46,11 +46,6 @@ public class User implements Serializable, UserDetails {
     @Setter
     private LocalDateTime userRecordDate;
 
-    @Column(columnDefinition = "VARCHAR(32) NOT NULL",length = 32)
-    @Nullable
-    @Getter
-    private String  height;
-
     @Column(columnDefinition = "VARCHAR(32) NOT NULL", length = 32, unique = true)
     @NonNull
     @Getter

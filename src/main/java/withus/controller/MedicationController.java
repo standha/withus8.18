@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
 import withus.entity.ProgressKey;
-import withus.entity.Tbl_button_count;
 import withus.entity.Tbl_medication_alarm;
 import withus.entity.User;
 import withus.service.AlarmService;
@@ -50,10 +49,10 @@ public class MedicationController extends BaseController {
 
         modelAndView.addObject("user",user);
 
-        if (user.getType() == User.Type.PATIENT) {
-            Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
-            modelAndView.addObject("count", count);
-        }
+//        if (user.getType() == User.Type.PATIENT) {
+//            Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+//            modelAndView.addObject("count", count);
+//        }
 
         return modelAndView;
     }
