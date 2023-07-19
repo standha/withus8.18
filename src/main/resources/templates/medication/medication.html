@@ -77,24 +77,25 @@
     </div>
 </header>
 <!-- // header -->
+<form id="medication-from" th:action ="@{/medication}" onsubmit="return onFormSubmission(this);">
 <div class="container" id="content">
-
     <div class="cont-wrap type01">
         <div class="d1 d2">
             <span id="date"></span>
             <span>(오늘)</span>
         </div>
+
         <div class="time-submit2" th:if="${alarmOnoffMorning}" >
             <div class="time-tit1" id="rdo18">
                 <span class="time-label">아침</span>
             </div>
             <div class="rdo-wrap grid-col type02" >
                 <div class="rdo-box" id="check_medi1" onclick="medication_Click_morning(this)">
-                    <input type="radio" name="morning" id="drug1" value="1">
+                    <input type="radio" name="morning" id="drug1" value=1>
                     <label for="drug1">복용 했어요</label>
                 </div>
                 <div class="rdo-box" id="uncheck_medi1" onclick="medication_Click_morning(this)">
-                    <input type="radio" name="morning" id="drug2" value="0">
+                    <input type="radio" name="morning" id="drug2" value=0>
                     <label for="drug2">복용 안했어요</label>
                 </div>
             </div>
@@ -102,36 +103,21 @@
         <div class="time-submit2" th:if="${alarmOnoffLunch}" >
 
             <div class="time-tit1" id="rdo18" >
-                <span class="time-label"  >점심</span>
+                <span class="time-label" >점심</span>
             </div>
             <div class="rdo-wrap grid-col type02" >
                 <div class="rdo-box" id="check_medi2" onclick="medication_Click_lunch(this)">
-                    <input type="radio" name="lunch" id="drug3" value="0">
+                    <input type="radio" name="lunch" id="drug3" value=1>
                     <label for="drug3">복용 했어요</label>
                 </div>
                 <div class="rdo-box" id="uncheck_medi2" onclick="medication_Click_lunch(this)">
-                    <input type="radio" name="lunch" id="drug4" value="1">
+                    <input type="radio" name="lunch" id="drug4" value=0>
                     <label for="drug4">복용 안했어요</label>
                 </div>
             </div>
         </div>
 
 
-        <div class="popup pop-type01" id="layerSelectType" style="display: none">
-            <div class="pop-wrap">
-                <!-- <a href="javascript:void(0);" class="pop-close"></a> -->
-                <div class="popup-header"></div>
-                <div class="popup-body">
-                    <div class="pop-tit" id="popUp1">
-                    </div>
-                    <div class="pop-cont" id="popUp2">
-                    </div>
-                </div>
-                <div class="btn-wrap grid2">
-                    <button class="btn xlg type02" id="buttonOk">확인</button>
-                </div>
-            </div>
-        </div>
 
         <div class="time-submit2" id="tim3" th:if="${alarmOnoffDinner}" >
             <div class="time-tit1" id="rdo18">
@@ -139,12 +125,30 @@
             </div>
             <div class="rdo-wrap grid-col type02" >
                 <div class="rdo-box" id="check_medi3" onclick="medication_Click_dinner(this)">
-                    <input type="radio" name="dinner" id="drug5" value="0">
+                    <input type="radio" name="dinner" id="drug5" value=1>
                     <label for="drug3">복용 했어요</label>
                 </div>
                 <div class="rdo-box" id="uncheck_medi3" onclick="medication_Click_dinner(this)">
-                    <input type="radio" name="dinner" id="drug6" value="1">
+                    <input type="radio" name="dinner" id="drug6" value=0>
                     <label for="drug4">복용 안했어요</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="popup pop-type01" id="layerSelectType" style="display: none">
+            <div class="pop-wrap">
+                <!-- <a href="javascript:void(0);" class="pop-close"></a> -->
+                <div class="popup-header"></div>
+                <div class="popup-body">
+                    <!--                <div class="pop-tit" id="popUp1">-->
+                    <!--                </div>-->
+                    <div class="pop-cont" id="popUp2">
+                    </div>
+
+                </div>
+                <div class="btn-wrap grid2" >
+                    <button class="btn xlg type07" id="buttonNo">아니요</button>
+                    <button class="btn xlg type02" id="buttonOk">저장 및 알림</button>
                 </div>
             </div>
         </div>
@@ -181,6 +185,7 @@
     </div>
 </footer>
 <!-- // footer -->
+</form>
 
 </body>
 </html>
