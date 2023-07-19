@@ -209,6 +209,8 @@ select {width:150px; padding:.8em .5em;border: 1px solid #999;font-family: inher
 .rdo-wrap {position: relative; width: 100%; display: flex;}
 .rdo-wrap .rdo-mark {cursor: pointer;}
 .rdo-wrap.grid2,
+.rdo-wrap.grid3 {flex-direction: row; justify-content: space-between;}
+.rdo-wrap.grid3 .rdo-box {width: 31%;}
 .rdo-wrap.grid2 .rdo-box {width: 48%;}
 .rdo-wrap.grid-col {flex-direction: column;}
 .rdo-wrap.grid-col {flex-direction: column;}

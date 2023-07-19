@@ -273,6 +273,10 @@
 
             </div>
         </div>
+        <div class="btn-wrap2 grid4">
+            <button class="btn xlg1 type01" onclick="alarm_caregiver()">보호자에게 알림</button>
+            <button type="submit" class="btn xlg1 type01" onclick="submit_Click()">저장</button>
+        </div>
     </div>
 
 
@@ -437,12 +441,12 @@
     <!-- footer -->
     <footer>
         <div class="footer-wrap">
-            <div class="btn-wrap type01" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
-                <input type="submit" class="btn xlg type01">
-            </div>
-            <div class="btn-wrap type01" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
-                <input type="submit" class="btn xlg type02" disabled>
-            </div>
+<!--            <div class="btn-wrap type01" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">-->
+<!--                <input type="submit" class="btn xlg type01">-->
+<!--            </div>-->
+<!--            <div class="btn-wrap type01" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">-->
+<!--                <input type="submit" class="btn xlg type02" disabled>-->
+<!--            </div>-->
             <div class="btn-wrap type02" onclick="showHistory();">
                 <span class="btn xlg arrow-type02">
                     <span>증상 변화 기록</span>
