@@ -18,7 +18,10 @@ footer {position: relative;}
 .cont-wrap.type01:before {content: ''; display: block; position: absolute; top: 0; width: 100%; height: 8px; box-shadow: inset 0 0 6px 0 rgba(0, 0, 0, 0.05); background-color: #f6f9fc;}
 .cont-wrap.type01 h3 {font-size: 1.07rem; color: #666; font-weight: 500; padding: 12px 15px 15px;}
 
+.cont-wrap.type02 {border-top: 1px solid #edeeef; margin-top: 15px; background-color: #fff;}
+/*.cont-wrap.type03 {border-top: 1px solid #edeeef; margin-top: 15px; background-color: #fff;}*/
 
+.cont-wrap.title-txt{ text-align: center;font-size: 0.93rem;}
 .gnb {}
 .gnb li {}
 .gnb li a {}
@@ -26,7 +29,7 @@ footer {position: relative;}
 /* index */
 .index-page {background-color: #f6f9fc;}
 .index-page .header-wrap {padding: 70px 0 40px;}
-.index-page .header-wrap h1 {width: 215px; height: 120px; margin: 0 auto; background: url(../images/common/sp-icon.png) -385px -2px no-repeat; background-size: 600px 450px;}
+.index-page .header-wrap h1 {width: 215px; height: 120px; margin: 0 auto; background: url('../images/common/sp-icon.png') -385px -2px no-repeat; background-size: 600px 450px;}
 .index-page .container {margin: auto 0;}
 .index-page .login-wrap {display: flex; flex-direction: column; margin: 0 8%; padding: 5% 6%; border-radius: 15px; box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05); border: solid 1px #f4f4f4; background-color: #ffffff;}
 .index-page .login-wrap .chk-wrap .chk-box {margin-left: auto;}
@@ -137,8 +140,15 @@ footer {position: relative;}
 /* calendar (alarm, exercise, symptom, intake) */
 .record-water {position: relative; background-color: #eff7fd;}
 .record-water:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 20px; height: 26px; background: url('../images/common/sp-icon.png') -236px -75px; background-size: 600px 450px; transform: translate(-50%, -17%);}
+
 .record-exercise {position: relative; background-color: #f5ecff;}
-.record-exercise:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 22px; height: 26px; background: url('../images/common/sp-icon.png') -98px -76px; background-size: 600px 450px; transform: translate(-50%, -17%);}
+/*.record-exercise:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 22px; height: 26px; background: url('../images/common/sp-icon.png') -98px -76px; background-size: 600px 450px; transform: translate(-50%, -17%);}*/
+.walk-icon:before{content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 22px; height: 26px; background: url('../images/exercise-icon/walking.png');background-size: 600px 450px; transform: translate(-50%, -17%); }
+.swim-icon:before{content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 22px; height: 26px; background: url('../images/exercise-icon/swimming.png');background-size: 600px 450px; transform: translate(-50%, -17%); }
+.cycle-icon:before{content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 22px; height: 26px; background: url('../images/exercise-icon/cycling.png');background-size: 600px 450px; transform: translate(-50%, -17%); }
+.aerobic-icon:before{content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 22px; height: 26px; background: url('../images/exercise-icon/aerobic.png');background-size: 600px 450px; transform: translate(-50%, -17%); }
+.strength-icon:before{content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 22px; height: 26px; background: url('../images/exercise-icon/strength.png');background-size: 600px 450px; transform: translate(-50%, -17%); }
+
 .record-alarm {position: relative; background-color: #f3f8e4;}
 .record-alarm:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 24px; height: 22px; background: url('../images/common/sp-icon.png') -2px -77px; background-size: 600px 450px; transform: translate(-50%, -17%);}
 .record-face1 {position: relative;}
@@ -194,6 +204,8 @@ footer {position: relative;}
 .time-page .time-tit {font-size: 1.07rem; color: #666; font-weight: 500; padding: 5% 0 2%;}
 .time-page .chk-wrap {margin: 5% 0;}
 .time-page .alert-chk {padding: 8% 0 5%; color: #222; font-weight: 500; text-align: center; border-top: 1px solid #e6e6e6;}
+.time-page .time-tit2 {font-size: 1.07rem; color: #666; font-weight: 500; padding: 5% 5% 2% 2%;}
+
 
 .time-submit {display: flex; justify-content: space-between; align-items: center; padding-bottom: 5%; border-bottom: 1px solid #ebebeb;}
 .time-submit .rdo-wrap {width: 43%;}
@@ -201,6 +213,9 @@ footer {position: relative;}
 .time-submit .field-wrap:before {content: ''; display: block; position: absolute; left: 0; top: 50%; width: 1px; height: 24px; background-color: #ebebeb; transform: translateY(-50%);}
 .time-submit .field-wrap .field {border: none; padding: 0;}
 .time-submit .field-wrap .insert input.num2 {width: 50px; font-size: 2.7rem; letter-spacing: -0.05em;}
+.time-submit2 {display: flex;  align-items: center; padding-bottom: 5%; border-bottom: 1px solid #ebebeb;}
+.time-submit .rdo-wrap {width: 60%;}
+
 
 /* reservation */
 .reser-page {}
@@ -214,7 +229,7 @@ footer {position: relative;}
 .guide-page .guide-wrap {padding: 5%;}
 .guide-page .guide-wrap .guide-list {display: flex; flex-direction: column;}
 .guide-page .guide-wrap .guide-list > a {position: relative; display: flex; align-items: center; padding: 10% 3%; border-bottom: 1px solid #ebebeb;}
-.guide-page .guide-wrap .guide-list > a:after {content: ''; display: block; position: absolute; width: 12px; height: 19px; right: 5%; top: 50%; transform: translateY(-50%); background-image: url(../images/common/sp-icon.png); background-position: -334px -77px; background-size: 600px 450px; background-repeat: no-repeat;}
+.guide-page .guide-wrap .guide-list > a:after {content: ''; display: block; position: absolute; width: 12px; height: 19px; right: 5%; top: 50%; transform: translateY(-50%); background-image: url('../images/common/sp-icon.png'); background-position: -334px -77px; background-size: 600px 450px; background-repeat: no-repeat;}
 .guide-page .guide-wrap .guide-list > a > span {font-size: 1.25rem; font-weight: 500;}
 .guide-page .guide-wrap .guide-list > a > span.num {color: #666;}
 .guide-page .guide-wrap .guide-list > a > span.txt {padding-left: 5%; color: #222;}

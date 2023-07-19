@@ -35,6 +35,7 @@ public class BaseController {
         return userService.getUserByIdAndDate(getUsername());
     }
 
+
     protected String getPatientContact() {
         return getUser().getContact();
     }

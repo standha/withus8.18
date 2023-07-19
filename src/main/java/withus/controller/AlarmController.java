@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class AlarmController extends BaseController {
@@ -91,13 +92,17 @@ public class AlarmController extends BaseController {
             Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
+//        modelAndView.addObject("alarmOnoffmorning",alarm.isMedicationAlarmOnoffMorning());
 
-        modelAndView.addObject("medicationAlarmOnoff", alarm.isMedicationAlarmOnoff());
+        modelAndView.addObject("alarmOnoffMorning", alarm.isAlarmOnoffMorning());
+        modelAndView.addObject("alarmOnoffLunch", alarm.isAlarmOnoffLunch());
+        modelAndView.addObject("alarmOnoffDinner",alarm.isAlarmOnoffDinner());
+
         modelAndView.addObject("type", user.getType());
         modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("previousUrl", "/alarm");
 
-        logger.info("id:{}, url:{} , alarmOnOff:{}, morning:{}, lunch:{}, dinner:{}", user.getUserId(), request.getRequestURL(), alarm.isMedicationAlarmOnoff(), alarm.getMedicationTimeMorning(), alarm.getMedicationTimeLunch(), alarm.getMedicationTimeDinner());
+//        logger.info("id:{}, url:{} , alarmOnOff:{}, morning:{}, lunch:{}, dinner:{}", user.getUserId(), request.getRequestURL(), alarm.isMedicationAlarmOnoff(), alarm.getMedicationTimeMorning(), alarm.getMedicationTimeLunch(), alarm.getMedicationTimeDinner());
 
         return modelAndView;
     }
