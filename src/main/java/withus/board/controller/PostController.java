@@ -68,30 +68,38 @@ public class PostController {
     }
 
     @GetMapping("/list/notice")
-    public String listNotice(Model model, @RequestParam(value="page", defaultValue = "0") int page){
+    public String listNotice(Model model, @RequestParam(value="page", defaultValue = "0") int page, Principal principal){
         Page<Post> paging = this.postService.getPageByCategory("공지사항", page, 10);
+        User nowUser = this.userService.getUserById(principal.getName());
         model.addAttribute("paging", paging);
+        model.addAttribute("nowUser", nowUser);
         return "board/post_list_by_category";
     }
 
     @GetMapping("/list/question")
-    public String listQuestion(Model model, @RequestParam(value="page", defaultValue = "0") int page){
+    public String listQuestion(Model model, @RequestParam(value="page", defaultValue = "0") int page, Principal principal){
         Page<Post> paging = this.postService.getPageByCategory("질문게시판", page, 10);
+        User nowUser = this.userService.getUserById(principal.getName());
         model.addAttribute("paging", paging);
+        model.addAttribute("nowUser", nowUser);
         return "board/post_list_by_category";
     }
 
     @GetMapping("/list/share")
-    public String listShare(Model model, @RequestParam(value="page", defaultValue = "0") int page){
+    public String listShare(Model model, @RequestParam(value="page", defaultValue = "0") int page, Principal principal){
         Page<Post> paging = this.postService.getPageByCategory("나눔게시판", page, 10);
+        User nowUser = this.userService.getUserById(principal.getName());
         model.addAttribute("paging", paging);
+        model.addAttribute("nowUser", nowUser);
         return "board/post_list_by_category";
     }
 
     @GetMapping(value = "/detail/{id}")
-    public String detail(Model model, @PathVariable("id") Integer id, CommentForm commentForm) {
+    public String detail(Model model, @PathVariable("id") Integer id, CommentForm commentForm, Principal principal) {
         Post post = this.postService.getPost(id);
+        User nowUser = this.userService.getUserById(principal.getName());
         model.addAttribute("post", post);
+        model.addAttribute("nowUser", nowUser);
         return "board/post_detail";
     }
 
