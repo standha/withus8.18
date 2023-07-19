@@ -23,6 +23,8 @@ public class AllUserDTO {
     private String guserContact;
     private String currentCode;
     private LocalDateTime userRecordDate;
+    private String height;
+    private User.Relative relative;
 
     public static AllUserDTO fromString(String queryResult) {
         String[] array = queryResult.split(",");
@@ -40,6 +42,8 @@ public class AllUserDTO {
                 .guserContact(array[9])
                 .userRecordDate(Utility.parseDateTime(array[10]))
                 .currentCode(array[11])
+                .height(array[12])
+                .relative(User.Relative.RbyName(array[13]))
                 .build();
     }
 }

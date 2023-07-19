@@ -36,6 +36,9 @@
 				break;
 		}
 	}
+
+
+
 </script>
 <div class="skip-navi">
 	<a href="#content">본문 바로가기</a>
@@ -93,13 +96,13 @@
 						<input type="text" name="name" id="input3" placeholder="성함을 입력해주세요" value="">
 					</div>
 				</div>
-				<div class="field patient-only">
+				<div class="field">
 					<div class="insert">
 						<label for="input4">생년월일</label>
 						<input style="inline-size: auto; background: white" type="date" name="birthdate" id="input4" placeholder="- -">
 					</div>
 				</div>
-				<div class="field patient-only">
+				<div class="field">
 					<div class="insert">
 						<span class="label-txt">성별</span>
 						<div class="rdo-wrap grid2 type01">
@@ -118,16 +121,43 @@
 						</div>
 					</div>
 				</div>
+
 				<div class="field">
 					<div class="insert">
-						<label for="input5">연락처(본인)</label>
-						<input type="text" name="contact" id="input5" placeholder="ex) 01012345678">
+						<label for="input5">키</label>
+						<input type="text" name="height" id="input5" pattern="\d*" inputmode="numeric" min="0" placeholder="키"/>
+					</div>
+				</div>
+
+				<div class="field caregiver-only">
+					<div class="insert">
+						<label>환자와의 관계</label>
+						<select name="relative" id="relativeSelect" >
+							<option value="none" >관계를 선택하세요</option>
+							<option value="spouse" >배우자</option>
+							<option value="child" >자녀</option>
+							<option value="relative" >친척</option>
+							<option value="etc" >기타</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="field">
+					<div class="insert">
+						<label for="input7">연락처(본인)</label>
+						<input type="text" name="contact" id="input7" placeholder="ex) 01012345678">
 					</div>
 				</div>
 				<div class="field patient-only">
 					<div class="insert">
-						<label for="input6">연락처(보호자)</label>
-						<input type="text" name="caregiver" id="input6" placeholder="ex) 01012345678">
+						<label for="input8">연락처(보호자)</label>
+						<input type="text" name="caregiver" id="input8" placeholder="ex) 01012345678">
+					</div>
+				</div>
+				<div class="field caregiver-only">
+					<div class="insert">
+						<label for="input9">연락처(환자)</label>
+						<input type="text" name="patient" id="input9" placeholder="ex) 01012345678">
 					</div>
 				</div>
 			</div>

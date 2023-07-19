@@ -13,9 +13,9 @@ spring:
       thread-name-prefix: TNP-
 
   datasource:
-    url: jdbc:mysql://127.0.0.1/withus?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://127.0.0.1:3306/withus?serverTimezone=Asia/Seoul
     username: withus
-    password: Withus@12
+    password: withus@12
     driver-class-name: com.mysql.cj.jdbc.Driver
     initialization-mode: never
     sql-script-encoding: UTF-8
@@ -31,4 +31,4 @@ spring:
 
     hibernate:
       # ex) ddl-auto: none, create-drop, create, update, validate
-      ddl-auto: validate
+      ddl-auto: update

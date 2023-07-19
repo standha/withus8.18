@@ -171,6 +171,18 @@ footer {position: relative;}
 .record-review .cont span.bold {font-size: 2.7rem; font-family: 'Roboto', sans-serif; letter-spacing: -0.05em;}
 
 .box-wrap {margin: 5% 3%; padding: 6% 0; border: 1px solid #ecedf0; background-color: #f7f8fa; border-radius: 18px;}
+
+
+.goalbox-wrap {margin: 1.5% 0.3%; padding: 3% 0; border: 2px solid #151D6D;  border-radius: 18px; display: flex;
+    align-items: center;
+    justify-content: center;}
+
+.goalbox-tit {
+    font-size: 40px; /* 원하는 크기로 설정 */
+    font-weight: bold;
+    text-align: center;
+}
+
 .box-wrap .box-tit {text-align: center; font-size: 1rem; color: #222; font-weight: 500;}
 .box-wrap .box-list {display: flex; justify-content: space-between; flex: 1; margin-top: 5%;}
 .box-wrap .box-list li {position: relative; flex-grow: 1; text-align: center;}

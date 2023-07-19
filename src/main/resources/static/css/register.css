@@ -19,7 +19,7 @@
 	vertical-align: middle;
 }
 
-[type=radio] {
+[type=radio], [type=relationship] {
 	position: absolute;
 	opacity: 0;
 	width: 0;

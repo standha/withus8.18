@@ -1,15 +1,15 @@
 package withus.repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import com.sun.istack.Nullable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import withus.entity.User;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
@@ -21,6 +21,9 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     @Transactional(readOnly = true)
     Optional<User> findByUserIdAndPassword(String id, String password);
+
+   /* @Transactional(readOnly = true)
+    Optional<User> findByHeight(Float height);*/
 
     @Transactional(readOnly = true)
     Optional<User> findByContact(String contact);
@@ -46,7 +49,8 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query(value = "select u.name as patientName ,u.id as patientId, u.password as patientPassword, u.birthdate as patientBirthdate," +
             " u.gender as patientGender, u.contact as patientContact, c.name as caregiverName," +
             "c.id as caregiverId, c.password as caregiverPassword, c.contact as caregiverContact, u.user_record_date as userRecordDate , code as currentCode" +
-            " from user as u left join user as c on c.contact = u.caregiver_contact " +
+            " from user as u left join user as c on c.contact = u.caregiver_contact, " +
+            "u.height as height, u.relative as relative " +
             "left join(select any_value(t.entry_code) as 'code' , any_value(t.date_time), t.user_id from" +
             "(select wwh.user_id, wwh.date_time, wwh.entry_code" +
             " from wwithus_entry_history as wwh" +
@@ -59,5 +63,4 @@ public interface UserRepository extends JpaRepository<User, String> {
             "where u.type = 'PATIENT'" +
             " order by u.registration_date_time asc;", nativeQuery = true)
     ArrayList<String> findByAll();
-
 }

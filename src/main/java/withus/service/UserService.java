@@ -1,6 +1,5 @@
 package withus.service;
 
-import com.querydsl.core.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -10,15 +9,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import withus.auth.NoOpPasswordEncoder;
 import withus.dto.MoistureAvgDTO;
-import withus.dto.wwithus.HeaderInfoDTO;
 import withus.entity.*;
 import withus.repository.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -67,6 +63,13 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+    /*
+    @Nullable
+    public User getUserByHeight(float height) {
+        User user = userRepository.findByHeight(height).orElse(null);
+        return user;
+    }*/
+
     @Nullable
     public User getUserByCaregiverId(String caregiverId) {
         return userRepository.findByCaregiverUserId(caregiverId).orElse(null);
@@ -107,6 +110,7 @@ public class UserService implements UserDetailsService {
             Tbl_goal tbl_goal = Tbl_goal.builder()
                     .goalId(saved.getUserId())
                     .goal(0)
+                    //.goal(Integer.toString(0))
                     .build();
 
             goalRepositroy.save(tbl_goal);

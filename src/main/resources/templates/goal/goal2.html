@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>위더스</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+  <meta name="format-detection" content="telephone=no">
+  <link th:href="@{/css/reset.css}" rel="stylesheet">
+  <link th:href="@{/css/common.css}" rel="stylesheet">
+  <link th:href="@{/css/layout.css}" rel="stylesheet">
+  <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
+  <script th:src="@{/js/common.js}"></script>
+  <script th:src="@{/js/goal/goal.js}"></script>
+  <script th:src="@{/js/help.js}"></script>
+
+  <style>
+    .iamge-goal1 {
+      width: auto;
+      height: 100px;
+    }
+  </style>
+
+</head>
+<body>
+<input type="hidden" id="button-count" th:attr="value=@{/button-count}">
+<input type="hidden" id="helper-request" th:attr="value=@{/helper-request}">
+<div class="skip-navi">
+  <a href="#content">본문 바로가기</a>
+</div>
+
+<!-- wrap -->
+<div id="wrap" class="todo-page">
+
+  <!-- header -->
+  <header>
+    <div class="header-wrap type02" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
+      <div class="head">
+        <div onclick="helperRequest()" >
+          <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+            <span class="ico-call" ></span>
+            <span class="txt-rt">도우미</span>
+          </a>
+        </div>
+        <h2>
+          <span>목표 리스트</span>
+        </h2>
+      </div>
+    </div>
+    <div class="header-wrap type02" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
+      <div class="head">
+        <div onclick="helperRequest()" >
+          <a class="btn xsm type07" href="tel:010-8454-9186">
+            <span class="ico-call" ></span>
+            <span class="txt-rt">도우미</span>
+          </a>
+        </div>
+        <h2>
+          <span>목표 리스트</span>
+        </h2>
+      </div>
+    </div>
+  </header>
+  <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
+    <input type = 'hidden' name = "symptom"           th:value = "${count.symptom}" style = "display:none">
+    <input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
+    <input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">
+    <input type = 'hidden' name = "disease"           th:value = "${count.diseaseInfo}" style = "display:none">
+    <input type = 'hidden' name = "exercise"          th:value = "${count.exercise}" style = "display:none">
+    <input type = 'hidden' name = "goal"              th:value = "${count.goal}" style = "display:none">
+    <input type = 'hidden' name = "helper"            th:value = "${count.helper}" style = "display:none">
+    <input type = 'hidden' name = "level"             th:value = "${count.level}" style = "display:none">
+    <input type = 'hidden' name = "natriumMoisture"   th:value = "${count.natriumMoisture}" style = "display:none">
+    <input type = 'hidden' name = "weight"            th:value = "${count.weight}" style = "display:none">
+    <input type = 'hidden' name = "withusRang"        th:value = "${count.withusRang}" style = "display:none">
+  </div>
+  <!-- content -->
+  <div class = "container" id="content1" th:if = "${type} == ${T(withus.entity.User.Type).PATIENT} ">
+    <div class="goalbox-wrap" style="background-color: #F3F3A3;">
+      <p class="goalbox-tit">난이도 중</p>
+    </div>
+    <div class="cont-wrap type01">
+      <div class="rdo-wrap grid-col type02">
+
+        <form id="appointment-form" th:action="@{/goal1}" onsubmit="return onFormSubmission(this);">
+
+        <div th:if="${goal} == 1" class="rdo-box checked" data-category="middle">
+          <label>
+            <span class="rdo-mark"></span>
+            <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 3회 이상 정해진 시간에 약 복용">주 3회 이상 정해진 시간에 약 복용
+          </label>
+        </div>
+        <div th:unless="${goal} == 1" class="rdo-box" data-category="middle">
+          <label>
+            <span class="rdo-mark"></span>
+            <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 3회 이상 정해진 시간에 약 복용">주 3회 이상 정해진 시간에 약 복용
+          </label>
+        </div>
+
+        <div th:if="${goal} == 2" class="rdo-box checked" data-category="middle">
+          <label>
+            <span class="rdo-mark"></span>
+            <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 3회 이상 혈압과 맥박 측정">주 3회 이상 혈압과 맥박 측정
+          </label>
+        </div>
+        <div th:unless="${goal} == 2" class="rdo-box" data-category="middle">
+          <label>
+            <span class="rdo-mark"></span>
+            <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 3회 이상 혈압과 맥박 측정">주 3회 이상 혈압과 맥박 측정
+          </label>
+        </div>
+
+        <div th:if="${goal} == 3" class="rdo-box checked" data-category="middle">
+          <label>
+            <span class="rdo-mark" ></span>
+            <input type="checkbox" name="check_radio" onclick="radioClick()"  value="주 3회 최소 30분 이상 운동">주 3회 최소 30분 이상 운동
+          </label>
+        </div>
+        <div th:unless="${goal} == 3" class="rdo-box" data-category="middle">
+          <label>
+            <span class="rdo-mark" ></span>
+            <input type="checkbox" name="check_radio" onclick="radioClick()"  value="주 3회 최소 30분 이상 운동">주 3회 최소 30분 이상 운동
+          </label>
+        </div>
+
+        <div th:if="${goal} == 4" class="rdo-box checked" data-category="middle">
+          <label>
+            <span class="rdo-mark"></span>
+            <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 3회 이상 식사 시 염분 측정">주 3회 이상 식사 시 염분 측정
+          </label>
+        </div>
+        <div th:unless="${goal} == 4" class="rdo-box" data-category="middle">
+          <label>
+            <span class="rdo-mark"></span>
+            <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 3회 이상 식사 시 염분 측정">주 3회 이상 식사 시 염분 측정
+          </label>
+        </div>
+
+        <div th:if="${goal} == 5" class="rdo-box checked" data-category="middle">
+          <label>
+            <span class="rdo-mark checked"></span>
+            <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 3회 이상 체중 측정">주 3회 이상 체중 측정
+          </label>
+        </div>
+        <div th:unless="${goal} == 5" class="rdo-box" data-category="middle">
+          <label>
+            <span class="rdo-mark checked"></span>
+            <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 3회 이상 체중 측정">주 3회 이상 체중 측정
+          </label>
+        </div>
+
+        <div th:if="${goal} == 6" class="rdo-box checked" data-category="middle">
+          <label>
+            <span class="rdo-mark checked"></span>
+            <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 3회 이상 마음 일기 기록">주 3회 이상 마음 일기 기록
+          </label>
+        </div>
+        <div th:unless="${goal} == 6" class="rdo-box" data-category="middle">
+          <label>
+            <span class="rdo-mark checked"></span>
+            <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 3회 이상 마음 일기 기록">주 3회 이상 마음 일기 기록
+          </label>
+        </div>
+
+        <div class="goalbtn-container">
+          <button type="submit" class="btn xlg type01"  name="submit_click">저장</button>
+        </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="popup pop-type01" id="layerSelectType" style="display: none">
+    <div class="pop-wrap">
+      <!-- <a href="javascript:void(0);" class="pop-close"></a> -->
+      <div class="popup-header"></div>
+      <div class="popup-body">
+        <div class="pop-tit" id="popUp1">
+        </div>
+        <div class="pop-cont" id="popUp2">
+        </div>
+        <div class="pop-desc">목표를 변경하고 싶으면 ‘수정’ 버튼을 눌러주세요.</div>
+      </div>
+      <div class="btn-wrap grid2">
+        <button class="btn xlg type07" id="buttonNo">수정</button>
+        <button class="btn xlg type02" id="buttonOk">확인</button>
+      </div>
+    </div>
+  </div>
+  <div class="dim-layer" style="display: none" id="dim"></div>
+
+
+  <div class = "container" id="content" th:if = "${type} == ${T(withus.entity.User.Type).CAREGIVER} ">
+    <div class="goalbox-wrap" style="background-color: #F3F3A3;">
+      <p class="goalbox-tit">난이도 중</p>
+    </div>
+    <div class="cont-wrap type01">
+      <div class="rdo-wrap grid-col type02">
+
+        <form id="appointment-form" th:action="@{/goal1}" onsubmit="return onFormSubmission(this);">
+
+        <div th:if="${goal} == 1" class="rdo-box checked" data-category="middle">
+          <label>
+            <span class="rdo-mark"></span>
+            <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 3회 이상 정해진 시간에 약 복용">주 3회 이상 정해진 시간에 약 복용
+          </label>
+        </div>
+        <div th:unless="${goal} == 1" class="rdo-box" data-category="middle">
+          <label>
+            <span class="rdo-mark"></span>
+            <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 3회 이상 정해진 시간에 약 복용">주 3회 이상 정해진 시간에 약 복용
+          </label>
+        </div>
+
+        <div th:if="${goal} == 2" class="rdo-box checked" data-category="middle">
+          <label>
+            <span class="rdo-mark"></span>
+            <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 3회 이상 혈압과 맥박 측정">주 3회 이상 혈압과 맥박 측정
+          </label>
+        </div>
+        <div th:unless="${goal} == 2" class="rdo-box" data-category="middle">
+          <label>
+            <span class="rdo-mark"></span>
+            <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 3회 이상 혈압과 맥박 측정">주 3회 이상 혈압과 맥박 측정
+          </label>
+        </div>
+
+        <div th:if="${goal} == 3" class="rdo-box checked" data-category="middle">
+          <label>
+            <span class="rdo-mark" ></span>
+            <input type="checkbox" name="check_radio" onclick="radioClick()"  value="주 3회 최소 30분 이상 운동">주 3회 최소 30분 이상 운동
+          </label>
+        </div>
+        <div th:unless="${goal} == 3" class="rdo-box" data-category="middle">
+          <label>
+            <span class="rdo-mark" ></span>
+            <input type="checkbox" name="check_radio" onclick="radioClick()"  value="주 3회 최소 30분 이상 운동">주 3회 최소 30분 이상 운동
+          </label>
+        </div>
+      </div>
+
+      <div th:if="${goal} == 4" class="rdo-box checked" data-category="middle">
+        <label>
+          <span class="rdo-mark"></span>
+          <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 3회 이상 식사 시 염분 측정">주 3회 이상 식사 시 염분 측정
+        </label>
+      </div>
+      <div th:unless="${goal} == 4" class="rdo-box" data-category="middle">
+        <label>
+          <span class="rdo-mark"></span>
+          <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 3회 이상 식사 시 염분 측정">주 3회 이상 식사 시 염분 측정
+        </label>
+      </div>
+
+      <div th:if="${goal} == 5" class="rdo-box checked" data-category="middle">
+        <label>
+          <span class="rdo-mark checked"></span>
+          <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 3회 이상 체중 측정">주 3회 이상 체중 측정
+        </label>
+      </div>
+      <div th:unless="${goal} == 5" class="rdo-box" data-category="middle">
+        <label>
+          <span class="rdo-mark checked"></span>
+          <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 3회 이상 체중 측정">주 3회 이상 체중 측정
+        </label>
+      </div>
+
+      <div th:if="${goal} == 6" class="rdo-box checked" data-category="middle">
+        <label>
+          <span class="rdo-mark checked"></span>
+          <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 3회 이상 마음 일기 기록">주 3회 이상 마음 일기 기록
+        </label>
+      </div>
+      <div th:unless="${goal} == 6" class="rdo-box" data-category="middle">
+        <label>
+          <span class="rdo-mark checked"></span>
+          <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 3회 이상 마음 일기 기록">주 3회 이상 마음 일기 기록
+        </label>
+      </div>
+
+      <div class="goalbtn-container">
+        <button type="submit" class="btn xlg type01"  name="submit_click">저장</button>
+      </div>
+      </form>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

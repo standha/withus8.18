@@ -25,24 +25,24 @@
 
 <!-- wrap -->
 <div id="wrap" class="main-page" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
-	
+
 	<!-- header -->
 	<header>
 		<div class="header-wrap">
-            <div class="head">
+			<div class="head">
 				<div onclick="helperRequest()" >
-                <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
-                    <span class="ico-call" ></span>
-                    <span class="txt-rt">도우미</span>
-                </a>
+					<a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+						<span class="ico-call" ></span>
+						<span class="txt-rt">도우미</span>
+					</a>
 				</div>
-                <a class="ico-my" th:href="@{/changeInfo}"></a>
-                <a class="btn xsm type07" th:onclick="'addDiseaseInfo(parseInt(' + ${count.diseaseInfo} + '))'" th:href="@{/info}">
-                    <span class="ico-info"></span>
-                    <span class="txt-rt">질환정보</span>
-                </a>
-            </div>
-			<lable style="cursor:pointer" onclick="location.href='/goal'">
+				<a class="ico-my" th:href="@{/changeInfo}"></a>
+				<a class="btn xsm type07" th:onclick="'addDiseaseInfo(parseInt(' + ${count.diseaseInfo} + '))'" th:href="@{/info}">
+					<span class="ico-info"></span>
+					<span class="txt-rt">질환정보</span>
+				</a>
+			</div>
+			<lable style="cursor:pointer" onclick="location.href='/goallevel'">
 				<div class="cont" th:onclick="'addGoal(parseInt(' + ${count.goal} + '))'">
                 <span class="title-txt">
                     <span class="ico-goal"></span>
@@ -111,14 +111,14 @@
 	<!-- footer -->
 	<footer>
 		<div class="footer-wrap">
-            <div class="chat-txt">
-                <span class="black">위더스랑 </span>
-                <span class="ico-logo2"></span>
-            </div>
-            <a class="btn sm type08" th:href="@{/wwithus}" th:onclick="'addChat(parseInt(' + ${count.withusRang} + '))'">
-                <span class="txt-lt">대화시작</span>
-                <span class="ico-arrow1"></span>
-            </a>
+			<div class="chat-txt">
+				<span class="black">위더스랑 </span>
+				<span class="ico-logo2"></span>
+			</div>
+			<a class="btn sm type08" th:href="@{/wwithus}" th:onclick="'addChat(parseInt(' + ${count.withusRang} + '))'">
+				<span class="txt-lt">대화시작</span>
+				<span class="ico-arrow1"></span>
+			</a>
 		</div>
 	</footer>
 	<!-- // footer -->
@@ -193,14 +193,14 @@
 	<!-- footer -->
 	<footer>
 		<div class="footer-wrap" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25">
-            <div class="chat-txt">
-                <span class="black">위더스랑 </span>
-                <span class="ico-logo2"></span>
-            </div>
-            <a class="btn sm type08" th:href="@{/wwithus}">
-                <span class="txt-lt">대화시작</span>
-                <span class="ico-arrow1"></span>
-            </a>
+			<div class="chat-txt">
+				<span class="black">위더스랑 </span>
+				<span class="ico-logo2"></span>
+			</div>
+			<a class="btn sm type08" th:href="@{/wwithus}">
+				<span class="txt-lt">대화시작</span>
+				<span class="ico-arrow1"></span>
+			</a>
 		</div>
 
 		<div class="footer-wrap" th:if="${week} == 25">

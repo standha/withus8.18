@@ -1,6 +1,5 @@
 package withus.controller;
 
-import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.Nullable;
@@ -8,6 +7,8 @@ import org.springframework.security.core.Authentication;
 import withus.auth.AuthenticationFacade;
 import withus.entity.User;
 import withus.service.UserService;
+
+import java.util.List;
 
 public class BaseController {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
@@ -35,6 +36,11 @@ public class BaseController {
         return userService.getUserByIdAndDate(getUsername());
     }
 
+/*
+    protected User getUserByHeight() {
+        return userService.getUserByHeight(getUser().getHeight());
+    }*/
+
     protected String getPatientContact() {
         return getUser().getContact();
     }
@@ -59,9 +65,7 @@ public class BaseController {
                 username = getCaretaker().getUserId();
                 break;
         }
-
         return username;
     }
-
 
 }
