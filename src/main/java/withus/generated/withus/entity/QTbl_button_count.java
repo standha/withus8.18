@@ -38,7 +38,13 @@ public class QTbl_button_count extends EntityPathBase<Tbl_button_count> {
 
     public final NumberPath<Integer> level = createNumber("level", Integer.class);
 
+    public final NumberPath<Integer> medication = createNumber("medication", Integer.class);
+
+    public final NumberPath<Integer> mentalHealth = createNumber("mentalHealth", Integer.class);
+
     public final NumberPath<Integer> natriumMoisture = createNumber("natriumMoisture", Integer.class);
+
+    public final NumberPath<Integer> noticeBoard = createNumber("noticeBoard", Integer.class);
 
     public final NumberPath<Integer> symptom = createNumber("symptom", Integer.class);
 
