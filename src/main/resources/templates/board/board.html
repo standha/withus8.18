@@ -19,7 +19,7 @@
     </div>
     <div class="card mb-3 border-0" style="cursor:pointer" th:onclick="|location.href='@{/board/post/list/notice}'|">
         <div class="card-body border border-3 border-primary rounded py-0 px-3 mt-5 mx-2">
-            <h3 class="mb-0" th:text="${currentNotice[0].subject}"></h3>
+            <h3 class="mb-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" th:text="${currentNotice[0].subject}"></h3>
         </div>
         <div th:if="${localDateNow.equals(currentNotice[0].createDate.toLocalDate())}" th:text="|오늘 ${#temporals.format(currentNotice[0].createDate.toLocalTime(), 'HH:mm')}|"></div>
         <div th:unless="${localDateNow.equals(currentNotice[0].createDate.toLocalDate())}" class="card-text text-end px-3 mb-3" th:text="${#temporals.format(currentNotice[0].createDate, 'yy/MM/dd HH:mm')}">

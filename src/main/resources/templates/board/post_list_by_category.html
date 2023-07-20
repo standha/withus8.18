@@ -48,7 +48,34 @@
 <!--                              th:text="${#lists.size(post.commentList)}">-->
 <!--                        </span>-->
                     </div>
-                    <a class="col-2 p-0 modify btn btn-sm btn-outline-secondary rounded-pill float-end" style="width: 48px;" href="javascript:void(0);" sec:authorize="isAuthenticated()" th:if="${post.author != null and #authentication.getPrincipal().getUsername() == post.author.userId or #authentication.getPrincipal().getUsername() == '위더스'}" th:data-uri="@{|/board/post/modify/${post.id}|}">···</a>
+                    <!-- modal -->
+                    <button data-bs-toggle="modal" th:attr="data-bs-target=|#alert${post.id}|" class="col-2 p-0 modify btn btn-sm btn-outline-secondary rounded-pill float-end" style="width: 48px;" sec:authorize="isAuthenticated()" th:if="${post.author != null and #authentication.getPrincipal().getUsername() == post.author.userId or #authentication.getPrincipal().getUsername() == '위더스'}">···</button>
+                    <div class="modal fade" th:id="'alert'+${post.id}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-sm">
+                            <div class="modal-content align-items-center">
+                                <div class="modal-body text-center">
+                                    게시물을 수정하시겠습니까?
+                                </div>
+                                <div class="row border-top w-100">
+                                    <div class="col px-0 py-2 text-center">
+                                        <a th:href="@{|/board/post/modify/${post.id}|}" style="text-decoration: none;">
+                                            <div class="text-dark">
+                                                수정
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="col px-0 py-2 text-center" style="background-color: #0ddf6a; max-width: 50%; border-bottom-right-radius: 8px;">
+                                        <a th:href="@{|/board/post/delete/${post.id}|}" style="text-decoration: none;">
+                                            <div class="text-white">
+                                                삭제
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- modal end -->
                 </div>
             </div>
         </a>
@@ -87,14 +114,15 @@
     </a>
 </div>
 <script layout:fragment="script" type='text/javascript'>
-    const modify_elements = document.getElementsByClassName("modify");
-    Array.from(modify_elements).forEach(function(element) {
-        element.addEventListener('click', function() {
-            if(confirm("게시물을 수정하시겠습니까??")) {
-                location.href = this.dataset.uri;
-            }
-        });
-    });
+    // modal로 변경
+    // const modify_elements = document.getElementsByClassName("modify");
+    // Array.from(modify_elements).forEach(function(element) {
+    //     element.addEventListener('click', function() {
+    //         if(confirm("게시물을 수정하시겠습니까??")) {
+    //             location.href = this.dataset.uri;
+    //         }
+    //     });
+    // });
     const page_elements = document.getElementsByClassName("page-link");
     Array.from(page_elements).forEach(function(element) {
         element.addEventListener('click', function() {
