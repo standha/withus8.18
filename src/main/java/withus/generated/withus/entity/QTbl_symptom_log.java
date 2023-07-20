@@ -30,6 +30,8 @@ public class QTbl_symptom_log extends EntityPathBase<Tbl_symptom_log> {
 
     public final QRecordKey pk;
 
+    public final StringPath text = createString("text");
+
     public final NumberPath<Integer> tired = createNumber("tired", Integer.class);
 
     public final NumberPath<Integer> todaysymptom = createNumber("todaysymptom", Integer.class);

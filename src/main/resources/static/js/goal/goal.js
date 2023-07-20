@@ -67,7 +67,7 @@ function radioClick() {
         //기존에 선택되어 있는 것
         var buttons = document.querySelectorAll(".rdo-box.checked");
         buttons.forEach(function(button) {
-            var value0 = button.querySelector('input[name="check_radio"]').value;;
+            var value0 = button.querySelector('input[name="check_radio"]').value;
             var category0 = button.querySelector('input[name="check_radio"]').getAttribute("data-category");;
             if (button.checked) {
                 updateCheckedArray(category0, value0);
@@ -75,12 +75,6 @@ function radioClick() {
             console.log("c", value0);
             console.log("c", category0);
         });
-
-
-
-
-
-
 
 
 
@@ -143,14 +137,16 @@ radioClick();
 
 
 
-
-
-function onFormSubmission(button) {
+function onFormSubmission(form) {
 
     var Item2;
     var checkedTop = [];
     var checkedMiddle = [];
     var checkedBottom = [];
+    //
+    // topGoals = form.querySelector('input[name=check_radio]:checked').value;
+    // middleGoals = form.querySelector('input[name=check_radio]:checked').value;
+    // bottomGoals = form.querySelector('input[name=check_radio]:checked').value;
 
     var checked = Array.from(document.querySelectorAll("input[name=check_radio]:checked"))
         .map((button) => button.value);
@@ -178,9 +174,7 @@ function onFormSubmission(button) {
             console.log("4",checkedBottom);
         }
         checkedarray(category)
-
     });
-
 
     $("#layerSelectType").show();
     $("#dim").show();
@@ -227,7 +221,7 @@ function onFormSubmission(button) {
             bottom_goals: bottomGoals
         };
 
-        const url = "";
+        const url = "/goal1";
         const options = {
             method: "PUT",
             headers: {

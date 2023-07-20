@@ -7,6 +7,7 @@
     <title>위더스</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
     <meta name="format-detection" content="telephone=no">
+    <script src="https://kit.fontawesome.com/e381c8a508.js" crossorigin="anonymous"></script>
     <link  th:href="@{/css/jquery-ui.css}" rel="stylesheet">
     <link th:href="@{/css/reset.css}" rel="stylesheet">
     <link th:href="@{/css/common.css}" rel="stylesheet">
@@ -120,6 +121,9 @@
                             {
                                 case 0:
                                     $(this).addClass('record-face1');
+                                    if(str == symptomHistory[i].pk.text){
+                                        <i className="fa-solid fa-plus fa-2xs" style="color: #32bbf5;"></i>
+                                    }
                                     break;
 
                                 case 1:

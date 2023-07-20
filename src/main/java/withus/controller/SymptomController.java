@@ -17,7 +17,6 @@ import withus.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class SymptomController extends BaseController {
@@ -41,6 +40,7 @@ public class SymptomController extends BaseController {
             modelAndView.addObject("ankle", 2);
             modelAndView.addObject("breath", 2);
             modelAndView.addObject("cough", 2);
+            modelAndView.addObject("text", 2);
             logger.info("id:{}, url:{}, type:{}, level:{}, week:{} , Today's Symptom Not Recorded", user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek());
         } else {
             Tbl_symptom_log symptom = symptomService.getSymptom(new RecordKey(getConnectId(), LocalDate.now()));
@@ -48,8 +48,9 @@ public class SymptomController extends BaseController {
             modelAndView.addObject("ankle", symptom.getAnkle());
             modelAndView.addObject("breath", symptom.getOutofbreath());
             modelAndView.addObject("cough", symptom.getCough());
-            logger.info("id:{}, url:{}, type:{}, level:{}, week:{}, tired:{}, ankle:{}, breath:{}, cough:{}"
-                    , user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek(), symptom.getTired(), symptom.getAnkle(), symptom.getOutofbreath(), symptom.getCough());
+            modelAndView.addObject("text", symptom.getText());
+            logger.info("id:{}, url:{}, type:{}, level:{}, week:{}, tired:{}, ankle:{}, breath:{}, cough:{},text:{}"
+                    , user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek(), symptom.getTired(), symptom.getAnkle(), symptom.getOutofbreath(), symptom.getCough(), symptom.getText());
         }
         if (user.getType() == User.Type.PATIENT) {
             Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
@@ -94,8 +95,8 @@ public class SymptomController extends BaseController {
         tbl_symptom_log.setPk(new RecordKey(user.getUserId(), LocalDate.now()));
         tbl_symptom_log.setWeek(user.getWeek());
 
-        logger.info("id:{}, date:{}, week:{}, tired:{}, ankle:{}, breath:{}, cough:{}"
-                , tbl_symptom_log.getPk().getId(), tbl_symptom_log.getPk().getDate(), tbl_symptom_log.getWeek(), tbl_symptom_log.getTired(), tbl_symptom_log.getAnkle(), tbl_symptom_log.getOutofbreath(), tbl_symptom_log.getCough());
+        logger.info("id:{}, date:{}, week:{}, tired:{}, ankle:{}, breath:{}, cough:{},text{}"
+                , tbl_symptom_log.getPk().getId(), tbl_symptom_log.getPk().getDate(), tbl_symptom_log.getWeek(), tbl_symptom_log.getTired(), tbl_symptom_log.getAnkle(), tbl_symptom_log.getOutofbreath(), tbl_symptom_log.getCough(), tbl_symptom_log.getText());
 
         Result.Code code;
         Tbl_symptom_log saved = null;

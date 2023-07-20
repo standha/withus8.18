@@ -84,7 +84,7 @@
         <div class="cont-wrap type01">
             <div class="rdo-wrap grid-col type02">
 
-                <form id="appointment-form" th:action="@{/goal1}" onsubmit="return onFormSubmission(this);">
+                <form id="goal-form" th:action="@{/goal}" onsubmit="return onFormSubmission(this);">
 
                 <div th:if="${goal} == 1" class="rdo-box checked">
                     <label>
@@ -290,6 +290,7 @@
         </form>
 
     </div>
+</div>
 </div>
 </div>
 </body>
