@@ -44,3 +44,7 @@ function showHistory() {
     const element = document.querySelector("#bloodPressure-history-get-action");
     location.href = element.value;
 }
+
+
+
+

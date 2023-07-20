@@ -67,7 +67,7 @@ public class CommentContorller {
         Comment comment = this.commentService.getComment(id);
         model.addAttribute("comment", comment);
 
-        if (comment.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("admin")) {
+        if (comment.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("위더스")) {
             commentForm.setContent(comment.getContent());
             return "board/comment_form_modify";
         } else {
@@ -85,7 +85,7 @@ public class CommentContorller {
         Comment comment = this.commentService.getComment(id);
         model.addAttribute("comment", comment);
 
-        if (comment.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("admin")) {
+        if (comment.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("위더스")) {
             this.commentService.modify(comment, commentForm.getContent());
 
             return String.format("redirect:/board/post/detail/%s#comment_%s", comment.getPost().getId(), comment.getId());
@@ -98,7 +98,7 @@ public class CommentContorller {
     @GetMapping("/delete/{id}")
     public String commentDelete(Principal principal, @PathVariable("id") Integer id) {
         Comment comment = this.commentService.getComment(id);
-        if (comment.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("admin")) {
+        if (comment.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("위더스")) {
             this.commentService.delete(comment);
             return String.format("redirect:/board/post/detail/%s", comment.getPost().getId());
         } else {

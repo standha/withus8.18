@@ -15,6 +15,10 @@
     <script th:src="@{/js/bloodPressure/bloodPressure.js}"></script>
     <script th:src="@{/js/help.js}"></script>
     <script th:src="@{/js/input_limit.js}"></script>
+
+    <style>
+        .slide { user-select: none;}
+    </style>
 </head>
 <body>
 <input type="hidden" id="button-count" th:attr="value=@{/button-count}">

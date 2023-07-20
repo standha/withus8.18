@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="kr">
-<html lang="ko">
+<html style="overflow-y: hidden;" lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,12 +12,44 @@
     <link th:href="@{/css/common.css}" rel="stylesheet">
     <link th:href="@{/css/layout.css}" rel="stylesheet">
     <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
-    <script th:src="@{/js/chart.js}"></script>
-    <script th:src="@{js/chartjs-plugin-style.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@2.0.1/dist/chartjs-plugin-annotation.min.js"></script>
     <script th:src="@{/js/jquery-ui.js}"></script>
     <script th:src="@{/js/datepicker-ko.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/help.js}"></script>
+    <style>
+        .button-container {
+            text-align: right;
+        }
+
+        /* Base styles for the button */
+        .arrow-button {
+            padding: 6px 10px 6px 10px;
+            background-color: #fff;
+            color: #000;
+            border: 1px solid rgba(0, 0, 0, 0.5); /* 50% transparent border */
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+            width: 20%;
+
+
+        }
+
+        /* Creating the arrow */
+        .arrow-button .arrow {
+            content: "";
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 5px 5px 0 5px; /* Updated to point downwards */
+            border-color: #808080 transparent transparent transparent; /* Updated to gray arrow */
+            margin-right: 5px; /* Adjusted spacing between arrow and text */
+            vertical-align: middle;
+        }
+    </style>
 </head>
 <body>
 <input type="hidden" id="button-count" th:attr="value=@{/button-count}">
@@ -84,7 +116,12 @@
                         <li class="black">맥박</li>
                     </ul>
                 </div>
-                <canvas id="myChart" class="chart-blood" style="height:70vw; width:100vw"></canvas>
+                <div class="slide" style="margin-bottom: 2%;">
+                    <canvas id="myChart" class="chart-blood slide-item" style="height:70vw; width:100vw"></canvas>
+                </div>
+                <div style="margin-bottom: 2%; padding-right: 5%;" class="button-container">
+                    <button id="cycleButton" onclick="cycleChange()" class="arrow-button"><span class="arrow"></span>3일</button>
+                </div>
                 <div class="tbl-chart">
                     <div class="tbl-wrap type01">
                         <table>
@@ -108,67 +145,232 @@
     var bloodRecord = /*[[ ${bloodWeek} ]]*/;
     /*]]*/
 
+    let bloodList = {};
+    let currSlide = 0;
+    let maxSlide = 0;
+    let cycle = "THREE";
+    initializeSlide();
     var date = [];
     var contraction = [];
     var relaxation = [];
     var pressure = [];
 
+    function checkNull(){
+        const offset = new Date().getTimezoneOffset() * 60000;
+        const today = new Date(Date.now() - offset);
+        let pk ={pk:{date : today.toISOString().substr(0,10)},contraction:null,relaxation:null, pressure:null};
+        if (bloodRecord.length === 0){
+            bloodRecord.push(pk);
+        } else {
+            if(bloodRecord[bloodRecord.length -1].pk.date !== today.toISOString().substr(0,10)){
+                bloodRecord.push(pk);
+            }
+        }
+    }
+    checkNull();
     //요일 데이터 테이블
-    var rowItem = "<tr><th></th>";
+    var rowItem = "<tr id='week-tr'><th></th>";
     var week = ['일', '월', '화', '수', '목', '금', '토'];
-    for(i=0; i<bloodRecord.length; i++)
-    {
-        var day = new Date(bloodRecord[i].pk.date.substr(0, 4), bloodRecord[i].pk.date.substr(5, 2)-1, bloodRecord[i].pk.date.substr(8, 2)).getDay();
-        var dayLabel = week[day];
-        rowItem += "<th>" + dayLabel + "</th>";
+
+    if(bloodRecord.length > 3){
+        for(i=bloodRecord.length-3; i<bloodRecord.length; i++)
+        {
+            var day = new Date(bloodRecord[i].pk.date.substr(0, 4), bloodRecord[i].pk.date.substr(5, 2)-1, bloodRecord[i].pk.date.substr(8, 2)).getDay();
+            var dayLabel = week[day];
+            rowItem += "<th style='transition: opacity 0.5s;'>" + bloodRecord[i].pk.date.substr(8,10)+ "일 " + dayLabel + "</th>";
+        }
+    } else {
+        for(i=0; i<bloodRecord.length; i++)
+        {
+            var day = new Date(bloodRecord[i].pk.date.substr(0, 4), bloodRecord[i].pk.date.substr(5, 2)-1, bloodRecord[i].pk.date.substr(8, 2)).getDay();
+            var dayLabel = week[day];
+            rowItem += "<th style='transition: opacity 0.5s;'>" + bloodRecord[i].pk.date.substr(8,10)+ "일 " + dayLabel + "</th>";
+        }
     }
     rowItem += "</tr>"
     $('#history-table-day').append(rowItem);
 
     //수축기 이완기 데이터 테이블
-    var contractionItem = "<tr>";
+    var contractionItem = "<tr id='contraction-tr'>";
     contractionItem += "<th><span class=\"bold\">수축 기압</span>";
-    for(i=0; i<bloodRecord.length; i++)
-    {
-        contractionItem += "<td style='text-align: center'>";
-        contractionItem += "<span class=\"red\">" + bloodRecord[i].contraction + "</span>";
-        contractionItem += "</td>";
+    if(bloodRecord.length > 3){
+        for(i=bloodRecord.length-3; i<bloodRecord.length; i++)
+        {
+            contractionItem += "<td style='text-align: center;'>";
+            if(bloodRecord[i].contraction === null){
+                contractionItem += "<span class=\"red\" style='transition: opacity 0.5s;'>" + '' + "</span>";
+            } else {
+                contractionItem += "<span class=\"red\" style='transition: opacity 0.5s;'>" + bloodRecord[i].contraction + "</span>";
+            }
+            contractionItem += "</td>";
+        }
+    } else {
+        for(i=0; i<bloodRecord.length; i++)
+        {
+            contractionItem += "<td style='text-align: center;'>";
+            if(bloodRecord[i].contraction === null){
+                contractionItem += "<span class=\"red\" style='transition: opacity 0.5s;'>" + '' + "</span>";
+            } else {
+                contractionItem += "<span class=\"red\" style='transition: opacity 0.5s;'>" + bloodRecord[i].contraction + "</span>";
+            }
+            contractionItem += "</td>";
+        }
     }
+
     contractionItem += "</tr>"
     $('#history-table-data').append(contractionItem);
 
 
-    var relaxationItem = "<tr>";
+    var relaxationItem = "<tr id='relaxation-tr'>";
     relaxationItem += "<th><span class=\"bold\">이완 기압</span>";
-    for(i=0; i<bloodRecord.length; i++)
-    {
-        relaxationItem += "<td style='text-align: center'>";
-        relaxationItem += "<span class=\"blue\">" + bloodRecord[i].relaxation + "</span>";
-        relaxationItem += "</td>";
+    if(bloodRecord.length > 3){
+        for(i=bloodRecord.length-3; i<bloodRecord.length; i++)
+        {
+            relaxationItem += "<td style='text-align: center;'>";
+            if(bloodRecord[i].relaxation === null){
+                relaxationItem += "<span class=\"blue\" style='transition: opacity 0.5s;'>" + '' + "</span>";
+            } else {
+                relaxationItem += "<span class=\"blue\" style='transition: opacity 0.5s;'>" + bloodRecord[i].relaxation + "</span>";
+            }
+            relaxationItem += "</td>";
+        }
+    } else{
+        for(i=0; i<bloodRecord.length; i++)
+        {
+            relaxationItem += "<td style='text-align: center;'>";
+            if(bloodRecord[i].relaxation === null){
+                relaxationItem += "<span class=\"blue\" style='transition: opacity 0.5s;'>" + '' + "</span>";
+            } else {
+                relaxationItem += "<span class=\"blue\" style='transition: opacity 0.5s;'>" + bloodRecord[i].relaxation + "</span>";
+            }
+            relaxationItem += "</td>";
+        }
     }
+
     relaxationItem += "</tr>"
     $('#history-table-data').append(relaxationItem);
 
     //혈압 데이터 테이블
-    var pulse = "<tr>";
+    var pulse = "<tr id='pressure-tr'>";
     pulse += "<th><span class=\"bold\">맥박";
-    for(i=0; i<bloodRecord.length; i++)
-    {
-        pulse += "<td style='text-align: center'>";
-        pulse += "<span class=\"black\">" + bloodRecord[i].pressure + "</span>";
-        pulse += "</td>";
+    if(bloodRecord.length > 3){
+        for(i=bloodRecord.length-3; i<bloodRecord.length; i++)
+        {
+            pulse += "<td style='text-align: center;'>";
+            if(bloodRecord[i].pressure === null){
+                pulse += "<span class=\"black\" style='transition: opacity 0.5s;'>" + '' + "</span>";
+            } else {
+                pulse += "<span class=\"black\" style='transition: opacity 0.5s;'>" + bloodRecord[i].pressure + "</span>";
+            }
+            pulse += "</td>";
+        }
+    } else {
+        for(i=0; i<bloodRecord.length; i++)
+        {
+            pulse += "<td style='text-align: center;'>";
+            if(bloodRecord[i].pressure === null){
+                pulse += "<span class=\"black\" style='transition: opacity 0.5s;'>" + '' + "</span>";
+            } else {
+                pulse += "<span class=\"black\" style='transition: opacity 0.5s;'>" + bloodRecord[i].pressure + "</span>";
+            }
+            pulse += "</td>";
+        }
     }
+
     pulse += "</tr>"
     $('#history-table-data').append(pulse);
+    function iconAdd(){
+        const contractionTr = document.getElementById('contraction-tr').lastElementChild;
+        const contractionSpan = contractionTr.getElementsByTagName('span')[0];
 
-    for(i=0; i<bloodRecord.length; i++)
-    {
-        //x축 라벨 바꾸기
-        date[i] = bloodRecord[i].pk.date.substr(5,2) + " / " + bloodRecord[i].pk.date.substr(8,2);
-        //date[i] = bloodRecord[i].pk.date;
-        contraction[i] = bloodRecord[i].contraction;
-        relaxation[i] = bloodRecord[i].relaxation;
-        pressure[i] = bloodRecord[i].pressure;
+        if(contractionSpan.textContent === ''){
+            const imgElement = document.createElement('img');
+            imgElement.src = '/images/bloodPressureSubmit.jpg';
+            imgElement.alt = 'bloodPressure Page Move';
+
+            if(cycle ==="THREE"){
+                contractionTr.style.width ='25%';
+                imgElement.style.width = '48%';
+            } else {
+                contractionTr.style.width ='12.5%';
+                imgElement.style.width = '100%';
+            }
+            const anchorElement = document.createElement('a');
+            anchorElement.href = '/bloodPressure'; // Add your desired link URL
+            anchorElement.appendChild(imgElement);
+            contractionSpan.appendChild(anchorElement);
+        }
+
+    }
+    iconAdd();
+
+
+    if(bloodRecord.length <=3){
+        for(i=0; i<bloodRecord.length; i++)
+        {
+            //x축 라벨 바꾸기
+            date[i] = bloodRecord[i].pk.date.substr(5,2) + " / " + bloodRecord[i].pk.date.substr(8,2);
+            //date[i] = bloodRecord[i].pk.date;
+            contraction[i] = bloodRecord[i].contraction;
+            relaxation[i] = bloodRecord[i].relaxation;
+            pressure[i] = bloodRecord[i].pressure;
+        }
+    } else {
+        var threeBloodRecord = bloodRecord.slice(bloodRecord.length-3,bloodRecord.length);
+        for(i=0; i<threeBloodRecord.length; i++)
+        {
+            //x축 라벨 바꾸기
+            date[i] = threeBloodRecord[i].pk.date.substr(5,2) + " / " + threeBloodRecord[i].pk.date.substr(8,2);
+            //date[i] = threeBloodRecord[i].pk.date;
+            contraction[i] = threeBloodRecord[i].contraction;
+            relaxation[i] = threeBloodRecord[i].relaxation;
+            pressure[i] = threeBloodRecord[i].pressure;
+        }
+    }
+
+
+    function addNewTD(id, color) {
+        var tr = document.getElementById(id);
+        for (var i = 0; i < 4; i++) { // Add 'var' before 'i'
+            var newTD = document.createElement('td');
+            newTD.style.textAlign = 'center';
+
+            var span = document.createElement('span');
+            span.classList.add(color); // Add the 'black' class to the span
+            span.style.transition = 'opacity 0.5s';
+
+            newTD.appendChild(span); // Add the span to the new td
+            tr.appendChild(newTD); // Add the new td to the tr
+        }
+    }
+    function addNewTH(id) {
+        var tr = document.getElementById(id);
+        for(var i = 0; i<4; i++){
+            var newTH = document.createElement('th');
+            newTH.style.textAlign = 'center'; // Set the text alignment for the new th
+            newTH.style.transition = 'opacity 0.5s';
+
+            tr.appendChild(newTH); // Add the new td to the tr
+        }
+    }
+
+    function removeTH(id) {
+        var tr = document.getElementById(id);
+        for(i=0;i<4;i++){
+            var th = tr.lastElementChild; // Get the last child element (the added th)
+            if (th) {
+                tr.removeChild(th);
+            }
+        }
+    }
+    function removeTD(id) {
+        var tr = document.getElementById(id);
+        for(i=0;i<4;i++){
+            var td = tr.lastElementChild; // Get the last child element (the added th)
+            if (td) {
+                tr.removeChild(td);
+            }
+        }
     }
 
     let draw = Chart.controllers.line.prototype.draw;
@@ -178,7 +380,7 @@
         datasets: [{
             label: '수축기 혈압',
             data: contraction,
-            fill: true,
+            fill: false,
             spanGaps: false,
             borderWidth: 2,
             borderColor: '#fc4d4d',
@@ -188,7 +390,7 @@
         },{
             label: '이완기 혈압',
             data: relaxation,
-            fill: true,
+            fill: false,
             spanGaps: false,
             borderWidth: 2,
             borderColor: '#3ca5ff',
@@ -198,150 +400,76 @@
         },{
             label: '맥박',
             data: pressure,
-            fill: true,
+            fill: false,
             spanGaps: false,
             borderWidth: 2,
             borderColor: '#515558',
             pointBackgroundColor: '#515558',
             pointBorderColor: '#515558',
             pointRadius: 1.5
-        }
+        },
+
         ]
     };
-    var myPlugin = {
-        id: 'lineDraw',
-        afterDraw (chart, easing) {
-            if (chart.config.options && chart.config.options.scales) {
-                if (chart.config.options.scales.xAxes) {
-                    chart.config.options.scales.xAxes.forEach(function (xAxisConfig) {
-                        if (!xAxisConfig.color) {
-                            return
-                        }
 
-                        var chartArea = chart.chartArea
-                        var xAxis = chart.scales[xAxisConfig.id]
-
-                        // just draw the scale again with different colors
-                        var color = xAxisConfig.gridLines.color
-                        xAxisConfig.gridLines.color = xAxisConfig.color
-                        xAxis.draw(chartArea)
-                        xAxisConfig.gridLines.color = color
-                    })
-                }
-                if (chart.config.options.scales.yAxes) {
-                    chart.config.options.scales.yAxes.forEach(function (yAxisConfig) {
-                        if (!yAxisConfig.color) {
-                            return
-                        }
-
-                        var ctx = chart.chart.ctx
-                        var chartArea = chart.chartArea
-                        var yAxis = chart.scales[yAxisConfig.id]
-
-                        // here, since we also have the grid lines, set a clip area for the left of the y axis
-                        ctx.save()
-                        ctx.rect(0, 0, chartArea.left + yAxisConfig.gridLines.lineWidth - 1, chartArea.bottom + yAxisConfig.gridLines.lineWidth - 1)
-                        ctx.clip()
-
-                        var color = yAxisConfig.gridLines.color
-                        yAxisConfig.gridLines.color = yAxisConfig.color
-                        yAxis.draw(chartArea)
-                        yAxisConfig.gridLines.color = color
-
-                        ctx.restore()
-                    })
-                }
-                // we need to draw the tooltip so that it comes over the (redrawn) elements
-                chart.tooltip.transition(easing).draw()
-            }
-        }
-    }
 
     var myChart = new Chart(ctx, {
-        plugins: [
-            {
-                id: "responsiveGradient",
-                afterLayout: function(chart, options) {
-                    var scales = chart.scales;
-
-                    // create a linear gradient with the dimentions of the scale
-                    var color = chart.ctx.createLinearGradient(0,scales["y-axis-0"].bottom,0,0);
-                    // add gradients stops
-                    color.addColorStop(0, "rgba(252,77,77,0)");
-                    color.addColorStop(0.25, "rgba(252,77,77,0)");
-                    color.addColorStop(0.5, "rgba(252,77,77,0)");
-                    color.addColorStop(0.75, "rgba(252,77,77,0.1)");
-                    color.addColorStop(1, "rgba(252,77,77,0.7)");
-
-                    // create a linear gradient with the dimentions of the scale
-                    var color1 = chart.ctx.createLinearGradient(0,scales["y-axis-0"].bottom,0,0);
-                    // add gradients stops
-                    color1.addColorStop(0, "rgba(60,165,255,0)");
-                    color1.addColorStop(0.25, "rgba(60,165,255,0)");
-                    color1.addColorStop(0.5, "rgba(60,165,255,0)");
-                    color1.addColorStop(0.75, "rgba(60,165,255,0.1)");
-                    color1.addColorStop(1, "rgba(60,165,255,0.7)");
-
-                    // create a linear gradient with the dimentions of the scale
-                    var color2 = chart.ctx.createLinearGradient(0,scales["y-axis-0"].bottom,0,0);
-                    // add gradients stops
-                    color2.addColorStop(0, "rgba(81,85,88,0)");
-                    color2.addColorStop(0.25, "rgba(81,85,88,0)");
-                    color2.addColorStop(0.5, "rgba(81,85,88,0.1)");
-                    color2.addColorStop(0.75, "rgba(81,85,88,0.1)");
-                    color2.addColorStop(1, "rgba(81,85,88,0.7)");
-
-                    // changes the background color option
-                    chart.data.datasets[0].backgroundColor = color;
-                    chart.data.datasets[1].backgroundColor = color1;
-                    chart.data.datasets[2].backgroundColor = color2;
-                }
-            }
-        ],
         // The type of chart we want to create
         type: 'line',
 
         // The data for our dataset
         data: data,
-
         // Configuration options go here
         options: {
             scales:{
-                yAxes:[{
+                y: {
+                    beginAtZero: true,
+                    min: 40,
+                    max: 200,
+                    stepSize: 20,
+                    maxTicksLimit: 9,
                     ticks: {
-                        beginAtZero: true,
-                        min: 40,
-                        max: 200,
-                        stepSize: 20,
-                        maxTicksLimit: 9,
                         callback: function(value, index, values) {
-                            return value == 40 || value == 80 || value == 120 || value == 160 || value == 200?value:'';
+                            return value == 40 || value == 80 || value == 120 || value == 160 || value == 200 ? value : '';
                         }
                     }
-                }]
-                // ,
-                // xAxes:[{
-                //     gridLines: {
-                //         display: false
-                //     }
-                // }]
-            },
-            legend: {
-                display: false,
-                position: 'top',
-                align: 'right', // 안먹음 ㅠㅠ
-                fullWidth: false,
-                labels: {
-                    usePointStyle: true,
-                    fontSize: 13,
-                    fontStyle: '',
-                    padding: 30
                 }
-            }
+            },
+            plugins: {
+                annotation: {
+                    annotations: {
+                        box1: {
+                            type: 'box',
+                            xMin: 0,
+                            xMax: 6,
+                            yMin: 90,
+                            yMax: 130,
+                            backgroundColor: 'rgba(255, 99, 132, 0.25)',
+                            borderWidth: 0
+                        },
+                        box2: {
+
+                            type: 'box',
+                            xMin: 0,
+                            xMax: 6,
+                            yMin: 60,
+                            yMax: 90,
+                            backgroundColor: 'rgba(99, 184, 255, 0.25)',
+                            borderWidth: 0
+                        }
+                    }
+                },
+                legend: {
+                    display: false
+                },
+                tooltip:{
+                    enabled:false
+                }
+            },
+
+
         }
     });
-
-    var bloodList = [];
 
     const getAjax = function(url) {
         return new Promise((resolve, reject) => { // 1.
@@ -363,13 +491,369 @@
         const url ="/blood-get-data";
         try {
             bloodList = await getAjax("/blood-get-data");
+            return bloodList;
         } catch(e) {
             console.log(e);
         }
 
     }
-    getBloodData();
+    function bloodListNullCheck(){
+        const today = new Date();
+        const year  = today.getFullYear();
+        const month = today.getMonth()+1;
+        const day = today.getDate();
+        let pk = {pk:{date:[year,month,day]},contraction: null, relaxation: null, pressure: null};
+        let bloodTempList = bloodList['bloodList'];
+        if(JSON.stringify(bloodTempList[bloodTempList.length -1].pk.date) !== JSON.stringify([year,month,day])){
+            bloodList['bloodList'].push(pk);
+        }
+    }
+    async function initializeSlide() {
+        bloodList = await getBloodData(); // 데이터 받아오기
+        bloodListNullCheck();
+        currSlide = bloodList['bloodList'].length - 1;
+        maxSlide = bloodList['bloodList'].length - 1;
 
+    }
+
+    const slide = document.querySelector(".slide");
+
+
+    let startPoint = 0;
+    let endPoint = 0;
+
+    // PC 클릭 이벤트 (드래그)
+    slide.addEventListener("mousedown", (e) => {
+        startPoint = e.pageX; // 마우스 드래그 시작 위치 저장
+    });
+
+    slide.addEventListener("mouseup", (e) => {
+        endPoint = e.pageX; // 마우스 드래그 끝 위치 저장
+        if (startPoint < endPoint) {
+            // 마우스가 오른쪽으로 드래그 된 경우
+            if(bloodList['bloodList'].length > 3){
+                prevMove();
+            }
+        } else if (startPoint > endPoint) {
+            // 마우스가 왼쪽으로 드래그 된 경우
+            if(bloodList['bloodList'].length > 3){
+                nextMove();
+            }
+        }
+    });
+
+    // 모바일 터치 이벤트 (스와이프)
+    slide.addEventListener("touchstart", (e) => {
+        startPoint = e.touches[0].pageX; // 터치가 시작되는 위치 저장
+    });
+    slide.addEventListener("touchend", (e) => {
+        endPoint = e.changedTouches[0].pageX; // 터치가 끝나는 위치 저장
+        if (startPoint < endPoint) {
+            // 오른쪽으로 스와이프 된 경우
+            if(bloodList['bloodList'].length > 3){
+                prevMove();
+            }
+        } else if (startPoint > endPoint) {
+            // 왼쪽으로 스와이프 된 경우
+            if(bloodList['bloodList'].length > 3){
+                nextMove();
+            }
+        }
+    });
+    function changeTdData(){
+        const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
+        let newWeeks = [];
+        let newContractions = [];
+        let newRelaxation = [];
+        let newPressure = [];
+
+        const trWeek = document.getElementById('week-tr');
+        const trWeekElements = trWeek.getElementsByTagName('th');
+        const trContraction = document.getElementById('contraction-tr');
+        const trContractionElements = trContraction.getElementsByTagName('td');
+        const trRelaxation = document.getElementById('relaxation-tr');
+        const trRelaxationElements = trRelaxation.getElementsByTagName('td');
+        const trPressure = document.getElementById('pressure-tr');
+        const trPressureElements = trPressure.getElementsByTagName('td');
+
+        if(cycle ==="THREE"){
+
+            let threeBloodData = bloodList['bloodList'].slice(currSlide-2,currSlide+1);
+            for(var i = 0; i<3; i++){
+                let bloodData = threeBloodData[i];
+                newContractions.push(bloodData['contraction']);
+                newRelaxation.push(bloodData['relaxation']);
+                newPressure.push(bloodData['pressure']);
+                let bloodDate = new Date((bloodData['pk'])['date']);
+                newWeeks.push(((bloodData['pk'])['date'])[2].toString().padStart(2,'0') + '일 '+WEEKDAY[bloodDate.getDay()]);
+            }
+            for (let i = 0; i < 3; i++) {
+                const td1 = trWeekElements[i+1];
+                const td2 = trContractionElements[i];
+                const td3 = trRelaxationElements[i];
+                const td4 = trPressureElements[i];
+
+                const span2 = td2.getElementsByTagName('span')[0];
+                const span3 = td3.getElementsByTagName('span')[0];
+                const span4 = td4.getElementsByTagName('span')[0];
+
+
+                td1.style.fontSize = '0.88rem';
+                td1.style.opacity = 0;
+                span2.style.opacity = 0;
+                span3.style.opacity = 0;
+                span4.style.opacity = 0;
+                setTimeout(function() {
+                    td1.textContent = newWeeks[i];
+                    td1.style.opacity = 1;
+                    span2.textContent = newContractions[i] === null ? '' : newContractions[i];
+                    span2.style.opacity = 1;
+                    span3.textContent = newRelaxation[i] === null ? '' : newRelaxation[i];
+                    span3.style.opacity = 1;
+                    span4.textContent = newPressure[i] === null ? '' :  newPressure[i];
+                    span4.style.opacity = 1;
+                    if(newWeeks[i] === newWeeks[newWeeks.length - 1]){
+                        iconAdd();
+                    }
+                }, 300);
+            }
+        } else {
+            let sevenBloodData = bloodList['bloodList'].slice(currSlide-6,currSlide+1);
+            trContractionElements[2].style.width='12.5%';
+            for(var i = 0; i<7; i++){
+                let bloodData = sevenBloodData[i];
+                newContractions.push(bloodData['contraction']);
+                newRelaxation.push(bloodData['relaxation']);
+                newPressure.push(bloodData['pressure']);
+                let bloodDate = new Date((bloodData['pk'])['date']);
+                newWeeks.push(((bloodData['pk'])['date'])[2].toString().padStart(2,'0') + '일 '+WEEKDAY[bloodDate.getDay()]);
+            }
+            for (let i = 0; i < 7; i++) {
+                const td1 = trWeekElements[i+1];
+                const td2 = trContractionElements[i];
+                const td3 = trRelaxationElements[i];
+                const td4 = trPressureElements[i];
+
+                const span2 = td2.getElementsByTagName('span')[0];
+                const span3 = td3.getElementsByTagName('span')[0];
+                const span4 = td4.getElementsByTagName('span')[0];
+
+
+
+                td1.style.fontSize = '0.80rem';
+                td1.style.opacity = 0;
+                span2.style.opacity = 0;
+                span3.style.opacity = 0;
+                span4.style.opacity = 0;
+                setTimeout(function() {
+                    td1.textContent = newWeeks[i];
+                    td1.style.opacity = 1;
+                    span2.textContent = newContractions[i] === null ? '' : newContractions[i];
+                    span2.style.opacity = 1;
+                    span3.textContent = newRelaxation[i] === null ? '' : newRelaxation[i];
+                    span3.style.opacity = 1;
+                    span4.textContent = newPressure[i] === null ? '' :  newPressure[i];
+                    span4.style.opacity = 1;
+                    if(newWeeks[i] === newWeeks[newWeeks.length - 1]){
+                        iconAdd();
+                    }
+                }, 300);
+            }
+        }
+    }
+
+
+
+    function nextMove() {
+        let newContractions = [];
+        let newRelaxation = [];
+        let newPressure = [];
+        let newLabels = [];
+        currSlide++;
+        // 마지막 슬라이드 이상으로 넘어가지 않게 하기 위해서
+        if (currSlide <= maxSlide) {
+            if(cycle ==="THREE"){
+                let threeBloodData = bloodList['bloodList'].slice(currSlide-2,currSlide+1);
+                for(var i = 0; i<3; i++){
+                    let bloodData = threeBloodData[i];
+                    newContractions.push(bloodData['contraction']);
+                    newRelaxation.push(bloodData['relaxation']);
+                    newPressure.push(bloodData['pressure']);
+                    newLabels.push(((bloodData['pk'])['date'])[1].toString().padStart(2,'0') + ' / ' + ((bloodData['pk'])['date'])[2].toString().padStart(2,'0'));
+                }
+                myChart.data.datasets[0].data = newContractions;
+                myChart.data.datasets[1].data = newRelaxation;
+                myChart.data.datasets[2].data = newPressure;
+                myChart.data.labels = newLabels;
+                myChart.update();
+            } else {
+                let sevenBloodData = bloodList['bloodList'].slice(currSlide-6,currSlide+1);
+                for(var i = 0; i<7; i++){
+                    let bloodData = sevenBloodData[i];
+                    newContractions.push(bloodData['contraction']);
+                    newRelaxation.push(bloodData['relaxation']);
+                    newPressure.push(bloodData['pressure']);
+                    newLabels.push(((bloodData['pk'])['date'])[1].toString().padStart(2,'0') + ' / ' + ((bloodData['pk'])['date'])[2].toString().padStart(2,'0'));
+                }
+                myChart.data.datasets[0].data = newContractions;
+                myChart.data.datasets[1].data = newRelaxation;
+                myChart.data.datasets[2].data = newPressure;
+                myChart.data.labels = newLabels;
+                myChart.update();
+            }
+            changeTdData();
+        } else {
+            currSlide--;
+        }
+    }
+    function limitSlide(cycle, max){
+        if(cycle ==="THREE"){
+            return 2;
+        } else {
+            return 6
+        }
+    }
+    function prevMove() {
+        let newContractions = [];
+        let newRelaxation = [];
+        let newPressure = [];
+        let newLabels = [];
+        currSlide--;
+
+        // 1번째 슬라이드 이하로 넘어가지 않게 하기 위해서
+        if (currSlide >= limitSlide(cycle,maxSlide)) {
+            if(cycle ==="THREE"){
+
+                let threeBloodData = bloodList['bloodList'].slice(currSlide-2,currSlide+1);
+                for(var i = 0; i<3; i++){
+                    let bloodData = threeBloodData[i];
+                    newContractions.push(bloodData['contraction']);
+                    newRelaxation.push(bloodData['relaxation']);
+                    newPressure.push(bloodData['pressure']);
+                    newLabels.push(((bloodData['pk'])['date'])[1].toString().padStart(2,'0') + ' / ' + ((bloodData['pk'])['date'])[2].toString().padStart(2,'0'));
+                }
+                myChart.data.datasets[0].data = newContractions;
+                myChart.data.datasets[1].data = newRelaxation;
+                myChart.data.datasets[2].data = newPressure;
+                myChart.data.labels = newLabels;
+                myChart.update();
+
+            } else {
+
+                let sevenBloodData = bloodList['bloodList'].slice(currSlide-6,currSlide+1);
+                for(var i = 0; i<7; i++){
+                    let bloodData = sevenBloodData[i];
+                    newContractions.push(bloodData['contraction']);
+                    newRelaxation.push(bloodData['relaxation']);
+                    newPressure.push(bloodData['pressure']);
+                    newLabels.push(((bloodData['pk'])['date'])[1].toString().padStart(2,'0') + ' / ' + ((bloodData['pk'])['date'])[2].toString().padStart(2,'0'));
+                }
+                myChart.data.datasets[0].data = newContractions;
+                myChart.data.datasets[1].data = newRelaxation;
+                myChart.data.datasets[2].data = newPressure;
+                myChart.data.labels = newLabels;
+                myChart.update();
+
+
+            }
+
+            changeTdData();
+        } else {
+            currSlide++;
+        }
+    }
+    function cycleChange(){
+        if(bloodList['bloodList'].length >= 7){
+            const cycleButton = document.getElementById('cycleButton');
+            const arrowSpan = cycleButton.querySelector('.arrow');
+            if (cycleButton.textContent === '3일') {
+                cycleButton.textContent = '7일';
+            } else {
+                cycleButton.textContent = '3일';
+            }
+            cycleButton.insertBefore(arrowSpan, cycleButton.firstChild)
+            if(cycle ==="THREE"){
+                cycle ="SEVEN";
+            } else {
+                cycle ="THREE";
+            }
+            let newContractions = [];
+            let newRelaxation = [];
+            let newPressure = [];
+            let newLabels = [];
+            currSlide = maxSlide;
+            if(cycle ==="THREE"){
+                removeTH('week-tr');
+                removeTD('contraction-tr');
+                removeTD('relaxation-tr');
+                removeTD('pressure-tr');
+
+                let threeBloodData = bloodList['bloodList'].slice(currSlide-2,currSlide+1);
+                for(var i = 0; i<3; i++){
+                    let bloodData = threeBloodData[i];
+                    newContractions.push(bloodData['contraction']);
+                    newRelaxation.push(bloodData['relaxation']);
+                    newPressure.push(bloodData['pressure']);
+                    newLabels.push(((bloodData['pk'])['date'])[1].toString().padStart(2,'0') + ' / ' + ((bloodData['pk'])['date'])[2].toString().padStart(2,'0'));
+                }
+                myChart.data.datasets[0].data = newContractions;
+                myChart.data.datasets[1].data = newRelaxation;
+                myChart.data.datasets[2].data = newPressure;
+                myChart.data.labels = newLabels;
+                myChart.update();
+            } else {
+
+                const trWeek = document.getElementById('week-tr');
+                const trWeekElements = trWeek.getElementsByTagName('th');
+                const trContraction = document.getElementById('contraction-tr');
+                const trContractionElements = trContraction.getElementsByTagName('td');
+                const trRelaxation = document.getElementById('relaxation-tr');
+                const trRelaxationElements = trRelaxation.getElementsByTagName('td');
+                const trPressure = document.getElementById('pressure-tr');
+                const trPressureElements = trPressure.getElementsByTagName('td');
+                for (let i = 0; i < 3; i++) {
+                    const td1 = trWeekElements[i + 1];
+                    const td2 = trContractionElements[i];
+                    const td3 = trRelaxationElements[i];
+                    const td4 = trPressureElements[i];
+
+                    const span2 = td2.getElementsByTagName('span')[0];
+                    const span3 = td3.getElementsByTagName('span')[0];
+                    const span4 = td4.getElementsByTagName('span')[0];
+
+                    td1.style.opacity = 0;
+                    span2.style.opacity = 0;
+                    span3.style.opacity = 0;
+                    span4.style.opacity = 0;
+                    td1.textContent = '';
+                    span2.textContent='';
+                    span3.textContent='';
+                    span4.textContent='';
+                }
+                addNewTH('week-tr');
+                addNewTD('contraction-tr','red');
+                addNewTD('relaxation-tr','blue');
+                addNewTD('pressure-tr','black');
+                let sevenBloodData = bloodList['bloodList'].slice(currSlide-6,currSlide+1);
+                for(var i = 0; i<7; i++){
+                    let bloodData = sevenBloodData[i];
+                    newContractions.push(bloodData['contraction']);
+                    newRelaxation.push(bloodData['relaxation']);
+                    newPressure.push(bloodData['pressure']);
+                    newLabels.push(((bloodData['pk'])['date'])[1].toString().padStart(2,'0') + ' / ' + ((bloodData['pk'])['date'])[2].toString().padStart(2,'0'));
+                }
+                myChart.data.datasets[0].data = newContractions;
+                myChart.data.datasets[1].data = newRelaxation;
+                myChart.data.datasets[2].data = newPressure;
+                myChart.data.labels = newLabels;
+                myChart.update();
+            }
+            changeTdData();
+        } else {
+            alert("7일 이후에 가능합니다.")
+        }
+
+    }
 </script>
 
 </body>
