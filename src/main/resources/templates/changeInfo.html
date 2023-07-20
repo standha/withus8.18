@@ -66,7 +66,7 @@
                         </a>
                     </div>
                     <h2>정보설정</h2>
-                    <div >
+                    <div>
                         <a class="btn xsm type07" th:href="@{/logout}">
                             <span style="
                             display: inline-block;
@@ -181,17 +181,25 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="field patient-only">
+                        <div class="insert">
+                            <label for="input5">키</label>
+                            <input type="text" name="height" id="input5" th:value="${user.height}" pattern="\d*" inputmode="numeric"/>
+                        </div>
+                    </div>
+
                     <div class="field">
                         <div class="insert">
-                            <label for="input5">연락처(본인)</label>
-                            <input type="text" id="input5" th:value="${user.contact}" name="contact">
+                            <label for="input6">연락처(본인)</label>
+                            <input type="text" id="input6" th:value="${user.contact}" name="contact">
                         </div>
                     </div>
 
                     <div class="field" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT}">
                         <div class="insert patient-only">
-                            <label for="input6">연락처(보호자)</label>
-                            <input type="text" id="input6" th:value="${caregiver_contact}" name="caregiver">
+                            <label for="input7">연락처(보호자)</label>
+                            <input type="text" id="input7" th:value="${caregiver_contact}" name="caregiver">
                         </div>
                     </div>
                     <div th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and (${week} != 25) and (${week} != 0)">

@@ -19,9 +19,15 @@ public class QTbl_goal extends EntityPathBase<Tbl_goal> {
 
     public static final QTbl_goal tbl_goal = new QTbl_goal("tbl_goal");
 
+    public final NumberPath<Integer> bottom_goals = createNumber("bottom_goals", Integer.class);
+
     public final NumberPath<Integer> goal = createNumber("goal", Integer.class);
 
     public final StringPath goalId = createString("goalId");
+
+    public final NumberPath<Integer> middle_goals = createNumber("middle_goals", Integer.class);
+
+    public final NumberPath<Integer> top_goals = createNumber("top_goals", Integer.class);
 
     public QTbl_goal(String variable) {
         super(Tbl_goal.class, forVariable(variable));

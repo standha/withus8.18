@@ -1,123 +1,227 @@
-function radioClick(){
-    var checklength = document.getElementsByName("check_radio").length;
-    var checked;
-    var goalNum;
-    var Item, Item2;
-    for(var i=0; i<checklength; i++){
-        if(document.getElementsByName("check_radio")[i].checked == true){
-            checked = document.getElementsByName("check_radio")[i].value;
-            goalNum = i+1;
+function radioClick() {
+    var checkButtons = document.getElementsByName("check_radio");
+    var checked=[];
+    var checkedTop = [];
+    var checkedMiddle = [];
+    var checkedBottom = [];
+
+    function updateCheckedArray(category, value) {
+        if (category === "top") {
+            if (!checkedTop.includes(value) && checkedTop.length < 3) {
+                checkedTop.push(value);
+                checked.push(value);
+            }
+        } else if (category === "middle") {
+            if (!checkedMiddle.includes(value) && checkedMiddle.length < 3) {
+                checkedMiddle.push(value);
+                checked.push(value);
+            }
+        } else if (category === "bottom") {
+            if ( checkedBottom.length < 3) {
+                //console.log("a")
+                checkedBottom.push(value);
+                checked.push(value);
+            }
         }
     }
 
-    switch(goalNum){
-        case 1:
-            $("#layerSelectType").show();
-            $("#dim").show();
-            Item = "<span class=\"bold\">'" + checked  + "'</span>";
-            Item += "<span>으로 목표를 설정하셨군요.</span>";
-            $('#popUp1').append(Item);
-            Item2 = "<span>매일 심장약을 복용하신 후<br></span>";
-            Item2 += "<span class=\"route\">" + "위더스" + "<span>" + " > " + "</span>" + "알람" +  "<span>" + " > " + "</span>" + "약물" + "</span>" + "에 기록해주세요.";
-            $('#popUp2').append(Item2);
-            break;
+    function deselectButton(button) {
+        button.checked = false;
+        button.parentNode.parentNode.classList.remove("checked");
+        var category = button.getAttribute("data-category");
+        //console.log("7")
+        var value = button.value;
 
-        case 2:
-            $("#layerSelectType").show();
-            $("#dim").show();
-            Item = "<span class=\"bold\">'" + checked  + "'</span>";
-            Item += "<span>으로 목표를 설정하셨군요.</span>";
-            $('#popUp1').append(Item);
-            Item2 = "<span>매일 정해진 시간에 측정한 뒤<br></span>";
-            Item2 += "<span class=\"route\">" + "위더스" + "<span>" + " > " + "</span>" + "혈압/맥박" + "</span>" + "</span>" + "에 기록해주세요.";
-            $('#popUp2').append(Item2);
-            break;
-
-        case 3:
-            $("#layerSelectType").show();
-            $("#dim").show();
-            Item = "<span class=\"bold\">'" + checked  + "'</span>";
-            Item += "<span>으로 목표를 설정하셨군요.</span>";
-            $('#popUp1').append(Item);
-            Item2 = "<span>매일 정해진 시간에 측정한 뒤<br></span>";
-            Item2 += "<span class=\"route\">" + "위더스" + "<span>" + " > " + "</span>" + "체중" + "</span>" + "</span>" + "에 입력해주세요.";
-            $('#popUp2').append(Item2);
-            break;
-
-        case 4:
-            $("#layerSelectType").show();
-            $("#dim").show();
-            Item = "<span class=\"bold\">'" + checked  + "'</span>";
-            Item += "<span>으로 목표를 설정하셨군요.</span>";
-            $('#popUp1').append(Item);
-            Item2 = "<span>하루동안 증상이 있었는지 생각하며<br></span>";
-            Item2 += "<span class=\"route\">" + "위더스" + "<span>" + " > " + "</span>" + "증상일지" + "</span>" + "</span>" + "에 입력해주세요.";
-            $('#popUp2').append(Item2);
-            break;
-
-        case 5:
-            $("#layerSelectType").show();
-            $("#dim").show();
-            Item = "<span class=\"bold\">'" + checked  + "'</span>";
-            Item += "<span>으로 목표를 설정하셨군요.</span>";
-            $('#popUp1').append(Item);
-            Item2 = "<span>하루동안 증상이 있었는지 생각하며<br>매일</span>";
-            Item2 += "<span class=\"route\">" + "위더스" + "<span>" + " > " + "</span>" + "증상일지" + "</span>" + "</span>" + "에 입력해주세요.";
-            $('#popUp2').append(Item2);
-            break;
-
-        case 6:
-            $("#layerSelectType").show();
-            $("#dim").show();
-            Item = "<span class=\"bold\">'" + checked  + "'</span>";
-            Item += "<span>으로 목표를 설정하셨군요.</span>";
-            $('#popUp1').append(Item);
-            Item2 = "<span>식사 시 염도계로 음식의 소금양을 측정하고<br></span>";
-            Item2 += "<span class=\"route\">" + "위더스" + "<span>" + " > " + "</span>" + "염분/수분" + "</span>" + "</span>" + "에 입력해주세요.";
-            $('#popUp2').append(Item2);
-            break;
-
-        case 7:
-            $("#layerSelectType").show();
-            $("#dim").show();
-            Item = "<span class=\"bold\">'" + checked  + "'</span>";
-            Item += "<span>으로 목표를 설정하셨군요.</span>";
-            $('#popUp1').append(Item);
-            Item2 = "<span>매일 식사 시 염도계로 음식의 소금양을 측정하고<br></span>";
-            Item2 += "<span class=\"route\">" + "위더스" + "<span>" + " > " + "</span>" + "염분/수분" + "</span>" + "</span>" + "에 입력해주세요.";
-            $('#popUp2').append(Item2);
-            break;
-
-        case 8:
-            $("#layerSelectType").show();
-            $("#dim").show();
-            Item = "<span class=\"bold\">'" + checked  + "'</span>";
-            Item += "<span>으로 목표를 설정하셨군요.</span>";
-            $('#popUp1').append(Item);
-            Item2 = "<span>운동한 후</span>";
-            Item2 += "<span class=\"route\">" + "위더스" + "<span>" + " > " + "</span>" + "운동" + "</span>" + "</span>" + "에 입력해주세요.";
-            $('#popUp2').append(Item2);
-            break;
-
-        case 9:
-            $("#layerSelectType").show();
-            $("#dim").show();
-            Item = "<span class=\"bold\">'" + checked  + "'</span>";
-            Item += "<span>으로 목표를 설정하셨군요.</span>";
-            $('#popUp1').append(Item);
-            Item2 = "<span>운동한 후</span>";
-            Item2 += "<span class=\"route\">" + "위더스" + "<span>" + " > " + "</span>" + "운동" + "</span>" + "</span>" + "에 입력해주세요.";
-            $('#popUp2').append(Item2);
-            break;
-
+        if (category === "top") {
+            var index = checkedTop.indexOf(value);
+            if (index > -1) {
+                checkedTop.splice(index, 1);
+                checked.splice(index, 1);
+            }
+        } else if (category === "middle") {
+            var index = checkedMiddle.indexOf(value);
+            if (index > -1) {
+                checkedMiddle.splice(index, 1);
+                checked.splice(index, 1);
+            }
+        } else if (category === "bottom") {
+            var index = checkedBottom.indexOf(value);
+            // console.log("6")
+            if (index > -1) {
+                checkedBottom.splice(index, 1);
+                checked.splice(index, 1);
+            }
+        }
     }
 
+    function handleButtonClick() {
+
+        //console.log("b")
+        var category = this.getAttribute("data-category");
+        // console.log("5",category)
+        var value = this.value;
+
+
+
+
+        //기존에 선택되어 있는 것
+        var buttons = document.querySelectorAll(".rdo-box.checked");
+        buttons.forEach(function(button) {
+            var value0 = button.querySelector('input[name="check_radio"]').value;
+            var category0 = button.querySelector('input[name="check_radio"]').getAttribute("data-category");;
+            if (button.checked) {
+                updateCheckedArray(category0, value0);
+            }
+            console.log("c", value0);
+            console.log("c", category0);
+        });
+
+
+
+        if (this.checked) {
+            updateCheckedArray(category, value);
+            //  console.log("c",value)
+            //   console.log("c",category)
+            this.parentNode.parentNode.classList.add("checked");
+        } else {
+            deselectButton(this);
+            //  console.log("d")
+        }
+
+        var topDisabled = checkedTop.length >= 3;
+        var middleDisabled = checkedMiddle.length >= 3;
+        var bottomDisabled = checkedBottom.length >= 3;
+
+        for (var j = 0; j < checkButtons.length; j++) {
+            var button = checkButtons[j];
+            var buttonCategory = button.getAttribute("data-category");
+
+            if (buttonCategory === "top") {
+                button.disabled = topDisabled;
+            } else if (buttonCategory === "middle") {
+                button.disabled = middleDisabled;
+            } else if (buttonCategory === "bottom") {
+                button.disabled = bottomDisabled;
+            }
+        }
+
+        var totalSelected = checkedTop.length + checkedMiddle.length + checkedBottom.length;
+
+        if (totalSelected >= 3) {
+            for (var j = 0; j < checkButtons.length; j++) {
+                if (!checkButtons[j].checked) {
+                    checkButtons[j].disabled = true;
+                }
+            }
+        } else {
+            for (var j = 0; j < checkButtons.length; j++) {
+                checkButtons[j].disabled = false;
+            }
+        }
+
+        console.log("Selected Top Goals:", checkedTop);
+        console.log("Selected Middle Goals:", checkedMiddle);
+        console.log("Selected Bottom Goals:", checkedBottom);
+    }
+
+    for (var i = 0; i < checkButtons.length; i++) {
+        checkButtons[i].addEventListener("change", handleButtonClick);
+    }
+
+    // 배열 초기화
+    checked = [];
+}
+
+radioClick();
+
+
+
+
+function onFormSubmission(form) {
+
+    var Item2;
+    var checkedTop = [];
+    var checkedMiddle = [];
+    var checkedBottom = [];
+    //
+    // topGoals = form.querySelector('input[name=check_radio]:checked').value;
+    // middleGoals = form.querySelector('input[name=check_radio]:checked').value;
+    // bottomGoals = form.querySelector('input[name=check_radio]:checked').value;
+
+    var checked = Array.from(document.querySelectorAll("input[name=check_radio]:checked"))
+        .map((button) => button.value);
+    console.log("1",checked)
+
+
+
+    var selectedButtons = document.querySelectorAll(".rdo-box.checked");
+
+    selectedButtons.forEach(function(button) {
+        var value = button.querySelector('input[name="check_radio"]').value;
+        console.log("2",value);
+        var category = button.querySelector('input[name="check_radio"]').getAttribute("data-category");
+        console.log("3",category);
+
+        if (category === "top" && checkedTop.length < 3 && !checkedTop.includes(value)) {
+            checkedTop.push(value);
+            //checked.push(value);
+        } else if (category === "middle" && checkedMiddle.length < 3 && !checkedMiddle.includes(value)) {
+            checkedMiddle.push(value);
+            //checked.push(value);
+        } else if (category === "bottom" && checkedBottom.length < 3 && !checkedBottom.includes(value)) {
+            checkedBottom.push(value);
+            //checked.push(value);
+            console.log("4",checkedBottom);
+        }
+        checkedarray(category)
+    });
+
+    $("#layerSelectType").show();
+    $("#dim").show();
+    //Item[i] = "<span class=\"bold\">'" + checked[i]  + "'</span>";
+    Item = "<span> 목표를 설정하셨군요.</span>";
+    $('#popUp1').append(Item);
+
+
+    function checkedarray(category){
+        checked=[];  //배열초기화
+        if (category === "top"){
+            for (var i = 0; i < checkedTop.length; i++) {
+                checked.push(checkedTop[i]);
+            }
+        }else if(category === "middle"){
+            for (var i = 0; i < checkedMiddle.length; i++) {
+                checked.push(checkedMiddle[i]);
+            }
+        }else if (category === "bottom"){
+            for (var i = 0; i < checkedBottom.length; i++) {
+                checked.push(checkedBottom[i]);
+                console.log("5",checked)
+            }
+        }
+    }
+
+    for (var i = 0; i < checked.length; i++) {
+        Item2 = "<span class=\"bold\">'" + checked[i] + "'</span> <br>";
+        $('#popUp2').append(Item2);
+        console.log("6",Item2);
+    }
+
+
     $("#buttonOk").click(function(){
+
+        const topGoals = checkedTop.join(","); // 배열을 쉼표로 구분된 문자열로 변환
+        const middleGoals = checkedMiddle.join(",");
+        const bottomGoals = checkedBottom.join(",");
+
         const body = {
-            goal: goalNum
+            goal: '2',
+            top_goals: topGoals,
+            middle_goals: middleGoals,
+            bottom_goals: bottomGoals
         };
 
-        const url = '';
+        const url = "/goal1";
         const options = {
             method: "PUT",
             headers: {

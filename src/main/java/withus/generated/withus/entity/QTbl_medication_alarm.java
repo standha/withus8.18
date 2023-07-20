@@ -19,13 +19,9 @@ public class QTbl_medication_alarm extends EntityPathBase<Tbl_medication_alarm> 
 
     public static final QTbl_medication_alarm tbl_medication_alarm = new QTbl_medication_alarm("tbl_medication_alarm");
 
-    public final BooleanPath alarmOnoffDinner = createBoolean("alarmOnoffDinner");
-
-    public final BooleanPath alarmOnoffLunch = createBoolean("alarmOnoffLunch");
-
-    public final BooleanPath alarmOnoffMorning = createBoolean("alarmOnoffMorning");
-
     public final StringPath id = createString("id");
+
+    public final BooleanPath medicationAlarmOnoff = createBoolean("medicationAlarmOnoff");
 
     public final TimePath<java.time.LocalTime> medicationTimeDinner = createTime("medicationTimeDinner", java.time.LocalTime.class);
 
