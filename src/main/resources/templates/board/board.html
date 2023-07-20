@@ -1,6 +1,6 @@
 <!-- 타임리프의 layout:decorate 속성은 템플릿의 레이아웃(부모 템플릿)으로 사용할 템플릿을 설정한다. 속성의 값인 ~{layout}은 layout.html 파일을 의미한다. -->
 <html layout:decorate="~{board/layout}">
-<div layout:fragment="content" class="container my-3 bg-light" style="height: 100%;">
+<div layout:fragment="content" class="container py-3 bg-light" style="height: 95vh;">
     <div class="card mb-3 border-0" style="cursor:pointer;" th:onclick="|location.href='@{/board/rank}'|">
         <div class="row mx-0 mb-3">
             <div class="col border border-2 border-dark rounded-3 me-2 pt-2" style="background-color: #e2f0d9;">

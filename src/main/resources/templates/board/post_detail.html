@@ -133,18 +133,18 @@
     </div>
 <!-- 댓글 입력 폼 -->
     <form th:action="@{|/board/comment/create/${post.id}|}" th:object="${commentForm}" method="post" class="w-100 position-fixed bottom-0 bg-white border-top row p-1 mx-0">
-      <!--    <div th:replace="~{form_errors :: formErrorsFragment}"></div>-->
-      <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
-        <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
-      </div>
+<!--          <div th:replace="~{form_errors :: formErrorsFragment}"></div>-->
+<!--      <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">-->
+<!--        <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />-->
+<!--      </div>-->
       <!-- 로그인 상태가 아닌 경우 textarea 태그에 disabled 속성을 적용하여 입력을 못하게 -->
       <textarea sec:authorize="isAnonymous()" disabled th:field="*{content}" rows="1" class="form-control" placeholder="로그인 해주세요!"></textarea>
       <button sec:authorize="isAnonymous()" th:href="@{/login}" class="btn btn-primary">로그인</button>
       <div class="col-8 px-0">
-        <textarea sec:authorize="isAuthenticated()" th:field="*{content}" rows="1" class="form-control rounded-pill"></textarea>
+        <input id="COMMENT_CONTENT" sec:authorize="isAuthenticated()" th:field="*{content}" rows="1" class="form-control rounded-pill">
       </div>
       <div class="col-2 px-0">
-        <input sec:authorize="isAuthenticated()" type="submit" value="등록" class="btn btn-outline-dark rounded-pill float-end">
+        <button id="COMMENT_SUBMIT" sec:authorize="isAuthenticated()" type="submit" class="btn btn-outline-dark rounded-pill float-end">등록</button>
       </div>
       <div class="col-2 px-0">
         <a th:href="@{/board}">
@@ -154,4 +154,17 @@
     </form>
   </div>
 </div>
+<!--<script>-->
+<!--  const commentContent = document.querySelector('#COMMENT_CONTENT');-->
+<!--  const commentSubmit = document.querySelector('#COMMENT_SUBMIT');-->
+
+<!--  commentContent.addEventListener('keyup', activeEvent);-->
+
+<!--  function activeEvent() {-->
+<!--    switch (!(commentContent.value)) {-->
+<!--      case true : commentSubmit.disabled = true; break;-->
+<!--      case false : commentSubmit.disabled = false; break;-->
+<!--    }-->
+<!--  }-->
+<!--</script>-->
 </html>
