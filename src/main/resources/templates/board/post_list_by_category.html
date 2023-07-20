@@ -18,68 +18,63 @@
 <!--    loop.odd - 루프의 홀수번째 순서인 경우 true-->
 <!--    loop.even - 루프의 짝수번째 순서인 경우 true-->
 <!--    loop.current - 현재 대입된 객체 (예: 위의 경우 post과 동일)-->
-    <div th:each="post, loop : ${paging}">
-        <a th:href="@{|/board/post/detail/${post.id}|}" style="text-decoration: none;">
-            <div class="border-bottom border-dark p-2">
-                <div class="row mx-0">
-                    <div class="col px-0" th:if="${post.author != null and nowUser.userId == '위더스'}">
-                        <span th:if="${post.author.type.toString().equals('ADMINISTRATOR')}" class="text-dark fw-bold">관리자</span>
-                        <span th:unless="${post.author.type.toString().equals('ADMINISTRATOR')}" th:text="${post.author.name}" class="text-dark fw-bold"></span>
-                        <span th:if="${post.author.type.toString().equals('PATIENT')}" class="border rounded-pill bg-success text-white text-center" style="font-size: 12px; display: inline-block; width: 60px">환자</span>
-                        <span th:if="${post.author.type.toString().equals('CAREGIVER')}" class="border rounded-pill bg-warning text-white text-center" style="font-size: 12px; display: inline-block; width: 60px">보호자</span>
-                    </div>
-                    <div class="col px-0" th:unless="${post.author != null and nowUser.userId == '위더스'}">
-                        <span th:if="${post.author.type.toString().equals('ADMINISTRATOR')}" class="text-dark fw-bold">관리자</span>
-                        <span th:unless="${post.author.type.toString().equals('ADMINISTRATOR')}" class="text-dark fw-bold">익명</span>
-                        <span th:if="${post.author.type.toString().equals('PATIENT')}" class="border rounded-pill bg-success text-white text-center" style="font-size: 12px; display: inline-block; width: 60px">환자</span>
-                        <span th:if="${post.author.type.toString().equals('CAREGIVER')}" class="border rounded-pill bg-warning text-white text-center" style="font-size: 12px; display: inline-block; width: 60px">보호자</span>
-                    </div>
-                    <!-- #temporals.format(날짜객체, 날짜포맷) - 날짜객체를 날짜포맷에 맞게 변환 -->
-                    <div class="col px-0 text-end text-secondary"
-                         th:text="${#temporals.format(post.createDate, 'MM/dd HH:mm')}">
-                    </div>
+  <div th:each="post, loop : ${paging}">
+    <div th:onclick="|location.href='@{|/board/post/detail/${post.id}}'|">
+      <div class="border-bottom border-dark p-2">
+        <div class="row mx-0">
+          <div class="col px-0" th:if="${post.author != null and nowUser.userId == '위더스'}">
+            <span th:if="${post.author.type.toString().equals('ADMINISTRATOR')}" class="text-dark fw-bold">관리자</span>
+            <span th:unless="${post.author.type.toString().equals('ADMINISTRATOR')}" th:text="${post.author.name}" class="text-dark fw-bold"></span>
+            <span th:if="${post.author.type.toString().equals('PATIENT')}" class="border rounded-pill bg-success text-white text-center" style="font-size: 12px; display: inline-block; width: 60px">환자</span>
+            <span th:if="${post.author.type.toString().equals('CAREGIVER')}" class="border rounded-pill bg-warning text-white text-center" style="font-size: 12px; display: inline-block; width: 60px">보호자</span>
+          </div>
+          <div class="col px-0" th:unless="${post.author != null and nowUser.userId == '위더스'}">
+            <span th:if="${post.author.type.toString().equals('ADMINISTRATOR')}" class="text-dark fw-bold">관리자</span>
+            <span th:unless="${post.author.type.toString().equals('ADMINISTRATOR')}" class="text-dark fw-bold">익명</span>
+            <span th:if="${post.author.type.toString().equals('PATIENT')}" class="border rounded-pill bg-success text-white text-center" style="font-size: 12px; display: inline-block; width: 60px">환자</span>
+            <span th:if="${post.author.type.toString().equals('CAREGIVER')}" class="border rounded-pill bg-warning text-white text-center" style="font-size: 12px; display: inline-block; width: 60px">보호자</span>
+          </div>
+          <!-- #temporals.format(날짜객체, 날짜포맷) - 날짜객체를 날짜포맷에 맞게 변환 -->
+          <div class="col px-0 text-end text-secondary" th:text="${#temporals.format(post.createDate, 'MM/dd HH:mm')}">
+          </div>
+        </div>
+        <div class="row mx-0">
+          <div class="col ps-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" th:text="${post.subject}">
+<!--            댓글수-->
+<!--            <span class="text-danger small ms-2" th:if="${#lists.size(post.commentList) > 0}" th:text="${#lists.size(post.commentList)}"></span>-->
+          </div>
+          <!-- modal -->
+          <button data-bs-toggle="modal" th:attr="data-bs-target=|#alert${post.id}|" class="col-2 p-0 btn btn-sm btn-outline-secondary rounded-pill float-end" style="width: 48px;" sec:authorize="isAuthenticated()" th:if="${post.author != null and #authentication.getPrincipal().getUsername() == post.author.userId or #authentication.getPrincipal().getUsername() == '위더스'}">···</button>
+          <div class="modal fade" th:id="'alert'+${post.id}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+              <div class="modal-content align-items-center">
+                <div class="modal-body text-center">
+                  게시물을 수정하시겠습니까?
                 </div>
-                <div class="row mx-0">
-                    <div class="col px-0">
-                        <a th:text="${post.subject}"></a>
-<!--                        댓글수-->
-<!--                        <span class="text-danger small ms-2"-->
-<!--                              th:if="${#lists.size(post.commentList) > 0}"-->
-<!--                              th:text="${#lists.size(post.commentList)}">-->
-<!--                        </span>-->
-                    </div>
-                    <!-- modal -->
-                    <button data-bs-toggle="modal" th:attr="data-bs-target=|#alert${post.id}|" class="col-2 p-0 modify btn btn-sm btn-outline-secondary rounded-pill float-end" style="width: 48px;" sec:authorize="isAuthenticated()" th:if="${post.author != null and #authentication.getPrincipal().getUsername() == post.author.userId or #authentication.getPrincipal().getUsername() == '위더스'}">···</button>
-                    <div class="modal fade" th:id="'alert'+${post.id}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-sm">
-                            <div class="modal-content align-items-center">
-                                <div class="modal-body text-center">
-                                    게시물을 수정하시겠습니까?
-                                </div>
-                                <div class="row border-top w-100">
-                                    <div class="col px-0 py-2 text-center">
-                                        <a th:href="@{|/board/post/modify/${post.id}|}" style="text-decoration: none;">
-                                            <div class="text-dark">
-                                                수정
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col px-0 py-2 text-center" style="background-color: #0ddf6a; max-width: 50%; border-bottom-right-radius: 8px;">
-                                        <a th:href="@{|/board/post/delete/${post.id}|}" style="text-decoration: none;">
-                                            <div class="text-white">
-                                                삭제
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- modal end -->
+                <div class="row border-top w-100">
+                  <div class="col px-0 py-2 text-center">
+                    <a th:href="@{|/board/post/modify/${post.id}|}" style="text-decoration: none;">
+                      <div class="text-dark">
+                        수정
+                      </div>
+                    </a>
+                  </div>
+                  <div class="col px-0 py-2 text-center" style="background-color: #0ddf6a; max-width: 50%; border-bottom-right-radius: 8px;">
+                    <a th:href="@{|/board/post/delete/${post.id}|}" style="text-decoration: none;">
+                      <div class="text-white">
+                        삭제
+                      </div>
+                    </a>
+                  </div>
                 </div>
+              </div>
             </div>
-        </a>
+          </div>
+          <!-- modal end -->
+        </div>
+      </div>
     </div>
+  </div>
   <!-- 페이징 처리 -->
   <div th:if="${!paging.isEmpty()}">
     <ul class="pagination justify-content-center mt-4">
