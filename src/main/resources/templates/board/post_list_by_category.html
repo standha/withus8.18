@@ -19,7 +19,7 @@
 <!--    loop.even - 루프의 짝수번째 순서인 경우 true-->
 <!--    loop.current - 현재 대입된 객체 (예: 위의 경우 post과 동일)-->
   <div th:each="post, loop : ${paging}">
-    <div th:onclick="|location.href='@{|/board/post/detail/${post.id}}'|">
+    <div>
       <div class="border-bottom border-dark p-2">
         <div class="row mx-0">
           <div class="col px-0" th:if="${post.author != null and nowUser.userId == '위더스'}">
@@ -39,12 +39,12 @@
           </div>
         </div>
         <div class="row mx-0">
-          <div class="col ps-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" th:text="${post.subject}">
+          <div class="col ps-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" th:onclick="|location.href='@{|/board/post/detail/${post.id}|}'|" th:text="${post.subject}">
 <!--            댓글수-->
 <!--            <span class="text-danger small ms-2" th:if="${#lists.size(post.commentList) > 0}" th:text="${#lists.size(post.commentList)}"></span>-->
           </div>
           <!-- modal -->
-          <button data-bs-toggle="modal" th:attr="data-bs-target=|#alert${post.id}|" class="col-2 p-0 btn btn-sm btn-outline-secondary rounded-pill float-end" style="width: 48px;" sec:authorize="isAuthenticated()" th:if="${post.author != null and #authentication.getPrincipal().getUsername() == post.author.userId or #authentication.getPrincipal().getUsername() == '위더스'}">···</button>
+          <a type="button" id="INDEX" class="col-2 p-0 btn btn-sm btn-outline-secondary rounded-pill float-end" style="width: 48px;" data-bs-toggle="modal" th:attr="data-bs-target=|#alert${post.id}|" sec:authorize="isAuthenticated()" th:if="${post.author != null and #authentication.getPrincipal().getUsername() == post.author.userId or #authentication.getPrincipal().getUsername() == '위더스'}">···</a>
           <div class="modal fade" th:id="'alert'+${post.id}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-sm">
               <div class="modal-content align-items-center">
@@ -118,6 +118,11 @@
     //         }
     //     });
     // });
+    $(function() {
+      $("#INDEX").click(function (event) {
+        event.stopPropagation();
+      });
+    });
     const page_elements = document.getElementsByClassName("page-link");
     Array.from(page_elements).forEach(function(element) {
         element.addEventListener('click', function() {
