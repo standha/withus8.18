@@ -150,11 +150,11 @@ public class UserService implements UserDetailsService {
 
             outPatientVisitAlarmRepository.save(tbl_outpatient_visit_alarm);
 
-            Tbl_goal tbl_goal = Tbl_goal.builder()
-                    .goalId(saved.getUserId())
-                    .goal(0)
-                    //.goal(Integer.toString(0))
-                    .build();
+//            Tbl_goal tbl_goal = Tbl_goal.builder()
+//                    .goalId(saved.getUserId())
+//                    .goal(0)
+//                    //.goal(Integer.toString(0))
+//                    .build();
 
             goalRepositroy.save(tbl_goal);
 
