@@ -41,8 +41,6 @@ function popup(symptomsum){
         Item2 =  "<span> 보호자에게 증상일지를 알릴까요? </span>";
         $('#popUp2').append(Item2);
     }
-
-
 }
 //저장 클릭시 팝업창 출력
 function popuppop(symptomsum){
