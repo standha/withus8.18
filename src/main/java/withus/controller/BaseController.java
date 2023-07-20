@@ -36,10 +36,6 @@ public class BaseController {
         return userService.getUserByIdAndDate(getUsername());
     }
 
-/*
-    protected User getUserByHeight() {
-        return userService.getUserByHeight(getUser().getHeight());
-    }*/
 
     protected String getPatientContact() {
         return getUser().getContact();

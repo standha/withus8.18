@@ -53,7 +53,7 @@ public class SymptomController extends BaseController {
                     , user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek(), symptom.getTired(), symptom.getAnkle(), symptom.getOutofbreath(), symptom.getCough(), symptom.getText());
         }
         if (user.getType() == User.Type.PATIENT) {
-            Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
         modelAndView.addObject("week", user.getWeek());
@@ -77,7 +77,7 @@ public class SymptomController extends BaseController {
         modelAndView.addObject("previousUrl", "/symptom");
 
         if (user.getType() == User.Type.PATIENT) {
-            Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
 

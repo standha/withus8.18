@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
 import withus.entity.ProgressKey;
-import withus.entity.Tbl_button_count;
+import withus.entity.Tbl_patient_main_button_count;
 import withus.entity.User;
 import withus.exception.UnexpectedEnumValueException;
 import withus.service.CountService;
@@ -42,14 +42,14 @@ public class UserInfoController extends BaseController {
         ModelAndView modelAndView = new ModelAndView("changeInfo");
         User user = getUser();
         if (user.getType() == User.Type.PATIENT && user.getCaregiver() != null) {
-            Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
             modelAndView.addObject("caregiver_contact", user.getCaregiver().getContact());
 
             logger.info("id:{}, url:{}, type:{}, level:{}, week:{}, gender:{}, name:{}, contact:{}, caregiver_contact:{}, birthdate:{}, height:{}"
                     , user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek(), user.getGender(), user.getName(), user.getContact(), user.getCaregiver().getContact(), user.getBirthdate(), user.getHeight());
         } else if (user.getType() == User.Type.PATIENT && user.getCaregiver() == null) {
-            Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
             modelAndView.addObject("caregiver_contact", null);
 

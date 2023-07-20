@@ -10,8 +10,8 @@ import withus.repository.OutPatientVisitAlarmRepository;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AlarmService {
@@ -39,7 +39,10 @@ public class AlarmService {
         found.setMedicationTimeMorning(tbl_medication_alarm.getMedicationTimeMorning());
         found.setMedicationTimeLunch(tbl_medication_alarm.getMedicationTimeLunch());
         found.setMedicationTimeDinner(tbl_medication_alarm.getMedicationTimeDinner());
-        found.setMedicationAlarmOnoff(tbl_medication_alarm.isMedicationAlarmOnoff());
+
+        found.setAlarmOnoffMorning(tbl_medication_alarm.isAlarmOnoffMorning());
+        found.setAlarmOnoffLunch(tbl_medication_alarm.isAlarmOnoffLunch());
+        found.setAlarmOnoffDinner(tbl_medication_alarm.isAlarmOnoffDinner());
 
         Tbl_medication_alarm saved = medicationAlarmRepository.save(tbl_medication_alarm);
 
@@ -56,10 +59,11 @@ public class AlarmService {
         return outPatientVisitAlarmRepository.save(found);
     }
 
-    @Nullable
-    public List<Tbl_medication_alarm> getPillAlarmOn() {
-        return medicationAlarmRepository.findByMedicationAlarmOnoffIsTrue();
-    }
+//
+//    @Nullable
+//    public List<Tbl_medication_alarm> getPillAlarmOn() {
+//        return medicationAlarmRepository.findByMedicationAlarmOnoffIsTrue();
+//    }
 
     @Nullable
     public List<Tbl_outpatient_visit_alarm> getVisitAlarmOn() {

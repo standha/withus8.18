@@ -31,35 +31,35 @@
     <header th:replace="Admin/admin_infoHeader :: headerFragment"></header>
     <div class="container" id="content">
         <ul class="main-icon2">
-            <a th:href="@{/admin_pillRecord/{userId}(userId=${patient.userId})}">
+            <a th:href="@{/admin_pillRecord/{userId}(userId=${info.userId})}">
                 <span class="ico-drug"></span>
                 <span>복약 기록</span>
             </a>
-            <a th:href="@{/admin_blood_pressure/{userId}(userId=${patient.userId})}">
+            <a th:href="@{/admin_blood_pressure/{userId}(userId=${info.userId})}">
                 <span class="ico-blood-l"></span>
                 <span>혈압/맥박</span>
             </a>
-            <a th:href="@{/admin_exerciseRecord/{userId}(userId=${patient.userId})}">
+            <a th:href="@{/admin_exerciseRecord/{userId}(userId=${info.userId})}">
                 <span class="ico-exercise-l"></span>
                 <span>운동</span>
             </a>
-             <a th:href="@{/admin_natriumRecord/{userId}(userId=${patient.userId})}">
+             <a th:href="@{/admin_natriumRecord/{userId}(userId=${info.userId})}" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
                 <span class="ico-salt"></span>
                 <span>저염식이</span>
             </a>
-            <a th:href="@{/admin_moistureRecord/{userId}(userId=${patient.userId})}">
+            <a th:href="@{/admin_moistureRecord/{userId}(userId=${info.userId})}" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
                 <span class="ico-water2"></span>
                 <span>수분섭취</span>
             </a>
-            <a th:href="@{/admin_weightRecord/{userId}(userId=${patient.userId})}">
+            <a th:href="@{/admin_weightRecord/{userId}(userId=${info.userId})}">
                 <span class="ico-weight-l"></span>
                 <span>체중</span>
             </a>
-            <a th:href="@{/admin_symptomRecord/{userId}(userId=${patient.userId})}">
+            <a th:href="@{/admin_symptomRecord/{userId}(userId=${info.userId})}" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
                 <span class="ico-list"></span>
                 <span>증상 일지</span>
             </a>
-            <a th:href="@{/admin_button_count/{userId}(userId=${patient.userId})}">
+            <a th:href="@{/admin_button_count/{userId}(userId=${info.userId})}">
                 <span class="button-click"></span>
                 <span>버튼 클릭 수</span>
             </a>

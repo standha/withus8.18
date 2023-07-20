@@ -6,26 +6,23 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
-import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.security.web.header.Header;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
 import withus.dto.*;
+import withus.dto.HeaderInfoDTO;
 import withus.dto.HelpRequest.CaregiverHelpRequestDTO;
 import withus.dto.HelpRequest.PatientHelpRequestDTO;
+import withus.dto.wwithus.*;
 import withus.entity.*;
 import withus.service.*;
 
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +44,52 @@ public class AdminHomeController extends withus.controller.BaseController {
         this.countService = countService;
     }
 
+    @GetMapping("/admin_home/patient")
+    public ModelAndView viewHome(){
+        User user = getUser();
+        if (user.getType() != User.Type.ADMINISTRATOR) {
+            throw new IllegalStateException(user.getUserId() + " is not Admin");
+        }
+
+        ArrayList<String> userFin = userService.getAllUserPlz();
+        List<AllUserDTO> resultList = new ArrayList<>();
+        ModelAndView mav = new ModelAndView();
+
+        if (userFin != null) {
+            // userFin.forEach((s)-> resultList.add(AllUserDTO.fromString(s)));
+            for (String aUserFin : userFin) {
+                resultList.add(AllUserDTO.fromString(aUserFin));
+            }
+        }
+        mav.addObject("type","PATIENT");
+        mav.addObject("user", resultList);
+        mav.setViewName("Admin/admin_home");
+        return mav;
+    }
+    @GetMapping("/admin_home/caregiver")
+    public ModelAndView viewCaregiverHome(){
+        User user = getUser();
+        if (user.getType() != User.Type.ADMINISTRATOR) {
+            throw new IllegalStateException(user.getUserId() + " is not Admin");
+        }
+
+        List<AllUserDTO> resultList = new ArrayList<>();
+
+        ArrayList<String> userFin = userService.getAllUserCaregiver();
+
+        ModelAndView mav = new ModelAndView();
+
+        if (userFin != null) {
+            // userFin.forEach((s)-> resultList.add(AllUserDTO.fromString(s)));
+            for (String aUserFin : userFin) {
+                resultList.add(AllUserDTO.fromString(aUserFin));
+            }
+        }
+        mav.addObject("type","CAREGIVER");
+        mav.addObject("user", resultList);
+        mav.setViewName("Admin/admin_home");
+        return mav;
+    }
     @GetMapping("/user/{userId}")
     public ModelAndView viewPatient(@PathVariable("userId") String userId) {
         // @pathVariable, @ParameterValue, @Header
@@ -57,8 +100,11 @@ public class AdminHomeController extends withus.controller.BaseController {
 
         ModelAndView mav = new ModelAndView();
         HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
-        mav.addObject("patient", headerInfo);
+        mav.addObject("info", headerInfo);
+        User.Type type = adminService.getTypeInfo(userId);
 
+
+        mav.addObject("type", type);
         List<HelpRequestDTO> helpRequestAsc = adminService.getHelpRequestAsc();
 
         mav.setViewName("Admin/admin_center");
@@ -68,7 +114,36 @@ public class AdminHomeController extends withus.controller.BaseController {
 
         return mav;
     }
+    @GetMapping("/admin_dashboard")
+    public ModelAndView viewDashboard() {
+        User user = getUser();
+        if (user.getType() != User.Type.ADMINISTRATOR) {
+            throw new IllegalStateException(user.getUserId() + " is not Admin");
+        }
 
+
+        ModelAndView mav = new ModelAndView();
+        List<UserGenderCountDTO> userGenderCountInfo = adminService.getUserGenderCountInfo();
+        List<UserAgeCountDTO> userAgeCountInfo = adminService.getUserAgeCountInfo();
+        List<UserRegisterCountDTO> userRegisterCountInfo = adminService.getUserRegisterCountInfo();
+        List<UserWeekCountDTO> userWeekCountInfo = adminService.getUserWeekCountInfo();
+        List<UserRelativeCountDTO> userRelativeCountInfo = adminService.getUserRelativeCountInfo();
+        List<CaregiverButtonSumDTO> caregiverButtonSumInfo = adminService.getCaregiverButtonSumInfo();
+        List<PatientButtonSumDTO> patientButtonSumInfo = adminService.getPatientButtonSumInfo();
+
+        mav.addObject("admin", user.getUserId());
+        mav.addObject("userGenderCountList",userGenderCountInfo);
+        mav.addObject("userAgeCountList",userAgeCountInfo);
+        mav.addObject("userRegisterCountList",userRegisterCountInfo);
+        mav.addObject("userWeekCountList",userWeekCountInfo);
+        mav.addObject("userRelativeCountList",userRelativeCountInfo);
+        mav.addObject("caregiverButtonSumList",caregiverButtonSumInfo);
+        mav.addObject("patientButtonSumList",patientButtonSumInfo);
+
+        mav.setViewName("Admin/admin_dashboard");
+
+        return mav;
+    }
     @GetMapping("/admin_moistureRecord/{userId}")
     public ModelAndView adminMoistureRecord(@PathVariable("userId") String userId) {
         User user = getUser();
@@ -81,10 +156,12 @@ public class AdminHomeController extends withus.controller.BaseController {
 
         List<MoistureAvgDTO> moistureAvg = adminService.getMoistureAvg(userId) == null ? null : adminService.getMoistureAvg(userId);
         List<Tbl_mositrue_record> moistureAsc = adminService.getMoistureAsc(userId) == null ? null : adminService.getMoistureAsc(userId);
+        User.Type type = adminService.getTypeInfo(userId);
 
+        mav.addObject("type", type);
         mav.addObject("weekAsc", moistureAsc);
         mav.addObject("weekAvg", moistureAvg);
-        mav.addObject("patient", headerInfo);
+        mav.addObject("info", headerInfo);
         mav.setViewName("Admin/admin_moistureRecord");
 
         logger.info("user try to access admin_moistureRecord id:{}, PatientId:{})", user.getUserId(),
@@ -105,8 +182,10 @@ public class AdminHomeController extends withus.controller.BaseController {
 
         List<Tbl_symptom_log> symptom = adminService.getSymptom(userId) == null ? null : adminService.getSymptom(userId);
         List<SymptomAvgDTO> symptomAvg = adminService.getSymptomAvg(userId) == null ? null : adminService.getSymptomAvg(userId);
+        User.Type type = adminService.getTypeInfo(userId);
 
-        modelAndView.addObject("patient", headerInfo);
+        modelAndView.addObject("type", type);
+        modelAndView.addObject("info", headerInfo);
         modelAndView.addObject("symptom", symptom);
         modelAndView.addObject("symptomAvg", symptomAvg);
         modelAndView.setViewName("Admin/admin_symptomRecord");
@@ -129,8 +208,10 @@ public class AdminHomeController extends withus.controller.BaseController {
         HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
         List<Tbl_Exercise_record> exercise = adminService.getExercise(userId);
         List<ExerciseDTO> exerciseAvg = adminService.getExerciseAvg(userId);
+        User.Type type = adminService.getTypeInfo(userId);
 
-        modelAndView.addObject("patient", headerInfo);
+        modelAndView.addObject("type", type);
+        modelAndView.addObject("info", headerInfo);
         modelAndView.addObject("exercise", exercise);
         modelAndView.addObject("exerciseAvg", exerciseAvg);
         modelAndView.setViewName("Admin/admin_exerciseRecord");
@@ -152,7 +233,9 @@ public class AdminHomeController extends withus.controller.BaseController {
         HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
         List<PillSumDTO> pillSum = adminService.getPillSum(userId);
         List<Tbl_medication_record> pillAsc = adminService.getPillAsc(userId);
+        User.Type type = adminService.getTypeInfo(userId);
 
+        mav.addObject("type",type);
         mav.addObject("pillSum", pillSum);
         mav.addObject("patient", headerInfo);
         mav.addObject("pillAsc", pillAsc);
@@ -227,9 +310,11 @@ public class AdminHomeController extends withus.controller.BaseController {
         ModelAndView modelAndView = new ModelAndView();
         List<Tbl_blood_pressure_pulse> blood_pressure_pulseList = adminService.getBloodPressure(userId);
         HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
+        User.Type type = adminService.getTypeInfo(userId);
 
+        modelAndView.addObject("type", type);
         modelAndView.addObject("blood_pressure_pulseList", blood_pressure_pulseList);
-        modelAndView.addObject("patient", headerInfo);
+        modelAndView.addObject("info", headerInfo);
         modelAndView.setViewName("Admin/admin_bloodPressure");
 
         logger.info("user try to access admin_bloodPressure  id:{}, PatientId:{})", user.getUserId(), userId);
@@ -247,8 +332,10 @@ public class AdminHomeController extends withus.controller.BaseController {
         HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
         List<NatriumCountDTO> natriumCountListSum = adminService.getNatriumCountWeek(userId);
         List<Tbl_natrium_record> natriumAsc = adminService.getNatriumAsc(userId);
+        User.Type type = adminService.getTypeInfo(userId);
 
-        mav.addObject("patient", headerInfo);
+        mav.addObject("type", type);
+        mav.addObject("info", headerInfo);
         mav.addObject("natriumCountListSumLists", natriumCountListSum);
         mav.addObject("natriumAsc", natriumAsc);
         mav.setViewName("Admin/admin_natriumRecord");
@@ -269,10 +356,12 @@ public class AdminHomeController extends withus.controller.BaseController {
         HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
         List<WeightAvgDTO> weightAvg = adminService.getWeightAvg(userId);
         List<Tbl_weight> weightAsc = adminService.getWeightAsc(userId);
+        User.Type type = adminService.getTypeInfo(userId);
 
         mav.addObject("weekAsc", weightAsc);
         mav.addObject("weekAvg", weightAvg);
-        mav.addObject("patient", headerInfo);
+        mav.addObject("info", headerInfo);
+        mav.addObject("type", type);
 
         logger.info("user try to access admin_weightRecord  id:{}, PatientId:{})", user.getUserId(), userId);
 
@@ -287,15 +376,27 @@ public class AdminHomeController extends withus.controller.BaseController {
         if (user.getType() != User.Type.ADMINISTRATOR) {
             throw new IllegalStateException(user.getUserId() + " is not Admin");
         }
-
         HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
         ModelAndView modelAndView = new ModelAndView("Admin/admin_button_count");
-        List<Tbl_button_count> counts = adminService.getButtonCountAsc(userId);
+        User.Type type = adminService.getTypeInfo(userId);
+        modelAndView.addObject("type", type);
+        modelAndView.addObject("info", headerInfo);
+        if(type == User.Type.PATIENT){
 
-        modelAndView.addObject("counts", counts);
-        modelAndView.addObject("patient", headerInfo);
-        List<ButtonCountSumDTO> countSum = adminService.getButtonCount(userId);
-        modelAndView.addObject("countSum", countSum);
+            List<Tbl_patient_main_button_count> counts = adminService.getPatientMainButtonCountAsc(userId);
+            modelAndView.addObject("counts", counts);
+
+            List<PatientMainButtonCountSumDTO> countSum = adminService.getPatientMainButtonCount(userId);
+            modelAndView.addObject("countSum", countSum);
+
+        } else {
+            List<Tbl_caregiver_main_button_count> counts = adminService.getCaregiverMainButtonCountAsc(userId);
+            modelAndView.addObject("counts", counts);
+
+            List<CaregiverMainButtonCountSumDTO> countSum = adminService.getCaregiverMainButtonCount(userId);
+            modelAndView.addObject("countSum", countSum);
+        }
+
 
         logger.info("user try to access admin_button_count  id:{}, PatientId:{})", user.getUserId(),
                 userId);

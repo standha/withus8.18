@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication
 @EnableWebMvc
-@EnableJpaRepositories(basePackages = "withus.repository")
+@EnableJpaRepositories(basePackages = "withus")
 @EnableScheduling
 public class WithusApplication {
     public static void main(String[] args) {

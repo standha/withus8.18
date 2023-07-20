@@ -28,6 +28,8 @@ public class QTbl_Exercise_record extends EntityPathBase<Tbl_Exercise_record> {
 
     public final QRecordKey pk;
 
+    public final NumberPath<Integer> sport = createNumber("sport", Integer.class);
+
     public final NumberPath<Integer> week = createNumber("week", Integer.class);
 
     public QTbl_Exercise_record(String variable) {

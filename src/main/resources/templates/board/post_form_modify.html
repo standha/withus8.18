@@ -1,0 +1,55 @@
+<html layout:decorate="~{board/layout}">
+<div layout:fragment="content" class="container px-0">
+    <h5 class="my-3 border-bottom pb-2 text-center">글 수정</h5>
+    <form th:action="@{|/board/post/modify/${post.id}|}" th:object="${postForm}" method="post">
+        <div>
+            <select th:field="*{category}" class="form-select rounded-0 border-start-0 border-end-0">
+                <option value="">카테고리를선택해주세요</option> <!--선택안한 비어있는값-->
+                <option sec:authorize="hasRole('ROLE_ADMIN')" value="공지사항">공지사항</option>
+                <option value="질문게시판">질문게시판</option>
+                <option value="나눔게시판">나눔게시판</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="subject" class="form-lable px-2">제목</label>
+            <input type="text" th:field="*{subject}" class="form-control rounded-0 border-start-0 border-end-0">
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label"></label>
+            <textarea th:field="*{content}" class="form-control rounded-0 border-start-0 border-end-0" rows="16"></textarea>
+        </div>
+        <div class="text-center">
+          <input type="submit" value="저장" class="btn btn-warning rounded-pill">
+        </div>
+    </form>
+  <a data-bs-toggle="modal" data-bs-target="#alert" class="position-fixed bottom-0 end-0 p-2" style="width: 48px;">
+    <img th:src="@{/images/board/123.다이애딕_환자용_게시판_명예의전당_아이콘11.png}" class="img-fluid float-end" style="max-height: 38px;">
+  </a>
+  <div class="modal fade" th:id="alert" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content align-items-center">
+        <div class="modal-body text-center">
+          글쓰기를 종료하시겠습니까?
+        </div>
+        <div class="row border-top w-100">
+          <div class="col px-0 py-2 text-center">
+            <a style="text-decoration: none;" data-bs-dismiss="modal">
+              <div class="text-dark">
+                취소
+              </div>
+            </a>
+          </div>
+          <div class="col px-0 py-2 text-center" style="background-color: #0ddf6a; max-width: 50%; border-bottom-right-radius: 8px;">
+            <a th:href="@{|/board/post/detail/${post.id}|}" style="text-decoration: none;">
+              <div class="text-white">
+                확인
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- modal end -->
+</div>
+</html>

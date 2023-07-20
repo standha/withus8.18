@@ -13,8 +13,8 @@ import javax.persistence.Table;
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Setter
 @Getter
-@Table(name = "tbl_button_count")
-public class Tbl_button_count {
+@Table(name = "tbl_patient_main_button_count")
+public class Tbl_patient_main_button_count {
     @EmbeddedId
     private ProgressKey key;
 
@@ -24,8 +24,17 @@ public class Tbl_button_count {
     @Column(name = "level")
     private Integer level;
 
-    @Column(name = "alarm")
-    private Integer alarm;
+    @Column(name = "withusRang")
+    private Integer withusRang;
+
+    @Column(name = "diseaseInfo")
+    private Integer diseaseInfo;
+
+    @Column(name = "helper")
+    private Integer helper;
+
+    @Column(name ="medicine")
+    private Integer medicine;
 
     @Column(name = "bloodPressure")
     private Integer bloodPressure;
@@ -33,21 +42,24 @@ public class Tbl_button_count {
     @Column(name = "exercise")
     private Integer exercise;
 
+    @Column(name = "symptom")
+    private Integer symptom;
+
     @Column(name = "natriumMoisture")
     private Integer natriumMoisture;
 
     @Column(name = "weight")
     private Integer weight;
 
-    @Column(name = "symptom")
-    private Integer symptom;
+    @Column(name="mindHealth")
+    private Integer mindHealth;
 
-    @Column(name = "diseaseInfo")
-    private Integer diseaseInfo;
+    @Column(name="board")
+    private Integer board;
 
-    @Column(name = "withusRang")
-    private Integer withusRang;
+    @Column(name = "alarm")
+    private Integer alarm;
 
-    @Column(name = "helper")
-    private Integer helper;
+    @Column(name="infoEdit")
+    private Integer infoEdit;
 }

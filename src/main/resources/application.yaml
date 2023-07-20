@@ -11,9 +11,11 @@ spring:
         max-size: 20
         allow-core-thread-timeout: false
       thread-name-prefix: TNP-
+  thymeleaf:
+    cache: false
 
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/withus?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://192.168.4.26/withus?serverTimezone=Asia/Seoul
     username: withus
     password: withus@12
     driver-class-name: com.mysql.cj.jdbc.Driver

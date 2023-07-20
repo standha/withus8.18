@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
-import withus.dto.wwithus.AllUserDTO;
+import withus.dto.wwithus.*;
 import withus.entity.*;
 import withus.entity.User.Type;
 import withus.service.*;
@@ -24,11 +24,14 @@ public class CenterController extends BaseController {
     private final GoalService goalService;
     private final CountService countService;
 
+    private final AdminService adminService;
+
     @Autowired
-    public CenterController(AuthenticationFacade authenticationFacade, UserService userService, GoalService goalService, CountService countService) {
+    public CenterController(AuthenticationFacade authenticationFacade, UserService userService, GoalService goalService, CountService countService, AdminService adminService) {
         super(userService, authenticationFacade);
         this.goalService = goalService;
         this.countService = countService;
+        this.adminService = adminService;
     }
 
     @GetMapping({"/center"})
@@ -87,25 +90,32 @@ public class CenterController extends BaseController {
                             .build();
                 }
             }
-
+            // todo: 관리자 로그인 페이지 분리
             if (user.getType().equals(Type.ADMINISTRATOR)) {
-                List<AllUserDTO> resultList = new ArrayList<>();
-                ArrayList<String> userFin = userService.getAllUserPlz();
+                List<UserGenderCountDTO> userGenderCountInfo = adminService.getUserGenderCountInfo();
+                List<UserAgeCountDTO> userAgeCountInfo = adminService.getUserAgeCountInfo();
+                List<UserRegisterCountDTO> userRegisterCountInfo = adminService.getUserRegisterCountInfo();
+                List<UserWeekCountDTO> userWeekCountInfo = adminService.getUserWeekCountInfo();
+                List<UserRelativeCountDTO> userRelativeCountInfo = adminService.getUserRelativeCountInfo();
+                List<CaregiverButtonSumDTO> caregiverButtonSumInfo = adminService.getCaregiverButtonSumInfo();
+                List<PatientButtonSumDTO> patientButtonSumInfo = adminService.getPatientButtonSumInfo();
 
-                if (userFin != null) {
-                    // userFin.forEach((s)-> resultList.add(AllUserDTO.fromString(s)));
-                    for (String aUserFin : userFin) {
-                        resultList.add(AllUserDTO.fromString(aUserFin));
-                    }
-                }
+                modelAndView.addObject("admin", user.getUserId());
+                modelAndView.addObject("userGenderCountList",userGenderCountInfo);
+                modelAndView.addObject("userAgeCountList",userAgeCountInfo);
+                modelAndView.addObject("userRegisterCountList",userRegisterCountInfo);
+                modelAndView.addObject("userWeekCountList",userWeekCountInfo);
+                modelAndView.addObject("userRelativeCountList",userRelativeCountInfo);
+                modelAndView.addObject("caregiverButtonSumList",caregiverButtonSumInfo);
+                modelAndView.addObject("patientButtonSumList",patientButtonSumInfo);
 
-                modelAndView.addObject("user", resultList);
-                modelAndView.setViewName("Admin/admin_home");
+                modelAndView.setViewName("Admin/admin_dashboard");
+
             } else if (user.getType().equals(Type.PATIENT)) { //환자 로그인 중
                 if (user.getWeek() == 0) {
                     modelAndView.setViewName("home_0week");
                 } else {
-                    Tbl_button_count count = countService.getCount(new ProgressKey(user.getUserId(), user.getWeek()));
+                    Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
                     modelAndView.setViewName("home");
                     modelAndView.addObject("count", count);
                     modelAndView.addObject("type", user.getType());

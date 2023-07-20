@@ -98,8 +98,22 @@
 				</div>
 				<div class="field">
 					<div class="insert">
-						<label for="input4">생년월일</label>
-						<input style="inline-size: auto; background: white" type="date" name="birthdate" id="input4" placeholder="- -">
+						<span class="label-txt">생년월일</span>
+						<div style="display: flex; height: 50px;">
+							<div style="display: flex; width: 33%; margin-right: 10%;" >
+								<select style="border-radius: 5px;" id="year" name="year" required></select>
+								<div style ="font-size: 21px; padding-left: 7%; line-height : 48px;">년</div>
+							</div>
+							<div style="display: flex; width: 33%; margin-right: 10%;">
+								<select style="border-radius: 5px;" id="month" name="month" required></select>
+								<div style ="font-size: 21px; padding-left: 7%; line-height : 48px;">월</div>
+							</div>
+							<div style="display: flex; width: 33%;">
+								<select style="border-radius: 5px;" id="day" name="day" required></select>
+								<div style ="font-size: 21px; padding-left: 7%; line-height : 48px;">일</div>
+							</div>
+						</div>
+<!--						<input style="inline-size: auto; background: white" type="date" name="birthdate" id="input4" placeholder="- -">-->
 					</div>
 				</div>
 				<div class="field">
@@ -125,14 +139,14 @@
 				<div class="field">
 					<div class="insert">
 						<label for="input5">키</label>
-						<input type="text" name="height" id="input5" pattern="\d*" inputmode="numeric" min="0" placeholder="키"/>
+						<input type="text" name="height" id="input5" pattern="\d*" inputmode="numeric" min="0" placeholder="키">
 					</div>
 				</div>
 
 				<div class="field caregiver-only">
 					<div class="insert">
 						<label>환자와의 관계</label>
-						<select name="relative" id="relativeSelect" >
+						<select style="border-radius: 5px; height:50px;" name="relative" id="relativeSelect" >
 							<option value="none" >관계를 선택하세요</option>
 							<option value="spouse" >배우자</option>
 							<option value="child" >자녀</option>
@@ -177,5 +191,68 @@
 </div>
 <!— wrap —>
 
+<script>
+	doDisplay('PATIENT');
+
+	function resetOptions(selectElement) {
+		selectElement.innerHTML = "";
+	}
+
+	var yearSelect = document.getElementById("year");
+	var currentYear = new Date().getFullYear();
+	for (var i = 1900; i <= currentYear; i++) {
+		var option = document.createElement("option");
+		option.text = i;
+		option.value = i;
+		yearSelect.appendChild(option);
+	}
+
+	// Populate months
+	var monthSelect = document.getElementById("month");
+	for (var j = 1; j <= 12; j++) {
+		var option = document.createElement("option");
+		option.text = j;
+		option.value = j;
+		monthSelect.appendChild(option);
+	}
+
+	// Populate days
+	var daySelect = document.getElementById("day");
+	for (var k = 1; k <= 31; k++) {
+		var option = document.createElement("option");
+		option.text = k;
+		option.value = k;
+		daySelect.appendChild(option);
+	}
+
+	$("#year").on('change', function(){
+		var year = $( '#year' ).val();
+		var month = $( '#month' ).val();
+		var date = new Date(year, month, 0);
+		var lastDate = date.getDate();
+		resetOptions(daySelect);
+		for (var k = 1; k <= lastDate; k++) {
+			var option = document.createElement("option");
+			option.text = k;
+			option.value = k;
+			daySelect.appendChild(option);
+		}
+	});
+	$("#month").on('change', function(){
+		var year = $( '#year' ).val();
+		var month = $( '#month' ).val();
+		var date = new Date(year, month, 0);
+		var lastDate = date.getDate();
+		resetOptions(daySelect);
+		for (var k = 1; k <= lastDate; k++) {
+			var option = document.createElement("option");
+			option.text = k;
+			option.value = k;
+			daySelect.appendChild(option);
+		}
+	});
+
+
+</script>
 </body>
 </html>
