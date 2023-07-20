@@ -243,10 +243,10 @@ span[class*="ico-"], a[class*="ico-"], div[class*="ico-"], button[class*="ico-"]
 .input-textarea textarea {width: 100%; min-height: 150px; line-height: 1.5; padding: 10px; border: 1px solid #ccc; color: #111; font-size: 1rem;}
 .input-textarea input:focus {border: 1px solid #111;}
 
-/* select */
-select {width:150px; padding:.8em .5em;border: 1px solid #999;font-family: inherit;background-color: #aaaaaa; background:url('../images/arrow.jpg') no-repeat 95% 50%; border-radius: 0px; -webkit-appearance: none; -moz-appearance: none; appearance: none; margin:100px auto;}
-/*select {position: relative; width: 100%; padding: 0 10px; height: 1.5; line-height: 1.5; font-size: 0.88rem; color: #333; font-weight: 300; border: 1px solid #ccc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; box-sizing: border-box;}*/
-/*select:focus {border: 1px solid #111;}*/
+select {position: relative; width: 100%; padding: 0 10px; height: 1.5; line-height: 1.5; font-size: 0.88rem; color: #333; font-weight: 300; border: 1px solid #ccc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; box-sizing: border-box;}
+select:focus {border: 1px solid #111;}
+
+#activityDropdown {width:150px; padding:.8em .5em;border: 1px solid #999;font-family: inherit;background-color: #aaaaaa; background:url('../images/arrow.jpg') no-repeat 95% 50%; border-radius: 0px; -webkit-appearance: none; -moz-appearance: none; appearance: none; margin:100px auto;}
 
 /* checkbox */
 .chk-wrap {position: relative; width: 100%; display: flex;}
