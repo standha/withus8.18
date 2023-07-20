@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>위더스</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+  <meta name="format-detection" content="telephone=no">
+  <link th:href="@{/css/reset.css}" rel="stylesheet">
+  <link th:href="@{/css/common.css}" rel="stylesheet">
+  <link th:href="@{/css/layout.css}" rel="stylesheet">
+  <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
+  <script th:src="@{/js/common.js}"></script>
+  <script th:src="@{/js/goal/goal.js}"></script>
+  <script th:src="@{/js/help.js}"></script>
+
+</head>
+<body>
+<input type="hidden" id="button-count" th:attr="value=@{/button-count}">
+<input type="hidden" id="helper-request" th:attr="value=@{/helper-request}">
+<div class="skip-navi">
+  <a href="#content">본문 바로가기</a>
+</div>
+
+<!-- wrap -->
+<div id="wrap" class="list-page">
+
+  <!-- header -->
+  <header>
+    <div class="header-wrap type02" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
+      <div class="head">
+        <div onclick="helperRequest()" >
+          <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+            <span class="ico-call" ></span>
+            <span class="txt-rt">도우미</span>
+          </a>
+        </div>
+        <h2>
+          <span>목표 리스트</span>
+        </h2>
+      </div>
+    </div>
+    <div class="header-wrap type02" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
+      <div class="head">
+        <div onclick="helperRequest()" >
+          <a class="btn xsm type07" href="tel:010-8454-9186">
+            <span class="ico-call" ></span>
+            <span class="txt-rt">도우미</span>
+          </a>
+        </div>
+
+        <h2>
+          <span>목표 리스트</span>
+        </h2>
+      </div>
+    </div>
+  </header>
+
+  <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
+    <input type = 'hidden' name = "symptom"           th:value = "${count.symptom}" style = "display:none">
+    <input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
+    <input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">
+    <input type = 'hidden' name = "disease"           th:value = "${count.diseaseInfo}" style = "display:none">
+    <input type = 'hidden' name = "exercise"          th:value = "${count.exercise}" style = "display:none">
+    <input type = 'hidden' name = "goal"              th:value = "${count.goal}" style = "display:none">
+    <input type = 'hidden' name = "helper"            th:value = "${count.helper}" style = "display:none">
+    <input type = 'hidden' name = "level"             th:value = "${count.level}" style = "display:none">
+    <input type = 'hidden' name = "natriumMoisture"   th:value = "${count.natriumMoisture}" style = "display:none">
+    <input type = 'hidden' name = "weight"            th:value = "${count.weight}" style = "display:none">
+    <input type = 'hidden' name = "withusRang"        th:value = "${count.withusRang}" style = "display:none">
+  </div>
+
+
+  <div class="container" id="content">
+    <div class="cont-wrap">
+
+      <a href="#" class="list-card" th:href="@{/goal1}">
+        <div class="star-ratings">
+          <div class="star-ratings-fill space-x-2 text-lg" >
+            <span>★</span>
+          </div>
+          <div class="star-ratings-base space-x-2 text-lg">
+            <span>★</span><span>★</span><span>★</span>
+          </div>
+        </div>
+        <span class="btn xxlg arrow-type01">난이도 하</span>
+      </a>
+
+<!--      <a href="#" class="list-card" th:href="@{/goal1}">-->
+<!--        <div class="star-ratings">-->
+<!--          <div class="star-ratings-fill space-x-2 text-lg" >-->
+<!--            <img src="/images/common/1.png"  style="width:150px; height:150px;">-->
+<!--          </div>-->
+<!--          <div class="star-ratings-base space-x-2 text-lg">-->
+<!--            <img src="/images/common/star1.png" style="width:300px; height:300px;"><img src="/images/common/star1.png" style="width:300px; height:300px;"><img src="/images/common/star1.png"  style="width:300px; height:300px;">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <span class="btn xxlg arrow-type01">난이도 하</span>-->
+<!--      </a>-->
+
+      <a href="#" class="list-card" th:href="@{/goal2}">
+        <div class="star-ratings">
+          <div class="star-ratings-fill space-x-2 text-lg" >
+            <span>★</span><span>★</span>
+          </div>
+          <div class="star-ratings-base space-x-2 text-lg">
+            <span>★</span><span>★</span><span>★</span>
+          </div>
+        </div>
+        <span class="btn xxlg arrow-type01">난이도 중</span>
+      </a>
+
+      <a href="#" class="list-card" th:href="@{/goal3}">
+        <div class="star-ratings">
+          <div class="star-ratings-fill space-x-2 text-lg" >
+            <span>★</span><span>★</span><span>★</span>
+          </div>
+          <div class="star-ratings-base space-x-2 text-lg">
+            <span>★</span><span>★</span><span>★</span>
+          </div>
+        </div>
+        <span class="btn xxlg arrow-type01">난이도 상</span>
+      </a>
+
+      <a href="#" class="list-card" th:href="@{/goal0}">
+        <div class="star-ratings">
+          <div class="star-ratings-base space-x-2 text-lg">
+            <span class="star1">★</span><span class="star2">★</span><span class="star3">★</span>
+          </div>
+        </div>
+        <span class="btn xxlg arrow-type01">나만의 목표 만들기</span>
+      </a>
+    </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

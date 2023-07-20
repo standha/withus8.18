@@ -25,7 +25,6 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
     public UserRepositorySupport(JPAQueryFactory queryFactory) {
         super(User.class);
         this.queryFactory = queryFactory;
-
     }
 
     public List<MoistureAvgDTO> findMoistureWeek(String userId) {

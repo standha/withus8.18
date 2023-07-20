@@ -25,6 +25,7 @@ public class AllUserDTO {
     private String guserContact;
     private String currentCode;
     private LocalDateTime userRecordDate;
+    private String height;
     private User.Relative relative;
 
     public static AllUserDTO fromString(String queryResult) {

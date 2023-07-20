@@ -1,14 +1,11 @@
 package withus.entity;
 
 import lombok.*;
-import org.springframework.lang.NonNull;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.time.LocalTime;
 
 @Entity
 @Builder(toBuilder = true)
@@ -24,4 +21,13 @@ public class Tbl_goal {
 
     @Column(name = "goal")
     private Integer goal;
+
+    @Column(name = "top_goals", columnDefinition = "VARCHAR(128) NOT NULL", length = 128)
+    private Integer top_goals;
+
+    @Column(name = "middle_goals", columnDefinition = "VARCHAR(128) NOT NULL", length = 128)
+    private Integer middle_goals;
+
+    @Column(name = "bottom_goals", columnDefinition = "VARCHAR(128) NOT NULL", length = 128)
+    private Integer bottom_goals;
 }
