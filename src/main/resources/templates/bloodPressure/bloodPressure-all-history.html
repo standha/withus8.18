@@ -145,6 +145,11 @@
     var bloodRecord = /*[[ ${bloodWeek} ]]*/;
     /*]]*/
 
+    let bloodList = {};
+    let currSlide = 0;
+    let maxSlide = 0;
+    let cycle = "THREE";
+    initializeSlide();
     var date = [];
     var contraction = [];
     var relaxation = [];
@@ -276,27 +281,28 @@
     $('#history-table-data').append(pulse);
     function iconAdd(){
         const contractionTr = document.getElementById('contraction-tr').lastElementChild;
-        const relaxationTr = document.getElementById('relaxation-tr').lastElementChild;
-        const pressureTr = document.getElementById('pressure-tr').lastElementChild;
-
         const contractionSpan = contractionTr.getElementsByTagName('span')[0];
-        const relaxationSpan = relaxationTr.getElementsByTagName('span')[0];
-        const pressureSpan = pressureTr.getElementsByTagName('span')[0];
+
         if(contractionSpan.textContent === ''){
             const imgElement = document.createElement('img');
             imgElement.src = '/images/bloodPressureSubmit.jpg';
             imgElement.alt = 'bloodPressure Page Move';
-            imgElement.style.width = '100%';
 
+            if(cycle ==="THREE"){
+                contractionTr.style.width ='25%';
+                imgElement.style.width = '48%';
+            } else {
+                contractionTr.style.width ='12.5%';
+                imgElement.style.width = '100%';
+            }
             const anchorElement = document.createElement('a');
             anchorElement.href = '/bloodPressure'; // Add your desired link URL
             anchorElement.appendChild(imgElement);
-
-            contractionSpan.style.display = 'inline-block';
             contractionSpan.appendChild(anchorElement);
         }
 
     }
+    iconAdd();
 
 
     if(bloodRecord.length <=3){
@@ -442,6 +448,7 @@
                             borderWidth: 0
                         },
                         box2: {
+
                             type: 'box',
                             xMin: 0,
                             xMax: 6,
@@ -493,9 +500,9 @@
     function bloodListNullCheck(){
         const today = new Date();
         const year  = today.getFullYear();
-        const month = today.getMonth();
+        const month = today.getMonth()+1;
         const day = today.getDate();
-        let pk = {pk:{date:[year,month,day]},contraction:'', relaxation:'', pressure:''};
+        let pk = {pk:{date:[year,month,day]},contraction: null, relaxation: null, pressure: null};
         let bloodTempList = bloodList['bloodList'];
         if(JSON.stringify(bloodTempList[bloodTempList.length -1].pk.date) !== JSON.stringify([year,month,day])){
             bloodList['bloodList'].push(pk);
@@ -503,16 +510,14 @@
     }
     async function initializeSlide() {
         bloodList = await getBloodData(); // 데이터 받아오기
+        bloodListNullCheck();
         currSlide = bloodList['bloodList'].length - 1;
         maxSlide = bloodList['bloodList'].length - 1;
-        bloodListNullCheck();
+
     }
-    let bloodList = {};
-    let currSlide = 0;
-    let maxSlide = 0;
-    initializeSlide();
+
     const slide = document.querySelector(".slide");
-    let cycle = "THREE";
+
 
     let startPoint = 0;
     let endPoint = 0;
@@ -591,6 +596,8 @@
                 const span2 = td2.getElementsByTagName('span')[0];
                 const span3 = td3.getElementsByTagName('span')[0];
                 const span4 = td4.getElementsByTagName('span')[0];
+
+
                 td1.style.fontSize = '0.88rem';
                 td1.style.opacity = 0;
                 span2.style.opacity = 0;
@@ -599,17 +606,20 @@
                 setTimeout(function() {
                     td1.textContent = newWeeks[i];
                     td1.style.opacity = 1;
-                    span2.textContent = newContractions[i];
+                    span2.textContent = newContractions[i] === null ? '' : newContractions[i];
                     span2.style.opacity = 1;
-                    span3.textContent = newRelaxation[i];
+                    span3.textContent = newRelaxation[i] === null ? '' : newRelaxation[i];
                     span3.style.opacity = 1;
-                    span4.textContent = newPressure[i];
+                    span4.textContent = newPressure[i] === null ? '' :  newPressure[i];
                     span4.style.opacity = 1;
+                    if(newWeeks[i] === newWeeks[newWeeks.length - 1]){
+                        iconAdd();
+                    }
                 }, 300);
             }
         } else {
             let sevenBloodData = bloodList['bloodList'].slice(currSlide-6,currSlide+1);
-
+            trContractionElements[2].style.width='12.5%';
             for(var i = 0; i<7; i++){
                 let bloodData = sevenBloodData[i];
                 newContractions.push(bloodData['contraction']);
@@ -628,6 +638,8 @@
                 const span3 = td3.getElementsByTagName('span')[0];
                 const span4 = td4.getElementsByTagName('span')[0];
 
+
+
                 td1.style.fontSize = '0.80rem';
                 td1.style.opacity = 0;
                 span2.style.opacity = 0;
@@ -636,12 +648,15 @@
                 setTimeout(function() {
                     td1.textContent = newWeeks[i];
                     td1.style.opacity = 1;
-                    span2.textContent = newContractions[i];
+                    span2.textContent = newContractions[i] === null ? '' : newContractions[i];
                     span2.style.opacity = 1;
-                    span3.textContent = newRelaxation[i];
+                    span3.textContent = newRelaxation[i] === null ? '' : newRelaxation[i];
                     span3.style.opacity = 1;
-                    span4.textContent = newPressure[i];
+                    span4.textContent = newPressure[i] === null ? '' :  newPressure[i];
                     span4.style.opacity = 1;
+                    if(newWeeks[i] === newWeeks[newWeeks.length - 1]){
+                        iconAdd();
+                    }
                 }, 300);
             }
         }
