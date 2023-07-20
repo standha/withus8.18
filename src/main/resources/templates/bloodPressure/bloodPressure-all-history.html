@@ -192,14 +192,22 @@
         for(i=bloodRecord.length-3; i<bloodRecord.length; i++)
         {
             contractionItem += "<td style='text-align: center;'>";
-            contractionItem += "<span class=\"red\" style='transition: opacity 0.5s;'>" + bloodRecord[i].contraction + "</span>";
+            if(bloodRecord[i].contraction === null){
+                contractionItem += "<span class=\"red\" style='transition: opacity 0.5s;'>" + '' + "</span>";
+            } else {
+                contractionItem += "<span class=\"red\" style='transition: opacity 0.5s;'>" + bloodRecord[i].contraction + "</span>";
+            }
             contractionItem += "</td>";
         }
     } else {
         for(i=0; i<bloodRecord.length; i++)
         {
             contractionItem += "<td style='text-align: center;'>";
-            contractionItem += "<span class=\"red\" style='transition: opacity 0.5s;'>" + bloodRecord[i].contraction + "</span>";
+            if(bloodRecord[i].contraction === null){
+                contractionItem += "<span class=\"red\" style='transition: opacity 0.5s;'>" + '' + "</span>";
+            } else {
+                contractionItem += "<span class=\"red\" style='transition: opacity 0.5s;'>" + bloodRecord[i].contraction + "</span>";
+            }
             contractionItem += "</td>";
         }
     }
@@ -214,14 +222,22 @@
         for(i=bloodRecord.length-3; i<bloodRecord.length; i++)
         {
             relaxationItem += "<td style='text-align: center;'>";
-            relaxationItem += "<span class=\"blue\" style='transition: opacity 0.5s;'>" + bloodRecord[i].relaxation + "</span>";
+            if(bloodRecord[i].relaxation === null){
+                relaxationItem += "<span class=\"blue\" style='transition: opacity 0.5s;'>" + '' + "</span>";
+            } else {
+                relaxationItem += "<span class=\"blue\" style='transition: opacity 0.5s;'>" + bloodRecord[i].relaxation + "</span>";
+            }
             relaxationItem += "</td>";
         }
     } else{
         for(i=0; i<bloodRecord.length; i++)
         {
             relaxationItem += "<td style='text-align: center;'>";
-            relaxationItem += "<span class=\"blue\" style='transition: opacity 0.5s;'>" + bloodRecord[i].relaxation + "</span>";
+            if(bloodRecord[i].relaxation === null){
+                relaxationItem += "<span class=\"blue\" style='transition: opacity 0.5s;'>" + '' + "</span>";
+            } else {
+                relaxationItem += "<span class=\"blue\" style='transition: opacity 0.5s;'>" + bloodRecord[i].relaxation + "</span>";
+            }
             relaxationItem += "</td>";
         }
     }
@@ -236,21 +252,49 @@
         for(i=bloodRecord.length-3; i<bloodRecord.length; i++)
         {
             pulse += "<td style='text-align: center;'>";
-            pulse += "<span class=\"black\" style='transition: opacity 0.5s;'>" + bloodRecord[i].pressure + "</span>";
+            if(bloodRecord[i].pressure === null){
+                pulse += "<span class=\"black\" style='transition: opacity 0.5s;'>" + '' + "</span>";
+            } else {
+                pulse += "<span class=\"black\" style='transition: opacity 0.5s;'>" + bloodRecord[i].pressure + "</span>";
+            }
             pulse += "</td>";
         }
     } else {
         for(i=0; i<bloodRecord.length; i++)
         {
             pulse += "<td style='text-align: center;'>";
-            pulse += "<span class=\"black\" style='transition: opacity 0.5s;'>" + bloodRecord[i].pressure + "</span>";
+            if(bloodRecord[i].pressure === null){
+                pulse += "<span class=\"black\" style='transition: opacity 0.5s;'>" + '' + "</span>";
+            } else {
+                pulse += "<span class=\"black\" style='transition: opacity 0.5s;'>" + bloodRecord[i].pressure + "</span>";
+            }
             pulse += "</td>";
         }
     }
 
     pulse += "</tr>"
     $('#history-table-data').append(pulse);
-    function imageAdd(){
+    function iconAdd(){
+        const contractionTr = document.getElementById('contraction-tr').lastElementChild;
+        const relaxationTr = document.getElementById('relaxation-tr').lastElementChild;
+        const pressureTr = document.getElementById('pressure-tr').lastElementChild;
+
+        const contractionSpan = contractionTr.getElementsByTagName('span')[0];
+        const relaxationSpan = relaxationTr.getElementsByTagName('span')[0];
+        const pressureSpan = pressureTr.getElementsByTagName('span')[0];
+        if(contractionSpan.textContent === ''){
+            const imgElement = document.createElement('img');
+            imgElement.src = '/images/bloodPressureSubmit.jpg';
+            imgElement.alt = 'bloodPressure Page Move';
+            imgElement.style.width = '100%';
+
+            const anchorElement = document.createElement('a');
+            anchorElement.href = '/bloodPressure'; // Add your desired link URL
+            anchorElement.appendChild(imgElement);
+
+            contractionSpan.style.display = 'inline-block';
+            contractionSpan.appendChild(anchorElement);
+        }
 
     }
 
