@@ -70,7 +70,7 @@
 
     <div class="container" id="content">
         <ul class="main-icon">
-            <a th:href="@{/medication}" th:onclick="'addMedication(parseInt(' + ${count.medication} + '))'">
+            <a th:href="@{/medication}" th:onclick="'addMedication(parseInt(' + ${count.medicine} + '))'">
                 <span class="ico-medication"></span>
                 <span>복용약</span>
             </a>
@@ -96,14 +96,14 @@
                 <span>체중</span>
             </a>
 
-            <a th:href="@{/mentalHealth}" th:onclick="'addmentalHealth(parseInt(' + ${count.mentalHealth} + '))'">
+            <a th:href="@{/mentalHealth}" th:onclick="'addmentalHealth(parseInt(' + ${count.mindHealth} + '))'">
                 <span>
                     <img src = "images/common/notice.png" width = "100" height ="100"> <!--마음건강 -->
                 </span>
             </a>
-            <a th:href="@{/noticeBoard}" th:onclick="'addNoticeBoard(parseInt(' + ${count.noticeBoard} + '))'">
+            <a th:href="@{/board}" th:onclick="'addNoticeBoard(parseInt(' + ${count.board} + '))'">
                 <span>
-                    <img src = "images/common/mental.png" width = "100" height ="100"> <!--마음건강 -->
+                    <img src = "images/common/mental.png" width = "100" height ="100"> <!-- 게시판 -->
                 </span>
             </a>
 
@@ -115,9 +115,9 @@
         </ul>
         <div>
             <input type='hidden' name="symptom" th:value="${count.symptom}" style="display:none">
-            <input type='hidden' name="medication" th:value="${count.medication}" style="display:none">
-            <input type='hidden' name="mentalHealth" th:value="${count.mentalHealth}" style="display:none">
-            <input type='hidden' name="noticeBoard" th:value="${count.noticeBoard}" style="display:none">
+            <input type='hidden' name="medication" th:value="${count.medicine}" style="display:none">
+            <input type='hidden' name="mentalHealth" th:value="${count.mindHealth}" style="display:none">
+            <input type='hidden' name="noticeBoard" th:value="${count.board}" style="display:none">
             <input type='hidden' name="alarm" th:value="${count.alarm}" style="display:none">
             <input type='hidden' name="blood" th:value="${count.bloodPressure}" style="display:none">
             <input type='hidden' name="disease" th:value="${count.diseaseInfo}" style="display:none">
