@@ -132,6 +132,9 @@ public class UserService implements UserDetailsService {
         Tbl_goal tbl_goal = Tbl_goal.builder()
                 .goalId(saved.getUserId())
                 .goal(0)
+                .top_goals(null)
+                .middle_goals(null)
+                .bottom_goals(null)
                 .build();
 
         goalRepositroy.save(tbl_goal);
