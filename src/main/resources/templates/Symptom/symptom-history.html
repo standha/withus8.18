@@ -25,7 +25,7 @@
 </div>
 <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
     <input type = 'hidden' name = "symptom"           th:value = "${count.symptom}" style = "display:none">
-    <input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
+    <input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "displ-ay:none">
     <input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">
     <input type = 'hidden' name = "disease"           th:value = "${count.diseaseInfo}" style = "display:none">
     <input type = 'hidden' name = "exercise"          th:value = "${count.exercise}" style = "display:none">
@@ -84,7 +84,7 @@
 <script th:inline="javascript">
 
     /*<![CDATA[*/
-    var symptomHistory = /*[[ ${symptom} ]]*/;
+    var symptomHistory =[[ ${symptom} ]];
     /*]]*/
 
 
