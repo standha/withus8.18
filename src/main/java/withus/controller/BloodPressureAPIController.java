@@ -14,6 +14,7 @@ import withus.service.UserService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 public class BloodPressureAPIController extends BaseController {
@@ -31,7 +32,7 @@ public class BloodPressureAPIController extends BaseController {
         User user = getUser();
         List<Tbl_blood_pressure_pulse> bloodList = bloodPressureService.getALlBloodRecord(user.getUserId());
 
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new ConcurrentHashMap<>();
         response.put("bloodList", bloodList);
 
         return ResponseEntity.ok(response);

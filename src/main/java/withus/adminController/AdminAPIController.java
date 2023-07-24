@@ -14,6 +14,7 @@ import withus.service.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 public class AdminAPIController extends withus.controller.BaseController {
@@ -35,7 +36,7 @@ public class AdminAPIController extends withus.controller.BaseController {
         }
         List<Tbl_patient_main_button_count> counts = adminService.getPatientMainButtonCountAsc(userId);
 
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new ConcurrentHashMap<>();
         response.put("counts", counts);
 
         return ResponseEntity.ok(response);
@@ -49,7 +50,7 @@ public class AdminAPIController extends withus.controller.BaseController {
         }
         List<Tbl_patient_sub_button_count> counts = adminService.getPatientSubButtonCountAsc(userId);
 
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new ConcurrentHashMap<>();
         response.put("counts", counts);
         return ResponseEntity.ok(response);
     }
@@ -60,7 +61,7 @@ public class AdminAPIController extends withus.controller.BaseController {
             throw new IllegalStateException(user.getUserId() + " is not Admin");
         }
         List<Tbl_patient_detail_button_count> counts = adminService.getPatientDetailButtonCountAsc(userId);
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new ConcurrentHashMap<>();
         response.put("counts", counts);
         return ResponseEntity.ok(response);
     }
@@ -72,7 +73,7 @@ public class AdminAPIController extends withus.controller.BaseController {
         }
         List<Tbl_caregiver_main_button_count> counts = adminService.getCaregiverMainButtonCountAsc(userId);
 
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new ConcurrentHashMap<>();
         response.put("counts", counts);
 
         return ResponseEntity.ok(response);
@@ -86,7 +87,7 @@ public class AdminAPIController extends withus.controller.BaseController {
         }
         List<Tbl_caregiver_sub_button_count> counts = adminService.getCaregiverSubButtonCountAsc(userId);
 
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new ConcurrentHashMap<>();
         response.put("counts", counts);
         return ResponseEntity.ok(response);
     }
@@ -99,7 +100,7 @@ public class AdminAPIController extends withus.controller.BaseController {
         }
         List<Tbl_caregiver_detail_button_count> counts = adminService.getCaregiverDetailButtonCountAsc(userId);
 
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new ConcurrentHashMap<>();
         response.put("counts", counts);
         return ResponseEntity.ok(response);
     }
