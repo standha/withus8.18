@@ -1,5 +1,5 @@
 var inputCheck = true;
-var inputSpanData = "";
+
 function onFormSubmission(form) {
     if(form.querySelector("input[name=contraction]").value==0 ||
         form.querySelector("input[name=pressure]").value==0 ||
@@ -64,13 +64,42 @@ function bloodPressure_caregiver() {
         $('#popUp2').append(Item);
 
 
-        $("#buttonNo").click(function () {
+        $("#buttonOk").click(function () {
             $("#layerSelectType").hide();
             $("#dim").hide();
             $("#buttonCaregiverType").hide();
             window.location.reload();
             return false;
         });
+
+        $("#buttonNo").click(function () {
+            $("#layerSelectType").hide();
+            $("#dim").hide();
+            $("#buttonCaregiverType").hide();
+            if(document.getElementsByTagName("form")[0].querySelector("input[name=contraction]").value == 0 ||
+                document.getElementsByTagName("form")[0].querySelector("input[name=relaxation]").value == 0 ||
+                document.getElementsByTagName("form")[0].querySelector("input[name=pressure]").value == 0){
+            } else {
+                const body = {
+                    contraction: document.getElementsByTagName("form")[0].querySelector("input[name=contraction]").value,
+                    relaxation: document.getElementsByTagName("form")[0].querySelector("input[name=relaxation]").value,
+                    pressure: document.getElementsByTagName("form")[0].querySelector("input[name=pressure]").value
+                };
+                const url = document.getElementsByTagName("form")[0].action;
+                const options = {
+                    method: "POST",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(body)
+                };
+            }
+
+            window.location.reload();
+            return false;
+        });
+
     }
 }
 function submit_Click() {
@@ -95,5 +124,14 @@ function submit_Click() {
 
 
 }
-
+document.addEventListener("DOMContentLoaded", function () {
+    // "저장" 버튼에 클릭 이벤트 핸들러를 추가합니다. 버튼은 id="saveButton"으로 선택됩니다.
+    const saveButton = document.getElementById("saveButton");
+    if (saveButton) {
+        saveButton.addEventListener("click", function (event) {
+            event.preventDefault(); // 기본 폼 제출 동작을 방지합니다.
+            onFormSubmission(document.getElementById("bloodPressure-form"));
+        });
+    }
+});
 
