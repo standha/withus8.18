@@ -18,6 +18,7 @@
     <script th:src="@{/js/datepicker-ko.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/help.js}"></script>
+    <script src="https://kit.fontawesome.com/e381c8a508.js" crossorigin="anonymous"></script>
     <style>
         .button-container {
             text-align: right;
@@ -87,6 +88,9 @@
                     <span class="ico-blood-s"></span>
                     <span>혈압/맥박</span>
                 </h2>
+                <div class="col text-end" style="font-size: 20px; margin-top: 0.73vh;">
+                    <a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl" style="color: #00b050;"></i></a>
+                </div>
             </div>
             <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${user.week} == 25">
                 <div onclick="helperRequest()" >
@@ -99,6 +103,9 @@
                     <span class="ico-blood-s"></span>
                     <span>혈압/맥박</span>
                 </h2>
+                <div class="col text-end" style="font-size: 20px; margin-top: 0.73vh;">
+                    <a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl" style="color: #00b050;"></i></a>
+                </div>
             </div>
         </div>
     </header>

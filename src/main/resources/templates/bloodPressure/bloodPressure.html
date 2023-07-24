@@ -15,7 +15,7 @@
     <script th:src="@{/js/bloodPressure/bloodPressure.js}"></script>
     <script th:src="@{/js/help.js}"></script>
     <script th:src="@{/js/input_limit.js}"></script>
-
+    <script src="https://kit.fontawesome.com/e381c8a508.js" crossorigin="anonymous"></script>
     <style>
         .slide { user-select: none;}
     </style>
@@ -67,6 +67,9 @@
                     <span class="ico-blood-s"></span>
                     <span>혈압/맥박</span>
                 </h2>
+                <div class="col text-end" style="font-size: 20px; margin-top: 0.73vh;">
+                    <a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl" style="color: #00b050;"></i></a>
+                </div>
             </div>
             <div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()" >
@@ -79,6 +82,9 @@
                     <span class="ico-blood-s"></span>
                     <span>혈압/맥박</span>
                 </h2>
+                <div class="col text-end" style="font-size: 20px; margin-top: 0.73vh;">
+                    <a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl" style="color: #00b050;"></i></a>
+                </div>
             </div>
         </div>
     </header>
@@ -120,16 +126,37 @@
                         </div>
                     </div>
                 </div>
-                <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25" class="btn-wrap type01">
-                    <button class="btn xlg type01" type="submit">입력</button>
+                <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25" class="btn-wrap2 grid4">
+                    <button class="btn xlg1 type01" onclick="bloodPressure_caregiver()">보호자에게 알림</button>
+                    <button type="submit" class="btn xlg1 type01" onClick="submit_Click()">저장</button>
                 </div>
                 <div th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25" class="btn-wrap type01">
-                    <button class="btn xlg type02" type="submit" disabled>입력</button>
+                    <button class="btn xlg type02" type="submit" onClick="submit_Click()" disabled>저장</button>
                 </div>
             </div>
+            <div class="dim-layer" style="display: none" id="dim"></div>
         </form>
     </div>
+    <div class="popup pop-type01" id="layerSelectType" style="display: none">
+        <div class="pop-wrap">
+            <!-- <a href="javascript:void(0);" class="pop-close"></a> -->
+            <div class="popup-header"></div>
+            <div class="popup-body">
+                <!--                <div class="pop-tit" id="popUp1">-->
+                <!--                </div>-->
+                <div class="pop-cont" id="popUp2">
+                </div>
 
+            </div>
+            <div id="buttonCaregiverType" class="btn-wrap grid2" style="display:none" >
+                <button class="btn xlg type07" id="buttonNo">아니요</button>
+                <button class="btn xlg type02" id="buttonOk">저장 및 알림</button>
+            </div>
+            <div id="buttonRecordType" class="btn-wrap grid1" style="display:none">
+                <button class="btn xlg type02" id="buttonCheck" style="border-radius:0px 0px 10px 10px;">확인</button>
+            </div>
+        </div>
+    </div>
 
     <!-- footer -->
     <footer>
