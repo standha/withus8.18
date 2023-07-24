@@ -67,7 +67,11 @@ public class CommentContorller {
         Comment comment = this.commentService.getComment(id);
         model.addAttribute("comment", comment);
 
-        if (comment.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("admin")) {
+        String nowUserName = principal.getName();
+        User nowUser = this.userService.getUserById(nowUserName);
+        model.addAttribute("nowUser", nowUser);
+
+        if (comment.getAuthor().getUserId().equals(principal.getName()) || nowUser.getType().toString().equals("ADMINISTRATOR")) {
             commentForm.setContent(comment.getContent());
             return "board/comment_form_modify";
         } else {
@@ -85,7 +89,11 @@ public class CommentContorller {
         Comment comment = this.commentService.getComment(id);
         model.addAttribute("comment", comment);
 
-        if (comment.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("admin")) {
+        String nowUserName = principal.getName();
+        User nowUser = this.userService.getUserById(nowUserName);
+        model.addAttribute("nowUser", nowUser);
+
+        if (comment.getAuthor().getUserId().equals(principal.getName()) || nowUser.getType().toString().equals("ADMINISTRATOR")) {
             this.commentService.modify(comment, commentForm.getContent());
 
             return String.format("redirect:/board/post/detail/%s#comment_%s", comment.getPost().getId(), comment.getId());
@@ -96,9 +104,14 @@ public class CommentContorller {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/delete/{id}")
-    public String commentDelete(Principal principal, @PathVariable("id") Integer id) {
+    public String commentDelete(Model model, Principal principal, @PathVariable("id") Integer id) {
         Comment comment = this.commentService.getComment(id);
-        if (comment.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("admin")) {
+
+        String nowUserName = principal.getName();
+        User nowUser = this.userService.getUserById(nowUserName);
+        model.addAttribute("nowUser", nowUser);
+
+        if (comment.getAuthor().getUserId().equals(principal.getName()) || nowUser.getType().toString().equals("ADMINISTRATOR")) {
             this.commentService.delete(comment);
             return String.format("redirect:/board/post/detail/%s", comment.getPost().getId());
         } else {

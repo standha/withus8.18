@@ -30,4 +30,5 @@ public class Tbl_goal {
 
     @Column(name = "bottom_goals", columnDefinition = "VARCHAR(128)", length = 128)
     private Integer bottom_goals;
+
 }

@@ -74,7 +74,7 @@ public class UserService implements UserDetailsService {
         }
         User user = _user.get();
         List<GrantedAuthority> authorities = new ArrayList<>();
-        if ("위더스".equals(username)) {
+        if ("withusad".equals(username)) {
             authorities.add(new SimpleGrantedAuthority(UserRole.ADMIN.getValue()));
         } else {
             authorities.add(new SimpleGrantedAuthority(UserRole.USER.getValue()));

@@ -1,6 +1,6 @@
 <!-- 타임리프의 layout:decorate 속성은 템플릿의 레이아웃(부모 템플릿)으로 사용할 템플릿을 설정한다. 속성의 값인 ~{layout}은 layout.html 파일을 의미한다. -->
 <html layout:decorate="~{board/layout}">
-<div layout:fragment="content" class="container my-3 bg-light" style="height: 100%;">
+<div layout:fragment="content" class="container py-3 bg-light" style="height: 95vh;">
     <div class="card mb-3 border-0" style="cursor:pointer;" th:onclick="|location.href='@{/board/rank}'|">
         <div class="row mx-0 mb-3">
             <div class="col border border-2 border-dark rounded-3 me-2 pt-2" style="background-color: #e2f0d9;">
@@ -21,7 +21,7 @@
         <div class="card-body border border-3 border-primary rounded py-0 px-3 mt-5 mx-2">
             <h3 class="mb-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" th:text="${currentNotice[0].subject}"></h3>
         </div>
-        <div th:if="${localDateNow.equals(currentNotice[0].createDate.toLocalDate())}" th:text="|오늘 ${#temporals.format(currentNotice[0].createDate.toLocalTime(), 'HH:mm')}|"></div>
+        <div th:if="${localDateNow.equals(currentNotice[0].createDate.toLocalDate())}" class="card-text text-end px-3 mb-3" th:text="|오늘 ${#temporals.format(currentNotice[0].createDate.toLocalTime(), 'HH:mm')}|"></div>
         <div th:unless="${localDateNow.equals(currentNotice[0].createDate.toLocalDate())}" class="card-text text-end px-3 mb-3" th:text="${#temporals.format(currentNotice[0].createDate, 'yy/MM/dd HH:mm')}">
         </div>
         <h4 class="text-center">
@@ -31,7 +31,7 @@
     </div>
     <div class="card mb-3 border-0" style="cursor:pointer" th:onclick="|location.href='@{/board/post/list/question}'|">
         <div class="card-body border border-3 border-primary rounded py-0 px-3 mt-5 mx-2">
-            <h3 class="mb-0" th:text="${currentQuestion[0].subject}"></h3>
+            <h3 class="mb-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" th:text="${currentQuestion[0].subject}"></h3>
         </div>
         <div class="card-text text-end px-3 mb-3" th:if="${localDateNow.equals(currentQuestion[0].createDate.toLocalDate())}" th:text="|오늘 ${#temporals.format(currentQuestion[0].createDate.toLocalTime(), 'HH:mm')}|">
         </div>
@@ -44,7 +44,7 @@
     </div>
     <div class="card mb-3 border-0" style="cursor:pointer" th:onclick="|location.href='@{/board/post/list/share}'|">
         <div class="card-body border border-3 border-primary rounded py-0 px-3 mt-5 mx-2">
-            <h3 class="mb-0" th:text="${currentShare[0].subject}"></h3>
+            <h3 class="mb-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" th:text="${currentShare[0].subject}"></h3>
         </div>
         <div class="card-text text-end px-3 mb-3" th:if="${localDateNow.equals(currentShare[0].createDate.toLocalDate())}" th:text="|오늘 ${#temporals.format(currentShare[0].createDate.toLocalTime(), 'HH:mm')}|">
         </div>

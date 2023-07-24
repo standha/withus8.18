@@ -1,5 +1,6 @@
 package withus;
 
+import withus.board.entity.Post;
 import withus.board.service.PostService;
 
 import org.junit.jupiter.api.Test;
@@ -23,8 +24,8 @@ public class TestCase {
         for (int i=1; i<=30; i++) {
             String subject = String.format("테스트 데이터입니다 [%03d]", i);
             String content = String.format("내용무 [%03d]", i);
-            User user = this.userService.getUserForBoard("위더스");
-            this.postService.create(subject, content, user, "공지사항");
+            User user = this.userService.getUserForBoard("withusad");
+            this.postService.create(subject, content, user, "NOTICE");
         }
     }
 }

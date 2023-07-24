@@ -13,8 +13,82 @@
 	<link th:href="@{/css/layout.css}" rel="stylesheet" >
 	<script th:src="@{/js/jquery-1.12.4.min.js}"></script>
 	<script th:src="@{/js/common.js}"></script>
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	<style>
+		.select2-container--default .select2-selection--single {
+			height: 50px;
+			line-height: 50px;
+		}
+		#select2-year-container {
+			height: 50px;
+			line-height: 50px;
+			padding-left: 10px; /* 선택 영역의 왼쪽 여백 설정 (선택적) */
+			display: flex;
+			align-items: center;
+		}
+		#select2-month-container {
+			height: 50px;
+			line-height: 50px;
+			padding-left: 10px; /* 선택 영역의 왼쪽 여백 설정 (선택적) */
+			display: flex;
+			align-items: center;
+		}
+		#select2-day-container {
+			height: 50px;
+			line-height: 50px;
+			padding-left: 10px; /* 선택 영역의 왼쪽 여백 설정 (선택적) */
+			display: flex;
+			align-items: center;
+		}
+		.select2-selection__arrow {
+			display: flex;
+			align-items: center;
+			height: 50px;
+		}
+		.select2-container--default .select2-selection--single .select2-selection__arrow {
+			height: 50px;
+		}
+		.select2-selection__arrow b {
+			display: inline-block;
+		}
+
+		.insert {
+			max-width: 90vw; /* 최대 너비 설정 */
+		}
+
+		.insert select {
+			width: 100%; /* 드롭다운 부분과 같은 너비 설정 */
+		}
+	</style>
 </head>
 <script>
+
+	$(document).ready(function() {
+		$('#year').select2({
+			minimumResultsForSearch: -1, // 검색 상자 비활성화
+			dropdownCssClass: 'dropdown-style', // CSS 클래스 추가
+			dropdownAutoWidth : true, // 옵션 박스 자동 크기 조정
+			containerCssClass: 'select2-custom-height'
+		});
+	});
+	$(document).ready(function() {
+		$('#month').select2({
+			minimumResultsForSearch: -1, // 검색 상자 비활성화
+			dropdownCssClass: 'dropdown-style', // CSS 클래스 추가
+			dropdownAutoWidth : true, // 옵션 박스 자동 크기 조정
+			containerCssClass: 'select2-custom-height'
+		});
+	});
+	$(document).ready(function() {
+		$('#day').select2({
+			minimumResultsForSearch: -1, // 검색 상자 비활성화
+			dropdownCssClass: 'dropdown-style', // CSS 클래스 추가
+			dropdownAutoWidth : true, // 옵션 박스 자동 크기 조정
+			containerCssClass: 'select2-custom-height'
+		});
+	});
+
 	function check_radio(div)
 	{
 		switch(div.id){
