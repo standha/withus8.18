@@ -585,7 +585,6 @@
         const trPressureElements = trPressure.getElementsByTagName('td');
 
         if(cycle ==="THREE"){
-
             let threeBloodData = bloodList['bloodList'].slice(currSlide-2,currSlide+1);
             for(var i = 0; i<3; i++){
                 let bloodData = threeBloodData[i];
@@ -608,6 +607,7 @@
 
                 td1.style.fontSize = '0.88rem';
                 td1.style.opacity = 0;
+                td4.style.width = "25%";
                 span2.style.opacity = 0;
                 span3.style.opacity = 0;
                 span4.style.opacity = 0;
@@ -646,7 +646,7 @@
                 const span3 = td3.getElementsByTagName('span')[0];
                 const span4 = td4.getElementsByTagName('span')[0];
 
-
+                td4.style.width = "12.5%";
 
                 td1.style.fontSize = '0.80rem';
                 td1.style.opacity = 0;

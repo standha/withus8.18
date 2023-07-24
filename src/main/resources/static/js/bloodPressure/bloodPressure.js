@@ -68,14 +68,6 @@ function bloodPressure_caregiver() {
             $("#layerSelectType").hide();
             $("#dim").hide();
             $("#buttonCaregiverType").hide();
-            window.location.reload();
-            return false;
-        });
-
-        $("#buttonNo").click(function () {
-            $("#layerSelectType").hide();
-            $("#dim").hide();
-            $("#buttonCaregiverType").hide();
             if(document.getElementsByTagName("form")[0].querySelector("input[name=contraction]").value == 0 ||
                 document.getElementsByTagName("form")[0].querySelector("input[name=relaxation]").value == 0 ||
                 document.getElementsByTagName("form")[0].querySelector("input[name=pressure]").value == 0){
@@ -94,7 +86,27 @@ function bloodPressure_caregiver() {
                     },
                     body: JSON.stringify(body)
                 };
+                fetch(url, options)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.code === 'OK') {
+                            console.log("입력 성공하였습니다.")
+                        }  else {
+                            console.log("기록 실패하였습니다. 관리자에게 문의해주세요.");
+                            alert("기록 실패하였습니다. 관리자에게 문의해주세요.");
+                        }
+                    });
             }
+            window.location.reload();
+            return false;
+        });
+
+        $("#buttonNo").click(function () {
+            $("#layerSelectType").hide();
+            $("#dim").hide();
+            $("#buttonCaregiverType").hide();
+
 
             window.location.reload();
             return false;
@@ -130,7 +142,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (saveButton) {
         saveButton.addEventListener("click", function (event) {
             event.preventDefault(); // 기본 폼 제출 동작을 방지합니다.
-            onFormSubmission(document.getElementById("bloodPressure-form"));
         });
     }
 });

@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.querydsl.core.types.dsl.Wildcard.count;
 import static withus.entity.QUser.user;
 
 @Controller
@@ -81,12 +82,17 @@ public class BloodPressureController extends BaseController {
         }*/
 
         User user = getUser();
+        logger.info("id:{}, type:{}", user.getUserId(), user.getType());
         modelAndView.addObject("user", user);
 
         List<Tbl_blood_pressure_pulse> bloodWeek = bloodPressureService.getALlBloodRecord(user.getUserId());
 
         if (user.getType() == User.Type.PATIENT) {
             Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("count", count);
+        }
+        if (user.getType() == User.Type.CAREGIVER) {
+            Tbl_caregiver_main_button_count count = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
 
