@@ -25,9 +25,9 @@ public class BoardController {
     private final UserService userService;
     @GetMapping("/board")
     public String root(Model model) {
-        List<Post> currentNotice = this.postService.getListByCategory("공지사항");
-        List<Post> currentQuestion = this.postService.getListByCategory("질문게시판");
-        List<Post> currentShare = this.postService.getListByCategory("나눔게시판");
+        List<Post> currentNotice = this.postService.getListByCategory("NOTICE");
+        List<Post> currentQuestion = this.postService.getListByCategory("QUESTION");
+        List<Post> currentShare = this.postService.getListByCategory("SHARE");
         List<User> rankListPatient = this.userService.getListByType(User.Type.PATIENT);
         List<User> rankListCaregiver = this.userService.getListByType(User.Type.CAREGIVER);
 

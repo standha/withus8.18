@@ -69,7 +69,7 @@ public class PostController {
 
     @GetMapping("/list/notice")
     public String listNotice(Model model, @RequestParam(value="page", defaultValue = "0") int page, Principal principal){
-        Page<Post> paging = this.postService.getPageByCategory("공지사항", page, 10);
+        Page<Post> paging = this.postService.getPageByCategory("NOTICE" , page, 10);
         User nowUser = this.userService.getUserById(principal.getName());
         model.addAttribute("paging", paging);
         model.addAttribute("nowUser", nowUser);
@@ -78,7 +78,7 @@ public class PostController {
 
     @GetMapping("/list/question")
     public String listQuestion(Model model, @RequestParam(value="page", defaultValue = "0") int page, Principal principal){
-        Page<Post> paging = this.postService.getPageByCategory("질문게시판", page, 10);
+        Page<Post> paging = this.postService.getPageByCategory("QUESTION", page, 10);
         User nowUser = this.userService.getUserById(principal.getName());
         model.addAttribute("paging", paging);
         model.addAttribute("nowUser", nowUser);
@@ -87,7 +87,7 @@ public class PostController {
 
     @GetMapping("/list/share")
     public String listShare(Model model, @RequestParam(value="page", defaultValue = "0") int page, Principal principal){
-        Page<Post> paging = this.postService.getPageByCategory("나눔게시판", page, 10);
+        Page<Post> paging = this.postService.getPageByCategory("SHARE", page, 10);
         User nowUser = this.userService.getUserById(principal.getName());
         model.addAttribute("paging", paging);
         model.addAttribute("nowUser", nowUser);
@@ -105,7 +105,10 @@ public class PostController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
-    public String postCreate(PostForm postForm) {
+    public String postCreate(Model model, Principal principal, PostForm postForm) {
+        User user = this.userService.getUserById(principal.getName());
+        model.addAttribute("user", user);
+
         return "board/post_form";
     }
 
@@ -124,10 +127,11 @@ public class PostController {
     // 입력값도 입력하지 않았기 때문에 postForm의 @NotEmpty에 의해 Validation이 실패하여 다시 질문 등록 화면에 머물러 있을 것이다.
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
-    public String postCreate(@Valid PostForm postForm, BindingResult bindingResult, Principal principal) {
+    public String postCreate(Model model, @Valid PostForm postForm, BindingResult bindingResult, Principal principal) {
         if (bindingResult.hasErrors()) { return "board/post_form"; }
 
         User user = this.userService.getUserForBoard(principal.getName());
+        model.addAttribute("user", user);
 
         this.postService.create(postForm.getSubject(), postForm.getContent(), user, postForm.getCategory());
         return "redirect:/board";
@@ -140,7 +144,10 @@ public class PostController {
         Post post = this.postService.getPost(id);
         model.addAttribute("post", post);
 
-        if(post.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("위더스")) {
+        User user = this.userService.getUserById(principal.getName());
+        model.addAttribute("user", user);
+
+        if(post.getAuthor().getUserId().equals(principal.getName()) || user.getType().toString().equals("ADMINISTRATOR")) {
             postForm.setSubject(post.getSubject());
             postForm.setContent(post.getContent());
             postForm.setCategory(post.getCategory());
@@ -162,7 +169,10 @@ public class PostController {
         Post post = this.postService.getPost(id);
         model.addAttribute("post", post);
 
-        if (post.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("위더스")) {
+        User user = this.userService.getUserById(principal.getName());
+        model.addAttribute("user", user);
+
+        if(post.getAuthor().getUserId().equals(principal.getName()) || user.getType().toString().equals("ADMINISTRATOR")) {
             this.postService.modify(post, postForm.getSubject(), postForm.getContent(), postForm.getCategory());
 
             return String.format("redirect:/board/post/detail/%s", id);
@@ -173,9 +183,13 @@ public class PostController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/delete/{id}")
-    public String postDelete(Principal principal, @PathVariable("id") Integer id) {
+    public String postDelete(Model model, Principal principal, @PathVariable("id") Integer id) {
         Post post = this.postService.getPost(id);
-        if (post.getAuthor().getUserId().equals(principal.getName()) || principal.getName().equals("위더스")) {
+        String nowUsername = principal.getName();
+        User nowUser = this.userService.getUserById(nowUsername);
+        model.addAttribute("nowUser", nowUser);
+
+        if(post.getAuthor().getUserId().equals(principal.getName()) || nowUser.getType().toString().equals("ADMINISTRATOR")) {
             this.postService.delete(post);
             return "redirect:/board";
         } else {

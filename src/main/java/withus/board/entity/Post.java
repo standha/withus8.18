@@ -9,6 +9,7 @@ import javax.persistence.*;
 // 추천 기능에 필요한 라이브러리
 import java.util.Set;
 
+import lombok.EqualsAndHashCode;
 import withus.entity.User;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,4 +43,12 @@ public class Post {
     Set<User> voter;
 
     private String category;
+
+//    @Column(columnDefinition = "VARCHAR(16) NOT NULL", length = 16)
+//    @Enumerated(EnumType.STRING)
+//    private Category category;
+//
+//    public enum Category {
+//        NOTICE, QUESTION, SHARE
+//    }
 }

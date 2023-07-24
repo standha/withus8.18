@@ -22,13 +22,13 @@
     <div>
       <div class="border-bottom border-dark p-2">
         <div class="row mx-0">
-          <div class="col px-0" th:if="${post.author != null and nowUser.userId == '위더스'}">
+          <div class="col px-0" th:if="${post.author != null and nowUser.type.toString().equals('ADMINISTRATOR')}">
             <span th:if="${post.author.type.toString().equals('ADMINISTRATOR')}" class="text-dark fw-bold">관리자</span>
             <span th:unless="${post.author.type.toString().equals('ADMINISTRATOR')}" th:text="${post.author.name}" class="text-dark fw-bold"></span>
             <span th:if="${post.author.type.toString().equals('PATIENT')}" class="border rounded-pill bg-success text-white text-center" style="font-size: 12px; display: inline-block; width: 60px">환자</span>
             <span th:if="${post.author.type.toString().equals('CAREGIVER')}" class="border rounded-pill bg-warning text-white text-center" style="font-size: 12px; display: inline-block; width: 60px">보호자</span>
           </div>
-          <div class="col px-0" th:unless="${post.author != null and nowUser.userId == '위더스'}">
+          <div class="col px-0" th:unless="${post.author != null and nowUser.type.toString().equals('ADMINISTRATOR')}">
             <span th:if="${post.author.type.toString().equals('ADMINISTRATOR')}" class="text-dark fw-bold">관리자</span>
             <span th:unless="${post.author.type.toString().equals('ADMINISTRATOR')}" class="text-dark fw-bold">익명</span>
             <span th:if="${post.author.type.toString().equals('PATIENT')}" class="border rounded-pill bg-success text-white text-center" style="font-size: 12px; display: inline-block; width: 60px">환자</span>
@@ -44,7 +44,7 @@
 <!--            <span class="text-danger small ms-2" th:if="${#lists.size(post.commentList) > 0}" th:text="${#lists.size(post.commentList)}"></span>-->
           </div>
           <!-- modal -->
-          <a type="button" id="INDEX" class="col-2 p-0 btn btn-sm btn-outline-secondary rounded-pill float-end" style="width: 48px;" data-bs-toggle="modal" th:attr="data-bs-target=|#alert${post.id}|" sec:authorize="isAuthenticated()" th:if="${post.author != null and #authentication.getPrincipal().getUsername() == post.author.userId or #authentication.getPrincipal().getUsername() == '위더스'}">···</a>
+          <a type="button" id="INDEX" class="col-2 p-0 btn btn-sm btn-outline-secondary rounded-pill float-end" style="width: 48px;" data-bs-toggle="modal" th:attr="data-bs-target=|#alert${post.id}|" sec:authorize="isAuthenticated()" th:if="${post.author != null and #authentication.getPrincipal().getUsername() == post.author.userId or nowUser.type.toString().equals('ADMINISTRATOR')}">···</a>
           <div class="modal fade" th:id="'alert'+${post.id}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-sm">
               <div class="modal-content align-items-center">
