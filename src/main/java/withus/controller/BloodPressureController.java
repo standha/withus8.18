@@ -20,6 +20,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static withus.entity.QUser.user;
+
 @Controller
 public class BloodPressureController extends BaseController {
     private final BloodPressureService bloodPressureService;
@@ -65,9 +67,10 @@ public class BloodPressureController extends BaseController {
     @GetMapping("/bloodPressure-all-history")
     public ModelAndView getBloodPressureRecord() {
         ModelAndView modelAndView = new ModelAndView("bloodPressure/bloodPressure-all-history");
-        List<Tbl_blood_pressure_pulse> bloodPressureHistory;
+        /*List<Tbl_blood_pressure_pulse> bloodPressureHistory;
         bloodPressureHistory = bloodPressureService.getBloodAllRecord(getConnectId(), -1, -1, -1);
         LocalDate today = LocalDate.now();
+
 
         List<Tbl_blood_pressure_pulse> bloodWeek = new ArrayList<>();
         for (int i = 1; i <= 7; i++) {
@@ -75,10 +78,12 @@ public class BloodPressureController extends BaseController {
                 Tbl_blood_pressure_pulse week = bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(), today.with(DayOfWeek.of(i))));
                 bloodWeek.add(week);
             }
-        }
+        }*/
 
         User user = getUser();
         modelAndView.addObject("user", user);
+
+        List<Tbl_blood_pressure_pulse> bloodWeek = bloodPressureService.getALlBloodRecord(user.getUserId());
 
         if (user.getType() == User.Type.PATIENT) {
             Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
@@ -86,7 +91,9 @@ public class BloodPressureController extends BaseController {
         }
 
         modelAndView.addObject("bloodWeek", bloodWeek);
-        modelAndView.addObject("bloodPressure", bloodPressureHistory);
+        //modelAndView.addObject("bloodPressure", bloodPressureHistory);
+
+
         modelAndView.addObject("previousUrl", "/center");
 
         return modelAndView;
