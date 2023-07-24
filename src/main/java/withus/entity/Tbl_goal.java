@@ -22,13 +22,13 @@ public class Tbl_goal {
     @Column(name = "goal")
     private Integer goal;
 
-    @Column(name = "top_goals", columnDefinition = "VARCHAR(128) NOT NULL", length = 128)
+    @Column(name = "top_goals", columnDefinition = "VARCHAR(128)", length = 128)
     private Integer top_goals;
 
-    @Column(name = "middle_goals", columnDefinition = "VARCHAR(128) NOT NULL", length = 128)
+    @Column(name = "middle_goals", columnDefinition = "VARCHAR(128)", length = 128)
     private Integer middle_goals;
 
-    @Column(name = "bottom_goals", columnDefinition = "VARCHAR(128) NOT NULL", length = 128)
+    @Column(name = "bottom_goals", columnDefinition = "VARCHAR(128)", length = 128)
     private Integer bottom_goals;
 
 }

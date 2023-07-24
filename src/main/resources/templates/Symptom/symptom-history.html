@@ -16,6 +16,7 @@
     <script th:src="@{/js/datepicker-ko.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/help.js}"></script>
+    <script src="https://kit.fontawesome.com/e381c8a508.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <input type="hidden" id="button-count" th:attr="value=@{/button-count}">
@@ -25,7 +26,7 @@
 </div>
 <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
     <input type = 'hidden' name = "symptom"           th:value = "${count.symptom}" style = "display:none">
-    <input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
+    <input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "displ-ay:none">
     <input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">
     <input type = 'hidden' name = "disease"           th:value = "${count.diseaseInfo}" style = "display:none">
     <input type = 'hidden' name = "exercise"          th:value = "${count.exercise}" style = "display:none">
@@ -84,7 +85,7 @@
 <script th:inline="javascript">
 
     /*<![CDATA[*/
-    var symptomHistory = /*[[ ${symptom} ]]*/;
+    var symptomHistory =/*[[ ${symptom} ]]*/;
     /*]]*/
 
 
@@ -120,6 +121,10 @@
                             {
                                 case 0:
                                     $(this).addClass('record-face1');
+                                    // if(symptomHistory[i].text)
+                                    //     console.log("text의 값이 존재합니다.");
+                                    //<font-awesome-icon :icon="['fas', 'plus']" size="2xs" style="color: #4eb9ef;" />;
+                                    //<i className="fa-solid fa-plus fa-2xs" style="color: #4eb9ef;"></i>
                                     break;
 
                                 case 1:
@@ -137,6 +142,8 @@
                                     $(this).addClass('record-face4');
                                     break;
                             }
+                        }else{
+                            $(this).addClass('symptom-write');
                         }
                     }
                 });
@@ -146,10 +153,21 @@
         };
     })();
 
-    $( function() {
-        $( "#dateRecord" ).datepicker();
-    } );
+    // $(document).ready(function() {
+    //     // symptom-write 클래스를 가진 요소를 클릭했을 때의 이벤트 핸들러
+    //     $('.symptom-write').click(function() {
+    //         // 이동하고자 하는 페이지의 URL을 여기에 작성합니다.
+    //         var destinationURL = '/symptom';
+    //         console.log("1.");
+    //
+    //         // 페이지 이동
+    //         window.location.href = destinationURL;
+    //     });
+    // })
+    //
+    // $( function() {
+    //     $( "#dateRecord" ).datepicker();
+    // } );
 </script>
-
 </body>
 </html>
