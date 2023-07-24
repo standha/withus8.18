@@ -21,13 +21,13 @@ public class Tbl_medication_alarm {
     public String id;
 
     @Column(name = "medication_alarm_onoff_morning")
-    private boolean alarmOnoffMorning;
+    private boolean alarmOnoffMorning = true;
 
     @Column(name = "medication_alarm_onoff_lunch")
-    private boolean alarmOnoffLunch;
+    private boolean alarmOnoffLunch = true;
 
     @Column(name = "medication_alarm_onoff_dinner")
-    private boolean alarmOnoffDinner;
+    private boolean alarmOnoffDinner = true;
 
     @Column(name = "medication_Time_Morning")
     private LocalTime medicationTimeMorning;

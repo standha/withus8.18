@@ -21,11 +21,11 @@ public class TestCase {
 
     @Test
     void testJPA() {
-        for (int i=1; i<=30; i++) {
+        for (int i=1; i<=20; i++) {
             String subject = String.format("테스트 데이터입니다 [%03d]", i);
             String content = String.format("내용무 [%03d]", i);
-            User user = this.userService.getUserForBoard("withusad");
-            this.postService.create(subject, content, user, "NOTICE");
+            User user = this.userService.getUserForBoard("acau01");
+            this.postService.create(subject, content, user, "SHARE");
         }
     }
 }
