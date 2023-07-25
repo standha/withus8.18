@@ -1,8 +1,8 @@
 function addHelper(count) {
     count = parseInt(count);
     count = count + 1;
-
-    const symptom    = document.querySelector("input[name=symptom]").value;
+    const url = document.querySelector("#button-count").value;
+    let body = {};
     const alarm    = document.querySelector("input[name=alarm]").value;
     const weight  = document.querySelector("input[name=weight]").value;
     const blood = document.querySelector("input[name=blood]").value;
@@ -10,22 +10,53 @@ function addHelper(count) {
     const disease   = document.querySelector("input[name=disease]").value;
     const level    = document.querySelector("input[name=level]").value;
     const exercise = document.querySelector("input[name=exercise]").value;
-    const natriumMoisture   = document .querySelector("input[name=natriumMoisture]").value;
     const chat = document.querySelector("input[name=withusRang]").value;
-    const body = {
-        helper: count,
-        symptom: symptom,
-        alarm: alarm,
-        weight: weight,
-        bloodPressure: blood,
-        goal: goal,
-        diseaseInfo: disease,
-        level: level,
-        exercise: exercise,
-        natriumMoisture: natriumMoisture,
-        withusRang: chat
-    };
-    const url = document.querySelector("#button-count").value;
+    const board = document.querySelector("input[name=board]").value;
+    const mindHealth = document.querySelector("input[name=mindHealth]").value;
+    const medicine = document.querySelector("input[name=medicine]").value;
+    const infoEdit = document.querySelector("input[name=infoEdit]").value;
+    if(url ==="/patient-main-button-count"){
+        const symptom    = document.querySelector("input[name=symptom]").value;
+        const natriumMoisture   = document .querySelector("input[name=natriumMoisture]").value;
+        body = {
+            helper: count,
+            symptom: symptom,
+            alarm: alarm,
+            weight: weight,
+            bloodPressure: blood,
+            goal: goal,
+            diseaseInfo: disease,
+            level: level,
+            exercise: exercise,
+            natriumMoisture: natriumMoisture,
+            withusRang: chat,
+            board: board,
+            mindHealth:mindHealth,
+            medicine:medicine,
+            infoEdit:infoEdit
+        };
+    } else{
+        const familyObservation = document.querySelector("input[name=familyObservation]").value;
+        const dietManagement = document.querySelector("input[name=dietManagement]").value;
+        body = {
+            helper: count,
+            dietManagement: dietManagement,
+            alarm: alarm,
+            weight: weight,
+            bloodPressure: blood,
+            goal: goal,
+            diseaseInfo: disease,
+            level: level,
+            exercise: exercise,
+            familyObservation: familyObservation,
+            withusRang: chat,
+            board: board,
+            mindHealth:mindHealth,
+            medicine:medicine,
+            infoEdit:infoEdit
+        };
+    }
+
     const options = {
         method: "PUT",
         headers: {

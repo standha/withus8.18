@@ -24,9 +24,8 @@ public class CaregiverProgressKey implements Serializable {
     @EqualsAndHashCode.Include
     @Column(name = "week")
     private Integer week;
-
     public CaregiverProgressKey() {
-
+        // 기본 생성자 추가
     }
     public CaregiverProgressKey(String id, Integer week) {
         super();

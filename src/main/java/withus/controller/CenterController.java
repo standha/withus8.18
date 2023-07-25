@@ -125,7 +125,9 @@ public class CenterController extends BaseController {
                 if (getCaretaker().getWeek() == 0) {
                     modelAndView.setViewName("home_0week");
                 } else {
+                    Tbl_caregiver_main_button_count count = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
                     modelAndView.setViewName("home");
+                    modelAndView.addObject("count", count);
                     modelAndView.addObject("type", user.getType());
                     modelAndView.addObject("week", getCaretaker().getWeek());
                 }
