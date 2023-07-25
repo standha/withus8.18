@@ -3,6 +3,7 @@ package withus.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
@@ -265,6 +266,21 @@ public class MoistureNatriumController extends BaseController {
                 .code(code)
                 .data(saved)
                 .build();
+    }
+
+    @GetMapping("/diet")
+    public String diet(Model model) {
+        User user = getUser();
+        User.Type type = user.getType();
+        if (user.getType() == User.Type.PATIENT) {
+            Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            model.addAttribute("count", count);
+        }
+
+        model.addAttribute("user", user);
+        model.addAttribute("type", type);
+
+        return "moistureNatrium/diet/diet";
     }
 
     public Integer avgWeek() {

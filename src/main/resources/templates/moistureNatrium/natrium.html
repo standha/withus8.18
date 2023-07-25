@@ -72,7 +72,7 @@
     <!-- content -->
     <div class="container" id="content">
         <div class="cont-wrap type01">
-            <form id="MemberInfo" th:action="@{/natrium}" method="post"  onsubmit="return onFormSubmission(this);">
+            <form id="MemberInfo" th:action="@{/natrium}" method="post" onsubmit="return onFormSubmission(this);">
             <div class="insert-wrap">
                 <div class="box-wrap">
                     <p class="box-tit">염도계에 표시된 염도를 선택해주세요.</p>
@@ -177,6 +177,9 @@
     <!-- footer -->
     <footer>
         <div class="footer-wrap">
+            <div class="btn-wrap type01">
+                <a th:href="@{/diet}" class="btn xlg type02">저염식이 식단추천</a>
+            </div>
             <div class="btn-wrap type02">
                 <span class="btn xlg arrow-type02" onclick="showHistory();">
                     <span>저염식이 실천</span>
