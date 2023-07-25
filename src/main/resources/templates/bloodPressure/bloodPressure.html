@@ -30,8 +30,8 @@
 <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
     <input type = 'hidden' name = "symptom"           th:value = "${patientCount.symptom}" style = "display:none">
     <input type = 'hidden' name = "alarm"             th:value = "${patientCount.alarm}" style = "display:none">
-    <input type = 'hidden' name = "blood"             th:value = "${patientCount.bloodPressure}" style = "display:none">
-    <input type = 'hidden' name = "disease"           th:value = "${patientCount.diseaseInfo}" style = "display:none">
+    <input type = 'hidden' name = "bloodPressure"             th:value = "${patientCount.bloodPressure}" style = "display:none">
+    <input type = 'hidden' name = "diseaseInfo"           th:value = "${patientCount.diseaseInfo}" style = "display:none">
     <input type = 'hidden' name = "exercise"          th:value = "${patientCount.exercise}" style = "display:none">
     <input type = 'hidden' name = "goal"              th:value = "${patientCount.goal}" style = "display:none">
     <input type = 'hidden' name = "helper"            th:value = "${patientCount.helper}" style = "display:none">
@@ -46,8 +46,8 @@
 </div>
 <div th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25 ">
     <input type = 'hidden' name = "alarm"             th:value = "${caregiverCount.alarm}" style = "display:none">
-    <input type = 'hidden' name = "blood"             th:value = "${caregiverCount.bloodPressure}" style = "display:none">
-    <input type = 'hidden' name = "disease"           th:value = "${caregiverCount.diseaseInfo}" style = "display:none">
+    <input type = 'hidden' name = "bloodPressure"             th:value = "${caregiverCount.bloodPressure}" style = "display:none">
+    <input type = 'hidden' name = "diseaseInfo"           th:value = "${caregiverCount.diseaseInfo}" style = "display:none">
     <input type = 'hidden' name = "exercise"          th:value = "${caregiverCount.exercise}" style = "display:none">
     <input type = 'hidden' name = "goal"              th:value = "${caregiverCount.goal}" style = "display:none">
     <input type = 'hidden' name = "helper"            th:value = "${caregiverCount.helper}" style = "display:none">
@@ -67,7 +67,7 @@
         <div class="header-wrap type01">
             <div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${patientCount.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" onclick="addHelper()" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>

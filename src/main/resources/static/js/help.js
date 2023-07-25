@@ -1,55 +1,55 @@
-function addHelper(count) {
-    count = parseInt(count);
-    count = count + 1;
+function addHelper() {
+
+    const helper    = parseInt(document.querySelector("input[name=helper]").value);
     const url = document.querySelector("#button-count").value;
     let body = {};
-    const alarm    = document.querySelector("input[name=alarm]").value;
-    const weight  = document.querySelector("input[name=weight]").value;
-    const blood = document.querySelector("input[name=blood]").value;
-    const goal     = document.querySelector("input[name=goal]").value;
-    const disease   = document.querySelector("input[name=disease]").value;
-    const level    = document.querySelector("input[name=level]").value;
-    const exercise = document.querySelector("input[name=exercise]").value;
-    const chat = document.querySelector("input[name=withusRang]").value;
-    const board = document.querySelector("input[name=board]").value;
-    const mindHealth = document.querySelector("input[name=mindHealth]").value;
-    const medicine = document.querySelector("input[name=medicine]").value;
-    const infoEdit = document.querySelector("input[name=infoEdit]").value;
+    const alarm    = parseInt(document.querySelector("input[name=alarm]").value);
+    const weight  = parseInt(document.querySelector("input[name=weight]").value);
+    const bloodPressure = parseInt(document.querySelector("input[name=bloodPressure]").value);
+    const goal     = parseInt(document.querySelector("input[name=goal]").value);
+    const diseaseInfo   = parseInt(document.querySelector("input[name=diseaseInfo]").value);
+    const level    = parseInt(document.querySelector("input[name=level]").value);
+    const exercise = parseInt(document.querySelector("input[name=exercise]").value);
+    const withusRang = parseInt(document.querySelector("input[name=withusRang]").value);
+    const board = parseInt(document.querySelector("input[name=board]").value);
+    const mindHealth = parseInt(document.querySelector("input[name=mindHealth]").value);
+    const medicine = parseInt(document.querySelector("input[name=medicine]").value);
+    const infoEdit = parseInt(document.querySelector("input[name=infoEdit]").value);
     if(url ==="/patient-main-button-count"){
-        const symptom    = document.querySelector("input[name=symptom]").value;
-        const natriumMoisture   = document .querySelector("input[name=natriumMoisture]").value;
+        const symptom    = parseInt(document.querySelector("input[name=symptom]").value);
+        const natriumMoisture   = parseInt(document .querySelector("input[name=natriumMoisture]").value);
         body = {
-            helper: count,
+            helper: helper +1,
             symptom: symptom,
             alarm: alarm,
             weight: weight,
-            bloodPressure: blood,
+            bloodPressure: bloodPressure,
             goal: goal,
-            diseaseInfo: disease,
+            diseaseInfo: diseaseInfo,
             level: level,
             exercise: exercise,
             natriumMoisture: natriumMoisture,
-            withusRang: chat,
+            withusRang: withusRang,
             board: board,
             mindHealth:mindHealth,
             medicine:medicine,
             infoEdit:infoEdit
         };
     } else{
-        const familyObservation = document.querySelector("input[name=familyObservation]").value;
-        const dietManagement = document.querySelector("input[name=dietManagement]").value;
+        const familyObservation = parseInt(document.querySelector("input[name=familyObservation]").value);
+        const dietManagement = parseInt(document.querySelector("input[name=dietManagement]").value);
         body = {
-            helper: count,
+            helper: helper +1,
             dietManagement: dietManagement,
             alarm: alarm,
             weight: weight,
-            bloodPressure: blood,
+            bloodPressure: bloodPressure,
             goal: goal,
-            diseaseInfo: disease,
+            diseaseInfo: diseaseInfo,
             level: level,
             exercise: exercise,
             familyObservation: familyObservation,
-            withusRang: chat,
+            withusRang: withusRang,
             board: board,
             mindHealth:mindHealth,
             medicine:medicine,
@@ -67,7 +67,14 @@ function addHelper(count) {
     };
     fetch(url, options)
         .then(response => response.json())
-        .then(data => console.log(data));
+        .then(data => {
+            console.log(data);
+            document.querySelector("input[name=helper]").value = parseInt(document.querySelector("input[name=helper]").value) + 1;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
     return false;
 }
 

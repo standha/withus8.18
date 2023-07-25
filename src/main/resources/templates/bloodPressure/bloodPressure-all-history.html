@@ -53,12 +53,13 @@
     </style>
 </head>
 <body>
-<input type="hidden" id="button-count" th:attr="value=@{/button-count}">
+<input th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 " type="hidden" id="button-count" th:attr="value=@{/patient-main-button-count}">
+<input th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25 " type="hidden" id="button-count" th:attr="value=@{/caregiver-main-button-count}">
 <input type="hidden" id="helper-request" th:attr="value=@{/helper-request}">
 <div class="skip-navi">
     <a href="#content">본문 바로가기</a>
 </div>
-<div th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${user.week} != 25">
+<div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
     <input type = 'hidden' name = "symptom"           th:value = "${count.symptom}" style = "display:none">
     <input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
     <input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">
@@ -70,6 +71,27 @@
     <input type = 'hidden' name = "natriumMoisture"   th:value = "${count.natriumMoisture}" style = "display:none">
     <input type = 'hidden' name = "weight"            th:value = "${count.weight}" style = "display:none">
     <input type = 'hidden' name = "withusRang"        th:value = "${count.withusRang}" style = "display:none">
+    <input type = 'hidden' name = "medicine"        th:value = "${count.medicine}" style = "display:none">
+    <input type = 'hidden' name = "board"        th:value = "${count.board}" style = "display:none">
+    <input type = 'hidden' name = "infoEdit"        th:value = "${count.infoEdit}" style = "display:none">
+    <input type = 'hidden' name = "mindHealth"        th:value = "${count.mindHealth}" style = "display:none">
+</div>
+<div th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25 ">
+    <input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
+    <input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">
+    <input type = 'hidden' name = "disease"           th:value = "${count.diseaseInfo}" style = "display:none">
+    <input type = 'hidden' name = "exercise"          th:value = "${count.exercise}" style = "display:none">
+    <input type = 'hidden' name = "goal"              th:value = "${count.goal}" style = "display:none">
+    <input type = 'hidden' name = "helper"            th:value = "${count.helper}" style = "display:none">
+    <input type = 'hidden' name = "level"             th:value = "${count.level}" style = "display:none">
+    <input type = 'hidden' name = "weight"            th:value = "${count.weight}" style = "display:none">
+    <input type = 'hidden' name = "withusRang"        th:value = "${count.withusRang}" style = "display:none">
+    <input type = 'hidden' name = "familyObservation"        th:value = "${count.familyObservation}" style = "display:none">
+    <input type = 'hidden' name = "dietManagement"        th:value = "${count.dietManagement}" style = "display:none">
+    <input type = 'hidden' name = "mindHealth"        th:value = "${count.mindHealth}" style = "display:none">
+    <input type = 'hidden' name = "board"        th:value = "${count.board}" style = "display:none">
+    <input type = 'hidden' name = "infoEdit"        th:value = "${count.infoEdit}" style = "display:none">
+    <input type = 'hidden' name = "medicine"           th:value = "${count.medicine}" style = "display:none">
 </div>
 <!-- wrap -->
 <div id="wrap" class="chart-page">
@@ -79,7 +101,7 @@
         <div class="header-wrap type01">
             <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${user.week} != 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" onclick="addHelper()" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
