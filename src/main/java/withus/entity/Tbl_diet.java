@@ -20,6 +20,9 @@ public class Tbl_diet {
     private String subject;
 
     @Column
+    private String image;
+
+    @Column
     private String ingredient;
 
     @Column

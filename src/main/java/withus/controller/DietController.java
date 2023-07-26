@@ -73,16 +73,42 @@ public class DietController {
     }
 
     @GetMapping("/side")
-    public String sideList(Model model) {
+    public String sideList(Model model, Principal principal) {
         List<Tbl_diet> sideList = this.dietService.getListByCategory("side");
+
+        User user = this.userService.getUserById(principal.getName());
+        User.Type type = user.getType();
+        if (user.getType() == User.Type.PATIENT) {
+            Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            model.addAttribute("count", count);
+        } else if (user.getType() == User.Type.CAREGIVER) {
+            Tbl_caregiver_main_button_count count = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            model.addAttribute("count", count);
+        }
+
+        model.addAttribute("user", user);
+        model.addAttribute("type", type);
         model.addAttribute("list", sideList);
 
         return "moistureNatrium/diet/list";
     }
 
     @GetMapping("/kimchi")
-    public String kimchiList(Model model) {
+    public String kimchiList(Model model, Principal principal) {
         List<Tbl_diet> kimchiList = this.dietService.getListByCategory("kimchi");
+
+        User user = this.userService.getUserById(principal.getName());
+        User.Type type = user.getType();
+        if (user.getType() == User.Type.PATIENT) {
+            Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            model.addAttribute("count", count);
+        } else if (user.getType() == User.Type.CAREGIVER) {
+            Tbl_caregiver_main_button_count count = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            model.addAttribute("count", count);
+        }
+
+        model.addAttribute("user", user);
+        model.addAttribute("type", type);
         model.addAttribute("list", kimchiList);
 
         return "moistureNatrium/diet/list";
