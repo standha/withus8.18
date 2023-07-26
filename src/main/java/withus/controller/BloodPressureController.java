@@ -74,18 +74,6 @@ public class BloodPressureController extends BaseController {
     @GetMapping("/bloodPressure-all-history")
     public ModelAndView getBloodPressureRecord() {
         ModelAndView modelAndView = new ModelAndView("bloodPressure/bloodPressure-all-history");
-        /*List<Tbl_blood_pressure_pulse> bloodPressureHistory;
-        bloodPressureHistory = bloodPressureService.getBloodAllRecord(getConnectId(), -1, -1, -1);
-        LocalDate today = LocalDate.now();
-
-
-        List<Tbl_blood_pressure_pulse> bloodWeek = new ArrayList<>();
-        for (int i = 1; i <= 7; i++) {
-            if (bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(), today.with(DayOfWeek.of(i)))) != null) {
-                Tbl_blood_pressure_pulse week = bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(), today.with(DayOfWeek.of(i))));
-                bloodWeek.add(week);
-            }
-        }*/
 
         User user = getUser();
         logger.info("id:{}, type:{}", user.getUserId(), user.getType());
@@ -100,11 +88,8 @@ public class BloodPressureController extends BaseController {
             Tbl_caregiver_main_button_count count = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
-
+        modelAndView.addObject("type", user.getType());
         modelAndView.addObject("bloodWeek", bloodWeek);
-        //modelAndView.addObject("bloodPressure", bloodPressureHistory);
-
-
         modelAndView.addObject("previousUrl", "/center");
 
         return modelAndView;

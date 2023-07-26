@@ -62,8 +62,8 @@
 <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
     <input type = 'hidden' name = "symptom"           th:value = "${count.symptom}" style = "display:none">
     <input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
-    <input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">
-    <input type = 'hidden' name = "disease"           th:value = "${count.diseaseInfo}" style = "display:none">
+    <input type = 'hidden' name = "bloodPressure"             th:value = "${count.bloodPressure}" style = "display:none">
+    <input type = 'hidden' name = "diseaseInfo"           th:value = "${count.diseaseInfo}" style = "display:none">
     <input type = 'hidden' name = "exercise"          th:value = "${count.exercise}" style = "display:none">
     <input type = 'hidden' name = "goal"              th:value = "${count.goal}" style = "display:none">
     <input type = 'hidden' name = "helper"            th:value = "${count.helper}" style = "display:none">
@@ -78,8 +78,8 @@
 </div>
 <div th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25 ">
     <input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
-    <input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">
-    <input type = 'hidden' name = "disease"           th:value = "${count.diseaseInfo}" style = "display:none">
+    <input type = 'hidden' name = "bloodPressure"             th:value = "${count.bloodPressure}" style = "display:none">
+    <input type = 'hidden' name = "diseaseInfo"           th:value = "${count.diseaseInfo}" style = "display:none">
     <input type = 'hidden' name = "exercise"          th:value = "${count.exercise}" style = "display:none">
     <input type = 'hidden' name = "goal"              th:value = "${count.goal}" style = "display:none">
     <input type = 'hidden' name = "helper"            th:value = "${count.helper}" style = "display:none">
@@ -477,7 +477,6 @@
                             borderWidth: 0
                         },
                         box2: {
-
                             type: 'box',
                             xMin: 0,
                             xMax: 6,

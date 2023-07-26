@@ -46,10 +46,15 @@ public class WeightController extends BaseController {
 
             modelAndView.addObject("weight", weight.getWeight());
         }
+
         if (user.getType() == User.Type.PATIENT) {
             Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
+        } else if (user.getType() == User.Type.CAREGIVER) {
+            Tbl_caregiver_main_button_count count = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("count", count);
         }
+
         modelAndView.addObject("type", typeCheck);
         modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("previousUrl", "/center");
@@ -62,15 +67,21 @@ public class WeightController extends BaseController {
         ModelAndView modelAndView = new ModelAndView("weight/weight-history");
         modelAndView.addObject("previousUrl", "/weight");
         User user = getUser();
+
         if (user.getType() == User.Type.PATIENT) {
             Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
+        }else if (user.getType() == User.Type.CAREGIVER) {
+            Tbl_caregiver_main_button_count count = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("count", count);
         }
+
         modelAndView.addObject("type", user.getType());
         List<Tbl_weight> weightRecord;
         weightRecord = weightService.getWeightRecord(getConnectId(), 0);
         modelAndView.addObject("weightRecord", weightRecord);
         modelAndView.addObject("week", user.getWeek());
+        modelAndView.addObject("height", user.getHeight());
         return modelAndView;
     }
 

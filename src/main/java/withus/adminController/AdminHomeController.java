@@ -237,7 +237,7 @@ public class AdminHomeController extends withus.controller.BaseController {
 
         mav.addObject("type",type);
         mav.addObject("pillSum", pillSum);
-        mav.addObject("patient", headerInfo);
+        mav.addObject("info", headerInfo);
         mav.addObject("pillAsc", pillAsc);
         mav.setViewName("Admin/admin_pillRecord");
 

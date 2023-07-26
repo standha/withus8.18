@@ -28,7 +28,7 @@ public class WeightService {
     }
 
     @NonNull
-    public List<Tbl_weight> getWeightRecord(String id, float weight) {
+    public List<Tbl_weight> getWeightRecord(String id, int weight) {
         return weightRecordRepository.findByPk_IdAndWeightGreaterThan(id, weight);
     }
 

@@ -1,7 +1,7 @@
 function addHelper() {
 
     const helper    = parseInt(document.querySelector("input[name=helper]").value);
-    const url = document.querySelector("#button-count").value;
+    let url = document.querySelector("#button-count").value;
     let body = {};
     const alarm    = parseInt(document.querySelector("input[name=alarm]").value);
     const weight  = parseInt(document.querySelector("input[name=weight]").value);
@@ -15,7 +15,8 @@ function addHelper() {
     const mindHealth = parseInt(document.querySelector("input[name=mindHealth]").value);
     const medicine = parseInt(document.querySelector("input[name=medicine]").value);
     const infoEdit = parseInt(document.querySelector("input[name=infoEdit]").value);
-    if(url ==="/patient-main-button-count"){
+    if(url ==="/patient-main-button-count" || url ==="/patient-sub-button-count" || url ==="/patient-detail-button-count"){
+        url = "/patient-main-button-count";
         const symptom    = parseInt(document.querySelector("input[name=symptom]").value);
         const natriumMoisture   = parseInt(document .querySelector("input[name=natriumMoisture]").value);
         body = {
@@ -36,6 +37,7 @@ function addHelper() {
             infoEdit:infoEdit
         };
     } else{
+        url = "/caregiver-main-button-count";
         const familyObservation = parseInt(document.querySelector("input[name=familyObservation]").value);
         const dietManagement = parseInt(document.querySelector("input[name=dietManagement]").value);
         body = {
