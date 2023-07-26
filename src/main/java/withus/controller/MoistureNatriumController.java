@@ -3,6 +3,7 @@ package withus.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
@@ -118,8 +119,15 @@ public class MoistureNatriumController extends BaseController {
 
         User user = getUser();
         if (user.getType() == User.Type.PATIENT) {
-            Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
-            modelAndView.addObject("count", count);
+            Tbl_patient_main_button_count mainCount = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            Tbl_patient_detail_button_count detailCount = countService.getPatientDetailCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            modelAndView.addObject("detailCount", detailCount);
+        } else if(user.getType() == User.Type.CAREGIVER) {
+            Tbl_caregiver_main_button_count mainCount = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            Tbl_caregiver_detail_button_count detailCount = countService.getCaregiverDetailCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            modelAndView.addObject("detailCount", detailCount);
         }
 
         modelAndView.addObject("week", user.getWeek());
@@ -265,6 +273,23 @@ public class MoistureNatriumController extends BaseController {
                 .code(code)
                 .data(saved)
                 .build();
+    }
+
+    @GetMapping("/diet")
+    public String diet(Model model) {
+        User user = getUser();
+        User.Type type = user.getType();
+        if (user.getType() == User.Type.PATIENT) {
+            Tbl_patient_main_button_count mainCount = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            Tbl_patient_detail_button_count detailCount = countService.getPatientDetailCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            model.addAttribute("mainCount", mainCount);
+            model.addAttribute("detailCount", detailCount);
+        }
+
+        model.addAttribute("user", user);
+        model.addAttribute("type", type);
+
+        return "moistureNatrium/diet/main";
     }
 
     public Integer avgWeek() {
