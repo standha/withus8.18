@@ -13,6 +13,8 @@
 	<script th:src="@{/js/jquery-1.12.4.min.js}"></script>
 	<script th:src="@{/js/common.js}"></script>
 	<script th:src="@{/js/help.js}"></script>
+	<script src="https://kit.fontawesome.com/e381c8a508.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
 <input type="hidden" id="button-count" th:attr="value=@{/button-count}">
@@ -47,6 +49,10 @@
 					</a>
 				</div>
 				<h2>알람</h2>
+
+				<div class="col text-end" style="font-size: 20px; margin-top: 0.73vh;">
+					<a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl" style="color: #FFFFFF;"></i></a>
+				</div>
 			</div>
 			<div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${user.week} == 25">
 				<div onclick="helperRequest()" >
@@ -56,7 +62,11 @@
 					</a>
 				</div>
 				<h2>알람</h2>
+				<div class="col text-end" style="font-size: 20px; margin-top: 0.73vh;">
+					<a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl" style="color: #FFFFFF;"></i></a>
+				</div>
 			</div>
+
 		</div>
 	</header>
 	<!-- // header -->

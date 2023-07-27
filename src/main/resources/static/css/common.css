@@ -334,7 +334,7 @@ select:focus {border: 1px solid #111;}
 .label1 {font-weight: 500; font-size: 1rem; color: #222;}
 
 
-.checked{border: solid 1px #25cc85; background-color: #19d585; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04); background-position: -260px -115px;}
+/*.checked{border: solid 1px #25cc85; background-color: #19d585; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04); background-position: -260px -115px;}*/
 .rdo-wrap.type03 {justify-content: center; border: 2px solid #bebebe; border-radius: 8px;}
 .rdo-wrap.type03 .rdo-box {position: relative; width: 50%; height: 32px; line-height: 30px; background-color: #fff; border-radius: 8px 0 0 8px;}
 .rdo-wrap.type03 .rdo-box + .rdo-box {border-radius: 0 8px 8px 0;}

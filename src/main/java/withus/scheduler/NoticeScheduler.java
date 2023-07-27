@@ -14,7 +14,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import withus.controller.MedicationController;
 import withus.entity.Tbl_medication_alarm;
 import withus.entity.Tbl_outpatient_visit_alarm;
 import withus.entity.User;

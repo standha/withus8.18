@@ -29,6 +29,17 @@ public class Tbl_medication_alarm {
     @Column(name = "medication_alarm_onoff_dinner")
     private boolean alarmOnoffDinner = true;
 
+
+    @Column(name="morning")
+    private String morning;
+
+
+    @Column(name="lunch")
+    private String lunch;
+
+    @Column(name="dinner")
+    private String dinner;
+
     @Column(name = "medication_Time_Morning")
     private LocalTime medicationTimeMorning;
 

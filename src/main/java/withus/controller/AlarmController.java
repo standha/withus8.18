@@ -11,6 +11,7 @@ import withus.dto.Result;
 import withus.entity.*;
 import withus.service.AlarmService;
 import withus.service.CountService;
+import withus.service.MedicationService;
 import withus.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,16 +20,20 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
+import static withus.entity.QUser.user;
+
 @Controller
 public class AlarmController extends BaseController {
     private final AlarmService alarmService;
+    private final MedicationService medicationService;
     private final CountService countService;
 
     @Autowired
-    public AlarmController(AuthenticationFacade authenticationFacade, UserService userService, AlarmService alarmService, CountService countService) {
+    public AlarmController(AuthenticationFacade authenticationFacade, UserService userService, AlarmService alarmService, CountService countService, MedicationService medicationService) {
         super(userService, authenticationFacade);
         this.alarmService = alarmService;
         this.countService = countService;
+        this.medicationService = medicationService;
     }
 
     @GetMapping("/alarm")
@@ -96,7 +101,7 @@ public class AlarmController extends BaseController {
 
         modelAndView.addObject("alarmOnoffMorning", alarm.isAlarmOnoffMorning());
         modelAndView.addObject("alarmOnoffLunch", alarm.isAlarmOnoffLunch());
-        modelAndView.addObject("alarmOnoffDinner",alarm.isAlarmOnoffDinner());
+        modelAndView.addObject("alarmOnoffDinner", alarm.isAlarmOnoffDinner());
 
         modelAndView.addObject("type", user.getType());
         modelAndView.addObject("week", user.getWeek());
@@ -106,6 +111,70 @@ public class AlarmController extends BaseController {
 
         return modelAndView;
     }
+
+    @GetMapping("/medication")
+    public ModelAndView getMedication(HttpServletRequest request) {
+        logger.info("getmedication success ");
+        ModelAndView modelAndView = new ModelAndView("medication/medication");
+        User user = getUser();
+
+
+        Tbl_medication_alarm intakemedi = medicationService.getFinshedIntake(getUsername());
+
+
+        modelAndView.addObject("alarmOnoffMorning", intakemedi.isAlarmOnoffMorning());
+        modelAndView.addObject("alarmOnoffLunch", intakemedi.isAlarmOnoffLunch());
+        modelAndView.addObject("alarmOnoffDinner", intakemedi.isAlarmOnoffDinner());
+//        RecordKey recordKey = RecordKey.builder().build();
+//        String morningValue = medicationService.getMorningValue(recordKey);
+//        String lunchValue = medicationService.getLunchValue(recordKey);
+//        String dinnerValue = medicationService.getDinnerValue(recordKey);
+////
+//
+//        if (medicationService.getFinishCheck(RecordKey.builder().build()) == null) {
+//
+//            modelAndView.addObject("morning", "");
+//            modelAndView.addObject("lunch", "");
+//            modelAndView.addObject("dinner", "");
+//
+//
+//        } else {
+
+//            modelAndView.addObject("moring", morningValue);
+//            modelAndView.addObject("lunch", lunchValue);
+//            modelAndView.addObject("dinner", dinnerValue);
+//
+
+
+//        tbl_medication_alarm medication = medicationService.getMedicationId(getConnectId())
+//        modelAndView.addObject("medication",medication.getMedication());
+
+
+        if (intakemedi.getMorning() == null || intakemedi.getLunch() == null || intakemedi.getDinner() == null) {
+
+            modelAndView.addObject("morning", "");
+            modelAndView.addObject("lunch", "");
+            modelAndView.addObject("dinner", "");
+        } else {
+            modelAndView.addObject("morning", intakemedi.getMorning());
+            modelAndView.addObject("lunch", intakemedi.getLunch());
+            modelAndView.addObject("dinner", intakemedi.getDinner());
+        }
+
+        if (user.getType() == User.Type.PATIENT) {
+            Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("count", count);
+        }
+
+
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("type", user.getType());
+        modelAndView.addObject("week", user.getWeek());
+        modelAndView.addObject("prieviousUrl", "/center");
+
+        return modelAndView;
+    }
+
 
     @GetMapping("/pill-history")
     public ModelAndView getPillHistory(@RequestParam(required = false) Integer year, @RequestParam(required = false) Integer month) {
@@ -253,4 +322,40 @@ public class AlarmController extends BaseController {
                 .data(saved)
                 .build();
     }
+
+
+    @PostMapping(value = "/medication", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Result<Tbl_medication_alarm> postMedication(@RequestBody Tbl_medication_alarm tbl_medication_alarm) {
+        User user = getUser();
+        tbl_medication_alarm.setId(getConnectId());
+
+
+//        tbl_medication_record.getPk();
+        Result.Code code;
+        Tbl_medication_alarm saved = null;
+
+        logger.info("medication post mapping");
+
+        try {
+            if (user.getType() == User.Type.PATIENT && user.getWeek() != 25) {
+                saved = medicationService.upsertMedicationCheck(tbl_medication_alarm);
+                code = Result.Code.OK;
+
+            } else if (user.getWeek() == 25) {
+                throw new IllegalStateException("25 Weeks User try input data [warn]");
+            } else {
+                throw new IllegalStateException("Caregiver try input data [warn]");
+            }
+        } catch (Exception exception) {
+            logger.error(exception.getLocalizedMessage(), exception);
+            code = Result.Code.ERROR_DATABASE;
+        }
+        return Result.<Tbl_medication_alarm>builder()
+                .code(code)
+                .data(saved)
+                .build();
+    }
+
+
 }
