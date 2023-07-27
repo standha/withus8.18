@@ -280,11 +280,11 @@ public class MoistureNatriumController extends BaseController {
         User user = getUser();
         User.Type type = user.getType();
         if (user.getType() == User.Type.PATIENT) {
-            Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
-            model.addAttribute("count", count);
+            Tbl_patient_main_button_count mainCount = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            model.addAttribute("count", mainCount);
         } else if (user.getType() == User.Type.CAREGIVER) {
-            Tbl_caregiver_main_button_count count = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
-            model.addAttribute("count", count);
+            Tbl_caregiver_main_button_count mainCount = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            model.addAttribute("count", mainCount);
         }
 
         model.addAttribute("user", user);

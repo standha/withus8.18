@@ -15,13 +15,82 @@
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/moistureNatrium/natrium.js}"></script>
     <script th:src="@{/js/help.js}"></script>
-
     <script th:src="@{/js/home.js}"></script>
     <script th:src="@{/js/subButton.js}"></script>
     <script th:src="@{/js/detailButton.js}"></script>
 </head>
 <body>
 <input type="hidden" id="helper-request" th:attr="value=@{/helper-request}">
+
+<!-- buttonCount -->
+<input type="hidden" id="button-count" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25" th:attr="value=@{/patient-detail-button-count}">
+<input type="hidden" id="button-count" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25" th:attr="value=@{/caregiver-detail-button-count}">
+
+<div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
+  <input type='hidden' name="symptom" th:value="${mainCount.symptom}" style="display:none">
+  <input type='hidden' name="medicine" th:value="${mainCount.medicine}" style="display:none">
+  <input type='hidden' name="mindHealth" th:value="${mainCount.mindHealth}" style="display:none">
+  <input type='hidden' name="board" th:value="${mainCount.board}" style="display:none">
+  <input type='hidden' name="alarm" th:value="${mainCount.alarm}" style="display:none">
+  <input type='hidden' name="bloodPressure" th:value="${mainCount.bloodPressure}" style="display:none">
+  <input type='hidden' name="diseaseInfo" th:value="${mainCount.diseaseInfo}" style="display:none">
+  <input type='hidden' name="exercise" th:value="${mainCount.exercise}" style="display:none">
+  <input type='hidden' name="goal" th:value="${mainCount.goal}" style="display:none">
+  <input type='hidden' name="helper" th:value="${mainCount.helper}" style="display:none">
+  <input type='hidden' name="level" th:value="${mainCount.level}" style="display:none">
+  <input type='hidden' name="natriumMoisture" th:value="${mainCount.natriumMoisture}" style="display:none">
+  <input type='hidden' name="weight" th:value="${mainCount.weight}" style="display:none">
+  <input type='hidden' name="withusRang" th:value="${mainCount.withusRang}" style="display:none">
+  <input type='hidden' name="infoEdit" th:value="${mainCount.infoEdit}" style="display:none">
+  <input type='hidden' name="board" th:value="${mainCount.board}" style="display:none">
+
+  <input type='hidden' name="recommendDiet" th:value="${detailCount.recommendDiet}" style="display:none">
+  <input type='hidden' name="meditation" th:value="${detailCount.meditation}" style="display:none">
+  <input type='hidden' name="bodyActivity" th:value="${detailCount.bodyActivity}" style="display:none">
+  <input type='hidden' name="deepBreath" th:value="${detailCount.deepBreath}" style="display:none">
+  <input type='hidden' name="consulting" th:value="${detailCount.consulting}" style="display:none">
+  <input type='hidden' name="medicineAlarm" th:value="${detailCount.medicineAlarm}" style="display:none">
+  <input type='hidden' name="bloodPressureAlarm" th:value="${detailCount.bloodPressureAlarm}" style="display:none">
+  <input type='hidden' name="exerciseAlarm" th:value="${detailCount.exerciseAlarm}" style="display:none">
+  <input type='hidden' name="symptomAlarm" th:value="${detailCount.symptomAlarm}" style="display:none">
+  <input type='hidden' name="natriumMoistureAlarm" th:value="${detailCount.natriumMoistureAlarm}" style="display:none">
+  <input type='hidden' name="waterIntakeAlarm" th:value="${detailCount.waterIntakeAlarm}" style="display:none">
+  <input type='hidden' name="weightAlarm" th:value="${detailCount.weightAlarm}" style="display:none">
+  <input type='hidden' name="mindScoreAlarm" th:value="${detailCount.mindScoreAlarm}" style="display:none">
+</div>
+<div th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25">
+  <input type='hidden' name="goal" th:value="${mainCount.goal}" style="display:none">
+  <input type='hidden' name="level" th:value="${mainCount.level}" style="display:none">
+  <input type='hidden' name="withusRang" th:value="${mainCount.withusRang}" style="display:none">
+  <input type='hidden' name="diseaseInfo" th:value="${mainCount.diseaseInfo}" style="display:none">
+  <input type='hidden' name="helper" th:value="${mainCount.helper}" style="display:none">
+  <input type='hidden' name="medicine" th:value="${mainCount.medicine}" style="display:none">
+  <input type='hidden' name="bloodPressure" th:value="${mainCount.bloodPressure}" style="display:none">
+  <input type='hidden' name="exercise" th:value="${mainCount.exercise}" style="display:none">
+  <input type='hidden' name="familyObservation" th:value="${mainCount.familyObservation}" style="display:none">
+  <input type='hidden' name="dietManagement" th:value="${mainCount.dietManagement}" style="display:none">
+  <input type='hidden' name="weight" th:value="${mainCount.weight}" style="display:none">
+  <input type='hidden' name="mindHealth" th:value="${mainCount.mindHealth}" style="display:none">
+  <input type='hidden' name="alarm" th:value="${mainCount.alarm}" style="display:none">
+  <input type='hidden' name="board" th:value="${mainCount.board}" style="display:none">
+  <input type='hidden' name="infoEdit" th:value="${mainCount.infoEdit}" style="display:none">
+
+  <input type='hidden' name="recommendDiet" th:value="${detailCount.recommendDiet}" style="display:none">
+  <input type='hidden' name="meditation" th:value="${detailCount.meditation}" style="display:none">
+  <input type='hidden' name="bodyActivity" th:value="${detailCount.bodyActivity}" style="display:none">
+  <input type='hidden' name="deepBreath" th:value="${detailCount.deepBreath}" style="display:none">
+  <input type='hidden' name="consulting" th:value="${detailCount.consulting}" style="display:none">
+  <input type='hidden' name="medicineAlarm" th:value="${detailCount.medicineAlarm}" style="display:none">
+  <input type='hidden' name="bloodPressureAlarm" th:value="${detailCount.bloodPressureAlarm}" style="display:none">
+  <input type='hidden' name="exerciseAlarm" th:value="${detailCount.exerciseAlarm}" style="display:none">
+  <input type='hidden' name="symptomAlarm" th:value="${detailCount.symptomAlarm}" style="display:none">
+  <input type='hidden' name="natriumMoistureAlarm" th:value="${detailCount.natriumMoistureAlarm}" style="display:none">
+  <input type='hidden' name="lewaterIntakeAlarmvel" th:value="${detailCount.waterIntakeAlarm}" style="display:none">
+  <input type='hidden' name="weightAlarm" th:value="${detailCount.weightAlarm}" style="display:none">
+  <input type='hidden' name="mindDiaryAlarm" th:value="${detailCount.mindDiaryAlarm}" style="display:none">
+  <input type='hidden' name="mindScoreAlarm" th:value="${detailCount.mindScoreAlarm}" style="display:none">
+</div>
+<!-- buttonCount -->
 <div class="skip-navi">
     <a href="#content">본문 바로가기</a>
 </div>
@@ -180,75 +249,7 @@
     </footer>
     <!-- // footer -->
 
-  <!-- buttonCount -->
-  <input type="hidden" id="button-count" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25" th:attr="value=@{/patient-detail-button-count}">
-  <input type="hidden" id="button-count" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25" th:attr="value=@{/caregiver-detail-button-count}">
 
-  <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
-    <input type='hidden' name="symptom" th:value="${mainCount.symptom}" style="display:none">
-    <input type='hidden' name="medicine" th:value="${mainCount.medicine}" style="display:none">
-    <input type='hidden' name="mindHealth" th:value="${mainCount.mindHealth}" style="display:none">
-    <input type='hidden' name="board" th:value="${mainCount.board}" style="display:none">
-    <input type='hidden' name="alarm" th:value="${mainCount.alarm}" style="display:none">
-    <input type='hidden' name="bloodPressure" th:value="${mainCount.bloodPressure}" style="display:none">
-    <input type='hidden' name="diseaseInfo" th:value="${mainCount.diseaseInfo}" style="display:none">
-    <input type='hidden' name="exercise" th:value="${mainCount.exercise}" style="display:none">
-    <input type='hidden' name="goal" th:value="${mainCount.goal}" style="display:none">
-    <input type='hidden' name="helper" th:value="${mainCount.helper}" style="display:none">
-    <input type='hidden' name="level" th:value="${mainCount.level}" style="display:none">
-    <input type='hidden' name="natriumMoisture" th:value="${mainCount.natriumMoisture}" style="display:none">
-    <input type='hidden' name="weight" th:value="${mainCount.weight}" style="display:none">
-    <input type='hidden' name="withusRang" th:value="${mainCount.withusRang}" style="display:none">
-    <input type='hidden' name="infoEdit" th:value="${mainCount.infoEdit}" style="display:none">
-    <input type='hidden' name="board" th:value="${mainCount.board}" style="display:none">
-
-    <input type='hidden' name="recommendDiet" th:value="${detailCount.recommendDiet}" style="display:none">
-    <input type='hidden' name="meditation" th:value="${detailCount.meditation}" style="display:none">
-    <input type='hidden' name="bodyActivity" th:value="${detailCount.bodyActivity}" style="display:none">
-    <input type='hidden' name="deepBreath" th:value="${detailCount.deepBreath}" style="display:none">
-    <input type='hidden' name="consulting" th:value="${detailCount.consulting}" style="display:none">
-    <input type='hidden' name="medicineAlarm" th:value="${detailCount.medicineAlarm}" style="display:none">
-    <input type='hidden' name="bloodPressureAlarm" th:value="${detailCount.bloodPressureAlarm}" style="display:none">
-    <input type='hidden' name="exerciseAlarm" th:value="${detailCount.exerciseAlarm}" style="display:none">
-    <input type='hidden' name="symptomAlarm" th:value="${detailCount.symptomAlarm}" style="display:none">
-    <input type='hidden' name="natriumMoistureAlarm" th:value="${detailCount.natriumMoistureAlarm}" style="display:none">
-    <input type='hidden' name="lewaterIntakeAlarmvel" th:value="${detailCount.waterIntakeAlarm}" style="display:none">
-    <input type='hidden' name="weightAlarm" th:value="${detailCount.weightAlarm}" style="display:none">
-    <input type='hidden' name="mindScoreAlarm" th:value="${detailCount.mindScoreAlarm}" style="display:none">
-  </div>
-  <div th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25">
-    <input type='hidden' name="goal" th:value="${mainCount.goal}" style="display:none">
-    <input type='hidden' name="level" th:value="${mainCount.level}" style="display:none">
-    <input type='hidden' name="withusRang" th:value="${mainCount.withusRang}" style="display:none">
-    <input type='hidden' name="diseaseInfo" th:value="${mainCount.diseaseInfo}" style="display:none">
-    <input type='hidden' name="helper" th:value="${mainCount.helper}" style="display:none">
-    <input type='hidden' name="medicine" th:value="${mainCount.medicine}" style="display:none">
-    <input type='hidden' name="bloodPressure" th:value="${mainCount.bloodPressure}" style="display:none">
-    <input type='hidden' name="exercise" th:value="${mainCount.exercise}" style="display:none">
-    <input type='hidden' name="familyObservation" th:value="${mainCount.familyObservation}" style="display:none">
-    <input type='hidden' name="dietManagement" th:value="${mainCount.dietManagement}" style="display:none">
-    <input type='hidden' name="weight" th:value="${mainCount.weight}" style="display:none">
-    <input type='hidden' name="mindHealth" th:value="${mainCount.mindHealth}" style="display:none">
-    <input type='hidden' name="alarm" th:value="${mainCount.alarm}" style="display:none">
-    <input type='hidden' name="board" th:value="${mainCount.board}" style="display:none">
-    <input type='hidden' name="infoEdit" th:value="${mainCount.infoEdit}" style="display:none">
-
-    <input type='hidden' name="recommendDiet" th:value="${detailCount.recommendDiet}" style="display:none">
-    <input type='hidden' name="meditation" th:value="${detailCount.meditation}" style="display:none">
-    <input type='hidden' name="bodyActivity" th:value="${detailCount.bodyActivity}" style="display:none">
-    <input type='hidden' name="deepBreath" th:value="${detailCount.deepBreath}" style="display:none">
-    <input type='hidden' name="consulting" th:value="${detailCount.consulting}" style="display:none">
-    <input type='hidden' name="medicineAlarm" th:value="${detailCount.medicineAlarm}" style="display:none">
-    <input type='hidden' name="bloodPressureAlarm" th:value="${detailCount.bloodPressureAlarm}" style="display:none">
-    <input type='hidden' name="exerciseAlarm" th:value="${detailCount.exerciseAlarm}" style="display:none">
-    <input type='hidden' name="symptomAlarm" th:value="${detailCount.symptomAlarm}" style="display:none">
-    <input type='hidden' name="natriumMoistureAlarm" th:value="${detailCount.natriumMoistureAlarm}" style="display:none">
-    <input type='hidden' name="lewaterIntakeAlarmvel" th:value="${detailCount.waterIntakeAlarm}" style="display:none">
-    <input type='hidden' name="weightAlarm" th:value="${detailCount.weightAlarm}" style="display:none">
-    <input type='hidden' name="mindDiaryAlarm" th:value="${detailCount.mindDiaryAlarm}" style="display:none">
-    <input type='hidden' name="mindScoreAlarm" th:value="${detailCount.mindScoreAlarm}" style="display:none">
-  </div>
-  <!-- buttonCount -->
 </div>
 <!--// wrap -->
 
