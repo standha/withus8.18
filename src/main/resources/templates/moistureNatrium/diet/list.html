@@ -1,7 +1,7 @@
 <html layout:decorate="~{moistureNatrium/diet/layout}">
 <div layout:fragment="content">
   <div th:each="diet, loop : ${list}">
-    <div class="row mx-0 border-bottom">
+    <div class="row mx-0 border-bottom" th:onclick="|location.href='@{|/diet/${diet.id}|}'|">
       <div class="col">
         <img th:src="@{${diet.image}}">
       </div>
