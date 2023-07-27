@@ -8,9 +8,11 @@
         <h2 th:text="${diet.subject}"></h2>
       </div>
       <div>
-        <p>재료</p>
+        <p th:if="${diet.ingredient}">재료</p>
         <p th:text="${diet.ingredient}"></p>
-        <p>양념</p>
+        <p th:if="${diet.stock}">육수</p>
+        <p th:text="${diet.stock}"></p>
+        <p th:if="${diet.sause}">양념</p>
         <p th:text="${diet.sause}"></p>
       </div>
 
