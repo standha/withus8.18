@@ -137,10 +137,10 @@
                 </div>
                 <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25" class="btn-wrap2 grid4">
                     <button id="saveButton" class="btn xlg1 type01" onclick="bloodPressure_caregiver()">보호자에게 알림</button>
-                    <button type="submit" class="btn xlg1 type01" onClick="submit_Click()">저장</button>
+                    <button type="submit" class="btn xlg1 type01">저장</button>
                 </div>
                 <div th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25" class="btn-wrap type01">
-                    <button class="btn xlg type02" type="submit" onClick="submit_Click()">저장</button>
+                    <button class="btn xlg type02" type="submit">저장</button>
                 </div>
             </div>
             <div class="dim-layer" style="display: none" id="dim"></div>

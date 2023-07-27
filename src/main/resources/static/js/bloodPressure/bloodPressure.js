@@ -12,6 +12,7 @@ function onFormSubmission(form) {
          relaxation = form.querySelector("input[name=relaxation]").value;
          pressure = form.querySelector("input[name=pressure]").value;
         inputCheck = true;
+        submit_Click();
     }
     if(inputCheck === false){
         alert("모든 데이터를 입력해주세요.");
@@ -56,6 +57,37 @@ function showHistory() {
 function bloodPressure_caregiver() {
     var Item;
     if(inputCheck){
+        if(document.getElementsByTagName("form")[0].querySelector("input[name=contraction]").value == 0 ||
+            document.getElementsByTagName("form")[0].querySelector("input[name=relaxation]").value == 0 ||
+            document.getElementsByTagName("form")[0].querySelector("input[name=pressure]").value == 0){
+        } else {
+            const body = {
+                contraction: document.getElementsByTagName("form")[0].querySelector("input[name=contraction]").value,
+                relaxation: document.getElementsByTagName("form")[0].querySelector("input[name=relaxation]").value,
+                pressure: document.getElementsByTagName("form")[0].querySelector("input[name=pressure]").value
+            };
+            const url = document.getElementsByTagName("form")[0].action;
+            const options = {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            };
+            fetch(url, options)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.code === 'OK') {
+                        console.log("입력 성공하였습니다.")
+                    }  else {
+                        console.log("기록 실패하였습니다. 관리자에게 문의해주세요.");
+                        alert("기록 실패하였습니다. 관리자에게 문의해주세요.");
+                    }
+                });
+        }
+
         $("#layerSelectType").show();
         $("#dim").show();
         $("#buttonCaregiverType").show();
@@ -68,36 +100,7 @@ function bloodPressure_caregiver() {
             $("#layerSelectType").hide();
             $("#dim").hide();
             $("#buttonCaregiverType").hide();
-            if(document.getElementsByTagName("form")[0].querySelector("input[name=contraction]").value == 0 ||
-                document.getElementsByTagName("form")[0].querySelector("input[name=relaxation]").value == 0 ||
-                document.getElementsByTagName("form")[0].querySelector("input[name=pressure]").value == 0){
-            } else {
-                const body = {
-                    contraction: document.getElementsByTagName("form")[0].querySelector("input[name=contraction]").value,
-                    relaxation: document.getElementsByTagName("form")[0].querySelector("input[name=relaxation]").value,
-                    pressure: document.getElementsByTagName("form")[0].querySelector("input[name=pressure]").value
-                };
-                const url = document.getElementsByTagName("form")[0].action;
-                const options = {
-                    method: "POST",
-                    headers: {
-                        "Accept": "application/json",
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(body)
-                };
-                fetch(url, options)
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
-                        if (data.code === 'OK') {
-                            console.log("입력 성공하였습니다.")
-                        }  else {
-                            console.log("기록 실패하였습니다. 관리자에게 문의해주세요.");
-                            alert("기록 실패하였습니다. 관리자에게 문의해주세요.");
-                        }
-                    });
-            }
+
             window.location.reload();
             return false;
         });

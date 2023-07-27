@@ -18,6 +18,23 @@
 	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@2.0.1/dist/chartjs-plugin-annotation.min.js"></script>
 	<script th:src="@{/js/common.js}"></script>
 	<script th:src="@{/js/help.js}"></script>
+	<style>
+		.weightThead th {
+			padding: 0.7em 0.3em;
+			text-align: center;
+			font-weight: normal;
+			border: 0;
+			font-size: 0.81rem;
+			color: #666;
+		}
+		tbody td {
+			position: relative;
+			border: 1px solid #e8eaed;
+			text-align: center;
+			height: 61.4px;
+			padding-top: 1.4%;
+		}
+	</style>
 </head>
 <body>
 <input type="hidden" id="button-count" th:attr="value=@{/button-count}">
@@ -114,6 +131,45 @@
 		</div>
 		<div class="cont-wrap type01">
 			<div id="dateRecord" class="size-lg"></div>
+			<table>
+				<thead>
+					<tr class="weightThead">
+						<th scope="col" class="ui-datepicker-week-end">
+							<span title="일요일">일</span>
+						</th>
+						<th scope="col">
+							<span title="월요일">월</span>
+						</th>
+						<th scope="col">
+							<span title="화요일">화</span>
+						</th>
+						<th scope="col">
+							<span title="수요일">수</span>
+						</th>
+						<th scope="col">
+							<span title="목요일">목</span>
+						</th>
+						<th scope="col">
+
+							<span title="금요일">금</span>
+						</th>
+						<th scope="col" class="ui-datepicker-week-end">
+							<span title="토요일">토</span>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+				<tr class="weightDiary">
+					<td><span style="font-weight: normal; color:#666;" id="sunDate">24</span><span id="sunWeight"></span></td>
+					<td><span style="font-weight: normal; color:#666;" id="monDate">25</span><span id="monWeight"></span></td>
+					<td><span style="font-weight: normal; color:#666;" id="tueDate">26</span><span id="tueWeight"></span></td>
+					<td><span style="font-weight: normal; color:#666;" id="wedDate">27</span><span id="wedWeight"></span></td>
+					<td><span style="font-weight: normal; color:#666;" id="thuDate">28</span><span id="thuWeight"></span></td>
+					<td><span style="font-weight: normal; color:#666;" id="friDate">29</span><span id="friWeight"></span></td>
+					<td><span style="font-weight: normal; color:#666;" id="satDate">30</span><span id="satWeight"></span></td>
+				</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 	<!-- // content -->
@@ -122,156 +178,151 @@
 <!--// wrap -->
 
 <script th:inline="javascript">
+	/*<![CDATA[*/
+	var weightRecord = /*[[ ${weightRecord} ]]*/;
+	/*]]*/
 
-	$.datepicker._generateHTML = (function (){
-		var realGenerateHtml = $.datepicker._generateHTML;
-		return function (instance) {
-			var html = realGenerateHtml.apply(this, arguments), $temp;
+	var today = new Date();
 
-			if ( instance.input.is(".size-lg") ) {
-				$temp = $("<table></table>").append(html);
-				$temp.find(".ui-datepicker-title").each(function () {
+	var year = today.getFullYear();
+	var month = ('0' + (today.getMonth() + 1)).slice(-2);
+	var day = ('0' + today.getDate()).slice(-2);
 
-					var year = $(this).find('.ui-datepicker-year').text();
-					var month = $(this).find('.ui-datepicker-month').data();
-					var day = $(this).find('.ui-datepicker-day').text();
+	var dateString = year + '-' + month;
 
-					var monthStr, dayStr;
-					monthStr = (month+1).toString();
-					if(monthStr.length == 1){
-						monthStr = "0" + monthStr;
-					}
-					dayStr = day.toString();
-					if(dayStr.length == 1){
-						dayStr = "0" + dayStr;
-					}
-					var str = year.toString() + "-" + monthStr + "-" + dayStr;
+	var date = [];
+	var weight = [];
+	var height = /*[[ ${height} ]]*/;
+	height = parseInt(height);
 
+	const underWeightMax = height* height / 10000 * 18.5;
+	const normalWeightMax = height*height / 10000 * 23;
+	const overWeightMax = height*height / 10000 * 25;
+	console.log(underWeightMax);
+	var j = 0;
+	for(i=0; i<weightRecord.length; i++)
+	{
+		if(dateString == weightRecord[i].pk.date.substr(0, 7))
+		{
+			date[j] = weightRecord[i].pk.date.substr(8, 2);
+			weight[j] = weightRecord[i].weight;
+			j++;
+		}
+	}
+	var ctx = document.getElementById('myChart').getContext('2d');
+	var data = {
+		labels: date,
+		datasets: [{
+			label: '체중',
+			data: weight,
+			fill: true,
+			spanGaps: false,
+			borderWidth: 2,
+			borderColor: '#21bc97',
+			pointBackgroundColor: '#21bc97',
+			pointBorderColor: '#21bc97',
+			pointRadius: 1.5
+		}]
+	};
 
-					/*<![CDATA[*/
-					var weightRecord = /*[[ ${weightRecord} ]]*/;
-					/*]]*/
-
-					var date = [];
-					var weight = [];
-					var height = /*[[ ${height} ]]*/;
-					height = parseInt(height);
-
-					const underWeightMax = height* height / 10000 * 18.5;
-					const normalWeightMax = height*height / 10000 * 23;
-					const overWeightMax = height*height / 10000 * 25;
-					console.log(underWeightMax);
-					var j = 0;
-					for(i=0; i<weightRecord.length; i++)
-					{
-						if(str == weightRecord[i].pk.date.substr(0, 7))
-						{
-							date[j] = weightRecord[i].pk.date.substr(8, 2);
-							weight[j] = weightRecord[i].weight;
-							j++;
+	var myChart = new Chart(ctx, {
+		type: 'line',
+		data: data,
+		options: {
+			scales:{
+				y:{
+					min: function(){
+						if(weight.length === 0){
+							return 20;
+						} else {
+							return weight[0] -5;
+						}
+					},
+					max:function(){
+						if(weight.length === 0){
+							return 110;
+						} else {
+							return weight[0] +5;
+						}
+					},
+				}
+			},
+			plugins: {
+				annotation: {
+					annotations: {
+						box1: {
+							type: 'box',
+							xMin: 0,
+							xMax: 31,
+							yMin: 20,
+							yMax: underWeightMax,
+							backgroundColor: 'rgb(255,255,65,0.25)',
+							borderWidth: 0
+						},
+						box2: {
+							type: 'box',
+							xMin: 0,
+							xMax: 31,
+							yMin: underWeightMax,
+							yMax: normalWeightMax,
+							backgroundColor: 'rgba(109,197,37,0.25)',
+							borderWidth: 0
+						},
+						box3: {
+							type: 'box',
+							xMin: 0,
+							xMax: 31,
+							yMin: normalWeightMax,
+							yMax: overWeightMax,
+							backgroundColor: 'rgba(239,115,30,0.25)',
+							borderWidth: 0
+						},
+						box4: {
+							type: 'box',
+							xMin: 0,
+							xMax: 31,
+							yMin: overWeightMax,
+							yMax: 200,
+							backgroundColor: 'rgba(255,26,26,0.25)',
+							borderWidth: 0
 						}
 					}
-					var ctx = document.getElementById('myChart').getContext('2d');
-					var data = {
-						labels: date,
-						datasets: [{
-							label: '체중',
-							data: weight,
-							fill: true,
-							spanGaps: false,
-							borderWidth: 2,
-							borderColor: '#21bc97',
-							pointBackgroundColor: '#21bc97',
-							pointBorderColor: '#21bc97',
-							pointRadius: 1.5
-						}]
-					};
-
-					var myChart = new Chart(ctx, {
-						type: 'line',
-						data: data,
-						options: {
-							scales:{
-								y:{
-									min: function(){
-										if(weight.length === 0){
-											return 20;
-										} else {
-											return weight[0] -5;
-										}
-									},
-									max:function(){
-										if(weight.length === 0){
-											return 110;
-										} else {
-											return weight[0] +5;
-										}
-									},
-								}
-							},
-							plugins: {
-								annotation: {
-									annotations: {
-										box1: {
-											type: 'box',
-											xMin: 0,
-											xMax: 31,
-											yMin: 20,
-											yMax: underWeightMax,
-											backgroundColor: 'rgb(255,255,65,0.25)',
-											borderWidth: 0
-										},
-										box2: {
-											type: 'box',
-											xMin: 0,
-											xMax: 31,
-											yMin: underWeightMax,
-											yMax: normalWeightMax,
-											backgroundColor: 'rgba(109,197,37,0.25)',
-											borderWidth: 0
-										},
-										box3: {
-											type: 'box',
-											xMin: 0,
-											xMax: 31,
-											yMin: normalWeightMax,
-											yMax: overWeightMax,
-											backgroundColor: 'rgba(239,115,30,0.25)',
-											borderWidth: 0
-										},
-										box4: {
-											type: 'box',
-											xMin: 0,
-											xMax: 31,
-											yMin: overWeightMax,
-											yMax: 200,
-											backgroundColor: 'rgba(255,26,26,0.25)',
-											borderWidth: 0
-										}
-									}
-								},
-								legend: {
-									display: false
-								},
-								tooltip:{
-									enabled:false
-								}
-							}
-						}
-					});
-				});
-				html = $temp[0].innerHTML;
+				},
+				legend: {
+					display: false
+				},
+				tooltip:{
+					enabled:false
+				}
 			}
+		}
+	});
+	var weekSunday = parseInt(document.getElementById('sunDate').value);
+	var tempMonth
 
-			return html;
-		};
-	})();
 
 
-	$( function() {
-		$( "#dateRecord" ).datepicker();
-	} );
-
+	$(document).ready(function() {
+		// Datepicker 초기화
+		$("#datepicker").datepicker({
+			// 2개월씩 이동하도록 변경
+			stepMonths: 1,
+			// 클릭 횟수를 기록할 변수
+			clickCount: 0,
+			// 달력이 변경될 때 발생하는 이벤트
+			onChangeMonthYear: function(year, month, inst) {
+				// 클릭 횟수를 증가시킴
+				this.clickCount++;
+				// 4번 클릭할 때마다 월을 2개월씩 이동
+				if (this.clickCount % 4 === 0) {
+					$(this).datepicker('setDate', new Date(year, month + 2, 1));
+				}
+				// 'return false;'를 사용하면 기본 동작이 막히고 달력이 변경되지 않습니다.
+				// 'return true;'를 사용하면 변경 후 달력이 업데이트됩니다.
+				return true;
+			}
+		});
+	});
 
 </script>
 
