@@ -1,12 +1,14 @@
 <html layout:decorate="~{moistureNatrium/diet/layout}">
 <div layout:fragment="content">
-  <div th:each="diet, loop : ${list}">
-    <div class="row mx-0 border-bottom">
-      <div class="col">
-        <img th:src="@{${diet.image}}">
-      </div>
-      <div class="col">
-        <h2 th:text="${diet.subject}"></h2>
+  <div class="container bg-white">
+    <div th:each="diet, loop : ${list}">
+      <div class="row align-items-center mx-0 border-bottom" th:onclick="|location.href='@{|/diet/${diet.id}|}'|">
+        <div class="col-5 px-0">
+          <img class="img-fluid mx-auto d-block" th:src="@{${diet.image}}">
+        </div>
+        <div class="col px-0">
+          <h2 th:text="${diet.subject}"></h2>
+        </div>
       </div>
     </div>
   </div>
