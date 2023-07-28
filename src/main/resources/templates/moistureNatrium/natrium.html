@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="kr">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>위더스</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
-    <meta name="format-detection" content="telephone=no">
-    <link th:href="@{/css/reset.css}" rel="stylesheet">
-    <link th:href="@{/css/common.css}" rel="stylesheet">
-    <link th:href="@{/css/layout.css}" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>위더스</title>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+  <meta name="format-detection" content="telephone=no">
+  <link th:href="@{/css/reset.css}" rel="stylesheet">
+  <link th:href="@{/css/common.css}" rel="stylesheet">
+  <link th:href="@{/css/layout.css}" rel="stylesheet">
   
-    <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
-    <script th:src="@{/js/jquery-ui.js}"></script>
-    <script th:src="@{/js/datepicker-ko.js}"></script>
-    <script th:src="@{/js/common.js}"></script>
-    <script th:src="@{/js/moistureNatrium/natrium.js}"></script>
-    <script th:src="@{/js/help.js}"></script>
-    <script th:src="@{/js/home.js}"></script>
-    <script th:src="@{/js/subButton.js}"></script>
-    <script th:src="@{/js/detailButton.js}"></script>
+  <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
+  <script th:src="@{/js/jquery-ui.js}"></script>
+  <script th:src="@{/js/datepicker-ko.js}"></script>
+  <script th:src="@{/js/common.js}"></script>
+  <script th:src="@{/js/moistureNatrium/natrium.js}"></script>
+  <script th:src="@{/js/help.js}"></script>
+  <script th:src="@{/js/home.js}"></script>
+  <script th:src="@{/js/subButton.js}"></script>
+  <script th:src="@{/js/detailButton.js}"></script>
 </head>
 <body>
 <input type="hidden" id="helper-request" th:attr="value=@{/helper-request}">
 
 <!-- buttonCount -->
-<input type="hidden" id="button-count" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25" th:attr="value=@{/patient-detail-button-count}">
-<input type="hidden" id="button-count" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25" th:attr="value=@{/caregiver-detail-button-count}">
+<input type="hidden" id="button-count" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25"
+       th:attr="value=@{/patient-detail-button-count}">
+<input type="hidden" id="button-count" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25"
+       th:attr="value=@{/caregiver-detail-button-count}">
 
 <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
   <input type='hidden' name="symptom" th:value="${mainCount.symptom}" style="display:none">
@@ -44,7 +47,7 @@
   <input type='hidden' name="withusRang" th:value="${mainCount.withusRang}" style="display:none">
   <input type='hidden' name="infoEdit" th:value="${mainCount.infoEdit}" style="display:none">
   <input type='hidden' name="board" th:value="${mainCount.board}" style="display:none">
-
+  
   <input type='hidden' name="recommendDiet" th:value="${detailCount.recommendDiet}" style="display:none">
   <input type='hidden' name="meditation" th:value="${detailCount.meditation}" style="display:none">
   <input type='hidden' name="bodyActivity" th:value="${detailCount.bodyActivity}" style="display:none">
@@ -75,7 +78,7 @@
   <input type='hidden' name="alarm" th:value="${mainCount.alarm}" style="display:none">
   <input type='hidden' name="board" th:value="${mainCount.board}" style="display:none">
   <input type='hidden' name="infoEdit" th:value="${mainCount.infoEdit}" style="display:none">
-
+  
   <input type='hidden' name="recommendDiet" th:value="${detailCount.recommendDiet}" style="display:none">
   <input type='hidden' name="meditation" th:value="${detailCount.meditation}" style="display:none">
   <input type='hidden' name="bodyActivity" th:value="${detailCount.bodyActivity}" style="display:none">
@@ -93,300 +96,243 @@
 </div>
 <!-- buttonCount -->
 <div class="skip-navi">
-    <a href="#content">본문 바로가기</a>
+  <a href="#content">본문 바로가기</a>
 </div>
 <!-- wrap -->
 <div id="wrap" class="salt-page">
-
-    <!-- header -->
-    <header>
-        <div class="header-wrap type01">
-            <div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
-                <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:010-8454-9186" onclick="addHelper()">
-                        <span class="ico-call" ></span>
-                        <span class="txt-rt">도우미</span>
-                    </a>
-                </div>
-                <h2>
-                    <span class="ico-salt-s"></span>
-                    <span>저염식이</span>
-                </h2>
-            </div>
-            <div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
-                <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:010-8454-9186">
-                        <span class="ico-call" ></span>
-                        <span class="txt-rt">도우미</span>
-                    </a>
-                </div>
-                <h2>
-                    <span class="ico-salt-s"></span>
-                    <span>저염식이</span>
-                </h2>
-            </div>
+  
+  <!-- header -->
+  <header>
+    <div class="header-wrap type01">
+      <div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
+        <div onclick="helperRequest()">
+          <a class="btn xsm type07" href="tel:010-8454-9186" onclick="addHelper()">
+            <span class="ico-call"></span>
+            <span class="txt-rt">도우미</span>
+          </a>
         </div>
-    </header>
-    <!-- // header -->
-
-    <!-- content -->
-    <div id="content">
-        <div class="cont-wrap type01">
-            <form id="MemberInfo" th:action="@{/natrium}" method="post" onsubmit="return onFormSubmission(this);">
-            <div class="insert-wrap">
-                <div class="box-wrap">
-                    <p class="box-tit">염도계에 표시된 염도를 선택해주세요.</p>
-                    <ul class="box-list px-0">
-                        <li>
-                            <span class="normal">1.2% <span>이상</span></span>
-                            <span class="round-high">고염</span>
-                        </li>
-                        <li>
-                            <span class="normal">0.7 ~ 1.1%</span>
-                            <span class="round-middle">보통</span>
-                        </li>
-                        <li>
-                            <span class="normal">0.3 ~ 0.6%</span>
-                            <span class="round-row">저염</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <input type="hidden" id="natrium-history-get-action" th:attr="value=@{/natrium-all-history}">
-                <div class="tab-wrap type02">
-                    <p class="tab-tit">아침</p>
-                    <ul class="tab-menu tab-colorbar">
-                        <li id="morning0 col" class="none">
-                            <span class="ico-tab-chk"></span>
-                            <span>식사<br>안함</span>
-                        </li>
-                        <li id="morning1" class="row">
-                            <span class="ico-tab-chk"></span>
-                            <span>저염</span>
-                        </li>
-                        <li id="morning2" class="middle">
-                            <span class="ico-tab-chk"></span>
-                            <span>보통</span>
-                        </li>
-                        <li id="morning3" class="high">
-                            <span class="ico-tab-chk"></span>
-                            <span>고염</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="tab-wrap type02">
-                    <p class="tab-tit">점심</p>
-                    <ul class="tab-menu tab-colorbar">
-                        <li id="lunch0" class="none">
-                            <span class="ico-tab-chk"></span>
-                            <span>식사<br>안함</span>
-                        </li>
-                        <li id="lunch1" class="row">
-                            <span class="ico-tab-chk"></span>
-                            <span>저염</span>
-                        </li>
-                        <li id="lunch2" class="middle">
-                            <span class="ico-tab-chk"></span>
-                            <span>보통</span>
-                        </li>
-                        <li id="lunch3" class="high">
-                            <span class="ico-tab-chk"></span>
-                            <span>고염</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="tab-wrap type02">
-                    <p class="tab-tit">저녁</p>
-                    <ul class="tab-menu tab-colorbar">
-                        <li id="dinner0" class="none">
-                            <span class="ico-tab-chk"></span>
-                            <span>식사<br>안함</span>
-                        </li>
-                        <li id="dinner1" class="row">
-                            <span class="ico-tab-chk"></span>
-                            <span>저염</span>
-                        </li>
-                        <li id="dinner2" class="middle">
-                            <span class="ico-tab-chk"></span>
-                            <span>보통</span>
-                        </li>
-                        <li id="dinner3" class="high">
-                            <span class="ico-tab-chk"></span>
-                            <span>고염</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-              
-              <!-- 보호자에게 알림 -->
-              <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT}  and ${week} != 25">
-                <div class="footer-wrap">
-                  <div class="btn-wrap type01">
-                    <button type="button" class="btn xlg type01" data-bs-toggle="modal" th:attr="data-bs-target='#Alarm'">보호자에게 알림</button>
-                    <!-- modal -->
-                    <div class="modal fade" th:id="Alarm" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-                      <div class="modal-dialog modal-dialog-centered modal-sm">
-                        <div class="modal-content align-items-center">
-                          <div class="modal-body text-center">
-                            보호자에게 먹은 식단을 알릴까요?
-                          </div>
-                          <div class="row border-top w-100">
-                            <div class="col px-0 py-2 text-center">
-                              <a style="text-decoration: none;" data-bs-dismiss="modal">
-                                <div class="text-dark">
-                                  아니요
-                                </div>
-                              </a>
-                            </div>
-                            <div class="col px-0 py-2 text-center" style="background-color: #0ddf6a; max-width: 50%; border-bottom-right-radius: 8px;">
-                              <button type="submit" class="text-white" style="text-decoration: none;">
-                                저장 및 알림
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- modal end -->
-                  </div>
-                </div>
-                <!-- 보호자에게 알림 끝 -->
-                
-                <!-- 저장 -->
-                <div class="col footer-wrap">
-                  <div class="btn-wrap type01">
-                    <button type="submit" class="btn xlg type01" data-bs-toggle="modal" th:attr="data-bs-target='#Save'">저장</button>
-                    <!-- modal -->
-                    <div class="modal fade" th:id="Save" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-                      <div class="modal-dialog modal-dialog-centered modal-sm">
-                        <div class="modal-content align-items-center">
-                          <div class="modal-body text-center">
-                            기록이 완료되었습니다.
-                          </div>
-                          <div class="row border-top w-100">
-                            <div class="col px-0 py-2 text-center">
-                              <a style="text-decoration: none;" data-bs-dismiss="modal">
-                                <div class="text-dark">
-                                  확인
-                                </div>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- modal end -->
-                  </div>
-                </div>
-                <!-- 저장 끝 -->
-                
-              </div>
-              
-              <!-- 보호자
-              <div th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}  or ${week} == 25" class="footer-wrap">
-                <div class="btn-wrap type01">
-                  <button type="submit" class="btn xlg type02" disabled>저장</button>
-                </div>
-              </div>
-               -->
-              
-              <!-- 알림과 입력 -->
-              
-          </form>
-          <div class="footer-wrap">
-            <div class="btn-wrap type01">
-              <a class="btn xlg type02" style="text-align: center;" th:href="@{/diet}" onclick="postButtonCount('recommendDiet')">저염식이 식단추천</a>
-            </div>
+        <h2>
+          <span class="ico-salt-s"></span>
+          <span>저염식이</span>
+        </h2>
+      </div>
+      <div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
+        <div onclick="helperRequest()">
+          <a class="btn xsm type07" href="tel:010-8454-9186">
+            <span class="ico-call"></span>
+            <span class="txt-rt">도우미</span>
+          </a>
+        </div>
+        <h2>
+          <span class="ico-salt-s"></span>
+          <span>저염식이</span>
+        </h2>
+      </div>
+    </div>
+  </header>
+  <!-- // header -->
+  
+  <!-- content -->
+  <div id="content">
+    <div class="cont-wrap type01">
+      <form id="MemberInfo" th:action="@{/natrium}" method="post" onsubmit="return onFormSubmission(this);">
+        <div class="insert-wrap">
+          <div class="box-wrap">
+            <p class="box-tit">염도계에 표시된 염도를 선택해주세요.</p>
+            <ul class="box-list px-0">
+              <li>
+                <span class="normal">1.2% <span>이상</span></span>
+                <span class="round-high">고염</span>
+              </li>
+              <li>
+                <span class="normal">0.7 ~ 1.1%</span>
+                <span class="round-middle">보통</span>
+              </li>
+              <li>
+                <span class="normal">0.3 ~ 0.6%</span>
+                <span class="round-row">저염</span>
+              </li>
+            </ul>
+          </div>
+          
+          <input type="hidden" id="natrium-history-get-action" th:attr="value=@{/natrium-all-history}">
+          <div class="tab-wrap type02">
+            <p class="tab-tit">아침</p>
+            <ul class="tab-menu tab-colorbar">
+              <li id="morning0" class="none">
+                <span class="ico-tab-chk"></span>
+                <span>식사<br>안함</span>
+              </li>
+              <li id="morning1" class="row">
+                <span class="ico-tab-chk"></span>
+                <span>저염</span>
+              </li>
+              <li id="morning2" class="middle">
+                <span class="ico-tab-chk"></span>
+                <span>보통</span>
+              </li>
+              <li id="morning3" class="high">
+                <span class="ico-tab-chk"></span>
+                <span>고염</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="tab-wrap type02">
+            <p class="tab-tit">점심</p>
+            <ul class="tab-menu tab-colorbar">
+              <li id="lunch0" class="none">
+                <span class="ico-tab-chk"></span>
+                <span>식사<br>안함</span>
+              </li>
+              <li id="lunch1" class="row">
+                <span class="ico-tab-chk"></span>
+                <span>저염</span>
+              </li>
+              <li id="lunch2" class="middle">
+                <span class="ico-tab-chk"></span>
+                <span>보통</span>
+              </li>
+              <li id="lunch3" class="high">
+                <span class="ico-tab-chk"></span>
+                <span>고염</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="tab-wrap type02">
+            <p class="tab-tit">저녁</p>
+            <ul class="tab-menu tab-colorbar">
+              <li id="dinner0" class="none">
+                <span class="ico-tab-chk"></span>
+                <span>식사<br>안함</span>
+              </li>
+              <li id="dinner1" class="row">
+                <span class="ico-tab-chk"></span>
+                <span>저염</span>
+              </li>
+              <li id="dinner2" class="middle">
+                <span class="ico-tab-chk"></span>
+                <span>보통</span>
+              </li>
+              <li id="dinner3" class="high">
+                <span class="ico-tab-chk"></span>
+                <span>고염</span>
+              </li>
+            </ul>
+          </div>
+          <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25" class="btn-wrap2 grid4">
+            <button id="saveButton" class="btn xlg1 type01" onclick="natrium_caregiver()">보호자에게 알림</button>
+            <button type="submit" class="btn xlg1 type01">저장</button>
           </div>
         </div>
-    </div>
-    <!-- // content -->
-
-    <!-- footer -->
-    <footer>
-        <div class="footer-wrap">
-            <div class="btn-wrap type02">
-                <span class="btn xlg arrow-type02" onclick="showHistory();">
-                    <span>저염식이 실천</span>
-                    <span class="ico-arrow2"></span>
-                </span>
-            </div>
+        <div class="dim-layer" style="display: none" id="dim"></div>
+      </form>
+      <div class="footer-wrap">
+        <div class="btn-wrap type01">
+          <a class="btn xlg type02" style="text-align: center;" th:href="@{/diet}"
+             onclick="postButtonCount('recommendDiet')">저염식이 식단추천</a>
         </div>
-    </footer>
-    <!-- // footer -->
-
+      </div>
+    </div>
+  </div>
+  <!-- // content -->
+  <div class="popup pop-type01" id="layerSelectType" style="display: none">
+    <div class="pop-wrap">
+      <!-- <a href="javascript:void(0);" class="pop-close"></a> -->
+      <div class="popup-header"></div>
+      <div class="popup-body">
+        <!--                <div class="pop-tit" id="popUp1">-->
+        <!--                </div>-->
+        <div class="pop-cont" id="popUp2">
+        </div>
+      </div>
+      <div id="buttonCaregiverType" class="btn-wrap grid2" style="display:none">
+        <button class="btn xlg type07" id="buttonNo">아니요</button>
+        <button class="btn xlg type02" id="buttonOk">저장 및 알림</button>
+      </div>
+      <div id="buttonRecordType" class="btn-wrap grid1" style="display:none">
+        <button class="btn xlg type02" id="buttonCheck" style="border-radius:0px 0px 10px 10px;">확인</button>
+      </div>
+    </div>
+  </div>
+  <!-- footer -->
+  <footer>
+    <div class="footer-wrap">
+      <div class="btn-wrap type02">
+        <span class="btn xlg arrow-type02" onclick="showHistory();">
+          <span>저염식이 실천</span>
+          <span class="ico-arrow2"></span>
+        </span>
+      </div>
+    </div>
+  </footer>
+  <!-- // footer -->
 
 </div>
 <!--// wrap -->
 
 </body>
 <script th:inline="javascript">
-
-    /*<![CDATA[*/
-    var morning = /*[[ ${morning} ]]*/;
-    var lunch = /*[[ ${lunch} ]]*/;
-    var dinner = /*[[ ${dinner} ]]*/;
-    /*]]*/
-
-    switch(morning)
-    {
-        case 0:
-            $('#morning0').attr('class','none active');
-            break;
-
-        case 1:
-            $('#morning1').attr('class','row active');
-            break;
-
-        case 2:
-            $('#morning2').attr('class','middle active');
-            break;
-
-        case 3:
-            $('#morning3').attr('class','high active');
-            break;
-    }
-
-    switch(lunch)
-    {
-        case 0:
-            $('#lunch0').attr('class','none active');
-            break;
-
-        case 1:
-            $('#lunch1').attr('class','row active');
-            break;
-
-        case 2:
-            $('#lunch2').attr('class','middle active');
-            break;
-
-        case 3:
-            $('#lunch3').attr('class','high active');
-            break;
-    }
-
-    switch(dinner)
-    {
-        case 0:
-            $('#dinner0').attr('class','none active');
-            break;
-
-        case 1:
-            $('#dinner1').attr('class','row active');
-            break;
-
-        case 2:
-            $('#dinner2').attr('class','middle active');
-            break;
-
-        case 3:
-            $('#dinner3').attr('class','high active');
-            break;
-    }
-
+  /*<![CDATA[*/
+  var morning = /*[[ ${morning} ]]*/;
+  var lunch = /*[[ ${lunch} ]]*/;
+  var dinner = /*[[ ${dinner} ]]*/;
+  /*]]*/
+  
+  switch (morning) {
+    case 0:
+      $('#morning0').attr('class', 'none active');
+      break;
+    
+    case 1:
+      $('#morning1').attr('class', 'row active');
+      break;
+    
+    case 2:
+      $('#morning2').attr('class', 'middle active');
+      break;
+    
+    case 3:
+      $('#morning3').attr('class', 'high active');
+      break;
+  }
+  
+  switch (lunch) {
+    case 0:
+      $('#lunch0').attr('class', 'none active');
+      break;
+    
+    case 1:
+      $('#lunch1').attr('class', 'row active');
+      break;
+    
+    case 2:
+      $('#lunch2').attr('class', 'middle active');
+      break;
+    
+    case 3:
+      $('#lunch3').attr('class', 'high active');
+      break;
+  }
+  
+  switch (dinner) {
+    case 0:
+      $('#dinner0').attr('class', 'none active');
+      break;
+    
+    case 1:
+      $('#dinner1').attr('class', 'row active');
+      break;
+    
+    case 2:
+      $('#dinner2').attr('class', 'middle active');
+      break;
+    
+    case 3:
+      $('#dinner3').attr('class', 'high active');
+      break;
+  }
 </script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
