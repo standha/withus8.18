@@ -9,6 +9,7 @@
     <link th:href="@{/css/reset.css}" rel="stylesheet">
     <link th:href="@{/css/common.css}" rel="stylesheet">
     <link th:href="@{/css/layout.css}" rel="stylesheet">
+  
     <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
     <script th:src="@{/js/jquery-ui.js}"></script>
     <script th:src="@{/js/datepicker-ko.js}"></script>
@@ -129,13 +130,13 @@
     <!-- // header -->
 
     <!-- content -->
-    <div class="container" id="content">
+    <div id="content">
         <div class="cont-wrap type01">
             <form id="MemberInfo" th:action="@{/natrium}" method="post" onsubmit="return onFormSubmission(this);">
             <div class="insert-wrap">
                 <div class="box-wrap">
                     <p class="box-tit">염도계에 표시된 염도를 선택해주세요.</p>
-                    <ul class="box-list">
+                    <ul class="box-list px-0">
                         <li>
                             <span class="normal">1.2% <span>이상</span></span>
                             <span class="round-high">고염</span>
@@ -155,7 +156,7 @@
                 <div class="tab-wrap type02">
                     <p class="tab-tit">아침</p>
                     <ul class="tab-menu tab-colorbar">
-                        <li id="morning0" class="none">
+                        <li id="morning0 col" class="none">
                             <span class="ico-tab-chk"></span>
                             <span>식사<br>안함</span>
                         </li>
@@ -218,16 +219,81 @@
                     </ul>
                 </div>
             </div>
-            <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT}  and ${week} != 25" class="footer-wrap">
-                <div class="btn-wrap type01">
-                    <button type="submit" class="btn xlg type01">입력</button>
+              
+              <!-- 보호자에게 알림 -->
+              <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT}  and ${week} != 25">
+                <div class="footer-wrap">
+                  <div class="btn-wrap type01">
+                    <button type="button" class="btn xlg type01" data-bs-toggle="modal" th:attr="data-bs-target='#Alarm'">보호자에게 알림</button>
+                    <!-- modal -->
+                    <div class="modal fade" th:id="Alarm" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered modal-sm">
+                        <div class="modal-content align-items-center">
+                          <div class="modal-body text-center">
+                            보호자에게 먹은 식단을 알릴까요?
+                          </div>
+                          <div class="row border-top w-100">
+                            <div class="col px-0 py-2 text-center">
+                              <a style="text-decoration: none;" data-bs-dismiss="modal">
+                                <div class="text-dark">
+                                  아니요
+                                </div>
+                              </a>
+                            </div>
+                            <div class="col px-0 py-2 text-center" style="background-color: #0ddf6a; max-width: 50%; border-bottom-right-radius: 8px;">
+                              <button type="submit" class="text-white" style="text-decoration: none;">
+                                저장 및 알림
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- modal end -->
+                  </div>
                 </div>
-            </div>
-            <div th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}  or ${week} == 25" class="footer-wrap">
-                <div class="btn-wrap type01">
-                    <button type="submit" class="btn xlg type02" disabled>입력</button>
+                <!-- 보호자에게 알림 끝 -->
+                
+                <!-- 저장 -->
+                <div class="col footer-wrap">
+                  <div class="btn-wrap type01">
+                    <button type="submit" class="btn xlg type01" data-bs-toggle="modal" th:attr="data-bs-target='#Save'">저장</button>
+                    <!-- modal -->
+                    <div class="modal fade" th:id="Save" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered modal-sm">
+                        <div class="modal-content align-items-center">
+                          <div class="modal-body text-center">
+                            기록이 완료되었습니다.
+                          </div>
+                          <div class="row border-top w-100">
+                            <div class="col px-0 py-2 text-center">
+                              <a style="text-decoration: none;" data-bs-dismiss="modal">
+                                <div class="text-dark">
+                                  확인
+                                </div>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- modal end -->
+                  </div>
                 </div>
-            </div>
+                <!-- 저장 끝 -->
+                
+              </div>
+              
+              <!-- 보호자
+              <div th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}  or ${week} == 25" class="footer-wrap">
+                <div class="btn-wrap type01">
+                  <button type="submit" class="btn xlg type02" disabled>저장</button>
+                </div>
+              </div>
+               -->
+              
+              <!-- 알림과 입력 -->
+              
           </form>
           <div class="footer-wrap">
             <div class="btn-wrap type01">
@@ -322,5 +388,6 @@
     }
 
 </script>
-
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </html>
