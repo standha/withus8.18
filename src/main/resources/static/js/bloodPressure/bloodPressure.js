@@ -16,6 +16,7 @@ function onFormSubmission(form) {
     }
     if(inputCheck === false){
         alert("모든 데이터를 입력해주세요.");
+        window.location.reload();
     }
 
     console.log("C : "+contraction);
@@ -34,18 +35,20 @@ function onFormSubmission(form) {
         },
         body: JSON.stringify(body)
     };
+    if(inputCheck === true){
+        fetch(url, options)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data.code === 'OK') {
+                    console.log("입력 성공하였습니다.")
+                }  else {
+                    console.log("기록 실패하였습니다. 관리자에게 문의해주세요.");
+                    alert("기록 실패하였습니다. 관리자에게 문의해주세요.");
+                }
+            });
+    }
 
-    fetch(url, options)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            if (data.code === 'OK') {
-                console.log("입력 성공하였습니다.")
-            }  else {
-                console.log("기록 실패하였습니다. 관리자에게 문의해주세요.");
-                alert("기록 실패하였습니다. 관리자에게 문의해주세요.");
-            }
-        });
 
     return false;
 }

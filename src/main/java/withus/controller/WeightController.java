@@ -41,11 +41,18 @@ public class WeightController extends BaseController {
             modelAndView.addObject("weight", ""); //객체가 비어있어 타임리프에 null point 오류를 해결해주도록 한다. weight에 0kg을 뷰해줌
         } else {
             Tbl_weight weight = weightService.getTodayWeight(new RecordKey(getConnectId(), LocalDate.now()));
-
             logger.info("id:{}, today weight:{}", user.getUserId(), weight.getWeight());
-
             modelAndView.addObject("weight", weight.getWeight());
+
+            if(weightService.getTodayWeight(new RecordKey(getConnectId(), LocalDate.now().minusDays(1) )) == null){
+                logger.info("id:{}, yesterday weight:null", user.getUserId());
+                modelAndView.addObject("oneDayBefore", "");
+            } else {
+                Tbl_weight oneDayBefore = weightService.getTodayWeight(new RecordKey(getConnectId(), LocalDate.now().minusDays(1)));
+                modelAndView.addObject("oneDayBefore", oneDayBefore.getWeight());
+            }
         }
+
 
         if (user.getType() == User.Type.PATIENT) {
             Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
@@ -97,11 +104,14 @@ public class WeightController extends BaseController {
             if (user.getType() == User.Type.PATIENT && user.getWeek() != 25) {
                 saved = weightService.upsertWeightRecord(tbl_weight);
                 code = Result.Code.OK;
-            } else if (user.getWeek() == 25)
+            } else if(user.getType() == User.Type.CAREGIVER && user.getWeek() != 25){
+                saved = weightService.upsertWeightRecord(tbl_weight);
+                code = Result.Code.OK;
+            }
+            else if (user.getWeek() == 25)
                 throw new IllegalStateException("25 Weeks User try input data [warn]");
-
             else
-                throw new IllegalStateException("Caregiver try input data [warn]");
+                throw new IllegalStateException("ADMIN try input data [warn]");
 
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);
