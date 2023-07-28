@@ -151,7 +151,7 @@ footer {position: relative;}
 
 .record-alarm {position: relative; background-color: #f3f8e4;}
 .record-alarm:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 24px; height: 22px; background: url('../images/common/sp-icon.png') -2px -77px; background-size: 600px 450px; transform: translate(-50%, -17%);}
-
+.record-alarm-gray:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 24px; height: 22px; background: url('../images/common/sp-icon.png') -2px -77px; background-size: 600px 450px; transform: translate(-50%, -17%); filter:grayscale(100%);}
 
 /*증상일지*/
 .record-face1 {position: relative;}

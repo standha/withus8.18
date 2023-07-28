@@ -29,6 +29,9 @@ public class Tbl_diet {
     private String sause;
 
     @Column
+    private String stock;
+
+    @Column
     private String step1;
 
     @Column

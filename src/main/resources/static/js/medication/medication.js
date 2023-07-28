@@ -7,53 +7,96 @@ window.addEventListener('DOMContentLoaded', function () {
 
 });
 
-// var drug_yes,drug_no = 0;
-// var sum_drug = drug_yes + drug_no;
-//
-function medication_caregiver(form) {
-    const enable_morning = form.querySelector("input[name=alarmOnoffMorning]");
-    const enable_lunch = form.querySelector("input[name=alarmOnoffLunch]");
-    const enable_dinner = form.querySelector("input[name=alarmOnoffDinner]");
-    console.log('a');
 
+function medication_caregiver(form) {
     $("#layerSelectType").show();
     $("#dim").show();
-    Item2 = "<span>보호자에게 증상일지를 알릴까요? </span>";
-    $('#popUp2').append(Item2);
+    // $("#buttonCaregiverType").show();
+    // $("#buttonRecordType").hide();
+    Item = "<span> 보호자에게 복약내용을 알릴까요?</span>";
+    $('#popUp2').append(Item);
+
 
     $("#buttonOk").click(function () {
         console.log("저장 ok");
-
         onFormSubmission(form);
-       //  const body = {
-       //      alarmOnoffMorning: enable_morning,
-       //      alarmOnoffLunch: enable_lunch,
-       //      alarmOnoffDinner: enable_dinner,
-       //
-       // }
-       //
-       //  const url = form.action;
-       //  const options = {
-       //      method: "POST",
-       //      headers: {
-       //          "Accept": "application/json",
-       //          "Content-Type": "application/json"
-       //      },
-       //      body: JSON.stringify(body)
-       //  };
-       //  fetch(url, options)
-       //      .then(response => response.json())
-       //      .then(data => console.log(data));
+        $("#medicationsubmit").hide();
+        $("#layerSelectType").hide();
+        $("#dim").hide();
 
         window.location.reload();
         return false;
+
+
     });
+
 
     $("#buttonNo").click(function () {
         $("#layerSelectType").hide();
         $("#dim").hide();
+        // $("#buttonCaregiverType").hide();
+
         window.location.reload();
-        // savePreviousWork();
+        return false;
+
+
+    });
+
+}
+
+
+
+function popup(tmp, total_drug_count, completed_drug_count, not_completed_drug_count) {
+    $("#medicationsubmit").show();
+    $("#dim").show();
+
+    console.log("팝업창 열렸다");
+
+    if (total_drug_count < tmp) {
+        if (total_drug_count === 0) {
+            Item2 = "<span>기록을 깜빡하셨나요? 내일은 잊지 말고 기록해주세요!</span>";
+            $('#popUp3').append(Item2);
+            $("#medicationsubmit").show();
+            $("#dim").show();
+        } else {
+            if (completed_drug_count === total_drug_count) {
+                Item2 = "<span>남은 약도 잊지 말고 챙겨드세요!</span>";
+                $('#popUp3').append(Item2);
+                $("#medicationsubmit").show();
+                $("#dim").show();
+                console.log("남은 약도 잊지 말고 챙겨드세요");
+            }
+            if (not_completed_drug_count >= 1) {
+                Item2 = "<span>약 먹는 것을 깜빡하셨나요? 남은 약은 잊지 말고 챙겨드세요!</span>";
+                $('#popUp3').append(Item2);
+                $("#medicationsubmit").show();
+                $("#dim").show();
+                console.log("약 먹는 것을 깜빡하셨나요? 남은 약은 잊지말고 챙겨드세요!!!!!!!");
+            }
+        }
+    }
+
+    if (total_drug_count === tmp) {
+        if (completed_drug_count === total_drug_count) {
+            Item2 = "<span>오늘도 수고하셨어요! 내일도 잊지 말고 약 챙겨드세요!</span>";
+            $('#popUp3').append(Item2);
+            $("#medicationsubmit").show();
+            $("#dim").show();
+            console.log("오늘도 수고하셨어요! 내일도 잊지말고 약 챙겨드세요");
+        }
+        if (not_completed_drug_count >= 1) {
+            Item2 = "<span>약 먹는 것을 깜빡하셨나요? 내일은 잊지 말고 챙겨드세요!</span>";
+            $('#popUp3').append(Item2);
+            $("#medicationsubmit").show();
+            $("#dim").show();
+            console.log("약 먹는 것을 깜빡하셨나요? 내일은 잊지말고 챙겨드세요");
+        }
+    }
+    $("#buttonCheck").click(function () {
+        $("#medicationsubmit").hide();
+        $("#dim").hide();
+
+        window.location.reload();
         return false;
     });
 
@@ -62,126 +105,69 @@ function medication_caregiver(form) {
 //저장버튼 클릭시
 function onFormSubmission(form) {
 
-    console.log("kkkkkk");
-
-    const enable_morning = form.querySelector("input[name=alarmOnoffMorning]");
-    const enable_lunch = form.querySelector("input[name=alarmOnoffLunch]");
-    const enable_dinner = form.querySelector("input[name=alarmOnoffDinner]");
-    //
-    // const enable_morning = enable_morning_element ? enable_morning_element.checked : false;
-    // const enable_lunch = enable_lunch_element ? enable_lunch_element.checked : false;
-    // const enable_dinner = enable_dinner_element ? enable_dinner_element.checked : false;
-    //
-    // const isAlarmOnoffMorning = alarmOnoffMorning;
+    console.log(form);
 
 
-
-    const morning = form.querySelector('input[name=morning]:checked').value;
-    const lunch = form.querySelector('input[name=lunch]:checked').value;
-    const dinner =form.querySelector('input[name=dinner]:checked').value;
-
-    // let tmp = parseInt(morning) + parseInt(lunch)+ parseInt(dinner);
-    let tmp = (morning ? 1 : 0) + (lunch ? 1 : 0) + (dinner ? 1 : 0); //활성화된 타임개수
+    const enable_morning_element = document.getElementById("morningDiv");
+    const enable_morning_value = enable_morning_element ? enable_morning_element.getAttribute("value") : "0";
+    const enable_morning = enable_morning_value === '1' ? 1 : 0;
 
 
+    const enable_lunch_element = document.getElementById("lunchDiv");
+    const enable_lunch_value = enable_lunch_element ? enable_lunch_element.getAttribute("value") : "0";
+    const enable_lunch = enable_lunch_value === '1' ? 1 : 0;
 
-    let completed_drug_count = 0; //복용했습니다
-    let not_completed_drug_count = 0; //복용안했습니다
+    const enable_dinner_element = document.getElementById("dinnerDiv");
+    const enable_dinner_value = enable_dinner_element ? enable_dinner_element.getAttribute("value") : "0";
+    const enable_dinner = enable_dinner_value === '1' ? 1 : 0;
 
+
+    const tmp = enable_morning + enable_lunch + enable_dinner; //활성화된 타임 개수
+    console.log("활성화타임개수", tmp);
+
+    const morning = form.querySelector('input[name=morning]:checked')?.value ?? "0";
+    const lunch = form.querySelector('input[name=lunch]:checked')?.value ?? "0";
+    const dinner = form.querySelector('input[name=dinner]:checked')?.value ?? "0";
+
+
+    let completed_drug_count = 0;
+    let not_completed_drug_count = 0;
+    let cnt = 0;
+    console.log("if문시작 ");
     //아침 복용여부확인
-    if (morning === 1){
-        completed_drug_count+=1;
-    }else{
-        not_completed_drug_count+=1;
-    }
-    //점심 복용여부 확인
-    if (lunch === 1){
-        completed_drug_count+=1;
-    }else{
-        not_completed_drug_count+=1;
-    }
-    //저녁 복용여부 확인
-    if (dinner === 1){
-        completed_drug_count+=1;
-    }else {
-        not_completed_drug_count+=1;
-    }
-    let total_drug_count = completed_drug_count + not_completed_drug_count;
-    console.log('middddd');
-
-    if (total_drug_count < tmp) {
-        if (completed_drug_count === total_drug_count) {
-            $("#layerSelectType").show();
-            $("#dim").show();
-            Item2 = "<span>남은 약도 잊지 말고 챙겨드세요!</span>";
-            $('#popUp2').append(Item2);
-
-            console.log("남은 약도 잊지 말고 챙겨드세요");
-        }
-        if (not_completed_drug_count >= 1) {
-            $("#layerSelectType").show();
-            $("#dim").show();
-            Item2 = "<span>약 먹는 것을 깜빡하셨나요? 남은 약은 잊지 말고 챙겨드세요!</span>";
-            $('#popUp2').append(Item2);
-
-            console.log("약 먹는 것을 깜빡하셨나요? 남은 약은 잊지말고 챙겨드세요");
-
-        }
+    if (morning === "y") {
+        completed_drug_count++;
+    } else if (morning === "n") {
+        not_completed_drug_count++;
+    } else {
+        console.log("break;");
     }
 
-    if (total_drug_count === tmp) {
-        if (completed_drug_count === total_drug_count) {
-            $("#layerSelectType").show();
-            $("#dim").show();
-            Item2 = "<span>오늘도 수고하셨어요! 내일도 잊지 말고 약 챙겨드세요!</span>";
-            $('#popUp2').append(Item2);
+    if (lunch === "y") {
+        completed_drug_count++;
+    } else if (lunch === "n") {
+        not_completed_drug_count++;
+    } else {
+        console.log("break;");
+    }
 
-            console.log("오늘도 수고하셨어요! 내일도 잊지말고 약 챙겨드세요");
-
-        }
-        if (not_completed_drug_count >= 1) {
-            $("#layerSelectType").show();
-            $("#dim").show();
-            Item2 = "<span>약 먹는 것을 깜빡하셨나요? 내일을 잊지 말고 챙겨드세요!</span>";
-            $('#popUp2').append(Item2);
-
-            console.log("약 먹는 것을 깜빡하셨나요? 내일을 잊지말고 챙겨드세요");
-
-        }
+    if (dinner === "y") {
+        completed_drug_count++;
+    } else if (dinner === "n") {
+        not_completed_drug_count++;
+    } else {
+        console.log("break;");
     }
 
 
+    console.log('복용여부 확인해서 변수 저장완료');
 
+    const total_drug_count = completed_drug_count + not_completed_drug_count;
+    console.log("복용했습니다", completed_drug_count);
+    console.log("복용안했습니다", not_completed_drug_count);
+    console.log("기록완료", total_drug_count);
 
-    // const sum =
-
-    // let morningRadio = document.querySelector('input[name=morning]:checked');
-    // if (morningRadio && morningRadio.value === '1') {
-    //     drug_y++;
-    // } else {
-    //     drug_n++;
-    // }
-
-// // 점심 복용 여부 확인
-//     let lunchRadio = document.querySelector('input[name=lunch]:checked');
-//     if (lunchRadio && lunchRadio.value === '1') {
-//         drug_y++;
-//     } else {
-//         drug_n++;
-//     }
-//
-// // 저녁 복용 여부 확인
-//     let dinnerRadio = document.querySelector('input[name=dinner]:checked');
-//     if (dinnerRadio && dinnerRadio.value === '1') {
-//         drug_y++;
-//     } else {
-//         drug_n++;
-// //     }
-//
-//     let comple_drug = drug_y + drug_n;  //완료한 기록개수
-//     let tmp = (enable_morning ? 1 : 0) + (enable_lunch ? 1 : 0) + (enable_dinner ? 1 : 0); //활성화된 타임개수
-//
-
+    popup(tmp, total_drug_count, completed_drug_count, not_completed_drug_count);
 
 
     const body = {
@@ -192,9 +178,11 @@ function onFormSubmission(form) {
         lunch: lunch,
         dinner: dinner,
 
-    };
+    }
+
     const url = form.action;
-    console.log("a");
+    console.log("url action");
+
     const options = {
         method: "POST",
         headers: {
@@ -207,17 +195,11 @@ function onFormSubmission(form) {
 
     fetch(url, options)
         .then(response => response.json())
-        .then(data => {console.log(data);
-                window.location.reload();
+        .then(data => console.log(data));
 
-            //     alert("입력 완료되었습니다.");
-            // }  else {
-            //     alert("입력 실패하였습니다. 관리자에게 문의해주세요.");
-            // }
-        });
+
     console.log("저장");
-
-
+    return false;
 }
 
 
@@ -291,9 +273,19 @@ function medication_Click_dinner(div) {
             break;
     }
 }
+
 function showHistory() {
     const element = document.querySelector("#pill-history-get-action");
     location.href = element.value;
 }
 
+// document.addEventListener("DOMContentLoaded", function () {
+//     // "저장" 버튼에 클릭 이벤트 핸들러를 추가합니다. 버튼은 id="saveButton"으로 선택됩니다.
+//     const saveButton = document.getElementById("saveButton");
+//     if (saveButton) {
+//         saveButton.addEventListener("click", function (event) {
+//             event.preventDefault(); // 기본 폼 제출 동작을 방지합니다.
+//         });
+//     }
+// });
 

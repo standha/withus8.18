@@ -15,6 +15,8 @@
     <script th:src="@{/js/alarm/pill.js}"></script>
     <script th:src="@{/js/help.js}"></script>
     <script th:src="@{/js/input_limit.js}"></script>
+    <script src="https://kit.fontawesome.com/e381c8a508.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
 <input type="hidden" id="pill-history-get-action" th:attr="value=@{/pill-history}">
@@ -55,6 +57,10 @@
                     <span class="ico-alarm-s"></span>
                     <span>복약</span>
                 </h2>
+
+                <div class="col text-end" style="font-size: 20px; margin-top: 0.73vh;">
+                    <a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl" style="color: #00b050;"></i></a>
+                </div>
             </div>
             <div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
                 <div onclick="helperRequest()">
@@ -67,6 +73,10 @@
                     <span class="ico-alarm-s"></span>
                     <span>복약</span>
                 </h2>
+
+                <div class="col text-end" style="font-size: 20px; margin-top: 0.73vh;">
+                    <a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl" style="color: #00b050;"></i></a>
+                </div>
             </div>
         </div>
     </header>

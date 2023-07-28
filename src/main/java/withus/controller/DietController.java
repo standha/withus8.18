@@ -115,8 +115,21 @@ public class DietController {
     }
 
     @GetMapping("/{id}")
-    public String detail(Model model, @PathVariable("id") Integer id) {
+    public String detail(Model model, @PathVariable("id") Integer id, Principal principal) {
         Tbl_diet diet = this.dietService.getDiet(id);
+
+        User user = this.userService.getUserById(principal.getName());
+        User.Type type = user.getType();
+        if (user.getType() == User.Type.PATIENT) {
+            Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            model.addAttribute("count", count);
+        } else if (user.getType() == User.Type.CAREGIVER) {
+            Tbl_caregiver_main_button_count count = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            model.addAttribute("count", count);
+        }
+
+        model.addAttribute("user", user);
+        model.addAttribute("type", type);
         model.addAttribute("diet", diet);
 
         return "moistureNatrium/diet/detail";

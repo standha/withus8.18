@@ -25,13 +25,13 @@ public class AlarmService {
         this.medicationRecordRepository = medicationRecordRepository;
         this.outPatientVisitAlarmRepository = outPatientVisitAlarmRepository;
     }
-
     @Nonnull
     public Tbl_medication_record upsertTrueRecord(Tbl_medication_record tbl_medication_record) {
         Tbl_medication_record saved = medicationRecordRepository.save(tbl_medication_record);
 
         return saved;
     }
+
 
     @NonNull
     public Tbl_medication_alarm upsertMedication(Tbl_medication_alarm tbl_medication_alarm) {
