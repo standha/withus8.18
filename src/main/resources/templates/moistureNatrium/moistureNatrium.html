@@ -64,9 +64,13 @@
     <!-- content -->
     <div class="container" id="content">
         <div class="cont-wrap">
-            <a th:href="@{/natrium}" class="list-card">
+            <a th:href="@{/natrium}" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25" class="list-card">
                 <span class="ico-salt"></span>
                 <span class="btn xxlg arrow-type01">저염식이</span>
+            </a>
+            <a th:href="@{/natrium-all-history}" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25" class="list-card">
+              <span class="ico-salt"></span>
+              <span class="btn xxlg arrow-type01">저염식이</span>
             </a>
             <a th:href="@{/moisture}" class="list-card">
                 <span class="ico-water2"></span>
