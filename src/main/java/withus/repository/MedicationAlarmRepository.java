@@ -5,7 +5,9 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import withus.entity.RecordKey;
 import withus.entity.Tbl_medication_alarm;
+import withus.entity.Tbl_natrium_record;
 import withus.entity.User;
 
 import javax.annotation.Nonnull;
@@ -16,16 +18,20 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface MedicationAlarmRepository extends JpaRepository<Tbl_medication_alarm, String> {
-    @Transactional(readOnly = true)
-//    @Nonnull
-    Optional<Tbl_medication_alarm> findById(String id);
-
+public interface MedicationAlarmRepository extends JpaRepository<Tbl_medication_alarm, RecordKey> {
 //    @Transactional(readOnly = true)
-//    @Nonnull
-//    List<Tbl_medication_alarm> findByAlarmOnoffMorningIsTrue();
-//    List<Tbl_medication_alarm> findByAlarmOnoffLunchIsTrue();
-//    List<Tbl_medication_alarm> findByAlarmOnoffDinnerIsTrue();
+////    @Nonnull
+//    Optional<Tbl_medication_alarm> findById(String id);
+
+
+    @Transactional(readOnly = true)
+    Optional<Tbl_medication_alarm> findByPk(RecordKey pk);
+
+    //    @Transactional(readOnly = true)
+//    List<Tbl_medication_alarm> findAllById(String id);
+//
+    @Transactional(readOnly = true)
+    List<Tbl_medication_alarm> findByPk_Id(String id);
 
 
 }

@@ -93,8 +93,9 @@
 </header>
 <!-- // header -->
 <!--content-->>
-<form id="medication-form" th:action="@{/medication}" onsubmit="return onFormSubmission(this);">
+
     <div class="container" id="content" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
+        <form id="medication-form" th:action="@{/medication}" onsubmit="return onFormSubmission(this);">
         <div class="cont-wrap type01">
             <div class="d1 d2">
                 <span id="date"></span>
@@ -149,7 +150,7 @@
                     </div>
                 </div>
             </div>
-
+        </div>
 
             <div class="btn-wrap2 grid4"
                  th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
@@ -162,10 +163,11 @@
 
             </div>
 
-        </div>
-    </div>
+
+
     <div class="dim-layer" style="display: none" id="dim"></div>
 </form>
+</div>
 
 
 <div class="popup pop-type01" id="medicationsubmit" style="display: none">
