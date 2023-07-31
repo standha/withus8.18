@@ -231,14 +231,14 @@ public class AdminHomeController extends withus.controller.BaseController {
 
         ModelAndView mav = new ModelAndView();
         HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
-        List<PillSumDTO> pillSum = adminService.getPillSum(userId);
-        List<Tbl_medication_record> pillAsc = adminService.getPillAsc(userId);
+//        List<PillSumDTO> pillSum = adminService.getPillSum(userId);
+//        List<Tbl_medication_record> pillAsc = adminService.getPillAsc(userId);
         User.Type type = adminService.getTypeInfo(userId);
 
         mav.addObject("type",type);
-        mav.addObject("pillSum", pillSum);
+//        mav.addObject("pillSum", pillSum);
         mav.addObject("info", headerInfo);
-        mav.addObject("pillAsc", pillAsc);
+//        mav.addObject("pillAsc", pillAsc);
         mav.setViewName("Admin/admin_pillRecord");
 
         logger.info("user try to access admin_pillRecord id:{}, PatientId:{})", user.getUserId(),

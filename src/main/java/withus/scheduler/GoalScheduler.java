@@ -34,13 +34,13 @@ public class GoalScheduler {
     private final WeightService weightService;
     private final SymptomService symptomService;
     private final ExerciseService exerciseService;
-    private final AlarmService alarmService;
+    private final MedicationAlarmService medicationAlarmService;
     private final GoalService goalService;
     private final AndroidPushNotificationService androidPushNotificationService;
 
     @Autowired
     public GoalScheduler(UserService userService, MoistureNatriumService moistureNatriumService, BloodPressureService bloodPressureService,
-                         WeightService weightService, SymptomService symptomService, ExerciseService exerciseService, AlarmService alarmService,
+                         WeightService weightService, SymptomService symptomService, ExerciseService exerciseService, MedicationAlarmService medicationAlarmService,
                          GoalService goalService, AndroidPushNotificationService androidPushNotificationService) {
         this.moistureNatriumService = moistureNatriumService;
         this.userService = userService;
@@ -48,7 +48,7 @@ public class GoalScheduler {
         this.weightService = weightService;
         this.symptomService = symptomService;
         this.exerciseService = exerciseService;
-        this.alarmService = alarmService;
+        this.medicationAlarmService = medicationAlarmService;
         this.goalService = goalService;
         this.androidPushNotificationService = androidPushNotificationService;
     }
@@ -115,9 +115,9 @@ public class GoalScheduler {
         int count = 0;
         LocalDate today = LocalDate.now();
         for (int i = 1; i <= 7; i++) {
-            if (alarmService.getMedicationRecord(new RecordKey(id, today.with(DayOfWeek.of(i)))) != null) {
-                Tbl_medication_record record = alarmService.getMedicationRecord(new RecordKey(id, today.with(DayOfWeek.of(i))));
-                if (record.isFinished() == true) {
+            if (medicationAlarmService.getMedication(new RecordKey(id, today.with(DayOfWeek.of(i)))) != null) {
+                Tbl_medication_alarm record = medicationAlarmService.getMedication(new RecordKey(id, today.with(DayOfWeek.of(i))));
+                if (record.getMorning().equals("y") && record.getLunch().equals("y") && record.getDinner().equals("y")) {
                     count++;
                 }
             }

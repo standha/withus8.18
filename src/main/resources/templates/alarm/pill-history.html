@@ -101,6 +101,7 @@
 	/*]]*/
 
 	$.datepicker._generateHTML = (function () {
+
 		var realGenerateHtml = $.datepicker._generateHTML;
 		return function (instance) {
 			var html = realGenerateHtml.apply(this, arguments), $temp;
@@ -124,12 +125,29 @@
 
 					var str = yy.toString() + "-" + monthStr + "-" + dayStr;
 
-					for(i=0; i<pillHistory.length; i++)
-					{
-						if(str == pillHistory[i].pk.date)
-						{
-							$(this).addClass('record-alarm');
+					// var morning = "y";
+					// var lunch = "y";
+					// var dinner = "y";
+
+					for (i = 0; i < pillHistory.length; i++) {
+						if (str == pillHistory[i].pk.date) {
+							morning = pillHistory[i].morning;
+							lunch = pillHistory[i].lunch;
+							dinner = pillHistory[i].dinner;
+							break;
 						}
+					}
+
+					var classes = [];
+					if (morning === "y" || lunch === "y" || dinner === "y") {
+						classes.push("record-alarm");
+					}
+					if (morning === "n" || lunch === "n" || dinner === "n") {
+						classes.push("record-alarm-gray");
+					}
+
+					if (classes.length > 0) {
+						$(this).addClass(classes.join(" "));
 					}
 				});
 				html = $temp[0].innerHTML;
@@ -137,7 +155,6 @@
 			return html;
 		};
 	})();
-
 	$( function() {
 		$( "#dateRecord" ).datepicker();
 	} );
