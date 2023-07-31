@@ -355,6 +355,7 @@ public class AdminHomeController extends withus.controller.BaseController {
         ModelAndView mav = new ModelAndView();
         HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
         List<WeightAvgDTO> weightAvg = adminService.getWeightAvg(userId);
+
         List<Tbl_weight> weightAsc = adminService.getWeightAsc(userId);
         User.Type type = adminService.getTypeInfo(userId);
 
