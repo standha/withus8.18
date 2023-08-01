@@ -48,6 +48,7 @@
                 <span class="ico-salt"></span>
                 <span>저염식이</span>
             </a>
+
             <a th:href="@{/admin_moistureRecord/{userId}(userId=${info.userId})}" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
                 <span class="ico-water2"></span>
                 <span>수분섭취</span>
@@ -64,16 +65,53 @@
                 <span class="button-click"></span>
                 <span>버튼 클릭 수</span>
             </a>
-            <a th:href="@{/family_data/{userId}(userId=${info.userId})}"
-               a href="javacsript:void(0); onclick='함수명(매개변수)'>
+            <a th href="#" onclick="getFamilyData('현재 등록된 가족이 없습니다.')" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
                 <span class="family-data"></span>
                 <span>가족 데이터 확인</span>
+            </a>
+            <a th href="#" onclick="getFamilyData('현재 등록된 환자가 없습니다.')" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
+                <span class="family-data"></span>
+                <span>환자 데이터 확인</span>
             </a>
         </ul>
     </div>
 </div>
 <script>
-    function
+    /*<![CDATA[*/
+    var userId = "[[ ${userId} ]]";
+    /*]]*/
+    const getAjax = function(url) {
+        return new Promise((resolve, reject) => { // 1.
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json"
+                ,
+                success: (res) => {
+                    resolve(res);  // 2.
+                },
+                error: (e) => {
+                    reject(e);  // 3.
+                }
+            });
+        });
+    }
+    async function getFamilyData(str){
+        try {
+            const family_id = await getAjax("/family_data/"+userId);
+            if(family_id["familyId"] === ""){
+                alert(str);
+                window.location.reload();
+            } else {
+                window.location.href = "/user/"+family_id["familyId"];
+            }
+
+        } catch(e) {
+            console.log(e);
+        }
+
+    }
+
 </script>
 </body>
 </html>

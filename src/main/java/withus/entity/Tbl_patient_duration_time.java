@@ -13,10 +13,10 @@ import javax.persistence.Table;
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Setter
 @Getter
-@Table(name = "tbl_caregiver_use_time")
-public class Tbl_caregiver_use_time {
+@Table(name = "tbl_patient_duration_time")
+public class Tbl_patient_duration_time {
     @EmbeddedId
-    private CaregiverProgressKey key;
+    private ProgressKey key;
 
     @Column(name ="main")
     private Integer main;
@@ -42,11 +42,11 @@ public class Tbl_caregiver_use_time {
     @Column(name = "exercise")
     private Integer exercise;
 
-    @Column(name = "familyObservation")
-    private Integer familyObservation;
+    @Column(name = "symptom")
+    private Integer symptom;
 
-    @Column(name = "dietManagement")
-    private Integer dietManagement;
+    @Column(name = "natriumMoisture")
+    private Integer natriumMoisture;
 
     @Column(name = "weight")
     private Integer weight;
@@ -60,6 +60,4 @@ public class Tbl_caregiver_use_time {
     @Column(name = "alarm")
     private Integer alarm;
 
-    @Column(name = "totalUseTime")
-    private Integer totalUserTime;
 }

@@ -109,22 +109,37 @@ public class AdminAPIController extends withus.controller.BaseController {
     @GetMapping(value="/family_data/{userId}")
     public ResponseEntity<Map<String, Object>> familyData(@PathVariable("userId") String userId) {
         User user = getUser();
+        if (user.getType() != User.Type.ADMINISTRATOR) {
+            throw new IllegalStateException(user.getUserId() + " is not Admin");
+        }
+        User existUser = userService.getUserById(userId);
+        User.Type type = null;
+        if(existUser != null){
+            type = existUser.getType();
+        }
         Map<String, Object> response = new ConcurrentHashMap<>();
-        User.Type type = user.getType();
         String familyId = null;
 
         if(type == User.Type.PATIENT){
-            if(user.getCaregiver() != null){
-                User existCaregiver = userService.getUserByContact(user.getCaregiver().getContact());
+            if(existUser.getCaregiver() != null){
+                User existCaregiver = userService.getUserByContact(existUser.getCaregiver().getContact());
+                logger.info("contact:{}",existUser.getCaregiver().getContact());
                 if(existCaregiver != null){
                     familyId = existCaregiver.getUserId();
+                    logger.info("caregiver:{}",existCaregiver.getUserId());
+                } else {
+                    familyId ="";
                 }
+            } else {
+                familyId ="";
             }
             response.put("familyId", familyId);
         } else if (type == User.Type.CAREGIVER) {
-            User existPatient = userService.getUserById(getConnectId());
-            if(getConnectId() != null && existPatient != null){
+            User existPatient = userService.getUserTopByCaregiverContact(existUser.getContact());
+            if(existPatient != null){
                 familyId = existPatient.getUserId();
+            } else {
+                familyId ="";
             }
             response.put("familyId", familyId);
         }
