@@ -24,6 +24,7 @@
     .main-icon2 a span {text-align: center; font-size: 1.1rem; font-weight: 700;}
     .main-icon2 a span[class*="ico-"] {margin-bottom: 10px;}
     .button-click { background-image: url("/images/button-click.png"); width: 64px; height: 64px; }
+    .family-data {background-image: url("/images/admin/familyData.PNG"); width: 64px; height: 64px;}
 </style>
 <div th:replace="Admin/admin_nav :: navFragment"></div>
 <body>
@@ -63,8 +64,16 @@
                 <span class="button-click"></span>
                 <span>버튼 클릭 수</span>
             </a>
+            <a th:href="@{/family_data/{userId}(userId=${info.userId})}"
+               a href="javacsript:void(0); onclick='함수명(매개변수)'>
+                <span class="family-data"></span>
+                <span>가족 데이터 확인</span>
+            </a>
         </ul>
     </div>
 </div>
+<script>
+    function
+</script>
 </body>
 </html>

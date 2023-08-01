@@ -6,15 +6,15 @@ public class SymptomAvgDTO {
     private Integer tired;
     private Integer ankle;
     private Integer cough;
-    private String text;
 
-    public SymptomAvgDTO(Integer week, Integer outofbreath, Integer tired, Integer ankle, Integer cough, String text) {
+
+    public SymptomAvgDTO(Integer week, Integer outofbreath, Integer tired, Integer ankle, Integer cough) {
         this.week = week;
         this.outofbreath = outofbreath;
         this.tired = tired;
         this.ankle = ankle;
         this.cough = cough;
-        this.text = text;
+
     }
 
     public Integer getWeek() {
@@ -37,5 +37,4 @@ public class SymptomAvgDTO {
         return cough;
     }
 
-    public String getText() { return text; }
 }

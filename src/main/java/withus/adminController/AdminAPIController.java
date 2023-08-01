@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
 import withus.entity.*;
 import withus.service.*;
@@ -102,6 +103,31 @@ public class AdminAPIController extends withus.controller.BaseController {
 
         Map<String, Object> response = new ConcurrentHashMap<>();
         response.put("counts", counts);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value="/family_data/{userId}")
+    public ResponseEntity<Map<String, Object>> familyData(@PathVariable("userId") String userId) {
+        User user = getUser();
+        Map<String, Object> response = new ConcurrentHashMap<>();
+        User.Type type = user.getType();
+        String familyId = null;
+
+        if(type == User.Type.PATIENT){
+            if(user.getCaregiver() != null){
+                User existCaregiver = userService.getUserByContact(user.getCaregiver().getContact());
+                if(existCaregiver != null){
+                    familyId = existCaregiver.getUserId();
+                }
+            }
+            response.put("familyId", familyId);
+        } else if (type == User.Type.CAREGIVER) {
+            User existPatient = userService.getUserById(getConnectId());
+            if(getConnectId() != null && existPatient != null){
+                familyId = existPatient.getUserId();
+            }
+            response.put("familyId", familyId);
+        }
         return ResponseEntity.ok(response);
     }
 

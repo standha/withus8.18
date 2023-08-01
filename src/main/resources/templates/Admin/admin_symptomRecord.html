@@ -30,7 +30,7 @@
             <table id="foo-table" class="table table-bordered" style="table-layout: fixed">
                 <thead>
                 <tr>
-                    <th colspan="6" style="text-align: center; font-weight: bold;">증상일지 (1 = 입력)</th>
+                    <th colspan="7" style="text-align: center; font-weight: bold;">증상일지 (1 = 입력)</th>
                 </tr>
                 <tr>
                     <th style="text-align: center">주차</th>
@@ -39,6 +39,7 @@
                     <th style="text-align: center">증상 2</th>
                     <th style="text-align: center">증상 3</th>
                     <th style="text-align: center">증상 4</th>
+                    <th style="text-align: center">메모</th>
                 </tr>
                 </thead>
                 <tbody id="history-table-data" style="text-align: center" >
@@ -84,7 +85,7 @@
                     Item += "<td rowspan='8' style='vertical-align: middle'>" + i + "주차" +"</td>";
                 }
                 Item += "<td>" + weekText[j] +"</td>";
-                var day = new Date(weekAsc[weekAscCount].pk.date.substr(0, 4), weekAsc[weekAscCount].pk.date.substr(5, 2)-1, weekAsc[weekAscCount].pk.date.substr(8, 2)).getDay();
+                var day = new Date(weekAsc[weekAscCount].pk.date.substr(0, 4), parseInt(weekAsc[weekAscCount].pk.date.substr(5, 2))-1, weekAsc[weekAscCount].pk.date.substr(8, 2)).getDay();
                 var week = ['일', '월', '화', '수', '목', '금', '토'];     //날짜와 요일을 매핑하는 배열
                 var dayLabel = week[day];
                 if(weekAsc[weekAscCount].week == i && weekText[j] == dayLabel.toString())
@@ -93,12 +94,14 @@
                     Item += "<td>" + (weekAsc[weekAscCount].tired) +"</td>";
                     Item += "<td>" + (weekAsc[weekAscCount].ankle) +"</td>";
                     Item += "<td>" + (weekAsc[weekAscCount].cough) +"</td>";
+                    Item += "<td>" + (weekAsc[weekAscCount].text) +"</td>";
                     weekAscCount++;
                     if(weekAscCount >= weekAsc.length)
                         weekAscCount--;
                 }
                 else
                 {
+                    Item += "<td>" + "" + "</td>";
                     Item += "<td>" + "" + "</td>";
                     Item += "<td>" + "" + "</td>";
                     Item += "<td>" + "" + "</td>";
@@ -124,12 +127,14 @@
                         Item += "<td>" + (weekAvg[weekAvgCount].tired) +"</td>";
                         Item += "<td>" + (weekAvg[weekAvgCount].ankle) +"</td>";
                         Item += "<td>" + (weekAvg[weekAvgCount].cough) +"</td>";
+                        Item += "<td>" + "" + "</td>";
                         weekAvgCount++;
                         if(weekAvgCount >= weekAvg.length)
                             weekAvgCount--;
                     }
                     else
                     {
+                        Item += "<td>" + "" + "</td>";
                         Item += "<td>" + "" + "</td>";
                         Item += "<td>" + "" + "</td>";
                         Item += "<td>" + "" + "</td>";
@@ -161,7 +166,7 @@
         Item += "<td>" + sum2 + "</td>";
         Item += "<td>" + sum3 + "</td>";
         Item += "<td>" + sum4 + "</td>";
-
+        Item += "<td>" + "" + "</td>";
         Item += "</tr>";
         $('#history-table-data').append(Item);
 
