@@ -134,21 +134,26 @@
 							morning = pillHistory[i].morning;
 							lunch = pillHistory[i].lunch;
 							dinner = pillHistory[i].dinner;
+
+							let classes = [];
+							if (morning === "y" || lunch === "y" || dinner === "y") {
+								// classes.push("record-alarm");
+								$(this).addClass('record-alarm')
+							}
+							if (morning === "n" || lunch === "n" || dinner === "n") {
+								// classes.push("record-alarm-gray");
+								$(this).addClass('record-alarm-gray')
+							}
+
+							if (classes.length > 0) {
+								$(this).addClass(classes.join(" "));
+							}
 							break;
 						}
 					}
 
-					var classes = [];
-					if (morning === "y" || lunch === "y" || dinner === "y") {
-						classes.push("record-alarm");
-					}
-					if (morning === "n" || lunch === "n" || dinner === "n") {
-						classes.push("record-alarm-gray");
-					}
 
-					if (classes.length > 0) {
-						$(this).addClass(classes.join(" "));
-					}
+
 				});
 				html = $temp[0].innerHTML;
 			}

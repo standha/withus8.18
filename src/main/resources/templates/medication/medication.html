@@ -57,8 +57,7 @@
     <div class="header-wrap type01">
         <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${user.week} != 25">
             <div onclick="helperRequest()">
-                <a class="btn xsm type07" href="tel:010-8454-9186"
-                   th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'">
+                <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'">
                     <span class="ico-call"></span>
                     <span class="txt-rt">도우미</span>
                 </a>
