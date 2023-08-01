@@ -19,13 +19,13 @@ public class Tbl_medication_alarm {
     @EmbeddedId
     private RecordKey pk;
 
-    @Column(name = "medication_alarm_onoff_morning")
+    @Column(name = "onoff_morning")
     private boolean alarmOnoffMorning = true;
 
-    @Column(name = "medication_alarm_onoff_lunch")
+    @Column(name = "onoff_lunch")
     private boolean alarmOnoffLunch = true;
 
-    @Column(name = "medication_alarm_onoff_dinner")
+    @Column(name = "onoff_dinner")
     private boolean alarmOnoffDinner = true;
 
 

@@ -84,9 +84,9 @@ public class AlarmController extends BaseController {
         }
 
         if (medicationAlarmService.getMedication(new RecordKey(getConnectId(), LocalDate.now())) == null) {
-            modelAndView.addObject("medicationRecordMorning", "");
-            modelAndView.addObject("medicationRecordLunch", "");
-            modelAndView.addObject("medicationRecordDinner", "");
+            modelAndView.addObject("medicationRecordMorning", null);
+            modelAndView.addObject("medicationRecordLunch", null);
+            modelAndView.addObject("medicationRecordDinner", null);
         } else {
             modelAndView.addObject("medicationRecordMorning", alarm.getMorning());
             modelAndView.addObject("medicationRecordLunch", alarm.getLunch());
@@ -94,17 +94,17 @@ public class AlarmController extends BaseController {
         }
 
         if (medicationAlarmService.getMedication(new RecordKey(getConnectId(), LocalDate.now())) == null) {
-
+            modelAndView.addObject("alarmOnoffMorning", null);
+            modelAndView.addObject("alarmOnoffLunch", null);
+            modelAndView.addObject("alarmOnoffDinner", null);
+        }else{
             modelAndView.addObject("alarmOnoffMorning", alarm.isAlarmOnoffMorning());
             modelAndView.addObject("alarmOnoffLunch", alarm.isAlarmOnoffLunch());
             modelAndView.addObject("alarmOnoffDinner", alarm.isAlarmOnoffDinner());
-
-            modelAndView.addObject("type", user.getType());
-            modelAndView.addObject("week", user.getWeek());
-        }
+       }
+        modelAndView.addObject("type", user.getType());
+        modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("previousUrl", "/alarm");
-
-//        logger.info("id:{}, url:{} , alarmOnOff:{}, morning:{}, lunch:{}, dinner:{}", user.getUserId(), request.getRequestURL(), alarm.isMedicationAlarmOnoff(), alarm.getMedicationTimeMorning(), alarm.getMedicationTimeLunch(), alarm.getMedicationTimeDinner());
 
         return modelAndView;
     }
