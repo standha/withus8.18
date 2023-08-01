@@ -41,7 +41,7 @@
                 <tr>
                     <th style="text-align: center">식사 안함</th>
                     <th style="text-align: center">저염식</th>
-                    <th style="text-align: center">보통</th>
+                    <th style="text-align: center">보통 식사</th>
                     <th style="text-align: center">고염식</th>
                 </tr>
                 </thead>
@@ -90,7 +90,7 @@
                 var weekText = ['월', '화', '수', '목', '금', '토', '일'];     //월요일부터 표시해주는 배열
                 Item += "<td rowspan='3' style='vertical-align: middle;'>" + weekText[j] +"</td>";
 
-                var day = new Date(weekAsc[weekAscCount].pk.date.substr(0, 4), weekAsc[weekAscCount].pk.date.substr(5, 2)-1, weekAsc[weekAscCount].pk.date.substr(8, 2)).getDay();
+                var day = new Date(weekAsc[weekAscCount].pk.date.substr(0, 4), parseInt(weekAsc[weekAscCount].pk.date.substr(5, 2))-1, weekAsc[weekAscCount].pk.date.substr(8, 2)).getDay();
                 var week = ['일', '월', '화', '수', '목', '금', '토'];     //날짜와 요일을 매핑하는 배열
                 var dayLabel = week[day];
 

@@ -14,19 +14,15 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import withus.controller.MedicationController;
-import withus.entity.Tbl_medication_alarm;
 import withus.entity.Tbl_outpatient_visit_alarm;
 import withus.entity.User;
 import withus.service.*;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -35,13 +31,13 @@ import java.util.concurrent.ExecutionException;
 @EnableScheduling
 public class NoticeScheduler {
     Logger logger = LoggerFactory.getLogger(this.getClass());
-    private final AlarmService alarmService;
+    private final MedicationAlarmService medicationAlarmService;
     private final AndroidPushNotificationService androidPushNotificationService;
     private final UserService userService;
 
     @Autowired
-    public NoticeScheduler(AlarmService alarmService, AndroidPushNotificationService androidPushNotificationService, UserService userService) {
-        this.alarmService = alarmService;
+    public NoticeScheduler(MedicationAlarmService medicationAlarmService, AndroidPushNotificationService androidPushNotificationService, UserService userService) {
+        this.medicationAlarmService = medicationAlarmService;
         this.androidPushNotificationService = androidPushNotificationService;
         this.userService = userService;
     }
@@ -150,7 +146,7 @@ public class NoticeScheduler {
         logger.info("Scheduler:{}, ThreadName:{}","OutPatient1D",Thread.currentThread().getName());
         List<String> visitToken = new ArrayList<String>();
         LocalDate tomorrow = LocalDate.now().plusDays(1);
-        List<Tbl_outpatient_visit_alarm> visits = alarmService.getVisitAlarmOn();
+        List<Tbl_outpatient_visit_alarm> visits = medicationAlarmService.getVisitAlarmOn();
 
         logger.info("tomorrow:{}", tomorrow);
 
@@ -186,7 +182,7 @@ public class NoticeScheduler {
         LocalDateTime now = LocalDateTime.now();
         LocalDate date = now.toLocalDate();
         LocalTime time = now.toLocalTime().plusHours(2);
-        List<Tbl_outpatient_visit_alarm> visits = alarmService.getVisitAlarmOn();
+        List<Tbl_outpatient_visit_alarm> visits = medicationAlarmService.getVisitAlarmOn();
 
         logger.info("2 hours before outpatient time check, time:{}, alarm_on_count:{}", time, visits.stream().count());
 

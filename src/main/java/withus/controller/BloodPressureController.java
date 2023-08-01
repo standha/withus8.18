@@ -20,6 +20,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.querydsl.core.types.dsl.Wildcard.count;
+import static withus.entity.QUser.user;
+
 @Controller
 public class BloodPressureController extends BaseController {
     private final BloodPressureService bloodPressureService;
@@ -37,13 +40,13 @@ public class BloodPressureController extends BaseController {
         User user = getUser();
         ModelAndView modelAndView = new ModelAndView("bloodPressure/bloodPressure");
 
-        if (bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(), LocalDate.now())) == null) {
+        if (bloodPressureService.getTodayBloodRecord(new RecordKey(user.getUserId(), LocalDate.now())) == null) {
             modelAndView.addObject("contraction", "");
             modelAndView.addObject("pressure", "");
             modelAndView.addObject("relaxation", "");
             logger.info("id:{}, today bloodPressure:null", user.getUserId());
         } else {
-            Tbl_blood_pressure_pulse today = bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(), LocalDate.now()));
+            Tbl_blood_pressure_pulse today = bloodPressureService.getTodayBloodRecord(new RecordKey(user.getUserId(), LocalDate.now()));
             modelAndView.addObject("contraction", today.getContraction());
             modelAndView.addObject("pressure", today.getPressure());
             modelAndView.addObject("relaxation", today.getRelaxation());
@@ -52,7 +55,13 @@ public class BloodPressureController extends BaseController {
 
         if (user.getType() == User.Type.PATIENT) {
             Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
-            modelAndView.addObject("count", count);
+            modelAndView.addObject("patientCount", count);
+            logger.info("Patient Count: {}", count);
+        } else if (user.getType() == User.Type.CAREGIVER) {
+            Tbl_caregiver_main_button_count count = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            logger.info("Caregiver Count: {}", count);
+            modelAndView.addObject("caregiverCount", count);
+
         }
 
         modelAndView.addObject("type", user.getType());
@@ -65,28 +74,22 @@ public class BloodPressureController extends BaseController {
     @GetMapping("/bloodPressure-all-history")
     public ModelAndView getBloodPressureRecord() {
         ModelAndView modelAndView = new ModelAndView("bloodPressure/bloodPressure-all-history");
-        List<Tbl_blood_pressure_pulse> bloodPressureHistory;
-        bloodPressureHistory = bloodPressureService.getBloodAllRecord(getConnectId(), -1, -1, -1);
-        LocalDate today = LocalDate.now();
-
-        List<Tbl_blood_pressure_pulse> bloodWeek = new ArrayList<>();
-        for (int i = 1; i <= 7; i++) {
-            if (bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(), today.with(DayOfWeek.of(i)))) != null) {
-                Tbl_blood_pressure_pulse week = bloodPressureService.getTodayBloodRecord(new RecordKey(getConnectId(), today.with(DayOfWeek.of(i))));
-                bloodWeek.add(week);
-            }
-        }
 
         User user = getUser();
+        logger.info("id:{}, type:{}", user.getUserId(), user.getType());
         modelAndView.addObject("user", user);
+
+        List<Tbl_blood_pressure_pulse> bloodWeek = bloodPressureService.getALlBloodRecord(user.getUserId());
 
         if (user.getType() == User.Type.PATIENT) {
             Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
+        }else if (user.getType() == User.Type.CAREGIVER) {
+            Tbl_caregiver_main_button_count count = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("count", count);
         }
-
+        modelAndView.addObject("type", user.getType());
         modelAndView.addObject("bloodWeek", bloodWeek);
-        modelAndView.addObject("bloodPressure", bloodPressureHistory);
         modelAndView.addObject("previousUrl", "/center");
 
         return modelAndView;
@@ -105,10 +108,13 @@ public class BloodPressureController extends BaseController {
             if (user.getType() == User.Type.PATIENT && user.getWeek() != 25) {
                 saved = bloodPressureService.upsertBloodPressureRecord(tbl_blood_pressure_pulse);
                 code = Result.Code.OK;
+            } else if(user.getType() == User.Type.CAREGIVER && user.getWeek() != 25){
+                saved = bloodPressureService.upsertBloodPressureRecord(tbl_blood_pressure_pulse);
+                code = Result.Code.OK;
             } else if (user.getWeek() == 25) {
                 throw new IllegalStateException("25 Weeks User try input data [warn]");
             } else {
-                throw new IllegalStateException("Caregiver try input data [warn]");
+                throw new IllegalStateException("Admin try input data [warn]");
             }
         } catch (Exception exception) {
             logger.error(exception.getLocalizedMessage(), exception);

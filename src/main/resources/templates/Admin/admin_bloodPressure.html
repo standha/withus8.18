@@ -84,7 +84,7 @@
                     Item += "<td rowspan='7' style='vertical-align: middle'>" + i + "주차" +"</td>";
                 }
                 Item += "<td>" + weekText[j] +"</td>";
-                var day = new Date(weekAsc[weekAscCount].pk.date.substr(0, 4), weekAsc[weekAscCount].pk.date.substr(5, 2)-1, weekAsc[weekAscCount].pk.date.substr(8, 2)).getDay();
+                var day = new Date(weekAsc[weekAscCount].pk.date.substr(0, 4), parseInt(weekAsc[weekAscCount].pk.date.substr(5, 2))-1, weekAsc[weekAscCount].pk.date.substr(8, 2)).getDay();
                 var week = ['일', '월', '화', '수', '목', '금', '토'];     //날짜와 요일을 매핑하는 배열
                 var dayLabel = week[day];
                 if(weekAsc[weekAscCount].week == i && weekText[j] == dayLabel.toString())

@@ -19,7 +19,7 @@ public class Tbl_weight {
     private RecordKey pk;
 
     @Column(name = "weight")
-    private float weight;
+    private Integer weight;
 
     @Column(name = "week")
     private Integer week;

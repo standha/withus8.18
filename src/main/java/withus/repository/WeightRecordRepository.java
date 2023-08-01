@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface WeightRecordRepository extends JpaRepository<Tbl_weight, RecordKey> {
     @Transactional(readOnly = true)
-    List<Tbl_weight> findByPk_IdAndWeightGreaterThan(String pk_id, float weight);
+    List<Tbl_weight> findByPk_IdAndWeightGreaterThan(String pk_id, int weight);
 
     @Transactional
     Optional<Tbl_weight> findByPk(RecordKey pk);

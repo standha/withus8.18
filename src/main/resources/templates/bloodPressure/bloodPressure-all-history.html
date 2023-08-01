@@ -18,6 +18,7 @@
     <script th:src="@{/js/datepicker-ko.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/help.js}"></script>
+    <script src="https://kit.fontawesome.com/e381c8a508.js" crossorigin="anonymous"></script>
     <style>
         .button-container {
             text-align: right;
@@ -52,16 +53,17 @@
     </style>
 </head>
 <body>
-<input type="hidden" id="button-count" th:attr="value=@{/button-count}">
+<input th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 " type="hidden" id="button-count" th:attr="value=@{/patient-main-button-count}">
+<input th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25 " type="hidden" id="button-count" th:attr="value=@{/caregiver-main-button-count}">
 <input type="hidden" id="helper-request" th:attr="value=@{/helper-request}">
 <div class="skip-navi">
     <a href="#content">본문 바로가기</a>
 </div>
-<div th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${user.week} != 25">
+<div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
     <input type = 'hidden' name = "symptom"           th:value = "${count.symptom}" style = "display:none">
     <input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
-    <input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">
-    <input type = 'hidden' name = "disease"           th:value = "${count.diseaseInfo}" style = "display:none">
+    <input type = 'hidden' name = "bloodPressure"             th:value = "${count.bloodPressure}" style = "display:none">
+    <input type = 'hidden' name = "diseaseInfo"           th:value = "${count.diseaseInfo}" style = "display:none">
     <input type = 'hidden' name = "exercise"          th:value = "${count.exercise}" style = "display:none">
     <input type = 'hidden' name = "goal"              th:value = "${count.goal}" style = "display:none">
     <input type = 'hidden' name = "helper"            th:value = "${count.helper}" style = "display:none">
@@ -69,6 +71,27 @@
     <input type = 'hidden' name = "natriumMoisture"   th:value = "${count.natriumMoisture}" style = "display:none">
     <input type = 'hidden' name = "weight"            th:value = "${count.weight}" style = "display:none">
     <input type = 'hidden' name = "withusRang"        th:value = "${count.withusRang}" style = "display:none">
+    <input type = 'hidden' name = "medicine"        th:value = "${count.medicine}" style = "display:none">
+    <input type = 'hidden' name = "board"        th:value = "${count.board}" style = "display:none">
+    <input type = 'hidden' name = "infoEdit"        th:value = "${count.infoEdit}" style = "display:none">
+    <input type = 'hidden' name = "mindHealth"        th:value = "${count.mindHealth}" style = "display:none">
+</div>
+<div th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25 ">
+    <input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
+    <input type = 'hidden' name = "bloodPressure"             th:value = "${count.bloodPressure}" style = "display:none">
+    <input type = 'hidden' name = "diseaseInfo"           th:value = "${count.diseaseInfo}" style = "display:none">
+    <input type = 'hidden' name = "exercise"          th:value = "${count.exercise}" style = "display:none">
+    <input type = 'hidden' name = "goal"              th:value = "${count.goal}" style = "display:none">
+    <input type = 'hidden' name = "helper"            th:value = "${count.helper}" style = "display:none">
+    <input type = 'hidden' name = "level"             th:value = "${count.level}" style = "display:none">
+    <input type = 'hidden' name = "weight"            th:value = "${count.weight}" style = "display:none">
+    <input type = 'hidden' name = "withusRang"        th:value = "${count.withusRang}" style = "display:none">
+    <input type = 'hidden' name = "familyObservation"        th:value = "${count.familyObservation}" style = "display:none">
+    <input type = 'hidden' name = "dietManagement"        th:value = "${count.dietManagement}" style = "display:none">
+    <input type = 'hidden' name = "mindHealth"        th:value = "${count.mindHealth}" style = "display:none">
+    <input type = 'hidden' name = "board"        th:value = "${count.board}" style = "display:none">
+    <input type = 'hidden' name = "infoEdit"        th:value = "${count.infoEdit}" style = "display:none">
+    <input type = 'hidden' name = "medicine"           th:value = "${count.medicine}" style = "display:none">
 </div>
 <!-- wrap -->
 <div id="wrap" class="chart-page">
@@ -78,7 +101,7 @@
         <div class="header-wrap type01">
             <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${user.week} != 25">
                 <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+                    <a class="btn xsm type07" href="tel:010-8454-9186" onclick="addHelper()" >
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
@@ -87,6 +110,9 @@
                     <span class="ico-blood-s"></span>
                     <span>혈압/맥박</span>
                 </h2>
+                <div class="col text-end" style="font-size: 20px; margin-top: 0.73vh;">
+                    <a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl" style="color: #00b050;"></i></a>
+                </div>
             </div>
             <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${user.week} == 25">
                 <div onclick="helperRequest()" >
@@ -99,6 +125,9 @@
                     <span class="ico-blood-s"></span>
                     <span>혈압/맥박</span>
                 </h2>
+                <div class="col text-end" style="font-size: 20px; margin-top: 0.73vh;">
+                    <a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl" style="color: #00b050;"></i></a>
+                </div>
             </div>
         </div>
     </header>
@@ -285,7 +314,7 @@
 
         if(contractionSpan.textContent === ''){
             const imgElement = document.createElement('img');
-            imgElement.src = '/images/bloodPressureSubmit.jpg';
+            imgElement.src = '/images/SubmitButton.jpg';
             imgElement.alt = 'bloodPressure Page Move';
 
             if(cycle ==="THREE"){
@@ -448,7 +477,6 @@
                             borderWidth: 0
                         },
                         box2: {
-
                             type: 'box',
                             xMin: 0,
                             xMax: 6,
@@ -578,7 +606,6 @@
         const trPressureElements = trPressure.getElementsByTagName('td');
 
         if(cycle ==="THREE"){
-
             let threeBloodData = bloodList['bloodList'].slice(currSlide-2,currSlide+1);
             for(var i = 0; i<3; i++){
                 let bloodData = threeBloodData[i];
@@ -601,6 +628,7 @@
 
                 td1.style.fontSize = '0.88rem';
                 td1.style.opacity = 0;
+                td4.style.width = "25%";
                 span2.style.opacity = 0;
                 span3.style.opacity = 0;
                 span4.style.opacity = 0;
@@ -639,7 +667,7 @@
                 const span3 = td3.getElementsByTagName('span')[0];
                 const span4 = td4.getElementsByTagName('span')[0];
 
-
+                td4.style.width = "12.5%";
 
                 td1.style.fontSize = '0.80rem';
                 td1.style.opacity = 0;

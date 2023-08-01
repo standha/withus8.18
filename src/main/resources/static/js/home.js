@@ -1,39 +1,104 @@
-function addSymptom(count) {
-    count = parseInt(count);
-    count = count + 1;
-
-    const alarm    = document.querySelector("input[name=alarm]").value;
-    const blood    = document.querySelector("input[name=blood]").value;
-    const disease  = document.querySelector("input[name=disease]").value;
-    const exercise = document.querySelector("input[name=exercise]").value;
-    const goal     = document.querySelector("input[name=goal]").value;
-    const helper   = document.querySelector("input[name=helper]").value;
-    const level    = document.querySelector("input[name=level]").value;
-    const namo = document.querySelector("input[name=natriumMoisture]").value;
-    const weight   = document .querySelector("input[name=weight]").value;
-    const chat = document.querySelector("input[name=withusRang]").value;
-    const board = document.querySelector("input[name=board]").value;
-    const medicine = document.querySelector("input[name=medicine]").value;
-    const infoEdit = document.querySelector("input[name=infoEdit]").value;
-    const mindHealth = document.querySelector("input[name=mindHealth]").value;
-    const body = {
-        symptom: count,
-        alarm: alarm,
-        bloodPressure: blood,
-        diseaseInfo: disease,
-        exercise: exercise,
-        goal: goal,
-        helper: helper,
-        level: level,
-        natriumMoisture: namo,
-        weight: weight,
-        withusRang: chat,
-        board : board,
-        medicine: medicine,
-        infoEdit: infoEdit,
-        mindHealth: mindHealth
+function patientMainBody(tag) {
+    let body = {
+        alarm: parseInt(document.querySelector("input[name=alarm]").value),
+        symptom: parseInt(document.querySelector("input[name=symptom]").value),
+        bloodPressure: parseInt(document.querySelector("input[name=bloodPressure]").value),
+        diseaseInfo: parseInt(document.querySelector("input[name=diseaseInfo]").value),
+        exercise: parseInt(document.querySelector("input[name=exercise]").value),
+        goal: parseInt(document.querySelector("input[name=goal]").value),
+        helper: parseInt(document.querySelector("input[name=helper]").value),
+        level: parseInt(document.querySelector("input[name=level]").value),
+        natriumMoisture: parseInt(document.querySelector("input[name=natriumMoisture]").value),
+        weight: parseInt(document.querySelector("input[name=weight]").value),
+        withusRang: parseInt(document.querySelector("input[name=withusRang]").value),
+        board: parseInt(document.querySelector("input[name=board]").value),
+        medicine: parseInt(document.querySelector("input[name=medicine]").value),
+        infoEdit: parseInt(document.querySelector("input[name=infoEdit]").value),
+        mindHealth: parseInt(document.querySelector("input[name=mindHealth]").value)
     };
+
+    // tag에 따라 해당 변수 증가
+    const variablesToIncrement = [
+        'symptom',
+        'bloodPressure',
+        'diseaseInfo',
+        'exercise',
+        'goal',
+        'helper',
+        'level',
+        'natriumMoisture',
+        'weight',
+        'withusRang',
+        'board',
+        'medicine',
+        'infoEdit',
+        'mindHealth',
+        'alarm'
+    ];
+
+    if (variablesToIncrement.includes(tag)) {
+        body[tag] += 1;
+    }
+
+    return body;
+}
+
+
+function caregiverMainBody(tag) {
+    let body = {
+        alarm: parseInt(document.querySelector("input[name=alarm]").value),
+        dietManagement: parseInt(document.querySelector("input[name=dietManagement]").value),
+        bloodPressure: parseInt(document.querySelector("input[name=bloodPressure]").value),
+        diseaseInfo: parseInt(document.querySelector("input[name=diseaseInfo]").value),
+        exercise: parseInt(document.querySelector("input[name=exercise]").value),
+        goal: parseInt(document.querySelector("input[name=goal]").value),
+        helper: parseInt(document.querySelector("input[name=helper]").value),
+        level: parseInt(document.querySelector("input[name=level]").value),
+        familyObservation: parseInt(document.querySelector("input[name=familyObservation]").value),
+        weight: parseInt(document.querySelector("input[name=weight]").value),
+        withusRang: parseInt(document.querySelector("input[name=withusRang]").value),
+        board: parseInt(document.querySelector("input[name=board]").value),
+        medicine: parseInt(document.querySelector("input[name=medicine]").value),
+        infoEdit: parseInt(document.querySelector("input[name=infoEdit]").value),
+        mindHealth: parseInt(document.querySelector("input[name=mindHealth]").value)
+    };
+
+    // tag에 따라 해당 변수 증가
+    const variablesToIncrement = [
+        'dietManagement',
+        'bloodPressure',
+        'diseaseInfo',
+        'exercise',
+        'goal',
+        'helper',
+        'level',
+        'familyObservation',
+        'weight',
+        'withusRang',
+        'board',
+        'medicine',
+        'infoEdit',
+        'mindHealth',
+        'alarm'
+    ];
+
+    if (variablesToIncrement.includes(tag)) {
+        body[tag] += 1;
+    }
+
+    return body;
+}
+
+
+function postButtonCount(menu) {
+    let body = {};
     const url = document.querySelector("#button-count").value;
+    if(url ==="/patient-main-button-count"){
+        body = patientMainBody(menu);
+    } else {
+        body = caregiverMainBody(menu);
+    }
+
     const options = {
         method: "PUT",
         headers: {
@@ -51,473 +116,3 @@ function addSymptom(count) {
     return false;
 }
 
-function addAlarm(count) {
-    count = parseInt(count);
-    count = count + 1;
-
-    const symptom    = document.querySelector("input[name=symptom]").value;
-    const blood    = document.querySelector("input[name=blood]").value;
-    const disease  = document.querySelector("input[name=disease]").value;
-    const exercise = document.querySelector("input[name=exercise]").value;
-    const goal     = document.querySelector("input[name=goal]").value;
-    const helper   = document.querySelector("input[name=helper]").value;
-    const level    = document.querySelector("input[name=level]").value;
-    const namo = document.querySelector("input[name=natriumMoisture]").value;
-    const weight   = document .querySelector("input[name=weight]").value;
-    const chat = document.querySelector("input[name=withusRang]").value;
-    const board = document.querySelector("input[name=board]").value;
-    const medicine = document.querySelector("input[name=medicine]").value;
-    const infoEdit = document.querySelector("input[name=infoEdit]").value;
-    const mindHealth = document.querySelector("input[name=mindHealth]").value;
-    const body = {
-        alarm: count,
-        symptom: symptom,
-        bloodPressure: blood,
-        diseaseInfo: disease,
-        exercise: exercise,
-        goal: goal,
-        helper: helper,
-        level: level,
-        natriumMoisture: namo,
-        weight: weight,
-        withusRang: chat,
-        board: board,
-        medicine: medicine,
-        infoEdit : infoEdit,
-        mindHealth: mindHealth
-    };
-    const url = document.querySelector("#button-count").value;
-    const options = {
-        method: "PUT",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(body)
-    };
-
-
-    fetch(url, options)
-        .then(response => response.json())
-        .then(data => console.log(data));
-
-    return false;
-}
-
-function addPressure(count) {
-    count = parseInt(count);
-    count = count + 1;
-
-    const symptom    = document.querySelector("input[name=symptom]").value;
-    const alarm    = document.querySelector("input[name=alarm]").value;
-    const disease  = document.querySelector("input[name=disease]").value;
-    const exercise = document.querySelector("input[name=exercise]").value;
-    const goal     = document.querySelector("input[name=goal]").value;
-    const helper   = document.querySelector("input[name=helper]").value;
-    const level    = document.querySelector("input[name=level]").value;
-    const namo = document.querySelector("input[name=natriumMoisture]").value;
-    const weight   = document .querySelector("input[name=weight]").value;
-    const chat = document.querySelector("input[name=withusRang]").value;
-    const board = document.querySelector("input[name=board]").value;
-    const medicine = document.querySelector("input[name=medicine]").value;
-    const infoEdit = document.querySelector("input[name=infoEdit]").value;
-    const mindHealth = document.querySelector("input[name=mindHealth]").value;
-    const body = {
-        bloodPressure: count,
-        symptom: symptom,
-        alarm: alarm,
-        diseaseInfo: disease,
-        exercise: exercise,
-        goal: goal,
-        helper: helper,
-        level: level,
-        natriumMoisture: namo,
-        weight: weight,
-        withusRang: chat,
-        board : board,
-        medicine : medicine,
-        infoEdit: infoEdit,
-        mindHealth: mindHealth
-    };
-    const url = document.querySelector("#button-count").value;
-    const options = {
-        method: "PUT",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(body)
-    };
-
-
-    fetch(url, options)
-        .then(response => response.json())
-        .then(data => console.log(data));
-
-    return false;
-}
-
-function addExercise(count) {
-    count = parseInt(count);
-    count = count + 1;
-    const symptom    = document.querySelector("input[name=symptom]").value;
-    const alarm    = document.querySelector("input[name=alarm]").value;
-    const disease  = document.querySelector("input[name=disease]").value;
-    const blood = document.querySelector("input[name=blood]").value;
-    const goal     = document.querySelector("input[name=goal]").value;
-    const helper   = document.querySelector("input[name=helper]").value;
-    const level    = document.querySelector("input[name=level]").value;
-    const namo = document.querySelector("input[name=natriumMoisture]").value;
-    const weight   = document .querySelector("input[name=weight]").value;
-    const chat = document.querySelector("input[name=withusRang]").value;
-    const board = document.querySelector("input[name=board]").value;
-    const medicine = document.querySelector("input[name=medicine]").value;
-    const infoEdit = document.querySelector("input[name=infoEdit]").value;
-    const mindHealth = document.querySelector("input[name=mindHealth]").value;
-    const body = {
-        exercise: count,
-        symptom: symptom,
-        alarm: alarm,
-        diseaseInfo: disease,
-        bloodPressure: blood,
-        goal: goal,
-        helper: helper,
-        level: level,
-        natriumMoisture: namo,
-        weight: weight,
-        withusRang: chat,
-        board: board,
-        medicine : medicine,
-        infoEdit: infoEdit,
-        mindHealth: mindHealth
-    };
-    const url = document.querySelector("#button-count").value;
-    const options = {
-        method: "PUT",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(body)
-    };
-
-
-    fetch(url, options)
-        .then(response => response.json())
-        .then(data => console.log(data));
-
-    return false;
-}
-
-function addMoistureNatrium(count) {
-    count = parseInt(count);
-    count = count + 1;
-
-    const symptom    = document.querySelector("input[name=symptom]").value;
-    const alarm    = document.querySelector("input[name=alarm]").value;
-    const disease  = document.querySelector("input[name=disease]").value;
-    const blood = document.querySelector("input[name=blood]").value;
-    const goal     = document.querySelector("input[name=goal]").value;
-    const helper   = document.querySelector("input[name=helper]").value;
-    const level    = document.querySelector("input[name=level]").value;
-    const exercise = document.querySelector("input[name=exercise]").value;
-    const weight   = document .querySelector("input[name=weight]").value;
-    const chat = document.querySelector("input[name=withusRang]").value;
-    const board = document.querySelector("input[name=board]").value;
-    const medicine = document.querySelector("input[name=medicine]").value;
-    const infoEdit = document.querySelector("input[name=infoEdit]").value;
-    const mindHealth = document.querySelector("input[name=mindHealth]").value;
-    const body = {
-        natriumMoisture: count,
-        symptom: symptom,
-        alarm: alarm,
-        diseaseInfo: disease,
-        bloodPressure: blood,
-        goal: goal,
-        helper: helper,
-        level: level,
-        exercise: exercise,
-        weight: weight,
-        withusRang: chat,
-        board: board,
-        medicine: medicine,
-        infoEdit: infoEdit,
-        mindHealth: mindHealth
-    };
-    const url = document.querySelector("#button-count").value;
-    const options = {
-        method: "PUT",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(body)
-    };
-
-
-    fetch(url, options)
-        .then(response => response.json())
-        .then(data => console.log(data));
-
-    return false;
-}
-
-function addWeight(count) {
-    count = parseInt(count);
-    count = count + 1;
-
-    const symptom    = document.querySelector("input[name=symptom]").value;
-    const alarm    = document.querySelector("input[name=alarm]").value;
-    const disease  = document.querySelector("input[name=disease]").value;
-    const blood = document.querySelector("input[name=blood]").value;
-    const goal     = document.querySelector("input[name=goal]").value;
-    const helper   = document.querySelector("input[name=helper]").value;
-    const level    = document.querySelector("input[name=level]").value;
-    const exercise = document.querySelector("input[name=exercise]").value;
-    const natriumMoisture   = document .querySelector("input[name=natriumMoisture]").value;
-    const chat = document.querySelector("input[name=withusRang]").value;
-    const board = document.querySelector("input[name=board]").value;
-    const medicine = document.querySelector("input[name=medicine]").value;
-    const infoEdit = document.querySelector("input[name=infoEdit]").value;
-    const mindHealth = document.querySelector("input[name=mindHealth]").value;
-    const body = {
-        weight: count,
-        symptom: symptom,
-        alarm: alarm,
-        diseaseInfo: disease,
-        bloodPressure: blood,
-        goal: goal,
-        helper: helper,
-        level: level,
-        exercise: exercise,
-        natriumMoisture: natriumMoisture,
-        withusRang: chat,
-        board: board,
-        medicine : medicine,
-        infoEdit: infoEdit,
-        mindHealth: mindHealth
-    };
-    const url = document.querySelector("#button-count").value;
-    const options = {
-        method: "PUT",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(body)
-    };
-
-
-    fetch(url, options)
-        .then(response => response.json())
-        .then(data => console.log(data));
-
-    return false;
-}
-
-function addDiseaseInfo(count) {
-    count = parseInt(count);
-    count = count + 1;
-
-    const symptom    = document.querySelector("input[name=symptom]").value;
-    const alarm    = document.querySelector("input[name=alarm]").value;
-    const weight  = document.querySelector("input[name=weight]").value;
-    const blood = document.querySelector("input[name=blood]").value;
-    const goal     = document.querySelector("input[name=goal]").value;
-    const helper   = document.querySelector("input[name=helper]").value;
-    const level    = document.querySelector("input[name=level]").value;
-    const exercise = document.querySelector("input[name=exercise]").value;
-    const natriumMoisture   = document .querySelector("input[name=natriumMoisture]").value;
-    const chat = document.querySelector("input[name=withusRang]").value;
-    const board = document.querySelector("input[name=board]").value;
-    const medicine = document.querySelector("input[name=medicine]").value;
-    const infoEdit = document.querySelector("input[name=infoEdit]").value;
-    const mindHealth = document.querySelector("input[name=mindHealth]").value;
-    const body = {
-        diseaseInfo: count,
-        symptom: symptom,
-        alarm: alarm,
-        weight: weight,
-        bloodPressure: blood,
-        goal: goal,
-        helper: helper,
-        level: level,
-        exercise: exercise,
-        natriumMoisture: natriumMoisture,
-        withusRang: chat,
-        board: board,
-        medicine: medicine,
-        infoEdit: infoEdit,
-        mindHealth: mindHealth
-    };
-    const url = document.querySelector("#button-count").value;
-    const options = {
-        method: "PUT",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(body)
-    };
-    fetch(url, options)
-        .then(response => response.json())
-        .then(data => console.log(data));
-
-    return false;
-}
-
-function addGoal(count) {
-    count = parseInt(count);
-    count = count + 1;
-
-    const symptom    = document.querySelector("input[name=symptom]").value;
-    const alarm    = document.querySelector("input[name=alarm]").value;
-    const weight  = document.querySelector("input[name=weight]").value;
-    const blood = document.querySelector("input[name=blood]").value;
-    const helper     = document.querySelector("input[name=helper]").value;
-    const disease   = document.querySelector("input[name=disease]").value;
-    const level    = document.querySelector("input[name=level]").value;
-    const exercise = document.querySelector("input[name=exercise]").value;
-    const natriumMoisture   = document .querySelector("input[name=natriumMoisture]").value;
-    const chat = document.querySelector("input[name=withusRang]").value;
-    const board = document.querySelector("input[name=board]").value;
-    const medicine = document.querySelector("input[name=medicine]").value;
-    const infoEdit = document.querySelector("input[name=infoEdit]").value;
-    const mindHealth = document.querySelector("input[name=mindHealth]").value;
-    const body = {
-        goal: count,
-        symptom: symptom,
-        alarm: alarm,
-        weight: weight,
-        bloodPressure: blood,
-        helper: helper,
-        diseaseInfo: disease,
-        level: level,
-        exercise: exercise,
-        natriumMoisture: natriumMoisture,
-        withusRang: chat,
-        board: board,
-        medicine: medicine,
-        infoEdit: infoEdit,
-        mindHealth : mindHealth
-    };
-    const url = document.querySelector("#button-count").value;
-    const options = {
-        method: "PUT",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(body)
-    };
-
-
-    fetch(url, options)
-        .then(response => response.json())
-        .then(data => console.log(data));
-    return false;
-}
-
-function addChat(count) {
-    count = parseInt(count);
-    count = count + 1;
-
-    const symptom    = document.querySelector("input[name=symptom]").value;
-    const alarm    = document.querySelector("input[name=alarm]").value;
-    const weight  = document.querySelector("input[name=weight]").value;
-    const blood = document.querySelector("input[name=blood]").value;
-    const helper     = document.querySelector("input[name=helper]").value;
-    const disease   = document.querySelector("input[name=disease]").value;
-    const level    = document.querySelector("input[name=level]").value;
-    const exercise = document.querySelector("input[name=exercise]").value;
-    const natriumMoisture   = document .querySelector("input[name=natriumMoisture]").value;
-    const goal = document.querySelector("input[name=goal]").value;
-    const board = document.querySelector("input[name=board]").value;
-    const medicine = document.querySelector("input[name=medicine]").value;
-    const infoEdit = document.querySelector("input[name=infoEdit]").value;
-    const mindHealth = document.querySelector("input[name=mindHealth]").value;
-    const body = {
-        withusRang: count,
-        symptom: symptom,
-        alarm: alarm,
-        weight: weight,
-        bloodPressure: blood,
-        helper: helper,
-        diseaseInfo: disease,
-        level: level,
-        exercise: exercise,
-        natriumMoisture: natriumMoisture,
-        goal: goal,
-        board: board,
-        medicine: medicine,
-        infoEdit: infoEdit,
-        mindHealth: mindHealth
-    };
-    const url = document.querySelector("#button-count").value;
-    const options = {
-        method: "PUT",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(body)
-    };
-
-
-    fetch(url, options)
-        .then(response => response.json())
-        .then(data => console.log(data));
-    return false;
-}
-
-function addLevel(count) {
-    count = parseInt(count);
-    count = count + 1;
-
-    const symptom    = document.querySelector("input[name=symptom]").value;
-    const alarm    = document.querySelector("input[name=alarm]").value;
-    const weight  = document.querySelector("input[name=weight]").value;
-    const blood = document.querySelector("input[name=blood]").value;
-    const helper     = document.querySelector("input[name=helper]").value;
-    const disease   = document.querySelector("input[name=disease]").value;
-    const goal    = document.querySelector("input[name=goal]").value;
-    const exercise = document.querySelector("input[name=exercise]").value;
-    const natriumMoisture   = document .querySelector("input[name=natriumMoisture]").value;
-    const chat = document.querySelector("input[name=withusRang]").value;
-    const board = document.querySelector("input[name=board]").value;
-    const medicine = document.querySelector("input[name=medicine]").value;
-    const infoEdit = document.querySelector("input[name=infoEdit]").value;
-    const mindHealth = document.querySelector("input[name=mindHealth]").value;
-    const body = {
-        level: count,
-        symptom: symptom,
-        alarm: alarm,
-        weight: weight,
-        bloodPressure: blood,
-        helper: helper,
-        diseaseInfo: disease,
-        goal: goal,
-        exercise: exercise,
-        natriumMoisture: natriumMoisture,
-        withusRang: chat,
-        board: board,
-        medicine: medicine,
-        infoEdit: infoEdit,
-        mindHealth: mindHealth
-    };
-    const url = document.querySelector("#button-count").value;
-    const options = {
-        method: "PUT",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(body)
-    };
-
-
-    fetch(url, options)
-        .then(response => response.json())
-        .then(data => console.log(data));
-    return false;
-}

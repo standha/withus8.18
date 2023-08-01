@@ -14,13 +14,32 @@
 	<script th:src="@{/js/jquery-1.12.4.min.js}"></script>
 	<script th:src="@{/js/jquery-ui.js}"></script>
 	<script th:src="@{/js/datepicker-ko.js}"></script>
-	<script th:src="@{/js/chart.js}"></script>
-	<script th:src="@{js/chartjs-plugin-style.min.js}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@2.0.1/dist/chartjs-plugin-annotation.min.js"></script>
 	<script th:src="@{/js/common.js}"></script>
 	<script th:src="@{/js/help.js}"></script>
+	<script src="https://kit.fontawesome.com/e381c8a508.js" crossorigin="anonymous"></script>
+	<style>
+		.weightThead th {
+			padding: 0.7em 0.3em;
+			text-align: center;
+			font-weight: normal;
+			border: 0;
+			font-size: 0.81rem;
+			color: #666;
+		}
+		tbody td {
+			position: relative;
+			border: 1px solid #e8eaed;
+			text-align: center;
+			height: 61.4px;
+			padding-top: 1.4%;
+		}
+	</style>
 </head>
 <body>
-<input type="hidden" id="button-count" th:attr="value=@{/button-count}">
+<input th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 " type="hidden" id="button-count" th:attr="value=@{/patient-main-button-count}">
+<input th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25 " type="hidden" id="button-count" th:attr="value=@{/caregiver-main-button-count}">
 <input type="hidden" id="helper-request" th:attr="value=@{/helper-request}">
 <div class="skip-navi">
 	<a href="#content">본문 바로가기</a>
@@ -28,8 +47,8 @@
 <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
 	<input type = 'hidden' name = "symptom"           th:value = "${count.symptom}" style = "display:none">
 	<input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
-	<input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">
-	<input type = 'hidden' name = "disease"           th:value = "${count.diseaseInfo}" style = "display:none">
+	<input type = 'hidden' name = "bloodPressure"             th:value = "${count.bloodPressure}" style = "display:none">
+	<input type = 'hidden' name = "diseaseInfo"           th:value = "${count.diseaseInfo}" style = "display:none">
 	<input type = 'hidden' name = "exercise"          th:value = "${count.exercise}" style = "display:none">
 	<input type = 'hidden' name = "goal"              th:value = "${count.goal}" style = "display:none">
 	<input type = 'hidden' name = "helper"            th:value = "${count.helper}" style = "display:none">
@@ -37,6 +56,27 @@
 	<input type = 'hidden' name = "natriumMoisture"   th:value = "${count.natriumMoisture}" style = "display:none">
 	<input type = 'hidden' name = "weight"            th:value = "${count.weight}" style = "display:none">
 	<input type = 'hidden' name = "withusRang"        th:value = "${count.withusRang}" style = "display:none">
+	<input type = 'hidden' name = "medicine"        th:value = "${count.medicine}" style = "display:none">
+	<input type = 'hidden' name = "board"        th:value = "${count.board}" style = "display:none">
+	<input type = 'hidden' name = "infoEdit"        th:value = "${count.infoEdit}" style = "display:none">
+	<input type = 'hidden' name = "mindHealth"        th:value = "${count.mindHealth}" style = "display:none">
+</div>
+<div th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25 ">
+	<input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
+	<input type = 'hidden' name = "bloodPressure"             th:value = "${count.bloodPressure}" style = "display:none">
+	<input type = 'hidden' name = "diseaseInfo"           th:value = "${count.diseaseInfo}" style = "display:none">
+	<input type = 'hidden' name = "exercise"          th:value = "${count.exercise}" style = "display:none">
+	<input type = 'hidden' name = "goal"              th:value = "${count.goal}" style = "display:none">
+	<input type = 'hidden' name = "helper"            th:value = "${count.helper}" style = "display:none">
+	<input type = 'hidden' name = "level"             th:value = "${count.level}" style = "display:none">
+	<input type = 'hidden' name = "weight"            th:value = "${count.weight}" style = "display:none">
+	<input type = 'hidden' name = "withusRang"        th:value = "${count.withusRang}" style = "display:none">
+	<input type = 'hidden' name = "familyObservation"        th:value = "${count.familyObservation}" style = "display:none">
+	<input type = 'hidden' name = "dietManagement"        th:value = "${count.dietManagement}" style = "display:none">
+	<input type = 'hidden' name = "mindHealth"        th:value = "${count.mindHealth}" style = "display:none">
+	<input type = 'hidden' name = "board"        th:value = "${count.board}" style = "display:none">
+	<input type = 'hidden' name = "infoEdit"        th:value = "${count.infoEdit}" style = "display:none">
+	<input type = 'hidden' name = "medicine"           th:value = "${count.medicine}" style = "display:none">
 </div>
 <!-- wrap -->
 <div id="wrap" class="chart-page">
@@ -46,7 +86,7 @@
 		<div class="header-wrap type01">
 			<div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
 				<div onclick="helperRequest()" >
-					<a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
+					<a class="btn xsm type07" href="tel:010-8454-9186" onclick="addHelper()" >
 						<span class="ico-call" ></span>
 						<span class="txt-rt">도우미</span>
 					</a>
@@ -55,6 +95,9 @@
 					<span class="ico-weight-s"></span>
 					<span>체중 변화</span>
 				</h2>
+				<div class="col text-end" style="font-size: 20px; margin-top: 0.73vh;">
+					<a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl" style="color: #00b050;"></i></a>
+				</div>
 			</div>
 			<div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
 				<div onclick="helperRequest()" >
@@ -67,6 +110,9 @@
 					<span class="ico-weight-s"></span>
 					<span>체중 변화</span>
 				</h2>
+				<div class="col text-end" style="font-size: 20px; margin-top: 0.73vh;">
+					<a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl" style="color: #00b050;"></i></a>
+				</div>
 			</div>
 		</div>
 	</header>
@@ -75,7 +121,6 @@
 	<!-- content -->
 	<div class="container" id="content">
 		<div class="cont-wrap type01">
-			<div id="dateRecord" class="size-lg"></div>
 			<div class="chart-wrap">
 				<div class="chart-legend">
 					<span class="tit">Kg</span>
@@ -92,6 +137,64 @@
 				</div>
 			</div>
 		</div>
+		<div class="cont-wrap type01">
+			<div id="dateRecord" class="size-lg hasDatepicker">
+				<div class="ui-datepicker-inline ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" style="display: block;">
+					<div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all">
+						<a class="ui-datepicker-prev ui-corner-all" data-handler="prev" data-event="click" title="이전달">
+							<span class="ui-icon ui-icon-circle-triangle-w">이전달</span>
+						</a>
+						<a class="ui-datepicker-next ui-corner-all" data-handler="next" data-event="click" title="다음달">
+							<span class="ui-icon ui-icon-circle-triangle-e">다음달</span>
+						</a>
+						<div class="ui-datepicker-title">
+							<span class="ui-datepicker-year">2022</span>
+							.&nbsp;
+							<span class="ui-datepicker-month">11</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<table>
+				<thead>
+					<tr class="weightThead">
+						<th scope="col" class="ui-datepicker-week-end">
+							<span title="일요일">일</span>
+						</th>
+						<th scope="col">
+							<span title="월요일">월</span>
+						</th>
+						<th scope="col">
+							<span title="화요일">화</span>
+						</th>
+						<th scope="col">
+							<span title="수요일">수</span>
+						</th>
+						<th scope="col">
+							<span title="목요일">목</span>
+						</th>
+						<th scope="col">
+
+							<span title="금요일">금</span>
+						</th>
+						<th scope="col" class="ui-datepicker-week-end">
+							<span title="토요일">토</span>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+				<tr class="weightDiary">
+					<td style="width:12.5%;"><span style="font-weight: normal; color:#666;" id="sunDate">24</span><span style="display: block; padding-top: 22%;" id="sunWeight"></span></td>
+					<td style="width:12.5%;"><span style="font-weight: normal; color:#666;" id="monDate">25</span><span style="display: block; padding-top: 22%;" id="monWeight"></span></td>
+					<td style="width:12.5%;"><span style="font-weight: normal; color:#666;" id="tueDate">26</span><span style="display: block; padding-top: 22%;" id="tueWeight"></span></td>
+					<td style="width:12.5%;"><span style="font-weight: normal; color:#666;" id="wedDate">27</span><span style="display: block; padding-top: 22%;" id="wedWeight"></span></td>
+					<td style="width:12.5%;"><span style="font-weight: normal; color:#666;" id="thuDate">28</span><span style="display: block; padding-top: 22%;" id="thuWeight"></span></td>
+					<td style="width:12.5%;"><span style="font-weight: normal; color:#666;" id="friDate">29</span><span style="display: block; padding-top: 22%;" id="friWeight"></span></td>
+					<td style="width:12.5%;"><span style="font-weight: normal; color:#666;" id="satDate">30</span><span style="display: block; padding-top: 22%;" id="satWeight"></span></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 	<!-- // content -->
 
@@ -99,134 +202,353 @@
 <!--// wrap -->
 
 <script th:inline="javascript">
+	/*<![CDATA[*/
+	var weightRecord = /*[[ ${weightRecord} ]]*/;
+	/*]]*/
+	var weightDict = {};
+	var today = new Date();
 
-	$.datepicker._generateHTML = (function (){
-		var realGenerateHtml = $.datepicker._generateHTML;
-		return function (instance) {
-			var html = realGenerateHtml.apply(this, arguments), $temp;
+	var year = today.getFullYear();
+	var month = ('0' + (today.getMonth() + 1)).slice(-2);
+	var day = ('0' + today.getDate()).slice(-2);
 
-			if ( instance.input.is(".size-lg") ) {
-				$temp = $("<table></table>").append(html);
-				$temp.find(".ui-datepicker-title").each(function () {
+	var dateString = year + '-' + month;
 
-					var year = $(this).find('.ui-datepicker-year').text();
-					var month = $(this).find('.ui-datepicker-month').text();
-					var str = year + "-" + month;
 
-					/*<![CDATA[*/
-					var weightRecord = /*[[ ${weightRecord} ]]*/;
-					/*]]*/
 
-					var date = [];
-					var weight = [];
-					var j = 0;
-					for(i=0; i<weightRecord.length; i++)
-					{
-						if(str == weightRecord[i].pk.date.substr(0, 7))
-						{
-							date[j] = weightRecord[i].pk.date.substr(8, 2);
-							weight[j] = weightRecord[i].weight;
-							j++;
+	var date = [];
+	var weight = [];
+	var height = /*[[ ${height} ]]*/;
+	height = parseInt(height);
+
+	const underWeightMax = height* height / 10000 * 18.5;
+	const normalWeightMax = height*height / 10000 * 23;
+	const overWeightMax = height*height / 10000 * 25;
+	console.log(underWeightMax);
+	var j = 0;
+	for(i=0; i<weightRecord.length; i++)
+	{
+		weightDict[weightRecord[i].pk.date] = weightRecord[i].weight;
+		if(dateString == weightRecord[i].pk.date.substr(0, 7))
+		{
+			date[j] = weightRecord[i].pk.date.substr(8, 2);
+			weight[j] = weightRecord[i].weight;
+			j++;
+		}
+	}
+	var ctx = document.getElementById('myChart').getContext('2d');
+	var data = {
+		labels: date,
+		datasets: [{
+			label: '체중',
+			data: weight,
+			fill: false,
+			spanGaps: false,
+			borderWidth: 2,
+			borderColor: '#21bc97',
+			pointBackgroundColor: '#21bc97',
+			pointBorderColor: '#21bc97',
+			pointRadius: 1.5
+		}]
+	};
+
+	var myChart = new Chart(ctx, {
+		type: 'line',
+		data: data,
+		options: {
+			scales:{
+				y:{
+					min: function(){
+						if(weight.length === 0){
+							return 20;
+						} else {
+							return weight[0] -5;
+						}
+					},
+					max:function(){
+						if(weight.length === 0){
+							return 110;
+						} else {
+							return weight[0] +5;
+						}
+					},
+				}
+			},
+			plugins: {
+				annotation: {
+					annotations: {
+						box1: {
+							type: 'box',
+							xMin: 0,
+							xMax: 31,
+							yMin: 20,
+							yMax: underWeightMax,
+							backgroundColor: 'rgb(255,255,65,0.25)',
+							borderWidth: 0
+						},
+						box2: {
+							type: 'box',
+							xMin: 0,
+							xMax: 31,
+							yMin: underWeightMax,
+							yMax: normalWeightMax,
+							backgroundColor: 'rgba(109,197,37,0.25)',
+							borderWidth: 0
+						},
+						box3: {
+							type: 'box',
+							xMin: 0,
+							xMax: 31,
+							yMin: normalWeightMax,
+							yMax: overWeightMax,
+							backgroundColor: 'rgba(239,115,30,0.25)',
+							borderWidth: 0
+						},
+						box4: {
+							type: 'box',
+							xMin: 0,
+							xMax: 31,
+							yMin: overWeightMax,
+							yMax: 200,
+							backgroundColor: 'rgba(255,26,26,0.25)',
+							borderWidth: 0
 						}
 					}
-
-					let draw = Chart.controllers.line.prototype.draw;
-					var ctx = document.getElementById('myChart').getContext('2d');
-					var data = {
-						labels: date,
-						datasets: [{
-							label: '체중',
-							data: weight,
-							fill: true,
-							spanGaps: false,
-							borderWidth: 2,
-							borderColor: '#21bc97',
-							pointBackgroundColor: '#21bc97',
-							pointBorderColor: '#21bc97',
-							pointRadius: 1.5
-						}]
-					};
-
-					var myChart = new Chart(ctx, {
-						plugins: [
-							{
-								id: "responsiveGradient",
-								afterLayout: function(chart, options) {
-									var scales = chart.scales;
-
-									// create a linear gradient with the dimentions of the scale
-									var color = chart.ctx.createLinearGradient(0,scales["y-axis-0"].bottom,0,0);
-									// add gradients stops
-									color.addColorStop(0, "rgba(33,188,151,0)");
-									color.addColorStop(0.25, "rgba(33,188,151,0)");
-									color.addColorStop(0.5, "rgba(33,188,151,0)");
-									color.addColorStop(0.75, "rgba(33,188,151,0.1)");
-									color.addColorStop(1, "rgba(33,188,151,0.7)");
-
-									// changes the background color option
-									chart.data.datasets[0].backgroundColor = color;
-								}
-							}
-						],
-
-						// The type of chart we want to create
-						type: 'line',
-
-						// The data for our dataset
-						data: data,
-
-						// Configuration options go here
-						options: {
-							scales:{
-								yAxes:[{
-									ticks: {
-										beginAtZero: true,
-										min: 30,
-										max: 110,
-										stepSize: 10,
-										maxTicksLimit: 20,
-										callback: function(value, index, values) {
-											return value == 30 || value == 50 || value == 70 || value == 90 ||  value == 110?value:'';
-										}
-									}
-								}]
-								,
-								xAxes:[{
-									gridLines: {
-										display: false
-									}
-								}]
-							},
-							legend: {
-								display: false,
-								position: 'top',
-								align: 'right', // 안먹음 ㅠㅠ
-								fullWidth: false,
-								labels: {
-									usePointStyle: true,
-									fontSize: 13,
-									fontStyle: '',
-									padding: 30
-								}
-							}
-						}
-					});
-				});
-				html = $temp[0].innerHTML;
+				},
+				legend: {
+					display: false
+				},
+				tooltip:{
+					enabled:false
+				}
 			}
-
-			return html;
-		};
-	})();
+		}
+	});
 
 
-	$( function() {
-		$( "#dateRecord" ).datepicker({
 
-		});
-	} );
+	function getPreviousSundayOfDate(dateString) {
+		const inputDate = new Date(dateString);
+		const dayOfWeek = inputDate.getDay(); // Day of the week (0: Sunday, 1: Monday, ..., 6: Saturday)
+
+		// If the day is Sunday, return the current date (Sunday)
+		if (dayOfWeek === 0) {
+			return inputDate.toISOString().slice(0, 10);
+		}
+
+		const diff = dayOfWeek; // Difference to previous Sunday
+
+		const previousSundayDate = new Date(inputDate);
+		previousSundayDate.setDate(inputDate.getDate() - diff);
+
+		// Format year, month, and day with 2 digits
+		const year = previousSundayDate.getFullYear();
+		const month = String(previousSundayDate.getMonth() + 1).padStart(2, '0');
+		const day = String(previousSundayDate.getDate()).padStart(2, '0');
+
+		return `${year}-${month}-${day}`;
+	}
+
+	function getDataForWeek(startingSunday) {
+		const days = ['일', '월', '화', '수', '목', '금', '토'];
+		const startDate = new Date(startingSunday);
+		const dataForWeek = [];
+
+		for (let i = 0; i < 7; i++) {
+			const currentDate = new Date(startDate);
+			currentDate.setDate(startDate.getDate() + i);
+
+			const year = currentDate.getFullYear();
+			const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+			const day = String(currentDate.getDate()).padStart(2, '0');
+			const dayOfWeek = days[currentDate.getDay()];
+
+			dataForWeek.push({
+				date: `${year}-${month}-${day}`,
+				dayOfWeek: dayOfWeek
+			});
+		}
+
+		return dataForWeek;
+	}
+
+	if(weightRecord[weightRecord.length-1].pk.date !== year + '-' + month + '-' +day){
+		weightRecord.push({pk:{date:year + '-' + month + '-' +day}, weight:''})
+		weightDict[weightRecord[weightRecord.length-1].pk.date] = weightRecord[weightRecord.length-1].weight;
+	}
+	let weightColorDict ={};
+	if(weightRecord.length > 2){
+		for(i=1; i<weightRecord.length; i++){
+			let nowDate = new Date(weightRecord[i].pk.date);
+			let yesterDate = new Date(weightRecord[i-1].pk.date);
+			yesterDate.setDate(yesterDate.getDate() + 1);
+			if (
+					nowDate.getFullYear() === yesterDate.getFullYear() &&
+					nowDate.getMonth() === yesterDate.getMonth() &&
+					nowDate.getDate() === yesterDate.getDate()
+			) {
+				if(weightRecord[i].weight- weightRecord[i-1].weight >= 2 || weightRecord[i].weight- weightRecord[i-1].weight <= -2){
+					weightColorDict[weightRecord[i].pk.date]= 'red';
+				} else {
+					weightColorDict[weightRecord[i].pk.date]= 'black';
+				}
+			} else {
+				weightColorDict[weightRecord[i].pk.date]= 'black';
+			}
+		}
+	}
 
 
+
+
+
+
+
+
+
+
+
+
+	var now = weightRecord[weightRecord.length-1].pk.date;
+	function initColor(){
+		document.getElementById('sunWeight').style.color = 'black';
+		document.getElementById('monWeight').style.color = 'black'
+		document.getElementById('tueWeight').style.color = 'black'
+		document.getElementById('wedWeight').style.color = 'black'
+		document.getElementById('thuWeight').style.color = 'black'
+		document.getElementById('friWeight').style.color = 'black'
+		document.getElementById('satWeight').style.color = 'black'
+
+	}
+	function settingDiary(date){
+		let setting =getPreviousSundayOfDate(date);
+		let weekSetting = getDataForWeek(setting);
+		document.getElementsByClassName('ui-datepicker-year')[0].textContent = weekSetting[0].date.substr(0,4)
+		document.getElementsByClassName('ui-datepicker-month')[0].textContent = weekSetting[0].date.substr(5,2);
+
+
+		document.getElementById('sunDate').textContent = weekSetting[0].date.substr(8,2);
+		document.getElementById('monDate').textContent = weekSetting[1].date.substr(8,2);
+		document.getElementById('tueDate').textContent = weekSetting[2].date.substr(8,2);
+		document.getElementById('wedDate').textContent = weekSetting[3].date.substr(8,2);
+		document.getElementById('thuDate').textContent = weekSetting[4].date.substr(8,2);
+		document.getElementById('friDate').textContent = weekSetting[5].date.substr(8,2);
+		document.getElementById('satDate').textContent = weekSetting[6].date.substr(8,2);
+		for(let i= 0;i<7; i++){
+			if(Object.keys(weightDict).includes(weekSetting[i].date)){
+				if(i === 0){
+					document.getElementById('sunWeight').textContent = weightDict[weekSetting[i].date];
+					if(weightColorDict[weekSetting[i].date] ==='red'){
+						document.getElementById('sunWeight').style.color = 'red'
+					}
+				} else if(i === 1){
+					document.getElementById('monWeight').textContent = weightDict[weekSetting[i].date];
+					if(weightColorDict[weekSetting[i].date] ==='red'){
+						document.getElementById('monWeight').style.color = 'red'
+					}
+				} else if(i === 2){
+					document.getElementById('tueWeight').textContent = weightDict[weekSetting[i].date];
+					if(weightColorDict[weekSetting[i].date] ==='red'){
+						document.getElementById('tueWeight').style.color = 'red'
+					}
+				} else if(i === 3){
+					document.getElementById('wedWeight').textContent = weightDict[weekSetting[i].date];
+					if(weightColorDict[weekSetting[i].date] ==='red'){
+						document.getElementById('wedWeight').style.color = 'red'
+					}
+				} else if(i === 4){
+					document.getElementById('thuWeight').textContent = weightDict[weekSetting[i].date];
+					if(weightColorDict[weekSetting[i].date] ==='red'){
+						document.getElementById('thuWeight').style.color = 'red'
+					}
+				} else if(i === 5){
+					document.getElementById('friWeight').textContent = weightDict[weekSetting[i].date];
+					if(weightColorDict[weekSetting[i].date] ==='red'){
+						document.getElementById('friWeight').style.color = 'red'
+					}
+				} else if(i === 6){
+					document.getElementById('satWeight').textContent = weightDict[weekSetting[i].date];
+					if(weightColorDict[weekSetting[i].date] ==='red'){
+						document.getElementById('satWeight').style.color = 'red';
+					}
+				}
+			} else {
+				if(i === 0){
+					document.getElementById('sunWeight').textContent = '';
+				} else if(i === 1){
+					document.getElementById('monWeight').textContent = '';
+				} else if(i === 2){
+					document.getElementById('tueWeight').textContent = '';
+				} else if(i === 3){
+					document.getElementById('wedWeight').textContent = '';
+				} else if(i === 4){
+					document.getElementById('thuWeight').textContent = '';
+				} else if(i === 5){
+					document.getElementById('friWeight').textContent = '';
+				} else if(i === 6){
+					document.getElementById('satWeight').textContent = '';
+				}
+			}
+		}
+	}
+
+	function isTodayNull(dateString){
+		const inputDate = new Date(dateString);
+		if(weightRecord[weightRecord.length-1].pk.date === dateString){
+			const dateId = ['sunWeight','monWeight','tueWeight','wedWeight','thuWeight','friWeight','satWeight'];
+			if(document.getElementById(dateId[inputDate.getDay()]).textContent === ''){
+				const sunWeightElement = document.getElementById(dateId[inputDate.getDay()]);
+				const linkElement = document.createElement('a');
+				linkElement.href = '/weight';
+				const imageElement = document.createElement('img');
+				imageElement.src = '/images/SubmitButton.jpg';
+				imageElement.alt = 'move weight input page';
+				imageElement.style ="width:80%";
+				linkElement.appendChild(imageElement);
+				sunWeightElement.appendChild(linkElement);
+			}
+		}
+
+	}
+	function getDate7DaysAgo(dateString) {
+		const inputDate = new Date(dateString);
+		const sevenDaysAgoDate = new Date(inputDate);
+		sevenDaysAgoDate.setDate(inputDate.getDate() - 7);
+
+		const year = sevenDaysAgoDate.getFullYear();
+		const month = String(sevenDaysAgoDate.getMonth() + 1).padStart(2, '0');
+		const day = String(sevenDaysAgoDate.getDate()).padStart(2, '0');
+
+		return `${year}-${month}-${day}`;
+	}
+	function getDate7DaysAfter(dateString) {
+		const inputDate = new Date(dateString);
+		const sevenDaysAfterDate = new Date(inputDate);
+		sevenDaysAfterDate.setDate(inputDate.getDate() + 7);
+
+		const year = sevenDaysAfterDate.getFullYear();
+		const month = String(sevenDaysAfterDate.getMonth() + 1).padStart(2, '0');
+		const day = String(sevenDaysAfterDate.getDate()).padStart(2, '0');
+
+		return `${year}-${month}-${day}`;
+	}
+
+	settingDiary(now);
+	isTodayNull(now);
+
+	$('.ui-datepicker-next').on('click',function(){
+		initColor();
+		now = getDate7DaysAfter(now);
+		settingDiary(now);
+		isTodayNull(now);
+	});
+
+	$('.ui-datepicker-prev').on('click',function(){
+		initColor();
+		now = getDate7DaysAgo(now);
+		settingDiary(now);
+		isTodayNull(now);
+	});
 </script>
 
 </body>

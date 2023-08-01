@@ -15,6 +15,7 @@ import withus.dto.MoistureAvgDTO;
 import withus.entity.*;
 import withus.repository.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -141,7 +142,16 @@ public class UserService implements UserDetailsService {
 
         if (checkType == "PATIENT") {
             Tbl_medication_alarm tbl_medication_alarm = Tbl_medication_alarm.builder()
-                    .id(saved.getUserId())
+                    .pk(new RecordKey(user.getUserId(), LocalDate.now()))
+                    .medicationTimeMorning(null)
+                    .medicationTimeLunch(null)
+                    .medicationTimeDinner(null)
+                    .alarmOnoffMorning(true)
+                    .alarmOnoffLunch(true)
+                    .alarmOnoffDinner(true)
+                    .morning(null)
+                    .lunch(null)
+                    .dinner(null)
                     .build();
 
             medicationAlarmRepository.save(tbl_medication_alarm);

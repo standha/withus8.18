@@ -108,30 +108,30 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .fetch();
         return userCountInfo;
     }
-
-    public List<PillSumDTO> findPillSum(String userId) {
-        QTbl_medication_record mr = QTbl_medication_record.tbl_medication_record;
-        List<PillSumDTO> pillSum = queryFactory.select(Projections.constructor(PillSumDTO.class, mr.week, mr.finished.count()))
-                .from(mr)
-                .groupBy(mr.week)
-                .orderBy(mr.week.asc())
-                .where(mr.finished.eq(true))
-                .where(mr.pk.id.eq(userId))
-                .fetch();
-
-        return pillSum;
-    }
-
-    public List<Tbl_medication_record> findPillAsc(String userId) {
-        QTbl_medication_record mr = QTbl_medication_record.tbl_medication_record;
-        List<Tbl_medication_record> pillAsc = queryFactory.selectFrom(mr)
-                .where(mr.pk.id.eq(userId))
-                .orderBy(mr.week.asc())
-                .orderBy(mr.pk.date.asc())
-                .fetch();
-
-        return pillAsc;
-    }
+//
+//    public List<PillSumDTO> findPillSum(String userId) {
+//        QTbl_medication_alarm mr = QTbl_medication_alarm.tbl_medication_alarm;
+//        List<PillSumDTO> pillSum = queryFactory.select(Projections.constructor(PillSumDTO.class, mr.week, mr.finished.count()))
+//                .from(mr)
+//                .groupBy(mr.week)
+//                .orderBy(mr.week.asc())
+//                .where(mr.finished.eq(true))
+//                .where(mr.pk.id.eq(userId))
+//                .fetch();
+//
+//        return pillSum;
+//    }
+//
+//    public List<Tbl_medication_alarm> findPillAsc(String userId) {
+//        QTbl_medication_alarm mr = QTbl_medication_alarm.tbl_medication_alarm;
+//        List<Tbl_medication_alarm> pillAsc = queryFactory.selectFrom(mr)
+//                .where(mr.pk.id.eq(userId))
+//                .orderBy(mr.week.asc())
+//                .orderBy(mr.pk.date.asc())
+//                .fetch();
+//
+//        return pillAsc;
+//    }
 
     public List<ExerciseDTO> findExerciseAvg(String userId) {
         QTbl_Exercise_record er = QTbl_Exercise_record.tbl_Exercise_record;

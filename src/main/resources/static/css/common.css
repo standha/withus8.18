@@ -236,6 +236,7 @@ span[class*="ico-"], a[class*="ico-"], div[class*="ico-"], button[class*="ico-"]
 .field-wrap.type04 .insert input.num4 {width: 140px;}
 .field-wrap.type04 .insert span {display: inline-block; font-size: 1rem; color: #222; font-weight: 500; line-height: 30px; vertical-align: bottom;}
 .field-wrap.type04 .insert span.bar {line-height: 46px; font-size: 2.6rem; font-family: 'Roboto', sans-serif; }
+.field-wrap.type04 .insert span.bar {line-height: 46px; font-size: 2.6rem; font-family: 'Roboto', sans-serif; }
 
 
 /* textarea */
@@ -304,6 +305,11 @@ select:focus {border: 1px solid #111;}
 .time-line.with-overlay{pointer-events: none;position: relative;z-index:1;}
 .time-line.with-overlay::before {content: '';position: absolute;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.5);z-index: 2; pointer-events: none;}
 
+select {position: relative; width: 100%; padding: 0 10px; height: 1.5; line-height: 1.5; font-size: 0.88rem; color: #333; font-weight: 300; border: 1px solid #ccc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; box-sizing: border-box;}
+select:focus {border: 1px solid #111;}
+
+#activityDropdown {width:150px; padding:.8em .5em;border: 1px solid #999;font-family: inherit;background-color: #aaaaaa; background:url('../images/arrow.jpg') no-repeat 95% 50%; border-radius: 0px; -webkit-appearance: none; -moz-appearance: none; appearance: none; margin:100px auto;}
+
 
 /**/
 .rdo-wrap.type01 {}
@@ -328,7 +334,7 @@ select:focus {border: 1px solid #111;}
 .label1 {font-weight: 500; font-size: 1rem; color: #222;}
 
 
-.checked{border: solid 1px #25cc85; background-color: #19d585; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04); background-position: -260px -115px;}
+/*.checked{border: solid 1px #25cc85; background-color: #19d585; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04); background-position: -260px -115px;}*/
 .rdo-wrap.type03 {justify-content: center; border: 2px solid #bebebe; border-radius: 8px;}
 .rdo-wrap.type03 .rdo-box {position: relative; width: 50%; height: 32px; line-height: 30px; background-color: #fff; border-radius: 8px 0 0 8px;}
 .rdo-wrap.type03 .rdo-box + .rdo-box {border-radius: 0 8px 8px 0;}

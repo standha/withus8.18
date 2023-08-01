@@ -24,8 +24,8 @@ public class ProgressKey implements Serializable {
     @EqualsAndHashCode.Include
     @Column(name = "week")
     private Integer week;
-
     public ProgressKey() {
+
     }
 
     public ProgressKey(String id, Integer week) {

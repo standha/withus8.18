@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
 import withus.entity.*;
 import withus.service.*;
@@ -14,6 +15,7 @@ import withus.service.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 public class AdminAPIController extends withus.controller.BaseController {
@@ -35,7 +37,7 @@ public class AdminAPIController extends withus.controller.BaseController {
         }
         List<Tbl_patient_main_button_count> counts = adminService.getPatientMainButtonCountAsc(userId);
 
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new ConcurrentHashMap<>();
         response.put("counts", counts);
 
         return ResponseEntity.ok(response);
@@ -49,7 +51,7 @@ public class AdminAPIController extends withus.controller.BaseController {
         }
         List<Tbl_patient_sub_button_count> counts = adminService.getPatientSubButtonCountAsc(userId);
 
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new ConcurrentHashMap<>();
         response.put("counts", counts);
         return ResponseEntity.ok(response);
     }
@@ -60,7 +62,7 @@ public class AdminAPIController extends withus.controller.BaseController {
             throw new IllegalStateException(user.getUserId() + " is not Admin");
         }
         List<Tbl_patient_detail_button_count> counts = adminService.getPatientDetailButtonCountAsc(userId);
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new ConcurrentHashMap<>();
         response.put("counts", counts);
         return ResponseEntity.ok(response);
     }
@@ -72,7 +74,7 @@ public class AdminAPIController extends withus.controller.BaseController {
         }
         List<Tbl_caregiver_main_button_count> counts = adminService.getCaregiverMainButtonCountAsc(userId);
 
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new ConcurrentHashMap<>();
         response.put("counts", counts);
 
         return ResponseEntity.ok(response);
@@ -86,7 +88,7 @@ public class AdminAPIController extends withus.controller.BaseController {
         }
         List<Tbl_caregiver_sub_button_count> counts = adminService.getCaregiverSubButtonCountAsc(userId);
 
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new ConcurrentHashMap<>();
         response.put("counts", counts);
         return ResponseEntity.ok(response);
     }
@@ -99,8 +101,33 @@ public class AdminAPIController extends withus.controller.BaseController {
         }
         List<Tbl_caregiver_detail_button_count> counts = adminService.getCaregiverDetailButtonCountAsc(userId);
 
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new ConcurrentHashMap<>();
         response.put("counts", counts);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value="/family_data/{userId}")
+    public ResponseEntity<Map<String, Object>> familyData(@PathVariable("userId") String userId) {
+        User user = getUser();
+        Map<String, Object> response = new ConcurrentHashMap<>();
+        User.Type type = user.getType();
+        String familyId = null;
+
+        if(type == User.Type.PATIENT){
+            if(user.getCaregiver() != null){
+                User existCaregiver = userService.getUserByContact(user.getCaregiver().getContact());
+                if(existCaregiver != null){
+                    familyId = existCaregiver.getUserId();
+                }
+            }
+            response.put("familyId", familyId);
+        } else if (type == User.Type.CAREGIVER) {
+            User existPatient = userService.getUserById(getConnectId());
+            if(getConnectId() != null && existPatient != null){
+                familyId = existPatient.getUserId();
+            }
+            response.put("familyId", familyId);
+        }
         return ResponseEntity.ok(response);
     }
 

@@ -1,0 +1,24 @@
+<html layout:decorate="~{moistureNatrium/diet/layout}">
+<div layout:fragment="content">
+    <!-- content -->
+    <div class="container" id="content">
+      <div class="cont-wrap">
+        <a th:href="@{/diet/soup}" class="list-card" style="text-decoration-line: none;">
+          <img th:src="@{/images/diet/국.png}" class="my-4" style="width: 50%;">
+          <span class="btn xxlg arrow-type01">국</span>
+        </a>
+        <a th:href="@{/diet/side}" class="list-card" style="text-decoration-line: none;">
+<!--          <img th:src="@{/images/diet/반찬1.png}" class="my-4" style="display: inline; width: 30%;">-->
+          <img th:src="@{/images/diet/반찬2.png}" class="my-4" style="width: 50%;">
+<!--          <img th:src="@{/images/diet/반찬3.png}" class="col my-4" style="display: inline; width: 30%;">-->
+          <span class="btn xxlg arrow-type01">반찬</span>
+        </a>
+        <a th:href="@{/diet/kimchi}" class="list-card" style="text-decoration-line: none;">
+          <img th:src="@{/images/diet/김치.png}" class="my-4" style="width: 50%;">
+          <span class="btn xxlg arrow-type01">김치</span>
+        </a>
+      </div>
+    </div>
+    <!-- // content -->
+</div>
+</html>
