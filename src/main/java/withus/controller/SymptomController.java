@@ -16,7 +16,9 @@ import withus.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+
 
 @Controller
 public class SymptomController extends BaseController {
@@ -40,7 +42,7 @@ public class SymptomController extends BaseController {
             modelAndView.addObject("ankle", 2);
             modelAndView.addObject("breath", 2);
             modelAndView.addObject("cough", 2);
-            modelAndView.addObject("text", 2);
+            modelAndView.addObject("text");
             logger.info("id:{}, url:{}, type:{}, level:{}, week:{} , Today's Symptom Not Recorded", user.getUserId(), request.getRequestURL(), user.getType(), user.getLevel(), user.getWeek());
         } else {
             Tbl_symptom_log symptom = symptomService.getSymptom(new RecordKey(getConnectId(), LocalDate.now()));
@@ -120,4 +122,75 @@ public class SymptomController extends BaseController {
                 .data(saved)
                 .build();
     }
+
+    //text 삭제
+    @PostMapping("/deleteData")
+    @ResponseBody
+    public Result<Tbl_symptom_log> postDataSymptom(@RequestBody String date){
+
+        Result.Code code;
+        Tbl_symptom_log saved = null;
+        User user = getUser();
+
+        try {
+            if (user.getType() == User.Type.PATIENT && user.getWeek() != 25) {
+
+                logger.info("DTO : {}",date);
+                LocalDate local = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);  //해당 날짜 받아오기
+                Tbl_symptom_log findUser = symptomService.getSymptom(new RecordKey(user.getUserId(), local));
+                findUser.setText(null);  //해당 날짜 열에 있는 text값을 null로 변경
+                logger.info("findUser:{}, {}, {}",findUser.getPk().getId(), findUser.getPk().getDate(), findUser.getText());
+                saved = symptomService.upsertSymptomRecord(findUser);
+                code = Result.Code.OK;
+            } else if (user.getWeek() == 25) {
+                throw new IllegalStateException("25 Weeks User try input data [warn]");
+            } else {
+                throw new IllegalStateException("Caregiver try input data [warn]");
+            }
+        } catch (Exception exception) {
+            logger.error(exception.getLocalizedMessage(), exception);
+            code = Result.Code.ERROR_DATABASE;
+        }
+
+        return Result.<Tbl_symptom_log>builder()
+                .code(code)
+                .data(saved)
+                .build();
+    }
+
+    //text수정
+    @PostMapping("/modifyeData")
+    @ResponseBody
+    public Result<Tbl_symptom_log> postmodifySymptom(@RequestBody String date,String text){
+
+        Result.Code code;
+        Tbl_symptom_log saved = null;
+        User user = getUser();
+
+        try {
+            if (user.getType() == User.Type.PATIENT && user.getWeek() != 25) {
+
+                logger.info("DTO : {}",date,text);
+                LocalDate local = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);  //해당 날짜 받아오기
+                Tbl_symptom_log findUser = symptomService.getSymptom(new RecordKey(user.getUserId(), local));
+                findUser.setText(text);  //해당 날짜 열에 있는 text값을 변경
+                logger.info("findUser:{}, {}, {}",findUser.getPk().getId(), findUser.getPk().getDate(), findUser.getText());
+                saved = symptomService.upsertSymptomRecord(findUser);
+                code = Result.Code.OK;
+            } else if (user.getWeek() == 25) {
+                throw new IllegalStateException("25 Weeks User try input data [warn]");
+            } else {
+                throw new IllegalStateException("Caregiver try input data [warn]");
+            }
+        } catch (Exception exception) {
+            logger.error(exception.getLocalizedMessage(), exception);
+            code = Result.Code.ERROR_DATABASE;
+        }
+
+        return Result.<Tbl_symptom_log>builder()
+                .code(code)
+                .data(saved)
+                .build();
+    }
+
 }

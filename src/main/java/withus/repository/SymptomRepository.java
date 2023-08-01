@@ -16,4 +16,9 @@ public interface SymptomRepository extends JpaRepository<Tbl_symptom_log, Record
 
     @Transactional(readOnly = true)
     Optional<Tbl_symptom_log> findByPk(RecordKey recordKey);
+//    //증상기록 보기
+//    @Transactional(readOnly = true)
+//    List<Tbl_symptom_log> findByPk_idAndTodaySymptomAndText(String pk_id, Integer todaySymptom, String text);
+
+
 }

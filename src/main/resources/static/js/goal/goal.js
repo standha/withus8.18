@@ -153,7 +153,6 @@ function onFormSubmission(form) {
     console.log("1",checked)
 
 
-
     var selectedButtons = document.querySelectorAll(".rdo-box.checked");
 
     selectedButtons.forEach(function(button) {
