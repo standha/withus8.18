@@ -74,7 +74,7 @@
     <header>
         <div class="header-wrap type01">
             <div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
-                <div onclick="helperRequest()" >
+                <div onclick="helperRequest()">
                     <a class="btn xsm type07" href="tel:010-8454-9186" onclick="addHelper()">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
@@ -86,7 +86,7 @@
                 </h2>
             </div>
             <div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
-                <div onclick="helperRequest()" >
+                <div onclick="helperRequest()">
                     <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
@@ -154,7 +154,12 @@
                     {
                         if(str == moistureHistory[i].pk.date)
                         {
-                            $(this).addClass('record-water');
+                            if (moistureHistory[i].intake <= 10){
+                              $(this).addClass('record-water');
+                            }
+                            else{
+                              $(this).addClass('record-water-over');
+                            }
                         }
                     }
                 });

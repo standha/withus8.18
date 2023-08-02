@@ -140,6 +140,8 @@ footer {position: relative;}
 /* calendar (alarm, exercise, symptom, intake) */
 .record-water {position: relative; background-color: #eff7fd;}
 .record-water:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 20px; height: 26px; background: url('../images/common/sp-icon.png') -236px -75px; background-size: 600px 450px; transform: translate(-50%, -17%);}
+.record-water-over {position: relative; background-color: #ff8f8f; color: white !important;}
+.record-water-over:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 20px; height: 26px; background: url('../images/common/sp-icon.png') -236px -75px; background-size: 600px 450px; transform: translate(-50%, -17%);}
 
 .record-exercise {position: relative; background-color: #f5ecff;}
 /*.record-exercise:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 22px; height: 26px; background: url('../images/common/sp-icon.png') -98px -76px; background-size: 600px 450px; transform: translate(-50%, -17%);}*/
