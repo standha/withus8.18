@@ -72,9 +72,13 @@
               <span class="ico-salt"></span>
               <span class="btn xxlg arrow-type01">저염식이</span>
             </a>
-            <a th:href="@{/moisture}" class="list-card">
+            <a th:href="@{/moisture}" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25" class="list-card">
                 <span class="ico-water2"></span>
                 <span class="btn xxlg arrow-type01">수분섭취</span>
+            </a>
+            <a th:href="@{/moisture-all-history}" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25" class="list-card">
+              <span class="ico-water2"></span>
+              <span class="btn xxlg arrow-type01">수분섭취</span>
             </a>
         </div>
     </div>
