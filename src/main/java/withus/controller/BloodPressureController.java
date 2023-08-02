@@ -12,16 +12,12 @@ import withus.dto.Result;
 import withus.entity.*;
 import withus.service.BloodPressureService;
 import withus.service.CountService;
-import withus.service.ExerciseService;
 import withus.service.UserService;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-import static com.querydsl.core.types.dsl.Wildcard.count;
-import static withus.entity.QUser.user;
+
 
 @Controller
 public class BloodPressureController extends BaseController {

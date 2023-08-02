@@ -114,7 +114,7 @@
                 <div class="pop-tit" id="popUp11">
                 </div>
                 <div class="pop-cont" id="popUp22">
-                    <input type="text" name="text" th:value="${symptomtext}" autofocus>
+                    <input type="text" name="text" th:value="${text}" id="editText" autofocus>
                 </div>
 
 <!--                <textarea id="editText"></textarea>-->
@@ -178,28 +178,22 @@
 
 
 
-
-
     function modify(month, day, week, date) {
-
-        // $("#symptommodify").hide();
-        // $("#dim").hide();
 
         // 기존 텍스트 가져오기 (이 부분은 알맞게 서버에서 텍스트를 가져오는 코드로 대체해야합니다)
         Item = "<span>" + month + "월 " + day + "일 " + week + "요일 </span>";
         $('#popUp11').append(Item);
-        const oldText = symptomtext;// 서버에서 가져온 기존 텍스트
+        $("#popUp22").html('<input type="text" name="text" id="editText" autofocus>');
 
-        $("#popUp22").text(oldText);
         $("#symptommodify").show();
         $("#dim").show();
 
-        $("#button").click(function () {
+        $("#button").click(function (e) {
 
             // 수정된 텍스트를 가져옵니다.
             const textAreaElement = document.getElementById("editText");
             const newText = textAreaElement.value
-            //const newText = $("#editText").val();
+
             if (newText !== null) {
                 const dateToEdit = date; // 수정하려는 날짜를 설정
                 saveEditedTextToServer(dateToEdit, newText);
@@ -208,20 +202,24 @@
             // 팝업을 닫습니다.
             $("#symptommodify").hide();
             $("#dim").hide();
+
+            $("#layerSelectType").hide();
+            $("#dim").hide();
+
+
+            // 수정된 텍스트를 서버에 저장하는 비동기 작업 (Promise를 사용하여 처리)
+            saveEditedTextToServer(date, newText)
+                .then(() => {
+                    // 비동기 작업이 완료된 후에 페이지를 새로고침합니다.
+                    window.location.reload();
+                })
+                .catch((error) => {
+                    // 오류 발생 시 처리 (예를 들어, 서버와의 통신 중 오류가 발생한 경우)
+                    console.error("오류 발생:", error);
+                    // 오류 발생 시에도 페이지를 새로고침할지, 오류 메시지를 표시할지 결정할 수 있습니다.
+                });
+
         });
-
-        //     // prompt로 텍스트 수정 입력란 띄우기
-        //     const newText = prompt("텍스트 수정", oldText);
-        //
-        //     // 수정된 텍스트가 있다면 서버에 보내고 저장하는 등의 작업을 수행합니다
-        //     if (newText !== null) {
-        //         const dateToEdit=tempStr;
-        //         saveEditedTextToServer(dateToEdit, newText);
-        //     }
-        //     // 서버에 newText를 보내고 저장하는 코드를 추가하세요.
-        //     console.log("수정된 텍스트:", newText);
-        // }
-
 
         //string으로 날짜 받아서 보내주기
         const getAjax = function (url, date, newText) {
@@ -232,9 +230,9 @@
                     type: "POST",
                     dataType: "json",
                     contentType: 'application/json; charset=utf-8',
-                    data: ({
-                        date,
-                        newText
+                    data:JSON.stringify ({
+                        date:date,
+                        text:newText
                     }),
                     success: (res) => {
                         resolve(res);  // 2.
@@ -292,7 +290,7 @@
                     var str = yy.toString() + "-" + monthStr + "-" + dayStr;
                     var hasTodaySymptom = false;
 
-                    for (i = 0; i < symptomHistory.length; i++) {
+                    for (var i = 0; i < symptomHistory.length; i++) {
                         hasTodaySymptom = false;
                         if (str == symptomHistory[i].pk.date) {
                             hasTodaySymptom = true;
@@ -302,11 +300,7 @@
                             switch (symptomHistory[i].todaysymptom) {
 
                                 case 0:
-                                    console.log("hgfd");
                                     if (symptomHistory[i].text != null && symptomHistory[i].text != "") {
-                                        console.log(symptomHistory[i].text);
-                                        console.log(sum);
-                                        console.log(symptomtext);
                                         $(this).addClass('see-more');
                                     } else {
                                         $(this).addClass('record-face1');
@@ -316,9 +310,6 @@
 
                                 case 1:
                                     if (symptomHistory[i].text != null && symptomHistory[i].text != "") {
-                                        console.log(symptomHistory[i].text);
-                                        console.log(sum);
-                                        console.log(symptomtext);
                                         $(this).addClass('see-more');
                                     } else {
                                         $(this).addClass('record-face2');
@@ -326,11 +317,7 @@
                                     break;
 
                                 case 2:
-                                    //$(this).addClass('record-face3');
                                     if (symptomHistory[i].text != null && symptomHistory[i].text != "") {
-                                        console.log(symptomHistory[i].text);
-                                        console.log(sum);
-                                        console.log(symptomtext);
                                         $(this).addClass('see-more');
                                     } else {
                                         $(this).addClass('record-face3');
@@ -338,11 +325,7 @@
                                     break;
 
                                 case 3:
-                                    // $(this).addClass('record-face3');
                                     if (symptomHistory[i].text != null && symptomHistory[i].text != "") {
-                                        console.log(symptomHistory[i].text);
-                                        console.log(sum);
-                                        console.log(symptomtext);
                                         $(this).addClass('see-more');
                                     } else {
                                         $(this).addClass('record-face3');
@@ -351,9 +334,6 @@
 
                                 case 4:
                                     if (symptomHistory[i].text != null && symptomHistory[i].text != "") {
-                                        console.log(symptomHistory[i].text);
-                                        console.log(sum);
-                                        console.log(symptomtext);
                                         $(this).addClass('see-more');
                                     } else {
                                         $(this).addClass('record-face4');
@@ -367,12 +347,10 @@
                         $(this).addClass('symptom-write')
                             .attr('onclick', "location.href='/symptom';")
                             .attr('style', 'cursor:pointer;');
-
                     }
 
                     });
                         html = $temp[0].innerHTML;
-
                     }
 
                     return html;
@@ -398,16 +376,17 @@
                             let todayyear = getdayyear(this.text);
                             let today = getDayOfWeek(todayyear, todaymonth, todayday);
                             let date = getdate(this.text);
+
                             symptompopup(todaysymptom, text, todaymonth, todayday, today,date);
+
                         });
                     });
 
-
-                    // 다른 부분 클릭 시 이벤트 전파 막기
-                    $("#dateRecord").on('click', function (e) {
-                        e.stopPropagation();
-                        console.log('555')
-                    });
+                    // // 다른 부분 클릭 시 이벤트 전파 막기
+                    // $("#dateRecord").on('click', function (e) {
+                    //     e.stopPropagation();
+                    //     console.log('555')
+                    // });
 
                 });
 
@@ -423,7 +402,7 @@
                         month = "0" + month;
                     }
                     const tempStr = yy.toString() + "-" + month + "-" + day.toString();
-                    console.log(tempStr);
+                    console.log('getText' + tempStr);
                     for (var i = 0; i < symptomHistory.length; i++) {
                         if (symptomHistory[i].pk.date == tempStr) {
                             return symptomHistory[i].text;
@@ -561,6 +540,7 @@
 
                 //증상 볼 수 있는 팝업창
                 function symptompopup(sum, text, month, day, week, date) {
+                    console.log('symptompopup');
                     $("#layerSelectType").show();
                     $("#dim").show();
 
@@ -611,96 +591,23 @@
                     $("#buttonNo").click(function () {
                         $("#layerSelectType").hide();
                         $("#dim").hide();
-                        console.log("a");
-                        deleteSymtomData(date);
-                        console.log("b");
-                        window.location.reload();
-                        return false;
+
+
+                        deleteSymtomData(date).then(() => {
+                            console.log("b");
+                            // deleteSymtomData 함수가 완료되면 새로고침 실행
+                            window.location.reload();
+                        }).catch((error) => {
+                            // 처리 중 에러가 발생한 경우의 처리
+                            console.error(error);
+                        });
                     });
 
                     $("#buttonOk").click(function () {
                         modify(month, day, week, date);
+                        //return false;
                     });
 
-
-                    // function modify(date) {
-                    //
-                    //     // $("#symptommodify").hide();
-                    //     // $("#dim").hide();
-                    //
-                    //     // 기존 텍스트 가져오기 (이 부분은 알맞게 서버에서 텍스트를 가져오는 코드로 대체해야합니다)
-                    //     const oldText = symptomtext;// 서버에서 가져온 기존 텍스트
-                    //
-                    //     $("#popUp22").text(oldText);
-                    //     $("#symptommodify").show();
-                    //     $("#dim").show();
-                    //
-                    //     $("#button").click(function () {
-                    //         // 수정된 텍스트를 가져옵니다.
-                    //         const newText = $("#editText").val();
-                    //         if (newText !== null) {
-                    //
-                    //             const dateToEdit = date; // 수정하려는 날짜를 설정
-                    //             saveEditedTextToServer(dateToEdit, newText);
-                    //         }
-                    //         // 팝업을 닫습니다.
-                    //         $("#symptommodify").hide();
-                    //         $("#dim").hide();
-                    //     });
-                    //
-                    //     //     // prompt로 텍스트 수정 입력란 띄우기
-                    //     //     const newText = prompt("텍스트 수정", oldText);
-                    //     //
-                    //     //     // 수정된 텍스트가 있다면 서버에 보내고 저장하는 등의 작업을 수행합니다
-                    //     //     if (newText !== null) {
-                    //     //         const dateToEdit=tempStr;
-                    //     //         saveEditedTextToServer(dateToEdit, newText);
-                    //     //     }
-                    //     //     // 서버에 newText를 보내고 저장하는 코드를 추가하세요.
-                    //     //     console.log("수정된 텍스트:", newText);
-                    //     // }
-                    //
-                    //
-                    //     //string으로 날짜 받아서 보내주기
-                    //     const getAjax = function (url, date, newText) {
-                    //         return new Promise((resolve, reject) => { // 1.
-                    //             console.log("a");
-                    //             $.ajax({
-                    //                 url: url,
-                    //                 type: "POST",
-                    //                 dataType: "json",
-                    //                 contentType: 'application/json; charset=utf-8',
-                    //                 data: ({
-                    //                     date,
-                    //                     newText
-                    //                 }),
-                    //                 success: (res) => {
-                    //                     resolve(res);  // 2.
-                    //                 },
-                    //                 error: (e) => {
-                    //                     reject(e);  // 3.
-                    //                 }
-                    //             });
-                    //         });
-                    //     }
-                    //
-                    //     // 서버에 수정된 텍스트를 보내고 저장하는 함수
-                    //     async function saveEditedTextToServer(date, newText) {
-                    //
-                    //         const url = "/modifyData";
-                    //         try {
-                    //
-                    //             const symptommodifyData = await getAjax(url, date, newText);
-                    //             console.log(symptommodifyData);
-                    //             return symptommodifyData;
-                    //         } catch (e) {
-                    //             console.log(e);
-                    //         }
-                    //
-                    //         console.log("날짜:", date);
-                    //         console.log("새로운 텍스트:", newText);
-                    //     }
-                    // }
                 }
 
 </script>

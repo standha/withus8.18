@@ -1,6 +1,7 @@
 package withus.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
+import withus.dto.dateDTO;
 import withus.entity.*;
 import withus.service.CountService;
 import withus.service.SymptomService;
@@ -159,9 +161,9 @@ public class SymptomController extends BaseController {
     }
 
     //text수정
-    @PostMapping("/modifyeData")
+    @PostMapping(value="/modifyData", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Result<Tbl_symptom_log> postmodifySymptom(@RequestBody String date,String text){
+    public Result<Tbl_symptom_log> postmodifySymptom(@RequestBody dateDTO date){
 
         Result.Code code;
         Tbl_symptom_log saved = null;
@@ -170,10 +172,10 @@ public class SymptomController extends BaseController {
         try {
             if (user.getType() == User.Type.PATIENT && user.getWeek() != 25) {
 
-                logger.info("DTO : {}",date,text);
-                LocalDate local = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);  //해당 날짜 받아오기
+                logger.info("DTO : {}",date.getDate());
+                LocalDate local = date.getDate();  //해당 날짜 받아오기
                 Tbl_symptom_log findUser = symptomService.getSymptom(new RecordKey(user.getUserId(), local));
-                findUser.setText(text);  //해당 날짜 열에 있는 text값을 변경
+                findUser.setText(date.getText());  //해당 날짜 열에 있는 text값을 변경
                 logger.info("findUser:{}, {}, {}",findUser.getPk().getId(), findUser.getPk().getDate(), findUser.getText());
                 saved = symptomService.upsertSymptomRecord(findUser);
                 code = Result.Code.OK;

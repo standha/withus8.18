@@ -3,14 +3,14 @@ package withus.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
-import withus.entity.ProgressKey;
-import withus.entity.Tbl_patient_main_button_count;
-import withus.entity.Tbl_goal;
-import withus.entity.User;
+import withus.entity.*;
 import withus.service.CountService;
 import withus.service.GoalService;
 import withus.service.UserService;
@@ -73,7 +73,6 @@ public class GoalController extends BaseController {
                 .build();
     }
 
-
     @GetMapping("/goallevel")
     public ModelAndView getGoallevel() {
         ModelAndView modelAndView = new ModelAndView("goal/goallevel");
@@ -124,31 +123,31 @@ public class GoalController extends BaseController {
         ModelAndView modelAndView = new ModelAndView("goal/goal1");
         User user = getUser();
         User.Type typeCheck = user.getType();
-        Tbl_goal goal = goalService.getGoalId(getConnectId());
+        Tbl_topgoals top_goals = goalService.getGoalId1(getConnectId());
         Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
 
         modelAndView.addObject("count", count);
-        modelAndView.addObject("goal", goal.getBottom_goals());
+        modelAndView.addObject("goal", top_goals.getTop_goals());
         modelAndView.addObject("type", typeCheck);
         modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("previousUrl", "/center");
 
-        logger.info("id:{}, goal:{}", user.getUserId(), goal.getBottom_goals());
+        logger.info("id:{}, goal:{}", user.getUserId(), top_goals.getTop_goals());
 
         return modelAndView;
     }
 
     @PutMapping(value = "/goal1", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Result<Tbl_goal> getGoal1(@RequestBody Tbl_goal tbl_goal) {
+    public Result<Tbl_topgoals> getGoal1(@RequestBody Tbl_topgoals tbl_topgoals) {
         User user = getUser();
-        tbl_goal.setGoalId(user.getUserId());
+        tbl_topgoals.setGoalId(user.getUserId());
         Result.Code code;
-        Tbl_goal saved = null;
+        Tbl_topgoals saved = null;
 
         try {
             if (user.getType() == User.Type.PATIENT) {
-                saved = goalService.upsertGoal(tbl_goal);
+                saved = goalService.upsert1Goal(tbl_topgoals);
                 code = Result.Code.OK;
             } else {
                 throw new IllegalStateException("Caregiver try input data [warn]");
@@ -158,7 +157,7 @@ public class GoalController extends BaseController {
             code = Result.Code.ERROR_DATABASE;
         }
 
-        return Result.<Tbl_goal>builder()
+        return Result.<Tbl_topgoals>builder()
                 .code(code)
                 .data(saved)
                 .build();
@@ -169,31 +168,31 @@ public class GoalController extends BaseController {
         ModelAndView modelAndView = new ModelAndView("goal/goal2");
         User user = getUser();
         User.Type typeCheck = user.getType();
-        Tbl_goal goal = goalService.getGoalId(getConnectId());
+        Tbl_middlegoals middle_goals = goalService.getGoalId2(getConnectId());
         Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
 
         modelAndView.addObject("count", count);
-        modelAndView.addObject("goal", goal.getMiddle_goals());
+        modelAndView.addObject("goal", middle_goals.getMiddle_goals());
         modelAndView.addObject("type", typeCheck);
         modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("previousUrl", "/center");
 
-        logger.info("id:{}, goal:{}", user.getUserId(), goal.getMiddle_goals());
+        logger.info("id:{}, goal:{}", user.getUserId(), middle_goals.getMiddle_goals());
 
         return modelAndView;
     }
 
     @PutMapping(value = "/goal2", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Result<Tbl_goal> getGoal2(@RequestBody Tbl_goal tbl_goal) {
+    public Result<Tbl_middlegoals> getGoal2(@RequestBody Tbl_middlegoals tbl_middlegoals) {
         User user = getUser();
-        tbl_goal.setGoalId(user.getUserId());
+        tbl_middlegoals.setGoalId(user.getUserId());
         Result.Code code;
-        Tbl_goal saved = null;
+        Tbl_middlegoals saved = null;
 
         try {
             if (user.getType() == User.Type.PATIENT) {
-                saved = goalService.upsertGoal(tbl_goal);
+                saved = goalService.upsert2Goal(tbl_middlegoals);
                 code = Result.Code.OK;
             } else {
                 throw new IllegalStateException("Caregiver try input data [warn]");
@@ -203,7 +202,7 @@ public class GoalController extends BaseController {
             code = Result.Code.ERROR_DATABASE;
         }
 
-        return Result.<Tbl_goal>builder()
+        return Result.<Tbl_middlegoals>builder()
                 .code(code)
                 .data(saved)
                 .build();
@@ -215,31 +214,31 @@ public class GoalController extends BaseController {
         ModelAndView modelAndView = new ModelAndView("goal/goal3");
         User user = getUser();
         User.Type typeCheck = user.getType();
-        Tbl_goal goal = goalService.getGoalId(getConnectId());
+        Tbl_bottomgoals bottom_goals = goalService.getGoalId3(getConnectId());
         Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
 
         modelAndView.addObject("count", count);
-        modelAndView.addObject("goal", goal.getTop_goals());
+        modelAndView.addObject("goal", bottom_goals.getBottom_goals());
         modelAndView.addObject("type", typeCheck);
         modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("previousUrl", "/center");
 
-        logger.info("id:{}, goal:{}", user.getUserId(), goal.getTop_goals());
+        logger.info("id:{}, goal:{}", user.getUserId(), bottom_goals.getBottom_goals());
 
         return modelAndView;
     }
 
     @PutMapping(value = "/goal3", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Result<Tbl_goal> getGoal3(@RequestBody Tbl_goal tbl_goal) {
+    public Result<Tbl_bottomgoals> getGoal3(@RequestBody Tbl_bottomgoals tbl_bottomgoals) {
         User user = getUser();
-        tbl_goal.setGoalId(user.getUserId());
+        tbl_bottomgoals.setGoalId(user.getUserId());
         Result.Code code;
-        Tbl_goal saved = null;
+        Tbl_bottomgoals saved = null;
 
         try {
             if (user.getType() == User.Type.PATIENT) {
-                saved = goalService.upsertGoal(tbl_goal);
+                saved = goalService.upsert3Goal(tbl_bottomgoals);
                 code = Result.Code.OK;
             } else {
                 throw new IllegalStateException("Caregiver try input data [warn]");
@@ -249,7 +248,7 @@ public class GoalController extends BaseController {
             code = Result.Code.ERROR_DATABASE;
         }
 
-        return Result.<Tbl_goal>builder()
+        return Result.<Tbl_bottomgoals>builder()
                 .code(code)
                 .data(saved)
                 .build();
