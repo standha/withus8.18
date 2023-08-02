@@ -430,6 +430,25 @@ public class AdminHomeController extends withus.controller.BaseController {
 
         return modelAndView;
     }
+    @GetMapping("/admin_withusRang/{userId}")
+    public ModelAndView getWwithusHistoryAll(@PathVariable("userId") String userId) {
+        User user = getUser();
+        if (user.getType() != User.Type.ADMINISTRATOR) {
+            throw new IllegalStateException(user.getUserId() + " is not Admin");
+        }
+        HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
+        ModelAndView modelAndView = new ModelAndView("Admin/admin_withusRang");
+        User.Type type = adminService.getTypeInfo(userId);
+        modelAndView.addObject("type", type);
+        modelAndView.addObject("info", headerInfo);
+
+        List<WwithusHistoryDTO> withusRang = adminService.getWwithusHistory(userId);
+        modelAndView.addObject("withusRang", withusRang);
+
+        logger.info("user try to access admin_withusRang  id:{}, getId:{})", user.getUserId(),
+                userId);
+        return modelAndView;
+    }
 
     @PostMapping(value = "/logout")
     public ModelAndView logoutPage(HttpServletRequest request, HttpServletResponse response) {

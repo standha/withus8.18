@@ -165,7 +165,10 @@ public class AdminService {
         return userRepositorySupport.findCaregiverDetailButtonCount(userId);
     }
 
-
+    @Nullable
+    public List<WwithusHistoryDTO> getWwithusHistory(String userId){
+        return userRepository.findWwithusHistory(userId);
+    }
 
     public List<NatriumCountDTO> getNatriumCountWeek(String userId) {
         Integer week = 1;

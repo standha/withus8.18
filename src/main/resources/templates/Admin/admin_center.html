@@ -26,6 +26,7 @@
     .button-click { background-image: url("/images/button-click.png"); width: 64px; height: 64px; }
     .family-data {background-image: url("/images/admin/familyData.PNG"); width: 64px; height: 64px;}
     .duration-time {background-image: url("/images/admin/durationTime.png"); width: 64px; height: 64px;}
+    .duration-time {background-image: url("/images/admin/withusRang.png"); width: 64px; height: 64px;}
 </style>
 <div th:replace="Admin/admin_nav :: navFragment"></div>
 <body>
@@ -61,6 +62,10 @@
             <a th:href="@{/admin_symptomRecord/{userId}(userId=${info.userId})}" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
                 <span class="ico-list"></span>
                 <span>증상 일지</span>
+            </a>
+            <a th:href="@{/admin_withusRang/{userId}(userId=${info.userId})}">
+                <span class="withusRang"></span>
+                <span>위더스랑</span>
             </a>
             <a th:href="@{/admin_durationTime/{userId}(userId=${info.userId})}">
                 <span class="duration-time"></span>
