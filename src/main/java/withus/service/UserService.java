@@ -27,7 +27,12 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final MedicationAlarmRepository medicationAlarmRepository;
     private final OutPatientVisitAlarmRepository outPatientVisitAlarmRepository;
+
     private final GoalRepository goalRepositroy;
+//    private final GoalRepository1 goalRepositroy1;
+//    private final GoalRepository2 goalRepositroy2;
+//    private final GoalRepository3 goalRepositroy3;
+
     private final PatientMainCountRepository patientMainCountRepository;
     private final PatientSubCountRepository patientSubCountRepository;
     private final PatientDetailCountRepository patientDetailCountRepository;
@@ -42,6 +47,9 @@ public class UserService implements UserDetailsService {
                         CaregiverMainCountRepository caregiverMainCountRepository, CaregiverSubCountRepository caregiverSubCountRepository, CaregiverDetailCountRepository caregiverDetailCountRepository ) {
         this.userRepository = userRepository;
         this.goalRepositroy = goalRepositroy;
+//        this.goalRepositroy1 = goalRepositroy1;
+//        this.goalRepositroy2 = goalRepositroy2;
+//        this.goalRepositroy3 = goalRepositroy3;
         this.medicationAlarmRepository = medicationAlarmRepository;
         this.outPatientVisitAlarmRepository = outPatientVisitAlarmRepository;
         this.patientMainCountRepository = patientMainCountRepository;
@@ -138,7 +146,25 @@ public class UserService implements UserDetailsService {
                 .bottom_goals(null)
                 .build();
 
+//        Tbl_topgoals tbl_topgoals = Tbl_topgoals.builder()
+//                .goalId(saved.getUserId())
+//                .top_goals(null)
+//                .build();
+//
+//        Tbl_middlegoals tbl_middlegoals = Tbl_middlegoals.builder()
+//                .goalId(saved.getUserId())
+//                .middle_goals(null)
+//                .build();
+//
+//        Tbl_bottomgoals tbl_bottomgoals = Tbl_bottomgoals.builder()
+//                .goalId(saved.getUserId())
+//                .bottom_goals(null)
+//                .build();
+
         goalRepositroy.save(tbl_goal);
+//        goalRepositroy1.save(tbl_topgoals);
+//        goalRepositroy2.save(tbl_middlegoals);
+//        goalRepositroy3.save(tbl_bottomgoals);
 
         if (checkType == "PATIENT") {
             Tbl_medication_alarm tbl_medication_alarm = Tbl_medication_alarm.builder()

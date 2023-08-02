@@ -84,7 +84,7 @@
         <div class="cont-wrap type01">
             <div class="rdo-wrap grid-col type02">
 
-                <form id="goal-form" th:action="@{/goal}" onsubmit="return onFormSubmission(this);">
+                <form id="goal-form" th:action="@{/goal1}" onsubmit="return onFormSubmission(this);">
 
                 <div th:if="${goal} == 1" class="rdo-box checked">
                     <label>
@@ -125,13 +125,13 @@
                     </label>
                 </div>
 
-                <div th:if="${goal} == 4" class="rdo-box checked">
+                <div th:if="${topgoal} == 4" class="rdo-box checked">
                     <label>
                         <span class="rdo-mark"></span>
                         <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 1회 이상 식사 시 염분 측정" data-category="bottom">주 1회 이상 식사 시 염분 측정
                     </label>
                 </div>
-                <div th:unless="${goal} == 4" class="rdo-box">
+                <div th:unless="${topgoal} == 4" class="rdo-box">
                     <label>
                         <span class="rdo-mark"></span>
                         <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 1회 이상 식사 시 염분 측정" data-category="bottom">주 1회 이상 식사 시 염분 측정
@@ -139,13 +139,13 @@
                 </div>
 
 
-                    <div th:if="${goal} == 5" class="rdo-box checked">
+                    <div th:if="${topgoal} == 5" class="rdo-box checked">
                         <label>
                             <span class="rdo-mark"></span>
                             <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 1회 이상 체중 측정" data-category="bottom">주 1회 이상 체중 측정
                         </label>
                     </div>
-                    <div th:unless="${goal} == 5" class="rdo-box">
+                    <div th:unless="${topgoal} == 5" class="rdo-box">
                         <label>
                             <span class="rdo-mark"></span>
                             <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 1회 이상 체중 측정" data-category="bottom">주 1회 이상 체중 측정
@@ -154,13 +154,13 @@
 
 
 
-                    <div th:if="${goal} == 6" class="rdo-box checked" >
+                    <div th:if="${topgoal} == 6" class="rdo-box checked" >
                         <label>
                             <span class="rdo-mark"></span>
                             <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 1회 이상 마음 일기 기록" data-category="bottom">주 1회 이상 마음 일기 기록
                         </label>
                     </div>
-                    <div th:unless="${goal} == 6" class="rdo-box">
+                    <div th:unless="${topgoal} == 6" class="rdo-box">
                         <label>
                             <span class="rdo-mark"></span>
                             <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 1회 이상 마음 일기 기록" data-category="bottom">주 1회 이상 마음 일기 기록

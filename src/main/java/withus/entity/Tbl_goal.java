@@ -2,10 +2,7 @@ package withus.entity;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Builder(toBuilder = true)
@@ -15,6 +12,9 @@ import javax.persistence.Table;
 @Getter
 @Table(name = "tbl_goal")
 public class Tbl_goal {
+    @EmbeddedId
+    private RecordKey pk;
+
     @Id
     @Column(name = "goal_id", columnDefinition = "VARCHAR(128) NOT NULL", length = 128)
     protected String goalId;
@@ -22,13 +22,17 @@ public class Tbl_goal {
     @Column(name = "goal")
     private Integer goal;
 
-    @Column(name = "top_goals", columnDefinition = "VARCHAR(128)", length = 128)
+    @Column(name = "top_goals")
     private Integer top_goals;
 
-    @Column(name = "middle_goals", columnDefinition = "VARCHAR(128)", length = 128)
+    @Column(name = "middle_goals")
     private Integer middle_goals;
 
-    @Column(name = "bottom_goals", columnDefinition = "VARCHAR(128)", length = 128)
+    @Column(name = "bottom_goals")
     private Integer bottom_goals;
+
+    @Column(name = "week")
+    private Integer week;
+
 
 }
