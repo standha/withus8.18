@@ -154,11 +154,11 @@
                     {
                         if(str == moistureHistory[i].pk.date)
                         {
-                            if (moistureHistory[i].intake <= 10){
-                              $(this).addClass('record-water');
-                            }
-                            else{
+                            if (moistureHistory[i].intake > 10) {
                               $(this).addClass('record-water-over');
+                            }
+                            else {
+                              $(this).addClass('record-water');
                             }
                         }
                     }
