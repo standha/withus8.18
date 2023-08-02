@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<html xmlns:th="http://www.thymeleaf.org" lang="kr" style="overflow: auto">
 <head>
 	<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
 
@@ -28,14 +28,15 @@
 		});
 	});
 </script>
-<body style="overflow: auto">
+<body>
 <div th:replace="Admin/admin_nav :: navFragment"></div>
 <!--<div th:replace="Admin/admin_header :: #admin_header"></div>-->
 <div id="content">
 	<div class="home-table">
 		<div class="home-header">
 			<div class="home-table__div">
-				<h4>등록 환자 목록</h4>
+				<h4 th:if="${type} =='PATIENT'">등록 환자 목록</h4>
+				<h4 th:if="${type} =='CAREGIVER'">등록 가족 목록</h4>
 			</div>
 			<div class="home-table__div">
 				<button id="excel-button" onclick="fnExcelReport('hidden-table', typeExcel, '')">엑셀 다운</button>
@@ -63,7 +64,7 @@
 				<th th:if="${type} =='CAREGIVER'">환자와의 관계</th>
 				<th th:if="${type} =='CAREGIVER'">가족 ID</th>
 				<th th:if="${type} =='CAREGIVER'">가족 PW</th>
-				<th th:if="${type} =='CAREGIVER'">가족 생녀월일</th>
+				<th th:if="${type} =='CAREGIVER'">가족 생년월일</th>
 				<th th:if="${type} =='CAREGIVER'">가족 성별</th>
 				<th th:if="${type} =='CAREGIVER'">가족 키</th>
 				<th th:if="${type} =='CAREGIVER'">가족 전화번호</th>

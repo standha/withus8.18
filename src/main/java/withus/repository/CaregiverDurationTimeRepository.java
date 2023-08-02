@@ -9,8 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface CaregiverDurationTimeRepository extends JpaRepository<Tbl_caregiver_duration_time, CaregiverProgressKey>{
-    @Transactional(readOnly = true)
-    List<Tbl_caregiver_duration_time> findAllByKey(CaregiverProgressKey caregiverProgressKey);
 
     @Transactional(readOnly = true)
     Optional<Tbl_caregiver_duration_time> findByKey(CaregiverProgressKey caregiverProgressKey);

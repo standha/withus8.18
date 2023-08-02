@@ -370,6 +370,32 @@ public class AdminHomeController extends withus.controller.BaseController {
 
         return mav;
     }
+    @GetMapping("/admin_durationTime/{userId}")
+    public ModelAndView adminDurationTime(@PathVariable("userId") String userId) {
+
+        User user = getUser();
+        if (user.getType() != User.Type.ADMINISTRATOR) {
+            throw new IllegalStateException(user.getUserId() + " is not Admin");
+        }
+        ModelAndView mav = new ModelAndView();
+        HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
+        User.Type type = adminService.getTypeInfo(userId);
+
+        if(type == User.Type.PATIENT){
+            List<Tbl_patient_duration_time> dt = adminService.getPatientDurationTime(userId);
+            mav.addObject("durationTimeAsc", dt);
+        } else if(type == User.Type.CAREGIVER){
+            List<Tbl_caregiver_duration_time> dt = adminService.getCaregiverDurationTime(userId);
+            mav.addObject("durationTimeAsc", dt);
+        }
+
+        mav.addObject("info", headerInfo);
+        mav.addObject("type", type);
+        mav.setViewName("Admin/admin_durationTime");
+
+        logger.info("user try to access admin_durationTime  Id:{}, getId:{})", user.getUserId(), userId);
+        return mav;
+    }
 
     @GetMapping("/admin_button_count/{userId}")
     public ModelAndView getSymptomAll(@PathVariable("userId") String userId) {

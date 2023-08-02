@@ -222,11 +222,13 @@
                     min : 0,
                     suggestedMax: function(){
                         let temp = dyadsYList.slice(1,25);
-                        if ( Math.max(...temp) < 9 ) {
+                        if ( Math.max(...temp) < 8 ) {
                             return 10;
+                        } else if(Math.max(...temp) < 12&& Math.max(...temp) >7){
+                            return 15;
                         }
                         else {
-                            return Math.max(...temp) + 2;
+                            return Math.max(...temp) + 5;
                         }
                     }
                 }

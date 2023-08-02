@@ -21,7 +21,7 @@ public class Tbl_patient_duration_time {
     @Column(name ="main")
     private Integer main;
 
-    @Column(name = "goal", columnDefinition = "Integer default 0")
+    @Column(name = "goal")
     private Integer goal;
 
     @Column(name = "level")

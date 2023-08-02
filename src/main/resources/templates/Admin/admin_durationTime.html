@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css"/>
+<script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>위더스</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no">
+    <link th:href="@{/css/reset.css}" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <link th:href="@{/css/layout.css}" rel="stylesheet">
+    <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <script src="/js/admin/admin_excel.js"></script>
+    <link href="/css/admin/adminTable.css" rel="stylesheet">
+
+    <title>Admin center</title>
+</head>
+<body>
+<div id="wrap" class="main-page">
+    <div th:if="${durationTimeAsc} != null">
+        <div th:replace="Admin/admin_nav :: navFragment"></div>
+        <header th:replace="Admin/admin_infoHeader :: headerFragment"></header>
+
+        <button class="btn__excel" onclick="fnExcelReport('foo-table','durationTime', userId)">엑셀 다운</button>
+        <div class="center-table">
+            <table id="foo-table" class="table table-bordered" style="table-layout: fixed;">
+                <thead>
+                <tr>
+                    <th colspan="16" style="vertical-align: middle; text-align: center; font-weight: bold;">항목별 사용 시간</th>
+                </tr>
+                <tr>
+                    <th style="vertical-align: middle; text-align: center">주차</th>
+                    <th style="vertical-align: middle; text-align: center">메인화면</th>
+                    <th style="vertical-align: middle; text-align: center">이주의 목표</th>
+                    <th style="vertical-align: middle; text-align: center">달성률</th>
+                    <th style="vertical-align: middle; text-align: center">위더스랑</th>
+                    <th style="vertical-align: middle; text-align: center">질환정보</th>
+                    <th style="vertical-align: middle; text-align: center">복용약</th>
+                    <th style="vertical-align: middle; text-align: center">혈압/맥박</th>
+                    <th style="vertical-align: middle; text-align: center">운동</th>
+                    <th th:if="${type} == ${T(withus.entity.User.Type).PATIENT}" style="vertical-align: middle; text-align: center">증상일지</th>
+                    <th th:if="${type} == ${T(withus.entity.User.Type).PATIENT}" style="vertical-align: middle; text-align: center">염분/수분</th>
+                    <th th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}" style="vertical-align: middle; text-align: center">가족관찰</th>
+                    <th th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}" style="vertical-align: middle; text-align: center">식단관리</th>
+                    <th style="vertical-align: middle; text-align: center">체중</th>
+                    <th style="vertical-align: middle; text-align: center">마음건강</th>
+                    <th style="vertical-align: middle; text-align: center">게시판</th>
+                    <th style="vertical-align: middle; text-align: center">알람</th>
+                    <th style="vertical-align: middle; text-align: center">총 사용시간</th>
+                </tr>
+                </thead>
+                <tbody id="history-table-data" style="text-align: center" >
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var durationTimeAsc = /*[[ ${durationTimeAsc} ]]*/;
+    var type = [[${type}]];
+    /*]]*/
+
+    var userId;
+    var totalSum =0;
+    if(durationTimeAsc.length == 0)
+    {
+        var Item = "<tr>";
+        Item += "<td colspan='16' style='background: #FFFFFF'>" + "데이터 없음" + "</td>";
+        Item += "</tr>";
+        $('.btn__excel').hide();
+        $('#history-table-data').append(Item);
+        userId = '';
+    }
+    else
+    {
+        userId = durationTimeAsc[0].key.id;
+
+        var AscCount = 0;
+        let weekArray = [];
+        for(j = 0; j<durationTimeAsc.length; j++){
+            weekArray.push(durationTimeAsc[j].key.week);
+        }
+
+        for(i=1; i<=24; i++)
+        {
+            if(i%2 === 0)
+                var Item = "<tr class='odd-tr'>";
+            else
+                var Item = "<tr class='even-tr'>";
+            Item += "<td style='vertical-align: middle'>" + i + "주차" +"</td>";
+            if(weekArray != null) {
+                if (weekArray.includes(i)) {
+                    if(type === 'PATIENT'){
+                        let total = durationTimeAsc[AscCount].main + durationTimeAsc[AscCount].goal + durationTimeAsc[AscCount].level + durationTimeAsc[AscCount].withusRang + durationTimeAsc[AscCount].diseaseInfo + durationTimeAsc[AscCount].medicine + durationTimeAsc[AscCount].bloodPressure +
+                            durationTimeAsc[AscCount].exercise + durationTimeAsc[AscCount].symptom + durationTimeAsc[AscCount].natriumMoisture + durationTimeAsc[AscCount].weight + durationTimeAsc[AscCount].mindHealth + durationTimeAsc[AscCount].board + durationTimeAsc[AscCount].alarm;
+                        totalSum += total;
+                        Item += "<td>" + durationTimeAsc[AscCount].main + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].goal + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].level + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].withusRang + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].diseaseInfo + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].medicine + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].bloodPressure + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].exercise + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].symptom + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].natriumMoisture + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].weight + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].mindHealth + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].board + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].alarm + "</td>";
+                        Item += "<td>" + total + "</td>";
+                        AscCount++;
+                    } else {
+                        let total = durationTimeAsc[AscCount].main + durationTimeAsc[AscCount].goal + durationTimeAsc[AscCount].level + durationTimeAsc[AscCount].withusRang + durationTimeAsc[AscCount].diseaseInfo + durationTimeAsc[AscCount].medicine + durationTimeAsc[AscCount].bloodPressure +
+                            durationTimeAsc[AscCount].exercise + durationTimeAsc[AscCount].familyObservation + durationTimeAsc[AscCount].dietManagement + durationTimeAsc[AscCount].weight + durationTimeAsc[AscCount].mindHealth + durationTimeAsc[AscCount].board + durationTimeAsc[AscCount].alarm;
+                        totalSum += total;
+                        Item += "<td>" + durationTimeAsc[AscCount].main + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].goal + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].level + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].withusRang + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].diseaseInfo + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].medicine + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].bloodPressure + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].exercise + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].familyObservation + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].dietManagement + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].weight + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].mindHealth + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].board + "</td>";
+                        Item += "<td>" + durationTimeAsc[AscCount].alarm + "</td>";
+                        Item += "<td>" + total + "</td>";
+                        AscCount++;
+                    }
+
+                } else {
+                    Item += "<td>" + "" + "</td>";
+                    Item += "<td>" + "" + "</td>";
+                    Item += "<td>" + "" + "</td>";
+                    Item += "<td>" + "" + "</td>";
+                    Item += "<td>" + "" + "</td>";
+                    Item += "<td>" + "" + "</td>";
+                    Item += "<td>" + "" + "</td>";
+                    Item += "<td>" + "" + "</td>";
+                    Item += "<td>" + "" + "</td>";
+                    Item += "<td>" + "" + "</td>";
+                    Item += "<td>" + "" + "</td>";
+                    Item += "<td>" + "" + "</td>";
+                    Item += "<td>" + "" + "</td>";
+                    Item += "<td>" + "" + "</td>";
+                    Item += "<td>" + "" + "</td>";
+                }
+            }
+
+
+            $('#history-table-data').append(Item);
+
+        }
+
+        var Item = "<tr class='allRecord'>";
+        Item += "<td>총합</td>";
+
+        var sum = {'main':0,'goal':0,'level':0,'withusRang':0,'diseaseInfo':0,'medicine':0,'bloodPressure':0,'exercise':0,'symptom':0,'natriumMoisture':0,'weight':0,'mindHealth':0,'board':0,'alarm':0,'familyObservation':0,'dietManagement':0};
+
+        if(type === 'PATIENT'){
+            for(i = 0; i<durationTimeAsc.length; i++){
+                sum['main'] += durationTimeAsc[i].main;
+                sum['goal'] += durationTimeAsc[i].goal;
+                sum['level'] += durationTimeAsc[i].level;
+                sum['withusRang'] += durationTimeAsc[i].withusRang;
+                sum['diseaseInfo'] += durationTimeAsc[i].diseaseInfo;
+                sum['medicine'] += durationTimeAsc[i].medicine;
+                sum['exercise'] += durationTimeAsc[i].exercise;
+                sum['symptom'] += durationTimeAsc[i].symptom;
+                sum['natriumMoisture'] += durationTimeAsc[i].natriumMoisture;
+                sum['weight'] += durationTimeAsc[i].weight;
+                sum['mindHealth'] += durationTimeAsc[i].mindHealth;
+                sum['board'] += durationTimeAsc[i].board;
+                sum['alarm'] += durationTimeAsc[i].alarm;
+                sum['bloodPressure'] += durationTimeAsc[i].bloodPressure;
+            }
+        } else {
+            for(i = 0; i<durationTimeAsc.length; i++){
+                sum['main'] += durationTimeAsc[i].main;
+                sum['goal'] += durationTimeAsc[i].goal;
+                sum['level'] += durationTimeAsc[i].level;
+                sum['withusRang'] += durationTimeAsc[i].withusRang;
+                sum['diseaseInfo'] += durationTimeAsc[i].diseaseInfo;
+                sum['medicine'] += durationTimeAsc[i].medicine;
+                sum['exercise'] += durationTimeAsc[i].exercise;
+                sum['familyObservation'] += durationTimeAsc[i].familyObservation;
+                sum['dietManagement'] += durationTimeAsc[i].dietManagement;
+                sum['weight'] += durationTimeAsc[i].weight;
+                sum['mindHealth'] += durationTimeAsc[i].mindHealth;
+                sum['board'] += durationTimeAsc[i].board;
+                sum['alarm'] += durationTimeAsc[i].alarm;
+                sum['bloodPressure'] += durationTimeAsc[i].bloodPressure;
+            }
+        }
+        Item += "<td>" + sum['main'] + "</td>";
+        Item += "<td>" + sum['goal'] + "</td>";
+        Item += "<td>" + sum['level'] + "</td>";
+        Item += "<td>" + sum['withusRang'] + "</td>";
+        Item += "<td>" + sum['diseaseInfo'] + "</td>";
+        Item += "<td>" + sum['medicine'] + "</td>";
+        Item += "<td>" + sum['bloodPressure'] + "</td>";
+        Item += "<td>" + sum['exercise'] + "</td>";
+        if(type ==='PATIENT'){
+            Item += "<td>" + sum['symptom'] + "</td>";
+            Item += "<td>" + sum['natriumMoisture'] + "</td>";
+        } else {
+            Item += "<td>" + sum['familyObservation'] + "</td>";
+            Item += "<td>" + sum['dietManagement'] + "</td>";
+        }
+        Item += "<td>" + sum['weight'] + "</td>";
+        Item += "<td>" + sum['mindHealth'] + "</td>";
+        Item += "<td>" + sum['board'] + "</td>";
+        Item += "<td>" + sum['alarm'] + "</td>";
+        Item += "<td>" + totalSum + "</td>";
+
+        Item += "</tr>";
+        $('#history-table-data').append(Item);
+    }
+
+
+</script>
+</body>
+</html>

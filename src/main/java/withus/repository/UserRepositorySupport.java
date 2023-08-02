@@ -40,6 +40,9 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
         return moistureAvg;
     }
 
+
+
+
     public List<Tbl_mositrue_record> findMoistureAsc(String userId) {
         QTbl_mositrue_record mr = QTbl_mositrue_record.tbl_mositrue_record;
         List<Tbl_mositrue_record> moistureAsc = queryFactory.selectFrom(mr)
@@ -367,7 +370,23 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
         return buttonCount;
     }
 
+    public List<Tbl_caregiver_duration_time> findCaregiverDurationTimeAsc(String userId) {
+        QTbl_caregiver_duration_time dt = QTbl_caregiver_duration_time.tbl_caregiver_duration_time;
+        List<Tbl_caregiver_duration_time> dtAsc = queryFactory.selectFrom(dt)
+                .where(dt.key.id.eq(userId))
+                .orderBy(dt.key.week.asc())
+                .fetch();
 
+        return dtAsc;
+    }
+    public List<Tbl_patient_duration_time> findPatientDurationTimeAsc(String userId) {
+        QTbl_patient_duration_time dt = QTbl_patient_duration_time.tbl_patient_duration_time;
+        List<Tbl_patient_duration_time> dtAsc = queryFactory.selectFrom(dt)
+                .where(dt.key.id.eq(userId))
+                .orderBy(dt.key.week.asc())
+                .fetch();
+        return dtAsc;
+    }
 
     @Transactional
     public void updateCaregiver(User caregiver){

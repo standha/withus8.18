@@ -121,6 +121,15 @@ public class AdminService {
     }
 
     @Nullable
+    public List<Tbl_patient_duration_time> getPatientDurationTime(String userId){
+        return userRepositorySupport.findPatientDurationTimeAsc(userId);
+    }
+
+    @Nullable
+    public List<Tbl_caregiver_duration_time> getCaregiverDurationTime(String userId){
+        return userRepositorySupport.findCaregiverDurationTimeAsc(userId);
+    }
+    @Nullable
     public List<PatientMainButtonCountSumDTO> getPatientMainButtonCount(String userId) {
         return userRepositorySupport.findPatientMainButtonCountSum(userId);
     }

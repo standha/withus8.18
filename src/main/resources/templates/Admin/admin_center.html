@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<html xmlns:th="http://www.thymeleaf.org" lang="kr" style="overflow: auto">
 <meta charset="UTF-8">
 
 <head>
@@ -25,16 +25,17 @@
     .main-icon2 a span[class*="ico-"] {margin-bottom: 10px;}
     .button-click { background-image: url("/images/button-click.png"); width: 64px; height: 64px; }
     .family-data {background-image: url("/images/admin/familyData.PNG"); width: 64px; height: 64px;}
+    .duration-time {background-image: url("/images/admin/durationTime.png"); width: 64px; height: 64px;}
 </style>
 <div th:replace="Admin/admin_nav :: navFragment"></div>
 <body>
-<div id="wrap" class="main-page">
+<div id="wrap" class="main-page" >
     <header th:replace="Admin/admin_infoHeader :: headerFragment"></header>
     <div class="container" id="content">
         <ul class="main-icon2">
             <a th:href="@{/admin_pillRecord/{userId}(userId=${info.userId})}">
                 <span class="ico-drug"></span>
-                <span>복약 기록</span>
+                <span>복용약</span>
             </a>
             <a th:href="@{/admin_blood_pressure/{userId}(userId=${info.userId})}">
                 <span class="ico-blood-l"></span>
@@ -61,10 +62,15 @@
                 <span class="ico-list"></span>
                 <span>증상 일지</span>
             </a>
+            <a th:href="@{/admin_durationTime/{userId}(userId=${info.userId})}">
+                <span class="duration-time"></span>
+                <span>항목별 사용 시간</span>
+            </a>
             <a th:href="@{/admin_button_count/{userId}(userId=${info.userId})}">
                 <span class="button-click"></span>
                 <span>버튼 클릭 수</span>
             </a>
+
             <a th href="#" onclick="getFamilyData('현재 등록된 가족이 없습니다.')" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
                 <span class="family-data"></span>
                 <span>가족 데이터 확인</span>

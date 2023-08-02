@@ -12,7 +12,5 @@ public interface PatientDurationTimeRepository extends JpaRepository<Tbl_patient
     @Transactional(readOnly = true)
     Optional<Tbl_patient_duration_time> findByKey(ProgressKey progressKey);
 
-    @Transactional(readOnly = true)
-    List<Tbl_patient_duration_time> findAllByKey(ProgressKey progressKey);
 }
 
