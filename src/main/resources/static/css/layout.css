@@ -140,6 +140,8 @@ footer {position: relative;}
 /* calendar (alarm, exercise, symptom, intake) */
 .record-water {position: relative; background-color: #eff7fd;}
 .record-water:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 20px; height: 26px; background: url('../images/common/sp-icon.png') -236px -75px; background-size: 600px 450px; transform: translate(-50%, -17%);}
+.record-water-over {position: relative; background-color: #ff8f8f; color: white !important;}
+.record-water-over:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 20px; height: 26px; background: url('../images/common/sp-icon.png') -236px -75px; background-size: 600px 450px; transform: translate(-50%, -17%);}
 
 .record-exercise {position: relative; background-color: #f5ecff;}
 /*.record-exercise:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 22px; height: 26px; background: url('../images/common/sp-icon.png') -98px -76px; background-size: 600px 450px; transform: translate(-50%, -17%);}*/
@@ -268,35 +270,43 @@ footer {position: relative;}
 .water-page .bottle-wrap .second-bottle,
 .water-page .bottle-wrap .third-bottle {position: relative; width: 80px; height: 190px; background-image: url('../images/common/sp-bottle.png'); background-size: 500px 200px; background-position: -1px 0; z-index: 10;}
 .water-page .bottle-wrap.step01 .first-bottle,
-.water-page .bottle-wrap.step01 .second-bottle {background-position: -84px 0;}
+.water-page .bottle-wrap.step01 .second-bottle,
+.water-page .bottle-wrap.step01 .third-bottle {background-position: -84px 0;}
 .water-page .bottle-wrap.step02 .first-bottle,
-.water-page .bottle-wrap.step02 .second-bottle {background-position: -167px 0;}
+.water-page .bottle-wrap.step02 .second-bottle,
+.water-page .bottle-wrap.step02 .third-bottle {background-position: -167px 0;}
 .water-page .bottle-wrap.step03 .first-bottle,
-.water-page .bottle-wrap.step03 .second-bottle {background-position: -250px 0;}
+.water-page .bottle-wrap.step03 .second-bottle,
+.water-page .bottle-wrap.step03 .third-bottle {background-position: -250px 0;}
 .water-page .bottle-wrap.step04 .first-bottle,
-.water-page .bottle-wrap.step04 .second-bottle {background-position: -333px 0;}
+.water-page .bottle-wrap.step04 .second-bottle,
+.water-page .bottle-wrap.step04 .third-bottle {background-position: -333px 0;}
 .water-page .bottle-wrap.step05 .first-bottle,
-.water-page .bottle-wrap.step05 .second-bottle {background-position: -416px 0;}
+.water-page .bottle-wrap.step05 .second-bottle,
+.water-page .bottle-wrap.step05 .third-bottle {background-position: -416px 0;}
 .water-page .bottle-wrap.full .first-bottle {background-position: -416px 0 !important;}
-.water-page .bottle-wrap.full .second-bottle {background-position: -416px 0 !important;}
+.water-page .bottle-wrap.full2 .second-bottle {background-position: -416px 0 !important;}
 .water-page .bottle-wrap.empty .second-bottle {background-position: -1px 0 !important;}
-.water-page .bottle-wrap.empty .third-bottle {background-position: -1px 0 !important;}
-.water-page .bottle-wrap.step06 .first-bottle,
-.water-page .bottle-wrap.step06 .second-bottle,
-.water-page .bottle-wrap.step06 .third-bottle {background-position: -84px 0;}
-.water-page .bottle-wrap.step07 .first-bottle,
-.water-page .bottle-wrap.step07 .second-bottle,
-.water-page .bottle-wrap.step07 .third-bottle {background-position: -167px 0;}
-.water-page .bottle-wrap.step08 .first-bottle,
-.water-page .bottle-wrap.step08 .second-bottle,
-.water-page .bottle-wrap.step08 .third-bottle {background-position: -250px 0;}
-.water-page .bottle-wrap.step09 .first-bottle,
-.water-page .bottle-wrap.step09 .second-bottle,
-.water-page .bottle-wrap.step09 .third-bottle {background-position: -333px 0;}
-.water-page .bottle-wrap.step10 .first-bottle,
-.water-page .bottle-wrap.step10 .second-bottle,
-.water-page .bottle-wrap.step10 .third-bottle {background-position: -416px 0;}
+.water-page .bottle-wrap.empty2 .third-bottle {background-position: -1px 0 !important;}
 
+/*.water-page {}*/
+/*.water-page .container {margin-bottom: auto;}*/
+/*.water-page .insert-wrap {padding: 5%;}*/
+/*.water-page .bottle-wrap {position: relative; display: flex; justify-content: space-between; align-items: center; margin: 8% 10%;}*/
+/*.water-page .bottle-wrap .first-bottle,*/
+/*.water-page .bottle-wrap .second-bottle {position: relative; width: 80px; height: 190px; background-image: url('../images/common/sp-bottle.png'); background-size: 500px 200px; background-position: -1px 0; z-index: 10;}*/
+/*.water-page .bottle-wrap.step01 .first-bottle,*/
+/*.water-page .bottle-wrap.step01 .second-bottle {background-position: -84px 0;}*/
+/*.water-page .bottle-wrap.step02 .first-bottle,*/
+/*.water-page .bottle-wrap.step02 .second-bottle {background-position: -167px 0;}*/
+/*.water-page .bottle-wrap.step03 .first-bottle,*/
+/*.water-page .bottle-wrap.step03 .second-bottle {background-position: -250px 0;}*/
+/*.water-page .bottle-wrap.step04 .first-bottle,*/
+/*.water-page .bottle-wrap.step04 .second-bottle {background-position: -333px 0;}*/
+/*.water-page .bottle-wrap.step05 .first-bottle,*/
+/*.water-page .bottle-wrap.step05 .second-bottle {background-position: -416px 0;}*/
+/*.water-page .bottle-wrap.full .first-bottle {background-position: -416px 0 !important;}*/
+/*.water-page .bottle-wrap.empty .second-bottle {background-position: -1px 0 !important;}*/
 
 .water-page .bottle-wrap .bottle-ml {width: 100%; z-index: 1;}
 .water-page .bottle-wrap .bottle-ml li {position: relative; font-size: 0.93rem; color: #333; text-align: center; line-height: 2.05;}

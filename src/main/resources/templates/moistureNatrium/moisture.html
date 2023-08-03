@@ -192,8 +192,8 @@
           <button class="btn xlg1 type01" onclick="submit_Click()">저장</button>
         </div>
       </div>
-      <div class="dim-layer" id="dim" style="display:none"></div>
     </div>
+    <div class="dim-layer" id="dim" style="display:none"></div>
   </div>
   
   <div class="popup pop-type02" id="popup" style="display:none">
@@ -208,7 +208,7 @@
           <span>적정량의 수분을 섭취하세요</span>
         </div>
       </div>
-      <button class="btn xlg type02" onclick="popupClose()">확인</button>
+      <button class="btn xlg type02" onclick="window.location.reload()">확인</button>
     </div>
   </div>
   
@@ -262,70 +262,69 @@
       break;
     
     case 1:
-      $('.bottle-wrap').attr('class', 'bottle-wrap empty step01');
+      $('.bottle-wrap').attr('class', 'bottle-wrap empty empty2 step01');
       break;
     
     case 2:
-      $('.bottle-wrap').attr('class', 'bottle-wrap empty step02');
+      $('.bottle-wrap').attr('class', 'bottle-wrap empty empty2 step02');
       break;
     
     case 3:
-      $('.bottle-wrap').attr('class', 'bottle-wrap empty step03');
+      $('.bottle-wrap').attr('class', 'bottle-wrap empty empty2 step03');
       break;
     
     case 4:
-      $('.bottle-wrap').attr('class', 'bottle-wrap empty step04');
+      $('.bottle-wrap').attr('class', 'bottle-wrap empty empty2 step04');
       break;
     
     case 5:
-      $('.bottle-wrap').attr('class', 'bottle-wrap empty step05');
+      $('.bottle-wrap').attr('class', 'bottle-wrap empty empty2 step05');
       break;
     
     case 6:
-      $('.bottle-wrap').attr('class', 'bottle-wrap full step01');
+      $('.bottle-wrap').attr('class', 'bottle-wrap full step01 empty2');
       break;
     
     case 7:
-      $('.bottle-wrap').attr('class', 'bottle-wrap full step02');
+      $('.bottle-wrap').attr('class', 'bottle-wrap full step02 empty2');
       break;
     
     case 8:
-      $('.bottle-wrap').attr('class', 'bottle-wrap full step03');
+      $('.bottle-wrap').attr('class', 'bottle-wrap full step03 empty2');
       break;
     
     case 9:
-      $('.bottle-wrap').attr('class', 'bottle-wrap full step04');
+      $('.bottle-wrap').attr('class', 'bottle-wrap full step04 empty2');
       break;
     
     case 10:
-      $('.bottle-wrap').attr('class', 'bottle-wrap full step05');
+      $('.bottle-wrap').attr('class', 'bottle-wrap full step05 empty2');
       break;
     
     case 11:
-      $('.bottle-wrap').attr('class', 'bottle-wrap full full step01');
+      $('.bottle-wrap').attr('class', 'bottle-wrap full full2 step01');
       break;
     
     case 12:
-      $('.bottle-wrap').attr('class', 'bottle-wrap full full step02');
+      $('.bottle-wrap').attr('class', 'bottle-wrap full full2 step02');
       break;
     
     case 13:
-      $('.bottle-wrap').attr('class', 'bottle-wrap full full step03');
+      $('.bottle-wrap').attr('class', 'bottle-wrap full full2 step03');
       break;
     
     case 14:
-      $('.bottle-wrap').attr('class', 'bottle-wrap full full step04');
+      $('.bottle-wrap').attr('class', 'bottle-wrap full full2 step04');
       break;
     
     case 15:
-      $('.bottle-wrap').attr('class', 'bottle-wrap full full step05');
+      $('.bottle-wrap').attr('class', 'bottle-wrap full full2 step05');
       break;
-    
+
     default:
-      $('.bottle-wrap').attr('class', 'bottle-wrap empty');
+      $('.bottle-wrap').attr('class', 'bottle-wrap full full2 step05');
       break;
   }
-
-
+  
 </script>
 </html>

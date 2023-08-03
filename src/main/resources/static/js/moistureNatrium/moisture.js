@@ -29,11 +29,12 @@ function setMinus(testNum) {
 		.then(response => response.json())
 		.then(data => {
 			console.log(data);
-			if (data.code === 'OK') {
+			if (!(data.code === 'OK')) {
 				alert("수정이 완료되었습니다.");
-			}  else {
-				alert("입력 실패하였습니다. 관리자에게 문의해주세요.");
 			}
+			// else {
+			// 	alert("입력 실패하였습니다. 관리자에게 문의해주세요.");
+			// }
 		});
 
 	return false;
@@ -42,15 +43,8 @@ function setMinus(testNum) {
 function setAdd(testNum) {
 	testNum = parseInt(testNum);
 	console.log(testNum);
-	if(testNum >= 15){
-		popupOpen();
-	}
-	else if(testNum >= 10) {
+	if(testNum >= 10){
 		testNum = testNum + 1;
-		// alert("입력이 완료되었습니다.");
-		setTimeout(function (){
-			window.location.reload();
-		}, 100);
 		popupOpen();
 	}
 	else{

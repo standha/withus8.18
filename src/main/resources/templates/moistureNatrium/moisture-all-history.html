@@ -74,16 +74,34 @@
 
 <!-- wrap -->
 <div id="wrap" class="insert-page">
-  
-  <!-- header -->
-  <header>
-    <div class="header-wrap type01">
-      <div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
-        <div onclick="helperRequest()">
-          <a class="btn xsm type07" href="tel:010-8454-9186" onclick="addHelper()">
-            <span class="ico-call"></span>
-            <span class="txt-rt">도우미</span>
-          </a>
+
+    <!-- header -->
+    <header>
+        <div class="header-wrap type01">
+            <div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
+                <div onclick="helperRequest()">
+                    <a class="btn xsm type07" href="tel:010-8454-9186" onclick="addHelper()">
+                        <span class="ico-call" ></span>
+                        <span class="txt-rt">도우미</span>
+                    </a>
+                </div>
+                <h2>
+                    <span class="ico-water-s"></span>
+                    <span>수분섭취 실천</span>
+                </h2>
+            </div>
+            <div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
+                <div onclick="helperRequest()">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
+                        <span class="ico-call" ></span>
+                        <span class="txt-rt">도우미</span>
+                    </a>
+                </div>
+                <h2>
+                    <span class="ico-water-s"></span>
+                    <span>수분섭취 실천</span>
+                </h2>
+            </div>
         </div>
         <h2>
           <span class="ico-water-s"></span>
@@ -132,38 +150,49 @@
 </div>
 </body>
 <script th:inline="javascript">
-  
-  /*<![CDATA[*/
-  var moistureHistory = /*[[ ${moisture} ]]*/;
-  /*]]*/
-  
-  $.datepicker._generateHTML = (function () {
-    var realGenerateHtml = $.datepicker._generateHTML;
-    return function (instance) {
-      var html = realGenerateHtml.apply(this, arguments), $temp;
-      
-      if (instance.input.is(".water")) {
-        $temp = $("<table></table>").append(html);
-        $temp.find(".ui-datepicker-calendar td a").each(function () {
-          var yy = $(this).parent().data("year"),
-              mm = $(this).parent().data("month"),
-              dd = +$(this).text();
-          
-          var monthStr, dayStr;
-          monthStr = (mm + 1).toString();
-          if (monthStr.length == 1) {
-            monthStr = "0" + monthStr;
-          }
-          dayStr = dd.toString();
-          if (dayStr.length == 1) {
-            dayStr = "0" + dayStr;
-          }
-          
-          var str = yy.toString() + "-" + monthStr + "-" + dayStr;
-          
-          for (i = 0; i < moistureHistory.length; i++) {
-            if (str == moistureHistory[i].pk.date) {
-              $(this).addClass('record-water');
+
+    /*<![CDATA[*/
+    var moistureHistory = /*[[ ${moisture} ]]*/;
+    /*]]*/
+
+    $.datepicker._generateHTML = (function () {
+        var realGenerateHtml = $.datepicker._generateHTML;
+        return function (instance) {
+            var html = realGenerateHtml.apply(this, arguments), $temp;
+
+            if ( instance.input.is(".water") ) {
+                $temp = $("<table></table>").append(html);
+                $temp.find(".ui-datepicker-calendar td a").each(function () {
+                    var yy = $(this).parent().data("year"),
+                        mm = $(this).parent().data("month"),
+                        dd = +$(this).text();
+
+                    var monthStr, dayStr;
+                    monthStr = (mm+1).toString();
+                    if(monthStr.length == 1){
+                        monthStr = "0" + monthStr;
+                    }
+                    dayStr = dd.toString();
+                    if(dayStr.length == 1){
+                        dayStr = "0" + dayStr;
+                    }
+
+                    var str = yy.toString() + "-" + monthStr + "-" + dayStr;
+
+                    for(i=0; i<moistureHistory.length; i++)
+                    {
+                        if(str == moistureHistory[i].pk.date)
+                        {
+                            if (moistureHistory[i].intake > 10) {
+                              $(this).addClass('record-water-over');
+                            }
+                            else {
+                              $(this).addClass('record-water');
+                            }
+                        }
+                    }
+                });
+                html = $temp[0].innerHTML;
             }
           }
         });
