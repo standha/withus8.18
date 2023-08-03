@@ -17,9 +17,12 @@
   <script th:src="@{/js/common.js}"></script>
   <script th:src="@{/js/moistureNatrium/natrium.js}"></script>
   <script th:src="@{/js/help.js}"></script>
+  <!-- buttonCount -->
   <script th:src="@{/js/home.js}"></script>
   <script th:src="@{/js/subButton.js}"></script>
   <script th:src="@{/js/detailButton.js}"></script>
+  <!-- fontawesome -->
+  <script src="https://kit.fontawesome.com/e381c8a508.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <input type="hidden" id="helper-request" th:attr="value=@{/helper-request}">
@@ -105,7 +108,7 @@
   <!-- header -->
   <header>
     <div class="header-wrap type01">
-      <div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
+      <div class="head align-items-center" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
         <div onclick="helperRequest()">
           <a class="btn xsm type07" href="tel:010-8454-9186" onclick="addHelper()">
             <span class="ico-call"></span>
@@ -116,8 +119,11 @@
           <span class="ico-salt-s"></span>
           <span>저염식이</span>
         </h2>
+        <div style="margin-top: 0.73vh;">
+          <a th:href="@{/center}"><i class="fa-solid fa-house fa-2xl" style="color: #19d585;"></i></a>
+        </div>
       </div>
-      <div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
+      <div class="head align-items-center" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
         <div onclick="helperRequest()">
           <a class="btn xsm type07" href="tel:010-8454-9186">
             <span class="ico-call"></span>
@@ -128,13 +134,16 @@
           <span class="ico-salt-s"></span>
           <span>저염식이</span>
         </h2>
+        <div style="margin-top: 0.73vh;">
+          <a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-2xl" style="color: #19d585;"></i></a>
+        </div>
       </div>
     </div>
   </header>
   <!-- // header -->
   
   <!-- content -->
-  <div id="content">
+  <div class="container" id="content">
     <div class="cont-wrap type01">
       <form id="MemberInfo" th:action="@{/natrium}" method="post" onsubmit="return onFormSubmission(this);">
         <div class="insert-wrap">

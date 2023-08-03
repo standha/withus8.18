@@ -2,30 +2,35 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="kr">
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>위더스</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
-    <meta name="format-detection" content="telephone=no">
-    <link  th:href="@{/css/jquery-ui.css}" rel="stylesheet">
-    <link th:href="@{/css/reset.css}" rel="stylesheet">
-    <link th:href="@{/css/common.css}" rel="stylesheet">
-    <link th:href="@{/css/layout.css}" rel="stylesheet">
-    <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
-    <script th:src="@{/js/jquery-ui.js}"></script>
-    <script th:src="@{/js/datepicker-ko.js}"></script>
-    <script th:src="@{/js/common.js}"></script>
-    <script th:src="@{/js/help.js}"></script>
-    <script th:src="@{/js/home.js}"></script>
-    <script th:src="@{/js/subButton.js}"></script>
-    <script th:src="@{/js/detailButton.js}"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>위더스</title>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+  <meta name="format-detection" content="telephone=no">
+  <link th:href="@{/css/jquery-ui.css}" rel="stylesheet">
+  <link th:href="@{/css/reset.css}" rel="stylesheet">
+  <link th:href="@{/css/common.css}" rel="stylesheet">
+  <link th:href="@{/css/layout.css}" rel="stylesheet">
+  <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
+  <script th:src="@{/js/jquery-ui.js}"></script>
+  <script th:src="@{/js/datepicker-ko.js}"></script>
+  <script th:src="@{/js/common.js}"></script>
+  <script th:src="@{/js/help.js}"></script>
+  <script th:src="@{/js/home.js}"></script>
+  <script th:src="@{/js/subButton.js}"></script>
+  <script th:src="@{/js/detailButton.js}"></script>
+  <!-- fontawesome -->
+  <script src="https://kit.fontawesome.com/e381c8a508.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <input type="hidden" id="helper-request" th:attr="value=@{/helper-request}">
 
 <!-- buttonCount -->
-<input type="hidden" id="button-count" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 " th:attr="value=@{/patient-main-button-count}">
-<input type="hidden" id="button-count" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25 " th:attr="value=@{/caregiver-main-button-count}">
+<input type="hidden" id="button-count" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 "
+       th:attr="value=@{/patient-main-button-count}">
+<input type="hidden" id="button-count" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25 "
+       th:attr="value=@{/caregiver-main-button-count}">
 
 <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
   <input type='hidden' name="goal" th:value="${count.goal}" style="display:none">
@@ -64,195 +69,196 @@
 <!-- buttonCount -->
 
 <div class="skip-navi">
-    <a href="#content">본문 바로가기</a>
+  <a href="#content">본문 바로가기</a>
 </div>
 
 <!-- wrap -->
 <div id="wrap" class="insert-page">
-
-    <!-- header -->
-    <header>
-        <div class="header-wrap type01">
-            <div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
-                <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:010-8454-9186" onclick="addHelper()">
-                        <span class="ico-call" ></span>
-                        <span class="txt-rt">도우미</span>
-                    </a>
-                </div>
-                <h2>
-                    <span class="ico-salt-s"></span>
-                    <span>저염식이 실천</span>
-                </h2>
-            </div>
-            <div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
-                <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:010-8454-9186">
-                        <span class="ico-call" ></span>
-                        <span class="txt-rt">도우미</span>
-                    </a>
-                </div>
-                <h2>
-                    <span class="ico-salt-s"></span>
-                    <span>저염식이 실천</span>
-                </h2>
-            </div>
+  
+  <!-- header -->
+  <header>
+    <div class="header-wrap type01">
+      <div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
+        <div onclick="helperRequest()">
+          <a class="btn xsm type07" href="tel:010-8454-9186" onclick="addHelper()">
+            <span class="ico-call"></span>
+            <span class="txt-rt">도우미</span>
+          </a>
         </div>
-    </header>
-    <!-- // header -->
-
-    <!-- content -->
-    <div class="container" id="content">
-        <div class="cont-wrap type01">
-            <!--
-                기록이 있는 해당 날짜의 td > a 에 하단 html이 추가되면 디자인추가됨
-                색상단계는 총 5단계 (high, middle, row, none, blank)
-                (example) https://stackoverflow.com/questions/35765931/display-additional-text-alongside-dates-in-jquery-ui-datepicker/35884576
-                <span class="record-colorbar">
-                    <span class="morning high"></span>
-                    <span class="lunch row"></span>
-                    <span class="dinner none"></span>
-                </span>
-             -->
-            <div id="dateRecord" class="datepicker-colorbar"></div>
-            <div class="box-wrap">
-                <p class="box-tit">1주일 섭취 횟수</p>
-                <ul class="box-list">
-                    <li>
-                        <span class="round-high">고염식</span>
-                        <span th:text="${high} + '회'" class="bold"></span>
-                    </li>
-                    <li>
-                        <span class="round-middle">보통</span>
-                        <span th:text="${normal} + '회'" class="bold"></span>
-                    </li>
-                    <li>
-                        <span class="round-row">저염식</span>
-                        <span th:text="${low} + '회'" class="bold"></span>
-                    </li>
-                </ul>
-            </div>
+        <h2>
+          <span class="ico-salt-s"></span>
+          <span>저염식이 실천</span>
+        </h2>
+        <div style="margin-top: 0.73vh;">
+          <a th:href="@{/center}"><i class="fa-solid fa-house fa-2xl" style="color: #19d585;"></i></a>
         </div>
+      </div>
+      <div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
+        <div onclick="helperRequest()">
+          <a class="btn xsm type07" href="tel:010-8454-9186">
+            <span class="ico-call"></span>
+            <span class="txt-rt">도우미</span>
+          </a>
+        </div>
+        <h2>
+          <span class="ico-salt-s"></span>
+          <span>저염식이 실천</span>
+        </h2>
+        <div style="margin-top: 0.73vh;">
+          <a th:href="@{/center}"><i class="fa-solid fa-house fa-2xl" style="color: #19d585;"></i></a>
+        </div>
+      </div>
     </div>
-    <!-- // content -->
+  </header>
+  <!-- // header -->
+  
+  <!-- content -->
+  <div class="container" id="content">
+    <div class="cont-wrap type01">
+      <!--
+          기록이 있는 해당 날짜의 td > a 에 하단 html이 추가되면 디자인추가됨
+          색상단계는 총 5단계 (high, middle, row, none, blank)
+          (example) https://stackoverflow.com/questions/35765931/display-additional-text-alongside-dates-in-jquery-ui-datepicker/35884576
+          <span class="record-colorbar">
+              <span class="morning high"></span>
+              <span class="lunch row"></span>
+              <span class="dinner none"></span>
+          </span>
+       -->
+      <div id="dateRecord" class="datepicker-colorbar"></div>
+      <div class="box-wrap">
+        <p class="box-tit">1주일 섭취 횟수</p>
+        <ul class="box-list">
+          <li>
+            <span class="round-high">고염식</span>
+            <span th:text="${high} + '회'" class="bold"></span>
+          </li>
+          <li>
+            <span class="round-middle">보통</span>
+            <span th:text="${normal} + '회'" class="bold"></span>
+          </li>
+          <li>
+            <span class="round-row">저염식</span>
+            <span th:text="${low} + '회'" class="bold"></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- // content -->
 
 </div>
 
 <script th:inline="javascript">
-
-    /*<![CDATA[*/
-    var natriumHistory = /*[[ ${natrium} ]]*/;
-    /*]]*/
-
-
-    $.datepicker._generateHTML = (function () {
-        var realGenerateHtml = $.datepicker._generateHTML;
-        return function (instance) {
-            var html = realGenerateHtml.apply(this, arguments), $temp;
-
-            if ( instance.input.is(".datepicker-colorbar") ) {
-                $temp = $("<table></table>").append(html);
-                $temp.find(".ui-datepicker-calendar td a").each(function () {
-                    var yy = $(this).parent().data("year"),
-                        mm = $(this).parent().data("month"),
-                        dd = +$(this).text();
-
-                    var monthStr, dayStr;
-                    monthStr = (mm+1).toString();
-                    if(monthStr.length == 1){
-                        monthStr = "0" + monthStr;
-                    }
-                    dayStr = dd.toString();
-                    if(dayStr.length == 1){
-                        dayStr = "0" + dayStr;
-                    }
-
-                    var str = yy.toString() + "-" + monthStr + "-" + dayStr;
-
-                    for(i=0; i<natriumHistory.length; i++)
-                    {
-                        if(str == natriumHistory[i].pk.date)
-                        {
-                            switch(natriumHistory[i].morning)
-                            {
-                                case 0:
-                                    $(this).append("<span class='record-colorbar'> <span class='morning none'></span> <span></span> <span></span> </span>");
-                                    break;
-
-                                case 1:
-                                    $(this).append("<span class='record-colorbar'> <span class='morning row'></span> <span></span> <span></span> </span>");
-                                    break;
-
-                                case 2:
-                                    $(this).append("<span class='record-colorbar'> <span class='morning middle'></span> <span></span> <span></span> </span>");
-                                    break;
-
-                                case 3:
-                                    $(this).append("<span class='record-colorbar'> <span class='morning high'></span> <span></span> <span></span> </span>");
-                                    break;
-
-                                default:
-                                    $(this).append("<span class='record-colorbar'> <span class='morning blank'></span> <span></span> <span></span> </span>");
-                                    break;
-                            }
-
-                            switch(natriumHistory[i].lunch)
-                            {
-                                case 0:
-                                    $(this).append("<span class='record-colorbar'> <span></span> <span class='lunch none'></span> <span></span> </span>");
-                                    break;
-
-                                case 1:
-                                    $(this).append("<span class='record-colorbar'> <span></span> <span class='lunch row'></span> <span></span> </span>");
-                                    break;
-
-                                case 2:
-                                    $(this).append("<span class='record-colorbar'> <span></span> <span class='lunch middle'></span> <span></span> </span>");
-                                    break;
-
-                                case 3:
-                                    $(this).append("<span class='record-colorbar'> <span></span> <span class='lunch high'></span> <span></span> </span>");
-                                    break;
-
-                                default:
-                                    $(this).append("<span class='record-colorbar'> <span></span> <span class='lunch blank'></span> <span></span> </span>");
-                                    break;
-                            }
-
-                            switch(natriumHistory[i].dinner)
-                            {
-                                case 0:
-                                    $(this).append("<span class='record-colorbar'> <span></span> <span></span> <span class='dinner none'></span> </span>");
-                                    break;
-
-                                case 1:
-                                    $(this).append("<span class='record-colorbar'> <span></span> <span></span> <span class='dinner row'></span> </span>");
-                                    break;
-
-                                case 2:
-                                    $(this).append("<span class='record-colorbar'> <span></span> <span></span> <span class='dinner middle'></span> </span>");
-                                    break;
-
-                                case 3:
-                                    $(this).append("<span class='record-colorbar'> <span></span> <span></span> <span class='dinner high'></span> </span>");
-                                    break;
-
-                                default:
-                                    $(this).append("<span class='record-colorbar'> <span></span> <span></span> <span class='dinner blank'></span> </span>");
-                                    break;
-                            }
-                        }
-                    }
-                });
-                html = $temp[0].innerHTML;
+  
+  /*<![CDATA[*/
+  var natriumHistory = /*[[ ${natrium} ]]*/;
+  /*]]*/
+  
+  
+  $.datepicker._generateHTML = (function () {
+    var realGenerateHtml = $.datepicker._generateHTML;
+    return function (instance) {
+      var html = realGenerateHtml.apply(this, arguments), $temp;
+      
+      if (instance.input.is(".datepicker-colorbar")) {
+        $temp = $("<table></table>").append(html);
+        $temp.find(".ui-datepicker-calendar td a").each(function () {
+          var yy = $(this).parent().data("year"),
+              mm = $(this).parent().data("month"),
+              dd = +$(this).text();
+          
+          var monthStr, dayStr;
+          monthStr = (mm + 1).toString();
+          if (monthStr.length == 1) {
+            monthStr = "0" + monthStr;
+          }
+          dayStr = dd.toString();
+          if (dayStr.length == 1) {
+            dayStr = "0" + dayStr;
+          }
+          
+          var str = yy.toString() + "-" + monthStr + "-" + dayStr;
+          
+          for (i = 0; i < natriumHistory.length; i++) {
+            if (str == natriumHistory[i].pk.date) {
+              switch (natriumHistory[i].morning) {
+                case 0:
+                  $(this).append("<span class='record-colorbar'> <span class='morning none'></span> <span></span> <span></span> </span>");
+                  break;
+                
+                case 1:
+                  $(this).append("<span class='record-colorbar'> <span class='morning row'></span> <span></span> <span></span> </span>");
+                  break;
+                
+                case 2:
+                  $(this).append("<span class='record-colorbar'> <span class='morning middle'></span> <span></span> <span></span> </span>");
+                  break;
+                
+                case 3:
+                  $(this).append("<span class='record-colorbar'> <span class='morning high'></span> <span></span> <span></span> </span>");
+                  break;
+                
+                default:
+                  $(this).append("<span class='record-colorbar'> <span class='morning blank'></span> <span></span> <span></span> </span>");
+                  break;
+              }
+              
+              switch (natriumHistory[i].lunch) {
+                case 0:
+                  $(this).append("<span class='record-colorbar'> <span></span> <span class='lunch none'></span> <span></span> </span>");
+                  break;
+                
+                case 1:
+                  $(this).append("<span class='record-colorbar'> <span></span> <span class='lunch row'></span> <span></span> </span>");
+                  break;
+                
+                case 2:
+                  $(this).append("<span class='record-colorbar'> <span></span> <span class='lunch middle'></span> <span></span> </span>");
+                  break;
+                
+                case 3:
+                  $(this).append("<span class='record-colorbar'> <span></span> <span class='lunch high'></span> <span></span> </span>");
+                  break;
+                
+                default:
+                  $(this).append("<span class='record-colorbar'> <span></span> <span class='lunch blank'></span> <span></span> </span>");
+                  break;
+              }
+              
+              switch (natriumHistory[i].dinner) {
+                case 0:
+                  $(this).append("<span class='record-colorbar'> <span></span> <span></span> <span class='dinner none'></span> </span>");
+                  break;
+                
+                case 1:
+                  $(this).append("<span class='record-colorbar'> <span></span> <span></span> <span class='dinner row'></span> </span>");
+                  break;
+                
+                case 2:
+                  $(this).append("<span class='record-colorbar'> <span></span> <span></span> <span class='dinner middle'></span> </span>");
+                  break;
+                
+                case 3:
+                  $(this).append("<span class='record-colorbar'> <span></span> <span></span> <span class='dinner high'></span> </span>");
+                  break;
+                
+                default:
+                  $(this).append("<span class='record-colorbar'> <span></span> <span></span> <span class='dinner blank'></span> </span>");
+                  break;
+              }
             }
-            return html;
-        };
-    })();
-
-    $( function() {
-        $( "#dateRecord" ).datepicker();
-    } );
+          }
+        });
+        html = $temp[0].innerHTML;
+      }
+      return html;
+    };
+  })();
+  
+  $(function () {
+    $("#dateRecord").datepicker();
+  });
 </script>
 
 </body>

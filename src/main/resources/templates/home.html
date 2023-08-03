@@ -16,6 +16,7 @@
     <script th:src="@{/js/goal/thisGoal.js}"></script>
     <script th:src="@{/js/home.js}"></script>
     <script th:src="@{/js/help.js}"></script>
+    <script th:src="@{/js/durationTime.js}"></script>
 </head>
 <body>
 <input type="hidden" id="button-count" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 " th:attr="value=@{/patient-main-button-count}">
@@ -286,7 +287,9 @@
 
 </div>
 <!--// wrap -->
-
+<script>
+    start('MAIN');
+</script>
 </body>
 
 </html>

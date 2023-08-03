@@ -13,15 +13,15 @@ import javax.persistence.Table;
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Setter
 @Getter
-@Table(name = "tbl_caregiver_use_time")
-public class Tbl_caregiver_use_time {
+@Table(name = "tbl_caregiver_duration_time")
+public class Tbl_caregiver_duration_time {
     @EmbeddedId
     private CaregiverProgressKey key;
 
     @Column(name ="main")
     private Integer main;
 
-    @Column(name = "goal", columnDefinition = "Integer default 0")
+    @Column(name = "goal")
     private Integer goal;
 
     @Column(name = "level")
@@ -60,6 +60,4 @@ public class Tbl_caregiver_use_time {
     @Column(name = "alarm")
     private Integer alarm;
 
-    @Column(name = "totalUseTime")
-    private Integer totalUserTime;
 }

@@ -3,6 +3,7 @@ package withus.repository;
 import com.sun.istack.Nullable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import withus.dto.wwithus.*;
@@ -187,6 +188,20 @@ public interface UserRepository extends JpaRepository<User, String> {
             "GROUP BY week;", nativeQuery = true)
     List<UserWeekCountDTO> findUserWeekCount();
 
+
+    @Nullable
+    @Query(value = "SELECT t1.entry_code, DATE(t1.date_time) AS date " +
+            "FROM wwithus_entry_history AS t1 " +
+            "JOIN ( " +
+            "SELECT DATE(t2.date_time) AS date, MAX(t2.date_time) AS max_date_time " +
+            "FROM wwithus_entry_history AS t2 " +
+            "WHERE t2.user_id = :userId " +
+            "GROUP BY DATE(t2.date_time) " +
+            ") AS t3 " +
+            "ON DATE(t1.date_time) = t3.date AND t1.date_time = t3.max_date_time " +
+            "WHERE t1.user_id = :userId " +
+            "order by t1.entry_code;", nativeQuery = true)
+    List<WwithusHistoryDTO> findWwithusHistory(@Param("userId") String userId);
 
 
 
