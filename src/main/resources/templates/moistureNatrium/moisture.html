@@ -21,6 +21,8 @@
   <script th:src="@{/js/home.js}"></script>
   <script th:src="@{/js/subButton.js}"></script>
   <script th:src="@{/js/detailButton.js}"></script>
+  <!-- fontawesome -->
+  <script src="https://kit.fontawesome.com/e381c8a508.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <input type="hidden" id="helper-request" th:attr="value=@{/helper-request}">
@@ -118,6 +120,9 @@
           <span class="ico-water-s"></span>
           <span>수분섭취</span>
         </h2>
+        <div style="margin-top: 0.73vh;">
+          <a th:href="@{/center}"><i class="fa-solid fa-house fa-2xl" style="color: #19d585;"></i></a>
+        </div>
       </div>
       <div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
         <div onclick="helperRequest()">
@@ -130,6 +135,9 @@
           <span class="ico-water-s"></span>
           <span>수분섭취</span>
         </h2>
+        <div style="margin-top: 0.73vh;">
+          <a th:href="@{/center}"><i class="fa-solid fa-house fa-2xl" style="color: #19d585;"></i></a>
+        </div>
       </div>
     </div>
   </header>
