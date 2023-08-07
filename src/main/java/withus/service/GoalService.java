@@ -1,9 +1,8 @@
 package withus.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
-import withus.entity.Tbl_goal;
+import withus.entity.*;
 import withus.repository.GoalRepository;
 
 import javax.annotation.Nullable;
@@ -14,7 +13,6 @@ public class GoalService {
 
     private final GoalRepository goalRepository;
 
-    @Autowired
     public GoalService(GoalRepository goalRepository) {
         this.goalRepository = goalRepository;
     }

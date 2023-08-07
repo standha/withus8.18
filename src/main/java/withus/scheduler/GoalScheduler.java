@@ -64,7 +64,7 @@ public class GoalScheduler {
         return count;
     }
 
-    public int BloodCount(String id) {
+    public int BloodPressureCount(String id) {
         int count = 0;
         LocalDate today = LocalDate.now();
         for (int i = 1; i <= 7; i++) {
@@ -111,7 +111,7 @@ public class GoalScheduler {
         return count;
     }
 
-    public int PillCount(String id) {
+    public int MedicineCount(String id) {
         int count = 0;
         LocalDate today = LocalDate.now();
         for (int i = 1; i <= 7; i++) {
@@ -126,7 +126,7 @@ public class GoalScheduler {
     }
 
     //cron = "0 0 21 * * SUN"
-    @Async
+   /* @Async
     @Scheduled(cron = "0 0 21 * * SUN")
     public void GoalList() {
         logger.info("Scheduler:{}, ThreadName:{}","CheckAchievement",Thread.currentThread().getName());
@@ -435,7 +435,7 @@ public class GoalScheduler {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public @ResponseBody
     ResponseEntity<String> levelNotice(String title, List<String> tokenList, String message) throws InterruptedException {

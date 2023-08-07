@@ -1,5 +1,35 @@
 var inputCheck = true;
 
+const getAjax = function(url) {
+	return new Promise((resolve, reject) => { // 1.
+		$.ajax({
+			url: url,
+			type: "GET",
+			dataType: "json"
+			,
+			success: (res) => {
+				resolve(res);  // 2.
+			},
+			error: (e) => {
+				reject(e);  // 3.
+			}
+		});
+	});
+}
+
+
+async function seed(path){
+	const url = "/seed/"+path;
+	try {
+		const seedData = await getAjax(url);
+		console.log(seedData);
+	} catch(e) {
+		console.log(e);
+	}
+}
+
+
+
 function onFormSubmission(form) {
 	let weight = null;
 	if(form.querySelector("input[name=weight]").value == 0 )
@@ -35,6 +65,7 @@ function onFormSubmission(form) {
 				console.log(data);
 				if (data.code === 'OK') {
 					console.log("입력 성공하였습니다.")
+					seed("weight");
 				}  else {
 					console.log("기록 실패하였습니다. 관리자에게 문의해주세요.");
 					alert("기록 실패하였습니다. 관리자에게 문의해주세요.");
@@ -45,6 +76,8 @@ function onFormSubmission(form) {
 
 	return false;
 }
+
+
 
 
 function ChangeWeightAlarm(value){
