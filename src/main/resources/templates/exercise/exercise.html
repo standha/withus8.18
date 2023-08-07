@@ -27,9 +27,12 @@
 </div>
 <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
     <input type='hidden' name="symptom" th:value="${count.symptom}" style="display:none">
+    <input type='hidden' name="medicine" th:value="${count.medicine}" style="display:none">
+    <input type='hidden' name="mindHealth" th:value="${count.mindHealth}" style="display:none">
+    <input type='hidden' name="board" th:value="${count.board}" style="display:none">
     <input type='hidden' name="alarm" th:value="${count.alarm}" style="display:none">
-    <input type='hidden' name="blood" th:value="${count.bloodPressure}" style="display:none">
-    <input type='hidden' name="disease" th:value="${count.diseaseInfo}" style="display:none">
+    <input type='hidden' name="bloodPressure" th:value="${count.bloodPressure}" style="display:none">
+    <input type='hidden' name="diseaseInfo" th:value="${count.diseaseInfo}" style="display:none">
     <input type='hidden' name="exercise" th:value="${count.exercise}" style="display:none">
     <input type='hidden' name="goal" th:value="${count.goal}" style="display:none">
     <input type='hidden' name="helper" th:value="${count.helper}" style="display:none">
@@ -37,6 +40,8 @@
     <input type='hidden' name="natriumMoisture" th:value="${count.natriumMoisture}" style="display:none">
     <input type='hidden' name="weight" th:value="${count.weight}" style="display:none">
     <input type='hidden' name="withusRang" th:value="${count.withusRang}" style="display:none">
+    <input type='hidden' name="infoEdit" th:value="${count.infoEdit}" style="display:none">
+    <input type='hidden' name="board" th:value="${count.board}" style="display:none">
 </div>
 <!-- wrap -->
 <div id="wrap" class="insert-page">
@@ -57,7 +62,8 @@
                     <span>운동</span>
                 </h2>
                 <div class="col text-end" style="font-size: 20px; margin-top: 0.73vh;">
-                    <a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl" style="color: #00b050;"></i></a>
+                    <a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl"
+                                                                    style="color: #00b050;"></i></a>
                 </div>
             </div>
             <div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
@@ -72,7 +78,8 @@
                     <span>운동</span>
                 </h2>
                 <div class="col text-end" style="font-size: 20px; margin-top: 0.73vh;">
-                    <a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl" style="color: #00b050;"></i></a>
+                    <a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl"
+                                                                    style="color: #00b050;"></i></a>
                 </div>
             </div>
         </div>
@@ -91,17 +98,17 @@
                     <div class="tit-img ico-exercise-l"></div>
                     <div class="field-wrap type04">
                         <div class="field">
-                        <label> 운동종류</label>
-                        <select  id="activityDropdown">
-                            <option value="" selected>선택</option>
-                            <option value="walking" >걷기</option>
-                            <option value="cycling" >자전거타기</option>
-                            <option value="swimming" >수영</option>
-                            <option value="strengthTraining">근력운동</option>
-                            <option value="aerobic">유산소운동</option>
-
-                        </select>
+                            <label> 운동종류</label>
+                            <select id="activityDropdown" name="exercise">
+                                <option value="none">선택</option>
+                                <option id ="exercise1" value="walking">걷기</option>
+                                <option id ="exercise2" value="cycling">자전거타기</option>
+                                <option id ="exercise3" value="swimming">수영</option>
+                                <option id ="exercise4" value="strength">근력운동</option>
+                                <!--                            <option value="aerobic">유산소운동</option>-->
+                            </select>
                         </div>
+
                         <div class="field">
                             <label for="input1">운동시간</label>
                             <input type="hidden" id="exercise-history-get-action"
@@ -135,28 +142,56 @@
                 </div>
             </div>
             <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25" class="btn-wrap2 grid4">
-                <button class="btn xlg1 type01" onclick="alarm_caregiver()">보호자에게 알림</button>
-                <button type="submit" class="btn xlg1 type01" onclick="submit_Click()">저장</button>
+                <button type="button" class="btn xlg1 type01" onclick="alarm_caregiver()">보호자에게 알림</button>
+                <button type="submit" class="btn xlg1 type01">저장</button>
             </div>
             <div th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25" class="btn-wrap2 grid4">
-                <button class="btn xlg1 type01"onclick="alarm_caregiver()">보호자에게 알림</button>
-                <button type="submit" class="btn xlg1 type01" onclick="submit_Click()">저장</button>
+                <button type="button" class="btn xlg1 type01" onclick="alarm_caregiver()">보호자에게 알림</button>
+                <button type="submit" class="btn xlg1 type01">저장</button>
             </div>
             <div class="dim-layer" style="display: none" id="dim"></div>
         </form>
     </div>
-    <div class="popup pop-type01" id="layerSelectType" style="display: none">
+    <div class="popup pop-type02" id="exercisesubmit" style="display: none">
         <div class="pop-wrap">
             <!-- <a href="javascript:void(0);" class="pop-close"></a> -->
             <div class="popup-header"></div>
             <div class="popup-body">
-<!--                <div class="pop-tit" id="popUp1">-->
-<!--                </div>-->
-                <div class="pop-cont" id="popUp2">
-                </div>
+                <div class="pop-cont" id="popUp2"></div>
 
             </div>
-            <div class="btn-wrap grid2" >
+            <div class="btn-wrap grid2">
+                <!--                <button class="btn xlg type07" id="buttonNo">아니요</button>-->
+                <button class="btn xlg type02" id="okButton">저장 및 알림</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup pop-type02" id="layer" style="display: none">
+        <div class="pop-wrap">
+            <!-- <a href="javascript:void(0);" class="pop-close"></a> -->
+            <div class="popup-header"></div>
+            <div class="popup-body">
+                <div class="pop-cont" id="popUp2"></div>
+
+            </div>
+            <div class="btn-wrap grid2">
+                <!--                <button class="btn xlg type07" id="buttonNo">아니요</button>-->
+                <button class="btn xlg type02" id="okButton">저장 및 알림</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="popup pop-type01" id="layerSelectType" style="display: none">
+        <div class="pop-wrap">
+
+            <div class="popup-header"></div>
+            <div class="popup-body">
+                <div class="pop-cont" id="popUp3">
+                </div>
+            </div>
+            <div class="btn-wrap grid2">
                 <button class="btn xlg type07" id="buttonNo">아니요</button>
                 <button class="btn xlg type02" id="buttonOk">저장 및 알림</button>
             </div>
@@ -167,7 +202,7 @@
     <footer>
         <div class="footer-wrap">
             <div class="btn-wrap type02">
-                <span class="btn xlg arrow-type02" onclick="showHistory();">
+                <span class="btn xlg arrow-type02" onclick="showHistory()">
                     <span>운동 기록</span>
                     <span class="ico-arrow2"></span>
                 </span>
@@ -180,3 +215,4 @@
 <!--// wrap -->
 </body>
 </html>
+

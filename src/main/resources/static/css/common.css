@@ -248,7 +248,35 @@ span[class*="ico-"], a[class*="ico-"], div[class*="ico-"], button[class*="ico-"]
 select {position: relative; width: 100%; padding: 0 10px; height: 1.5; line-height: 1.5; font-size: 0.88rem; color: #333; font-weight: 300; border: 1px solid #ccc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; box-sizing: border-box;}
 select:focus {border: 1px solid #111;}
 
-#activityDropdown {width:150px; padding:.8em .5em;border: 1px solid #999;font-family: inherit;background-color: #aaaaaa; background:url('../images/arrow.jpg') no-repeat 95% 50%; border-radius: 0px; -webkit-appearance: none; -moz-appearance: none; appearance: none; margin:100px auto;}
+#activityDropdown {width:150px; padding:.8em .5em;border: 1px solid #999;font-family: inherit;background-color: #aaaaaa; background:url('../images/arrow.jpg') no-repeat 95% 50%; border-radius: 0px; -webkit-appearance: none; -moz-appearance: none; appearance: none;}
+
+
+/*mindHealth*/
+.mood-icon {
+    display: grid;grid-template-columns: repeat(3, 100px);grid-template-rows: repeat(3, 100px);grid-gap: 20px;justify-content: center;margin: 60px 8% 20px; font-weight: bold;
+}
+.mood-box {width: 100px; height: 100px; border: 4px solid black; display: flex; justify-content: center; align-items: center;border-radius: 15px
+}
+.mood-box.sad{background-color: #006EC3 }
+.sad-chk { background: url('../images/mindHealth/sad-icon.png'); background-size:cover; width :100px; heigth:100px;}
+.mood-box.anger{background-color : #CD3301}
+.anger-chk { background: url('../images/mindHealth/anger-icon.png'); background-size:cover; width :100px; heigth:100px;}
+.mood-box.happy{background-color : #FF99CE}
+.happy-chk { background: url('../images/mindHealth/happy-icon.png'); background-size:cover; width :100px; heigth:100px;}
+.mood-box.surprise{background-color : #FFC100}
+.surprise-chk { background: url('../images/mindHealth/surprise-icon.png'); background-size:cover; width :100px; heigth:100px;}
+.mood-box.horror{background-color :#000000; color:#FFFFFF; }
+.horror-chk { background: url('../images/mindHealth/horror-icon.png'); background-size:cover; width :100px; heigth:100px;}
+.mood-box.aversion{background-color :#843C0A}
+.aversion-chk { background: url('../images/mindHealth/aversion-icon.png'); background-size:cover; width :100px; heigth:100px;}
+.mood-box.boring{background-color : #558136}
+.boring-chk { background: url('../images/mindHealth/boring-icon.png'); background-size:cover; width :100px; heigth:100px;}
+.mood-box.interest{background-color : #693099}
+.interest-chk { background: url('../images/mindHealth/interest-icon.png'); background-size:cover; width :100px; heigth:100px;}
+.mood-box.ache{background-color : #7E7E7E}
+.ache-chk { background: url('../images/mindHealth/ache-icon.png'); background-size:cover; width :100px; heigth:100px;}
+.mood-box.chk{background:none; }
+
 
 
 /* checkbox */

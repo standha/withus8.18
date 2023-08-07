@@ -16,27 +16,31 @@
     <script th:src="@{/js/datepicker-ko.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/help.js}"></script>
-    <script th:src="@{/js/exercise/exercise-history.js}"></script>
+<!--    <script th:src="@{/js/exercise/exercise-history.js}"></script>-->
 
 </head>
 <body>
-<input type="hidden" id="button-count" th:attr="value=@{/button-count}">
 <input type="hidden" id="helper-request" th:attr="value=@{/helper-request}">
 <div class="skip-navi">
     <a href="#content">본문 바로가기</a>
 </div>
 <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
-    <input type = 'hidden' name = "symptom"           th:value = "${count.symptom}" style = "display:none">
-    <input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
-    <input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">
-    <input type = 'hidden' name = "disease"           th:value = "${count.diseaseInfo}" style = "display:none">
-    <input type = 'hidden' name = "exercise"          th:value = "${count.exercise}" style = "display:none">
-    <input type = 'hidden' name = "goal"              th:value = "${count.goal}" style = "display:none">
-    <input type = 'hidden' name = "helper"            th:value = "${count.helper}" style = "display:none">
-    <input type = 'hidden' name = "level"             th:value = "${count.level}" style = "display:none">
-    <input type = 'hidden' name = "natriumMoisture"   th:value = "${count.natriumMoisture}" style = "display:none">
-    <input type = 'hidden' name = "weight"            th:value = "${count.weight}" style = "display:none">
-    <input type = 'hidden' name = "withusRang"        th:value = "${count.withusRang}" style = "display:none">
+    <input type='hidden' name="symptom" th:value="${count.symptom}" style="display:none">
+    <input type='hidden' name="medicine" th:value="${count.medicine}" style="display:none">
+    <input type='hidden' name="mindHealth" th:value="${count.mindHealth}" style="display:none">
+    <input type='hidden' name="board" th:value="${count.board}" style="display:none">
+    <input type='hidden' name="alarm" th:value="${count.alarm}" style="display:none">
+    <input type='hidden' name="bloodPressure" th:value="${count.bloodPressure}" style="display:none">
+    <input type='hidden' name="diseaseInfo" th:value="${count.diseaseInfo}" style="display:none">
+    <input type='hidden' name="exercise" th:value="${count.exercise}" style="display:none">
+    <input type='hidden' name="goal" th:value="${count.goal}" style="display:none">
+    <input type='hidden' name="helper" th:value="${count.helper}" style="display:none">
+    <input type='hidden' name="level" th:value="${count.level}" style="display:none">
+    <input type='hidden' name="natriumMoisture" th:value="${count.natriumMoisture}" style="display:none">
+    <input type='hidden' name="weight" th:value="${count.weight}" style="display:none">
+    <input type='hidden' name="withusRang" th:value="${count.withusRang}" style="display:none">
+    <input type='hidden' name="infoEdit" th:value="${count.infoEdit}" style="display:none">
+    <input type='hidden' name="board" th:value="${count.board}" style="display:none">
 </div>
 <!-- wrap -->
 <div id="wrap" class="insert-page">
@@ -124,27 +128,25 @@
 
                     var str = yy.toString() + "-" + monthStr + "-" + dayStr;
 
-                    for(i=0; i<exerciseHistory.length; i++)
-                    {
-                        if(str == exerciseHistory[i].pk.date)
-                        {
-                            var activityDropdownValue = $("#activityDropdown").val();
-                            var className = "";
-                            switch (activityDropdownValue){
-                                case "walking":
-                                    className="walk-icon";
+
+                    // var exercise;
+                    for (i = 0; i < exerciseHistory.length; i++) {
+                        if (str == exerciseHistory[i].pk.date) {
+                            recentExercise = exerciseHistory[i].recentExercise;
+                            switch (recentExercise) {
+                                case 1:
+                                    $(this).addClass('walk-icon');
                                     break;
-                                case "cycling":
-                                    className="cycle-icon";
+                                case 2:
+                                    $(this).addClass('cycle-icon');
                                     break;
-                                case "swimming":
-                                    className="swim-icon";
+                                case 3:
+                                    $(this).addClass('swim-icon');
                                     break;
-                                case "strengthTraining":
-                                    className="strength-icon";
+                                case 4:
+                                    $(this).addClass('strength-icon');
                                     break;
                             }
-                            $(this).addClass(className);
                         }
                     }
                 });

@@ -19,17 +19,10 @@ import java.util.Optional;
 
 @Repository
 public interface MedicationAlarmRepository extends JpaRepository<Tbl_medication_alarm, RecordKey> {
-//    @Transactional(readOnly = true)
-////    @Nonnull
-//    Optional<Tbl_medication_alarm> findById(String id);
-
 
     @Transactional(readOnly = true)
     Optional<Tbl_medication_alarm> findByPk(RecordKey pk);
 
-    //    @Transactional(readOnly = true)
-//    List<Tbl_medication_alarm> findAllById(String id);
-//
     @Transactional(readOnly = true)
     List<Tbl_medication_alarm> findByPk_Id(String id);
 

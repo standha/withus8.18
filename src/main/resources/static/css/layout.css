@@ -145,13 +145,20 @@ footer {position: relative;}
 .record-water-write {position: relative;}
 .record-water-write:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 70px; height: 35px; background: url('../images/common/write.jpg') -110px -100px ; background-size: contain; transform: translate(-50%, -17%);}
 
-.record-exercise {position: relative; background-color: #f5ecff;}
+/*.record-exercise {position: relative; background-color: #f5ecff;}*/
 /*.record-exercise:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 22px; height: 26px; background: url('../images/common/sp-icon.png') -98px -76px; background-size: 600px 450px; transform: translate(-50%, -17%);}*/
+.walk-icon {position: relative; background-color: #f5ecff;}
 .walk-icon:before{content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 22px; height: 26px; background: url('../images/exercise-icon/walking.png');background-size: 600px 450px; transform: translate(-50%, -17%); }
+.swim-icon {position: relative; background-color: #f5ecff;}
 .swim-icon:before{content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 22px; height: 26px; background: url('../images/exercise-icon/swimming.png');background-size: 600px 450px; transform: translate(-50%, -17%); }
+
+.cycle-icon {position: relative; background-color: #f5ecff;}
 .cycle-icon:before{content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 22px; height: 26px; background: url('../images/exercise-icon/cycling.png');background-size: 600px 450px; transform: translate(-50%, -17%); }
-.aerobic-icon:before{content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 22px; height: 26px; background: url('../images/exercise-icon/aerobic.png');background-size: 600px 450px; transform: translate(-50%, -17%); }
+
+.strength-icon {position: relative; background-color: #f5ecff;}
 .strength-icon:before{content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 22px; height: 26px; background: url('../images/exercise-icon/strength.png');background-size: 600px 450px; transform: translate(-50%, -17%); }
+
+/*.aerobic-icon:before{content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 22px; height: 26px; background: url('../images/exercise-icon/aerobic.png');background-size: 600px 450px; transform: translate(-50%, -17%); }*/
 
 .record-alarm {position: relative; background-color: #ffffff;}
 .record-alarm-gray{position: relative; background-color: #ffffff;}

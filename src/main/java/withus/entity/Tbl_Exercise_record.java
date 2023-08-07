@@ -24,7 +24,20 @@ public class Tbl_Exercise_record {
     @Column(name = "week")
     private Integer week;
 
-    @Column(name = "sport")
-    private Integer sport;
+    @Column(name = "walking")
+    private Integer walking;
+
+    @Column(name = "cycling")
+    private Integer cycling;
+
+    @Column(name = "swimming")
+    private Integer swimming;
+
+    @Column(name = "strength")
+    private Integer strength;
+
+    @Column(name ="recentExercise")
+    private Integer recentExercise;
+
 
 }
