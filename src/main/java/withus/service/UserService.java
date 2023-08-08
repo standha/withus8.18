@@ -145,6 +145,7 @@ public class UserService implements UserDetailsService {
                 .top_goals(null)
                 .middle_goals(null)
                 .bottom_goals(null)
+                .week(0)
                 .build();
 
 //        Tbl_topgoals tbl_topgoals = Tbl_topgoals.builder()
@@ -166,6 +167,8 @@ public class UserService implements UserDetailsService {
 //        goalRepositroy1.save(tbl_topgoals);
 //        goalRepositroy2.save(tbl_middlegoals);
 //        goalRepositroy3.save(tbl_bottomgoals);
+
+
 
         if (checkType == "PATIENT") {
             Tbl_medication_alarm tbl_medication_alarm = Tbl_medication_alarm.builder()
@@ -190,13 +193,6 @@ public class UserService implements UserDetailsService {
 
             outPatientVisitAlarmRepository.save(tbl_outpatient_visit_alarm);
 
-//            Tbl_goal tbl_goal = Tbl_goal.builder()
-//                    .goalId(saved.getUserId())
-//                    .goal(0)
-//                    //.goal(Integer.toString(0))
-//                    .build();
-
-            goalRepositroy.save(tbl_goal);
 
             for (int i = 1; i <= 24; i++) {
                 ProgressKey key = new ProgressKey(saved.getUserId(), i);
@@ -364,7 +360,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Nullable
-    public List<User> getPatient(User.Type type) {
+    public List<User> getUserAllByType(User.Type type) {
         return userRepository.findByType(type);
     }
 

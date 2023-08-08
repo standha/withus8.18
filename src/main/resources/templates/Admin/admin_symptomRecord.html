@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<html xmlns:th="http://www.thymeleaf.org" lang="kr" style="overflow: auto">
 <meta charset="UTF-8">
 <link rel="stylesheet" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css"/>
 <script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
@@ -94,7 +94,7 @@
                     Item += "<td>" + (weekAsc[weekAscCount].tired) +"</td>";
                     Item += "<td>" + (weekAsc[weekAscCount].ankle) +"</td>";
                     Item += "<td>" + (weekAsc[weekAscCount].cough) +"</td>";
-                    Item += "<td>" + (weekAsc[weekAscCount].text) +"</td>";
+                    Item += "<td>" + (weekAsc[weekAscCount].text == null ? '' : weekAsc[weekAscCount].text) +"</td>";
                     weekAscCount++;
                     if(weekAscCount >= weekAsc.length)
                         weekAscCount--;

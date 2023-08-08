@@ -27,6 +27,12 @@ public class Tbl_goal {
 
     @Column(name = "bottom_goals")
     private String bottom_goals;
+<<<<<<< HEAD
+
+    @Column(name = "week")
+    private Integer week;
+=======
+>>>>>>> 27dd8f5f2a0fbf266c956146dc701186918ee4ec
 
     @Column(name = "week")
     private Integer week;

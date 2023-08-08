@@ -191,7 +191,8 @@ async function onFormSubmission() {
     // });
 
     await goalpopup(combinedGoals);
-    event.preventDefault();
+
+    return false;
 }
 
 async function goalpopup(combinedGoals) {
@@ -258,7 +259,6 @@ async function goalpopup(combinedGoals) {
             return false;
         });
     });
-    return false;
 }
 
 function createRadioButton(value) {

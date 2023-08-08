@@ -2,83 +2,105 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>위더스</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
-    <meta name="format-detection" content="telephone=no">
-    <link th:href="@{/css/reset.css}" rel="stylesheet">
-    <link th:href="@{/css/common.css}" rel="stylesheet">
-    <link th:href="@{/css/layout.css}" rel="stylesheet">
-    <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
-    <script th:src="@{/js/common.js}"></script>
-    <script th:src="@{/js/help.js}"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>위더스</title>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+  <meta name="format-detection" content="telephone=no">
+  
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/reset.css}" rel="stylesheet">
+  <link th:href="@{/css/common.css}" rel="stylesheet">
+  <link th:href="@{/css/layout.css}" rel="stylesheet">
+  
+  <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
+  <script th:src="@{/js/common.js}"></script>
+  <script th:src="@{/js/help.js}"></script>
+  <!-- buttonCount -->
+  <script th:src="@{/js/home.js}"></script>
+  <script th:src="@{/js/subButton.js}"></script>
+  <script th:src="@{/js/detailButton.js}"></script>
+  <!-- fontawesome -->
+  <script src="https://kit.fontawesome.com/e381c8a508.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <input type="hidden" id="button-count" th:attr="value=@{/button-count}">
 <input type="hidden" id="helper-request" th:attr="value=@{/helper-request}">
 <div class="skip-navi">
-    <a href="#content">본문 바로가기</a>
+  <a href="#content">본문 바로가기</a>
 </div>
 <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${user.week} != 25">
-    <input type = 'hidden' name = "symptom"           th:value = "${count.symptom}" style = "display:none">
-    <input type = 'hidden' name = "alarm"             th:value = "${count.alarm}" style = "display:none">
-    <input type = 'hidden' name = "blood"             th:value = "${count.bloodPressure}" style = "display:none">
-    <input type = 'hidden' name = "disease"           th:value = "${count.diseaseInfo}" style = "display:none">
-    <input type = 'hidden' name = "exercise"          th:value = "${count.exercise}" style = "display:none">
-    <input type = 'hidden' name = "goal"              th:value = "${count.goal}" style = "display:none">
-    <input type = 'hidden' name = "helper"            th:value = "${count.helper}" style = "display:none">
-    <input type = 'hidden' name = "level"             th:value = "${count.level}" style = "display:none">
-    <input type = 'hidden' name = "natriumMoisture"   th:value = "${count.natriumMoisture}" style = "display:none">
-    <input type = 'hidden' name = "weight"            th:value = "${count.weight}" style = "display:none">
-    <input type = 'hidden' name = "withusRang"        th:value = "${count.withusRang}" style = "display:none">
+  <input type='hidden' name="symptom" th:value="${count.symptom}" style="display:none">
+  <input type='hidden' name="alarm" th:value="${count.alarm}" style="display:none">
+  <input type='hidden' name="blood" th:value="${count.bloodPressure}" style="display:none">
+  <input type='hidden' name="disease" th:value="${count.diseaseInfo}" style="display:none">
+  <input type='hidden' name="exercise" th:value="${count.exercise}" style="display:none">
+  <input type='hidden' name="goal" th:value="${count.goal}" style="display:none">
+  <input type='hidden' name="helper" th:value="${count.helper}" style="display:none">
+  <input type='hidden' name="level" th:value="${count.level}" style="display:none">
+  <input type='hidden' name="natriumMoisture" th:value="${count.natriumMoisture}" style="display:none">
+  <input type='hidden' name="weight" th:value="${count.weight}" style="display:none">
+  <input type='hidden' name="withusRang" th:value="${count.withusRang}" style="display:none">
 </div>
 <!-- wrap -->
 <div id="wrap" class="list-page">
-
-    <!-- header -->
-    <header>
-        <div class="header-wrap type02">
-            <div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${user.week} != 25">
-                <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'" >
-                        <span class="ico-call" ></span>
-                        <span class="txt-rt">도우미</span>
-                    </a>
-                </div>
-                <h2>염분/수분</h2>
-            </div>
-            <div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${user.week} == 25">
-                <div onclick="helperRequest()" >
-                    <a class="btn xsm type07" href="tel:010-8454-9186">
-                        <span class="ico-call" ></span>
-                        <span class="txt-rt">도우미</span>
-                    </a>
-                </div>
-                <h2>염분/수분</h2>
-            </div>
+  
+  <!-- header -->
+  <header>
+    <div class="header-wrap type02">
+      <div class="head align-items-center"
+           th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${user.week} != 25">
+        <div onclick="helperRequest()">
+          <a class="btn xsm type07" href="tel:010-8454-9186"
+             th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'">
+            <span class="ico-call"></span>
+            <span class="txt-rt">도우미</span>
+          </a>
         </div>
-    </header>
-    <!-- // header -->
-
-    <!-- content -->
-    <div class="container" id="content">
-        <div class="cont-wrap">
-            <a th:href="@{/natrium}" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25" class="list-card">
-                <span class="ico-salt"></span>
-                <span class="btn xxlg arrow-type01">저염식이</span>
-            </a>
-            <a th:href="@{/natrium-all-history}" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25" class="list-card">
-              <span class="ico-salt"></span>
-              <span class="btn xxlg arrow-type01">저염식이</span>
-            </a>
-            <a th:href="@{/moisture}" class="list-card">
-                <span class="ico-water2"></span>
-                <span class="btn xxlg arrow-type01">수분섭취</span>
-            </a>
+        <h2>염분/수분</h2>
+        <a th:href="@{/center}"><i class="fa-solid fa-house fa-2xl" style="color: #ffffff;"></i></a>
+      </div>
+      <div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${user.week} == 25">
+        <div onclick="helperRequest()">
+          <a class="btn xsm type07" href="tel:010-8454-9186">
+            <span class="ico-call"></span>
+            <span class="txt-rt">도우미</span>
+          </a>
         </div>
+        <h2>염분/수분</h2>
+        <a th:href="@{/center}"><i class="fa-solid fa-house fa-2xl" style="color: #ffffff;"></i></a>
+      </div>
     </div>
-    <!-- // content -->
+  </header>
+  <!-- // header -->
+  
+  <!-- content -->
+  <div class="container" id="content">
+    <div class="cont-wrap">
+      <a th:href="@{/natrium}" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25"
+         class="list-card">
+        <span class="ico-salt"></span>
+        <span class="btn arrow-type01 mb-0 py-3 fw-bold" style="font-size: 1.5rem;">저염식이</span>
+      </a>
+      <a th:href="@{/natrium-all-history}" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25"
+         class="list-card">
+        <span class="ico-salt"></span>
+        <span class="btn arrow-type01 mb-0 py-3 fw-bold" style="font-size: 1.5rem;">저염식이</span>
+      </a>
+      <a th:href="@{/moisture}" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25"
+         class="list-card">
+        <span class="ico-water2"></span>
+        <span class="btn arrow-type01 mb-0 py-3 fw-bold" style="font-size: 1.5rem;">수분섭취</span>
+      </a>
+      <a th:href="@{/moisture-all-history}" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25"
+         class="list-card">
+        <span class="ico-water2"></span>
+        <span class="btn arrow-type01 mb-0 py-3 fw-bold" style="font-size: 1.5rem;">수분섭취</span>
+      </a>
+    </div>
+  </div>
+  <!-- // content -->
 
 </div>
 <!--// wrap -->

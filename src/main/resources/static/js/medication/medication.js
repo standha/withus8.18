@@ -196,7 +196,6 @@ function onFormSubmission(form) {
         .then(data => console.log(data));
 
 
-    console.log("저장");
     return false;
 }
 

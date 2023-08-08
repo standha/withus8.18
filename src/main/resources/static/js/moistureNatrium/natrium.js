@@ -155,8 +155,8 @@ function natrium_caregiver() {
         window.location.reload();
         return false;
     });
-
 }
+
 function submit_Click() {
 
     $("#layerSelectType").show();
@@ -173,8 +173,8 @@ function submit_Click() {
         window.location.reload();
         return false;
     });
-
 }
+
 document.addEventListener("DOMContentLoaded", function () {
     // "저장" 버튼에 클릭 이벤트 핸들러를 추가합니다. 버튼은 id="saveButton"으로 선택됩니다.
     const saveButton = document.getElementById("saveButton");

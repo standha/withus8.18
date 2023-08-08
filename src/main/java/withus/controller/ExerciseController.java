@@ -1,6 +1,7 @@
 package withus.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,18 +41,47 @@ public class ExerciseController extends BaseController {
             case PATIENT:
                 Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
                 modelAndView.addObject("count", count);
-                if (exerciseService.getExercise(new RecordKey(user.getUserId(), LocalDate.now())) == null) {
+
+                Tbl_Exercise_record exercise = exerciseService.getExercise(new RecordKey(user.getUserId(), LocalDate.now()));
+
+               if (exerciseService.getExercise(new RecordKey(user.getUserId(), LocalDate.now())) == null) {
                     modelAndView.addObject("hour", "");
                     modelAndView.addObject("minute", "");
 
                     logger.info("id:{}, today exercise:null", user.getUserId());
                 } else {
-                    Tbl_Exercise_record exercise = exerciseService.getExercise(new RecordKey(user.getUserId(), LocalDate.now()));
+
                     modelAndView.addObject("hour", exercise.getHour());
                     modelAndView.addObject("minute", exercise.getMinute());
 
                     logger.info("id:{}, exerciseHour:{}, exerciseMinute:{}", user.getUserId(), exercise.getHour(), exercise.getMinute());
                 }
+
+//                if(exercise.getWalking() ==null ) {
+//                    modelAndView.addObject("walking","");
+//                }else {
+//                    modelAndView.addObject("walking",exercise.getHour());
+//                    modelAndView.addObject("minute",exercise.getMinute());
+//                }
+//                if(exercise.getCycling() ==null ) {
+//                    modelAndView.addObject("cycling","");
+//                }else {
+//                    modelAndView.addObject("cyclingHour",exercise.getHour());
+//                    modelAndView.addObject("cyclingMinute",exercise.getMinute());
+//                }
+//                if(exercise.getSwimming() ==null ) {
+//                    modelAndView.addObject("swimming","");
+//                }else {
+//                    modelAndView.addObject("swimmingHour",exercise.getHour());
+//                    modelAndView.addObject("swimmingMinute",exercise.getMinute());
+//                }
+//                if(exercise.getStrength() ==null ) {
+//                    modelAndView.addObject("strength","");
+//                }else {
+//                    modelAndView.addObject("strengthHour",exercise.getHour());
+//                    modelAndView.addObject("strengthMinute",exercise.getMinute());
+//                }
+
 
                 break;
 
@@ -62,9 +92,9 @@ public class ExerciseController extends BaseController {
 
                     logger.info("id:{}, today exercise:null", user.getUserId());
                 } else {
-                    Tbl_Exercise_record exercise = exerciseService.getExercise(new RecordKey(getCaretaker().getUserId(), LocalDate.now()));
-                    modelAndView.addObject("hour", exercise.getHour());
-                    modelAndView.addObject("minute", exercise.getMinute());
+                    Tbl_Exercise_record exercisecare = exerciseService.getExercise(new RecordKey(getCaretaker().getUserId(), LocalDate.now()));
+                    modelAndView.addObject("hour", exercisecare.getHour());
+                    modelAndView.addObject("minute", exercisecare.getMinute());
 
                     logger.info("id:{}", user.getUserId());
                 }
@@ -89,6 +119,8 @@ public class ExerciseController extends BaseController {
             case PATIENT:
                 Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
                 modelAndView.addObject("count", count);
+
+
                 exerciseHistory = exerciseService.getExerciseAllRecord(user.getUserId(), -1, -1);
                 modelAndView.addObject("exerciseWeekHour", avgWeek() / 60);
                 modelAndView.addObject("exerciseWeekMin", avgWeek() % 60);

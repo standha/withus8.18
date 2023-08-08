@@ -56,7 +56,7 @@ public class GoalScheduler {
         return count;
     }
 
-    public int BloodCount(String id) {
+    public int BloodPressureCount(String id) {
         int count = 0;
         LocalDate today = LocalDate.now();
         for (int i = 1; i <= 7; i++) {
@@ -95,7 +95,19 @@ public class GoalScheduler {
         for (int i = 1; i <= 7; i++) {
             if (exerciseService.getExercise(new RecordKey(id, today.with(DayOfWeek.of(i)))) != null) {
                 Tbl_Exercise_record exercise = exerciseService.getExercise(new RecordKey(id, today.with(DayOfWeek.of(i))));
-                int record = (exercise.getHour() * 60) + exercise.getMinute();
+                int record = 0;
+                if(exercise!= null && exercise.getStrength() != null){
+                    record += exercise.getStrength();
+                }
+                if(exercise!= null && exercise.getCycling() != null){
+                    record += exercise.getCycling();
+                }
+                if(exercise!= null && exercise.getSwimming() != null){
+                    record += exercise.getSwimming();
+                }
+                if(exercise!= null && exercise.getWalking() != null){
+                    record += exercise.getWalking();
+                }
                 if (record >= 30)
                     count++;
             }
@@ -103,7 +115,7 @@ public class GoalScheduler {
         return count;
     }
 
-    public int PillCount(String id) {
+    public int MedicineCount(String id) {
         int count = 0;
         LocalDate today = LocalDate.now();
         for (int i = 1; i <= 7; i++) {
@@ -119,7 +131,7 @@ public class GoalScheduler {
 }
 /*
     //cron = "0 0 21 * * SUN"
-    @Async
+   /* @Async
     @Scheduled(cron = "0 0 21 * * SUN")
     public void GoalList() {
         logger.info("Scheduler:{}, ThreadName:{}","CheckAchievement",Thread.currentThread().getName());
@@ -428,7 +440,7 @@ public class GoalScheduler {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public @ResponseBody
     ResponseEntity<String> levelNotice(String title, List<String> tokenList, String message) throws InterruptedException {

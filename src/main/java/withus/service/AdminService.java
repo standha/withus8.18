@@ -94,6 +94,14 @@ public class AdminService {
     public List<Tbl_Exercise_record> getExercise(String userId) {
         return userRepositorySupport.findExercise(userId);
     }
+    @Nullable
+    public List<GoalDTO> getPatientGoal(String userId){
+            return userRepositorySupport.findPatientGoal(userId);
+    }
+    @Nullable
+    public List<GoalDTO> getCaregiverGoal(String userId){
+        return userRepositorySupport.findCaregiverGoal(userId);
+    }
 
     @Nullable
     public List<ExerciseDTO> getExerciseAvg(String userId) {
@@ -120,6 +128,15 @@ public class AdminService {
         return userRepositorySupport.findNatriumAsc(userId);
     }
 
+    @Nullable
+    public List<Tbl_patient_duration_time> getPatientDurationTime(String userId){
+        return userRepositorySupport.findPatientDurationTimeAsc(userId);
+    }
+
+    @Nullable
+    public List<Tbl_caregiver_duration_time> getCaregiverDurationTime(String userId){
+        return userRepositorySupport.findCaregiverDurationTimeAsc(userId);
+    }
     @Nullable
     public List<PatientMainButtonCountSumDTO> getPatientMainButtonCount(String userId) {
         return userRepositorySupport.findPatientMainButtonCountSum(userId);
@@ -156,7 +173,10 @@ public class AdminService {
         return userRepositorySupport.findCaregiverDetailButtonCount(userId);
     }
 
-
+    @Nullable
+    public List<WwithusHistoryDTO> getWwithusHistory(String userId){
+        return userRepository.findWwithusHistory(userId);
+    }
 
     public List<NatriumCountDTO> getNatriumCountWeek(String userId) {
         Integer week = 1;

@@ -65,8 +65,15 @@ public class MoistureNatriumController extends BaseController {
 
         User user = getUser();
         if (user.getType() == User.Type.PATIENT) {
-            Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
-            modelAndView.addObject("count", count);
+            Tbl_patient_main_button_count mainCount = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            Tbl_patient_detail_button_count detailCount = countService.getPatientDetailCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            modelAndView.addObject("detailCount", detailCount);
+        } else if(user.getType() == User.Type.CAREGIVER) {
+            Tbl_caregiver_main_button_count mainCount = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            Tbl_caregiver_detail_button_count detailCount = countService.getCaregiverDetailCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            modelAndView.addObject("detailCount", detailCount);
         }
 
         modelAndView.addObject("type", user.getType());
@@ -79,10 +86,14 @@ public class MoistureNatriumController extends BaseController {
     @GetMapping("/moisture-all-history")
     public ModelAndView getMoistureAll() {
         ModelAndView modelAndView = new ModelAndView("moistureNatrium/moisture-all-history");
-        User user = getUser();
 
+        User user = getUser();
         if (user.getType() == User.Type.PATIENT) {
             Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("count", count);
+        }
+        if (user.getType() == User.Type.CAREGIVER) {
+            Tbl_caregiver_main_button_count count = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
             modelAndView.addObject("count", count);
         }
 

@@ -195,6 +195,30 @@ public class AdminHomeController extends withus.controller.BaseController {
 
         return modelAndView;
     }
+    @GetMapping("/admin_goals/{userId}")
+    public ModelAndView adminGoals(@PathVariable("userId") String userId){
+        User user = getUser();
+        if (user.getType() != User.Type.ADMINISTRATOR) {
+            throw new IllegalStateException(user.getUserId() + " is not Admin");
+        }
+        ModelAndView modelAndView = new ModelAndView();
+        HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
+
+        User.Type type = adminService.getTypeInfo(userId);
+        List<GoalDTO> goals;
+        if (type == User.Type.PATIENT) {
+            goals = adminService.getPatientGoal(userId);
+        } else {
+            goals = adminService.getCaregiverGoal(userId);
+        }
+        modelAndView.addObject("goals", goals);
+        modelAndView.addObject("type", type);
+        modelAndView.addObject("info", headerInfo);
+        modelAndView.setViewName("Admin/admin_goals");
+        logger.info("user try to access aadmin_goals id:{}, PatientId:{})", user.getUserId(),
+                userId);
+        return modelAndView;
+    }
 
     @GetMapping("/admin_exerciseRecord/{userId}")
     public ModelAndView adminExerciseRecord(@PathVariable("userId") String userId) {
@@ -370,6 +394,32 @@ public class AdminHomeController extends withus.controller.BaseController {
 
         return mav;
     }
+    @GetMapping("/admin_durationTime/{userId}")
+    public ModelAndView adminDurationTime(@PathVariable("userId") String userId) {
+
+        User user = getUser();
+        if (user.getType() != User.Type.ADMINISTRATOR) {
+            throw new IllegalStateException(user.getUserId() + " is not Admin");
+        }
+        ModelAndView mav = new ModelAndView();
+        HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
+        User.Type type = adminService.getTypeInfo(userId);
+
+        if(type == User.Type.PATIENT){
+            List<Tbl_patient_duration_time> dt = adminService.getPatientDurationTime(userId);
+            mav.addObject("durationTimeAsc", dt);
+        } else if(type == User.Type.CAREGIVER){
+            List<Tbl_caregiver_duration_time> dt = adminService.getCaregiverDurationTime(userId);
+            mav.addObject("durationTimeAsc", dt);
+        }
+
+        mav.addObject("info", headerInfo);
+        mav.addObject("type", type);
+        mav.setViewName("Admin/admin_durationTime");
+
+        logger.info("user try to access admin_durationTime  Id:{}, getId:{})", user.getUserId(), userId);
+        return mav;
+    }
 
     @GetMapping("/admin_button_count/{userId}")
     public ModelAndView getSymptomAll(@PathVariable("userId") String userId) {
@@ -402,6 +452,25 @@ public class AdminHomeController extends withus.controller.BaseController {
         logger.info("user try to access admin_button_count  id:{}, PatientId:{})", user.getUserId(),
                 userId);
 
+        return modelAndView;
+    }
+    @GetMapping("/admin_withusRang/{userId}")
+    public ModelAndView getWwithusHistoryAll(@PathVariable("userId") String userId) {
+        User user = getUser();
+        if (user.getType() != User.Type.ADMINISTRATOR) {
+            throw new IllegalStateException(user.getUserId() + " is not Admin");
+        }
+        HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
+        ModelAndView modelAndView = new ModelAndView("Admin/admin_withusRang");
+        User.Type type = adminService.getTypeInfo(userId);
+        modelAndView.addObject("type", type);
+        modelAndView.addObject("info", headerInfo);
+
+        List<WwithusHistoryDTO> withusRang = adminService.getWwithusHistory(userId);
+        modelAndView.addObject("withusRang", withusRang);
+
+        logger.info("user try to access admin_withusRang  id:{}, getId:{})", user.getUserId(),
+                userId);
         return modelAndView;
     }
 
