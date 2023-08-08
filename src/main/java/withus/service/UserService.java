@@ -107,7 +107,6 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-
     @Nullable
     public User getUserByCaregiverId(String caregiverId) {
         return userRepository.findByCaregiverUserId(caregiverId).orElse(null);
@@ -139,8 +138,10 @@ public class UserService implements UserDetailsService {
 
 
         Tbl_goal tbl_goal = Tbl_goal.builder()
+                //.pk(new RecordKey(user.getUserId(), LocalDate.now()))  //8월 2일 수정
                 .goalId(saved.getUserId())
-                .goal(0)
+                .goal(null)
+               // .goal(0)
                 .top_goals(null)
                 .middle_goals(null)
                 .bottom_goals(null)

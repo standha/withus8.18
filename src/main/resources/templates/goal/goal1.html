@@ -27,6 +27,10 @@
 <body>
 <input type="hidden" id="button-count" th:attr="value=@{/button-count}">
 <input type="hidden" id="helper-request" th:attr="value=@{/helper-request}">
+
+<input type="hidden" id="top" th:attr="value=${goalList.top_goals}">
+<input type="hidden" id="mid" th:attr="value=${goalList.middle_goals}">
+<input type="hidden" id="bottom" th:attr="value=${goalList.bottom_goals}">
 <div class="skip-navi">
     <a href="#content">본문 바로가기</a>
 </div>
@@ -86,52 +90,52 @@
 
                 <form id="goal-form" th:action="@{/goal1}" onsubmit="return onFormSubmission(this);">
 
-                <div th:if="${goal} == 1" class="rdo-box checked">
+                <div th:if="${goalList.top_goals} == '주 1회 이상 정해진 시간에 약 복용' or ${goalList.middle_goals} == '주 1회 이상 정해진 시간에 약 복용' or ${goalList.bottom_goals} == '주 1회 이상 정해진 시간에 약 복용'" class="rdo-box checked">
                     <label>
                         <span class="rdo-mark"></span>
                         <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 1회 이상 정해진 시간에 약 복용" data-category="bottom">주 1회 이상 정해진 시간에 약 복용
                     </label>
                 </div>
-                <div th:unless="${goal} == 1" class="rdo-box">
+                <div th:unless="${goalList.top_goals} == '주 1회 이상 정해진 시간에 약 복용' or ${goalList.middle_goals} == '주 1회 이상 정해진 시간에 약 복용' or ${goalList.bottom_goals} == '주 1회 이상 정해진 시간에 약 복용'" class="rdo-box">
                     <label>
                         <span class="rdo-mark"></span>
                         <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 1회 이상 정해진 시간에 약 복용" data-category="bottom">주 1회 이상 정해진 시간에 약 복용
                     </label>
                 </div>
 
-                <div th:if="${goal} == 2" class="rdo-box checked">
+                <div th:if="${goalList.top_goals} == '주 1회 이상 혈압과 맥박 측정' or ${goalList.middle_goals} == '주 1회 이상 혈압과 맥박 측정' or ${goalList.bottom_goals} == '주 1회 이상 혈압과 맥박 측정' " class="rdo-box checked">
                     <label>
                         <span class="rdo-mark"></span>
                         <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 1회 이상 혈압과 맥박 측정" data-category="bottom">주 1회 이상 혈압과 맥박 측정
                     </label>
                 </div>
-                <div th:unless="${goal} == 2" class="rdo-box">
+                <div th:unless="${goalList.top_goals} == '주 1회 이상 혈압과 맥박 측정' or ${goalList.middle_goals} == '주 1회 이상 혈압과 맥박 측정' or ${goalList.bottom_goals} == '주 1회 이상 혈압과 맥박 측정' " class="rdo-box">
                     <label>
                         <span class="rdo-mark"></span>
                         <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 1회 이상 혈압과 맥박 측정" data-category="bottom">주 1회 이상 혈압과 맥박 측정
                     </label>
                 </div>
 
-                <div th:if="${goal} == 3" class="rdo-box checked">
+                <div th:if="${goalList.top_goals} == '주 1회 최소 30분 이상 운동' or ${goalList.middle_goals} == '주 1회 최소 30분 이상 운동' or ${goalList.bottom_goals} == '주 1회 최소 30분 이상 운동'" class="rdo-box checked">
                     <label>
                         <span class="rdo-mark" ></span>
                         <input type="checkbox" name="check_radio" onclick="radioClick()"  value="주 1회 최소 30분 이상 운동" data-category="bottom" >주 1회 최소 30분 이상 운동
                     </label>
                 </div>
-                <div th:unless="${goal} == 3" class="rdo-box">
+                <div th:unless="${goalList.top_goals} == '주 1회 최소 30분 이상 운동' or ${goalList.middle_goals} == '주 1회 최소 30분 이상 운동' or ${goalList.bottom_goals} == '주 1회 최소 30분 이상 운동'" class="rdo-box">
                     <label>
                         <span class="rdo-mark" ></span>
                         <input type="checkbox" name="check_radio" onclick="radioClick()"  value="주 1회 최소 30분 이상 운동" data-category="bottom">주 1회 최소 30분 이상 운동
                     </label>
                 </div>
 
-                <div th:if="${topgoal} == 4" class="rdo-box checked">
+                <div th:if="${goalList.top_goals} == '주 1회 이상 식사 시 염분 측정' or ${goalList.middle_goals} == '주 1회 이상 식사 시 염분 측정' or ${goalList.bottom_goals} == '주 1회 이상 식사 시 염분 측정'" class="rdo-box checked">
                     <label>
                         <span class="rdo-mark"></span>
                         <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 1회 이상 식사 시 염분 측정" data-category="bottom">주 1회 이상 식사 시 염분 측정
                     </label>
                 </div>
-                <div th:unless="${topgoal} == 4" class="rdo-box">
+                <div th:unless="${goalList.top_goals} == '주 1회 이상 식사 시 염분 측정' or ${goalList.middle_goals} == '주 1회 이상 식사 시 염분 측정' or ${goalList.bottom_goals} == '주 1회 이상 식사 시 염분 측정'" class="rdo-box">
                     <label>
                         <span class="rdo-mark"></span>
                         <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 1회 이상 식사 시 염분 측정" data-category="bottom">주 1회 이상 식사 시 염분 측정
@@ -139,13 +143,13 @@
                 </div>
 
 
-                    <div th:if="${topgoal} == 5" class="rdo-box checked">
+                    <div th:if="${goalList.top_goals} == '주 1회 이상 체중 측정' or ${goalList.middle_goals} == '주 1회 이상 체중 측정' or ${goalList.bottom_goals} == '주 1회 이상 체중 측정'" class="rdo-box checked">
                         <label>
                             <span class="rdo-mark"></span>
                             <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 1회 이상 체중 측정" data-category="bottom">주 1회 이상 체중 측정
                         </label>
                     </div>
-                    <div th:unless="${topgoal} == 5" class="rdo-box">
+                    <div th:unless="${goalList.top_goals} == '주 1회 이상 체중 측정' or ${goalList.middle_goals} == '주 1회 이상 체중 측정' or ${goalList.bottom_goals} == '주 1회 이상 체중 측정'" class="rdo-box">
                         <label>
                             <span class="rdo-mark"></span>
                             <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 1회 이상 체중 측정" data-category="bottom">주 1회 이상 체중 측정
@@ -154,13 +158,13 @@
 
 
 
-                    <div th:if="${topgoal} == 6" class="rdo-box checked" >
+                    <div th:if="${goalList.top_goals} == '주 1회 이상 마음 일기 기록' or ${goalList.middle_goals} == '주 1회 이상 마음 일기 기록' or ${goalList.bottom_goals} == '주 1회 이상 마음 일기 기록'" class="rdo-box checked" >
                         <label>
                             <span class="rdo-mark"></span>
                             <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 1회 이상 마음 일기 기록" data-category="bottom">주 1회 이상 마음 일기 기록
                         </label>
                     </div>
-                    <div th:unless="${topgoal} == 6" class="rdo-box">
+                    <div th:unless="${goalList.top_goals} == '주 1회 이상 마음 일기 기록' or ${goalList.middle_goals} == '주 1회 이상 마음 일기 기록' or ${goalList.bottom_goals} == '주 1회 이상 마음 일기 기록'" class="rdo-box">
                         <label>
                             <span class="rdo-mark"></span>
                             <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 1회 이상 마음 일기 기록" data-category="bottom">주 1회 이상 마음 일기 기록
@@ -209,7 +213,7 @@
             <div th:if="${goal} == 1" class="rdo-box checked">
                 <label>
                     <span class="rdo-mark"></span>
-                    <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 1회 이상 정해진 시간에 약 복용" data-category="bottom">주 1회 이상 정해진 시간에 약 복용
+                    <input type="checkbox" name="check_radio" onclick="radioClick(goalList)" value="주 1회 이상 정해진 시간에 약 복용" data-category="bottom">주 1회 이상 정해진 시간에 약 복용
                 </label>
             </div>
             <div th:unless="${goal} == 1" class="rdo-box">
@@ -293,5 +297,6 @@
 </div>
 </div>
 </div>
+
 </body>
 </html>

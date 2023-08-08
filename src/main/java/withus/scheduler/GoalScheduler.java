@@ -4,24 +4,16 @@ package withus.scheduler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ResponseBody;
-import withus.entity.*;
+import withus.entity.RecordKey;
+import withus.entity.Tbl_Exercise_record;
+import withus.entity.Tbl_medication_alarm;
 import withus.service.*;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 @Component
 @EnableAsync
@@ -124,7 +116,8 @@ public class GoalScheduler {
         }
         return count;
     }
-
+}
+/*
     //cron = "0 0 21 * * SUN"
     @Async
     @Scheduled(cron = "0 0 21 * * SUN")
@@ -462,3 +455,4 @@ public class GoalScheduler {
         return new ResponseEntity<>("Push Notification ERROR!", HttpStatus.BAD_REQUEST);
     }
 }
+*/
