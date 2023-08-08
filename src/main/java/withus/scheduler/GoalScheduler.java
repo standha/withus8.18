@@ -103,7 +103,19 @@ public class GoalScheduler {
         for (int i = 1; i <= 7; i++) {
             if (exerciseService.getExercise(new RecordKey(id, today.with(DayOfWeek.of(i)))) != null) {
                 Tbl_Exercise_record exercise = exerciseService.getExercise(new RecordKey(id, today.with(DayOfWeek.of(i))));
-                int record = (exercise.getHour() * 60) + exercise.getMinute();
+                int record = 0;
+                if(exercise!= null && exercise.getStrength() != null){
+                    record += exercise.getStrength();
+                }
+                if(exercise!= null && exercise.getCycling() != null){
+                    record += exercise.getCycling();
+                }
+                if(exercise!= null && exercise.getSwimming() != null){
+                    record += exercise.getSwimming();
+                }
+                if(exercise!= null && exercise.getWalking() != null){
+                    record += exercise.getWalking();
+                }
                 if (record >= 30)
                     count++;
             }

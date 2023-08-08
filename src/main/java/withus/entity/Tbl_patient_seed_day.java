@@ -52,7 +52,7 @@ public class Tbl_patient_seed_day {
     @Column(name ="top_goal")
     private String topGoal;
 
-    @Column(name ="middle_goale")
+    @Column(name ="middle_goal")
     private String middleGoal;
 
     @Column(name ="bottom_goal")

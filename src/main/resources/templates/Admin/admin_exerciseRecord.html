@@ -30,12 +30,16 @@
             <table id="foo-table" class="table table-bordered" style="table-layout: fixed;">
                 <thead>
                 <tr>
-                    <th colspan="3" style="text-align: center; font-weight: bold;">운동</th>
+                    <th colspan="6" style="text-align: center; font-weight: bold;">운동</th>
                 </tr>
                 <tr>
                     <th style="text-align: center">주차</th>
                     <th style="text-align: center">요일</th>
-                    <th style="text-align: center">운동 시간(분)</th>
+                    <th style="text-align: center">걷기(분)</th>
+                    <th style="text-align: center">자전거 타기(분)</th>
+                    <th style="text-align: center">수영(분)</th>
+                    <th style="text-align: center">근력 운동(분)</th>
+
                 </tr>
                 </thead>
                 <tbody id="history-table-data" style="text-align: center;">
@@ -52,10 +56,11 @@
 
     var userId;
 
+
     if(weekAsc.length == 0)
     {
         var Item = "<tr>";
-        Item += "<td colspan='3' style='background: #FFFFFF'>" + "데이터 없음" + "</td>";
+        Item += "<td colspan='6' style='background: #FFFFFF'>" + "데이터 없음" + "</td>";
         Item += "</tr>";
         $('.btn__excel').hide();
         $('#history-table-data').append(Item);
@@ -66,8 +71,17 @@
         userId = weekAsc[0].pk.id;
         var weekAscCount = 0;
         var weekAvgCount = 0;
+        var sumWalkingTotal = 0;
+        var sumCyclingTotal = 0;
+        var sumSwimmingTotal = 0;
+        var sumStrengthTotal = 0;
         for(i=1; i<=24; i++)
         {
+            let sumWalking = 0;
+            let sumCycling = 0;
+            let sumSwimming = 0;
+            let sumStrength = 0;
+
             for(j=0; j<7; j++)
             {
                 if(i%2 == 0)
@@ -80,19 +94,33 @@
                     Item += "<td rowspan='10' style='vertical-align: middle'>" + i + "주차" +"</td>";
                 }
                 Item += "<td>" + weekText[j] +"</td>";
-                var day = new Date(weekAsc[weekAscCount].pk.date.substr(0, 4), weekAsc[weekAscCount].pk.date.substr(5, 2)-1, weekAsc[weekAscCount].pk.date.substr(8, 2)).getDay();
+                var day = new Date(weekAsc[weekAscCount].pk.date.substr(0, 4), parseInt(weekAsc[weekAscCount].pk.date.substr(5, 2))-1, weekAsc[weekAscCount].pk.date.substr(8, 2)).getDay();
                 var week = ['일', '월', '화', '수', '목', '금', '토'];     //날짜와 요일을 매핑하는 배열
                 var dayLabel = week[day];
                 if(weekAsc[weekAscCount].week == i && weekText[j] == dayLabel.toString())
                 {
-                    var minute = weekAsc[weekAscCount].hour * 60 + weekAsc[weekAscCount].minute;
-                    Item += "<td>" + minute +"</td>";
+                    Item += "<td>" + (weekAsc[weekAscCount].walking == null ? 0 : weekAsc[weekAscCount].walking) +"</td>";
+                    Item += "<td>" + (weekAsc[weekAscCount].cycling == null ? 0 : weekAsc[weekAscCount].cycling) +"</td>";
+                    Item += "<td>" + (weekAsc[weekAscCount].swimming == null ? 0 : weekAsc[weekAscCount].swimming) +"</td>";
+                    Item += "<td>" + (weekAsc[weekAscCount].strength == null ? 0 : weekAsc[weekAscCount].strength) +"</td>";
+
+                    sumSwimming += (weekAsc[weekAscCount].swimming == null ? 0 : weekAsc[weekAscCount].swimming);
+                    sumWalking += (weekAsc[weekAscCount].walking == null ? 0 : weekAsc[weekAscCount].walking);
+                    sumCycling += (weekAsc[weekAscCount].cycling == null ? 0 : weekAsc[weekAscCount].cycling);
+                    sumStrength += (weekAsc[weekAscCount].strength == null ? 0 : weekAsc[weekAscCount].strength);
+
                     weekAscCount++;
                     if(weekAscCount >= weekAsc.length)
                         weekAscCount--;
                 }
-                else
-                    Item += "<td>" + "" +"</td>";
+                else{
+                    Item += "<td>" + "" + "</td>";
+                    Item += "<td>" + "" + "</td>";
+                    Item += "<td>" + "" + "</td>";
+                    Item += "<td>" + "" + "</td>";
+
+                }
+
 
                 Item += "</tr>";
                 $('#history-table-data').append(Item);
@@ -107,10 +135,18 @@
                     Item += "<td>" + i + "주차 총 운동 시간" + "</td>";
                     if(weekAvg[weekAvgCount].week == i)
                     {
-                        Item += "<td>" + (weekAvg[weekAvgCount].sumHour * 60 + weekAvg[weekAvgCount].sumMinute) + "</td>";
+                        Item += "<td>" + (sumWalking == null ? 0 : sumWalking)+ "</td>";
+                        Item += "<td>" + (sumCycling == null ? 0 : sumCycling)+ "</td>";
+                        Item += "<td>" + (sumSwimming == null ? 0 : sumSwimming)+ "</td>";
+                        Item += "<td>" + (sumStrength == null ? 0 : sumStrength)+ "</td>";
                     }
-                    else
+                    else {
                         Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+
+                    }
                     Item += "</tr>";
 
                     if(i%2 == 0)
@@ -120,10 +156,17 @@
                     Item += "<td>" + i + "주차 총 운동 횟수" + "</td>";
                     if(weekAvg[weekAvgCount].week == i)
                     {
-                        Item += "<td>" + weekAvg[weekAvgCount].count + "</td>";
+                        Item += "<td>" + weekAvg[weekAvgCount].walkingCount + "</td>";
+                        Item += "<td>" + weekAvg[weekAvgCount].cyclingCount + "</td>";
+                        Item += "<td>" + weekAvg[weekAvgCount].swimmingCount + "</td>";
+                        Item += "<td>" + weekAvg[weekAvgCount].strengthCount + "</td>";
                     }
-                    else
+                    else {
                         Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                    }
                     Item += "</tr>";
 
                     if(i%2 == 0)
@@ -133,50 +176,71 @@
                     Item += "<td>" + i + "주차 평군 운동 시간" + "</td>";
                     if(weekAvg[weekAvgCount].week == i)
                     {
-                        var oneweekAvg = (weekAvg[weekAvgCount].sumHour * 60 + weekAvg[weekAvgCount].sumMinute) / weekAvg[weekAvgCount].count
-                        Item += "<td>" + oneweekAvg.toFixed(2) + "</td>";
+
+                        Item += "<td>" + (sumWalking/7)+ "</td>";
+                        Item += "<td>" + (sumCycling/7)+ "</td>";
+                        Item += "<td>" + (sumSwimming/7)+ "</td>";
+                        Item += "<td>" + (sumStrength/7)+ "</td>";
                         weekAvgCount++;
                         if(weekAvgCount >= weekAvg.length)
                             weekAvgCount--;
                     }
-                    else
+                    else{
                         Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                        Item += "<td>" + "" + "</td>";
+                    }
+
                     Item += "</tr>";
 
                     $('#history-table-data').append(Item);
                 }
 
             }
+            sumWalkingTotal += sumWalking;
+            sumCyclingTotal += sumCycling;
+            sumSwimmingTotal += sumSwimming;
+            sumStrengthTotal += sumStrength;
         }
 
         // 모든 주차 데이터
         var Item = "<tr class='allRecord'>";
         Item += "<td colspan='2'>모든 주차 총 운동 시간</td>";
-        var sumHour = 0;
-        var sumMinute = 0;
-        for(i=0; i<weekAvg.length;i++)
-        {
-            sumHour += weekAvg[i].sumHour;
-            sumMinute += weekAvg[i].sumMinute;
-        }
-        Item += "<td>" + (sumHour * 60 + sumMinute) + "</td>";
+        Item += "<td>" + sumWalkingTotal + "</td>";
+        Item += "<td>" + sumCyclingTotal + "</td>";
+        Item += "<td>" + sumSwimmingTotal + "</td>";
+        Item += "<td>" + sumStrengthTotal + "</td>";
         Item += "</tr>";
         $('#history-table-data').append(Item);
 
         var Item = "<tr class='allRecord'>";
         Item += "<td colspan='2'>모든 주차 총 운동 횟수</td>";
-        var exerciseCount = 0;
+        var walkingCountTotal = 0;
+        var cyclingCountTotal = 0;
+        var swimmingCountTotal = 0;
+        var strengthCountTotal = 0;
         for(i=0; i<weekAvg.length;i++)
         {
-            exerciseCount += weekAvg[i].count;
+            walkingCountTotal += weekAvg[i].walkingCount;
+            cyclingCountTotal += weekAvg[i].cyclingCount;
+            swimmingCountTotal += weekAvg[i].swimmingCount;
+            strengthCountTotal += weekAvg[i].strengthCount;
         }
-        Item += "<td>" + exerciseCount + "</td>";
+        Item += "<td>" + walkingCountTotal + "</td>";
+        Item += "<td>" + cyclingCountTotal + "</td>";
+        Item += "<td>" + swimmingCountTotal + "</td>";
+        Item += "<td>" + strengthCountTotal + "</td>";
+
         Item += "</tr>";
         $('#history-table-data').append(Item);
 
         var Item = "<tr class='allRecord'>";
         Item += "<td colspan='2'>모든 주차 평균 운동 시간</td>";
-        Item += "<td>" + ((sumHour * 60 + sumMinute) / exerciseCount).toFixed(2) + "</td>";
+        Item += "<td>" + sumWalkingTotal/24 + "</td>";
+        Item += "<td>" + sumCyclingTotal/24 + "</td>";
+        Item += "<td>" + sumSwimmingTotal/24 + "</td>";
+        Item += "<td>" + sumStrengthTotal/24 + "</td>";
         Item += "</tr>";
         $('#history-table-data').append(Item);
     }

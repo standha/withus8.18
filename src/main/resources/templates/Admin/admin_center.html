@@ -27,6 +27,7 @@
     .family-data {background-image: url("/images/admin/familyData.PNG"); width: 64px; height: 64px;}
     .duration-time {background-image: url("/images/admin/durationTime.png"); width: 64px; height: 64px;}
     .withusRang {background-image: url("/images/admin/withusRang.png"); width: 64px; height: 64px;}
+    .goal {background-image: url("/images/admin/goal.png"); width: 90px; height: 70px;}
 </style>
 <div th:replace="Admin/admin_nav :: navFragment"></div>
 <body>
@@ -34,6 +35,10 @@
     <header th:replace="Admin/admin_infoHeader :: headerFragment"></header>
     <div class="container" id="content">
         <ul class="main-icon2">
+            <a th:href="@{/admin_goals/{userId}(userId=${info.userId})}">
+                <span class="goal"></span>
+                <span>이주의 목표</span>
+            </a>
             <a th:href="@{/admin_pillRecord/{userId}(userId=${info.userId})}">
                 <span class="ico-drug"></span>
                 <span>복용약</span>
