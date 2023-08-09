@@ -9,7 +9,6 @@ import withus.repository.SymptomRepository;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SymptomService {
@@ -24,6 +23,12 @@ public class SymptomService {
     public List<Tbl_symptom_log> getSymptomRecord(String id, Integer todaySymptom) {
         return symptomRepository.findByPk_IdAndTodaysymptomGreaterThan(id, todaySymptom);
     }
+
+//    //증상기록 보기
+//    @Nullable
+//    public List<Tbl_symptom_log> getSymptomsee(String id, Integer todaySymptom,String text) {
+//        return symptomRepository.findByPk_idAndTodaySymptomAndText(id, todaySymptom,text);
+//    }
 
     @NonNull
     public Tbl_symptom_log upsertSymptomRecord(Tbl_symptom_log Tbl_symptom_log) {

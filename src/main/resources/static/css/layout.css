@@ -175,7 +175,11 @@ footer {position: relative;}
 .record-face4 {position: relative;}
 .record-face4:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 33px; height: 33px; background: url('../images/common/sp-icon.png') -107px -144px; background-size: 600px 450px; transform: translate(-50%, -17%);}
 .symptom-write {position: relative;}
-.symptom-write:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 70px; height: 35px; background: url('../images/common/write.jpg') -110px -100px ; background-size: contain; transform: translate(-50%, -17%);}
+.symptom-write:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 70px; height: 35px; background: url('../images/common/write.png') -115.8px -105px ; background-size: contain; transform: translate(-50%, -17%);}
+.see-more {position: relative;}
+.see-more:before {content: ''; display: block; position: absolute; top: 20%; left: 73%; width: 20px; height:10px; background: url('../images/common/plus.png') -100px -100px ; background-size: contain; transform: translate(-20%, -80%);}
+/*.record-face1, .see-more {position: relative;}*/
+/*.record-face1:before, .see-more:before {content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 33px; height: 33px; background: url('../images/common/sp-icon.png') -2px -144px; background-size: 600px 450px; transform: translate(-50%, -17%);}*/
 
 
 .record-colorbar {position: absolute; display: block; bottom: 7%; display: flex; flex-direction: column; justify-content: space-between; height: 50%; width: 100%; padding: 0 24%; border-radius: 2px;}

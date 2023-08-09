@@ -136,9 +136,32 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
 //        return pillAsc;
 //    }
 
+    public List<GoalDTO> findPatientGoal(String userId){
+        QTbl_patient_seed_day seedDay= QTbl_patient_seed_day.tbl_patient_seed_day;
+
+        List<GoalDTO> goalList = queryFactory.select(Projections.constructor(GoalDTO.class,seedDay.pk.id, seedDay.week, seedDay.topGoal, seedDay.middleGoal, seedDay.bottomGoal, seedDay.pk.date))
+                .from(seedDay)
+                .orderBy(seedDay.week.asc())
+                .orderBy(seedDay.pk.date.asc())
+                .where(seedDay.pk.id.eq(userId))
+                .fetch();
+        return goalList;
+    }
+
+    public List<GoalDTO> findCaregiverGoal(String userId){
+        QTbl_caregiver_seed_day seedDay= QTbl_caregiver_seed_day.tbl_caregiver_seed_day;
+        List<GoalDTO> goalList = queryFactory.select(Projections.constructor(GoalDTO.class,seedDay.pk.id, seedDay.week, seedDay.topGoal, seedDay.middleGoal, seedDay.bottomGoal, seedDay.pk.date))
+                .from(seedDay)
+                .orderBy(seedDay.week.asc())
+                .orderBy(seedDay.pk.date.asc())
+                .where(seedDay.pk.id.eq(userId))
+                .fetch();
+        return goalList;
+    }
+
     public List<ExerciseDTO> findExerciseAvg(String userId) {
         QTbl_Exercise_record er = QTbl_Exercise_record.tbl_Exercise_record;
-        List<ExerciseDTO> exerciseAvg = queryFactory.select(Projections.constructor(ExerciseDTO.class, er.week, er.hour.sum(), er.minute.sum(), er.week.count()))
+        List<ExerciseDTO> exerciseAvg = queryFactory.select(Projections.constructor(ExerciseDTO.class, er.week, er.walking.count(), er.cycling.count(), er.swimming.count(), er.strength.count()))
                 .from(er)
                 .groupBy(er.week)
                 .orderBy(er.week.asc())

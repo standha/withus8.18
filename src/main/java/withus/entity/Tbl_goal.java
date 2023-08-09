@@ -17,7 +17,7 @@ public class Tbl_goal {
     protected String goalId;
 
     @Column(name = "goal")
-    private Integer goal;
+    private String goal;
 
     @Column(name = "top_goals")
     private String top_goals;

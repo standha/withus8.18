@@ -1,21 +1,23 @@
 package withus.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
 import withus.dto.wwithus.*;
 import withus.entity.*;
 import withus.entity.User.Type;
-import withus.service.*;
+import withus.service.AdminService;
+import withus.service.CountService;
+import withus.service.GoalService;
+import withus.service.UserService;
 
-import java.util.ArrayList;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -134,6 +136,7 @@ public class CenterController extends BaseController {
             }
 
             if (user.getType() == Type.CAREGIVER || user.getType() == Type.PATIENT) {
+                //modelAndView.addObject("goalNow", getGoalNow(new RecordKey(user.getUserId(), LocalDate.now())));  //8월 2일 수정
                 modelAndView.addObject("goalNow", getGoalNow(getConnectId()));
                 modelAndView.addObject("level", ViewLevel(user));
                 modelAndView.addObject("user", user);
@@ -161,11 +164,18 @@ public class CenterController extends BaseController {
         return level;
     }
 
-    public String getGoalNow(String username) {
-        Integer goalCheck = goalService.getGoalId(username).getGoal();
-        String goalNow = "";
+    public String getGoalNow(String name) {
+        String goalCheck = goalService.getGoalId(name).getGoal();   //8월 2일 수
+        //Integer goalCheck = goalService.getGoalId(name).getGoal();   //8월 2일 수정
+        String goalNow = null;
+        //String goalNow = "";
+        if (goalCheck == "0"){
+            goalNow = "이번주 목표를 설정해봐요!";
+        }else{
+            goalNow=goalCheck;
+        }
 
-        switch (goalCheck) {
+        /*switch (goalCheck) {
             case 0:
                 goalNow = "이번주 목표를 설정해봐요!";
                 break;
@@ -196,7 +206,7 @@ public class CenterController extends BaseController {
             case 9:
                 goalNow = "주 3회, 최소 30분 이상 운동";
                 break;
-        }
+        }*/
 
         return goalNow;
     }

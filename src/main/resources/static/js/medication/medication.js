@@ -38,8 +38,6 @@ function medication_caregiver(form) {
 
         window.location.reload();
         return false;
-
-
     });
 
 }

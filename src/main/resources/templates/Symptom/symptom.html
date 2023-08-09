@@ -294,7 +294,7 @@
                         <span class="tit">오늘 증상에 대해 기록할 내용이 있으시면<br>메모해주세요</span>
                     </div>
                     <div class="rdo-wrap grid2 type04">
-                    <input type="text" name="text" autofocus>
+                    <input type="text" name="text" th:value="${text}" autofocus>
                     </div>
                 </div>
 
@@ -504,13 +504,12 @@
                 <div class="daily-box last">
                     <div class="daily-tit">
                         <span class="ico-daily4"></span>
-                        <span class="tit">오늘 증상에 대해 기록할 내용이 있으시면<br>메모해주세요</span>
+                        <span class="tit" >오늘 증상에 대해 기록할 내용이 있으시면<br>메모해주세요</span>
                     </div>
                     <div class="rdo-wrap grid2 type04">
-                        <input type="text" name="text" autofocus>
+                        <input type="text" name="text" th:value="${text}" autofocus>
                     </div>
                 </div>
-
 
 
             </div>

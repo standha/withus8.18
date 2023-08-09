@@ -94,6 +94,14 @@ public class AdminService {
     public List<Tbl_Exercise_record> getExercise(String userId) {
         return userRepositorySupport.findExercise(userId);
     }
+    @Nullable
+    public List<GoalDTO> getPatientGoal(String userId){
+            return userRepositorySupport.findPatientGoal(userId);
+    }
+    @Nullable
+    public List<GoalDTO> getCaregiverGoal(String userId){
+        return userRepositorySupport.findCaregiverGoal(userId);
+    }
 
     @Nullable
     public List<ExerciseDTO> getExerciseAvg(String userId) {

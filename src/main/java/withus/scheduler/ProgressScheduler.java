@@ -144,7 +144,7 @@ public class ProgressScheduler {
 
         for (Tbl_goal goal : goals) {
             logger.info("ASIS id:{}, goal:{}", goal.getGoalId(), goal.getGoal());
-            goal.setGoal(0);
+            goal.setGoal(null);
             goalService.upsertGoal(goal);
             logger.info("TOBE id:{}, goal:{}", goal.getGoalId(), goal.getGoal());
         }

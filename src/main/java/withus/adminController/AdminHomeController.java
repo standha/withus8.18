@@ -195,6 +195,30 @@ public class AdminHomeController extends withus.controller.BaseController {
 
         return modelAndView;
     }
+    @GetMapping("/admin_goals/{userId}")
+    public ModelAndView adminGoals(@PathVariable("userId") String userId){
+        User user = getUser();
+        if (user.getType() != User.Type.ADMINISTRATOR) {
+            throw new IllegalStateException(user.getUserId() + " is not Admin");
+        }
+        ModelAndView modelAndView = new ModelAndView();
+        HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
+
+        User.Type type = adminService.getTypeInfo(userId);
+        List<GoalDTO> goals;
+        if (type == User.Type.PATIENT) {
+            goals = adminService.getPatientGoal(userId);
+        } else {
+            goals = adminService.getCaregiverGoal(userId);
+        }
+        modelAndView.addObject("goals", goals);
+        modelAndView.addObject("type", type);
+        modelAndView.addObject("info", headerInfo);
+        modelAndView.setViewName("Admin/admin_goals");
+        logger.info("user try to access aadmin_goals id:{}, PatientId:{})", user.getUserId(),
+                userId);
+        return modelAndView;
+    }
 
     @GetMapping("/admin_exerciseRecord/{userId}")
     public ModelAndView adminExerciseRecord(@PathVariable("userId") String userId) {

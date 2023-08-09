@@ -3,13 +3,16 @@ package withus.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
 import withus.entity.ProgressKey;
-import withus.entity.Tbl_patient_main_button_count;
 import withus.entity.Tbl_goal;
+import withus.entity.Tbl_patient_main_button_count;
 import withus.entity.User;
 import withus.service.CountService;
 import withus.service.GoalService;
@@ -73,7 +76,6 @@ public class GoalController extends BaseController {
                 .build();
     }
 
-
     @GetMapping("/goallevel")
     public ModelAndView getGoallevel() {
         ModelAndView modelAndView = new ModelAndView("goal/goallevel");
@@ -124,16 +126,20 @@ public class GoalController extends BaseController {
         ModelAndView modelAndView = new ModelAndView("goal/goal1");
         User user = getUser();
         User.Type typeCheck = user.getType();
-        Tbl_goal goal = goalService.getGoalId(getConnectId());
-        Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
+        Tbl_goal goal = goalService.getGoalId(user.getUserId());
+
+        Tbl_patient_main_button_count count = countService.getPatientMainCount(
+                new ProgressKey(user.getUserId(), user.getWeek()));
+
+
 
         modelAndView.addObject("count", count);
-        modelAndView.addObject("goal", goal.getBottom_goals());
+        modelAndView.addObject("goalList", goal);
         modelAndView.addObject("type", typeCheck);
         modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("previousUrl", "/center");
 
-        logger.info("id:{}, goal:{}", user.getUserId(), goal.getBottom_goals());
+        logger.info("id:{}", user.getUserId());
 
         return modelAndView;
     }
@@ -142,6 +148,8 @@ public class GoalController extends BaseController {
     @ResponseBody
     public Result<Tbl_goal> getGoal1(@RequestBody Tbl_goal tbl_goal) {
         User user = getUser();
+        tbl_goal.setWeek(user.getWeek());
+        //tbl_goal.setGoalId(getConnectId());
         tbl_goal.setGoalId(user.getUserId());
         Result.Code code;
         Tbl_goal saved = null;
@@ -169,16 +177,16 @@ public class GoalController extends BaseController {
         ModelAndView modelAndView = new ModelAndView("goal/goal2");
         User user = getUser();
         User.Type typeCheck = user.getType();
-        Tbl_goal goal = goalService.getGoalId(getConnectId());
+        Tbl_goal goal = goalService.getGoalId(user.getUserId());
         Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
 
         modelAndView.addObject("count", count);
-        modelAndView.addObject("goal", goal.getMiddle_goals());
+        modelAndView.addObject("goalList", goal);
         modelAndView.addObject("type", typeCheck);
         modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("previousUrl", "/center");
 
-        logger.info("id:{}, goal:{}", user.getUserId(), goal.getMiddle_goals());
+        logger.info("id:{}", user.getUserId());
 
         return modelAndView;
     }
@@ -187,6 +195,8 @@ public class GoalController extends BaseController {
     @ResponseBody
     public Result<Tbl_goal> getGoal2(@RequestBody Tbl_goal tbl_goal) {
         User user = getUser();
+        //tbl_goal.setPk(new RecordKey(user.getUserId(), LocalDate.now()));
+        tbl_goal.setWeek(user.getWeek());
         tbl_goal.setGoalId(user.getUserId());
         Result.Code code;
         Tbl_goal saved = null;
@@ -215,16 +225,17 @@ public class GoalController extends BaseController {
         ModelAndView modelAndView = new ModelAndView("goal/goal3");
         User user = getUser();
         User.Type typeCheck = user.getType();
-        Tbl_goal goal = goalService.getGoalId(getConnectId());
+        Tbl_goal goal = goalService.getGoalId(user.getUserId());
+
         Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
 
         modelAndView.addObject("count", count);
-        modelAndView.addObject("goal", goal.getTop_goals());
+        modelAndView.addObject("goalList", goal);
         modelAndView.addObject("type", typeCheck);
         modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("previousUrl", "/center");
 
-        logger.info("id:{}, goal:{}", user.getUserId(), goal.getTop_goals());
+        logger.info("id:{}, goal:{}", user.getUserId(), goal.getBottom_goals());
 
         return modelAndView;
     }
@@ -233,6 +244,8 @@ public class GoalController extends BaseController {
     @ResponseBody
     public Result<Tbl_goal> getGoal3(@RequestBody Tbl_goal tbl_goal) {
         User user = getUser();
+        //tbl_goal.setPk(new RecordKey(user.getUserId(), LocalDate.now()));
+        tbl_goal.setWeek(user.getWeek());
         tbl_goal.setGoalId(user.getUserId());
         Result.Code code;
         Tbl_goal saved = null;
@@ -278,6 +291,8 @@ public class GoalController extends BaseController {
     @ResponseBody
     public Result<Tbl_goal> getGoal0(@RequestBody Tbl_goal tbl_goal) {
         User user = getUser();
+        //tbl_goal.setPk(new RecordKey(user.getUserId(), LocalDate.now()));
+        tbl_goal.setWeek(user.getWeek());
         tbl_goal.setGoalId(user.getUserId());
         Result.Code code;
         Tbl_goal saved = null;

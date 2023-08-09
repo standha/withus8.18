@@ -31,7 +31,6 @@ public class Tbl_symptom_log {
     private Integer cough;
 
     @Column(columnDefinition = "VARCHAR(128)", length = 128, name = "text")
-    @Getter
     private String text;
 
     @Column(name = "todaySymptom")

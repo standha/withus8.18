@@ -14,7 +14,7 @@
 </head>
 <style>
 	th {
-		text-align: center
+		text-align: center;
 	}
 </style>
 <script>
@@ -118,38 +118,38 @@
 	<table id="foo-table" class="table table-striped table-bordered" style="width:100%; text-align: center">
 		<thead>
 		<tr>
-			<th>등록 순서</th>
-			<th th:if="${type} =='PATIENT'">환자 이름</th>
-			<th th:if="${type} =='PATIENT'">환자 ID</th>
-			<th th:if="${type} =='PATIENT'">환자 PW</th>
-			<th th:if="${type} =='PATIENT'">환자 생년월일</th>
-			<th th:if="${type} =='PATIENT'">환자 성별</th>
-			<th th:if="${type} =='PATIENT'">환자 키</th>
-			<th th:if="${type} =='PATIENT'">환자 전화번호</th>
-			<th th:if="${type} =='PATIENT'">가족 이름</th>
-			<th th:if="${type} =='PATIENT'">가족 성별</th>
-			<th th:if="${type} =='PATIENT'">환자와의 관계</th>
-			<th th:if="${type} =='PATIENT'">가족 ID</th>
-			<th th:if="${type} =='PATIENT'">가족 PW</th>
-			<th th:if="${type} =='PATIENT'">가족 전화번호</th>
+			<th style="vertical-align : middle;" >등록<br>순서</th>
+			<th style="vertical-align : middle;" th:if="${type} =='PATIENT'">환자 이름</th>
+			<th style="vertical-align : middle;" th:if="${type} =='PATIENT'">환자 ID</th>
+			<th style="vertical-align : middle;" th:if="${type} =='PATIENT'">환자 PW</th>
+			<th style="vertical-align : middle;" th:if="${type} =='PATIENT'">환자<br>생년월일</th>
+			<th style="vertical-align : middle;" th:if="${type} =='PATIENT'">환자<br>성별</th>
+			<th style="vertical-align : middle;" th:if="${type} =='PATIENT'">환자 키</th>
+			<th style="vertical-align : middle;" th:if="${type} =='PATIENT'">환자 전화번호</th>
+			<th style="vertical-align : middle;" th:if="${type} =='PATIENT'">가족 이름</th>
+			<th style="vertical-align : middle;" th:if="${type} =='PATIENT'">가족<br>성별</th>
+			<th style="vertical-align : middle;" th:if="${type} =='PATIENT'">환자와의<br>관계</th>
+			<th style="vertical-align : middle;" th:if="${type} =='PATIENT'">가족 ID</th>
+			<th style="vertical-align : middle;" th:if="${type} =='PATIENT'">가족 PW</th>
+			<th style="vertical-align : middle;" th:if="${type} =='PATIENT'">가족 전화번호</th>
 
-			<th th:if="${type} =='CAREGIVER'">가족 이름</th>
-			<th th:if="${type} =='CAREGIVER'">환자와의 관계</th>
-			<th th:if="${type} =='CAREGIVER'">가족 ID</th>
-			<th th:if="${type} =='CAREGIVER'">가족 PW</th>
-			<th th:if="${type} =='CAREGIVER'">가족 생녀월일</th>
-			<th th:if="${type} =='CAREGIVER'">가족 성별</th>
-			<th th:if="${type} =='CAREGIVER'">가족 키</th>
-			<th th:if="${type} =='CAREGIVER'">가족 전화번호</th>
-			<th th:if="${type} =='CAREGIVER'">환자 이름</th>
-			<th th:if="${type} =='CAREGIVER'">환자 성별</th>
-			<th th:if="${type} =='CAREGIVER'">환자 ID</th>
-			<th th:if="${type} =='CAREGIVER'">환자 PW</th>
-			<th th:if="${type} =='CAREGIVER'">환자 전화번호</th>
+			<th style="vertical-align : middle;" th:if="${type} =='CAREGIVER'">가족 이름</th>
+			<th style="vertical-align : middle;" th:if="${type} =='CAREGIVER'">환자와의 관계</th>
+			<th style="vertical-align : middle;" th:if="${type} =='CAREGIVER'">가족 ID</th>
+			<th style="vertical-align : middle;" th:if="${type} =='CAREGIVER'">가족 PW</th>
+			<th style="vertical-align : middle;" th:if="${type} =='CAREGIVER'">가족<br>생년월일</th>
+			<th style="vertical-align : middle;" th:if="${type} =='CAREGIVER'">가족<br>성별</th>
+			<th style="vertical-align : middle;" th:if="${type} =='CAREGIVER'">가족 키</th>
+			<th style="vertical-align : middle;" th:if="${type} =='CAREGIVER'">가족<br>전화번호</th>
+			<th style="vertical-align : middle;" th:if="${type} =='CAREGIVER'">환자 이름</th>
+			<th style="vertical-align : middle;" th:if="${type} =='CAREGIVER'">환자<br>성별</th>
+			<th style="vertical-align : middle;" th:if="${type} =='CAREGIVER'">환자 ID</th>
+			<th style="vertical-align : middle;" th:if="${type} =='CAREGIVER'">환자 PW</th>
+			<th style="vertical-align : middle;" th:if="${type} =='CAREGIVER'">환자 전화번호</th>
 
-			<th >최근 접속시간</th>
-			<th>위더스랑 달성률</th>
-			<th>상세정보</th>
+			<th style="vertical-align : middle;">최근 접속시간</th>
+			<th style="vertical-align : middle;">위더스랑<br>달성률</th>
+			<th style="vertical-align : middle;">상세정보</th>
 		</tr>
 		</thead>
 		<tbody>

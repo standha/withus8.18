@@ -27,7 +27,12 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final MedicationAlarmRepository medicationAlarmRepository;
     private final OutPatientVisitAlarmRepository outPatientVisitAlarmRepository;
+
     private final GoalRepository goalRepositroy;
+//    private final GoalRepository1 goalRepositroy1;
+//    private final GoalRepository2 goalRepositroy2;
+//    private final GoalRepository3 goalRepositroy3;
+
     private final PatientMainCountRepository patientMainCountRepository;
     private final PatientSubCountRepository patientSubCountRepository;
     private final PatientDetailCountRepository patientDetailCountRepository;
@@ -42,6 +47,9 @@ public class UserService implements UserDetailsService {
                         CaregiverMainCountRepository caregiverMainCountRepository, CaregiverSubCountRepository caregiverSubCountRepository, CaregiverDetailCountRepository caregiverDetailCountRepository ) {
         this.userRepository = userRepository;
         this.goalRepositroy = goalRepositroy;
+//        this.goalRepositroy1 = goalRepositroy1;
+//        this.goalRepositroy2 = goalRepositroy2;
+//        this.goalRepositroy3 = goalRepositroy3;
         this.medicationAlarmRepository = medicationAlarmRepository;
         this.outPatientVisitAlarmRepository = outPatientVisitAlarmRepository;
         this.patientMainCountRepository = patientMainCountRepository;
@@ -99,7 +107,6 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-
     @Nullable
     public User getUserByCaregiverId(String caregiverId) {
         return userRepository.findByCaregiverUserId(caregiverId).orElse(null);
@@ -132,15 +139,13 @@ public class UserService implements UserDetailsService {
 
         Tbl_goal tbl_goal = Tbl_goal.builder()
                 .goalId(saved.getUserId())
-                .goal(0)
+                .goal(null)
                 .top_goals(null)
                 .middle_goals(null)
                 .bottom_goals(null)
                 .week(0)
                 .build();
-
         goalRepositroy.save(tbl_goal);
-
 
 
         if (checkType == "PATIENT") {
