@@ -75,6 +75,12 @@
         var sumCyclingTotal = 0;
         var sumSwimmingTotal = 0;
         var sumStrengthTotal = 0;
+
+        var walkingZero = 0;
+        var cyclingZero = 0;
+        var swimmingZero = 0;
+        var strengthZero = 0;
+
         for(i=1; i<=24; i++)
         {
             let sumWalking = 0;
@@ -82,6 +88,10 @@
             let sumSwimming = 0;
             let sumStrength = 0;
 
+            let weekWalkingZero = 0;
+            let weekSwimmingZero = 0;
+            let weekCyclingZero = 0;
+            let weekStrengthZero = 0
             for(j=0; j<7; j++)
             {
                 if(i%2 == 0)
@@ -108,7 +118,22 @@
                     sumWalking += (weekAsc[weekAscCount].walking == null ? 0 : weekAsc[weekAscCount].walking);
                     sumCycling += (weekAsc[weekAscCount].cycling == null ? 0 : weekAsc[weekAscCount].cycling);
                     sumStrength += (weekAsc[weekAscCount].strength == null ? 0 : weekAsc[weekAscCount].strength);
-
+                    if(weekAsc[weekAscCount].swimming == null || weekAsc[weekAscCount].swimming === 0 ){
+                        weekSwimmingZero += 1;
+                        swimmingZero +=1;
+                    }
+                    if(weekAsc[weekAscCount].walking == null || weekAsc[weekAscCount].walking === 0){
+                        weekWalkingZero += 1;
+                        walkingZero +=1;
+                    }
+                    if(weekAsc[weekAscCount].cycling == null || weekAsc[weekAscCount].cycling === 0){
+                        weekCyclingZero += 1;
+                        cyclingZero +=1;
+                    }
+                    if(weekAsc[weekAscCount].strength == null || weekAsc[weekAscCount].strength === 0){
+                        weekStrengthZero += 1;
+                        strengthZero +=1;
+                    }
                     weekAscCount++;
                     if(weekAscCount >= weekAsc.length)
                         weekAscCount--;
@@ -156,10 +181,10 @@
                     Item += "<td>" + i + "주차 총 운동 횟수" + "</td>";
                     if(weekAvg[weekAvgCount].week == i)
                     {
-                        Item += "<td>" + weekAvg[weekAvgCount].walkingCount + "</td>";
-                        Item += "<td>" + weekAvg[weekAvgCount].cyclingCount + "</td>";
-                        Item += "<td>" + weekAvg[weekAvgCount].swimmingCount + "</td>";
-                        Item += "<td>" + weekAvg[weekAvgCount].strengthCount + "</td>";
+                        Item += "<td>" + (weekAvg[weekAvgCount].walkingCount - weekWalkingZero) + "</td>";
+                        Item += "<td>" + (weekAvg[weekAvgCount].cyclingCount - weekCyclingZero) + "</td>";
+                        Item += "<td>" + (weekAvg[weekAvgCount].swimmingCount - weekSwimmingZero) + "</td>";
+                        Item += "<td>" + (weekAvg[weekAvgCount].strengthCount -weekStrengthZero) + "</td>";
                     }
                     else {
                         Item += "<td>" + "" + "</td>";
@@ -177,10 +202,10 @@
                     if(weekAvg[weekAvgCount].week == i)
                     {
 
-                        Item += "<td>" + (sumWalking/7)+ "</td>";
-                        Item += "<td>" + (sumCycling/7)+ "</td>";
-                        Item += "<td>" + (sumSwimming/7)+ "</td>";
-                        Item += "<td>" + (sumStrength/7)+ "</td>";
+                        Item += "<td>" + (sumWalking/7).toFixed(2)+ "</td>";
+                        Item += "<td>" + (sumCycling/7).toFixed(2)+ "</td>";
+                        Item += "<td>" + (sumSwimming/7).toFixed(2)+ "</td>";
+                        Item += "<td>" + (sumStrength/7).toFixed(2)+ "</td>";
                         weekAvgCount++;
                         if(weekAvgCount >= weekAvg.length)
                             weekAvgCount--;
@@ -227,20 +252,20 @@
             swimmingCountTotal += weekAvg[i].swimmingCount;
             strengthCountTotal += weekAvg[i].strengthCount;
         }
-        Item += "<td>" + walkingCountTotal + "</td>";
-        Item += "<td>" + cyclingCountTotal + "</td>";
-        Item += "<td>" + swimmingCountTotal + "</td>";
-        Item += "<td>" + strengthCountTotal + "</td>";
+        Item += "<td>" + (walkingCountTotal - walkingZero) + "</td>";
+        Item += "<td>" + (cyclingCountTotal - cyclingZero) + "</td>";
+        Item += "<td>" + (swimmingCountTotal -swimmingZero) + "</td>";
+        Item += "<td>" + (strengthCountTotal -strengthZero) + "</td>";
 
         Item += "</tr>";
         $('#history-table-data').append(Item);
 
         var Item = "<tr class='allRecord'>";
         Item += "<td colspan='2'>모든 주차 평균 운동 시간</td>";
-        Item += "<td>" + sumWalkingTotal/24 + "</td>";
-        Item += "<td>" + sumCyclingTotal/24 + "</td>";
-        Item += "<td>" + sumSwimmingTotal/24 + "</td>";
-        Item += "<td>" + sumStrengthTotal/24 + "</td>";
+        Item += "<td>" + (sumWalkingTotal/24).toFixed(2) + "</td>";
+        Item += "<td>" + (sumCyclingTotal/24).toFixed(2) + "</td>";
+        Item += "<td>" + (sumSwimmingTotal/24).toFixed(2) + "</td>";
+        Item += "<td>" + (sumStrengthTotal/24).toFixed(2) + "</td>";
         Item += "</tr>";
         $('#history-table-data').append(Item);
     }

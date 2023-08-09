@@ -32,7 +32,6 @@ public class Tbl_medication_alarm {
     @Column(name="morning")
     private String morning;
 
-
     @Column(name="lunch")
     private String lunch;
 

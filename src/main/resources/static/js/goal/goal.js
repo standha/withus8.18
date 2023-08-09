@@ -4,40 +4,12 @@
 //     const bottom = document.getElementById('bottom').value == null ? '' : document.getElementById('bottom').value;
 //     return {'top_goals':top, 'middle_goals':mid, 'bottom_goals':bottom}
 // }
+var goalList = {};
 
-const getAjax = function(url) {
-    return new Promise((resolve, reject) => { // 1.
-        $.ajax({
-            url: url,
-            type: "GET",
-            dataType: "json"
-            ,
-            success: (res) => {
-                resolve(res);  // 2.
-            },
-            error: (e) => {
-                reject(e);  // 3.
-            }
-        });
-    });
-}
-async function getgoalListData(){
-    const url ="/goalList";
-    try {
-        const goal = await getAjax("/goalList");
-        const goalList = goal["goalList"]
-        return {'top_goals':goalList.top_goals,'middle_goals':goalList.middle_goals,'bottom_goals':goalList.bottom_goals };
-    } catch(e) {
-        console.log(e);
-    }
 
-}
-
-async function radioClick() {
+function radioClick() {
     var checkButtons = document.getElementsByName("check_radio");
     var checked=[];
-    var goalList= await getgoalListData();
-
 
     console.log(goalList);
     function updateCheckedArray(value) {
@@ -151,13 +123,31 @@ function addSelectedGoalValue(button, goalList, checkedgoal) {
     var newValue = replaceEmptyValues(value,goalList);
     checkedgoal.push(newValue);
 }
-
-async function onFormSubmission() {
+function getAjax(){
+    var flag = true;
+    $.ajax({
+        url: "/goalList",
+        type: "GET",
+        dataType: "json",
+        async:false
+        ,
+        success: function (res) {
+            const goal = res["goalList"];
+            goalList = {'top_goals':goal.top_goals,'middle_goals':goal.middle_goals,'bottom_goals':goal.bottom_goals };
+            flag = false;
+            },
+        error: (e) => {
+            console.log(e);  // 3.
+            flag = true;
+        }
+    });
+    return flag;
+}
+function onFormSubmission() {
 
     var Item2;
     var checkedgoal = [];
-
-    var goalList=  await getgoalListData();
+    var flag = getAjax();
     console.log(goalList.top_goals)
 
     var checked = Array.from(document.querySelectorAll("input[name=check_radio]:checked"))
@@ -185,17 +175,12 @@ async function onFormSubmission() {
     if (goalList.bottom_goals !== null && goalList.bottom_goals !== "") {
         combinedGoals.push(goalList.bottom_goals);
     }
+    goalpopup(combinedGoals,flag);
 
-
-
-    // });
-
-    await goalpopup(combinedGoals);
-
-    return false;
+    return flag;
 }
 
-async function goalpopup(combinedGoals) {
+function goalpopup(combinedGoals,flag) {
     $("#layerSelectType").show();
     $("#dim").show();
     Item = "<span> 목표를 설정하셨군요.</span>";
@@ -212,53 +197,50 @@ async function goalpopup(combinedGoals) {
         console.log("Selected Value:", selectedValue);
     });
 
-    await new Promise((resolve) => {
-        $("#buttonOk").click(function () {
-            var selectedRadio = $("input[type=radio][name=selected_goal]:checked");
-            let selectedValue = selectedRadio.val();
-            console.log("Selected Value11111:", selectedValue);
+    $("#buttonOk").click(function () {
+        var selectedRadio = $("input[type=radio][name=selected_goal]:checked");
+        let selectedValue = selectedRadio.val();
+        console.log("Selected Value11111:", selectedValue);
 
-            let topGoals = combinedGoals[0] == null ? '' : combinedGoals[0];
-            let middleGoals = combinedGoals[1] == null ? '' : combinedGoals[1];
-            let bottomGoals = combinedGoals[2] == null ? '' : combinedGoals[2];
-            let goal = selectedValue == null ? "0" : selectedValue;
+        let topGoals = combinedGoals[0] == null ? '' : combinedGoals[0];
+        let middleGoals = combinedGoals[1] == null ? '' : combinedGoals[1];
+        let bottomGoals = combinedGoals[2] == null ? '' : combinedGoals[2];
+        let goal = selectedValue == null ? "0" : selectedValue;
 
-            const body = {
-                goal: goal,
-                top_goals: topGoals,
-                middle_goals: middleGoals,
-                bottom_goals: bottomGoals
-            };
+        const body = {
+            goal: goal,
+            top_goals: topGoals,
+            middle_goals: middleGoals,
+            bottom_goals: bottomGoals
+        };
 
-            const url = "/goal1";
-            const options = {
-                method: "PUT",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(body)
-            };
+        const url = "/goal1";
+        const options = {
+            method: "PUT",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        };
 
-            fetch(url, options)
-                .then(response => response.json())
-                .then(data => console.log(data));
+        fetch(url, options)
+            .then(response => response.json())
+            .then(data => console.log(data));
 
-            setTimeout(function () {
-                location.href = 'center';
-                resolve(); // Promise 완료 처리
-            }, 300);
-            return false;
-        });
-
-        $("#buttonNo").click(function () {
-            $("#layerSelectType").hide();
-            $("#dim").hide();
-            window.location.reload();
-            resolve(); // Promise 완료 처리
-            return false;
-        });
+        setTimeout(function () {
+            location.href = 'center';
+        }, 300);
+        return flag;
     });
+
+    $("#buttonNo").click(function () {
+        $("#layerSelectType").hide();
+        $("#dim").hide();
+        window.location.reload();
+        return flag;
+    });
+    return flag;
 }
 
 function createRadioButton(value) {

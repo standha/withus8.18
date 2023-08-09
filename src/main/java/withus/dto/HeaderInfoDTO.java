@@ -7,7 +7,7 @@ public class HeaderInfoDTO {
 
     private LocalDate birthdate;
 
-    private Integer goal;
+    private String goal;
 
     private String name;
 
@@ -25,7 +25,7 @@ public class HeaderInfoDTO {
         return birthdate;
     }
 
-    public Integer getGoal() {
+    public String getGoal() {
         return goal;
     }
 
@@ -33,7 +33,7 @@ public class HeaderInfoDTO {
         return name;
     }
 
-    public HeaderInfoDTO(String name, String userId, LocalDate birthdate, Integer goal, Integer level) {
+    public HeaderInfoDTO(String name, String userId, LocalDate birthdate, String goal, Integer level) {
         this.name = name;
         this.userId = userId;
         this.birthdate = birthdate;
