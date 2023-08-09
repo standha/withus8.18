@@ -127,18 +127,6 @@ span[class*="ico-"], a[class*="ico-"], div[class*="ico-"], button[class*="ico-"]
 .alert-top span.sub {font-size: 0.75rem; color: #9c9c9c;}
 
 
-
-/*
-.star-rating{width:205px;}
-.star-rating,.star-rating span {display: inline-block; height:39px; overflow:hidden; background: url(../images/common/star.png) }
-.star-rating span{background-position:left bottom; line-height: 0; vertical-align: top;}
-
-
-.star-rating0{width:205px;}
-.star-rating0,.star-rating0 span {color: #c0c0c0; display: inline-block; height:39px; overflow:hidden; background: url(../images/common/star.png) no-repeat;}
-.star-rating0 span{color: #c0c0c0; background-position:left bottom; line-height: 0; vertical-align: top;}
-*/
-
 .star-ratings {
 
     /*text-align: center;*/
@@ -471,7 +459,8 @@ select:focus {border: 1px solid #111;}
 .pop-type01 .popup-header:before {content: ''; display: block; position: absolute; left: 50%; top: -37px; width: 73px; height: 73px; background: url('../images/common/sp-icon.png') -267px -150px no-repeat; background-size: 600px 450px; transform: translateX(-50%);}
 .pop-type01 .popup-header1 {position: relative;}
 .pop-type01 .popup-header1:before {content: ''; display: block; position: absolute; left: 50%; top: -37px; width: 73px; height: 73px; background: url('../images/common/sp-icon.png') -98px -76px no-repeat; background-size: 600px 450px; transform: translateX(-50%);}
-
+.pop-type01 .popup-header2 {position: relative;}
+.pop-type01 .popup-header2:before {width: 73px; height: 73px; background: url('../images/icon-call.png') no-repeat; background-size: 600px 450px; transform: translateX(-50%);}
 
 
 .pop-type01 .popup-body {position: relative; padding: 17% 5% 12%;}

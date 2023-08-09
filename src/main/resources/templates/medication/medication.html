@@ -90,8 +90,6 @@
         </div>
     </div>
 </header>
-<!-- // header -->
-<!--content-->>
 
     <div class="container" id="content" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
         <form id="medication-form" th:action="@{/medication}" onsubmit="return onFormSubmission(this);">

@@ -92,123 +92,69 @@
 
 <div id="wrap" class="list-page">
     <header>
-        <div class="header-wrap type02" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
-            <div class="head">
-                <div onclick="helperRequest()" >
+        <div class="header-wrap type01">
+            <div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
+                <div onclick="helperRequest()">
                     <a class="btn xsm type07" href="tel:010-8454-9186" onclick="addHelper()">
-                        <span class="ico-call" ></span>
+                        <span class="ico-call"></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
                 <h2>
-                    <span>마음 관리</span>
+
+                    <span>심호흡</span>
                 </h2>
                 <div class="col text-end" style="font-size: 20px; margin-top: 0.73vh;">
-                    <a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl" style="color: #FFFFFF;"></i></a>
+                    <a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl"
+                                                                    style="color: #00b050;"></i></a>
                 </div>
             </div>
-            <div class="header-wrap type02" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
-                <div class="head">
-                    <div onclick="helperRequest()" >
-                        <a class="btn xsm type07" href="tel:010-8454-9186">
-                            <span class="ico-call" ></span>
-                            <span class="txt-rt">도우미</span>
-                        </a>
-                    </div>
-                    <h2>마음 관리
-                    </h2>
-                    <div class="col text-end" style="font-size: 20px; margin-top: 0.73vh;">
-                        <a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl" style="color: #FFFFFF;"></i></a>
-                    </div>
+            <div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
+                <div onclick="helperRequest()">
+                    <a class="btn xsm type07" href="tel:010-8454-9186">
+                        <span class="ico-call"></span>
+                        <span class="txt-rt">도우미</span>
+                    </a>
                 </div>
+                <h2>
+
+                    <span>심호흡</span>
+                </h2>
+                <div class="col text-end" style="font-size: 20px; margin-top: 0.73vh;">
+                    <a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl"
+                                                                    style="color: #00b050;"></i></a>
+                </div>
+
             </div>
         </div>
     </header>
-
-
+    <!--content-->
     <div class="container" id="content">
-        <div class="cont-wrap">
-
-            <a href="#" class="list-card" th:href="@{/meditation}">
-
-<!--                <img src="images/mindHealth/diary-icon.PNG">-->
-<!--               -->
-                <span class="btn xxlg arrow-type01">명상</span>
-            </a>
-
-            <a href="#" class="list-card" th:href="@{/physicalActivity}">
-<!--                    <img src="images/mindHealth/score-icon.PNG">-->
-                <span class="btn xxlg arrow-type01">신체활동</span>
-            </a>
-
-
-            <a href="#" class="list-card" th:href="@{/breath}">
-<!--                    <img src="images/mindHealth/control-icon.PNG">-->
-                <span class="btn xxlg arrow-type01">심호흡</span>
-            </a>
-
-            <a href="#" class="list-card" onclick="helpPopup()">
-                <!--                    <img src="images/mindHealth/control-icon.PNG">-->
-                <span class="btn xxlg arrow-type01">상담</span>
-            </a>
-            <script>
-                function helpPopup() {
-                    $("#layerSelectType").show();
-                    $("#dim").show();
-
-
-                    var Item2;
-                    Item2 = "<span> 위더스 도우미에게</br>전화를 연결할까요?</span>"
-                    $('#popUp2').append(Item2);
-
-                    $("#buttonNo").click(function () {
-                        $("#layerSelectType").hide();
-                        $("#dim").hide();
-
-                        window.location.reload();
-                        return false;
-                    });
-
-                    $("#buttonOk").click(function () {
-                        $("#layerSelectType").hide();
-                        $("#dim").hide();
-                        helperRequest();
-                        window.location.reload();
-                        return false;
-                    });
-
-
-                }
-
-
-            </script>
-
-
-        </div>
-    </div>
-
-
-    <div class="popup pop-type01" id="layerSelectType" style="display: none">
-        <div class="pop-wrap">
-            <!-- <a href="javascript:void(0);" class="pop-close"></a> -->
-            <div class="popup-header2" ></div>
-<!--            <div class="icon-call" style="background-image: url('/images/icon-call.png'); background-repeat: no-repeat;">-->
-            <div class="popup-body">
-                <!--                <div class="pop-tit" id="popUp1">-->
-                <!--                </div>-->
-                <div class="pop-cont" id="popUp2">
+        <div class="cont-wrap type01">
+            <div class ="insert-wrap">
+                <div class="tit-img">
+                    <img src="/images/deepBreath/breath-inhale.jpg" alt="Breathe Inhale">
                 </div>
-                <!--                <div class="pop-desc">목표를 변경하고 싶으면 ‘수정’ 버튼을 눌러주세요.</div>-->
-            </div>
-            <div class="btn-wrap grid2">
-                <button class="btn xlg type07" id="buttonNo">취소</button>
-                <button class="btn xlg type02" id="buttonOk">확인</button>
+                <div class="field-wrap type04">
+                    <div class="field">
+                        <div class="nott" style="padding: 50px 20px 0 20px; box-sizing:border-box;">
+                            <span style="  display: flex; font-size:18px; font-weight:bold;  align-items: center; line-height:2.1;">
+                                숨을 코로 천천히 들이마시고 입으로</br>
+                                ‘후~’하고 소리를 내면서 천천히 끝까지</br>
+                                내쉬세요. 시간이 종료될 때까지 반복하세요 </span>
+                        </div>
+                    </div>
+                    <div class="field" style="align-items: center">
+                        <div class="nott" style="padding: 50px 20px 0 20px; box-sizing:border-box;">
+                            <span id="stopwatch">01:00</span>
+                            <button class="stop" style=""id="startBtn">Start</button>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
             </div>
         </div>
     </div>
-    <div class="dim-layer" style="display: none" id="dim"></div>
-
-
-</div>
-</body>
-</html>
