@@ -80,6 +80,7 @@ span[class*="ico-"], a[class*="ico-"], div[class*="ico-"], button[class*="ico-"]
 .ico-logo2 {display: inline-block; width: 23px; height: 23px; background-position: -176px -2px;}
 .ico-arrow1 {display: inline-block; width: 18px; height: 15px; background-position: -304px -77px;}
 .ico-arrow2 {display: inline-block; width: 7px; height: 12px; background-position: -325px -77px;}
+.ico-arrow3 {display: inline-block; width: 7px; height: 12px; background-position: -325px -77px;transform: scaleX(-1);}
 .ico-join-chk {display: inline-block; width: 17px; height: 17px; background-position: -346px -2px;}
 .ico-tab-chk {display: inline-block; width: 15px; height: 15px; background-position: -365px -2px;}
 .ico-water {width: 52px; height: 70px; background-position: -400px -150px;}
@@ -226,6 +227,16 @@ span[class*="ico-"], a[class*="ico-"], div[class*="ico-"], button[class*="ico-"]
 .field-wrap.type04 .insert span.bar {line-height: 46px; font-size: 2.6rem; font-family: 'Roboto', sans-serif; }
 .field-wrap.type04 .insert span.bar {line-height: 46px; font-size: 2.6rem; font-family: 'Roboto', sans-serif; }
 
+.field-wrap.type05 {position: relative;}
+.field-wrap.type04 .field {display: flex; flex-direction: column; padding: 5% 0; border-bottom: 1px solid #ebebeb;}
+.field-wrap.type04 .field label {font-size: 20px; color: #000000; font-weight: 500; text-align: center; margin-bottom: 3%;}
+
+
+
+
+
+
+
 
 /* textarea */
 .input-textarea {width: 100%;}
@@ -346,7 +357,30 @@ select:focus {border: 1px solid #111;}
 .rdo-wrap.type02 .rdo-box.checked label {color: #fff;}
 .rdo-wrap.type02 .rdo-box.checked2 {border: solid 1px #FF0000; background-color:#FF0000; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);}
 
-/*medication*/
+
+/*mindscore*/
+
+
+.rdo-wrap.type09 {padding: 3% 3%;}
+.rdo-wrap.type09 + .rdo-wrap.type09 {margin-top: 8px;}
+.rdo-wrap.type09 .rdo-box {text-align:center;position: relative; height: 55px; line-height: 53px; border-radius: 5px; border: 1px solid #efefef; background-color: #fff; margin-bottom: 3%;}
+.rdo-wrap.type09 .rdo-box .rdo-mark {position: absolute; left: 10px; top: 50%; width: 23px; height: 23px; transform: translateY(-50%); background-position: -2px -2px;}
+.rdo-wrap.type09 .rdo-box label {font-weight: 500; font-size: 1rem; color: #222; padding-left: 30px; font-size: 1.06rem;}
+.rdo-wrap.type09 .rdo-box.checked {border: solid 1px #000000; background-color: #E6E6E6; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);}
+.rdo-wrap.type09 .rdo-box.checked .rdo-mark {background-position: -260px -115px;}
+.rdo-wrap.type09 .rdo-box.checked label {color: #222;}
+.rdo-wrap.type09 .rdo-box.checked2 {border: solid 1px #FF0000; background-color:#FF0000; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);}
+
+/*.rdo-wrap.type09 {padding:5%;}*/
+/*.rdo-wrap.type09 + .rdo-wrap.type09{margin-top:5px;}*/
+/*.rdo-wrap.type09 .rdo-box {text-align:center;position: relative; height: 55px; line-height: 53px; border-radius: 5px; border: 2px solid #efefef; background-color: #fff; margin-bottom: 3%;}*/
+/*.rdo-wrap.type09.rdo-box.label {font-weight: 500; font-size: 1rem; color: #222; padding-left: 40px; font-size: 1.06rem;}*/
+/*.rdo-wrap.type09.rdo-box.checked {border: solid 1px #000000; background-color: #19d585; }*/
+/*.rdo-wrap.type09 .rdo-box.checked .rdo-mark {background-position: -260px -115px;}*/
+/*.rdo-wrap.type09 .rdo-box.checked label {color: #000000;}*/
+
+
+    /*medication*/
 .label1 {font-weight: 500; font-size: 1rem; color: #222;}
 
 

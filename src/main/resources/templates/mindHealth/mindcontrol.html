@@ -130,25 +130,23 @@
         <div class="cont-wrap">
 
             <a href="#" class="list-card" th:href="@{/meditation}">
-
-<!--                <img src="images/mindHealth/diary-icon.PNG">-->
-<!--               -->
+                <img src="images/mindHealth/명상.png" style="width:40%;">
                 <span class="btn xxlg arrow-type01">명상</span>
             </a>
 
             <a href="#" class="list-card" th:href="@{/physicalActivity}">
-<!--                    <img src="images/mindHealth/score-icon.PNG">-->
+                    <img src="images/mindHealth/신체활동.png" style="width:40%;">
                 <span class="btn xxlg arrow-type01">신체활동</span>
             </a>
 
 
             <a href="#" class="list-card" th:href="@{/breath}">
-<!--                    <img src="images/mindHealth/control-icon.PNG">-->
+                    <img src="images/mindHealth/심호흡.png" style="width:40%;">
                 <span class="btn xxlg arrow-type01">심호흡</span>
             </a>
 
             <a href="#" class="list-card" onclick="helpPopup()">
-                <!--                    <img src="images/mindHealth/control-icon.PNG">-->
+                <img src="images/mindHealth/상담.png" style="width:40%;" >
                 <span class="btn xxlg arrow-type01">상담</span>
             </a>
             <script>
@@ -165,7 +163,7 @@
                         $("#layerSelectType").hide();
                         $("#dim").hide();
 
-                        window.location.reload();
+                        $('#popUp2').empty();
                         return false;
                     });
 
@@ -173,7 +171,7 @@
                         $("#layerSelectType").hide();
                         $("#dim").hide();
                         helperRequest();
-                        window.location.reload();
+                        $('#popUp2').empty();
                         return false;
                     });
 

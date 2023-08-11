@@ -90,7 +90,7 @@
     <input type='hidden' name="mindScoreAlarm" th:value="${detailCount.mindScoreAlarm}" style="display:none">
 </div>
 
-<div id="wrap" class="list-page">
+<div id="wrap" class="insert-page">
     <header>
         <div class="header-wrap type01">
             <div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
@@ -132,29 +132,109 @@
     <div class="container" id="content">
         <div class="cont-wrap type01">
             <div class ="insert-wrap">
-                <div class="tit-img">
-                    <img src="/images/deepBreath/breath-inhale.jpg" alt="Breathe Inhale">
+                <div class="tit-img" style="padding-left: 35px; padding-right: 20px;">
+                    <img id="breathImage" src="/images/deepBreath/breath-inhale.jpg" alt="Breathe Inhale">
                 </div>
-                <div class="field-wrap type04">
-                    <div class="field">
-                        <div class="nott" style="padding: 50px 20px 0 20px; box-sizing:border-box;">
-                            <span style="  display: flex; font-size:18px; font-weight:bold;  align-items: center; line-height:2.1;">
+                <div class="field-wrap type05" style="margin:0;">
+                    <div class="field3"style="display: flex; flex-direction: column; padding: 5px 0; ">
+                        <div class="nott" style="padding: 10px; box-sizing:border-box;">
+                            <span style="display: flex; font-size:18px; font-weight:bold;  text-align: center;align-items: center; line-height:2.1;">
                                 숨을 코로 천천히 들이마시고 입으로</br>
                                 ‘후~’하고 소리를 내면서 천천히 끝까지</br>
                                 내쉬세요. 시간이 종료될 때까지 반복하세요 </span>
                         </div>
                     </div>
                     <div class="field" style="align-items: center">
-                        <div class="nott" style="padding: 50px 20px 0 20px; box-sizing:border-box;">
-                            <span id="stopwatch">01:00</span>
-                            <button class="stop" style=""id="startBtn">Start</button>
+                        <div class="nott" style="text-align: center;font-size: 20px !important;padding:20px">
+                            <span style="font-size: 20px !important;" id="stopwatch">01:00</span>
                         </div>
+                            <button style="width: 100%; height: 50px; background-color: #0058FE; color: white; border: none; border-radius: 20px; font-weight:bold;display: flex; justify-content: center; align-items: center; font-size: 18px;" id="startStopBtn">
+                                시작
+                            </button>
                     </div>
+                </div>
 
 
+<script>
+    const stopwatchDisplay = document.getElementById('stopwatch');
+    const startStopBtn = document.getElementById('startStopBtn');
+    const breathImage = document.getElementById('breathImage');
 
+    let remainingTime = 60; // 1 minute in seconds
+    let interval;
+
+    const imageSources = [
+        '/images/deepBreath/breath-inhale.jpg',
+        '/images/deepBreath/breath-exhalation.jpg'
+    ];
+    let currentImageIndex = 0;
+
+    function startStopwatch() {
+        if (!interval) {
+            interval = setInterval(updateStopwatchAndImage, 1000);
+            startStopBtn.textContent = '일시정지';
+        } else {
+            clearInterval(interval);
+            interval = null;
+            startStopBtn.textContent = '시작';
+        }
+    }
+
+    function updateStopwatchAndImage() {
+        remainingTime--;
+        if (remainingTime >= 0) {
+            updateDisplay();
+            updateImage();
+        } else {
+            stopStopwatch();
+            goToExhalePage();
+        }
+    }
+
+    function updateImage() {
+        currentImageIndex = (currentImageIndex + 1) % imageSources.length;
+        breathImage.src = imageSources[currentImageIndex];
+    }
+
+    function updateDisplay() {
+        const minutes = String(Math.floor(remainingTime / 60)).padStart(2, '0');
+        const seconds = String(remainingTime % 60).padStart(2, '0');
+        stopwatchDisplay.textContent = `${minutes}:${seconds}`;
+    }
+
+    function stopStopwatch() {
+        clearInterval(interval);
+        interval = null;
+        remainingTime = 60;
+        updateDisplay();
+        startStopBtn.textContent = '시작';
+    }
+
+    startStopBtn.addEventListener('click', startStopwatch);
+
+    updateDisplay(); // Initialize the display
+
+    function goToAbdominalPage() {
+        window.location.href = 'breath1.html'; // "exhale.html" 페이지로 이동
+    }
+</script>
 
                 </div>
             </div>
         </div>
-    </div>
+
+
+
+    <footer>
+        <div class="footer-wrap">
+<!--            <div class="btn-wrap type02" >-->
+                <span class="btn xlg arrow-type02" style="margin-left:70%" onclick="goToAbdominalPage()">
+                    <span>다음</span>
+                    <span class="ico-arrow2"></span>
+                </span>
+<!--            </div>-->
+        </div>
+    </footer>
+</div>
+</body>
+</html>
