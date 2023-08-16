@@ -224,7 +224,7 @@ public class NoticeScheduler {
 
     //위더스랑 1~8주차 PUSH알림 cron = "0 0 8 * * MON,TUE,THU,SAT"
     @Async
-    @Scheduled(cron = "0 0 8 * * MON,TUE,THU,SAT")
+    @Scheduled(cron = "0 0 8 * * MON,WED,SAT")
     public void withusNotice1() {
         logger.info("Scheduler:{}, ThreadName:{}","Chat1-8",Thread.currentThread().getName());
         List<String> tokenList = new ArrayList<String>();
