@@ -30,15 +30,17 @@ public class GoalScheduler {
     private final MoistureNatriumService moistureNatriumService;
     private final BloodPressureService bloodPressureService;
     private final WeightService weightService;
+    private final MindHealthService mindHealthService;
     private final SymptomService symptomService;
     private final ExerciseService exerciseService;
     private final MedicationAlarmService medicationAlarmService;
     private final GoalService goalService;
     private final AndroidPushNotificationService androidPushNotificationService;
+    private final SeedService seedService;
 
     @Autowired
     public GoalScheduler(UserService userService, MoistureNatriumService moistureNatriumService, BloodPressureService bloodPressureService,
-                         WeightService weightService, SymptomService symptomService, ExerciseService exerciseService, MedicationAlarmService medicationAlarmService,
+                         WeightService weightService, SymptomService symptomService, SeedService seedService, ExerciseService exerciseService, MindHealthService mindHealthService, MedicationAlarmService medicationAlarmService,
                          GoalService goalService, AndroidPushNotificationService androidPushNotificationService) {
         this.moistureNatriumService = moistureNatriumService;
         this.userService = userService;
@@ -46,9 +48,11 @@ public class GoalScheduler {
         this.weightService = weightService;
         this.symptomService = symptomService;
         this.exerciseService = exerciseService;
+        this.mindHealthService = mindHealthService;
         this.medicationAlarmService = medicationAlarmService;
         this.goalService = goalService;
         this.androidPushNotificationService = androidPushNotificationService;
+        this.seedService = seedService;
     }
 
     public int NatriumCount(String id) {
@@ -135,8 +139,21 @@ public class GoalScheduler {
         return count;
     }
 
+    public int MindHealthCount(String id) {
+        int count = 0;
+        LocalDate today = LocalDate.now();
+        for (int i = 1; i <= 7; i++) {
+            if (mindHealthService.getmindHealth(new RecordKey(id, today.with(DayOfWeek.of(i)))) != null) {
+                Tbl_mindHealth_record record = mindHealthService.getmindHealth(new RecordKey(id, today.with(DayOfWeek.of(i))));
+                if (record != null) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
     public void GoalList() {
-        List<User> users = userService.getPatientLimit(User.Type.PATIENT, 25, 24);
+        List<User> users = userService.getAllUserLimit(25, 24);
         List<String> noneToken = new ArrayList<>();
         List<String> loseToken = new ArrayList<>();
         List<String> winToken = new ArrayList<>();
@@ -144,153 +161,159 @@ public class GoalScheduler {
             return;
         }
         for (User user : users) {
-            Tbl_goal goalUser = goalService.getGoalId(user.getUsername());
-            User guser = user.getCaregiver();
-            int success = 0;
-            List<String> userGoals = new ArrayList<>();
-            if(goalUser != null){
-                if(goalUser.getTop_goals() != null)
-                    userGoals.add(goalUser.getTop_goals());
-                if(goalUser.getMiddle_goals() != null)
-                    userGoals.add(goalUser.getMiddle_goals());
-                if(goalUser.getBottom_goals() != null)
-                    userGoals.add(goalUser.getBottom_goals());
+            if (user.getWeek() > 0) {
+                Tbl_goal goalUser = goalService.getGoalId(user.getUsername());
+                int success = 0;
+                List<String> userGoals = new ArrayList<>();
+                if (goalUser != null) {
+                    if (goalUser.getTop_goals() != null)
+                        userGoals.add(goalUser.getTop_goals());
+                    if (goalUser.getMiddle_goals() != null)
+                        userGoals.add(goalUser.getMiddle_goals());
+                    if (goalUser.getBottom_goals() != null)
+                        userGoals.add(goalUser.getBottom_goals());
+                }
+                if (userGoals.isEmpty()) {
+                    if (user.getAppToken() != null) {
+                        noneToken.add(user.getAppToken());
+                    }
+                    Integer goalCount = success;
+                    Tbl_seed_week seedWeek = Tbl_seed_week.builder()
+                            .key(new WeekUserKey(user.getUserId(), user.getWeek()))
+                            .goal(goalCount)
+                            .level(Boolean.FALSE)
+                            .build();
+                    seedService.upsertSeedWeek(seedWeek);
+                    logger.info("Not set the goal, id:{}, type:{}, level:{}, week:{} ", user.getUserId(), user.getType(), user.getLevel(), user.getWeek());
+                } else {
+                    for (String userGoal : userGoals) {
+                        switch (userGoal) {
+                            case "주 1회 이상 정해진 시간에 약 복용":
+                                if (MedicineCount(user.getUserId()) >= 1)
+                                    success += 1;
+                                break;
+                            case "주 3회 이상 정해진 시간에 약 복용":
+                                if (MedicineCount(user.getUserId()) >= 3)
+                                    success += 1;
+                                break;
+                            case "매일 정해진 시간에 약 복용":
+                                if (MedicineCount(user.getUserId()) == 7)
+                                    success += 1;
+                                break;
+                            case "주 1회 이상 혈압과 맥박 측정":
+                                if (BloodPressureCount(user.getUserId()) >= 1)
+                                    success += 1;
+                                break;
+                            case "주 3회 이상 혈압과 맥박 측정":
+                                if (BloodPressureCount(user.getUserId()) >= 3)
+                                    success += 1;
+                                break;
+                            case "매일 혈압과 맥박 측정":
+                                if (BloodPressureCount(user.getUserId()) == 7)
+                                    success += 1;
+                                break;
+                            case "주 1회 최소 30분 이상 운동":
+                                if (ExerciseCount(user.getUserId()) >= 1)
+                                    success += 1;
+                                break;
+                            case "주 3회 최소 30분 이상 운동":
+                                if (ExerciseCount(user.getUserId()) >= 3)
+                                    success += 1;
+                                break;
+                            case "매일 최소 30분 이상 운동":
+                                if (ExerciseCount(user.getUserId()) == 7)
+                                    success += 1;
+                                break;
+                            case "주 1회 이상 증상일지 기록":
+                                if (SymptomCount(user.getUserId()) >= 1)
+                                    success += 1;
+                                break;
+                            case "주 3회 이상 증상일지 기록":
+                                if (SymptomCount(user.getUserId()) >= 3)
+                                    success += 1;
+                                break;
+                            case "매일 증상일지 기록":
+                                if (SymptomCount(user.getUserId()) == 7)
+                                    success += 1;
+                                break;
+                            case "주 1회 이상 식사 시 염분/수분 측정":
+                                if (NatriumCount(user.getUserId()) >= 1)
+                                    success += 1;
+                                break;
+                            case "주 3회 이상 식사 시 염분/수분 측정":
+                                if (NatriumCount(user.getUserId()) >= 3)
+                                    success += 1;
+                                break;
+                            case "매일 식사 시 염분/수분 측정":
+                                if (NatriumCount(user.getUserId()) == 7)
+                                    success += 1;
+                                break;
+                            case "주 1회 이상 체중 측정":
+                                if (WeightCount(user.getUserId()) >= 1)
+                                    success += 1;
+                                break;
+                            case "주 3회 이상 체중 측정":
+                                if (WeightCount(user.getUserId()) >= 3)
+                                    success += 1;
+                                break;
+                            case "매일 체중 측정":
+                                if (WeightCount(user.getUserId()) == 7)
+                                    success += 1;
+                                break;
+                            case "주 1회 이상 마음 일기 기록":
+                                if (MindHealthCount(user.getUserId()) >= 1)
+                                    success += 1;
+                                break;
+                            case "주 3회 이상 마음 일기 기록":
+                                if (MindHealthCount(user.getUserId()) >= 3)
+                                    success += 1;
+                                break;
+                            case "매일 마음 일기 기록":
+                                if (MindHealthCount(user.getUserId()) == 7)
+                                    success += 1;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+                if (userGoals.size() == success && success != 0) {
+                    if (user.getAppToken() != null) {
+                        winToken.add(user.getAppToken());
+                    }
+                    Integer goalCount = success;
+                    logger.info("goalCount : {}", goalCount);
+                    Tbl_seed_week seedWeek = Tbl_seed_week.builder()
+                            .key(new WeekUserKey(user.getUserId(), user.getWeek()))
+                            .goal(goalCount)
+                            .level(Boolean.TRUE)
+                            .build();
+                    seedService.upsertSeedWeek(seedWeek);
+                    user.setLevel(user.getLevel() + 1);
+                    userService.upsertUser(user);
+                    logger.info("Achieve the goal, id:{}, type:{}, level:{}, week:{} goal:{}", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
+                } else if (success != 0) {
+                    if (user.getAppToken() != null) {
+                        loseToken.add(user.getAppToken());
+                    }
+                    Integer goalCount = success;
+                    logger.info("goalCount : {}", goalCount);
+                    Tbl_seed_week seedWeek = Tbl_seed_week.builder()
+                            .key(new WeekUserKey(user.getUserId(), user.getWeek()))
+                            .goal(goalCount)
+                            .level(Boolean.FALSE)
+                            .build();
+                    seedService.upsertSeedWeek(seedWeek);
+                    logger.info("Not Achieve the goal, id:{}, type:{}, level:{}, week:{} goal:{}", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
+                }
             }
-            if(userGoals.isEmpty()){
-                if(user.getAppToken() != null){
-                    noneToken.add(user.getAppToken());
-                }
-                if (user.getCaregiver() == null)
-                    break;
-                else {
-                    if (guser.getAppToken() != null) {
-                        noneToken.add(guser.getAppToken());
-                        logger.info("No goal set, id:{}, type:{}, patientId:{}", guser.getUserId(), guser.getType(), user.getUserId());
-                    }
-                }
-                logger.info("No goal set, id:{}, type:{}, level:{}, week:{} , goal:{}", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
-            } else {
-                for(String userGoal : userGoals){
-                    switch (userGoal){
-                        case "주 1회 이상 정해진 시간에 약 복용":
-                            if (MedicineCount(user.getUserId()) >= 1)
-                                success += 1;
-                            break;
-                        case "주 3회 이상 정해진 시간에 약 복용":
-                            if (MedicineCount(user.getUserId()) >= 3)
-                                success += 1;
-                            break;
-                        case "매일 정해진 시간에 약 복용":
-                            if (MedicineCount(user.getUserId()) == 7)
-                                success += 1;
-                            break;
-                        case "주 1회 이상 혈압과 맥박 측정":
-                            if (BloodPressureCount(user.getUserId()) >= 1)
-                                success += 1;
-                            break;
-                        case "주 3회 이상 혈압과 맥박 측정":
-                            if (BloodPressureCount(user.getUserId()) >= 3)
-                                success += 1;
-                            break;
-                        case "매일 혈압과 맥박 측정":
-                            if (BloodPressureCount(user.getUserId()) == 7)
-                                success += 1;
-                            break;
-                        case "주 1회 최소 30분 이상 운동":
-                            if(ExerciseCount(user.getUserId()) >= 1)
-                                success += 1;
-                            break;
-                        case "주 3회 최소 30분 이상 운동":
-                            if(ExerciseCount(user.getUserId()) >= 3)
-                                success += 1;
-                            break;
-                        case "매일 최소 30분 이상 운동":
-                            if(ExerciseCount(user.getUserId()) == 7)
-                                success += 1;
-                            break;
-                        case "주 1회 이상 증상일지 기록":
-                            if(SymptomCount(user.getUserId()) >= 1)
-                                success += 1;
-                            break;
-                        case "주 3회 이상 증상일지 기록":
-                            if(SymptomCount(user.getUserId()) >= 3)
-                                success += 1;
-                            break;
-                        case "매일 증상일지 기록":
-                            if(SymptomCount(user.getUserId()) == 7)
-                                success += 1;
-                            break;
-                        case "주 1회 이상 식사 시 염분/수분 측정":
-                            if(NatriumCount(user.getUserId()) >= 1)
-                                success += 1;
-                            break;
-                        case "주 3회 이상 식사 시 염분/수분 측정":
-                            if(NatriumCount(user.getUserId()) >= 3)
-                                success += 1;
-                            break;
-                        case "매일 식사 시 염분/수분 측정":
-                            if(NatriumCount(user.getUserId()) == 7)
-                                success += 1;
-                            break;
-                        case "주 1회 이상 체중 측정":
-                            if(WeightCount(user.getUserId()) >= 1)
-                                success += 1;
-                            break;
-                        case "주 3회 이상 체중 측정":
-                            if(WeightCount(user.getUserId()) >= 3)
-                                success += 1;
-                            break;
-                        case "매일 체중 측정":
-                            if(WeightCount(user.getUserId()) == 7)
-                                success += 1;
-                            break;
-                        case "주 1회 이상 마음 일기 기록":
-                            break;
-                        case "주 3회 이상 마음 일기 기록":
-                            break;
-                        case "매일 마음 일기 기록":
-                            break;
-                        default:
-                            break;
-                    }
-                }
+            try {
+                levelNotice("Achieve the goal", winToken, "이 주의 목표를 달성하셨네요!\n꽃이 어디까지 피었는지 확인해주세요~");
+                levelNotice("No goal set", noneToken, "이 주의 목표 설정이 되어있지 않아요.\n목표를 설정하여 꽃을 피워보세요.");
+                levelNotice("Not Achieve the goal", loseToken, "아쉽게도 이 주의 목표를 달성하지 못하셨네요.\n꽃이 어디까지 피었는지 확인해주세요.");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            if(userGoals.size() == success){
-                if (user.getAppToken() != null) {
-                    winToken.add(user.getAppToken());
-                }
-                if (user.getCaregiver() == null)
-                    break;
-                else {
-                    if (guser.getAppToken() != null) {
-                        winToken.add(guser.getAppToken());
-                        logger.info("Achieve the goal, id:{}, type:{}, patientId:{}", guser.getUserId(), guser.getType(), user.getUserId());
-                    }
-                }
-                user.setLevel(user.getLevel() + 1);
-                userService.upsertUser(user);
-                logger.info("Achieve the goal, id:{}, type:{}, level:{}, week:{} goal:{}", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
-            } else {
-                if (user.getAppToken() != null) {
-                    loseToken.add(user.getAppToken());
-                }
-                if (user.getCaregiver() == null)
-                    break;
-                else {
-                    if (guser.getAppToken() != null) {
-                        loseToken.add(guser.getAppToken());
-                        logger.info("Not Achieve the goal, id:{}, type:{}, patientId:{}", guser.getUserId(), guser.getType(), user.getUserId());
-                    }
-                }
-                logger.info("Not Achieve the goal, id:{}, type:{}, level:{}, week:{} goal:{}", user.getUserId(), user.getType(), user.getLevel(), user.getWeek(), goalUser.getGoal());
-            }
-        }
-        try {
-            levelNotice("Achieve the goal", winToken, "이 주의 목표를 달성하셨네요!\n꽃이 어디까지 피었는지 확인해주세요~");
-            levelNotice("No goal set", noneToken, "이 주의 목표 설정이 되어있지 않아요.\n목표를 설정하여 꽃을 피워보세요.");
-            levelNotice("Not Achieve the goal", loseToken, "아쉽게도 이 주의 목표를 달성하지 못하셨네요.\n꽃이 어디까지 피었는지 확인해주세요.");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
     public @ResponseBody

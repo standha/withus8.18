@@ -36,31 +36,31 @@ public class SeedController extends BaseController{
             }
             switch (data){
                 case "medicine":
-                    seedDay.setMedicine(true);
+                    seedDay.setMedicine(1);
                     break;
                 case "bloodPressure":
-                    seedDay.setBloodPressure(true);
+                    seedDay.setBloodPressure(1);
                     break;
                 case "exercise":
-                    seedDay.setExercise(true);
+                    seedDay.setExercise(1);
                     break;
                 case "symptom":
-                    seedDay.setSymptom(true);
+                    seedDay.setSymptom(1);
                     break;
                 case "natriumMoisture":
-                    seedDay.setNatirumMoisture(true);
+                    seedDay.setNatirumMoisture(1);
                     break;
                 case "waterIntake":
-                    seedDay.setWaterIntake(true);
+                    seedDay.setWaterIntake(1);
                     break;
                 case "weight":
-                    seedDay.setWeight(true);
+                    seedDay.setWeight(1);
                     break;
                 case "mindDiary":
-                    seedDay.setMindDiary(true);
+                    seedDay.setMindDiary(1);
                     break;
                 case "mindScore":
-                    seedDay.setMindScore(true);
+                    seedDay.setMindScore(1);
                 default:
                     return ResponseEntity.badRequest().body("Validation failed");
             }
@@ -72,25 +72,25 @@ public class SeedController extends BaseController{
             }
             switch (data){
                 case "medicine":
-                    seedDay.setMedicine(true);
+                    seedDay.setMedicine(1);
                     break;
                 case "bloodPressure":
-                    seedDay.setBloodPressure(true);
+                    seedDay.setBloodPressure(1);
                     break;
                 case "exercise":
-                    seedDay.setExercise(true);
+                    seedDay.setExercise(1);
                     break;
                 case "dietManagement":
-                    seedDay.setDietManagement(true);
+                    seedDay.setDietManagement(1);
                     break;
                 case "weight":
-                    seedDay.setWeight(true);
+                    seedDay.setWeight(1);
                     break;
                 case "mindDiary":
-                    seedDay.setMindDiary(true);
+                    seedDay.setMindDiary(1);
                     break;
                 case "mindScore":
-                    seedDay.setMindScore(true);
+                    seedDay.setMindScore(1);
                 default:
                     return ResponseEntity.badRequest().body("Validation failed");
             }

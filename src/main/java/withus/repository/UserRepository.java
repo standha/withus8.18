@@ -25,8 +25,6 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Transactional(readOnly = true)
     Optional<User> findByUserIdAndPassword(String id, String password);
 
-   /* @Transactional(readOnly = true)
-    Optional<User> findByHeight(Float height);*/
 
     @Transactional(readOnly = true)
     Optional<User> findTopByTempContact(String tempContact);
@@ -47,6 +45,10 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Transactional(readOnly = true)
     @Nullable
     List<User> findByType(User.Type type);
+
+    @Transactional(readOnly = true)
+    @Nullable
+    List<User> findByWeekLessThanAndLevelLessThan(int limit_week, int limit_level);
 
     @Transactional(readOnly = true)
     @Nullable

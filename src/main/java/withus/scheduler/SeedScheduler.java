@@ -51,15 +51,15 @@ public class SeedScheduler {
                 Tbl_patient_seed_day patientSeedDay = Tbl_patient_seed_day.builder()
                         .pk(new RecordKey(user.getUserId(), LocalDate.now()))
                         .week(user.getWeek())
-                        .medicine(false)
-                        .exercise(false)
-                        .bloodPressure(false)
-                        .natirumMoisture(false)
-                        .waterIntake(false)
-                        .symptom(false)
-                        .weight(false)
-                        .mindDiary(false)
-                        .mindScore(false)
+                        .medicine(0)
+                        .exercise(0)
+                        .bloodPressure(0)
+                        .natirumMoisture(0)
+                        .waterIntake(0)
+                        .symptom(0)
+                        .weight(0)
+                        .mindDiary(0)
+                        .mindScore(0)
                         .topGoal(goal.getTop_goals())
                         .middleGoal(goal.getMiddle_goals())
                         .bottomGoal(goal.getBottom_goals())
@@ -88,13 +88,13 @@ public class SeedScheduler {
                 Tbl_caregiver_seed_day caregiverSeedDay = Tbl_caregiver_seed_day.builder()
                         .pk(new RecordKey(user.getUserId(), LocalDate.now()))
                         .week(user.getWeek())
-                        .medicine(false)
-                        .bloodPressure(false)
-                        .exercise(false)
-                        .dietManagement(false)
-                        .weight(false)
-                        .mindDiary(false)
-                        .mindScore(false)
+                        .medicine(0)
+                        .bloodPressure(0)
+                        .exercise(0)
+                        .dietManagement(0)
+                        .weight(0)
+                        .mindDiary(0)
+                        .mindScore(0)
                         .topGoal(goal.getTop_goals())
                         .middleGoal(goal.getMiddle_goals())
                         .bottomGoal(goal.getBottom_goals())
@@ -128,7 +128,6 @@ public class SeedScheduler {
                 for (String goal : goalList){
                     switch (goal){
                         case "주 1회 이상 정해진 시간에 약 복용":
-
                             break;
                         default:
                             break;
