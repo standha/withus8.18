@@ -312,6 +312,93 @@ public class MindHealthController extends BaseController {
 
     }
 
+    @GetMapping("/breath1")
+    public ModelAndView getBreath1() {
+        ModelAndView modelAndView = new ModelAndView("mindHealth/breath1");
+        User user = getUser();
+
+        if (mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now())) == null) {
+            modelAndView.addObject("mood", null);
+            modelAndView.addObject("text", null);
+            modelAndView.addObject("score", null);
+
+        } else {
+            Tbl_mindHealth_record mood = mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now()));
+            modelAndView.addObject("mood", mood.getMood());
+            modelAndView.addObject("text", mood.getText());
+
+        }
+
+        if (user.getType() == User.Type.PATIENT) {
+            Tbl_patient_main_button_count mainCount = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            Tbl_patient_detail_button_count detailCount = countService.getPatientDetailCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            modelAndView.addObject("detailCount", detailCount);
+        }
+        if (user.getType() == User.Type.CAREGIVER) {
+            Tbl_caregiver_main_button_count mainCount = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            Tbl_caregiver_detail_button_count detailCount = countService.getCaregiverDetailCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            modelAndView.addObject("detailCount", detailCount);
+        }
+
+
+        modelAndView.addObject("type", user.getType());
+        modelAndView.addObject("week", user.getWeek());
+        modelAndView.addObject("previousUrl", "/mindHealth");
+
+        return modelAndView;
+
+
+    }
+
+    @GetMapping("/mindscore")
+    public ModelAndView getMindscore() {
+        ModelAndView modelAndView = new ModelAndView("mindHealth/mindscore");
+        User user = getUser();
+
+        if (mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now())) == null) {
+            modelAndView.addObject("mood", null);
+            modelAndView.addObject("text", null);
+            modelAndView.addObject("score", null);
+
+        } else {
+            Tbl_mindHealth_record mood = mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now()));
+            modelAndView.addObject("mood", mood.getMood());
+            modelAndView.addObject("text", mood.getText());
+            modelAndView.addObject("score", getMindscore());
+
+
+        }
+
+        if (user.getType() == User.Type.PATIENT) {
+            Tbl_patient_main_button_count mainCount = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            Tbl_patient_detail_button_count detailCount = countService.getPatientDetailCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            modelAndView.addObject("detailCount", detailCount);
+        }
+        if (user.getType() == User.Type.CAREGIVER) {
+            Tbl_caregiver_main_button_count mainCount = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            Tbl_caregiver_detail_button_count detailCount = countService.getCaregiverDetailCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            modelAndView.addObject("detailCount", detailCount);
+        }
+
+
+        modelAndView.addObject("type", user.getType());
+        modelAndView.addObject("week", user.getWeek());
+        modelAndView.addObject("previousUrl", "/mindHealth");
+
+        return modelAndView;
+
+
+    }
+
+
 }
 
 
