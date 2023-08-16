@@ -4,20 +4,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import withus.entity.*;
-import withus.repository.CaregiverSeedDayRepository;
-import withus.repository.PatientSeedDayRepository;
-import withus.repository.SeedWeekRepository;
+import withus.repository.*;
 
 @Service
 public class SeedService {
     private final PatientSeedDayRepository patientSeedDayRepository;
     private final CaregiverSeedDayRepository caregiverSeedDayRepository;
     private final SeedWeekRepository seedWeekRepository;
+    private final WwithusEntryHistoryRepository wwithusEntryHistoryRepository;
+    private final UserRepositorySupport userRepositorySupport;
     @Autowired
-    public SeedService(PatientSeedDayRepository patientSeedDayRepository, CaregiverSeedDayRepository caregiverSeedDayRepository, SeedWeekRepository seedWeekRepository) {
+    public SeedService(PatientSeedDayRepository patientSeedDayRepository, CaregiverSeedDayRepository caregiverSeedDayRepository, SeedWeekRepository seedWeekRepository,
+                       WwithusEntryHistoryRepository wwithusEntryHistoryRepository,UserRepositorySupport userRepositorySupport) {
         this.patientSeedDayRepository = patientSeedDayRepository;
         this.caregiverSeedDayRepository = caregiverSeedDayRepository;
         this.seedWeekRepository = seedWeekRepository;
+        this.wwithusEntryHistoryRepository = wwithusEntryHistoryRepository;
+        this.userRepositorySupport = userRepositorySupport;
     }
 
 
@@ -35,6 +38,14 @@ public class SeedService {
         return patientSeedDayRepository.findByPk(pk).orElse(null);
     }
 
+
+    @Nullable
+    public Integer getSeedSum(String userId) {
+        Integer week = userRepositorySupport.findWeekSeedSum(userId);
+        Integer day = userRepositorySupport.findPatientDaySeedSum(userId);
+        Long entry = wwithusEntryHistoryRepository.findWwithusSeedSum(userId);
+        return week + day + entry.intValue();
+    }
     @Nullable
     public void upsertPatientSeed(Tbl_patient_seed_day tblPatientSeedDay){
         patientSeedDayRepository.save(tblPatientSeedDay);

@@ -1,6 +1,8 @@
 package withus.repository;
 
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +17,10 @@ import withus.dto.wwithus.PatientButtonSumDTO;
 import withus.dto.wwithus.UserCountInfoDTO;
 import withus.entity.*;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
+import com.querydsl.core.types.dsl.DateTimeExpression;
 
 @Repository
 public class UserRepositorySupport extends QuerydslRepositorySupport {
@@ -285,6 +290,48 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
 
         return natriumAscList;
     }
+
+
+    public Integer findPatientDaySeedSum(String userId){
+        QTbl_patient_seed_day seedDay = QTbl_patient_seed_day.tbl_patient_seed_day;
+        Integer sumDaySeed = queryFactory.select(
+                        seedDay.bloodPressure.sum()
+                                .add(seedDay.exercise.sum())
+                                .add(seedDay.medicine.sum())
+                                .add(seedDay.natirumMoisture.sum())
+                                .add(seedDay.mindDiary.sum())
+                                .add(seedDay.mindScore.sum())
+                                .add(seedDay.symptom.sum())
+                                .add(seedDay.waterIntake.sum())
+                                .add(seedDay.weight.sum())
+                                .as("totalSum")
+                )
+                .from(seedDay)
+                .where(seedDay.pk.id.eq(userId))
+                .fetchOne();
+
+        return (sumDaySeed == null ? 0: sumDaySeed);
+    }
+
+    public Integer findWeekSeedSum(String userId){
+        QTbl_seed_week seedWeek = QTbl_seed_week.tbl_seed_week;
+        QUser user = QUser.user;
+        Integer sumGoalSeed = queryFactory.select(
+                        seedWeek.goal.sum()
+                )
+                .from(seedWeek)
+                .where(seedWeek.key.id.eq(userId))
+                .fetchOne();
+        Integer sumLevel = queryFactory.select(
+                        user.level.divide(4)
+                )
+                .from(user)
+                .where(user.userId.eq(userId))
+                .fetchOne();
+
+        return (sumGoalSeed == null ? 0: sumGoalSeed) + (sumLevel == null ? 0: sumLevel);
+    }
+
 
     public List<PatientMainButtonCountSumDTO> findPatientMainButtonCountSum(String userId) {
         QTbl_patient_main_button_count bc = QTbl_patient_main_button_count.tbl_patient_main_button_count;
