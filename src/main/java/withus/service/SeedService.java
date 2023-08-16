@@ -1,5 +1,7 @@
 package withus.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
@@ -8,6 +10,7 @@ import withus.repository.*;
 
 @Service
 public class SeedService {
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
     private final PatientSeedDayRepository patientSeedDayRepository;
     private final CaregiverSeedDayRepository caregiverSeedDayRepository;
     private final SeedWeekRepository seedWeekRepository;
@@ -40,10 +43,17 @@ public class SeedService {
 
 
     @Nullable
-    public Integer getSeedSum(String userId) {
+    public Integer getSeedSum(String userId, User.Type type) {
         Integer week = userRepositorySupport.findWeekSeedSum(userId);
-        Integer day = userRepositorySupport.findPatientDaySeedSum(userId);
+        Integer day = 0;
+        if(type == User.Type.PATIENT){
+            day = userRepositorySupport.findPatientDaySeedSum(userId);
+        } else if(type == User.Type.CAREGIVER){
+            day = userRepositorySupport.findCaregiverDaySeedSum(userId);
+        }
         Long entry = wwithusEntryHistoryRepository.findWwithusSeedSum(userId);
+
+        logger.info("seed userId : {}, week : {}, day : {}, entry : {}", userId, week,day, entry);
         return week + day + entry.intValue();
     }
     @Nullable

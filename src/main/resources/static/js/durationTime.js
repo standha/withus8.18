@@ -17,8 +17,7 @@
 function start(page) {
     let time = 0;
     function increaseTime() {
-        time += 1;
-        navigator.sendBeacon("/duration_time/"+page, JSON.stringify(time));
+        navigator.sendBeacon("/duration_time/"+page, JSON.stringify(1));
     }
 
     setInterval(increaseTime, 10000);

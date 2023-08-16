@@ -313,6 +313,24 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
         return (sumDaySeed == null ? 0: sumDaySeed);
     }
 
+    public Integer findCaregiverDaySeedSum(String userId){
+        QTbl_caregiver_seed_day seedDay = QTbl_caregiver_seed_day.tbl_caregiver_seed_day;
+        Integer sumDaySeed = queryFactory.select(
+                        seedDay.bloodPressure.sum()
+                                .add(seedDay.exercise.sum())
+                                .add(seedDay.medicine.sum())
+                                .add(seedDay.dietManagement.sum())
+                                .add(seedDay.mindDiary.sum())
+                                .add(seedDay.mindScore.sum())
+                                .add(seedDay.weight.sum())
+                                .as("totalSum")
+                )
+                .from(seedDay)
+                .where(seedDay.pk.id.eq(userId))
+                .fetchOne();
+
+        return (sumDaySeed == null ? 0: sumDaySeed);
+    }
     public Integer findWeekSeedSum(String userId){
         QTbl_seed_week seedWeek = QTbl_seed_week.tbl_seed_week;
         QUser user = QUser.user;
