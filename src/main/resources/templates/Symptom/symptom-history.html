@@ -16,6 +16,7 @@
     <script th:src="@{/js/datepicker-ko.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/help.js}"></script>
+    <script th:src="@{/js/durationTime.js}"></script>
     <script src="https://kit.fontawesome.com/e381c8a508.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -131,6 +132,7 @@
 </div>
 <!--// wrap -->
 <script th:inline="javascript">
+    start("SYMPTOM");
 
     /*<![CDATA[*/
     var symptomHistory = /*[[ ${symptom} ]]*/;

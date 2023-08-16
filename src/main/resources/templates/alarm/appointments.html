@@ -17,9 +17,11 @@
 	<script th:src="@{/js/alarm/appointments.js}"></script>
 	<script th:src="@{/js/help.js}"></script>
 	<script th:src="@{/js/input_limit.js}"></script>
+	<script th:src="@{/js/durationTime.js}"></script>
 </head>
 <body th:onload="'thCheck(' + ${time} + ')'">
 <script th:inline="javascript">
+	start("ALARM");
 	/*<![CDATA[*/
 	var appointment = /*[[ ${appointment} ]]*/;
 	/*]]*/

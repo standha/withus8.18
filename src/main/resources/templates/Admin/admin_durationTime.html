@@ -30,7 +30,7 @@
             <table id="foo-table" class="table table-bordered" style="table-layout: fixed;">
                 <thead>
                 <tr>
-                    <th colspan="16" style="vertical-align: middle; text-align: center; font-weight: bold;">항목별 사용 시간</th>
+                    <th colspan="16" style="vertical-align: middle; text-align: center; font-weight: bold;">항목별 사용 시간(분)</th>
                 </tr>
                 <tr>
                     <th style="vertical-align: middle; text-align: center">주차</th>
@@ -99,41 +99,41 @@
                         let total = durationTimeAsc[AscCount].main + durationTimeAsc[AscCount].goal + durationTimeAsc[AscCount].level + durationTimeAsc[AscCount].withusRang + durationTimeAsc[AscCount].diseaseInfo + durationTimeAsc[AscCount].medicine + durationTimeAsc[AscCount].bloodPressure +
                             durationTimeAsc[AscCount].exercise + durationTimeAsc[AscCount].symptom + durationTimeAsc[AscCount].natriumMoisture + durationTimeAsc[AscCount].weight + durationTimeAsc[AscCount].mindHealth + durationTimeAsc[AscCount].board + durationTimeAsc[AscCount].alarm;
                         totalSum += total;
-                        Item += "<td>" + durationTimeAsc[AscCount].main + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].goal + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].level + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].withusRang + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].diseaseInfo + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].medicine + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].bloodPressure + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].exercise + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].symptom + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].natriumMoisture + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].weight + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].mindHealth + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].board + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].alarm + "</td>";
-                        Item += "<td>" + total + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].main / 6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].goal /6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].level /6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].withusRang / 6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].diseaseInfo / 6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].medicine / 6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].bloodPressure / 6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].exercise / 6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].symptom / 6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].natriumMoisture / 6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].weight / 6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].mindHealth / 6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].board / 6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].alarm / 6) + "</td>";
+                        Item += "<td>" + parseInt(total / 6) + "</td>";
                         AscCount++;
                     } else {
                         let total = durationTimeAsc[AscCount].main + durationTimeAsc[AscCount].goal + durationTimeAsc[AscCount].level + durationTimeAsc[AscCount].withusRang + durationTimeAsc[AscCount].diseaseInfo + durationTimeAsc[AscCount].medicine + durationTimeAsc[AscCount].bloodPressure +
                             durationTimeAsc[AscCount].exercise + durationTimeAsc[AscCount].familyObservation + durationTimeAsc[AscCount].dietManagement + durationTimeAsc[AscCount].weight + durationTimeAsc[AscCount].mindHealth + durationTimeAsc[AscCount].board + durationTimeAsc[AscCount].alarm;
                         totalSum += total;
-                        Item += "<td>" + durationTimeAsc[AscCount].main + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].goal + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].level + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].withusRang + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].diseaseInfo + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].medicine + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].bloodPressure + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].exercise + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].familyObservation + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].dietManagement + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].weight + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].mindHealth + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].board + "</td>";
-                        Item += "<td>" + durationTimeAsc[AscCount].alarm + "</td>";
-                        Item += "<td>" + total + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].main / 6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].goal / 6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].level / 6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].withusRang / 6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].diseaseInfo / 6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].medicine / 6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].bloodPressure / 6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].exercise / 6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].familyObservation / 6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].dietManagement / 6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].weight / 6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].mindHealth / 6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].board / 6) + "</td>";
+                        Item += "<td>" + parseInt(durationTimeAsc[AscCount].alarm / 6) + "</td>";
+                        Item += "<td>" + parseInt(total / 6) + "</td>";
                         AscCount++;
                     }
 
@@ -201,26 +201,26 @@
                 sum['bloodPressure'] += durationTimeAsc[i].bloodPressure;
             }
         }
-        Item += "<td>" + sum['main'] + "</td>";
-        Item += "<td>" + sum['goal'] + "</td>";
-        Item += "<td>" + sum['level'] + "</td>";
-        Item += "<td>" + sum['withusRang'] + "</td>";
-        Item += "<td>" + sum['diseaseInfo'] + "</td>";
-        Item += "<td>" + sum['medicine'] + "</td>";
-        Item += "<td>" + sum['bloodPressure'] + "</td>";
-        Item += "<td>" + sum['exercise'] + "</td>";
+        Item += "<td>" + parseInt(sum['main'] /6) + "</td>";
+        Item += "<td>" + parseInt(sum['goal'] /6) + "</td>";
+        Item += "<td>" + parseInt(sum['level'] /6) + "</td>";
+        Item += "<td>" + parseInt(sum['withusRang'] /6) + "</td>";
+        Item += "<td>" + parseInt(sum['diseaseInfo'] /6) + "</td>";
+        Item += "<td>" + parseInt(sum['medicine'] /6) + "</td>";
+        Item += "<td>" + parseInt(sum['bloodPressure'] /6) + "</td>";
+        Item += "<td>" + parseInt(sum['exercise'] /6) + "</td>";
         if(type ==='PATIENT'){
-            Item += "<td>" + sum['symptom'] + "</td>";
-            Item += "<td>" + sum['natriumMoisture'] + "</td>";
+            Item += "<td>" + parseInt(sum['symptom']/6) + "</td>";
+            Item += "<td>" + parseInt(sum['natriumMoisture']/6) + "</td>";
         } else {
-            Item += "<td>" + sum['familyObservation'] + "</td>";
-            Item += "<td>" + sum['dietManagement'] + "</td>";
+            Item += "<td>" + parseInt(sum['familyObservation']/6) + "</td>";
+            Item += "<td>" + parseInt(sum['dietManagement']/6) + "</td>";
         }
-        Item += "<td>" + sum['weight'] + "</td>";
-        Item += "<td>" + sum['mindHealth'] + "</td>";
-        Item += "<td>" + sum['board'] + "</td>";
-        Item += "<td>" + sum['alarm'] + "</td>";
-        Item += "<td>" + totalSum + "</td>";
+        Item += "<td>" + parseInt(sum['weight']/6) + "</td>";
+        Item += "<td>" + parseInt(sum['mindHealth']/6) + "</td>";
+        Item += "<td>" + parseInt(sum['board']/6) + "</td>";
+        Item += "<td>" + parseInt(sum['alarm']/6) + "</td>";
+        Item += "<td>" + parseInt(totalSum/6) + "</td>";
 
         Item += "</tr>";
         $('#history-table-data').append(Item);

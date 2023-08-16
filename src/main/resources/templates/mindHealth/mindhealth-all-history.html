@@ -20,7 +20,7 @@
     <script th:src="@{/js/home.js}"></script>
     <script th:src="@{/js/subButton.js}"></script>
     <script th:src="@{/js/detailButton.js}"></script>
-
+    <script th:src="@{/js/durationTime.js}"></script>
     <script src="https://kit.fontawesome.com/e381c8a508.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -121,7 +121,7 @@
     </div>
 
     <script th:inline="javascript">
-
+        start("MIND_HEALTH");
         /*<![CDATA[*/
         var mindHealthHistory = /*[[ ${mindHealth} ]]*/;
         /*]]*/

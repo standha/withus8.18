@@ -1,6 +1,6 @@
 
 
-function start(page) {
+/*function start(page) {
     let time = 0;
     window.addEventListener("unload", function() {
         navigator.sendBeacon("/duration_time/"+page, JSON.stringify(time));
@@ -9,16 +9,18 @@ function start(page) {
         time += 1;
         console.log("Time:", time);
     }
-    setInterval(increaseTime, 60000);
+    setInterval(increaseTime, 10000);
 
 
-}
+}*/
 
-function startOneMin(page) {
+function start(page) {
+    let time = 0;
     function increaseTime() {
-        navigator.sendBeacon("/duration_time/"+page, JSON.stringify(1));
+        time += 1;
+        navigator.sendBeacon("/duration_time/"+page, JSON.stringify(time));
     }
 
-    setInterval(increaseTime, 60000);
+    setInterval(increaseTime, 10000);
 }
 

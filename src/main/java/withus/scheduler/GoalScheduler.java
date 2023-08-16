@@ -192,8 +192,24 @@ public class GoalScheduler {
                                 if (MedicineCount(user.getUserId()) >= 1)
                                     success += 1;
                                 break;
+                            case "주 2회 이상 정해진 시간에 약 복용":
+                                if (MedicineCount(user.getUserId()) >= 2)
+                                    success += 1;
+                                break;
                             case "주 3회 이상 정해진 시간에 약 복용":
                                 if (MedicineCount(user.getUserId()) >= 3)
+                                    success += 1;
+                                break;
+                            case "주 4회 이상 정해진 시간에 약 복용":
+                                if (MedicineCount(user.getUserId()) >= 4)
+                                    success += 1;
+                                break;
+                            case "주 5회 이상 정해진 시간에 약 복용":
+                                if (MedicineCount(user.getUserId()) >= 5)
+                                    success += 1;
+                                break;
+                            case "주 6회 이상 정해진 시간에 약 복용":
+                                if (MedicineCount(user.getUserId()) >= 6)
                                     success += 1;
                                 break;
                             case "매일 정해진 시간에 약 복용":
@@ -204,8 +220,24 @@ public class GoalScheduler {
                                 if (BloodPressureCount(user.getUserId()) >= 1)
                                     success += 1;
                                 break;
+                            case "주 2회 이상 혈압과 맥박 측정":
+                                if (BloodPressureCount(user.getUserId()) >= 2)
+                                    success += 1;
+                                break;
                             case "주 3회 이상 혈압과 맥박 측정":
                                 if (BloodPressureCount(user.getUserId()) >= 3)
+                                    success += 1;
+                                break;
+                            case "주 4회 이상 혈압과 맥박 측정":
+                                if (BloodPressureCount(user.getUserId()) >= 4)
+                                    success += 1;
+                                break;
+                            case "주 5회 이상 혈압과 맥박 측정":
+                                if (BloodPressureCount(user.getUserId()) >= 5)
+                                    success += 1;
+                                break;
+                            case "주 6회 이상 혈압과 맥박 측정":
+                                if (BloodPressureCount(user.getUserId()) >= 6)
                                     success += 1;
                                 break;
                             case "매일 혈압과 맥박 측정":
@@ -216,8 +248,24 @@ public class GoalScheduler {
                                 if (ExerciseCount(user.getUserId()) >= 1)
                                     success += 1;
                                 break;
+                            case "주 2회 최소 30분 이상 운동":
+                                if (ExerciseCount(user.getUserId()) >= 2)
+                                    success += 1;
+                                break;
                             case "주 3회 최소 30분 이상 운동":
                                 if (ExerciseCount(user.getUserId()) >= 3)
+                                    success += 1;
+                                break;
+                            case "주 4회 최소 30분 이상 운동":
+                                if (ExerciseCount(user.getUserId()) >= 4)
+                                    success += 1;
+                                break;
+                            case "주 5회 최소 30분 이상 운동":
+                                if (ExerciseCount(user.getUserId()) >= 5)
+                                    success += 1;
+                                break;
+                            case "주 6회 최소 30분 이상 운동":
+                                if (ExerciseCount(user.getUserId()) >= 6)
                                     success += 1;
                                 break;
                             case "매일 최소 30분 이상 운동":
@@ -228,8 +276,24 @@ public class GoalScheduler {
                                 if (SymptomCount(user.getUserId()) >= 1)
                                     success += 1;
                                 break;
+                            case "주 2회 이상 증상일지 기록":
+                                if (SymptomCount(user.getUserId()) >= 2)
+                                    success += 1;
+                                break;
                             case "주 3회 이상 증상일지 기록":
                                 if (SymptomCount(user.getUserId()) >= 3)
+                                    success += 1;
+                                break;
+                            case "주 4회 이상 증상일지 기록":
+                                if (SymptomCount(user.getUserId()) >= 4)
+                                    success += 1;
+                                break;
+                            case "주 5회 이상 증상일지 기록":
+                                if (SymptomCount(user.getUserId()) >= 5)
+                                    success += 1;
+                                break;
+                            case "주 6회 이상 증상일지 기록":
+                                if (SymptomCount(user.getUserId()) >= 6)
                                     success += 1;
                                 break;
                             case "매일 증상일지 기록":
@@ -240,8 +304,24 @@ public class GoalScheduler {
                                 if (NatriumCount(user.getUserId()) >= 1)
                                     success += 1;
                                 break;
+                            case "주 2회 이상 식사 시 염분/수분 측정":
+                                if (NatriumCount(user.getUserId()) >= 2)
+                                    success += 1;
+                                break;
                             case "주 3회 이상 식사 시 염분/수분 측정":
                                 if (NatriumCount(user.getUserId()) >= 3)
+                                    success += 1;
+                                break;
+                            case "주 4회 이상 식사 시 염분/수분 측정":
+                                if (NatriumCount(user.getUserId()) >= 4)
+                                    success += 1;
+                                break;
+                            case "주 5회 이상 식사 시 염분/수분 측정":
+                                if (NatriumCount(user.getUserId()) >= 5)
+                                    success += 1;
+                                break;
+                            case "주 6회 이상 식사 시 염분/수분 측정":
+                                if (NatriumCount(user.getUserId()) >= 6)
                                     success += 1;
                                 break;
                             case "매일 식사 시 염분/수분 측정":
@@ -252,8 +332,24 @@ public class GoalScheduler {
                                 if (WeightCount(user.getUserId()) >= 1)
                                     success += 1;
                                 break;
+                            case "주 2회 이상 체중 측정":
+                                if (WeightCount(user.getUserId()) >= 2)
+                                    success += 1;
+                                break;
                             case "주 3회 이상 체중 측정":
                                 if (WeightCount(user.getUserId()) >= 3)
+                                    success += 1;
+                                break;
+                            case "주 4회 이상 체중 측정":
+                                if (WeightCount(user.getUserId()) >= 4)
+                                    success += 1;
+                                break;
+                            case "주 5회 이상 체중 측정":
+                                if (WeightCount(user.getUserId()) >= 5)
+                                    success += 1;
+                                break;
+                            case "주 6회 이상 체중 측정":
+                                if (WeightCount(user.getUserId()) >= 6)
                                     success += 1;
                                 break;
                             case "매일 체중 측정":
@@ -264,8 +360,24 @@ public class GoalScheduler {
                                 if (MindHealthCount(user.getUserId()) >= 1)
                                     success += 1;
                                 break;
+                            case "주 2회 이상 마음 일기 기록":
+                                if (MindHealthCount(user.getUserId()) >= 2)
+                                    success += 1;
+                                break;
                             case "주 3회 이상 마음 일기 기록":
                                 if (MindHealthCount(user.getUserId()) >= 3)
+                                    success += 1;
+                                break;
+                            case "주 4회 이상 마음 일기 기록":
+                                if (MindHealthCount(user.getUserId()) >= 4)
+                                    success += 1;
+                                break;
+                            case "주 5회 이상 마음 일기 기록":
+                                if (MindHealthCount(user.getUserId()) >= 5)
+                                    success += 1;
+                                break;
+                            case "주 6회 이상 마음 일기 기록":
+                                if (MindHealthCount(user.getUserId()) >= 6)
                                     success += 1;
                                 break;
                             case "매일 마음 일기 기록":

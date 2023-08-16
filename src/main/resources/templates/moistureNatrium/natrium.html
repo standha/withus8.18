@@ -17,6 +17,7 @@
   <script th:src="@{/js/common.js}"></script>
   <script th:src="@{/js/moistureNatrium/natrium.js}"></script>
   <script th:src="@{/js/help.js}"></script>
+  <script th:src="@{/js/durationTime.js}"></script>
   <!-- buttonCount -->
   <script th:src="@{/js/home.js}"></script>
   <script th:src="@{/js/subButton.js}"></script>
@@ -288,6 +289,7 @@
 
 </body>
 <script th:inline="javascript">
+  start("NATRIUM_MOISTURE");
   /*<![CDATA[*/
   var morning = /*[[ ${morning} ]]*/;
   var lunch = /*[[ ${lunch} ]]*/;

@@ -13,6 +13,7 @@
     <script th:src="@{/js/help.js}"></script>
     <script th:src="@{/js/input_limit.js}"></script>
     <script th:src="@{/js/mindHealth/minddiary.js}"></script>
+    <script th:src="@{/js/durationTime.js}"></script>
     <script src="https://kit.fontawesome.com/e381c8a508.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -127,6 +128,7 @@
         </div>
 
         <script>
+            start("MIND_HEALTH");
             document.getElementById("nextButton").addEventListener("click", function () {
                 window.location.href = "minddiary1.html";
             });
