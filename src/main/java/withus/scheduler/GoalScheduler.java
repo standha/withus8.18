@@ -129,7 +129,7 @@ public class GoalScheduler {
         return count;
     }
 }
-/*
+
     //cron = "0 0 21 * * SUN"
    /* @Async
     @Scheduled(cron = "0 0 21 * * SUN")
@@ -440,7 +440,7 @@ public class GoalScheduler {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     public @ResponseBody
     ResponseEntity<String> levelNotice(String title, List<String> tokenList, String message) throws InterruptedException {

@@ -27,8 +27,14 @@ public class GoalService {
         return goalRepository.save(tbl_goal);
     }
 
+//    @NonNull
+//    public Tbl_goaloption upsertGoaloption(Tbl_goaloption tbl_goaloption) {
+//        return goalRepository.save(tbl_goaloption);
+//    }
+
     @Nullable
     public List<Tbl_goal> getAllGoal() {
         return goalRepository.findAll();
     }
+
 }

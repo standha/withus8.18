@@ -3,30 +3,27 @@ package withus.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
-import withus.entity.ProgressKey;
-import withus.entity.Tbl_goal;
-import withus.entity.Tbl_patient_main_button_count;
-import withus.entity.User;
+import withus.entity.*;
 import withus.service.CountService;
 import withus.service.GoalService;
+import withus.service.GoaloptionService;
 import withus.service.UserService;
 
 @Controller
 public class GoalController extends BaseController {
     private final GoalService goalService;
+    private final GoaloptionService goaloptionService;
     private final CountService countService;
 
     @Autowired
-    public GoalController(AuthenticationFacade authenticationFacade, UserService userService, GoalService goalService, CountService countService) {
+    public GoalController(AuthenticationFacade authenticationFacade, UserService userService, GoalService goalService, GoaloptionService goaloptionService, CountService countService) {
         super(userService, authenticationFacade);
         this.goalService = goalService;
+        this.goaloptionService = goaloptionService;
         this.countService = countService;
 
     }
@@ -268,26 +265,29 @@ public class GoalController extends BaseController {
                 .build();
     }
 
+
+
+
     @GetMapping("/goal0")
     public ModelAndView getGoal0() {
         ModelAndView modelAndView = new ModelAndView("goal/goal0");
         User user = getUser();
         User.Type typeCheck = user.getType();
-        Tbl_goal goal = goalService.getGoalId(getConnectId());
+        Tbl_goal goal = goalService.getGoalId(user.getUserId());
         Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
 
         modelAndView.addObject("count", count);
-        modelAndView.addObject("goal", goal.getGoal());
+        modelAndView.addObject("goaloption", goal);
         modelAndView.addObject("type", typeCheck);
         modelAndView.addObject("week", user.getWeek());
         modelAndView.addObject("previousUrl", "/center");
 
-        logger.info("id:{}, goal:{}", user.getUserId(), goal.getGoal());
+        logger.info("id:{}, goaloption:{}", user.getUserId(), goal.getWeek());
 
         return modelAndView;
     }
 
-    @PutMapping(value = "/goal0", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/goal0", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result<Tbl_goal> getGoal0(@RequestBody Tbl_goal tbl_goal) {
         User user = getUser();
@@ -314,5 +314,57 @@ public class GoalController extends BaseController {
                 .data(saved)
                 .build();
     }
+
+
+
+
+
+
+//    @GetMapping("/goal0")
+//    public ModelAndView getGoal0() {
+//        ModelAndView modelAndView = new ModelAndView("goal/goal0");
+//        User user = getUser();
+//        User.Type typeCheck = user.getType();
+//        Tbl_goaloption goal = goaloptionService.getGoalId(getConnectId());
+//        Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
+//
+//        modelAndView.addObject("count", count);
+//        modelAndView.addObject("goal", goal.getGoaloption());
+//        modelAndView.addObject("type", typeCheck);
+//        modelAndView.addObject("week", user.getWeek());
+//        modelAndView.addObject("previousUrl", "/center");
+//
+//        logger.info("id:{}, goaloption:{}", user.getUserId(), goal.getGoaloption());
+//
+//        return modelAndView;
+//    }
+//
+//    @PutMapping(value = "/goal0", consumes = MediaType.APPLICATION_JSON_VALUE)
+//    @ResponseBody
+//    public Result<Tbl_goaloption> getGoal0(@RequestBody Tbl_goaloption tbl_goaloption) {
+//        User user = getUser();
+//        //tbl_goal.setPk(new RecordKey(user.getUserId(), LocalDate.now()));
+//        tbl_goaloption.setWeek(user.getWeek());
+//        tbl_goaloption.setGoalId(user.getUserId());
+//        Result.Code code;
+//        Tbl_goaloption saved = null;
+//
+//        try {
+//            if (user.getType() == User.Type.PATIENT) {
+//                saved = goaloptionService.upsertGoal(tbl_goaloption);
+//                code = Result.Code.OK;
+//            } else {
+//                throw new IllegalStateException("Caregiver try input data [warn]");
+//            }
+//        } catch (Exception exception) {
+//            logger.error(exception.getLocalizedMessage(), exception);
+//            code = Result.Code.ERROR_DATABASE;
+//        }
+//
+//        return Result.<Tbl_goaloption>builder()
+//                .code(code)
+//                .data(saved)
+//                .build();
+//    }
 
 }

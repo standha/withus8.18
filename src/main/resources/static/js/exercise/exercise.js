@@ -20,7 +20,7 @@ function popup(){
 }
 
 function onFormSubmission(form) {
-    const hourValue = form.querySelector("input[name=hour]").value
+    const hourValue = form.querySelector("input[name=hour]").value;
     const minuteValue = form.querySelector("input[name=minute]").value;
     const selectElement = document.getElementById("activityDropdown");
     const exercise = selectElement ? selectElement.value: null;

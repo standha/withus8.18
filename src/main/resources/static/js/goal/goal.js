@@ -4,48 +4,20 @@
 //     const bottom = document.getElementById('bottom').value == null ? '' : document.getElementById('bottom').value;
 //     return {'top_goals':top, 'middle_goals':mid, 'bottom_goals':bottom}
 // }
+var goalList = {};
 
-const getAjax = function(url) {
-    return new Promise((resolve, reject) => { // 1.
-        $.ajax({
-            url: url,
-            type: "GET",
-            dataType: "json"
-            ,
-            success: (res) => {
-                resolve(res);  // 2.
-            },
-            error: (e) => {
-                reject(e);  // 3.
-            }
-        });
-    });
-}
-async function getgoalListData(){
-    const url ="/goalList";
-    try {
-        const goal = await getAjax("/goalList");
-        const goalList = goal["goalList"]
-        return {'top_goals':goalList.top_goals,'middle_goals':goalList.middle_goals,'bottom_goals':goalList.bottom_goals };
-    } catch(e) {
-        console.log(e);
-    }
 
-}
-
-async function radioClick() {
+function radioClick() {
     var checkButtons = document.getElementsByName("check_radio");
     var checked=[];
-    var goalList= await getgoalListData();
-
 
     console.log(goalList);
     function updateCheckedArray(value) {
 
-            if (!checked.includes(value) && checked.length < 3) {
-                checked.push(value);
-            }
+        if (!checked.includes(value) && checked.length < 3) {
+            checked.push(value);
         }
+    }
 
     function deselectButton(button) {
         button.checked = false;
@@ -53,10 +25,10 @@ async function radioClick() {
 
         var value = button.value;
 
-            var index = checked.indexOf(value);
-            if (index > -1) {
-                checked.splice(index, 1);
-            }
+        var index = checked.indexOf(value);
+        if (index > -1) {
+            checked.splice(index, 1);
+        }
     }
 
     function handleButtonClick() {
@@ -68,7 +40,7 @@ async function radioClick() {
         var buttons = document.querySelectorAll(".rdo-box.checked");
         buttons.forEach(function(button) {
             var value0 = button.querySelector('input[name="check_radio"]').value;
-           // var category0 = button.querySelector('input[name="check_radio"]').getAttribute("data-category");;
+            // var category0 = button.querySelector('input[name="check_radio"]').getAttribute("data-category");;
             if (button.checked) {
                 updateCheckedArray(value0);
             }
@@ -112,15 +84,15 @@ async function radioClick() {
         console.log("Selected Goals:", checked);
 
 
-    for(var i=0;i<checked.length;i++){
-        if (goalList.top_goals==null){
-            goalList.top_goals=checked;
-        }else if(goalList.middle_goals=null){
-            goalList.top_goals=checked;
-        }else if(goalList.bottom_goals=null){
-            goalList.bottom_goals=checked;
+        for(var i=0;i<checked.length;i++){
+            if (goalList.top_goals==null){
+                goalList.top_goals=checked;
+            }else if(goalList.middle_goals=null){
+                goalList.top_goals=checked;
+            }else if(goalList.bottom_goals=null){
+                goalList.bottom_goals=checked;
+            }
         }
-    }
 
 
     }
@@ -151,14 +123,225 @@ function addSelectedGoalValue(button, goalList, checkedgoal) {
     var newValue = replaceEmptyValues(value,goalList);
     checkedgoal.push(newValue);
 }
+function getAjax(){
+    var flag = true;
+    $.ajax({
+        url: "/goalList",
+        type: "GET",
+        dataType: "json",
+        async:false
+        ,
+        success: function (res) {
+            const goal = res["goalList"];
+            goalList = {'top_goals':goal.top_goals,'middle_goals':goal.middle_goals,'bottom_goals':goal.bottom_goals };
+            flag = false;
+        },
+        error: (e) => {
+            console.log(e);  // 3.
+            flag = true;
+        }
+    });
+    return flag;
+}
 
-async function onFormSubmission() {
+
+function onFormSubmission() {
 
     var Item2;
     var checkedgoal = [];
-
-    var goalList=  await getgoalListData();
+    goalList ={};
+    var flag = getAjax();
     console.log(goalList.top_goals)
+
+
+
+    let selectgoalElement = document.getElementById("goalDropdown");
+    let goaloption = selectgoalElement.value == null ? null : selectgoalElement.value;
+    let selectweekElement = document.getElementById("weekDropdown");
+    let goalweek = selectweekElement.value == null ? null : selectweekElement.value;
+
+    let goal=0;
+
+    if(isEmpty(goaloption)==true) {
+        alert("목표 항목을 입력해 주세요.");
+    }
+    else if(isEmpty(goalweek)==true)
+    {
+        alert("기록을 입력해 주세요.");
+    }
+    else {
+        switch (goaloption) {
+            case "복약":
+                goaloption = "복약";
+                console.log("복약 선택");
+                goal+=1;
+                break;
+            case "혈압/맥박":
+                goaloption = "혈압/맥박";
+                console.log("혈압/맥박 선택");
+                goal+=1;
+                break;
+            case "운동":
+                goaloption = "운동";
+                console.log("운동 선택");
+                goal+=1;
+                break;
+            case "증상일지":
+                goaloption = "증상일지";
+                console.log("증상일지 선택");
+                goal+=1;
+                break;
+            case "염분/수분" :
+                goaloption = "염분/수분";
+                console.log("염분/수분 해제");
+                goal+=1;
+                break;
+            case "수분":
+                goaloption = "수분";
+                console.log("수분 선택");
+                goal+=1;
+                break;
+            case "체중":
+                goaloption = "체중";
+                console.log("체중 선택");
+                goal+=1;
+                break;
+            case "마음일기":
+                goaloption = "마음일기";
+                console.log("마음일기 선택");
+                goal+=1;
+                break;
+            case "none" :
+                //alert("목표종류를 선택해주세요. ");
+                console.log("선택 해제");
+                break;
+
+        };
+        console.log(goaloption);
+
+        switch (goalweek) {
+            case "1회 이상":
+                goalweek = "1회 이상";
+                console.log("1회 이상 선택");
+                break;
+            case "2회 이상":
+                goalweek = "1회 이상";
+                console.log("1회 이상 선택");
+                break;
+            case "3회 이상":
+                goalweek = "1회 이상";
+                console.log("1회 이상 선택");
+                break;
+            case "4회 이상":
+                goalweek = "1회 이상";
+                console.log("1회 이상 선택");
+                break;
+            case "5회 이상" :
+                goalweek = "1회 이상";
+                console.log("1회 이상 해제");
+                break;
+            case "6회 이상":
+                goalweek = "1회 이상";
+                console.log("1회 이상 선택");
+                break;
+            case "매일":
+                goalweek = "매일";
+                console.log("매일 선택");
+                break;
+
+            case "none" :
+                //alert("기록을 선택해주세요. ");
+                console.log("선택 해제");
+                break;
+
+        };
+
+        console.log(goalweek);
+
+
+        // document.getElementById("goalDropdown").addEventListener("change", function() {
+        //     goaloption = this.value;
+        //     //updateSelectedOptions();
+        // });
+        //
+        // document.getElementById("weekDropdown").addEventListener("change", function() {
+        //     goalweek = this.value;
+        //     updateSelectedOptions();
+        // });
+        //
+        // function updateSelectedOptions() {
+        //     const selectedGoalElement = document.getElementById("selectedGoaloption");
+        //     const selectedWeekElement = document.getElementById("selectedWeekoption");
+        //
+        //     if (goaloption !== "none" && goalweek !== "none") {
+        //         selectedGoalElement.textContent = goaloption;
+        //         selectedWeekElement.textContent = goalweek;
+        //         selectedGoalElement.classList.add("highlighted-text");
+        //         selectedWeekElement.classList.add("highlighted-text");
+        //
+        //         const htmlContent = document.getElementById("htmlContent");
+        //         htmlContent.textContent = "을(를) 주 ";
+        //         htmlContent.classList.add("goaltext");
+        //
+        //         const htmlContent1 = document.getElementById("htmlContent1");
+        //         htmlContent1.textContent = " 기록한다";
+        //         htmlContent1.classList.add("goaltext");
+        //
+        //         // 새로운 표시 요소 생성 및 추가
+        //         const newSelectedOption = document.createElement("div");
+        //         newSelectedOption.textContent = `${goaloption}을(를) 주 ${goalweek} 기록한다`;
+        //         newSelectedOption.classList.add("selected-option");
+        //         document.getElementById("selectedOptionsContainer").appendChild(newSelectedOption);
+        //
+        //         goal++;
+        //
+        //         if (goal > 3) {
+        //             alert("목표 설정은 최대 3개까지 가능합니다.");
+        //         }
+        //     }
+        // }
+
+
+
+
+        //
+
+        if(goaloption!="none"||goalweek!="none"){
+            if(goal<=3){
+                // const selectedGoal = document.getElementById("selectedGoal");
+                // selectedGoal.classList.add("goaloptionpop");
+
+                const selectedGoalElement = document.getElementById("selectedGoaloption");
+                selectedGoalElement.textContent = goaloption;
+                selectedGoalElement.classList.add("highlighted-text"); // 클래스 추가
+
+                const selectedWeekElement = document.getElementById("selectedWeekoption");
+                selectedWeekElement.textContent = goalweek;
+                selectedWeekElement.classList.add("highlighted-text"); // 클래스 추가
+
+                // HTML에 적은 내용을 업데이트합니다.
+                const htmlContent = document.getElementById("htmlContent");
+                htmlContent.textContent = "을(를) 주 ";
+                htmlContent.classList.add("goaltext"); // 클래스 추가
+
+                const htmlContent1 = document.getElementById("htmlContent1");
+                htmlContent1.textContent = " 기록한다";
+                htmlContent1.classList.add("goaltext"); // 클래스 추가
+
+                // 새로운 표시 요소 생성 및 추가
+                const newSelectedOption = document.createElement("div");
+                newSelectedOption.textContent = `${goaloption}을(를) 주 ${goalweek} 기록한다`;
+                newSelectedOption.classList.add("selected-option");
+                document.getElementById("selectedOptionsContainer").appendChild(newSelectedOption);
+
+            }else {
+                alert("목표 설정은 최대 3개까지 가능합니다.");
+            }
+
+        }
+
+
+
 
     var checked = Array.from(document.querySelectorAll("input[name=check_radio]:checked"))
         .map((button) => button.value);
@@ -172,8 +355,6 @@ async function onFormSubmission() {
 
     // 합쳐진 값을 보여주기 위한 배열
     var combinedGoals = [];
-    combinedGoals.push(...checkedgoal);
-
 
     // 기존에 선택한 값들을 추가
     if (goalList.top_goals !== null && goalList.top_goals !== "") {
@@ -186,20 +367,74 @@ async function onFormSubmission() {
         combinedGoals.push(goalList.bottom_goals);
     }
 
+    console.log(combinedGoals);
+   // combinedGoals.push(...checkedgoal);
+
+    // 추가된 부분: 버튼의 상태 변경 시 combinedGoals 업데이트
+    var selectedButtons = document.querySelectorAll(".rdo-box");
+    selectedButtons.forEach(function (button) {
+        var input = button.querySelector('input[name="check_radio"]');
+        var value = input.value;
+
+        input.addEventListener("change", function () {
+            if (!this.checked && combinedGoals.includes(value)) {
+                var index = combinedGoals.indexOf(value);
+                if (index > -1) {
+                    combinedGoals.splice(index, 1);
+                    // 여기에서도 goalpopup을 호출하여 변경된 combinedGoals를 업데이트할 수 있음
+                    //  goalpopup(combinedGoals, flag);
+                    console.log(combinedGoals);
+                }
+            } else if (this.checked && !combinedGoals.includes(value)) {
+                combinedGoals.push(value);
+                console.log(combinedGoals);
+                // goalpopup(combinedGoals, flag);
+            }
+        });
+    });
 
 
+    // 새롭게 선택된 값을 중복 없이 추가
+    for (var i = 0; i < checkedgoal.length; i++) {
+        if (!combinedGoals.includes(checkedgoal[i])) {
+            combinedGoals.push(checkedgoal[i]);
+        }
+    }
+
+
+    // 중복 제거
+    combinedGoals = [...new Set(combinedGoals)];
+
+
+
+
+    // // 출력 시에 checked CSS가 해제된 값이 combinedGoals 배열에 있다면 제거
+    // var selectedButtons = document.querySelectorAll(".rdo-box");
+    // selectedButtons.forEach(function (button) {
+    //     var value = button.querySelector('input[name="check_radio"]').value;
+    //     if (!button.checked && combinedGoals.includes(value)) {
+    //         var index = combinedGoals.indexOf(value);
+    //         if (index > -1) {
+    //             combinedGoals.splice(index, 1);
+    //         }
+    //     }
     // });
 
-    await goalpopup(combinedGoals);
+    goalpopup(combinedGoals,flag);
 
-    return false;
+    }
+
+    return flag;
 }
 
-async function goalpopup(combinedGoals) {
+function goalpopup(combinedGoals,flag) {
+
+
     $("#layerSelectType").show();
     $("#dim").show();
-    Item = "<span> 목표를 설정하셨군요.</span>";
+    Item = "<span> 목표를 설정하셨군요!</span>";
     $('#popUp1').append(Item);
+
 
     for (var i = 0; i < combinedGoals.length; i++) {
         var Item2 = createRadioButton(combinedGoals[i]);
@@ -212,59 +447,85 @@ async function goalpopup(combinedGoals) {
         console.log("Selected Value:", selectedValue);
     });
 
-    await new Promise((resolve) => {
-        $("#buttonOk").click(function () {
-            var selectedRadio = $("input[type=radio][name=selected_goal]:checked");
-            let selectedValue = selectedRadio.val();
-            console.log("Selected Value11111:", selectedValue);
 
-            let topGoals = combinedGoals[0] == null ? '' : combinedGoals[0];
-            let middleGoals = combinedGoals[1] == null ? '' : combinedGoals[1];
-            let bottomGoals = combinedGoals[2] == null ? '' : combinedGoals[2];
-            let goal = selectedValue == null ? "0" : selectedValue;
 
-            const body = {
-                goal: goal,
-                top_goals: topGoals,
-                middle_goals: middleGoals,
-                bottom_goals: bottomGoals
-            };
+    // // 추가된 부분: 버튼의 상태 변경 시 combinedGoals 업데이트
+    // var selectedButtons = document.querySelectorAll(".rdo-box");
+    // selectedButtons.forEach(function (button) {
+    //     var input = button.querySelector('input[name="check_radio"]');
+    //     var value = input.value;
+    //
+    //     input.addEventListener("change", function () {
+    //         if (!this.checked && combinedGoals.includes(value)) {
+    //             var index = combinedGoals.indexOf(value);
+    //             if (index > -1) {
+    //                 combinedGoals.splice(index, 1);
+    //                 // 여기에서도 goalpopup을 호출하여 변경된 combinedGoals를 업데이트할 수 있음
+    //               //  goalpopup(combinedGoals, flag);
+    //             }
+    //         } else if (this.checked && !combinedGoals.includes(value)) {
+    //             combinedGoals.push(value);
+    //            // goalpopup(combinedGoals, flag);
+    //         }
+    //     });
+    // });
+    //
 
-            const url = "/goal1";
-            const options = {
-                method: "PUT",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(body)
-            };
+    $("#buttonOk").click(function () {
+        var selectedRadio = $("input[type=radio][name=selected_goal]:checked");
+        let selectedValue = selectedRadio.val();
+        console.log("Selected Value11111:", selectedValue);
 
-            fetch(url, options)
-                .then(response => response.json())
-                .then(data => console.log(data));
+        let topGoals = combinedGoals[0] == null ? '' : combinedGoals[0];
+        let middleGoals = combinedGoals[1] == null ? '' : combinedGoals[1];
+        let bottomGoals = combinedGoals[2] == null ? '' : combinedGoals[2];
+        let goal = selectedValue == null ? "이번주 목표를 설정해봐요!" : selectedValue;
 
-            setTimeout(function () {
-                location.href = 'center';
-                resolve(); // Promise 완료 처리
-            }, 300);
-            return false;
-        });
+        const body = {
+            goal: goal,
+            top_goals: topGoals,
+            middle_goals: middleGoals,
+            bottom_goals: bottomGoals,
+        };
 
-        $("#buttonNo").click(function () {
-            $("#layerSelectType").hide();
-            $("#dim").hide();
-            window.location.reload();
-            resolve(); // Promise 완료 처리
-            return false;
-        });
+        const url = "/goal1";
+        const options = {
+            method: "PUT",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        };
+
+        fetch(url, options)
+            .then(response => response.json())
+            .then(data => console.log(data));
+
+        setTimeout(function () {
+            location.href = 'center';
+        }, 300);
+        return flag;
     });
+
+    $("#buttonNo").click(function () {
+        $("#layerSelectType").hide();
+        $("#dim").hide();
+        window.location.reload();
+        return flag;
+    });
+    return flag;
 }
 
 function createRadioButton(value) {
-    var radioButton = '<label><input type="radio" name="selected_goal"  value="' + value + '"> ' + value + '</label><br>';
-    return radioButton;
+    return "<label><span class=\"rdo-mark\"></span> <input type=\"radio\" name=\"selected_goal\"  value=\"" + (value) + "\"> " + (value) + "</label><br>";
 }
 
-// 처음 페이지 로딩 시 라디오 버튼 클릭 이벤트 등록
-radioClick();
+
+function isEmpty(value) {
+    if (value =="none") {
+        return true;
+    } else {
+        return false;
+    }
+}
