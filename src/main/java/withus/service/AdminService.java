@@ -65,6 +65,7 @@ public class AdminService {
 //        return userRepositorySupport.findPillAsc(userId);
 //    }
 
+
     @Nullable
     public List<HelpRequestDTO> getHelpRequestAsc() {
         return userRepositorySupport.findHelpRequestAsc();
@@ -79,7 +80,8 @@ public class AdminService {
     public List<CaregiverHelpRequestDTO> getCaregiverRequest() {
         return userRepositorySupport.findCaregiverHelpRequest();
     }
-
+    @Nullable
+    public List<Tbl_mindHealth_record> getMindHealth(String userId){return userRepositorySupport.findMindHealth(userId);}
     @Nullable
     public List<Tbl_symptom_log> getSymptom(String userId) {
         return userRepositorySupport.findSymptom(userId);

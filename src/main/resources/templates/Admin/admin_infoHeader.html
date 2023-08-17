@@ -125,38 +125,12 @@
     levelItem += "단계" + "</p>";
     $('#patient_level').append(levelItem);
 
-    switch (goalCheck) {
-        case 0:
-            goalNow = "미설정";
-            break;
-        case 1:
-            goalNow = "매일 정해진 시간 약 복용";
-            break;
-        case 2:
-            goalNow = "매일 혈압과 맥박 측정";
-            break;
-        case 3:
-            goalNow = "매일 체중 측정";
-            break;
-        case 4:
-            goalNow = "주 3회 이상 증상일지 기록";
-            break;
-        case 5:
-            goalNow = "매일 증상일지 기록";
-            break;
-        case 6:
-            goalNow = "주 3회 이상 식사 시 염분 측정";
-            break;
-        case 7:
-            goalNow = "매일 식사 시 염분 측정";
-            break;
-        case 8:
-            goalNow = "주 1회, 최소 30분 이상 운동";
-            break;
-        case 9:
-            goalNow = "주 3회, 최소 30분 이상 운동";
-            break;
+    if(goalCheck === "이번주 목표를 설정해봐요!" || goalCheck === null){
+        goalNow = "미설정";
+    } else {
+        goalNow = goalCheck;
     }
+
 
     var Item = "<p style=\"text-align: center;\">" + goalNow + "</p>";
     $('#patient_goal').append(Item);

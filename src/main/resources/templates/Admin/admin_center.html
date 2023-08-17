@@ -19,8 +19,8 @@
 
 </head>
 <style>
-    .main-icon2 {display: flex; flex-wrap: wrap; justify-content: space-between; margin: 60px 8% 20px;}
-    .main-icon2 a {display: flex; flex-direction: column; justify-content: space-between; align-items: center; width: 14.66%; padding: 8% 0; margin-bottom: 15px; border-radius: 15px; box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.04); border: solid 1px #eff0f0; background-color: #ffffff;}
+    .main-icon2 {display: flex; flex-wrap: wrap; justify-content: flex-start; margin: 60px 8% 20px;}
+    .main-icon2 a {display: flex; margin-right: 2%; flex-direction: column; justify-content: space-between; align-items: center; width: 14.66%; padding: 8% 0; margin-bottom: 15px; border-radius: 15px; box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.04); border: solid 1px #eff0f0; background-color: #ffffff;}
     .main-icon2 a span {text-align: center; font-size: 1.1rem; font-weight: 700;}
     .main-icon2 a span[class*="ico-"] {margin-bottom: 10px;}
     .button-click { background-image: url("/images/button-click.png"); width: 64px; height: 64px; }
@@ -28,6 +28,8 @@
     .duration-time {background-image: url("/images/admin/durationTime.png"); width: 64px; height: 64px;}
     .withusRang {background-image: url("/images/admin/withusRang.png"); width: 64px; height: 64px;}
     .goal {background-image: url("/images/admin/goal.png"); width: 90px; height: 70px;}
+    .mindDiary {background-image: url("/images/admin/mindDiary.png"); width: 105px; height: 83px;}
+    .mindScore {background-image: url("/images/admin/mindScore.png"); width: 70px; height: 86px;}
 </style>
 <div th:replace="Admin/admin_nav :: navFragment"></div>
 <body>
@@ -51,6 +53,10 @@
                 <span class="ico-exercise-l"></span>
                 <span>운동</span>
             </a>
+            <a th:href="@{/admin_symptomRecord/{userId}(userId=${info.userId})}" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
+                <span class="ico-list"></span>
+                <span>증상 일지</span>
+            </a>
              <a th:href="@{/admin_natriumRecord/{userId}(userId=${info.userId})}" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
                 <span class="ico-salt"></span>
                 <span>저염식이</span>
@@ -64,10 +70,15 @@
                 <span class="ico-weight-l"></span>
                 <span>체중</span>
             </a>
-            <a th:href="@{/admin_symptomRecord/{userId}(userId=${info.userId})}" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
-                <span class="ico-list"></span>
-                <span>증상 일지</span>
+            <a th:href="@{/admin_mindDiary/{userId}(userId=${info.userId})}">
+                <span class="mindDiary"></span>
+                <span>마음 일기</span>
             </a>
+            <a th:href="@{/admin_mindScore/{userId}(userId=${info.userId})}">
+                <span class="mindScore"></span>
+                <span>마음 점수</span>
+            </a>
+
             <a th:href="@{/admin_withusRang/{userId}(userId=${info.userId})}">
                 <span class="withusRang"></span>
                 <span>위더스랑</span>

@@ -202,6 +202,15 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
 
         return blood_pressure_pulses;
     }
+    public List<Tbl_mindHealth_record> findMindHealth(String userId){
+        QTbl_mindHealth_record mr = QTbl_mindHealth_record.tbl_mindHealth_record;
+        List<Tbl_mindHealth_record> mindHealthRecords = queryFactory.selectFrom(mr)
+                .where(mr.pk.id.eq(userId))
+                .orderBy(mr.week.asc())
+                .orderBy(mr.pk.date.asc())
+                .fetch();
+        return mindHealthRecords;
+    }
 
     public List<HelpRequestDTO> findHelpRequestAsc() {
         QWithusHelpRequest wr = QWithusHelpRequest.withusHelpRequest;

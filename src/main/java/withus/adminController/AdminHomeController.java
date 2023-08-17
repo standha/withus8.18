@@ -271,6 +271,43 @@ public class AdminHomeController extends withus.controller.BaseController {
         return mav;
     }
 
+    @GetMapping("/admin_mindDiary/{userId}")
+    public ModelAndView mindDiaryRecord(@PathVariable("userId") String userId) {
+        User user = getUser();
+        if (user.getType() != User.Type.ADMINISTRATOR) {
+            throw new IllegalStateException(user.getUserId() + " is not Admin");
+        }
+
+        ModelAndView mav = new ModelAndView();
+        HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
+        User.Type type = adminService.getTypeInfo(userId);
+        List<Tbl_mindHealth_record> mr = adminService.getMindHealth(userId);
+
+        mav.addObject("type",type);
+        mav.addObject("info", headerInfo);
+        mav.addObject("mindDiary", mr);
+        mav.setViewName("Admin/admin_mindDiary");
+        return mav;
+    }
+    @GetMapping("/admin_mindScore/{userId}")
+    public ModelAndView mindScoreRecord(@PathVariable("userId") String userId) {
+        User user = getUser();
+        if (user.getType() != User.Type.ADMINISTRATOR) {
+            throw new IllegalStateException(user.getUserId() + " is not Admin");
+        }
+
+        ModelAndView mav = new ModelAndView();
+        HeaderInfoDTO headerInfo = adminService.getHeaderInfo(userId);
+        User.Type type = adminService.getTypeInfo(userId);
+        List<Tbl_mindHealth_record> mr = adminService.getMindHealth(userId);
+
+        mav.addObject("type",type);
+        mav.addObject("info", headerInfo);
+        mav.addObject("mindScore",mr);
+        mav.setViewName("Admin/admin_mindScore");
+        return mav;
+    }
+
     @GetMapping("/admin_withusHelpRequest")
     public ModelAndView adminWithusHelpRequest() {
         User user = getUser();
