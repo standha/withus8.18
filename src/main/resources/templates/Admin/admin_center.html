@@ -61,7 +61,10 @@
                 <span class="ico-salt"></span>
                 <span>저염식이</span>
             </a>
-
+            <a th:href="@{/admin_natriumRecord/{userId}(userId=${info.userId})}" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER}">
+                <span class="ico-salt"></span>
+                <span>식단관리</span>
+            </a>
             <a th:href="@{/admin_moistureRecord/{userId}(userId=${info.userId})}" th:if="${type} == ${T(withus.entity.User.Type).PATIENT}">
                 <span class="ico-water2"></span>
                 <span>수분섭취</span>

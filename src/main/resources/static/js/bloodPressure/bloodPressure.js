@@ -1,5 +1,34 @@
 var inputCheck = true;
 
+const getAjax = function(url) {
+    return new Promise((resolve, reject) => { // 1.
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json"
+            ,
+            success: (res) => {
+                resolve(res);  // 2.
+            },
+            error: (e) => {
+                reject(e);  // 3.
+            }
+        });
+    });
+}
+
+
+async function seed(path){
+    const url = "/seed/"+path;
+    try {
+        const seedData = await getAjax(url);
+        console.log(seedData);
+    } catch(e) {
+        console.log(e);
+    }
+}
+
+
 function onFormSubmission(form) {
     if(form.querySelector("input[name=contraction]").value==0 ||
         form.querySelector("input[name=pressure]").value==0 ||
@@ -41,7 +70,8 @@ function onFormSubmission(form) {
             .then(data => {
                 console.log(data);
                 if (data.code === 'OK') {
-                    console.log("입력 성공하였습니다.")
+                    console.log("입력 성공하였습니다.");
+                    seed("bloodPressure");
                 }  else {
                     console.log("기록 실패하였습니다. 관리자에게 문의해주세요.");
                     alert("기록 실패하였습니다. 관리자에게 문의해주세요.");
@@ -56,15 +86,6 @@ function showHistory() {
     const element = document.querySelector("#bloodPressure-history-get-action");
     location.href = element.value;
 }
-function bloodPressure_caregiver() {
-    var Item;
-    if(inputCheck){
-        $("#layerSelectType").show();
-        $("#dim").show();
-        $("#buttonCaregiverType").show();
-        $("#buttonRecordType").hide();
-        Item = "<span> 보호자에게 혈압/맥박을 알릴까요?</span>";
-        $('#popUp2').append(Item);
 
 function bloodPressure_caregiver() {
     var Item;
@@ -197,42 +218,12 @@ function submit_Click() {
             return false;
         });
 
-    }
-}
-function submit_Click() {
-
-    var Item2;
-    if(inputCheck){
-        $("#layerSelectType").show();
-        $("#dim").show();
-        $("#buttonCaregiverType").hide();
-        $("#buttonRecordType").show();
-        Item2 = "<span>기록이 완료되었습니다.</span>";
-        $('#popUp2').append(Item2);
-        $("#buttonCheck").click(function () {
-            $("#layerSelectType").hide();
-            $("#dim").hide();
-            $("#buttonRecordType").hide();
-            window.location.reload();
-            return false;
-        });
 
     }
 
 
-}
-document.addEventListener("DOMContentLoaded", function () {
-    // "저장" 버튼에 클릭 이벤트 핸들러를 추가합니다. 버튼은 id="saveButton"으로 선택됩니다.
-    const saveButton = document.getElementById("saveButton");
-    if (saveButton) {
-        saveButton.addEventListener("click", function (event) {
-            event.preventDefault(); // 기본 폼 제출 동작을 방지합니다.
-        });
-    }
-});
 
 
-}
 document.addEventListener("DOMContentLoaded", function () {
     // "저장" 버튼에 클릭 이벤트 핸들러를 추가합니다. 버튼은 id="saveButton"으로 선택됩니다.
     const saveButton = document.getElementById("saveButton");
