@@ -181,6 +181,18 @@ function onFormSubmission() {
                 const htmlContent1 = document.getElementById("htmlContent1");
                 htmlContent1.textContent = " 기록한다";
                 htmlContent1.classList.add("goaltext"); // 클래스 추가
+
+
+                // 새로운 표시 요소 생성 및 추가
+                const newSelectedOption = document.createElement("div");
+                newSelectedOption.textContent = `${goaloption}을(를) 주 ${goalweek} 기록한다`;
+                newSelectedOption.classList.add("selected-option");
+
+                const selectedOptionsContainer = document.querySelector(".selected-options-container");
+                selectedOptionsContainer.appendChild(newSelectedOption);
+                // document.getElementById("selectedOptionsContainer").appendChild(newSelectedOption);
+
+
             }else {
                 alert("목표 설정은 최대 3개까지 가능합니다.");
             }

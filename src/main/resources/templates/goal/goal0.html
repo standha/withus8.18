@@ -144,64 +144,23 @@
           </select>
           </div>
 
-          <div id="selectedOptionsContainer" th:if="${goaloption} == '복약' or ${goaloption} == '혈압/맥박' or ${goaloption} ==  '운동'" class="rdo-box " data-category="top">
-            <label>
-
-              <input type="checkbox" name="check_radio" onclick="radioClick()" >
-              <span id="selectedGoaloption"></span> <span id="htmlContent"></span>
-              <span id="selectedWeekoption"></span> <span id="htmlContent1"></span>
-            </label>
-          </div>
-          <div id="selectedOptionsContainer" th:unless="${goaloption} == '복약' or ${goaloption} == '혈압/맥박' or ${goaloption} ==  '운동'" class="rdo-box" data-category="top">
-            <label>
-              <span class="rdo-mark"></span>
-              <input type="checkbox" name="check_radio" onclick="radioClick()" >
-              <span id="selectedGoaloption"></span> <span id="htmlContent"></span>
-              <span id="selectedWeekoption"></span> <span id="htmlContent1"></span>
-            </label>
-          </div>
-
-<!--          <div th:if="${goaloption} == '복약' or ${goaloption} == '혈압/맥박' or ${goaloption} ==  '운동'" class="rdo-box checked" data-category="top">-->
+<!--          <div id="selectedOptionsContainer" th:if="${goaloption} == '복약' or ${goaloption} == '혈압/맥박' or ${goaloption} ==  '운동'" class="rdo-box " data-category="top">-->
 <!--            <label>-->
-<!--              <span class="rdo-mark checked"></span>-->
+
 <!--              <input type="checkbox" name="check_radio" onclick="radioClick()" >-->
-<!--              <span id="selectedGoaloption"></span> <span id="htmlContent"></span>-->
-<!--              <span id="selectedWeekoption"></span> <span id="htmlContent1"></span>-->
+
 <!--            </label>-->
 <!--          </div>-->
-<!--          <div th:unless="${goaloption} == '복약' or ${goaloption} == '혈압/맥박' or ${goaloption} ==  '운동'" class="rdo-box" data-category="top">-->
+<!--          <div id="selectedOptionsContainer" th:unless="${goaloption} == '복약' or ${goaloption} == '혈압/맥박' or ${goaloption} ==  '운동'" class="rdo-box" data-category="top">-->
 <!--            <label>-->
 <!--              <span class="rdo-mark"></span>-->
 <!--              <input type="checkbox" name="check_radio" onclick="radioClick()" >-->
-<!--              <span id="selectedGoaloption"></span> <span id="htmlContent"></span>-->
-<!--              <span id="selectedWeekoption"></span> <span id="htmlContent1"></span>-->
+
 <!--            </label>-->
 <!--          </div>-->
 
 
-<!--          <div th:if="${goaloption} == '복약' or ${goaloption} == '혈압/맥박' or ${goaloption} ==  '운동'" class="rdo-box checked" data-category="top">-->
-<!--            <label>-->
-<!--              <span class="rdo-mark checked"></span>-->
-<!--              <input type="checkbox" name="check_radio" onclick="radioClick()" >-->
-<!--              <span id="selectedGoaloption"></span> <span id="htmlContent"></span>-->
-<!--              <span id="selectedWeekoption"></span> <span id="htmlContent1"></span>-->
-<!--            </label>-->
-<!--          </div>-->
-<!--          <div th:unless="${goaloption} == '복약' or ${goaloption} == '혈압/맥박' or ${goaloption} ==  '운동'" class="rdo-box" data-category="top">-->
-<!--            <label>-->
-<!--              <span class="rdo-mark"></span>-->
-<!--              <input type="checkbox" name="check_radio" onclick="radioClick()" >-->
-<!--              <span id="selectedGoaloption"></span> <span id="htmlContent"></span>-->
-<!--              <span id="selectedWeekoption"></span> <span id="htmlContent1"></span>-->
-<!--            </label>-->
-<!--          </div>-->
-
-
-<!--          <div id="selectedOptionsContainer"  class="rdo-box checked">-->
-<!--            &lt;!&ndash; 이곳에 선택된 목표와 주차가 추가될 것입니다. &ndash;&gt;-->
-<!--            <span class="rdo-mark checked"></span>-->
-<!--          </div>-->
-
+          <div id="selectedOptionsContainer" class="rdo-box selected-options-container"></div>
         <div class="goalbtn-container">
           <button type="submit" class="btn xlg type01"  name="submit_click">저장</button>
         </div>

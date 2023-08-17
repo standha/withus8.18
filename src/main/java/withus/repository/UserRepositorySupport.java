@@ -1,8 +1,6 @@
 package withus.repository;
 
-import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
-import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +15,7 @@ import withus.dto.wwithus.PatientButtonSumDTO;
 import withus.dto.wwithus.UserCountInfoDTO;
 import withus.entity.*;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
-import com.querydsl.core.types.dsl.DateTimeExpression;
 
 @Repository
 public class UserRepositorySupport extends QuerydslRepositorySupport {

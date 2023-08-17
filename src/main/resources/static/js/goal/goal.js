@@ -154,7 +154,7 @@ function onFormSubmission() {
     console.log(goalList.top_goals)
 
 
-
+/*
     let selectgoalElement = document.getElementById("goalDropdown");
     let goaloption = selectgoalElement.value == null ? null : selectgoalElement.value;
     let selectweekElement = document.getElementById("weekDropdown");
@@ -259,49 +259,6 @@ function onFormSubmission() {
         console.log(goalweek);
 
 
-        // document.getElementById("goalDropdown").addEventListener("change", function() {
-        //     goaloption = this.value;
-        //     //updateSelectedOptions();
-        // });
-        //
-        // document.getElementById("weekDropdown").addEventListener("change", function() {
-        //     goalweek = this.value;
-        //     updateSelectedOptions();
-        // });
-        //
-        // function updateSelectedOptions() {
-        //     const selectedGoalElement = document.getElementById("selectedGoaloption");
-        //     const selectedWeekElement = document.getElementById("selectedWeekoption");
-        //
-        //     if (goaloption !== "none" && goalweek !== "none") {
-        //         selectedGoalElement.textContent = goaloption;
-        //         selectedWeekElement.textContent = goalweek;
-        //         selectedGoalElement.classList.add("highlighted-text");
-        //         selectedWeekElement.classList.add("highlighted-text");
-        //
-        //         const htmlContent = document.getElementById("htmlContent");
-        //         htmlContent.textContent = "을(를) 주 ";
-        //         htmlContent.classList.add("goaltext");
-        //
-        //         const htmlContent1 = document.getElementById("htmlContent1");
-        //         htmlContent1.textContent = " 기록한다";
-        //         htmlContent1.classList.add("goaltext");
-        //
-        //         // 새로운 표시 요소 생성 및 추가
-        //         const newSelectedOption = document.createElement("div");
-        //         newSelectedOption.textContent = `${goaloption}을(를) 주 ${goalweek} 기록한다`;
-        //         newSelectedOption.classList.add("selected-option");
-        //         document.getElementById("selectedOptionsContainer").appendChild(newSelectedOption);
-        //
-        //         goal++;
-        //
-        //         if (goal > 3) {
-        //             alert("목표 설정은 최대 3개까지 가능합니다.");
-        //         }
-        //     }
-        // }
-
-
 
 
         //
@@ -311,36 +268,38 @@ function onFormSubmission() {
                 // const selectedGoal = document.getElementById("selectedGoal");
                 // selectedGoal.classList.add("goaloptionpop");
 
-                const selectedGoalElement = document.getElementById("selectedGoaloption");
-                selectedGoalElement.textContent = goaloption;
-                selectedGoalElement.classList.add("highlighted-text"); // 클래스 추가
-
-                const selectedWeekElement = document.getElementById("selectedWeekoption");
-                selectedWeekElement.textContent = goalweek;
-                selectedWeekElement.classList.add("highlighted-text"); // 클래스 추가
-
-                // HTML에 적은 내용을 업데이트합니다.
-                const htmlContent = document.getElementById("htmlContent");
-                htmlContent.textContent = "을(를) 주 ";
-                htmlContent.classList.add("goaltext"); // 클래스 추가
-
-                const htmlContent1 = document.getElementById("htmlContent1");
-                htmlContent1.textContent = " 기록한다";
-                htmlContent1.classList.add("goaltext"); // 클래스 추가
+                // const selectedGoalElement = document.getElementById("selectedGoaloption");
+                // selectedGoalElement.textContent = goaloption;
+                // selectedGoalElement.classList.add("highlighted-text"); // 클래스 추가
+                //
+                // const selectedWeekElement = document.getElementById("selectedWeekoption");
+                // selectedWeekElement.textContent = goalweek;
+                // selectedWeekElement.classList.add("highlighted-text"); // 클래스 추가
+                //
+                // // HTML에 적은 내용을 업데이트합니다.
+                // const htmlContent = document.getElementById("htmlContent");
+                // htmlContent.textContent = "을(를) 주 ";
+                // htmlContent.classList.add("goaltext"); // 클래스 추가
+                //
+                // const htmlContent1 = document.getElementById("htmlContent1");
+                // htmlContent1.textContent = " 기록한다";
+                // htmlContent1.classList.add("goaltext"); // 클래스 추가
 
                 // 새로운 표시 요소 생성 및 추가
                 const newSelectedOption = document.createElement("div");
                 newSelectedOption.textContent = `${goaloption}을(를) 주 ${goalweek} 기록한다`;
                 newSelectedOption.classList.add("selected-option");
-                document.getElementById("selectedOptionsContainer").appendChild(newSelectedOption);
+
+                const selectedOptionsContainer = document.querySelector(".selected-options-container");
+                selectedOptionsContainer.appendChild(newSelectedOption);
+               // document.getElementById("selectedOptionsContainer").appendChild(newSelectedOption);
 
             }else {
                 alert("목표 설정은 최대 3개까지 가능합니다.");
             }
 
         }
-
-
+*/
 
 
     var checked = Array.from(document.querySelectorAll("input[name=check_radio]:checked"))
@@ -422,7 +381,7 @@ function onFormSubmission() {
 
     goalpopup(combinedGoals,flag);
 
-    }
+  //  }
 
     return flag;
 }

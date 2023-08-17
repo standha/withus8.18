@@ -276,7 +276,7 @@ select:focus {border: 1px solid #111;}
 }
 
 
-.selected-option {text-align:center;position: relative; height: 55px; line-height: 53px; border-radius: 5px; border: 1px solid #efefef; background-color: #fff; margin-bottom: 3%; background-position: -260px -115px; }
+.selected-option {text-align:center;position: relative; height: 55px; line-height: 53px; border-radius: 5px; border: 1px solid #efefef; background-color: #fff; margin-bottom: 3%; background-position: -260px -115px; background-position: -311px -2px;}
 
 
 
