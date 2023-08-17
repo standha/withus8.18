@@ -2,19 +2,16 @@ package withus.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
 import withus.entity.*;
-import withus.repository.MindHealthRepository;
 import withus.service.CountService;
 import withus.service.MindHealthService;
 import withus.service.UserService;
 
-import javax.jws.WebParam;
-import javax.xml.ws.Action;
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 public class MindHealthController extends BaseController {
@@ -89,7 +86,7 @@ public class MindHealthController extends BaseController {
         } else {
             Tbl_mindHealth_record mood = mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now()));
             modelAndView.addObject("mood", mood.getMood());
-            modelAndView.addObject("mood", mood.getText());
+            modelAndView.addObject("text", mood.getText());
 
         }
 
@@ -111,6 +108,297 @@ public class MindHealthController extends BaseController {
 
 
     }
+
+    @GetMapping("/mindhealth-all-history")
+    public ModelAndView getMindHealthAll() {
+        ModelAndView modelAndView = new ModelAndView("mindHealth/mindhealth-all-history");
+        User user = getUser();
+        List<Tbl_mindHealth_record> mindDiaryHistories = mindHealthService.getAllMindHealthRecord(getConnectId());
+
+        if (mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now())) == null) {
+            modelAndView.addObject("mood", null);
+            modelAndView.addObject("text", null);
+            modelAndView.addObject("score", null);
+
+        } else {
+            Tbl_mindHealth_record mood = mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now()));
+            modelAndView.addObject("mood", mood.getMood());
+            modelAndView.addObject("text", mood.getText());
+            modelAndView.addObject("minddiary",mindDiaryHistories);
+
+        }
+
+        if (user.getType() == User.Type.PATIENT) {
+            Tbl_patient_main_button_count mainCount = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+        }
+        if (user.getType() == User.Type.CAREGIVER) {
+            Tbl_caregiver_main_button_count mainCount = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+        }
+
+
+        modelAndView.addObject("type", user.getType());
+        modelAndView.addObject("week", user.getWeek());
+        modelAndView.addObject("previousUrl", "/minddiary1");
+
+        return modelAndView;
+
+
+    }
+    @GetMapping("/mindcontrol")
+    public ModelAndView getMindControl() {
+        ModelAndView modelAndView = new ModelAndView("mindHealth/mindcontrol");
+        User user = getUser();
+
+        if (mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now())) == null) {
+            modelAndView.addObject("mood", null);
+            modelAndView.addObject("text", null);
+            modelAndView.addObject("score", null);
+
+        } else {
+            Tbl_mindHealth_record mood = mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now()));
+            modelAndView.addObject("mood", mood.getMood());
+            modelAndView.addObject("text", mood.getText());
+
+        }
+
+        if (user.getType() == User.Type.PATIENT) {
+            Tbl_patient_main_button_count mainCount = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            Tbl_patient_detail_button_count detailCount = countService.getPatientDetailCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            modelAndView.addObject("detailCount", detailCount);
+        }
+        if (user.getType() == User.Type.CAREGIVER) {
+            Tbl_caregiver_main_button_count mainCount = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            Tbl_caregiver_detail_button_count detailCount = countService.getCaregiverDetailCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            modelAndView.addObject("detailCount", detailCount);
+        }
+
+
+        modelAndView.addObject("type", user.getType());
+        modelAndView.addObject("week", user.getWeek());
+        modelAndView.addObject("previousUrl", "/mindHealth");
+
+        return modelAndView;
+
+
+    }
+    @GetMapping("/meditation")
+    public ModelAndView getMeditation() {
+        ModelAndView modelAndView = new ModelAndView("mindHealth/meditation");
+        User user = getUser();
+
+        if (mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now())) == null) {
+            modelAndView.addObject("mood", null);
+            modelAndView.addObject("text", null);
+            modelAndView.addObject("score", null);
+
+        } else {
+            Tbl_mindHealth_record mood = mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now()));
+            modelAndView.addObject("mood", mood.getMood());
+            modelAndView.addObject("text", mood.getText());
+
+        }
+
+        if (user.getType() == User.Type.PATIENT) {
+            Tbl_patient_main_button_count mainCount = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            Tbl_patient_detail_button_count detailCount = countService.getPatientDetailCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            modelAndView.addObject("detailCount", detailCount);
+        }
+        if (user.getType() == User.Type.CAREGIVER) {
+            Tbl_caregiver_main_button_count mainCount = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            Tbl_caregiver_detail_button_count detailCount = countService.getCaregiverDetailCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            modelAndView.addObject("detailCount", detailCount);
+        }
+
+
+        modelAndView.addObject("type", user.getType());
+        modelAndView.addObject("week", user.getWeek());
+        modelAndView.addObject("previousUrl", "/mindHealth");
+
+        return modelAndView;
+
+
+    }
+    @GetMapping("/physicalActivity")
+    public ModelAndView getphysicalActivity() {
+        ModelAndView modelAndView = new ModelAndView("mindHealth/physicalActivity");
+        User user = getUser();
+
+        if (mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now())) == null) {
+            modelAndView.addObject("mood", null);
+            modelAndView.addObject("text", null);
+            modelAndView.addObject("score", null);
+
+        } else {
+            Tbl_mindHealth_record mood = mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now()));
+            modelAndView.addObject("mood", mood.getMood());
+            modelAndView.addObject("text", mood.getText());
+
+        }
+
+        if (user.getType() == User.Type.PATIENT) {
+            Tbl_patient_main_button_count mainCount = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            Tbl_patient_detail_button_count detailCount = countService.getPatientDetailCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            modelAndView.addObject("detailCount", detailCount);
+        }
+        if (user.getType() == User.Type.CAREGIVER) {
+            Tbl_caregiver_main_button_count mainCount = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            Tbl_caregiver_detail_button_count detailCount = countService.getCaregiverDetailCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            modelAndView.addObject("detailCount", detailCount);
+        }
+
+
+        modelAndView.addObject("type", user.getType());
+        modelAndView.addObject("week", user.getWeek());
+        modelAndView.addObject("previousUrl", "/mindHealth");
+
+        return modelAndView;
+
+
+    }
+
+    @GetMapping("/breath")
+    public ModelAndView getBreath() {
+        ModelAndView modelAndView = new ModelAndView("mindHealth/breath");
+        User user = getUser();
+
+        if (mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now())) == null) {
+            modelAndView.addObject("mood", null);
+            modelAndView.addObject("text", null);
+            modelAndView.addObject("score", null);
+
+        } else {
+            Tbl_mindHealth_record mood = mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now()));
+            modelAndView.addObject("mood", mood.getMood());
+            modelAndView.addObject("text", mood.getText());
+
+        }
+
+        if (user.getType() == User.Type.PATIENT) {
+            Tbl_patient_main_button_count mainCount = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            Tbl_patient_detail_button_count detailCount = countService.getPatientDetailCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            modelAndView.addObject("detailCount", detailCount);
+        }
+        if (user.getType() == User.Type.CAREGIVER) {
+            Tbl_caregiver_main_button_count mainCount = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            Tbl_caregiver_detail_button_count detailCount = countService.getCaregiverDetailCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            modelAndView.addObject("detailCount", detailCount);
+        }
+
+
+        modelAndView.addObject("type", user.getType());
+        modelAndView.addObject("week", user.getWeek());
+        modelAndView.addObject("previousUrl", "/mindHealth");
+
+        return modelAndView;
+
+
+    }
+
+    @GetMapping("/breath1")
+    public ModelAndView getBreath1() {
+        ModelAndView modelAndView = new ModelAndView("mindHealth/breath1");
+        User user = getUser();
+
+        if (mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now())) == null) {
+            modelAndView.addObject("mood", null);
+            modelAndView.addObject("text", null);
+            modelAndView.addObject("score", null);
+
+        } else {
+            Tbl_mindHealth_record mood = mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now()));
+            modelAndView.addObject("mood", mood.getMood());
+            modelAndView.addObject("text", mood.getText());
+
+        }
+
+        if (user.getType() == User.Type.PATIENT) {
+            Tbl_patient_main_button_count mainCount = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            Tbl_patient_detail_button_count detailCount = countService.getPatientDetailCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            modelAndView.addObject("detailCount", detailCount);
+        }
+        if (user.getType() == User.Type.CAREGIVER) {
+            Tbl_caregiver_main_button_count mainCount = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            Tbl_caregiver_detail_button_count detailCount = countService.getCaregiverDetailCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            modelAndView.addObject("detailCount", detailCount);
+        }
+
+
+        modelAndView.addObject("type", user.getType());
+        modelAndView.addObject("week", user.getWeek());
+        modelAndView.addObject("previousUrl", "/mindHealth");
+
+        return modelAndView;
+
+
+    }
+
+    @GetMapping("/mindscore")
+    public ModelAndView getMindscore() {
+        ModelAndView modelAndView = new ModelAndView("mindHealth/mindscore");
+        User user = getUser();
+
+        if (mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now())) == null) {
+            modelAndView.addObject("mood", null);
+            modelAndView.addObject("text", null);
+            modelAndView.addObject("score", null);
+
+        } else {
+            Tbl_mindHealth_record mood = mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now()));
+            modelAndView.addObject("mood", mood.getMood());
+            modelAndView.addObject("text", mood.getText());
+            modelAndView.addObject("score", getMindscore());
+
+
+        }
+
+        if (user.getType() == User.Type.PATIENT) {
+            Tbl_patient_main_button_count mainCount = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            Tbl_patient_detail_button_count detailCount = countService.getPatientDetailCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            modelAndView.addObject("detailCount", detailCount);
+        }
+        if (user.getType() == User.Type.CAREGIVER) {
+            Tbl_caregiver_main_button_count mainCount = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            Tbl_caregiver_detail_button_count detailCount = countService.getCaregiverDetailCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            modelAndView.addObject("detailCount", detailCount);
+        }
+
+
+        modelAndView.addObject("type", user.getType());
+        modelAndView.addObject("week", user.getWeek());
+        modelAndView.addObject("previousUrl", "/mindHealth");
+
+        return modelAndView;
+
+
+    }
+
+
 }
 
 

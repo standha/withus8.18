@@ -22,32 +22,32 @@ public class Tbl_patient_seed_day {
     @Column(name = "week")
     private Integer week;
 
-    @Column(name = "medicine")
-    private Boolean medicine;
+    @Column(name = "medicine", columnDefinition = "int default 0")
+    private Integer medicine;
 
-    @Column(name ="blood_pressure")
-    private Boolean bloodPressure;
+    @Column(name ="blood_pressure", columnDefinition = "int default 0")
+    private Integer bloodPressure;
 
-    @Column(name ="exercise")
-    private Boolean exercise;
+    @Column(name ="exercise", columnDefinition = "int default 0")
+    private Integer exercise;
 
-    @Column(name ="natirum_moisture")
-    private Boolean natirumMoisture;
+    @Column(name ="natirum_moisture", columnDefinition = "int default 0")
+    private Integer natirumMoisture;
 
-    @Column(name ="water_intake")
-    private Boolean waterIntake;
+    @Column(name ="water_intake", columnDefinition = "int default 0")
+    private Integer waterIntake;
 
-    @Column(name ="symptom")
-    private Boolean symptom;
+    @Column(name ="symptom", columnDefinition = "int default 0")
+    private Integer symptom;
 
-    @Column(name ="weight")
-    private Boolean weight;
+    @Column(name ="weight", columnDefinition = "int default 0")
+    private Integer weight;
 
-    @Column(name ="mind_diary")
-    private Boolean mindDiary;
+    @Column(name ="mind_diary", columnDefinition = "int default 0")
+    private Integer mindDiary;
 
-    @Column(name ="mind_score")
-    private Boolean mindScore;
+    @Column(name ="mind_score", columnDefinition = "int default 0")
+    private Integer mindScore;
 
     @Column(name ="top_goal")
     private String topGoal;

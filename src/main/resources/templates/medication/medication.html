@@ -15,6 +15,7 @@
     <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/help.js}"></script>
+    <script th:src="@{/js/durationTime.js}"></script>
     <script th:src="@{/js/medication/medication.js}"></script>
     <!--    <script th:src="@{/js/alarm/pill.js}"></script>-->
     <script th:src="@{/js/input_limit.js}"></script>
@@ -90,8 +91,6 @@
         </div>
     </div>
 </header>
-<!-- // header -->
-<!--content-->>
 
     <div class="container" id="content" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
         <form id="medication-form" th:action="@{/medication}" onsubmit="return onFormSubmission(this);">
@@ -209,4 +208,7 @@
     </div>
 </footer>
 </body>
+<script>
+    start("MEDICINE");
+</script>
 </html>

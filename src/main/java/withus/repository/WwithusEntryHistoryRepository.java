@@ -3,7 +3,10 @@ package withus.repository;
 import java.time.DayOfWeek;
 import java.util.List;
 
+import com.sun.istack.Nullable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.lang.NonNull;
 import org.springframework.transaction.annotation.Transactional;
 import withus.entity.User;
@@ -36,4 +39,24 @@ public interface WwithusEntryHistoryRepository extends JpaRepository<WwithusEntr
     default List<WwithusEntryHistory> findAllByUserAndWeekDay(User user, int week, int day) {
         return findAllByKey_UserAndKey_EntryCodeStartsWith(user, String.format("W%dD%d", week, day));
     }
+
+
+    @Transactional(readOnly = true)
+    @Nullable
+    @Query(value="SELECT COUNT(eh.entry_code) AS record_count " +
+            "FROM wwithus_entry_history eh " +
+            "JOIN ( " +
+            "    SELECT DATE(date_time) AS record_date, MAX(date_time) AS max_time " +
+            "    FROM wwithus_entry_history " +
+            "    WHERE user_id = :userId " +
+            "    GROUP BY DATE(date_time) " +
+            ") eh_max " +
+            "ON eh.date_time = eh_max.max_time AND DATE(eh.date_time) = eh_max.record_date " +
+            "JOIN wwithus_entry e ON eh.entry_code = e.code " +
+            "WHERE eh.user_id = :userId " +
+            "AND e.is_last = 1;", nativeQuery = true)
+    Long findWwithusSeedSum(@Param("userId") String userId);
+
+
+
 }

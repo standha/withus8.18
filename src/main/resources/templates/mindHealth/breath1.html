@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>위더스</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+  <meta name="format-detection" content="telephone=no">
+  <link th:href="@{/css/reset.css}" rel="stylesheet">
+  <link th:href="@{/css/common.css}" rel="stylesheet">
+  <link th:href="@{/css/layout.css}" rel="stylesheet">
+  <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
+  <script th:src="@{/js/common.js}"></script>
+  <script th:src="@{/js/goal/goal.js}"></script>
+  <script th:src="@{/js/help.js}"></script>
+  <script th:src="@{/js/durationTime.js}"></script>
+  <script src="https://kit.fontawesome.com/e381c8a508.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+<input type="hidden" id="button-count" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25"
+       th:attr="value=@{/patient-detail-button-count}">
+<input type="hidden" id="button-count" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25"
+       th:attr="value=@{/caregiver-detail-button-count}">
+
+<div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
+  <input type='hidden' name="symptom" th:value="${mainCount.symptom}" style="display:none">
+  <input type='hidden' name="medicine" th:value="${mainCount.medicine}" style="display:none">
+  <input type='hidden' name="mindHealth" th:value="${mainCount.mindHealth}" style="display:none">
+  <input type='hidden' name="board" th:value="${mainCount.board}" style="display:none">
+  <input type='hidden' name="alarm" th:value="${mainCount.alarm}" style="display:none">
+  <input type='hidden' name="bloodPressure" th:value="${mainCount.bloodPressure}" style="display:none">
+  <input type='hidden' name="diseaseInfo" th:value="${mainCount.diseaseInfo}" style="display:none">
+  <input type='hidden' name="exercise" th:value="${mainCount.exercise}" style="display:none">
+  <input type='hidden' name="goal" th:value="${mainCount.goal}" style="display:none">
+  <input type='hidden' name="helper" th:value="${mainCount.helper}" style="display:none">
+  <input type='hidden' name="level" th:value="${mainCount.level}" style="display:none">
+  <input type='hidden' name="natriumMoisture" th:value="${mainCount.natriumMoisture}" style="display:none">
+  <input type='hidden' name="weight" th:value="${mainCount.weight}" style="display:none">
+  <input type='hidden' name="withusRang" th:value="${mainCount.withusRang}" style="display:none">
+  <input type='hidden' name="infoEdit" th:value="${mainCount.infoEdit}" style="display:none">
+  <input type='hidden' name="board" th:value="${mainCount.board}" style="display:none">
+
+  <input type='hidden' name="recommendDiet" th:value="${detailCount.recommendDiet}" style="display:none">
+  <input type='hidden' name="meditation" th:value="${detailCount.meditation}" style="display:none">
+  <input type='hidden' name="bodyActivity" th:value="${detailCount.bodyActivity}" style="display:none">
+  <input type='hidden' name="deepBreath" th:value="${detailCount.deepBreath}" style="display:none">
+  <input type='hidden' name="consulting" th:value="${detailCount.consulting}" style="display:none">
+  <input type='hidden' name="medicineAlarm" th:value="${detailCount.medicineAlarm}" style="display:none">
+  <input type='hidden' name="bloodPressureAlarm" th:value="${detailCount.bloodPressureAlarm}" style="display:none">
+  <input type='hidden' name="exerciseAlarm" th:value="${detailCount.exerciseAlarm}" style="display:none">
+  <input type='hidden' name="symptomAlarm" th:value="${detailCount.symptomAlarm}" style="display:none">
+  <input type='hidden' name="natriumMoistureAlarm" th:value="${detailCount.natriumMoistureAlarm}" style="display:none">
+  <input type='hidden' name="waterIntakeAlarm" th:value="${detailCount.waterIntakeAlarm}" style="display:none">
+  <input type='hidden' name="weightAlarm" th:value="${detailCount.weightAlarm}" style="display:none">
+  <input type='hidden' name="mindScoreAlarm" th:value="${detailCount.mindScoreAlarm}" style="display:none">
+</div>
+<div th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25">
+  <input type='hidden' name="goal" th:value="${mainCount.goal}" style="display:none">
+  <input type='hidden' name="level" th:value="${mainCount.level}" style="display:none">
+  <input type='hidden' name="withusRang" th:value="${mainCount.withusRang}" style="display:none">
+  <input type='hidden' name="diseaseInfo" th:value="${mainCount.diseaseInfo}" style="display:none">
+  <input type='hidden' name="helper" th:value="${mainCount.helper}" style="display:none">
+  <input type='hidden' name="medicine" th:value="${mainCount.medicine}" style="display:none">
+  <input type='hidden' name="bloodPressure" th:value="${mainCount.bloodPressure}" style="display:none">
+  <input type='hidden' name="exercise" th:value="${mainCount.exercise}" style="display:none">
+  <input type='hidden' name="familyObservation" th:value="${mainCount.familyObservation}" style="display:none">
+  <input type='hidden' name="dietManagement" th:value="${mainCount.dietManagement}" style="display:none">
+  <input type='hidden' name="weight" th:value="${mainCount.weight}" style="display:none">
+  <input type='hidden' name="mindHealth" th:value="${mainCount.mindHealth}" style="display:none">
+  <input type='hidden' name="alarm" th:value="${mainCount.alarm}" style="display:none">
+  <input type='hidden' name="board" th:value="${mainCount.board}" style="display:none">
+  <input type='hidden' name="infoEdit" th:value="${mainCount.infoEdit}" style="display:none">
+
+  <input type='hidden' name="recommendDiet" th:value="${detailCount.recommendDiet}" style="display:none">
+  <input type='hidden' name="meditation" th:value="${detailCount.meditation}" style="display:none">
+  <input type='hidden' name="bodyActivity" th:value="${detailCount.bodyActivity}" style="display:none">
+  <input type='hidden' name="deepBreath" th:value="${detailCount.deepBreath}" style="display:none">
+  <input type='hidden' name="consulting" th:value="${detailCount.consulting}" style="display:none">
+  <input type='hidden' name="medicineAlarm" th:value="${detailCount.medicineAlarm}" style="display:none">
+  <input type='hidden' name="bloodPressureAlarm" th:value="${detailCount.bloodPressureAlarm}" style="display:none">
+  <input type='hidden' name="exerciseAlarm" th:value="${detailCount.exerciseAlarm}" style="display:none">
+  <input type='hidden' name="symptomAlarm" th:value="${detailCount.symptomAlarm}" style="display:none">
+  <input type='hidden' name="natriumMoistureAlarm" th:value="${detailCount.natriumMoistureAlarm}" style="display:none">
+  <input type='hidden' name="lewaterIntakeAlarmvel" th:value="${detailCount.waterIntakeAlarm}" style="display:none">
+  <input type='hidden' name="weightAlarm" th:value="${detailCount.weightAlarm}" style="display:none">
+  <input type='hidden' name="mindDiaryAlarm" th:value="${detailCount.mindDiaryAlarm}" style="display:none">
+  <input type='hidden' name="mindScoreAlarm" th:value="${detailCount.mindScoreAlarm}" style="display:none">
+</div>
+
+<div id="wrap" class="insert-page">
+  <header>
+    <div class="header-wrap type01">
+      <div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
+        <div onclick="helperRequest()">
+          <a class="btn xsm type07" href="tel:010-8454-9186" onclick="addHelper()">
+            <span class="ico-call"></span>
+            <span class="txt-rt">도우미</span>
+          </a>
+        </div>
+        <h2>
+
+          <span>심호흡</span>
+        </h2>
+        <div class="col text-end" style="font-size: 20px; margin-top: 0.73vh;">
+          <a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl"
+                                                          style="color: #00b050;"></i></a>
+        </div>
+      </div>
+      <div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
+        <div onclick="helperRequest()">
+          <a class="btn xsm type07" href="tel:010-8454-9186">
+            <span class="ico-call"></span>
+            <span class="txt-rt">도우미</span>
+          </a>
+        </div>
+        <h2>
+
+          <span>심호흡</span>
+        </h2>
+        <div class="col text-end" style="font-size: 20px; margin-top: 0.73vh;">
+          <a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl"
+                                                          style="color: #00b050;"></i></a>
+        </div>
+
+      </div>
+    </div>
+  </header>
+  <!--content-->
+  <div class="container" id="content">
+    <div class="cont-wrap type01">
+      <div class ="insert-wrap">
+        <div class="tit-img" style="padding-left: 40px; padding-right: 20px;">
+          <img id="breathImage" src="/images/deepBreath/abdominal-inhale.jpg" alt="Breathe Inhale">
+        </div>
+        <div class="field-wrap type05" style="margin:0;">
+          <div class="field3"style="display: flex; flex-direction: column; padding: 5px 0; ">
+            <div class="nott" style="padding: 10px; box-sizing:border-box;">
+                            <span style="display: flex; font-size:18px; font-weight:bold;  text-align: center;align-items: center; line-height:2.1;">
+                              숨을 들이쉬면서 아랫배를 부풀어 오르게 하고,</br>
+                              천천히 숨을 내 쉴때는 아랫배를 꺼지게</br>
+                              하세요. 시간이 종료될 때까지 반복하세요 </span>
+            </div>
+          </div>
+          <div class="field" style="align-items: center">
+            <div class="nott" style="text-align: center;font-size: 20px !important;padding:20px">
+              <span style="font-size: 20px !important;" id="stopwatch">01:00</span>
+            </div>
+            <button style="width: 100%; height: 50px; background-color: #0058FE; color: white; border: none; border-radius: 20px; font-weight:bold;display: flex; justify-content: center; align-items: center; font-size: 18px;" id="startStopBtn">
+              시작
+            </button>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+        <script>
+          const stopwatchDisplay = document.getElementById('stopwatch');
+          const startStopBtn = document.getElementById('startStopBtn');
+          const breathImage = document.getElementById('breathImage');
+
+          let remainingTime = 60; // 1 minute in seconds
+          let interval;
+
+          const imageSources = [
+            '/images/deepBreath/abdominal-inhale.jpg',
+            '/images/deepBreath/abdominal-exhalation.jpg'
+          ];
+          let currentImageIndex = 0;
+
+          function startStopwatch() {
+            if (!interval) {
+              interval = setInterval(updateStopwatchAndImage, 1000);
+              startStopBtn.textContent = '일시정지';
+            } else {
+              clearInterval(interval);
+              interval = null;
+              startStopBtn.textContent = '시작';
+            }
+          }
+
+          function updateStopwatchAndImage() {
+            remainingTime--;
+            if (remainingTime >= 0) {
+              updateDisplay();
+              updateImage();
+            } else {
+              stopStopwatch();
+            }
+          }
+
+          function updateImage() {
+            currentImageIndex = (currentImageIndex + 1) % imageSources.length;
+            breathImage.src = imageSources[currentImageIndex];
+          }
+
+          function updateDisplay() {
+            const minutes = String(Math.floor(remainingTime / 60)).padStart(2, '0');
+            const seconds = String(remainingTime % 60).padStart(2, '0');
+            stopwatchDisplay.textContent = `${minutes}:${seconds}`;
+          }
+
+          function stopStopwatch() {
+            clearInterval(interval);
+            interval = null;
+            remainingTime = 60;
+            updateDisplay();
+            startStopBtn.textContent = '시작';
+          }
+
+          startStopBtn.addEventListener('click', startStopwatch);
+
+          updateDisplay(); // Initialize the display
+
+          function goToExhalePage() {
+            window.location.href = 'breath.html'; // "exhale.html" 페이지로 이동
+          }
+
+          function submitPopup() {
+            $("#layerSelectType").show();
+            $("#dim").show();
+
+
+            var Item2;
+            Item2 = "<span> 마음은 편안해지셨나요?</span>"
+            $('#popUp2').append(Item2);
+
+            $("#buttonNo").click(function () {
+              $("#layerSelectType").hide();
+              $("#dim").hide();
+              window.location.reload();
+              goToExhalePage();
+              return false;
+            });
+
+            $("#buttonOk").click(function () {
+              $("#layerSelectType").hide();
+              $("#dim").hide();
+
+              window.location.reload();
+              return false;
+            });
+
+
+          }
+
+        </script>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="popup pop-type01" id="layerSelectType" style="display: none">
+    <div class="pop-wrap">
+      <div class="popup-header2"></div>
+      <div class="popup-body">
+        <div class="pop-cont" id="popUp2">
+        </div>
+      </div>
+      <div class="btn-wrap grid2">
+        <button class="btn xlg type07" id="buttonNo">반복하기</button>
+        <button class="btn xlg type02" id="buttonOk">예</button>
+      </div>
+    </div>
+  </div>
+  <div class="dim-layer" style="display: none" id="dim"></div>
+
+</div>
+
+
+<footer>
+  <div class="footer-wrap">
+    <!--            <div class="btn-wrap type02" >-->
+    <span class="btn xlg arrow-type02" style="margin-left:20%" onclick="goToExhalePage()">
+      <span class="ico-arrow3"></span>
+      <span>이전</span>
+    </span>
+    <!--            </div>-->
+    <span class="btn xlg arrow-type02" style="padding:70%" onclick="submitPopup()">
+                    <span>완료</span>
+
+                </span>
+  </div>
+</footer>
+
+
+</body>
+</html>

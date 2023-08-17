@@ -138,36 +138,14 @@ public class UserService implements UserDetailsService {
 
 
         Tbl_goal tbl_goal = Tbl_goal.builder()
-                //.pk(new RecordKey(user.getUserId(), LocalDate.now()))  //8월 2일 수정
                 .goalId(saved.getUserId())
                 .goal(null)
-               // .goal(0)
                 .top_goals(null)
                 .middle_goals(null)
                 .bottom_goals(null)
                 .week(0)
                 .build();
-
-//        Tbl_topgoals tbl_topgoals = Tbl_topgoals.builder()
-//                .goalId(saved.getUserId())
-//                .top_goals(null)
-//                .build();
-//
-//        Tbl_middlegoals tbl_middlegoals = Tbl_middlegoals.builder()
-//                .goalId(saved.getUserId())
-//                .middle_goals(null)
-//                .build();
-//
-//        Tbl_bottomgoals tbl_bottomgoals = Tbl_bottomgoals.builder()
-//                .goalId(saved.getUserId())
-//                .bottom_goals(null)
-//                .build();
-
         goalRepositroy.save(tbl_goal);
-//        goalRepositroy1.save(tbl_topgoals);
-//        goalRepositroy2.save(tbl_middlegoals);
-//        goalRepositroy3.save(tbl_bottomgoals);
-
 
 
         if (checkType == "PATIENT") {
@@ -369,6 +347,10 @@ public class UserService implements UserDetailsService {
         return userRepository.findByTypeAndWeekLessThanAndLevelLessThan(type, limit_week, limit_level);
     }
 
+    @Nullable
+    public List<User> getAllUserLimit(int limit_week, int limit_level){
+        return userRepository.findByWeekLessThanAndLevelLessThan(limit_week, limit_level);
+    }
 
     @Nullable
     public List<MoistureAvgDTO> getMoisture(String userId) {
