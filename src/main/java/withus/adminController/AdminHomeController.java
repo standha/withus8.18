@@ -560,7 +560,7 @@ public class AdminHomeController extends withus.controller.BaseController {
         modelAndView.addObject("seed",seed);
         modelAndView.addObject("type", type);
 
-        List<WwithusHistoryDTO> withusRang = adminService.getWwithusHistory(userId);
+        List<WwithusHistoryDTO> withusRang = adminService.getWwithusHistory(userId, type);
         modelAndView.addObject("withusRang", withusRang);
 
         logger.info("user try to access admin_withusRang  id:{}, getId:{})", user.getUserId(),

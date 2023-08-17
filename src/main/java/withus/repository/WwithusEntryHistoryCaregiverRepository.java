@@ -55,7 +55,7 @@ public interface WwithusEntryHistoryCaregiverRepository extends JpaRepository<Ww
             "JOIN wwithus_entry_caregiver e ON eh.entry_code = e.code " +
             "WHERE eh.user_id = :userId " +
             "AND e.is_last = 1;", nativeQuery = true)
-    Long findWwithusSeedSum(@Param("userId") String userId);
+    Long findWwithusEntryHistoryCaregiverBy(@Param("userId") String userId);
 
 
 

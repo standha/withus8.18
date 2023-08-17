@@ -171,8 +171,12 @@ public class AdminService {
     }
 
     @Nullable
-    public List<WwithusHistoryDTO> getWwithusHistory(String userId){
-        return userRepository.findWwithusHistory(userId);
+    public List<WwithusHistoryDTO> getWwithusHistory(String userId, User.Type type){
+        if(type == User.Type.CAREGIVER){
+            return userRepository.findCaregiverWwithusHistory(userId);
+        } else {
+            return userRepository.findPatientWwithusHistory(userId);
+        }
     }
 
     public List<NatriumCountDTO> getNatriumCountWeek(String userId) {

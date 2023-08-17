@@ -15,14 +15,16 @@ public class SeedService {
     private final CaregiverSeedDayRepository caregiverSeedDayRepository;
     private final SeedWeekRepository seedWeekRepository;
     private final WwithusEntryHistoryRepository wwithusEntryHistoryRepository;
+    private final WwithusEntryHistoryCaregiverRepository wwithusEntryHistoryCaregiverRepository;
     private final UserRepositorySupport userRepositorySupport;
     @Autowired
     public SeedService(PatientSeedDayRepository patientSeedDayRepository, CaregiverSeedDayRepository caregiverSeedDayRepository, SeedWeekRepository seedWeekRepository,
-                       WwithusEntryHistoryRepository wwithusEntryHistoryRepository,UserRepositorySupport userRepositorySupport) {
+                       WwithusEntryHistoryRepository wwithusEntryHistoryRepository,UserRepositorySupport userRepositorySupport, WwithusEntryHistoryCaregiverRepository wwithusEntryHistoryCaregiverRepository) {
         this.patientSeedDayRepository = patientSeedDayRepository;
         this.caregiverSeedDayRepository = caregiverSeedDayRepository;
         this.seedWeekRepository = seedWeekRepository;
         this.wwithusEntryHistoryRepository = wwithusEntryHistoryRepository;
+        this.wwithusEntryHistoryCaregiverRepository = wwithusEntryHistoryCaregiverRepository;
         this.userRepositorySupport = userRepositorySupport;
     }
 
@@ -46,12 +48,14 @@ public class SeedService {
     public Integer getSeedSum(String userId, User.Type type) {
         Integer week = userRepositorySupport.findWeekSeedSum(userId);
         Integer day = 0;
+        Long entry = 0L;
         if(type == User.Type.PATIENT){
             day = userRepositorySupport.findPatientDaySeedSum(userId);
+            entry = wwithusEntryHistoryRepository.findWwithusEntryHistoryPatientBy(userId);
         } else if(type == User.Type.CAREGIVER){
             day = userRepositorySupport.findCaregiverDaySeedSum(userId);
+            entry = wwithusEntryHistoryCaregiverRepository.findWwithusEntryHistoryCaregiverBy(userId);
         }
-        Long entry = wwithusEntryHistoryRepository.findWwithusSeedSum(userId);
 
         logger.info("seed userId : {}, week : {}, day : {}, entry : {}", userId, week,day, entry);
         return week + day + entry.intValue();

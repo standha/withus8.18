@@ -55,7 +55,7 @@ public interface WwithusEntryHistoryRepository extends JpaRepository<WwithusEntr
             "JOIN wwithus_entry e ON eh.entry_code = e.code " +
             "WHERE eh.user_id = :userId " +
             "AND e.is_last = 1;", nativeQuery = true)
-    Long findWwithusSeedSum(@Param("userId") String userId);
+    Long findWwithusEntryHistoryPatientBy(@Param("userId") String userId);
 
 
 

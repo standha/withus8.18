@@ -346,7 +346,7 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .where(user.userId.eq(userId))
                 .fetchOne();
 
-        return (sumGoalSeed == null ? 0: sumGoalSeed) + (sumLevel == null ? 0: sumLevel);
+        return (sumGoalSeed == null ? 0: sumGoalSeed * 10) + (sumLevel == null ? 0: sumLevel * 20);
     }
 
 
