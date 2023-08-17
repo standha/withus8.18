@@ -17,6 +17,9 @@ public class Tbl_mindHealth_record {
     @EmbeddedId
     private RecordKey pk;
 
+    @Column(name = "week")
+    private Integer week;
+
     @Column(name = "mood")
     private Integer mood;
 

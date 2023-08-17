@@ -116,30 +116,20 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .fetch();
         return userCountInfo;
     }
-//
-//    public List<PillSumDTO> findPillSum(String userId) {
-//        QTbl_medication_alarm mr = QTbl_medication_alarm.tbl_medication_alarm;
-//        List<PillSumDTO> pillSum = queryFactory.select(Projections.constructor(PillSumDTO.class, mr.week, mr.finished.count()))
-//                .from(mr)
-//                .groupBy(mr.week)
-//                .orderBy(mr.week.asc())
-//                .where(mr.finished.eq(true))
-//                .where(mr.pk.id.eq(userId))
-//                .fetch();
-//
-//        return pillSum;
-//    }
-//
-//    public List<Tbl_medication_alarm> findPillAsc(String userId) {
-//        QTbl_medication_alarm mr = QTbl_medication_alarm.tbl_medication_alarm;
-//        List<Tbl_medication_alarm> pillAsc = queryFactory.selectFrom(mr)
-//                .where(mr.pk.id.eq(userId))
-//                .orderBy(mr.week.asc())
-//                .orderBy(mr.pk.date.asc())
-//                .fetch();
-//
-//        return pillAsc;
-//    }
+
+
+
+
+    public List<Tbl_medication_alarm> findPillAsc(String userId) {
+        QTbl_medication_alarm mr = QTbl_medication_alarm.tbl_medication_alarm;
+        List<Tbl_medication_alarm> pillAsc = queryFactory.selectFrom(mr)
+                .where(mr.pk.id.eq(userId))
+                .orderBy(mr.week.asc())
+                .orderBy(mr.pk.date.asc())
+                .fetch();
+
+        return pillAsc;
+    }
 
     public List<GoalDTO> findPatientGoal(String userId){
         QTbl_patient_seed_day seedDay= QTbl_patient_seed_day.tbl_patient_seed_day;
@@ -201,6 +191,15 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .fetch();
 
         return blood_pressure_pulses;
+    }
+    public List<Tbl_mindHealth_record> findMindHealth(String userId){
+        QTbl_mindHealth_record mr = QTbl_mindHealth_record.tbl_mindHealth_record;
+        List<Tbl_mindHealth_record> mindHealthRecords = queryFactory.selectFrom(mr)
+                .where(mr.pk.id.eq(userId))
+                .orderBy(mr.week.asc())
+                .orderBy(mr.pk.date.asc())
+                .fetch();
+        return mindHealthRecords;
     }
 
     public List<HelpRequestDTO> findHelpRequestAsc() {
@@ -347,7 +346,7 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
                 .where(user.userId.eq(userId))
                 .fetchOne();
 
-        return (sumGoalSeed == null ? 0: sumGoalSeed) + (sumLevel == null ? 0: sumLevel);
+        return (sumGoalSeed == null ? 0: sumGoalSeed * 10) + (sumLevel == null ? 0: sumLevel * 20);
     }
 
 

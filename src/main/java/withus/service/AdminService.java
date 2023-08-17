@@ -55,15 +55,11 @@ public class AdminService {
     }
 
     // 3.복약기록
-//    @Nullable
-//    public List<PillSumDTO> getPillSum(String userId) {
-//        return userRepositorySupport.findPillSum(userId);
-//    }
+    @Nullable
+    public List<Tbl_medication_alarm> getPillAsc(String userId) {
+        return userRepositorySupport.findPillAsc(userId);
+    }
 
-//    @Nullable
-//    public List<Tbl_medication_record> getPillAsc(String userId) {
-//        return userRepositorySupport.findPillAsc(userId);
-//    }
 
     @Nullable
     public List<HelpRequestDTO> getHelpRequestAsc() {
@@ -79,7 +75,8 @@ public class AdminService {
     public List<CaregiverHelpRequestDTO> getCaregiverRequest() {
         return userRepositorySupport.findCaregiverHelpRequest();
     }
-
+    @Nullable
+    public List<Tbl_mindHealth_record> getMindHealth(String userId){return userRepositorySupport.findMindHealth(userId);}
     @Nullable
     public List<Tbl_symptom_log> getSymptom(String userId) {
         return userRepositorySupport.findSymptom(userId);
@@ -174,8 +171,12 @@ public class AdminService {
     }
 
     @Nullable
-    public List<WwithusHistoryDTO> getWwithusHistory(String userId){
-        return userRepository.findWwithusHistory(userId);
+    public List<WwithusHistoryDTO> getWwithusHistory(String userId, User.Type type){
+        if(type == User.Type.CAREGIVER){
+            return userRepository.findCaregiverWwithusHistory(userId);
+        } else {
+            return userRepository.findPatientWwithusHistory(userId);
+        }
     }
 
     public List<NatriumCountDTO> getNatriumCountWeek(String userId) {

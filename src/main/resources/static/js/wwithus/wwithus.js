@@ -210,6 +210,10 @@ alt="이미지가 표시되지 않고 있습니다."></a></div>`
     {
         setTimeout(requestNext, MESSAGE_INTERVAL_SECONDS, chatBalloon);
     }
+    if (chatBalloon.toScheduleForNextChatBalloon && userType === 'CAREGIVER' )
+    {
+        setTimeout(requestNext, MESSAGE_INTERVAL_SECONDS, chatBalloon);
+    }
 }
 
 /**
@@ -478,6 +482,10 @@ alt="이미지가 표시되지 않고 있습니다."></a></div>`
                 window.scrollTo(0, document.body.scrollHeight);
                 console.log(userType);
                 if (chatBalloon.toScheduleForNextChatBalloon && userType === 'PATIENT' )
+                {
+                    setTimeout(requestNext, MESSAGE_INTERVAL_SECONDS, chatBalloon);
+                }
+                if (chatBalloon.toScheduleForNextChatBalloon && userType === 'CAREGIVER' )
                 {
                     setTimeout(requestNext, MESSAGE_INTERVAL_SECONDS, chatBalloon);
                 }
