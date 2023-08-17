@@ -55,6 +55,20 @@ public class AlarmController extends BaseController {
         }
 
         Tbl_medication_alarm alarm = medicationAlarmService.getMedication(new RecordKey(user.getUserId(),LocalDate.now()));
+        if(alarm == null){
+            alarm = Tbl_medication_alarm.builder()
+                    .week(user.getWeek())
+                    .morning(null)
+                    .lunch(null)
+                    .dinner(null)
+                    .alarmOnoffMorning(true)
+                    .alarmOnoffLunch(true)
+                    .alarmOnoffDinner(true)
+                    .medicationTimeMorning(null)
+                    .medicationTimeLunch(null)
+                    .medicationTimeDinner(null)
+                    .build();
+        }
         if (alarm.getMedicationTimeMorning() == null) {
             modelAndView.addObject("morningHour", null);
             modelAndView.addObject("morningMinute", null);
@@ -116,9 +130,21 @@ public class AlarmController extends BaseController {
         User user = getUser();
 
 
-        Tbl_medication_alarm intakemedi = medicationAlarmService.getMedication(new RecordKey(user.getUserId(), LocalDate.now()));
-
-
+        Tbl_medication_alarm intakemedi = medicationAlarmService.getMedication(new RecordKey(user.getUserId(),LocalDate.now()));
+        if(intakemedi == null){
+            intakemedi = Tbl_medication_alarm.builder()
+                    .week(user.getWeek())
+                    .morning(null)
+                    .lunch(null)
+                    .dinner(null)
+                    .alarmOnoffMorning(true)
+                    .alarmOnoffLunch(true)
+                    .alarmOnoffDinner(true)
+                    .medicationTimeMorning(null)
+                    .medicationTimeLunch(null)
+                    .medicationTimeDinner(null)
+                    .build();
+        }
         modelAndView.addObject("alarmOnoffMorning",intakemedi.isAlarmOnoffMorning());
         modelAndView.addObject("alarmOnoffLunch", intakemedi.isAlarmOnoffLunch());
         modelAndView.addObject("alarmOnoffDinner", intakemedi.isAlarmOnoffDinner());
@@ -135,9 +161,17 @@ public class AlarmController extends BaseController {
         }
 
         if (user.getType() == User.Type.PATIENT) {
-            Tbl_patient_main_button_count count = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
-            modelAndView.addObject("count", count);
+            Tbl_patient_main_button_count mainCount = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            Tbl_patient_detail_button_count detailCount = countService.getPatientDetailCount(new ProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            modelAndView.addObject("detailCount", detailCount);
+        } else if(user.getType() == User.Type.CAREGIVER) {
+            Tbl_caregiver_main_button_count mainCount = countService.getCaregiverMainCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            Tbl_caregiver_detail_button_count detailCount = countService.getCaregiverDetailCount(new CaregiverProgressKey(user.getUserId(), user.getWeek()));
+            modelAndView.addObject("mainCount", mainCount);
+            modelAndView.addObject("detailCount", detailCount);
         }
+
 
 
         modelAndView.addObject("user", user);

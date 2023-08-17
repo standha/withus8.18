@@ -19,10 +19,14 @@ import withus.entity.User;
 @Setter
 public class WwithusEntryRequest {
     private User user;
+
     private String currentCode;
+
     @Nullable
     private String nextCode;
+
     private List<String> codesToSaveAsHistories;
+
     @Builder.Default
     private LocalDate date = LocalDate.now();
 }

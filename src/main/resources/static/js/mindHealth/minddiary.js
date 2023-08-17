@@ -1,188 +1,90 @@
-let moodType=0;
-//
-// function onFormSubmission(form) {
-//     console.log(form)
-//     console.log("moodType:" + moodType);
-//
-//     const body = {
-//         moodType: moodType
-//     }
-//     const url = form.action;
-//     const options = {
-//         method: "POST",
-//         headers: {
-//             "Accept": "application/json",
-//             "Content-Type": "application/json"
-//         },
-//         body: JSON.stringify(body)
-//     };
-//     fetch(url, options)
-//         .then(response => response.json())
-//         .then(data => console.log(data));
-//
-//     window.location.reload();
-//     return false;
-// }
+let mood=0;
 
+function onFormSubmission(form) {
+    console.log(form)
+    console.log(mood)
 
-function changeToMood(div) {
-    const moodBox = document.getElementById(div.id);
-    switch (div.id) {
-        case"1":
-            if (moodBox.classList.contains('mood-box')) {
-
-                moodBox.classList.remove("mood-box");
-                moodBox.classList.add("sad-chk");
-                moodBox.textContent = "";
-                moodType=1;
-
-            } else if (moodBox.classList.contains('sad-chk')) {
-                moodBox.classList.remove("sad-chk");
-                moodBox.classList.add("mood-box");
-                moodBox.textContent = "슬픔";
-                moodType=0;
-            }
-            break;
-
-        case"2":
-            if (moodBox.classList.contains('mood-box')) {
-
-                moodBox.classList.remove("mood-box");
-                moodBox.classList.add("anger-chk");
-                moodBox.textContent = "";
-                moodType=2;
-
-            } else if (moodBox.classList.contains('anger-chk')) {
-                moodBox.classList.remove("anger-chk");
-                moodBox.classList.add("mood-box");
-                moodBox.textContent = "분노";
-                moodType=0;
-            }
-            break;
-
-
-        case"3":
-            if (moodBox.classList.contains('mood-box')) {
-
-                moodBox.classList.remove("mood-box");
-                moodBox.classList.add("happy-chk");
-                moodBox.textContent = "";
-                moodType=3;
-
-            } else if (moodBox.classList.contains('happy-chk')) {
-                moodBox.classList.remove("happy-chk");
-                moodBox.classList.add("mood-box");
-                moodBox.textContent = "기쁨";
-                moodType=0;
-            }
-            break;
-
-        case"4":
-            if (moodBox.classList.contains('mood-box')) {
-
-                moodBox.classList.remove("mood-box");
-                moodBox.classList.add("surprise-chk");
-                moodBox.textContent = "";
-                moodType=4;
-
-            } else if (moodBox.classList.contains('surprise-chk')) {
-                moodBox.classList.remove("surprise-chk");
-                moodBox.classList.add("mood-box");
-                moodBox.textContent = "놀람";
-                moodType=0;
-            }
-            break;
-
-
-        case"5":
-            if (moodBox.classList.contains('mood-box')) {
-
-                moodBox.classList.remove("mood-box");
-                moodBox.classList.add("horror-chk");
-                moodBox.textContent = "";
-                moodType=5;
-
-            } else if (moodBox.classList.contains('horror-chk')) {
-                moodBox.classList.remove("horror-chk");
-                moodBox.classList.add("mood-box");
-                moodBox.textContent = "공포";
-                moodType=0;
-            }
-            break;
-
-
-        case"6":
-            if (moodBox.classList.contains('mood-box')) {
-
-                moodBox.classList.remove("mood-box");
-                moodBox.classList.add("aversion-chk");
-                moodBox.textContent = "";
-                moodType=6;
-
-            } else if (moodBox.classList.contains('aversion-chk')) {
-                moodBox.classList.remove("aversion-chk");
-                moodBox.classList.add("mood-box");
-                moodBox.textContent = "혐오";
-                moodType=0;
-            }
-            break;
-
-        case"7":
-            if (moodBox.classList.contains('mood-box')) {
-
-                moodBox.classList.remove("mood-box");
-                moodBox.classList.add("boring-chk");
-                moodBox.textContent = "";
-                moodType=7;
-
-            } else if (moodBox.classList.contains('boring-chk')) {
-                moodBox.classList.remove("boring-chk");
-                moodBox.classList.add("mood-box");
-                moodBox.textContent = "지루함";
-                moodType=0;
-            }
-            break;
-
-        case"8":
-            if (moodBox.classList.contains('mood-box')) {
-
-                moodBox.classList.remove("mood-box");
-                moodBox.classList.add("interest-chk");
-                moodBox.textContent = "";
-                moodType=8;
-
-            } else if (moodBox.classList.contains('interest-chk')) {
-                moodBox.classList.remove("interest-chk");
-                moodBox.classList.add("mood-box");
-                moodBox.textContent = "흥미";
-                moodType=0;
-            }
-            break;
-
-        case"9":
-            if (moodBox.classList.contains('mood-box')) {
-
-                moodBox.classList.remove("mood-box");
-                moodBox.classList.add("ache-chk");
-                moodBox.textContent = "";
-                moodType=9;
-
-            } else if (moodBox.classList.contains('ache-chk')) {
-                moodBox.classList.remove("ache-chk");
-                moodBox.classList.add("mood-box");
-                moodBox.textContent = "통증";
-                moodType=0;
-            }
-            break;
-
+    const body = {
+        mood: mood
     }
-    moodType=moodType;
+    const url = form.action;
+    const options = {
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+    };
+    fetch(url, options)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        });
+    // window.location.reload();
+    return false;
+}
+
+function toggleButton(buttonId) {
+    const button = document.getElementById(buttonId);
+    const buttonName = button.getAttribute('name'); // 버튼의 name 속성 값을 가져옴
+    const isActive = button.classList.contains(buttonName + "-chk");
+
+    const allButtons = document.querySelectorAll('.mood-box, .' + buttonName + "-chk"); // 모든 버튼과 해당 클래스 버튼 선택
+    allButtons.forEach(otherButton => {
+        if (otherButton.id !== buttonId) {
+            otherButton.disabled = true;
+            otherButton.classList.remove(buttonName + "-chk");
+            otherButton.classList.add("mood-box");
+            otherButton.textContent = getMoodText(otherButton.id);
+        }
+    });
+
+    if (!isActive) {
+        button.disabled = false;
+        button.classList.remove("mood-box");
+        button.classList.add(buttonName + "-chk");
+        button.textContent = "";
+        mood = parseInt(buttonId);
+    } else {
+        allButtons.forEach(otherButton => { // 모든 버튼을 다시 활성화하고 해당 버튼의 클래스를 mood-box로 변경
+            otherButton.disabled = false;
+            otherButton.classList.remove(otherButton.getAttribute('name') + "-chk");
+            otherButton.classList.add("mood-box");
+            otherButton.textContent = getMoodText(otherButton.id);
+        });
+        // moodType = 0;
+    }
+
+    console.log("mood: " + mood);
+}
+function getMoodText(buttonId) {
+    switch (buttonId) {
+        case "1":
+            return "슬픔";
+        case "2":
+            return "분노";
+        case "3":
+            return "기쁨";
+        case "4":
+            return "놀람";
+        case "5":
+            return "공포";
+        case "6":
+            return "혐오";
+        case "7":
+            return "지루함";
+        case "8":
+            return "흥미";
+        case "9":
+            return "통증";
+        default:
+            return "";
+    }
 }
 
 function showHistory() {
     const element = document.querySelector("#mindhealth-history-get-action");
     location.href = element.value;
 }
-
-
 

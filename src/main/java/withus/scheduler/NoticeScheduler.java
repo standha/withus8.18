@@ -222,7 +222,7 @@ public class NoticeScheduler {
         }
     }
 
-    //위더스랑 1~8주차 PUSH알림 cron = "0 0 8 * * MON,TUE,THU,SAT"
+    //위더스랑 1~8주차 PUSH알림 cron = "0 0 8 * * MON,WED,SAT"
     @Async
     @Scheduled(cron = "0 0 8 * * MON,WED,SAT")
     public void withusNotice1() {

@@ -27,7 +27,7 @@
 </div>
 
 <!-- wrap -->
-<div id="wrap" class="main-page" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
+<div id="wrap" class="main-page" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
     <!-- header -->
     <header>
         <div class="header-wrap">
@@ -231,8 +231,8 @@
         </ul>
         <div>
             <input type='hidden' name="medicine" th:value="${count.medicine}" style="display:none">
-            <input type='hidden' name="mindHealth" th:value="${count.mindHealth}" style="display:none">
             <input type='hidden' name="board" th:value="${count.board}" style="display:none">
+            <input type='hidden' name="mindHealth" th:value="${count.mindHealth}" style="display:none">
             <input type='hidden' name="alarm" th:value="${count.alarm}" style="display:none">
             <input type='hidden' name="bloodPressure" th:value="${count.bloodPressure}" style="display:none">
             <input type='hidden' name="diseaseInfo" th:value="${count.diseaseInfo}" style="display:none">
@@ -257,7 +257,7 @@
                 <span class="black">위더스랑 </span>
                 <span class="ico-logo2"></span>
             </div>
-            <a class="btn sm type08" th:href="@{/wwithus}">
+            <a class="btn sm type08" th:href="@{/wwithus/caregiver}">
                 <span class="txt-lt">대화시작</span>
                 <span class="ico-arrow1"></span>
             </a>

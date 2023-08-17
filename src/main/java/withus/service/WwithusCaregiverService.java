@@ -1,5 +1,21 @@
 package withus.service;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Service;
+import withus.auth.AuthenticationFacade;
+import withus.dto.Result;
+import withus.dto.wwithus.AnswerButton;
+import withus.dto.wwithus.ChatBalloon;
+import withus.dto.wwithus.WwithusEntryRequest;
+import withus.entity.User;
+import withus.entity.WwithusEntryCaregiver;
+import withus.entity.WwithusEntryHistoryCaregiver;
+import withus.repository.WwithusEntryHistoryCaregiverRepository;
+import withus.repository.WwithusEntryCaregiverRepository;
+import withus.util.Utility;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -9,37 +25,19 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Service;
-import withus.auth.AuthenticationFacade;
-import withus.controller.BaseController;
-import withus.dto.Result;
-import withus.dto.wwithus.AnswerButton;
-import withus.dto.wwithus.ChatBalloon;
-import withus.dto.wwithus.WwithusEntryRequest;
-import withus.entity.User;
-import withus.entity.WwithusEntry;
-import withus.entity.WwithusEntryHistory;
-import withus.repository.WwithusEntryHistoryRepository;
-import withus.repository.WwithusEntryRepository;
-import withus.util.Utility;
-
 @Service
 @Slf4j
-public class WwithusService {
-    private final WwithusEntryRepository wwithusEntryRepository;
-    private final WwithusEntryHistoryRepository wwithusEntryHistoryRepository;
+public class WwithusCaregiverService {
+    private final WwithusEntryCaregiverRepository wwithusEntryCaregiverRepository;
+    private final WwithusEntryHistoryCaregiverRepository wwithusEntryHistoryCaregiverRepository;
     private final AuthenticationFacade authenticationFacade;
     private final UserService userService;
 
     @Autowired
-    public WwithusService(UserService userService, AuthenticationFacade authenticationFacade, WwithusEntryRepository wwithusEntryRepository, WwithusEntryHistoryRepository wwithusEntryHistoryRepository) {
+    public WwithusCaregiverService(UserService userService, AuthenticationFacade authenticationFacade, WwithusEntryCaregiverRepository wwithusEntryCaregiverRepository, WwithusEntryHistoryCaregiverRepository wwithusEntryHistoryCaregiverRepository) {
         this.authenticationFacade = authenticationFacade;
-        this.wwithusEntryRepository = wwithusEntryRepository;
-        this.wwithusEntryHistoryRepository = wwithusEntryHistoryRepository;
+        this.wwithusEntryCaregiverRepository = wwithusEntryCaregiverRepository;
+        this.wwithusEntryHistoryCaregiverRepository = wwithusEntryHistoryCaregiverRepository;
         this.userService = userService;
 
     }
@@ -49,50 +47,51 @@ public class WwithusService {
         List<String> codesToSaveAsHistories = wwithusEntryRequest.getCodesToSaveAsHistories();
         String currentCode = wwithusEntryRequest.getCurrentCode();
 
-        if (user.getType() == User.Type.CAREGIVER) {
-            user = userService.getUserByCaregiverId(user.getUserId());
-            if (currentCode == null) {
-                throw new Utility.NoHisException();
-            }
-        }
+//        if (user.getType() == User.Type.CAREGIVER) {
+//            user = userService.getUserByCaregiverId(user.getUserId());
+//            if (currentCode == null) {
+//                throw new Utility.NoHisException();
+//            }
+//        }
+
         if (currentCode != null) {
             codesToSaveAsHistories.add(currentCode);
         }
 
         for (String codeToSaveAsHistory : codesToSaveAsHistories) {
-            WwithusEntry currentEntry = wwithusEntryRepository.findById(codeToSaveAsHistory).<RuntimeException>orElseThrow(() -> {
+            WwithusEntryCaregiver currentEntry = wwithusEntryCaregiverRepository.findById(codeToSaveAsHistory).<RuntimeException>orElseThrow(() -> {
                 throw new RuntimeException(String.format("Failed to select entry by the code \"%s\".", currentCode));
             });
 
             user = wwithusEntryRequest.getUser();
-            WwithusEntryHistory wwithusEntryHistory = toWwithusEntryHistory(wwithusEntryRequest.getUser(), currentEntry);
-            WwithusEntryHistory existingHistory = wwithusEntryHistoryRepository.findById(wwithusEntryHistory.getKey()).orElse(null);
+            WwithusEntryHistoryCaregiver wwithusEntryHistoryCaregiver = toWwithusEntryHistory(wwithusEntryRequest.getUser(), currentEntry);
+            WwithusEntryHistoryCaregiver existingHistory = wwithusEntryHistoryCaregiverRepository.findById(wwithusEntryHistoryCaregiver.getKey()).orElse(null);
             if (existingHistory == null) {
-                if (user.getType() == User.Type.PATIENT) {
-                    wwithusEntryHistoryRepository.save(wwithusEntryHistory);
+                if (user.getType() == User.Type.CAREGIVER) {
+                    wwithusEntryHistoryCaregiverRepository.save(wwithusEntryHistoryCaregiver);
                 } else {
-                    user = userService.getUserByCaregiverId(user.getUserId());
+//                    user = userService.getUserByCaregiverId(user.getUserId());
                     if (currentCode == null) {
                         throw new Utility.NoHisException();
                     }
                 }
             } else {
-                log.debug("Chose not to overwrite a {}: {}", WwithusEntry.class.getSimpleName(), wwithusEntryHistory);
+                log.debug("Chose not to overwrite a {}: {}", WwithusEntryCaregiver.class.getSimpleName(), wwithusEntryHistoryCaregiver);
             }
         }
 
-        WwithusEntry nextEntry;
+        WwithusEntryCaregiver nextEntry;
         String nextCode = wwithusEntryRequest.getNextCode();
         System.out.printf("###### nextCode is %s ######\n", nextCode);
 
         int week = user.getWeek();
         DayOfWeek dayOfWeek = wwithusEntryRequest.getDate().getDayOfWeek();
         if (nextCode == null) {
-            nextEntry = wwithusEntryRepository.findFirstByWeekAndDay(week, dayOfWeek).<RuntimeException>orElseThrow(() -> {
+            nextEntry = wwithusEntryCaregiverRepository.findFirstByWeekAndDay(week, dayOfWeek).<RuntimeException>orElseThrow(() -> {
                 throw new RuntimeException(String.format("Failed to select the first entry for %s, week %d.", dayOfWeek, week));
             });
         } else {
-            nextEntry = wwithusEntryRepository.findById(nextCode).<RuntimeException>orElseThrow(() -> {
+            nextEntry = wwithusEntryCaregiverRepository.findById(nextCode).<RuntimeException>orElseThrow(() -> {
                 throw new RuntimeException(String.format("Failed to select entry by the code \"%s\".", nextCode));
             });
         }
@@ -100,29 +99,31 @@ public class WwithusService {
         return toChatBalloon(nextEntry, true);
     }
 
-    public List<WwithusEntry> getAnswerWwithusEntries(String currentCode) {
-        List<WwithusEntry> answerNode = wwithusEntryRepository.findAllAnswersByCodeStartsWithButNotExactlyOrderByCode(currentCode + "_A");
+    public List<WwithusEntryCaregiver> getAnswerWwithusEntries(String currentCode) {
+        List<WwithusEntryCaregiver> answerNode = wwithusEntryCaregiverRepository.findAllAnswersByCodeStartsWithButNotExactlyOrderByCode(currentCode + "_A");
 
         return answerNode;
     }
 
     @NonNull
     public List<ChatBalloon> getWwithusEntryHistories(User user, LocalDate date) {
-        if (user.getType() == User.Type.CAREGIVER) {
-            user = userService.getUserByCaregiverId(user.getUserId());
-        }
+
+//        if (user.getType() == User.Type.CAREGIVER) {
+//            user = userService.getUserByCaregiverId(user.getUserId());
+//        }
+
         int week = user.getWeek();
         int day = Utility.getDayDigitForWwithus(week, date.getDayOfWeek());
 
-        List<WwithusEntryHistory> wwithusEntryHistories = wwithusEntryHistoryRepository.findAllByUserAndWeekDay(user, week, day);
+        List<WwithusEntryHistoryCaregiver> wwithusEntryHistories = wwithusEntryHistoryCaregiverRepository.findAllByUserAndWeekDay(user, week, day);
 
         List<ChatBalloon> chatBalloons = new ArrayList<>();
-        Iterator<WwithusEntryHistory> iterator = wwithusEntryHistories.stream().sorted().iterator();
+        Iterator<WwithusEntryHistoryCaregiver> iterator = wwithusEntryHistories.stream().sorted().iterator();
         while (iterator.hasNext()) {
-            WwithusEntryHistory wwithusEntryHistory = iterator.next();
+            WwithusEntryHistoryCaregiver wwithusEntryHistoryCaregiver = iterator.next();
 
             boolean isMostRecent = !iterator.hasNext();
-            chatBalloons.add(toChatBalloon(wwithusEntryHistory, isMostRecent));
+            chatBalloons.add(toChatBalloon(wwithusEntryHistoryCaregiver, isMostRecent));
         }
 
         return chatBalloons.stream()
@@ -205,51 +206,51 @@ public class WwithusService {
         int week = user.getWeek();
         int day = Utility.getDayDigitForWwithus(week, date.getDayOfWeek());
 
-        List<WwithusEntryHistory> wwithusEntryHistories = wwithusEntryHistoryRepository.findAllByUserAndWeekDay(user, week, day);
+        List<WwithusEntryHistoryCaregiver> wwithusEntryHistories = wwithusEntryHistoryCaregiverRepository.findAllByUserAndWeekDay(user, week, day);
         if (wwithusEntryHistories.isEmpty()) {
             code = Result.Code.ERROR_NOTHING_TO_DELETE;
         } else {
-            wwithusEntryHistoryRepository.deleteAll(wwithusEntryHistories);
+            wwithusEntryHistoryCaregiverRepository.deleteAll(wwithusEntryHistories);
         }
 
         return code;
     }
 
-    private WwithusEntryHistory toWwithusEntryHistory(User user, WwithusEntry wwithusEntry) {
-        return WwithusEntryHistory.builder()
+    private WwithusEntryHistoryCaregiver toWwithusEntryHistory(User user, WwithusEntryCaregiver wwithusEntryCaregiver) {
+        return WwithusEntryHistoryCaregiver.builder()
                 .key(
-                        WwithusEntryHistory.Key.builder()
+                        WwithusEntryHistoryCaregiver.Key.builder()
                                 .user(user)
-                                .entry(wwithusEntry)
+                                .entry(wwithusEntryCaregiver)
                                 .build()
                 ).build();
     }
 
-    private ChatBalloon toChatBalloon(@NonNull WwithusEntry wwithusEntry, boolean isLast) {
-        return toChatBalloon(wwithusEntry, LocalDateTime.now(), isLast);
+    private ChatBalloon toChatBalloon(@NonNull WwithusEntryCaregiver wwithusEntryCaregiver, boolean isLast) {
+        return toChatBalloon(wwithusEntryCaregiver, LocalDateTime.now(), isLast);
     }
 
-    private ChatBalloon toChatBalloon(@NonNull WwithusEntryHistory wwithusEntryHistory, boolean isLast) {
-        return toChatBalloon(wwithusEntryHistory.getEntry(), wwithusEntryHistory.getDateTime(), isLast);
+    private ChatBalloon toChatBalloon(@NonNull WwithusEntryHistoryCaregiver wwithusEntryHistoryCaregiver, boolean isLast) {
+        return toChatBalloon(wwithusEntryHistoryCaregiver.getEntry(), wwithusEntryHistoryCaregiver.getDateTime(), isLast);
     }
 
-    private ChatBalloon toChatBalloon(@NonNull WwithusEntry wwithusEntry, @NonNull LocalDateTime dateTime, boolean isLast) {
-        boolean isAnswerExpected = wwithusEntry.isAnswerExpected();
+    private ChatBalloon toChatBalloon(@NonNull WwithusEntryCaregiver wwithusEntryCaregiver, @NonNull LocalDateTime dateTime, boolean isLast) {
+        boolean isAnswerExpected = wwithusEntryCaregiver.isAnswerExpected();
 
         ChatBalloon.ChatBalloonBuilder chatBalloonBuilder = ChatBalloon.builder()
-                .code(wwithusEntry.getCode())
-                .direction(wwithusEntry.isAnswer() ? ChatBalloon.Direction.RIGHT : ChatBalloon.Direction.LEFT)
+                .code(wwithusEntryCaregiver.getCode())
+                .direction(wwithusEntryCaregiver.isAnswer() ? ChatBalloon.Direction.RIGHT : ChatBalloon.Direction.LEFT)
                 .isMostRecent(isLast)
-                .isToTerminate(wwithusEntry.isLast())
+                .isToTerminate(wwithusEntryCaregiver.isLast())
                 .isAnswerExpected(isAnswerExpected)
-                .content(getUsernamePlusContent(wwithusEntry.getContent()))
-                .urlToImageFile(wwithusEntry.getUrlToImageFile())
-                .urlToAudioFile(wwithusEntry.getUrlToAudioFile())
+                .content(getUsernamePlusContent(wwithusEntryCaregiver.getContent()))
+                .urlToImageFile(wwithusEntryCaregiver.getUrlToImageFile())
+                .urlToAudioFile(wwithusEntryCaregiver.getUrlToAudioFile())
                 .dateTime(dateTime)
-                .nextCode(wwithusEntry.getNextCode());
+                .nextCode(wwithusEntryCaregiver.getNextCode());
 
         if (isAnswerExpected) {
-            List<AnswerButton> answerButtons = getAnswerButtons(wwithusEntry);
+            List<AnswerButton> answerButtons = getAnswerButtons(wwithusEntryCaregiver);
             chatBalloonBuilder.answerButtons(answerButtons);
         }
 
@@ -273,15 +274,15 @@ public class WwithusService {
         return NoPatientChatBalloons;
     }
 
-    private List<AnswerButton> getAnswerButtons(WwithusEntry wwithusEntry) {
+    private List<AnswerButton> getAnswerButtons(WwithusEntryCaregiver wwithusEntryCaregiver) {
 
         List<AnswerButton> answerButtons = new ArrayList<>();
-        List<WwithusEntry> answerWwithusEntries = getAnswerWwithusEntries(wwithusEntry.getCode()).stream()
+        List<WwithusEntryCaregiver> answerWwithusEntries = getAnswerWwithusEntries(wwithusEntryCaregiver.getCode()).stream()
                 .sorted()
                 .collect(Collectors.toList());
 
         for (int i = 0; i < answerWwithusEntries.size(); i++) {
-            WwithusEntry answerWwithusEntity = answerWwithusEntries.get(i);
+            WwithusEntryCaregiver answerWwithusEntity = answerWwithusEntries.get(i);
             AnswerButton answerButton = AnswerButton.builder()
                     .code(answerWwithusEntity.getCode())
                     .ordinal(i)
@@ -302,9 +303,9 @@ public class WwithusService {
     public String getUsernamePlusContent(String content) {
         User user = userService.getUserById(authenticationFacade.getAuthentication().getName());
 
-        if (user.getType() == User.Type.CAREGIVER) {
-            user = userService.getUserByCaregiverId(user.getUserId());
-        }
+//        if (user.getType() == User.Type.CAREGIVER) {
+//            user = userService.getUserByCaregiverId(user.getUserId());
+//        }
 
         String username = user.getName();
         if (content.startsWith("님 ")) {

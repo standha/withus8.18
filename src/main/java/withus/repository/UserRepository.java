@@ -94,10 +94,10 @@ public interface UserRepository extends JpaRepository<User, String> {
             " from user as u left join user as c on u.contact = c.caregiver_contact " +
             "left join(select any_value(t.entry_code) as 'code' , any_value(t.date_time), t.user_id from" +
             "(select wwh.user_id, wwh.date_time, wwh.entry_code" +
-            " from wwithus_entry_history as wwh" +
+            " from wwithus_entry_history_caregiver as wwh" +
             " where(wwh.user_id, wwh.date_time)in(" +
             "select wh.user_id,max(wh.date_time)as dt" +
-            " from wwithus_entry_history as wh group by wh.user_id)" +
+            " from wwithus_entry_history_caregiver as wh group by wh.user_id)" +
             "order by wwh.date_time desc" +
             ")t " +
             "group by t.user_id)t on(u.id = t.user_id)" +
@@ -203,8 +203,20 @@ public interface UserRepository extends JpaRepository<User, String> {
             "ON DATE(t1.date_time) = t3.date AND t1.date_time = t3.max_date_time " +
             "WHERE t1.user_id = :userId " +
             "order by t1.entry_code;", nativeQuery = true)
-    List<WwithusHistoryDTO> findWwithusHistory(@Param("userId") String userId);
-
+    List<WwithusHistoryDTO> findPatientWwithusHistory(@Param("userId") String userId);
+    @Nullable
+    @Query(value = "SELECT t1.entry_code, DATE(t1.date_time) AS date " +
+            "FROM wwithus_entry_history_caregiver AS t1 " +
+            "JOIN ( " +
+            "SELECT DATE(t2.date_time) AS date, MAX(t2.date_time) AS max_date_time " +
+            "FROM wwithus_entry_history_caregiver AS t2 " +
+            "WHERE t2.user_id = :userId " +
+            "GROUP BY DATE(t2.date_time) " +
+            ") AS t3 " +
+            "ON DATE(t1.date_time) = t3.date AND t1.date_time = t3.max_date_time " +
+            "WHERE t1.user_id = :userId " +
+            "order by t1.entry_code;", nativeQuery = true)
+    List<WwithusHistoryDTO> findCaregiverWwithusHistory(@Param("userId") String userId);
 
 
 }

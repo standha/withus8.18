@@ -72,9 +72,20 @@
 			</div>
 		</div>
 	</header>
-	<input type="hidden" id="history-url" th:attr="value=@{/wwithus/histories}">
-	<input type="hidden" id="userType" name="userType" th:value="${userType}">
-	<input type="hidden" id="request-next-url" th:attr="value=@{/wwithus/request-next}">
+ 
+  <!-- 환자일 경우 -->
+  <div th:if="${userType} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
+    <input type="hidden" id="history-url" th:attr="value=@{/wwithus/histories}">
+    <input type="hidden" id="userType" name="userType" th:value="${userType}">
+    <input type="hidden" id="request-next-url" th:attr="value=@{/wwithus/request-next}">
+  </div>
+  <!-- 보호자일 경우 -->
+  <div th:if="${userType} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25">
+    <input type="hidden" id="history-url" th:attr="value=@{/wwithus/caregiver/histories}">
+    <input type="hidden" id="userType" name="userType" th:value="${userType}">
+    <input type="hidden" id="request-next-url" th:attr="value=@{/wwithus/caregiver/request-next}">
+  </div>
+  
 	<div class = "container" id ="content" style="overflow: auto">
 		<div class="cont-wrap">
 				<div id="body"></div>
