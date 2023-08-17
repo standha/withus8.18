@@ -70,6 +70,7 @@
     /*<![CDATA[*/
     var goalCheck = /*[[ ${info.goal} ]]*/;
     var level = /*[[ ${info.level} ]]*/;
+    var seed = [[ ${seed} ]];
     /*]]*/
 
     var levelItem = "<p style='text-align: right;'>";
@@ -125,6 +126,8 @@
     levelItem += "단계" + "</p>";
     $('#patient_level').append(levelItem);
 
+    var seedItem = "<p style='text-align: right;'>" +"누적씨앗 : " +seed + "개" +"</p>";
+    $('#patient_level').append(seedItem);
     if(goalCheck === "이번주 목표를 설정해봐요!" || goalCheck === null){
         goalNow = "미설정";
     } else {
