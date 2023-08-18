@@ -24,11 +24,13 @@
 
 </head>
 <body>
-<input type="hidden" id="helper-request" th:attr="value=@{/helper-request}">
+<input type="hidden" id="pill-history-get-action" th:attr="value=@{/pill-history}">
+<input type="hidden" id="pill-put-action" th:attr="value=@{/pill-history}">
 <input type="hidden" id="button-count" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25"
-       th:attr="value=@{/patient-detail-button-count}">
+       th:attr="value=@{/patient-main-button-count}">
 <input type="hidden" id="button-count" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25"
-       th:attr="value=@{/caregiver-detail-button-count}">
+       th:attr="value=@{/caregiver-main-button-count}">
+<input type="hidden" id="helper-request" th:attr="value=@{/helper-request}">
 <div class="skip-navi">
     <a href="#content">본문 바로가기</a>
 </div>
@@ -106,7 +108,7 @@
     <div class="header-wrap type01">
         <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${user.week} != 25">
             <div onclick="helperRequest()">
-                <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'">
+                <a class="btn xsm type07" href="tel:010-8454-9186" onclick="addHelper()">
                     <span class="ico-call"></span>
                     <span class="txt-rt">도우미</span>
                 </a>
@@ -255,6 +257,7 @@
         </div>
     </div>
 </footer>
+
 </body>
 <script>
     start("MEDICINE");
