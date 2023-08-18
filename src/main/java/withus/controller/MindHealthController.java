@@ -418,16 +418,16 @@ public Result<Tbl_mindHealth_record> PostMinddiary(@RequestBody Tbl_mindHealth_r
         ModelAndView modelAndView = new ModelAndView("mindHealth/mindscore");
         User user = getUser();
 
-        if (mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now())) == null) {
+        if (mindHealthService.getmindHealth(new RecordKey(user.getUserId(), LocalDate.now())) == null) {
             modelAndView.addObject("mood", null);
             modelAndView.addObject("text", null);
             modelAndView.addObject("score", null);
 
         } else {
-            Tbl_mindHealth_record mood = mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now()));
+            Tbl_mindHealth_record mood = mindHealthService.getmindHealth(new RecordKey(user.getUserId(), LocalDate.now()));
             modelAndView.addObject("mood", mood.getMood());
             modelAndView.addObject("text", mood.getText());
-            modelAndView.addObject("score", getMindscore());
+            modelAndView.addObject("score", mood.getScore());
 
 
         }
