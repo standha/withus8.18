@@ -11,6 +11,7 @@ function radioClick() {
     var checkButtons = document.getElementsByName("check_radio");
     var checked=[];
 
+
     console.log(goalList);
     function updateCheckedArray(value) {
 
@@ -151,7 +152,7 @@ function onFormSubmission() {
     var checkedgoal = [];
     goalList ={};
     var flag = getAjax();
-    console.log(goalList.top_goals)
+    console.log(goalList)
 
 
 /*

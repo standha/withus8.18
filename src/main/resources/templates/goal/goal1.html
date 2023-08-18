@@ -226,7 +226,7 @@
                 <div th:if="${goalList.top_goals} == '주 1회 이상 정해진 시간에 약 복용' or ${goalList.middle_goals} == '주 1회 이상 정해진 시간에 약 복용' or ${goalList.bottom_goals} == '주 1회 이상 정해진 시간에 약 복용'" class="rdo-box checked">
                     <label>
                         <span class="rdo-mark"></span>
-                        <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 1회 이상 정해진 시간에 약 복용" data-category="bottom">주 1회 이상 정해진 시간에 약 복용
+                        <input type="checkbox" name="check_radio" onclick="radioClick()" value="주 1회 이상 정해진 시간에 약 복용" id="1">주 1회 이상 정해진 시간에 약 복용
                     </label>
                 </div>
                 <div th:unless="${goalList.top_goals} == '주 1회 이상 정해진 시간에 약 복용' or ${goalList.middle_goals} == '주 1회 이상 정해진 시간에 약 복용' or ${goalList.bottom_goals} == '주 1회 이상 정해진 시간에 약 복용'" class="rdo-box">
