@@ -250,6 +250,36 @@ select:focus {border: 1px solid #111;}
 #activityDropdown {width:150px; padding:.8em .5em;border: 1px solid #999;font-family: inherit;background-color: #aaaaaa; background:url('../images/arrow.jpg') no-repeat 95% 50%; border-radius: 0px; -webkit-appearance: none; -moz-appearance: none; appearance: none;}
 
 
+/*goaloption*/
+#goalDropdown {width:150px; padding:.8em .5em;border: 1px solid #999;font-family: inherit;background-color: #aaaaaa; background:url('../images/arrow.jpg') no-repeat 95% 50%; border-radius: 0px; -webkit-appearance: none; -moz-appearance: none; appearance: none;}
+#goalDropdown {width:150px; padding:.8em .5em;border: 1px solid #999;font-family: inherit;background-color: #aaaaaa; background:url('../images/arrow.jpg') no-repeat 95% 50%; border-radius: 0px; -webkit-appearance: none; -moz-appearance: none; appearance: none; margin:100px auto;}
+
+
+#weekDropdown {width:150px; padding:.8em .5em;border: 1px solid #999;font-family: inherit;background-color: #aaaaaa; background:url('../images/arrow.jpg') no-repeat 95% 50%; border-radius: 0px; -webkit-appearance: none; -moz-appearance: none; appearance: none;}
+#weekDropdown {width:150px; padding:.8em .5em;border: 1px solid #999;font-family: inherit;background-color: #aaaaaa; background:url('../images/arrow.jpg') no-repeat 95% 50%; border-radius: 0px; -webkit-appearance: none; -moz-appearance: none; appearance: none; margin:100px auto;}
+
+
+.highlighted-text {
+    color: red;
+    font-size: 20px; /* 필요한 크기로 조정하세요 */
+}
+
+.goaltext {
+    font-size: 20px; /* 필요한 크기로 조정하세요 */
+}
+
+.goaloptionpop {content: ''; display: inline-block; position: absolute; left: 13%; top: 410px; width: 73px; height: 73px; background: url('../images/common/sp-icon.png') -267px -150px no-repeat; background-size: 600px 450px; transform: translateX(-50%);}
+
+.goal{
+    display: inline-block;
+    margin-right: 10px; /* 컨테이너들 사이 간격 설정 */
+}
+
+
+.selected-option {text-align:center;position: relative; height: 55px; line-height: 53px; border-radius: 5px; border: 1px solid #efefef; background-color: #fff; margin-bottom: 3%; background-position: -260px -115px; background-position: -311px -2px;}
+
+
+
 /*mindHealth*/
 .mood-icon {
     display: grid;grid-template-columns: repeat(3, 100px);grid-template-rows: repeat(3, 100px);grid-gap: 20px;justify-content: center;margin: 60px 8% 20px; font-weight: bold;

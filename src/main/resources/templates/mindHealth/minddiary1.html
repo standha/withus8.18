@@ -105,12 +105,12 @@
     </div>
 </header>
 
-<form id="mindHealth-form" th:action="@{/minddiary1}" onsubmit="return onFormSubmission(this);">
+<form id="mindHealth1-form" th:action="@{/minddiary1}" onsubmit="return onFormSubmission(this);">
 <div class="container" id="content">
     <div class="cont-wrap type01">
         <div class="insert-wrap">
             <div style="margin: 3% 3%; padding: 6% 0;">
-                  <span style="font-size:23px;line-height:2.1;"><br>
+                  <span style="font-size:20px;line-height:2.1;"><br>
                         마음건강을 위해 오늘 느낀 기분을<br>
                         기록해보세요<br>
                         기록할 내용이 없다면 저장을 눌러주세요.
@@ -118,15 +118,13 @@
 
             </div>
             <div class="daily-box last">
-              <textarea type="text" placeholder="내용을 입력하세요." id="myTextarea" name="text" autofocus
-                        style="width: 385px; height: 380px; font-size: 15px; border: 0; border-radius: 15px; outline: none; padding-left: 10px; background-color: rgb(233, 233, 233); margin-left:10px; margin-right:10px;"></textarea>
+              <input type="text" placeholder="내용을 입력하세요." id="myTextarea" name="text" autofocus
+                     th:value="${text}" style="width: 350px; height: 380px; font-size: 15px; border: 0; border-radius: 15px; outline: none; padding-left: 10px; background-color: rgb(233, 233, 233); margin-left:10px; margin-right:10px;">
             </div>
 
             <div class="btn-wrap type03 grid4">
                 <button type="submit" class="btn xlg1 type01" id="nextButton">저장(2/2)</button>
             </div>
-
-
 
 
         </div>
@@ -150,6 +148,39 @@
 </body>
 <script>
     start("MIND_HEALTH");
+
+
+    function onFormSubmission(form) {
+        console.log(form)
+        text = form.querySelector('input[name=text]').value;
+
+        const body = {
+            text:text
+        }
+        const url = form.action;
+        const options = {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        };
+
+
+        fetch(url, options)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+
+                if (data.code === 'OK') {
+                    alert("저장되었습니다."); }
+            });
+        // window.location.reload();
+        return false;
+    }
+
+
 </script>
 </html>
 

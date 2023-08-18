@@ -28,4 +28,7 @@ public class Tbl_mindHealth_record {
 
     @Column(name = "score")
     private Integer score;
+
+    @Column(name="week")
+    private Integer week;
 }

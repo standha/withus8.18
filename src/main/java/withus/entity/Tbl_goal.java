@@ -31,4 +31,7 @@ public class Tbl_goal {
     @Column(name = "week")
     private Integer week;
 
+//    @Column(name = "goalweek")
+//    private String goalweek;
+
 }

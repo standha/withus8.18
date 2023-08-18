@@ -1,34 +1,25 @@
-<!doctype html>
-<html lang="ko">
-<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>위더스</title>
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
-    <meta name="format-detection" content="telephone=no">
+
     <link th:href="@{/css/reset.css}" rel="stylesheet">
     <link th:href="@{/css/common.css}" rel="stylesheet">
     <link th:href="@{/css/layout.css}" rel="stylesheet">
-    <link th:href="@{/css/medication.css}" rel="stylesheet">
     <script th:src="@{/js/jquery-1.12.4.min.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/help.js}"></script>
-    <script th:src="@{/js/durationTime.js}"></script>
-    <script th:src="@{/js/medication/medication.js}"></script>
-    <!--    <script th:src="@{/js/alarm/pill.js}"></script>-->
     <script th:src="@{/js/input_limit.js}"></script>
+    <script th:src="@{/js/mindHealth/minddiary.js}"></script>
     <script src="https://kit.fontawesome.com/e381c8a508.js" crossorigin="anonymous"></script>
-
-
 </head>
 <body>
+
+<input type="hidden" id="button-count" th:attr="value=@{/button-count}">
 <input type="hidden" id="helper-request" th:attr="value=@{/helper-request}">
-<input type="hidden" id="button-count" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25"
-       th:attr="value=@{/patient-detail-button-count}">
-<input type="hidden" id="button-count" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25"
-       th:attr="value=@{/caregiver-detail-button-count}">
 <div class="skip-navi">
     <a href="#content">본문 바로가기</a>
 </div>
@@ -96,31 +87,27 @@
     <input type='hidden' name="mindDiaryAlarm" th:value="${detailCount.mindDiaryAlarm}" style="display:none">
     <input type='hidden' name="mindScoreAlarm" th:value="${detailCount.mindScoreAlarm}" style="display:none">
 </div>
-<!-- buttonCount -->
-<!-- wrap -->
-<!--<div id="wrap" class="time-page">-->
 
+<div id="wrap" class="chart-page">
 
-<!-- header -->
 <header>
     <div class="header-wrap type01">
-        <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${user.week} != 25">
+        <div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
             <div onclick="helperRequest()">
-                <a class="btn xsm type07" href="tel:010-8454-9186" th:onclick="'addHelper(parseInt(' + ${count.helper} + '))'">
+                <a class="btn xsm type07" href="tel:010-8454-9186" onclick="addHelper()">
                     <span class="ico-call"></span>
                     <span class="txt-rt">도우미</span>
                 </a>
             </div>
             <h2>
-                <span class="ico-alarm-s"></span>
-                <span>복용약</span>
+                <span>마음 점수</span>
             </h2>
             <div class="col text-end" style="font-size: 20px; margin-top: 0.73vh;">
                 <a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl"
                                                                 style="color: #00b050;"></i></a>
             </div>
         </div>
-        <div class="head" th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} or ${user.week} == 25">
+        <div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
             <div onclick="helperRequest()">
                 <a class="btn xsm type07" href="tel:010-8454-9186">
                     <span class="ico-call"></span>
@@ -128,8 +115,7 @@
                 </a>
             </div>
             <h2>
-                <span class="ico-alarm-s"></span>
-                <span>복용약</span>
+                <span>마음 점수</span>
             </h2>
             <div class="col text-end" style="font-size: 20px; margin-top: 0.73vh;">
                 <a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl"
@@ -139,124 +125,87 @@
         </div>
     </div>
 </header>
-
     <div class="container" id="content">
-        <form id="medication-form" th:action="@{/medication}" onsubmit="return onFormSubmission(this);">
         <div class="cont-wrap type01">
-            <div class="d1 d2">
-                <span id="date"></span>
-                <span>(오늘)</span>
-            </div>
-
-            <div id="morningDiv" class="time-submit2" name="alarmOnoffMorning" value=1 th:if="${alarmOnoffMorning}">
-                <div class="time-tit1" id="rdo18">
-                    <span class="time-label">아침</span>
-                </div>
-                <div class="rdo-wrap grid-col type02">
-                    <div class="rdo-box" id="check_medi1" onclick="medication_Click_morning(this)">
-                        <input type="radio" name="morning" id="drug1" value="y">
-                        <label for="drug1">복용 했어요</label>
-                    </div>
-                    <div class="rdo-box" id="uncheck_medi1" onclick="medication_Click_morning(this)">
-                        <input type="radio" name="morning" id="drug2" value="n">
-                        <label for="drug2">복용 안했어요</label>
-                    </div>
-                </div>
-            </div>
-            <div id="lunchDiv" class="time-submit2" name=alarmOnoffLunch value=1 th:if="${alarmOnoffLunch}">
-
-                <div class="time-tit1" id="rdo18">
-                    <span class="time-label">점심</span>
-                </div>
-                <div class="rdo-wrap grid-col type02">
-                    <div class="rdo-box" id="check_medi2" onclick="medication_Click_lunch(this)">
-                        <input type="radio" name="lunch" id="drug3" value="y">
-                        <label for="drug3">복용 했어요</label>
-                    </div>
-                    <div class="rdo-box" id="uncheck_medi2" onclick="medication_Click_lunch(this)">
-                        <input type="radio" name="lunch" id="drug4" value="n">
-                        <label for="drug4">복용 안했어요</label>
-                    </div>
+            <div class="chart-wrap">
+<!--                <div class="chart-legend">-->
+<!--             -->
+<!--                </div>-->
+                <canvas id="myChart" class="chart-blood" style="height:90vw; width:100vw"></canvas>
+                <div class="chart-legend">
+                    <span class="tit"></span>
+                    <ul class="list">
+                        <li >(일)</li>
+                    </ul>
                 </div>
             </div>
 
-
-            <div id="dinnerDiv" class="time-submit2" name="alarmOnoffDinner " value=1 th:if="${alarmOnoffDinner}">
-                <div class="time-tit1" id="rdo18">
-                    <span class="time-label">저녁</span>
-                </div>
-                <div class="rdo-wrap grid-col type02">
-                    <div class="rdo-box" id="check_medi3" onclick="medication_Click_dinner(this)">
-                        <input type="radio" name="dinner" id="drug5" value="y">
-                        <label for="drug5">복용 했어요</label>
-                    </div>
-                    <div class="rdo-box" id="uncheck_medi3" onclick="medication_Click_dinner(this)">
-                        <input type="radio" name="dinner" id="drug6" value="n">
-                        <label for="drug6">복용 안했어요</label>
-                    </div>
-                </div>
-            </div>
         </div>
-
-            <div class="btn-wrap2 grid4"
-                 th:if="${user.type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
-                <button type="button" class="btn xlg1 type01" onclick="medication_caregiver(document.getElementsByTagName('form')[0])">보호자에게 알림</button>
-                <button type="submit" id="save" class="btn xlg1 type01" >저장</button>
-            </div>
-            <div class="btn-wrap type03 grid4"
-                 th:if="${user.type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25">
-                <button type="submit" class="btn xlg1 type01" >저장</button>
-
-            </div>
-
-
-
-    <div class="dim-layer" style="display: none" id="dim"></div>
-</form>
+        </div>
 </div>
 
 
-<div class="popup pop-type01" id="medicationsubmit" style="display: none">
-    <div class="pop-wrap">
+    <script>
+        var weightRecord = /*[[ ${weightRecord} ]]*/;
+        var weightDict = {};
 
-        <div class="popup-header"></div>
-        <div class="popup-body">
-            <div class="pop-cont" id="popUp3">
-            </div>
-        </div>
-        <button class="btn xlg type02" id="buttonCheck">확인</button>
-    </div>
-</div>
-<div class="dim-layer" style="display: none" id="dim"></div>
+        // Process weightRecord data to populate weightDict
 
+        var today = new Date();
+        var dateString = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2);
 
-<div class="popup pop-type01" id="layerSelectType" style="display: none">
-    <div class="pop-wrap">
+        var date = [];
+        var weight = [];
+        var j = 0;
+        for (i = 0; i < weightRecord.length; i++) {
+            weightDict[weightRecord[i].pk.date] = weightRecord[i].weight;
+            if (dateString == weightRecord[i].pk.date.substr(0, 7)) {
+                date[j] = weightRecord[i].pk.date.substr(8, 2);
+                weight[j] = weightRecord[i].weight;
+                j++;
+            }
+        }
 
-        <div class="popup-header"></div>
-        <div class="popup-body">
-            <div class="pop-cont" id="popUp2">
-            </div>
-        </div>
-        <div class="btn-wrap grid2">
-            <button class="btn xlg type07" id="buttonNo">아니요</button>
-            <button class="btn xlg type02" id="buttonOk">저장 및 알림</button>
-        </div>
-    </div>
-</div>
-<!--footer-->
-<footer>
-    <div class="footer-wrap">
-        <div class="btn-wrap type02">
-                <span class="btn xlg arrow-type02" onclick="showHistory();">
-                    <span>복약 기록</span>
-                    <span class="ico-arrow2"></span>
-                </span>
-        </div>
-    </div>
-</footer>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var data = {
+            labels: date,
+            datasets: [{
+                label: '체중',
+                data: weight,
+                fill: false,
+                spanGaps: false,
+                borderWidth: 2,
+                borderColor: '#21bc97',
+                pointBackgroundColor: '#21bc97',
+                pointBorderColor: '#21bc97',
+                pointRadius: 1.5
+            }]
+        };
+
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: {
+                scales: {
+                    y: {
+                        min: 0,
+                        max: 25,
+                        stepSize: 5
+                    },
+                    x: {
+                        maxTicksLimit: 4
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        enabled: false
+                    }
+                }
+            }
+        });
+    </script>
 </body>
-<script>
-    start("MEDICINE");
-</script>
 </html>

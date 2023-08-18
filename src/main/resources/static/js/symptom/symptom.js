@@ -53,30 +53,30 @@ function popuppop(symptomsum){
     if(symptomsum==0){
         // 증상 개수가 0인 경우에 해당하는 클래스 추가
         recordFaceElement.addClass("record-face1");
-        Item2="<span> 환자분 상태가 좋으시군요!</span>";
+        Item2="<span> 건강상태가 좋으시군요!</span>";
         $('#popUp20').append(Item2);
 
     }else if(symptomsum==1){
         // 증상 개수가 1인 경우에 해당하는 클래스 추가
         recordFaceElement.addClass("record-face2");
-        Item2="<span> 일부증상이 있으시지만 생활에 어려움은 없으시군요.</span>";
+        Item2="<span> 증상이 있지만 생활에 어려움은 없으시군요.</span>";
         $('#popUp20').append(Item2);
     }else if(symptomsum==2){
         // 증상 개수가 2인 경우에 해당하는 클래스 추가
         recordFaceElement.addClass("record-face3");
-        Item2="<span> 일부 증상이 있으시군요.증상이 변화되는지 계속적으로 기록해보세요.</span>";
+        Item2="<span>  증상이 있군요.증상이 변화되는지 계속적으로 기록해보세요.</span>";
         $('#popUp20').append(Item2);
     }
     else if(symptomsum==3){
         // 증상 개수가 3인 경우에 해당하는 클래스 추가
         recordFaceElement.addClass("record-face3");
-        Item2="<span> 증상이 심하시군요. 의사에게 증상을 이야기 하셨나요?</span>";
+        Item2="<span> 증상이 심하시네요. 의사에게 증상을 알리셨나요?</span>";
         $('#popUp20').append(Item2);
     }
     else if(symptomsum==4){
         // 증상 개수가 4인 경우에 해당하는 클래스 추가
         recordFaceElement.addClass("record-face4");
-        Item2="<span> 증상이 심하시군요. 의사에게 증상을 이야기 해주세요.</span>";
+        Item2="<span> 증상이 심하시네요. 의사에게 증상을 알려주세요.</span>";
         $('#popUp20').append(Item2);
     }
 }

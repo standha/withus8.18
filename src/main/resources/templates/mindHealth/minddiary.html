@@ -77,54 +77,55 @@
         </div>
     </div>
 </header>
-<!--<form id="mindHealth-form" th:action="@{/minddiary}" onsubmit="return onFormSubmission(this);">-->
-<div class = "container" id ="content" >
+<form id="mindHealth-form" th:action="@{/minddiary}" onsubmit="return onFormSubmission(this);">
+<div class = "container" id ="content">
     <div class="cont-wrap type01">
         <div class="txt-m" style="padding:15px ">
-    <span style="font-size:23px;line-height:2.1;"><br>
+    <span style="font-size:20px;line-height:2.0;"><br>
         오늘 기분은 어떠신가요?<br>
         기분을 가장 잘 나타내는 단어를<br>
         선택해주세요.
     </span>
         </div>
-    <ul class ="mood-icon">
-        <button class="mood-box sad" id="1" onclick=changeToMood(this)>
+    <div class ="mood-icon">
+        <button type="button" class="mood-box sad" style="font-weight: bold" name="sad" id="1" onclick=toggleButton(this.id)>
             슬픔
         </button>
-        <button class="mood-box anger" id="2" onclick=changeToMood(this)>
+        <button  type="button" class="mood-box anger" style="font-weight: bold"  name="anger" id="2" onclick=toggleButton(this.id)>
             분노
         </button>
-        <span class="mood-box happy" id="3" onclick=changeToMood(this)>
+        <button  type="button" class="mood-box happy" style="font-weight: bold" name="happy"  id="3" onclick=toggleButton(this.id)>
             기쁨
-        </span>
-        <span class="mood-box surprise" id="4" onclick=changeToMood(this)>
+        </button>
+        <button  type="button" class="mood-box surprise" style="font-weight: bold" name="surprise" id="4" onclick=toggleButton(this.id)>
             놀람
-        </span>
-        <span class="mood-box horror" id="5" onclick=changeToMood(this) >
+        </button>
+        <button  type="button" class="mood-box horror" style="font-weight: bold" name="horror" id="5" onclick=toggleButton(this.id) >
             공포
-        </span>
-        <span class="mood-box aversion"  id="6" onclick=changeToMood(this) >
+        </button>
+        <button  type="button" class="mood-box aversion"  style="font-weight: bold" name="aversion" id="6" onclick=toggleButton(this.id)>
             혐오
-        </span>
-        <span class="mood-box boring" id="7" onclick=changeToMood(this) >
+        </button>
+        <button  type="button" class="mood-box boring" style="font-weight: bold"  name="boring" id="7" onclick=toggleButton(this.id) >
             지루함
-        </span>
-        <span class="mood-box interest" id="8" onclick=changeToMood(this) >
+        </button>
+        <button  type="button" class="mood-box interest" style="font-weight: bold" name="interest" id="8" onclick=toggleButton(this.id)>
             흥미
-        </span>
-        <span class="mood-box ache"  id="9"onclick=changeToMood(this) >
+        </button>
+        <button  type="button" class="mood-box ache" style="font-weight: bold"  name="ache" id="9"onclick=toggleButton(this.id)>
         통증
-        </span>
+        </button>
 
 
-    </ul>
+    </div>
 </div>
 </div>
 <footer>
-    <div class ="fooster-wrap">
+    <div class ="footer-wrap">
 
         <div class="btn-wrap type03 grid4">
-            <button type="submit" class="btn xlg1 type01" id="nextButton">다음(1/2)</button>
+<!--            <button type="submit" class="btn xlg1 type01" style="width:100%; margin:5px" id="nextButton">다음(1/2)</button>-->
+        <button type="submit" class="btn xlg1 type01" style="width:100%; margin:5px" id="nextButton">다음(1/2)</button>
         </div>
 
         <script>
@@ -136,10 +137,10 @@
 
     </div>
 </footer>
-<!--</form>-->
 
 
 
 
+</form>
 </body>
 </html>
