@@ -202,7 +202,7 @@ public class AlarmController extends BaseController {
         }
 
         modelAndView.addObject("pillHistories", alarm);
-        modelAndView.addObject("previousUrl", "/alarm");
+//        modelAndView.addObject("previousUrl", "/alarm");
 
         logger.info("id:{}", user.getUserId());
 

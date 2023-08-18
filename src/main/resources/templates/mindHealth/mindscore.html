@@ -19,7 +19,10 @@
 </head>
 <body>
 
-<input type="hidden" id="button-count" th:attr="value=@{/button-count}">
+<input type="hidden" id="button-count" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25"
+       th:attr="value=@{/patient-main-button-count}">
+<input type="hidden" id="button-count" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25"
+       th:attr="value=@{/caregiver-main-button-count}">
 <input type="hidden" id="helper-request" th:attr="value=@{/helper-request}">
 <div class="skip-navi">
     <a href="#content">본문 바로가기</a>
@@ -125,7 +128,7 @@
         </div>
     </div>
 </header>
-<form id="mindHealth-form" th:action="@{/minddiary}" onsubmit="return onFormSubmission(this);">
+<!--<form id="mindHealth-form" th:action="@{/mindscore}" onsubmit="return onFormSubmission(this);">-->
 <div class="container" id="content">
     <div class="cont-wrap type01">
         <div class="txt-m" style="padding:15px ">
@@ -178,125 +181,125 @@
 </div>
 
 
-</form>
+<!--</form>-->
 </body>
 <script>
     start("MIND_HEALTH");
 </script>
 </html>
 
-<script>
-    const questions =[
-        "매사에 즐거움이나 흥미가 없다",
-        "기분이 가라앉거나 우울하거나 희망이 없다고 느낀다",
-        "잠들기 어렵거나 자주 깬다/혹은 잠을 너무 많이 잔다",
-        "피곤하다고 느끼거나 기운이 거의 없다",
-        "식욕이 줄었다/혹은 너무 많이 먹는다",
-        "내 자신이 실패자로 여겨지거나 자신과 가족을 실망시켰다고 느낀다",
-        "신문을 읽거나 TV를 보는 것과 같은 일상적인 일에 집중하기 어렵다",
-        "다른 사람들이 눈치 챌 정도로 평소보다 말과 행동이 느리다/혹은 너무 안절부절 못해서 가만히 앉아 있을 수 없다",
-        "차라리 죽는 것이 낫겠다고 생각하거나 어떻게든 자해를 하려고 생각한다",
-     ];
-    let currentPage =0;
+<!--<script>-->
+<!--    const questions =[-->
+<!--        "매사에 즐거움이나 흥미가 없다",-->
+<!--        "기분이 가라앉거나 우울하거나 희망이 없다고 느낀다",-->
+<!--        "잠들기 어렵거나 자주 깬다/혹은 잠을 너무 많이 잔다",-->
+<!--        "피곤하다고 느끼거나 기운이 거의 없다",-->
+<!--        "식욕이 줄었다/혹은 너무 많이 먹는다",-->
+<!--        "내 자신이 실패자로 여겨지거나 자신과 가족을 실망시켰다고 느낀다",-->
+<!--        "신문을 읽거나 TV를 보는 것과 같은 일상적인 일에 집중하기 어렵다",-->
+<!--        "다른 사람들이 눈치 챌 정도로 평소보다 말과 행동이 느리다/혹은 너무 안절부절 못해서 가만히 앉아 있을 수 없다",-->
+<!--        "차라리 죽는 것이 낫겠다고 생각하거나 어떻게든 자해를 하려고 생각한다",-->
+<!--     ];-->
+<!--    let currentPage =0;-->
 
-    function createQuestionPage(question) {
-        const contentDiv = document.getElementById("content");
-        contentDiv.innerHTML = `
-            <div class="cont-wrap type01">
-                <div class="txt-m" style="padding: 15px">
-                    <span style="font-size: 18px; line-height: 2.0;">
-                        다음은 마음 상태에 대해 묻는</br>
-                        질문입니다. 내용을 읽고 해당되는</br>
-                        것을 선택해 주세요</br>
-                    </span>
-                    <div class="txt-m" style="padding: 10px">
-                        <span style="font-size: 20px; line-height: 2.0;">
-                            ${currentPage + 1}. ${question}
-                        </span>
-                    </div>
-                    <div class="rdo-wrap grid-col type09">
-                        <div class="rdo-box" id="chk_no"  data-value="0" onclick="mindscore_survey(this)">
-                            <input type="radio" id="chk1" value="0">
-                            <label for="chk1">전혀 없다</label>
-                        </div>
+<!--    function createQuestionPage(question) {-->
+<!--        const contentDiv = document.getElementById("content");-->
+<!--        contentDiv.innerHTML = `-->
+<!--            <div class="cont-wrap type01">-->
+<!--                <div class="txt-m" style="padding: 15px">-->
+<!--                    <span style="font-size: 18px; line-height: 2.0;">-->
+<!--                        다음은 마음 상태에 대해 묻는</br>-->
+<!--                        질문입니다. 내용을 읽고 해당되는</br>-->
+<!--                        것을 선택해 주세요</br>-->
+<!--                    </span>-->
+<!--                    <div class="txt-m" style="padding: 10px">-->
+<!--                        <span style="font-size: 20px; line-height: 2.0;">-->
+<!--                            ${currentPage + 1}. ${question}-->
+<!--                        </span>-->
+<!--                    </div>-->
+<!--                    <div class="rdo-wrap grid-col type09">-->
+<!--                        <div class="rdo-box" id="chk_no"  data-value="0" onclick="mindscore_survey(this)">-->
+<!--                            <input type="radio" id="chk1" value="0">-->
+<!--                            <label for="chk1">전혀 없다</label>-->
+<!--                        </div>-->
 
-                        <div class="rdo-box" id="chk_few" data-value="1" onclick="mindscore_survey(this)">
-                            <input type="radio" id="chk2" value="1">
-                            <label for="chk2">며칠 동안</label>
-                        </div>
+<!--                        <div class="rdo-box" id="chk_few" data-value="1" onclick="mindscore_survey(this)">-->
+<!--                            <input type="radio" id="chk2" value="1">-->
+<!--                            <label for="chk2">며칠 동안</label>-->
+<!--                        </div>-->
 
-                        <div class="rdo-box" id="chk_week" data-value="2" onclick="mindscore_survey(this)">
-                            <input type="radio" id="chk3" value="2">
-                            <label for="chk3">일주일 이상</label>
-                        </div>
+<!--                        <div class="rdo-box" id="chk_week" data-value="2" onclick="mindscore_survey(this)">-->
+<!--                            <input type="radio" id="chk3" value="2">-->
+<!--                            <label for="chk3">일주일 이상</label>-->
+<!--                        </div>-->
 
-                        <div class="rdo-box" id="chk_day" data-value="3" onclick="mindscore_survey(this)">
-                            <input type="radio" id="chk4" value="3">
-                            <label for="chk4">거의 매일</label>
-                        </div>
+<!--                        <div class="rdo-box" id="chk_day" data-value="3" onclick="mindscore_survey(this)">-->
+<!--                            <input type="radio" id="chk4" value="3">-->
+<!--                            <label for="chk4">거의 매일</label>-->
+<!--                        </div>-->
 
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
-
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        `;-->
+<!--    }-->
 
 
 
-    function updatePageIndicator() {
-        const totalPages = questions.length;
-        const pageIndicator = `${currentPage + 1}/${totalPages}`;
-        document.getElementById("nextButton").textContent = `다음(${pageIndicator})`;
-    }
-
-    document.getElementById("nextButton").addEventListener("click", function () {
-        goToNextPage();
-    });
 
 
+<!--    function updatePageIndicator() {-->
+<!--        const totalPages = questions.length;-->
+<!--        const pageIndicator = `${currentPage + 1}/${totalPages}`;-->
+<!--        document.getElementById("nextButton").textContent = `다음(${pageIndicator})`;-->
+<!--    }-->
 
-let sum=0;
-
-    function mindscore_survey(div) {
-
-        const radios = ["chk_no", "chk_few", "chk_week", "chk_day"];
-
-        for (const radio of radios) {
-            const radioDiv = document.getElementById(radio);
-            const radioInput = radioDiv.querySelector('input[type="radio"]');
-            radioDiv.className = radio === div.id ? "rdo-box checked" : "rdo-box";
-            radioInput.removeAttribute("checked");
-        }
-
-        div.querySelector('input[type="radio"]').setAttribute("checked", "");
-        selectedValue = parseInt(div.getAttribute("data-value"));
-        sum += selectedValue;
-        // console.log(selectedValue);
-        console.log(sum);
-    }
-    function goToNextPage() {
-        if (selectedValue !== null) { // 선택한 값이 null이 아닌 경우에만 다음 페이지로 이동
-            sum += selectedValue; // sum에 선택한 값 누적
-            selectedValue = null; // 선택한 값 초기화
-            currentPage++;
-
-            if (currentPage >= questions.length) {
-                window.location.href = "mindscore.html";
-                return;
-            }
-            createQuestionPage(questions[currentPage]);
-            updatePageIndicator();
-        } else {
-            alert("라디오 버튼을 선택해주세요.");
-        }
-    }
-    function onFormSubmission(form) {
-        goToNextPage();
-        return false; // 폼 제출 방지
-    }
+<!--    document.getElementById("nextButton").addEventListener("click", function () {-->
+<!--        goToNextPage();-->
+<!--    });-->
 
 
-</script>
+
+<!--let sum=0;-->
+
+<!--    function mindscore_survey(div) {-->
+
+<!--        const radios = ["chk_no", "chk_few", "chk_week", "chk_day"];-->
+
+<!--        for (const radio of radios) {-->
+<!--            const radioDiv = document.getElementById(radio);-->
+<!--            const radioInput = radioDiv.querySelector('input[type="radio"]');-->
+<!--            radioDiv.className = radio === div.id ? "rdo-box checked" : "rdo-box";-->
+<!--            radioInput.removeAttribute("checked");-->
+<!--        }-->
+
+<!--        div.querySelector('input[type="radio"]').setAttribute("checked", "");-->
+<!--        selectedValue = parseInt(div.getAttribute("data-value"));-->
+<!--        sum += selectedValue;-->
+<!--        // console.log(selectedValue);-->
+<!--        console.log(sum);-->
+<!--    }-->
+<!--    function goToNextPage() {-->
+<!--        if (selectedValue !== null) { // 선택한 값이 null이 아닌 경우에만 다음 페이지로 이동-->
+<!--            sum += selectedValue; // sum에 선택한 값 누적-->
+<!--            selectedValue = null; // 선택한 값 초기화-->
+<!--            currentPage++;-->
+
+<!--            if (currentPage >= questions.length) {-->
+<!--                window.location.href = "mindscore.html";-->
+<!--                return;-->
+<!--            }-->
+<!--            createQuestionPage(questions[currentPage]);-->
+<!--            updatePageIndicator();-->
+<!--        } else {-->
+<!--            alert("라디오 버튼을 선택해주세요.");-->
+<!--        }-->
+<!--    }-->
+<!--    function onFormSubmission(form) {-->
+<!--        goToNextPage();-->
+<!--        return false; // 폼 제출 방지-->
+<!--    }-->
+
+
+<!--</script>-->
 

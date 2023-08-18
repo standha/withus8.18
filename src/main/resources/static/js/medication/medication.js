@@ -276,13 +276,3 @@ function showHistory() {
     location.href = element.value;
 }
 
-// document.addEventListener("DOMContentLoaded", function () {
-//     // "저장" 버튼에 클릭 이벤트 핸들러를 추가합니다. 버튼은 id="saveButton"으로 선택됩니다.
-//     const saveButton = document.getElementById("saveButton");
-//     if (saveButton) {
-//         saveButton.addEventListener("click", function (event) {
-//             event.preventDefault(); // 기본 폼 제출 동작을 방지합니다.
-//         });
-//     }
-// });
-

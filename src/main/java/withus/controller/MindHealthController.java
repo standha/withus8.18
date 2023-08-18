@@ -1,6 +1,7 @@
 package withus.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,12 +10,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import withus.auth.AuthenticationFacade;
 import withus.dto.Result;
+import withus.dto.dateDTO;
 import withus.entity.*;
 import withus.service.CountService;
 import withus.service.MindHealthService;
 import withus.service.UserService;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -172,20 +175,25 @@ public Result<Tbl_mindHealth_record> PostMinddiary(@RequestBody Tbl_mindHealth_r
     public ModelAndView getMindHealthAll() {
         ModelAndView modelAndView = new ModelAndView("mindHealth/mindhealth-all-history");
         User user = getUser();
-        List<Tbl_mindHealth_record> mindDiaryHistories = mindHealthService.getAllMindHealthRecord(getConnectId());
+        List<Tbl_mindHealth_record> mindHealthHistory;
+        mindHealthHistory= mindHealthService.getAllMindHealthRecord(getConnectId());
 
-        if (mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now())) == null) {
-            modelAndView.addObject("mood", null);
-            modelAndView.addObject("text", null);
-            modelAndView.addObject("score", null);
+        modelAndView.addObject("minddiary",mindHealthHistory);
+        modelAndView.addObject("previousUrl", "/minddiary");
 
-        } else {
-            Tbl_mindHealth_record mood = mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now()));
-            modelAndView.addObject("mood", mood.getMood());
-            modelAndView.addObject("text", mood.getText());
-            modelAndView.addObject("minddiary",mindDiaryHistories);
-
-        }
+//        if (mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now())) == null) {
+//            modelAndView.addObject("mood", null);
+//            modelAndView.addObject("text", null);
+//            modelAndView.addObject("score", null);
+//
+//        } else {
+//            Tbl_mindHealth_record mood = mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now()));
+////            modelAndView.addObject("mood", mood.getMood());
+////            modelAndView.addObject("text", mood.getText());
+//            modelAndView.addObject("score",mood.getScore());
+//            modelAndView.addObject("minddiary",mindHealthService);
+//
+//        }
 
         if (user.getType() == User.Type.PATIENT) {
             Tbl_patient_main_button_count mainCount = countService.getPatientMainCount(new ProgressKey(user.getUserId(), user.getWeek()));
@@ -199,12 +207,83 @@ public Result<Tbl_mindHealth_record> PostMinddiary(@RequestBody Tbl_mindHealth_r
 
         modelAndView.addObject("type", user.getType());
         modelAndView.addObject("week", user.getWeek());
-        modelAndView.addObject("previousUrl", "/minddiary1");
+//        modelAndView.addObject("previousUrl", "/minddiary1");
 
         return modelAndView;
 
 
     }
+
+    @PostMapping("/deleteData1")
+    @ResponseBody
+    public Result<Tbl_mindHealth_record> postDataMindHealth(@RequestBody String date){
+
+        Result.Code code;
+        Tbl_mindHealth_record saved = null;
+        User user = getUser();
+
+        try {
+            if (user.getType() == User.Type.PATIENT && user.getWeek() != 25) {
+
+                logger.info("DTO : {}",date);
+                LocalDate local = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);  //해당 날짜 받아오기
+                Tbl_mindHealth_record findUser = mindHealthService.getmindHealth(new RecordKey(user.getUserId(), local));
+                findUser.setText(null);  //해당 날짜 열에 있는 text값을 null로 변경
+                logger.info("findUser:{}, {}, {}",findUser.getPk().getId(), findUser.getPk().getDate(), findUser.getText());
+                saved = mindHealthService.upsertMindhealth(findUser);
+                code = Result.Code.OK;
+            } else if (user.getWeek() == 25) {
+                throw new IllegalStateException("25 Weeks User try input data [warn]");
+            } else {
+                throw new IllegalStateException("Caregiver try input data [warn]");
+            }
+        } catch (Exception exception) {
+            logger.error(exception.getLocalizedMessage(), exception);
+            code = Result.Code.ERROR_DATABASE;
+        }
+
+        return Result.<Tbl_mindHealth_record>builder()
+                .code(code)
+                .data(saved)
+                .build();
+    }
+
+    //text수정
+    @PostMapping(value="/modifyData1", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Result<Tbl_mindHealth_record> postmodifyMindHealth(@RequestBody dateDTO date){
+
+        Result.Code code;
+        Tbl_mindHealth_record saved = null;
+        User user = getUser();
+
+        try {
+            if (user.getType() == User.Type.PATIENT && user.getWeek() != 25) {
+
+                logger.info("DTO : {}",date.getDate());
+                LocalDate local = date.getDate();  //해당 날짜 받아오기
+                Tbl_mindHealth_record findUser = mindHealthService.getmindHealth(new RecordKey(user.getUserId(), local));
+                findUser.setText(date.getText());  //해당 날짜 열에 있는 text값을 변경
+                logger.info("findUser:{}, {}, {}",findUser.getPk().getId(), findUser.getPk().getDate(), findUser.getText());
+                saved = mindHealthService.upsertMindhealth(findUser);
+                code = Result.Code.OK;
+            } else if (user.getWeek() == 25) {
+                throw new IllegalStateException("25 Weeks User try input data [warn]");
+            } else {
+                throw new IllegalStateException("Caregiver try input data [warn]");
+            }
+        } catch (Exception exception) {
+            logger.error(exception.getLocalizedMessage(), exception);
+            code = Result.Code.ERROR_DATABASE;
+        }
+
+        return Result.<Tbl_mindHealth_record>builder()
+                .code(code)
+                .data(saved)
+                .build();
+    }
+
+
     @GetMapping("/mindcontrol")
     public ModelAndView getMindControl() {
         ModelAndView modelAndView = new ModelAndView("mindHealth/mindcontrol");
@@ -469,8 +548,7 @@ public Result<Tbl_mindHealth_record> PostMinddiary(@RequestBody Tbl_mindHealth_r
 
         } else {
             Tbl_mindHealth_record mood = mindHealthService.getmindHealth(new RecordKey(getConnectId(), LocalDate.now()));
-            modelAndView.addObject("mood", mood.getMood());
-            modelAndView.addObject("text", mood.getText());
+
             modelAndView.addObject("score", getMindscore());
 
 

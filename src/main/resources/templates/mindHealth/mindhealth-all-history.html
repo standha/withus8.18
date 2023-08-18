@@ -5,10 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>위더스</title>
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
     <meta name="format-detection" content="telephone=no">
-    <link th:href="@{/css/jquery-ui.css}" rel="stylesheet">
+    <link  th:href="@{/css/jquery-ui.css}" rel="stylesheet">
     <link th:href="@{/css/reset.css}" rel="stylesheet">
     <link th:href="@{/css/common.css}" rel="stylesheet">
     <link th:href="@{/css/layout.css}" rel="stylesheet">
@@ -17,9 +16,6 @@
     <script th:src="@{/js/datepicker-ko.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/help.js}"></script>
-    <script th:src="@{/js/home.js}"></script>
-    <script th:src="@{/js/subButton.js}"></script>
-    <script th:src="@{/js/detailButton.js}"></script>
     <script th:src="@{/js/durationTime.js}"></script>
     <script src="https://kit.fontawesome.com/e381c8a508.js" crossorigin="anonymous"></script>
 </head>
@@ -30,7 +26,9 @@
        th:attr="value=@{/patient-main-button-count}">
 <input type="hidden" id="button-count" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} and ${week} != 25 "
        th:attr="value=@{/caregiver-main-button-count}">
-
+<div class="skip-navi">
+    <a href="#content">본문 바로가기</a>
+</div>
 <div th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25">
     <input type='hidden' name="symptom" th:value="${mainCount.symptom}" style="display:none">
     <input type='hidden' name="medicine" th:value="${mainCount.medicine}" style="display:none">
@@ -67,11 +65,6 @@
     <input type='hidden' name="infoEdit" th:value="${mainCount.infoEdit}" style="display:none">
 
 </div>
-<!-- buttonCount -->
-
-<div class="skip-navi">
-    <a href="#content">본문 바로가기</a>
-</div>
 <!-- wrap -->
 <div id="wrap" class="insert-page">
 
@@ -79,111 +72,195 @@
     <header>
         <div class="header-wrap type01">
             <div class="head" th:if="${type} == ${T(withus.entity.User.Type).PATIENT} and ${week} != 25 ">
-                <div onclick="helperRequest()">
+                <div onclick="helperRequest()" >
                     <a class="btn xsm type07" href="tel:010-8454-9186" onclick="addHelper()">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
                 <h2>
+                    <span class="ico-symptom-s"></span>
                     <span>마음 일기 기록</span>
                 </h2>
-                <div style="margin-top: 0.73vh;">
-                    <a th:href="@{/center}"><i class="fa-solid fa-house fa-2xl" style="color: #19d585;"></i></a>
+                <div class="col text-end" style="font-size: 20px; margin-top: 0.73vh;">
+                    <a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl" style="color: #00b050;"></i></a>
                 </div>
             </div>
             <div class="head" th:if="${type} == ${T(withus.entity.User.Type).CAREGIVER} or ${week} == 25">
-                <div onclick="helperRequest()">
+                <div onclick="helperRequest()" >
                     <a class="btn xsm type07" href="tel:010-8454-9186">
                         <span class="ico-call" ></span>
                         <span class="txt-rt">도우미</span>
                     </a>
                 </div>
                 <h2>
-
+                    <span class="ico-symptom-s"></span>
                     <span>마음 일기 기록</span>
                 </h2>
-                <div style="margin-top: 0.73vh;">
-                    <a th:href="@{/center}"><i class="fa-solid fa-house fa-2xl" style="color: #19d585;"></i></a>
+                <div class="col text-end" style="font-size: 20px; margin-top: 0.73vh;">
+                    <a th:href="@{/center}" class="align-middle"><i class="fa-solid fa-house fa-xl" style="color: #00b050;"></i></a>
                 </div>
             </div>
         </div>
     </header>
     <!-- // header -->
 
+    <!-- content -->
     <div class="container" id="content">
         <div class="cont-wrap type01">
-            <!-- 기록이 있는 해당 날짜의 td에 .record-alarm 클래스가 추가되면 디자인추가됨 -->
+            <!-- 기록이 있는 해당 날짜의 td에 .record-face1 /.record-face2 /.record-face3 /.record-face4 클래스가 추가되면 디자인추가됨 -->
             <div id="dateRecord" class="size-lg"></div>
-
-
         </div>
-
-        <div class="popup pop-type01" id="layerSelectType" style="display: none">
-            <div class="pop-wrap">
-                <!-- <a href="javascript:void(0);" class="pop-close"></a> -->
-                <div class="record-face1"></div>
-                <div class="popup-body">
-                    <div class="pop-tit" id="popUp1">
-                    </div>
-                    <div class="pop-cont" id="popUp2">
-                    </div>
-                    <!--                <div class="pop-desc">목표를 변경하고 싶으면 ‘수정’ 버튼을 눌러주세요.</div>-->
-                </div>
-                <div class="btn-wrap grid2">
-                    <button class="btn xlg type07" id="buttonNo">삭제</button>
-                    <button class="btn xlg type02" id="buttonOk">수정</button>
-                </div>
-            </div>
-        </div>
-        <div class="dim-layer" style="display: none" id="dim"></div>
-
-
-        <div class="popup pop-type01" id="symptommodify" style="display: none">
-            <div class="pop-wrap">
-                <!-- <a href="javascript:void(0);" class="pop-close"></a> -->
-                <div class="record-face1"></div>
-                <div class="popup-body">
-                    <div class="pop-tit" id="popUp11">
-                    </div>
-                    <div class="pop-cont" id="popUp22">
-                        <input type="text" name="text" th:value="${text}" id="editText" autofocus>
-                    </div>
-
-                    <!--                <textarea id="editText"></textarea>-->
-                    <!--                <div class="pop-desc">목표를 변경하고 싶으면 ‘수정’ 버튼을 눌러주세요.</div>-->
-                </div>
-                <button class="btn xlg type02" id="button">확인</button>
-            </div>
-        </div>
-        <div class="dim-layer" style="display: none" id="dim"></div>
-
     </div>
 
-    <script th:inline="javascript">
-        start("MIND_HEALTH");
-        /*<![CDATA[*/
-        var mindHealthHistory = /*[[ ${mindHealth} ]]*/;
-        /*]]*/
-        var mood = 0;
-        var symptomtext = "";
-        var yy = 0;
-        var mm =0;
-        var dd = 0;
 
+    <div class="popup pop-type01" id="layerSelectType" style="display: none">
+        <div class="pop-wrap">
+            <!-- <a href="javascript:void(0);" class="pop-close"></a> -->
+            <div class="record-face1"></div>
+            <div class="popup-body">
+                <div class="pop-tit" id="popUp1">
+                </div>
+                <div class="pop-cont" id="popUp2">
+                </div>
+                <!--                <div class="pop-desc">목표를 변경하고 싶으면 ‘수정’ 버튼을 눌러주세요.</div>-->
+            </div>
+            <div class="btn-wrap grid2">
+                <button class="btn xlg type07" id="buttonNo">삭제</button>
+                <button class="btn xlg type02" id="buttonOk">수정</button>
+            </div>
+        </div>
+    </div>
+    <div class="dim-layer" style="display: none" id="dim"></div>
+
+
+    <div class="popup pop-type01" id="mindmodify" style="display: none">
+        <div class="pop-wrap">
+            <!-- <a href="javascript:void(0);" class="pop-close"></a> -->
+            <div class="record-face1"></div>
+            <div class="popup-body">
+                <div class="pop-tit" id="popUp11">
+                </div>
+                <div class="pop-cont" id="popUp22">
+                    <input type="text" name="text" th:value="${text}" id="editText" autofocus>
+                </div>
+
+                <!--                <textarea id="editText"></textarea>-->
+                <!--                <div class="pop-desc">목표를 변경하고 싶으면 ‘수정’ 버튼을 눌러주세요.</div>-->
+            </div>
+            <button class="btn xlg type02" id="button">확인</button>
+        </div>
+    </div>
+    <div class="dim-layer" style="display: none" id="dim"></div>
+
+
+    <!-- // content -->
+
+</div>
+<!--// wrap -->
+<script th:inline="javascript">
+    start("SYMPTOM");
+
+    /*<![CDATA[*/
+    var mindHealthHistory = /*[[ ${minddiary} ]]*/;
+    /*]]*/
+    var sum = 0;
+    var mindtext = "";
+    var yy = 0;
+    var mm =0;
+    var dd = 0;
+
+
+
+    //string으로 날짜 받아서 보내주기
+    const getAjax = function(url, day) {
+        return new Promise((resolve, reject) => { // 1.
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType:"json",
+                contentType: 'application/json; charset=utf-8',
+                data: (
+                    day
+                ),
+                success: (res) => {
+                    resolve(res);  // 2.
+                },
+                error: (e) => {
+                    reject(e);  // 3.
+                }
+            });
+        });
+    }
+
+    async function deleteMindData(day){
+        const url ="/deleteData1";
+        try {
+
+            const mindData = await getAjax(url,day);
+            return mindData;
+        } catch(e) {
+            console.log(e);
+        }
+    }
+
+
+
+    function modify(month, day, week, date) {
+
+        // 기존 텍스트 가져오기 (이 부분은 알맞게 서버에서 텍스트를 가져오는 코드로 대체해야합니다)
+        Item = "<span>" + month + "월 " + day + "일 " + week + "요일 </span>";
+        $('#popUp11').append(Item);
+        $("#popUp22").html('<input type="text" name="text" id="editText" autofocus>');
+
+        $("#mindmodify").show();
+        $("#dim").show();
+
+        $("#button").click(function (e) {
+
+            // 수정된 텍스트를 가져옵니다.
+            const textAreaElement = document.getElementById("editText");
+            const newText = textAreaElement.value
+
+            if (newText !== null) {
+                const dateToEdit = date; // 수정하려는 날짜를 설정
+                saveEditedTextToServer(dateToEdit, newText);
+            }
+
+            // 팝업을 닫기
+            $("#mindmodify").hide();
+            $("#dim").hide();
+
+            $("#layerSelectType").hide();
+            $("#dim").hide();
+
+
+            // 수정된 텍스트를 서버에 저장하는 비동기 작업 (Promise를 사용하여 처리)
+            saveEditedTextToServer(date, newText)
+                .then(() => {
+                    // 비동기 작업이 완료된 후에 페이지를 새로고침
+                    window.location.reload();
+                })
+                .catch((error) => {
+                    // 오류 발생 시 처리 (예를 들어, 서버와의 통신 중 오류가 발생한 경우)
+                    console.error("오류 발생:", error);
+                });
+        });
 
         //string으로 날짜 받아서 보내주기
-        const getAjax = function(url, day) {
+        const getAjax = function (url, date, newText) {
             return new Promise((resolve, reject) => { // 1.
-
+                console.log("a");
                 $.ajax({
                     url: url,
                     type: "POST",
-                    dataType:"json",
+                    dataType: "json",
                     contentType: 'application/json; charset=utf-8',
-                    data: (
-                        day
-                    ),
+                    data:JSON.stringify ({
+                        date:date,
+                        text:newText
+                    }),
                     success: (res) => {
                         resolve(res);  // 2.
                     },
@@ -194,463 +271,376 @@
             });
         }
 
-        async function deleteSymtomData(day){
-            const url ="/deleteData";
+        // 서버에 수정된 텍스트를 보내고 저장하는 함수
+        async function saveEditedTextToServer(date, newText) {
+
+            const url = "/modifyData1";
             try {
 
-                const mindData = await getAjax(url,day);
-                return mindData;
-            } catch(e) {
+                const mindmodifyData = await getAjax(url, date, newText);
+                console.log(mindmodifyData);
+                return mindmodifyData;
+            } catch (e) {
                 console.log(e);
             }
+
+            console.log("날짜:", date);
+            console.log("새로운 텍스트:", newText);
         }
-
-        async function deleteMindData(day){
-            const url ="/deleteData";
-            try {
-
-                const mindData = await getAjax(url,day);
-                return mindData;
-            } catch(e) {
-                console.log(e);
-            }
-        }
-
-        function modify(month, day, week, date) {
-
-            // 기존 텍스트 가져오기 (이 부분은 알맞게 서버에서 텍스트를 가져오는 코드로 대체해야합니다)
-            Item = "<span>" + month + "월 " + day + "일 " + week + "요일 </span>";
-            $('#popUp11').append(Item);
-            $("#popUp22").html('<input type="text" name="text" id="editText" autofocus>');
-
-            $("#symptommodify").show();
-            $("#dim").show();
-
-            $("#button").click(function (e) {
-
-                // 수정된 텍스트를 가져옵니다.
-                const textAreaElement = document.getElementById("editText");
-                const newText = textAreaElement.value
-
-                if (newText !== null) {
-                    const dateToEdit = date; // 수정하려는 날짜를 설정
-                    saveEditedTextToServer(dateToEdit, newText);
-                }
-
-                // 팝업을 닫기
-                $("#symptommodify").hide();
-                $("#dim").hide();
-
-                $("#layerSelectType").hide();
-                $("#dim").hide();
+    }
 
 
-                // 수정된 텍스트를 서버에 저장하는 비동기 작업 (Promise를 사용하여 처리)
-                saveEditedTextToServer(date, newText)
-                    .then(() => {
-                        // 비동기 작업이 완료된 후에 페이지를 새로고침
-                        window.location.reload();
-                    })
-                    .catch((error) => {
-                        // 오류 발생 시 처리 (예를 들어, 서버와의 통신 중 오류가 발생한 경우)
-                        console.error("오류 발생:", error);
-                    });
-            });
+    $.datepicker._generateHTML = (function (event) {
+        var realGenerateHtml = $.datepicker._generateHTML;
+        console.log(event);
+        return function (instance) {
+            var html = realGenerateHtml.apply(this, arguments), $temp;
 
-            //string으로 날짜 받아서 보내주기
-            const getAjax = function (url, date, newText) {
-                return new Promise((resolve, reject) => { // 1.
-                    console.log("a");
-                    $.ajax({
-                        url: url,
-                        type: "POST",
-                        dataType: "json",
-                        contentType: 'application/json; charset=utf-8',
-                        data:JSON.stringify ({
-                            date:date,
-                            text:newText
-                        }),
-                        success: (res) => {
-                            resolve(res);  // 2.
-                        },
-                        error: (e) => {
-                            reject(e);  // 3.
+            if (instance.input.is(".size-lg")) {
+                $temp = $("<table></table>").append(html);
+                $temp.find(".ui-datepicker-calendar td a").each(function () {
+                    yy = $(this).parent().data("year"),
+                        mm = $(this).parent().data("month"),
+                        dd = +$(this).text();
+
+                    var monthStr, dayStr;
+                    monthStr = (mm + 1).toString();
+                    if (monthStr.length == 1) {
+                        monthStr = "0" + monthStr;
+                    }
+                    dayStr = dd.toString();
+                    if (dayStr.length == 1) {
+                        dayStr = "0" + dayStr;
+                    }
+                    var str = yy.toString() + "-" + monthStr + "-" + dayStr;
+                    var hasTodayMind = false;
+
+                    for (var i = 0; i < mindHealthHistory.length; i++) {
+                        hasTodayMind = false;
+                        if (str == mindHealthHistory[i].pk.date) {
+                            hasTodayMind = true;
+                            // sum = mindHealthHistory[i].todaysymptom;
+                            symptomtext = mindHealthHistory[i].text;
+
+                            switch (mindHealthHistory[i].mood) {
+
+                                case 1:
+                                    if (mindHealthHistory[i].text != null && mindHealthHistory[i].text != "") {
+                                        $(this).addClass('see-more');
+                                    } else {
+                                        $(this).addClass('sad-chk');
+                                    }
+                                    break;
+                                case 2:
+                                    if (mindHealthHistory[i].text != null && mindHealthHistory[i].text != "") {
+                                        $(this).addClass('see-more');
+                                    } else {
+                                        $(this).addClass('anger-chk');
+                                    }
+                                    break;
+                                case 3:
+                                    if (mindHealthHistory[i].text != null && mindHealthHistory[i].text != "") {
+                                        $(this).addClass('see-more');
+                                    } else {
+                                        $(this).addClass('happy-chk');
+                                    }
+                                    break;
+                                case 4:
+                                    if (mindHealthHistory[i].text != null && mindHealthHistory[i].text != "") {
+                                        $(this).addClass('see-more');
+                                    } else {
+                                        $(this).addClass('surprise-chk');
+                                    }
+                                    break;
+                                case 5:
+                                    if (mindHealthHistory[i].text != null && mindHealthHistory[i].text != "") {
+                                        $(this).addClass('see-more');
+                                    } else {
+                                        $(this).addClass('horror-chk');
+                                    }
+                                    break;
+                                case 6:
+                                    if (mindHealthHistory[i].text != null && mindHealthHistory[i].text != "") {
+                                        $(this).addClass('see-more');
+                                    } else {
+                                        $(this).addClass('aversion-chk');
+                                    }
+                                    break;
+                                case 7:
+                                    if (mindHealthHistory[i].text != null && mindHealthHistory[i].text != "") {
+                                        $(this).addClass('see-more');
+                                    } else {
+                                        $(this).addClass('boring-chk');
+                                    }
+                                    break;
+                                case 8:
+                                    if (mindHealthHistory[i].text != null && mindHealthHistory[i].text != "") {
+                                        $(this).addClass('see-more');
+                                    } else {
+                                        $(this).addClass('ache-chk');
+                                    }
+                                    break;
+                            }
                         }
-                    });
+
+                    }
+                    if (!hasTodayMind && getTodayDate() === str) {
+                        $(this).addClass('symptom-write')
+                            .attr('onclick', "location.href='/symptom';")
+                            .attr('style', 'cursor:pointer;');
+                    }
+
                 });
+                html = $temp[0].innerHTML;
             }
 
-            // 서버에 수정된 텍스트를 보내고 저장하는 함수
-            async function saveEditedTextToServer(date, newText) {
+            setTimeout(() => {
+                $(".see-more").on('click', function (e) {
+                    console.log('123');
+                    e.preventDefault();
+                    // e.stopPropagation();
+                    let text = getText(this.text);
+                    let todayMood = getTodayMood(this.text);
+                    let todaymonth = getdaymonth(this.text);
+                    let todayday = getday(this.text);
+                    let todayyear = getdayyear(this.text);
+                    let today = getDayOfWeek(todayyear, todaymonth, todayday);
+                    let date = getdate(this.text);
 
-                const url = "/modifyData";
-                try {
+                    symptompopup(todayMood, text, todaymonth, todayday, today,date);
 
-                    const symptommodifyData = await getAjax(url, date, newText);
-                    console.log(symptommodifyData);
-                    return symptommodifyData;
-                } catch (e) {
-                    console.log(e);
-                }
+                });
+            }, 10);
 
-                console.log("날짜:", date);
-                console.log("새로운 텍스트:", newText);
+            return html;
+        };
+    })();
+
+
+    $(function () {
+        $("#dateRecord").datepicker();
+
+    });
+
+
+    //그날 텍스트
+    function getText(day) {
+
+        if (day.length == 1) {
+            day = "0" + day;
+        }
+        let month = (mm + 1).toString();
+        if (month.length == 1) {
+            month = "0" + month;
+        }
+        const tempStr = yy.toString() + "-" + month + "-" + day.toString();
+        console.log('getText' + tempStr);
+        for (var i = 0; i < mindHealthHistory.length; i++) {
+            if (mindHealthHistory[i].pk.date == tempStr) {
+                return mindHealthHistory[i].text;
             }
+        }
+        return null;
+
+    }
+
+    //그날 date
+    function getdate(day) {
+
+        if (day.length == 1) {
+            day = "0" + day;
+        }
+        let month = (mm + 1).toString();
+        if (month.length == 1) {
+            month = "0" + month;
+        }
+        const tempStr = yy.toString() + "-" + month + "-" + day.toString();
+        console.log(tempStr);
+        for (var i = 0; i < mindHealthHistory.length; i++) {
+            if (mindHealthHistory[i].pk.date == tempStr) {
+                return tempStr;
+            }
+        }
+        return null;
+    }
+
+    //그날 증상에 따른 기분
+    function getTodayMood(day) {
+
+        if (day.length == 1) {
+            day = "0" + day;
+        }
+        let month = (mm + 1).toString();
+        if (month.length == 1) {
+            month = "0" + month;
+        }
+        const tempStr = yy.toString() + "-" + month + "-" + day.toString();
+        console.log(tempStr);
+        for (var i = 0; i < mindHealthHistory.length; i++) {
+            if (mindHealthHistory[i].pk.date == tempStr) {
+                return mindHealthHistory[i].mood;
+            }
+        }
+        return null;
+    }
+
+    //그날 년도
+    function getdayyear(day) {
+
+        if (day.length == 1) {
+            day = "0" + day;
+        }
+        let month = (mm + 1).toString();
+        if (month.length == 1) {
+            month = "0" + month;
+        }
+        const tempStr = yy.toString() + "-" + month + "-" + day.toString();
+        const tempyear = yy.toString();
+        console.log(tempStr);
+        for (var i = 0; i < mindHealthHistory.length; i++) {
+            if (mindHealthHistory[i].pk.date == tempStr) {
+                return tempyear;
+            }
+        }
+        return null;
+    }
+
+    //그날 월
+    function getdaymonth(day) {
+
+        if (day.length == 1) {
+            day = "0" + day;
+        }
+        let month = (mm + 1).toString();
+        if (month.length == 1) {
+            month = "0" + month;
+        }
+        const tempStr = yy.toString() + "-" + month + "-" + day.toString();
+        const tempmonth = month;
+        console.log(tempStr);
+        for (var i = 0; i < mindHealthHistory.length; i++) {
+            if (mindHealthHistory[i].pk.date == tempStr) {
+                return tempmonth;
+            }
+        }
+        return null;
+    }
+
+    //그날 일
+    function getday(day) {
+
+        if (day.length == 1) {
+            day = "0" + day;
+        }
+        let month = (mm + 1).toString();
+        if (month.length == 1) {
+            month = "0" + month;
+        }
+        const tempStr = yy.toString() + "-" + month + "-" + day.toString();
+        const tempday = day.toString();
+        console.log(tempStr);
+        for (var i = 0; i < mindHealthHistory.length; i++) {
+            if (mindHealthHistory[i].pk.date == tempStr) {
+                return tempday;
+            }
+        }
+        return null;
+    }
+
+    //그날 요일
+    function getDayOfWeek(year, month, day) {
+        // month 파라미터는 1부터 12 사이의 값을 가져야 하므로, 실제 입력된 month 값에서 1을 뺍니다.
+        const date = new Date(year, month - 1, day);
+        const days = ['일', '월', '화', '수', '목', '금', '토'];
+        return days[date.getDay()];
+    }
+
+    // 오늘 날짜를 가져오는 함수
+    function getTodayDate() {
+        var today = new Date();
+        var yy = today.getFullYear();
+        var mm = today.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줌
+        var dd = today.getDate();
+
+        // 월과 일이 한 자리 숫자인 경우 앞에 0을 추가하여 두 자리로 만듦
+        var monthStr = mm < 10 ? "0" + mm : mm.toString();
+        var dayStr = dd < 10 ? "0" + dd : dd.toString();
+
+        return yy + "-" + monthStr + "-" + dayStr;
+    }
+
+    //증상 볼 수 있는 팝업창
+    function symptompopup(sum, text, month, day, week, date) {
+        console.log('symptompopup');
+        $("#layerSelectType").show();
+        $("#dim").show();
+
+        // 선택 요소 가져오기
+        const recordFaceElement = $(".record-face1, .record-face2, .record-face3,.record-face4");
+
+        if (sum === 0) {
+            // 증상 개수가 0인 경우에 해당하는 클래스 추가
+            recordFaceElement.addClass("record-face1");
+            Item = "<span>" + month + "월 " + day + "일 " + week + "요일 </span>";
+            $('#popUp1').append(Item);
+            Item2 = "<span class=\"bold\">'" + text + "'</span> <br>";
+            $('#popUp2').append(Item2);
+            console.log("6", Item2);
+
+        } else if (sum === 1) {
+            // 증상 개수가 1인 경우에 해당하는 클래스 추가
+            recordFaceElement.addClass("record-face2");
+            Item = "<span>" + month + "월 " + day + "일 " + week + "요일 </span>";
+            $('#popUp1').append(Item);
+            Item2 = "<span class=\"bold\">'" + text + "'</span> <br>";
+            $('#popUp2').append(Item2);
+
+        } else if (sum === 2) {
+            // 증상 개수가 2인 경우에 해당하는 클래스 추가
+            recordFaceElement.addClass("record-face3");
+            Item = "<span>" + month + "월 " + day + "일 " + week + "요일 </span>";
+            $('#popUp1').append(Item);
+            Item2 = "<span class=\"bold\">'" + text + "'</span> <br>";
+            $('#popUp2').append(Item2);
+        } else if (sum == 3) {
+            // 증상 개수가 3인 경우에 해당하는 클래스 추가
+            recordFaceElement.addClass("record-face3");
+            Item = "<span>" + month + "월 " + day + "일 " + week + "요일 </span>";
+            $('#popUp1').append(Item);
+            Item2 = "<span class=\"bold\">'" + text + "'</span> <br>";
+            $('#popUp2').append(Item2);
+        } else if (sum == 4) {
+            // 증상 개수가 4인 경우에 해당하는 클래스 추가
+            recordFaceElement.addClass("record-face4");
+            Item = "<span>" + month + "월 " + day + "일 " + week + "요일 </span>";
+            $('#popUp1').append(Item);
+            Item2 = "<span class=\"bold\">'" + text + "'</span> <br>";
+            $('#popUp2').append(Item2);
         }
 
 
+        $("#buttonNo").click(function () {
+            $("#layerSelectType").hide();
+            $("#dim").hide();
 
 
-        $.datepicker._generateHTML = (function () {
-            var realGenerateHtml = $.datepicker._generateHTML;
-            return function (instance) {
-                var html = realGenerateHtml.apply(this, arguments), $temp;
-
-                if ( instance.input.is(".size-lg") ) {
-                    $temp = $("<table></table>").append(html);
-                    $temp.find(".ui-datepicker-calendar td a").each(function () {
-                        var yy = $(this).parent().data("year"),
-                            mm = $(this).parent().data("month"),
-                            dd = +$(this).text();
-
-                        var monthStr, dayStr;
-                        monthStr = (mm + 1).toString();
-                        if (monthStr.length == 1) {
-                            monthStr = "0" + monthStr;
-                        }
-                        dayStr = dd.toString();
-                        if (dayStr.length == 1) {
-                            dayStr = "0" + dayStr;
-                        }
-
-                        var str = yy.toString() + "-" + monthStr + "-" + dayStr;
-                        var hasTodaymind = false;
-
-                        for (var i = 0; i < mindHealthHistory.length; i++) {
-                            hasTodaymind = false;
-                            if (str == mindHealthHistory[i].pk.date){
-                                hasTodaymind = true;
-                                mindText = mindHealthHistory[i].text;
-
-                                switch(mindHealthHistory[i].mood) {
-                                    case 1:
-                                        if (mindHealthHistory[i].text != null && mindHealthHistory[i].text != "") {
-                                            $(this).addClass('see-more');
-                                        } else {
-                                            $(this).addClass('sad-chk');
-                                        }
-                                        break;
-                                    case 2:
-                                        if (mindHealthHistory[i].text != null && mindHealthHistory[i].text != "") {
-                                            $(this).addClass('see-more');
-                                        } else {
-                                            $(this).addClass('anger-chk');
-                                        }
-                                        break;
-                                    case 3:
-                                        if (mindHealthHistory[i].text != null && mindHealthHistory[i].text != "") {
-                                            $(this).addClass('see-more');
-                                        } else {
-                                            $(this).addClass('happy-chk');
-                                        }
-                                        break;
-                                    case 4:
-                                        if (mindHealthHistory[i].text != null && mindHealthHistory[i].text != "") {
-                                            $(this).addClass('see-more');
-                                        } else {
-                                            $(this).addClass('surprise-chk');
-                                        }
-                                        break;
-                                    case 5:
-                                        if (mindHealthHistory[i].text != null && mindHealthHistory[i].text != "") {
-                                            $(this).addClass('see-more');
-                                        } else {
-                                            $(this).addClass('horror-chk');
-                                        }
-                                        break;
-                                    case 6:
-                                        if (mindHealthHistory[i].text != null && mindHealthHistory[i].text != "") {
-                                            $(this).addClass('see-more');
-                                        } else {
-                                            $(this).addClass('aversion-chk');
-                                        }
-                                        break;
-                                    case 7:
-                                        if (mindHealthHistory[i].text != null && mindHealthHistory[i].text != "") {
-                                            $(this).addClass('see-more');
-                                        } else {
-                                            $(this).addClass('boring-chk');
-                                        }
-                                        break;
-                                    case 8:
-                                        if (mindHealthHistory[i].text != null && mindHealthHistory[i].text != "") {
-                                            $(this).addClass('see-more');
-                                        } else {
-                                            $(this).addClass('ache-chk');
-                                        }
-                                        break;
-                                }
-                                }
-                                }
-
-                        if (!hasTodaymind && getTodayDate() === str) {
-                                $(this).addClass('symptom-write')
-                                    .attr('onclick', "location.href='/symptom';")
-                                    .attr('style', 'cursor:pointer;');
-
-
-                        }
-                    });
-                    html = $temp[0].innerHTML;
-                }
-                setTimeout(() => {
-                    $(".see-more").on('click', function (e) {
-                        console.log('123');
-                        e.preventDefault();
-                        // e.stopPropagation();
-                        let text = getText(this.text);
-                        let todaysymptom = getTodaySymptom(this.text);
-                        let todaymonth = getdaymonth(this.text);
-                        let todayday = getday(this.text);
-                        let todayyear = getdayyear(this.text);
-                        let today = getDayOfWeek(todayyear, todaymonth, todayday);
-                        let date = getdate(this.text);
-
-                        symptompopup(todaysymptom, text, todaymonth, todayday, today,date);
-
-                    });
-                }, 10);
-
-                return html;
-            };
-        })();
-
-        $(function () {
-            $("#dateRecord").datepicker();
+            deleteMindData(date).then(() => {
+                console.log("b");
+                // deleteSymtomData 함수가 완료되면 새로고침 실행
+                window.location.reload();
+            }).catch((error) => {
+                // 처리 중 에러가 발생한 경우의 처리
+                console.error(error);
+            });
         });
 
-        //그날 텍스트
-        function getText(day) {
+        $("#buttonOk").click(function () {
+            modify(month, day, week, date);
+            //return false;
+        });
 
-            if (day.length == 1) {
-                day = "0" + day;
-            }
-            let month = (mm + 1).toString();
-            if (month.length == 1) {
-                month = "0" + month;
-            }
-            const tempStr = yy.toString() + "-" + month + "-" + day.toString();
-            console.log('getText' + tempStr);
-            for (var i = 0; i < mindHealthHistory.length; i++) {
-                if (mindHealthHistory[i].pk.date == tempStr) {
-                    return mindHealthHistory[i].text;
-                }
-            }
-            return null;
+    }
 
-        }
-
-        //그날 date
-        function getdate(day) {
-
-            if (day.length == 1) {
-                day = "0" + day;
-            }
-            let month = (mm + 1).toString();
-            if (month.length == 1) {
-                month = "0" + month;
-            }
-            const tempStr = yy.toString() + "-" + month + "-" + day.toString();
-            console.log(tempStr);
-            for (var i = 0; i < mindHealthHistory.length; i++) {
-                if (mindHealthHistory[i].pk.date == tempStr) {
-                    return tempStr;
-                }
-            }
-            return null;
-        }
-
-        //그날 증상에 따른 기분
-        function getTodaySymptom(day) {
-
-            if (day.length == 1) {
-                day = "0" + day;
-            }
-            let month = (mm + 1).toString();
-            if (month.length == 1) {
-                month = "0" + month;
-            }
-            const tempStr = yy.toString() + "-" + month + "-" + day.toString();
-            console.log(tempStr);
-            for (var i = 0; i < mindHealthHistory.length; i++) {
-                if (mindHealthHistory[i].pk.date == tempStr) {
-                    return mindHealthHistory[i].todaysymptom;
-                }
-            }
-            return null;
-        }
-
-        //그날 년도
-        function getdayyear(day) {
-
-            if (day.length == 1) {
-                day = "0" + day;
-            }
-            let month = (mm + 1).toString();
-            if (month.length == 1) {
-                month = "0" + month;
-            }
-            const tempStr = yy.toString() + "-" + month + "-" + day.toString();
-            const tempyear = yy.toString();
-            console.log(tempStr);
-            for (var i = 0; i < mindHealthHistory.length; i++) {
-                if (mindHealthHistory[i].pk.date == tempStr) {
-                    return tempyear;
-                }
-            }
-            return null;
-        }
-
-        //그날 월
-        function getdaymonth(day) {
-
-            if (day.length == 1) {
-                day = "0" + day;
-            }
-            let month = (mm + 1).toString();
-            if (month.length == 1) {
-                month = "0" + month;
-            }
-            const tempStr = yy.toString() + "-" + month + "-" + day.toString();
-            const tempmonth = month;
-            console.log(tempStr);
-            for (var i = 0; i < mindHealthHistory.length; i++) {
-                if (mindHealthHistory[i].pk.date == tempStr) {
-                    return tempmonth;
-                }
-            }
-            return null;
-        }
-
-        //그날 일
-        function getday(day) {
-
-            if (day.length == 1) {
-                day = "0" + day;
-            }
-            let month = (mm + 1).toString();
-            if (month.length == 1) {
-                month = "0" + month;
-            }
-            const tempStr = yy.toString() + "-" + month + "-" + day.toString();
-            const tempday = day.toString();
-            console.log(tempStr);
-            for (var i = 0; i < mindHealthHistory.length; i++) {
-                if (mindHealthHistory[i].pk.date == tempStr) {
-                    return tempday;
-                }
-            }
-            return null;
-        }
-
-        //그날 요일
-        function getDayOfWeek(year, month, day) {
-            // month 파라미터는 1부터 12 사이의 값을 가져야 하므로, 실제 입력된 month 값에서 1을 뺍니다.
-            const date = new Date(year, month - 1, day);
-            const days = ['일', '월', '화', '수', '목', '금', '토'];
-            return days[date.getDay()];
-        }
-
-        // 오늘 날짜를 가져오는 함수
-        function getTodayDate() {
-            var today = new Date();
-            var yy = today.getFullYear();
-            var mm = today.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줌
-            var dd = today.getDate();
-
-            // 월과 일이 한 자리 숫자인 경우 앞에 0을 추가하여 두 자리로 만듦
-            var monthStr = mm < 10 ? "0" + mm : mm.toString();
-            var dayStr = dd < 10 ? "0" + dd : dd.toString();
-
-            return yy + "-" + monthStr + "-" + dayStr;
-        }
-
-        function symptompopup(mood, text, month, day, week, date) {
-            console.log('symptompopup');
-            $("#layerSelectType").show();
-            $("#dim").show();
-
-            // 선택 요소 가져오기
-            const recordFaceElement = $(".sad-chk, .record-face2, .record-face3,.record-face4");
-
-            if (sum === 0) {
-                // 증상 개수가 0인 경우에 해당하는 클래스 추가
-                recordFaceElement.addClass("record-face1");
-                Item = "<span>" + month + "월 " + day + "일 " + week + "요일 </span>";
-                $('#popUp1').append(Item);
-                Item2 = "<span class=\"bold\">'" + text + "'</span> <br>";
-                $('#popUp2').append(Item2);
-                console.log("6", Item2);
-
-            } else if (sum === 1) {
-                // 증상 개수가 1인 경우에 해당하는 클래스 추가
-                recordFaceElement.addClass("record-face2");
-                Item = "<span>" + month + "월 " + day + "일 " + week + "요일 </span>";
-                $('#popUp1').append(Item);
-                Item2 = "<span class=\"bold\">'" + text + "'</span> <br>";
-                $('#popUp2').append(Item2);
-
-            } else if (sum === 2) {
-                // 증상 개수가 2인 경우에 해당하는 클래스 추가
-                recordFaceElement.addClass("record-face3");
-                Item = "<span>" + month + "월 " + day + "일 " + week + "요일 </span>";
-                $('#popUp1').append(Item);
-                Item2 = "<span class=\"bold\">'" + text + "'</span> <br>";
-                $('#popUp2').append(Item2);
-            } else if (sum == 3) {
-                // 증상 개수가 3인 경우에 해당하는 클래스 추가
-                recordFaceElement.addClass("record-face3");
-                Item = "<span>" + month + "월 " + day + "일 " + week + "요일 </span>";
-                $('#popUp1').append(Item);
-                Item2 = "<span class=\"bold\">'" + text + "'</span> <br>";
-                $('#popUp2').append(Item2);
-            } else if (sum == 4) {
-                // 증상 개수가 4인 경우에 해당하는 클래스 추가
-                recordFaceElement.addClass("record-face4");
-                Item = "<span>" + month + "월 " + day + "일 " + week + "요일 </span>";
-                $('#popUp1').append(Item);
-                Item2 = "<span class=\"bold\">'" + text + "'</span> <br>";
-                $('#popUp2').append(Item2);
-            }
-
-
-            $("#buttonNo").click(function () {
-                $("#layerSelectType").hide();
-                $("#dim").hide();
-
-
-                deleteSymtomData(date).then(() => {
-                    console.log("b");
-                    // deleteSymtomData 함수가 완료되면 새로고침 실행
-                    window.location.reload();
-                }).catch((error) => {
-                    // 처리 중 에러가 발생한 경우의 처리
-                    console.error(error);
-                });
-            });
-
-            $("#buttonOk").click(function () {
-                modify(month, day, week, date);
-                //return false;
-            });
-
-        }
-
-
-
-
-
-
-    </script>
+</script>
 </body>
 </html>
