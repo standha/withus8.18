@@ -83,6 +83,8 @@ public class WwithusService {
 
         WwithusEntry nextEntry;
         String nextCode = wwithusEntryRequest.getNextCode();
+        System.out.printf("###### nextCode is %s ######\n", nextCode);
+
         int week = user.getWeek();
         DayOfWeek dayOfWeek = wwithusEntryRequest.getDate().getDayOfWeek();
         if (nextCode == null) {

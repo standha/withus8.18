@@ -37,7 +37,7 @@ public interface WwithusEntryHistoryCaregiverRepository extends JpaRepository<Ww
      * 주차, 일차에 해당되는 prefix를 직접 입력하지 않도록 하기 위한 default method
      */
     default List<WwithusEntryHistoryCaregiver> findAllByUserAndWeekDay(User user, int week, int day) {
-        return findAllByKey_UserAndKey_EntryCodeStartsWith(user, String.format("W%dD%d", week, day));
+        return findAllByKey_UserAndKey_EntryCodeStartsWith(user, String.format("CW%dD%d", week, day));
     }
 
 

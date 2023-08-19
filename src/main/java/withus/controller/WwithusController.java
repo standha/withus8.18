@@ -147,7 +147,7 @@ public class WwithusController extends BaseController {
         try {
             User user = getUser();
             wwithusEntryRequest.setUser(user);
-            logger.info("request-next id:{}, type:{}, NextCode:{}", user.getUserId(), user.getType(), wwithusEntryRequest.getNextCode());
+            logger.info("request-next id:{}, type:{}, NextCode:{}, CurrentCode:{}, wwithusEntryRequest:{}", user.getUserId(), user.getType(), wwithusEntryRequest.getNextCode(), wwithusEntryRequest.getCurrentCode(), wwithusEntryRequest);
             LocalDate today = LocalDate.now();
             wwithusEntryRequest.setDate(today);
             data = wwithusService.getWwithusEntryAndSaveHistory(wwithusEntryRequest);

@@ -56,27 +56,27 @@ public class WwithusCaregiverController extends BaseController {
         return modelAndView;
     }
 
-    @PostMapping("/home/help-request")
-    @ResponseBody
-    public Result<WithusHelpRequest> postHelpRequest(@RequestBody String helpCode) {
-        User user = getUser();
-        LocalDateTime now = LocalDateTime.now();
-
-        Result.Code code = Result.Code.ERROR;
-        WithusHelpRequest withusHelpRequest = null;
-
-        try {
-            withusHelpRequest = homeService.createHelpRequest(user, now, helpCode.replaceAll("\"", ""));
-            code = Result.Code.OK;
-        } catch (Exception exception) {
-//			log.error(exception.getLocalizedMessage(), exception);
-        }
-
-        return Result.<WithusHelpRequest>builder()
-                .code(code)
-                .data(withusHelpRequest)
-                .build();
-    }
+//    @PostMapping("/home/help-request")
+//    @ResponseBody
+//    public Result<WithusHelpRequest> postHelpRequest(@RequestBody String helpCode) {
+//        User user = getUser();
+//        LocalDateTime now = LocalDateTime.now();
+//
+//        Result.Code code = Result.Code.ERROR;
+//        WithusHelpRequest withusHelpRequest = null;
+//
+//        try {
+//            withusHelpRequest = homeService.createHelpRequest(user, now, helpCode.replaceAll("\"", ""));
+//            code = Result.Code.OK;
+//        } catch (Exception exception) {
+////			log.error(exception.getLocalizedMessage(), exception);
+//        }
+//
+//        return Result.<WithusHelpRequest>builder()
+//                .code(code)
+//                .data(withusHelpRequest)
+//                .build();
+//    }
 
     @GetMapping("/wwithus/caregiver/histories")
     @ResponseBody
@@ -84,9 +84,9 @@ public class WwithusCaregiverController extends BaseController {
         Result.Code code = Result.Code.OK;
         User user = getUser();
 
-        if (user.getType() == User.Type.CAREGIVER) {
-            user = userService.getUserByCaregiverId(user.getUserId());
-        }
+//        if (user.getType() == User.Type.CAREGIVER) {
+//            user = userService.getUserByCaregiverId(user.getUserId());
+//        }
 
         LocalDate today = LocalDate.now();
         List<ChatBalloon> data;
@@ -141,7 +141,7 @@ public class WwithusCaregiverController extends BaseController {
         try {
             User user = getUser();
             wwithusEntryRequest.setUser(user);
-            logger.info("request-next id:{}, type:{}, NextCode:{}", user.getUserId(), user.getType(), wwithusEntryRequest.getNextCode());
+            logger.info("request-next id:{}, type:{}, NextCode:{}, CurrentCode:{}, wwithusEntryRequest:{}", user.getUserId(), user.getType(), wwithusEntryRequest.getNextCode(), wwithusEntryRequest.getCurrentCode(), wwithusEntryRequest);
             LocalDate today = LocalDate.now();
             wwithusEntryRequest.setDate(today);
             data = wwithusCaregiverService.getWwithusEntryAndSaveHistory(wwithusEntryRequest);

@@ -47,12 +47,13 @@ public class WwithusCaregiverService {
         List<String> codesToSaveAsHistories = wwithusEntryRequest.getCodesToSaveAsHistories();
         String currentCode = wwithusEntryRequest.getCurrentCode();
 
-        if (user.getType() == User.Type.CAREGIVER) {
-            user = userService.getUserByCaregiverId(user.getUserId());
-            if (currentCode == null) {
-                throw new Utility.NoHisException();
-            }
-        }
+//        if (user.getType() == User.Type.CAREGIVER) {
+//            user = userService.getUserByCaregiverId(user.getUserId());
+//            if (currentCode == null) {
+//                throw new Utility.NoHisException();
+//            }
+//        }
+
         if (currentCode != null) {
             codesToSaveAsHistories.add(currentCode);
         }
@@ -66,10 +67,10 @@ public class WwithusCaregiverService {
             WwithusEntryHistoryCaregiver wwithusEntryHistoryCaregiver = toWwithusEntryHistory(wwithusEntryRequest.getUser(), currentEntry);
             WwithusEntryHistoryCaregiver existingHistory = wwithusEntryHistoryCaregiverRepository.findById(wwithusEntryHistoryCaregiver.getKey()).orElse(null);
             if (existingHistory == null) {
-                if (user.getType() == User.Type.PATIENT) {
+                if (user.getType() == User.Type.CAREGIVER) {
                     wwithusEntryHistoryCaregiverRepository.save(wwithusEntryHistoryCaregiver);
                 } else {
-                    user = userService.getUserByCaregiverId(user.getUserId());
+//                    user = userService.getUserByCaregiverId(user.getUserId());
                     if (currentCode == null) {
                         throw new Utility.NoHisException();
                     }
@@ -81,8 +82,7 @@ public class WwithusCaregiverService {
 
         WwithusEntryCaregiver nextEntry;
         String nextCode = wwithusEntryRequest.getNextCode();
-
-        System.out.printf("###### nextCode is %s ######", nextCode);
+        System.out.printf("###### nextCode is %s ######\n", nextCode);
 
         int week = user.getWeek();
         DayOfWeek dayOfWeek = wwithusEntryRequest.getDate().getDayOfWeek();
@@ -107,9 +107,11 @@ public class WwithusCaregiverService {
 
     @NonNull
     public List<ChatBalloon> getWwithusEntryHistories(User user, LocalDate date) {
-        if (user.getType() == User.Type.CAREGIVER) {
-            user = userService.getUserByCaregiverId(user.getUserId());
-        }
+
+//        if (user.getType() == User.Type.CAREGIVER) {
+//            user = userService.getUserByCaregiverId(user.getUserId());
+//        }
+
         int week = user.getWeek();
         int day = Utility.getDayDigitForWwithus(week, date.getDayOfWeek());
 
@@ -214,7 +216,6 @@ public class WwithusCaregiverService {
         return code;
     }
 
-    // todo: 2023-08-16
     private WwithusEntryHistoryCaregiver toWwithusEntryHistory(User user, WwithusEntryCaregiver wwithusEntryCaregiver) {
         return WwithusEntryHistoryCaregiver.builder()
                 .key(
@@ -302,9 +303,9 @@ public class WwithusCaregiverService {
     public String getUsernamePlusContent(String content) {
         User user = userService.getUserById(authenticationFacade.getAuthentication().getName());
 
-        if (user.getType() == User.Type.CAREGIVER) {
-            user = userService.getUserByCaregiverId(user.getUserId());
-        }
+//        if (user.getType() == User.Type.CAREGIVER) {
+//            user = userService.getUserByCaregiverId(user.getUserId());
+//        }
 
         String username = user.getName();
         if (content.startsWith("님 ")) {

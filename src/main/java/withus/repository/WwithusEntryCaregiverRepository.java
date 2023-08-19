@@ -53,6 +53,6 @@ public interface WwithusEntryCaregiverRepository extends JpaRepository<WwithusEn
     default Optional<WwithusEntryCaregiver> findFirstByWeekAndDay(int week, int day) {
         System.out.println("week = " + week);
         System.out.println("day = " + day);
-        return findTopByCodeStartsWithAndFirstIsTrueOrderByCode(String.format("W%dD%d", week, day));
+        return findTopByCodeStartsWithAndFirstIsTrueOrderByCode(String.format("CW%dD%d", week, day));
     }
 }
